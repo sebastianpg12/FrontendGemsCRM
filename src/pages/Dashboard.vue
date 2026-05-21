@@ -1,22 +1,34 @@
 <template>
-  <div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-4">
 
-    <!-- ══ Top breadcrumb bar ══════════════════════════════════════════ -->
-    <div class="flex items-center justify-between gap-2 flex-wrap pr-12 sm:pr-14">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 hidden sm:inline">Dashboard Operativo</span>
-        <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 sm:hidden">Dashboard</span>
-        <span class="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase tracking-wider whitespace-nowrap">
-          {{ userRoleLabel }}
-        </span>
+    <!-- ══ Header: greeting + actions ══════════════════════════════════ -->
+    <div class="flex items-start justify-between gap-3 flex-wrap pr-12 sm:pr-14">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
+          <span class="w-1 h-1 rounded-full bg-slate-300 inline-block"></span>
+          <span class="px-2.5 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black rounded-full uppercase tracking-widest">
+            {{ userRoleLabel }}
+          </span>
+        </div>
+        <h1 class="text-2xl sm:text-[30px] xl:text-[34px] font-black text-slate-900 tracking-tight leading-tight">
+          Hola, {{ firstName }}<span class="text-primary-500">.</span>
+        </h1>
+        <p class="text-[12px] text-slate-400 mt-1 font-medium">
+          {{ todayLabel }} ·
+          <span v-if="criticalCount > 0" class="text-amber-500 font-black">
+            {{ criticalCount }} {{ criticalCount === 1 ? 'actividad requiere' : 'actividades requieren' }} atención
+          </span>
+          <span v-else class="text-emerald-500 font-black">Todo bajo control</span>
+        </p>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 mt-1">
         <button @click="refreshData" :disabled="isRefreshing"
-          class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-primary-500 hover:border-primary-200 hover:bg-primary-50 transition-colors disabled:opacity-50 shrink-0">
+          class="w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-primary-500 hover:border-primary-200 transition-all disabled:opacity-50 shadow-sm shrink-0">
           <i class="fas fa-sync-alt text-[11px]" :class="{ 'animate-spin': isRefreshing }"></i>
         </button>
         <router-link v-if="authStore.canCreateActivities" to="/activities"
-          class="flex items-center gap-1.5 px-3 sm:px-3.5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-lg text-[12px] font-semibold shadow-sm shadow-primary-500/20 transition-all shrink-0">
+          class="flex items-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[12px] font-black shadow-lg shadow-primary-500/20 transition-all shrink-0">
           <i class="fas fa-plus text-[10px]"></i>
           <span class="hidden sm:inline">Nueva actividad</span>
           <span class="sm:hidden">Nueva</span>
@@ -24,85 +36,80 @@
       </div>
     </div>
 
-    <!-- ══ Greeting ═══════════════════════════════════════════════════ -->
-    <div>
-      <h1 class="text-xl sm:text-2xl xl:text-[26px] font-bold text-slate-900 tracking-tight leading-tight">Hola, {{ firstName }}</h1>
-      <p class="text-[12px] sm:text-[13px] text-slate-500 mt-0.5">
-        Tienes <span class="font-semibold text-slate-700">{{ criticalCount }}</span>
-        {{ criticalCount === 1 ? 'actividad' : 'actividades' }} que
-        {{ criticalCount === 1 ? 'requiere' : 'requieren' }} atención entre hoy y vencidas.
-      </p>
-    </div>
-
-    <!-- ══ Quick actions row ══════════════════════════════════════════ -->
-    <div class="grid gap-2.5" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+    <!-- ══ Quick actions ════════════════════════════════════════════════ -->
+    <div class="grid gap-2" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
       <router-link v-for="qa in quickActions" :key="qa.label" :to="qa.to"
-        class="flex items-center gap-3 bg-white border border-slate-200 hover:shadow-md rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3 transition-all group"
-        :class="qa.hover">
-        <div class="w-9 h-9 rounded-lg flex items-center justify-center transition-colors shrink-0"
-          :class="qa.iconBg">
-          <i :class="['fas', qa.icon, qa.iconColor, 'text-[14px]']"></i>
+        class="group flex items-center gap-3 bg-white border border-slate-100 hover:border-primary-100 hover:shadow-lg hover:shadow-primary-500/5 rounded-2xl px-4 py-3 transition-all">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:scale-110" :class="qa.iconBg">
+          <i :class="['fas', qa.icon, qa.iconColor, 'text-[13px]']"></i>
         </div>
-        <span class="text-[12px] sm:text-[13px] font-semibold text-slate-800 truncate">{{ qa.label }}</span>
+        <span class="text-[12px] font-black text-slate-700 group-hover:text-slate-900 truncate flex-1">{{ qa.label }}</span>
+        <i class="fas fa-chevron-right text-[9px] text-slate-200 group-hover:text-primary-300 shrink-0 transition-all group-hover:translate-x-0.5"></i>
       </router-link>
     </div>
 
-    <!-- ══ Stats row ══════════════════════════════════════════════════ -->
-    <div class="grid gap-2.5" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+    <!-- ══ Stat cards ════════════════════════════════════════════════════ -->
+    <div class="grid gap-2.5" style="grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));">
       <div v-for="card in statCards" :key="card.label"
-        class="bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3">
-        <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1 sm:mb-1.5 truncate">{{ card.label }}</div>
+        class="bg-white border border-slate-100 rounded-2xl px-4 py-3.5 relative overflow-hidden hover:shadow-md hover:border-slate-200 transition-all group">
+        <div class="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" :class="card.accentBar"></div>
+        <div class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 truncate">{{ card.label }}</div>
         <div class="flex items-end justify-between gap-2">
-          <div class="flex items-baseline gap-1.5 sm:gap-2 min-w-0">
-            <span class="text-xl sm:text-2xl xl:text-[26px] font-bold text-slate-900 leading-none">{{ card.value }}</span>
-            <span class="text-[10px] sm:text-[11px] font-semibold truncate" :class="card.tagColor">{{ card.tag }}</span>
+          <div class="flex items-baseline gap-2 min-w-0">
+            <span class="text-[30px] font-black text-slate-900 leading-none">{{ card.value }}</span>
+            <span class="text-[10px] font-black truncate" :class="card.tagColor">{{ card.tag }}</span>
           </div>
-          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0" :class="card.iconBg">
-            <i :class="['fas', card.icon, card.iconColor, 'text-[12px] sm:text-[13px]']"></i>
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110" :class="card.iconBg">
+            <i :class="['fas', card.icon, card.iconColor, 'text-[13px]']"></i>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ Main grid ══════════════════════════════════════════════════ -->
+    <!-- ══ Main grid ═════════════════════════════════════════════════════ -->
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
 
-      <!-- ── Left: AI Insights + Agenda ─────────────────────────────── -->
+      <!-- ── Left: AI Insights + Agenda ──────────────────────────────── -->
       <div class="xl:col-span-2 flex flex-col gap-3">
 
         <AIInsightsWidget />
 
         <!-- Agenda -->
-        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col">
-          <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100 shrink-0">
+        <div class="bg-white border border-slate-100 rounded-2xl overflow-hidden">
+          <div class="flex items-center justify-between px-5 py-4 border-b border-slate-50">
             <div>
-              <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Agenda</div>
-              <div class="text-[13px] font-bold text-slate-900">Actividades próximas</div>
+              <div class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-400 mb-0.5">Agenda operativa</div>
+              <div class="text-[14px] font-black text-slate-900">Actividades próximas</div>
             </div>
             <router-link to="/activities"
-              class="text-[12px] text-primary-500 hover:text-primary-600 font-semibold transition-colors">
-              Ver todas
+              class="flex items-center gap-1.5 text-[10px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors">
+              Ver todas <i class="fas fa-arrow-right text-[9px] ml-0.5"></i>
             </router-link>
           </div>
-          <div v-if="agendaActivities.length === 0" class="py-8">
-            <p class="text-[12px] text-slate-400 text-center">Sin actividades próximas</p>
+          <div v-if="agendaActivities.length === 0" class="py-10 flex flex-col items-center gap-2">
+            <div class="w-11 h-11 rounded-2xl bg-slate-50 flex items-center justify-center">
+              <i class="fas fa-calendar-check text-slate-300 text-[15px]"></i>
+            </div>
+            <p class="text-[12px] text-slate-400 font-semibold">Sin actividades próximas</p>
           </div>
-          <div v-else class="max-h-[420px] overflow-y-auto divide-y divide-slate-50">
-            <div v-for="act in agendaActivities" :key="act._id"
-              class="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 hover:bg-slate-50/60 transition-colors">
-              <span class="w-2 h-2 rounded-full shrink-0"
-                :class="act.priority === 'urgent' ? 'bg-red-500' : act.priority === 'high' ? 'bg-orange-500' : 'bg-primary-400'"></span>
-              <div class="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center sm:gap-1.5">
-                <span class="text-[12px] font-semibold text-slate-800 truncate">{{ act.title }}</span>
-                <span class="text-[11px] sm:text-[12px] text-slate-400 truncate">
-                  <span class="hidden sm:inline">· </span>{{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}
-                </span>
+          <div v-else class="max-h-[400px] overflow-y-auto">
+            <div v-for="(act, idx) in agendaActivities" :key="act._id"
+              class="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/70 transition-colors"
+              :class="{ 'border-t border-slate-50': idx > 0 }">
+              <div class="w-2 h-2 rounded-full shrink-0 mt-0.5"
+                :class="act.priority === 'urgent' ? 'bg-red-500' : act.priority === 'high' ? 'bg-amber-500' : 'bg-primary-400'">
               </div>
-              <span :class="['shrink-0 px-2 py-0.5 rounded text-[10px] font-semibold', agendaStatusClass(act)]">
+              <div class="flex-1 min-w-0">
+                <p class="text-[12px] font-black text-slate-800 truncate">{{ act.title }}</p>
+                <p class="text-[11px] text-slate-400 font-medium truncate">
+                  {{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}
+                </p>
+              </div>
+              <span :class="['shrink-0 px-2.5 py-1 rounded-full text-[10px] font-black', agendaStatusClass(act)]">
                 {{ agendaStatusLabel(act) }}
               </span>
-              <span class="shrink-0 hidden md:flex items-center gap-1 text-[11px] text-slate-500">
-                <i class="fas fa-clock text-red-400 text-[10px]"></i>
+              <span class="shrink-0 hidden md:flex items-center gap-1 text-[11px] text-slate-400 font-medium">
+                <i class="fas fa-clock text-[9px]"></i>
                 {{ formatDateShort(act.dueDate || act.date) }}
               </span>
             </div>
@@ -111,61 +118,69 @@
 
       </div>
 
-      <!-- ── Right column ─────────────────────────────────────────── -->
+      <!-- ── Right column ─────────────────────────────────────────────── -->
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-3">
 
         <!-- Ritmo del día -->
-        <div class="bg-white border border-slate-200 rounded-xl px-4 py-3">
-          <div class="flex items-start justify-between mb-2 gap-2">
+        <div class="bg-white border border-slate-100 rounded-2xl px-5 py-4">
+          <div class="flex items-center justify-between mb-3 gap-2">
             <div class="min-w-0">
-              <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Ritmo del día</div>
-              <div class="text-[13px] font-bold text-slate-900">Foco operativo</div>
+              <div class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-0.5">Ritmo del día</div>
+              <div class="text-[14px] font-black text-slate-900">Foco operativo</div>
             </div>
-            <span class="bg-slate-900 text-white text-[11px] font-bold px-2.5 py-1 rounded-full leading-none shrink-0">{{ focusProgress }}%</span>
+            <div class="w-12 h-12 rounded-2xl bg-primary-50 flex items-center justify-center shrink-0">
+              <span class="text-[14px] font-black text-primary-600 leading-none">{{ focusProgress }}%</span>
+            </div>
           </div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3.5">
+          <div class="h-2 bg-slate-100 rounded-full overflow-hidden mb-4">
             <div class="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-700"
               :style="{ width: focusProgress + '%' }"></div>
           </div>
-          <div class="grid grid-cols-3 text-center gap-1">
-            <div>
-              <div class="text-xl font-bold text-red-500 leading-none">{{ overdueCount }}</div>
-              <div class="text-[10px] text-slate-500 font-semibold mt-1">Vencidas</div>
+          <div class="grid grid-cols-3 gap-1.5">
+            <div class="bg-red-50 rounded-xl px-2 py-3 text-center">
+              <div class="text-[24px] font-black text-red-500 leading-none">{{ overdueCount }}</div>
+              <div class="text-[9px] text-red-400 font-black uppercase tracking-wide mt-1">Vencidas</div>
             </div>
-            <div>
-              <div class="text-xl font-bold text-amber-500 leading-none">{{ todayCount }}</div>
-              <div class="text-[10px] text-slate-500 font-semibold mt-1">Hoy</div>
+            <div class="bg-amber-50 rounded-xl px-2 py-3 text-center">
+              <div class="text-[24px] font-black text-amber-500 leading-none">{{ todayCount }}</div>
+              <div class="text-[9px] text-amber-400 font-black uppercase tracking-wide mt-1">Hoy</div>
             </div>
-            <div>
-              <div class="text-xl font-bold text-cyan-500 leading-none">{{ highPriorityCount }}</div>
-              <div class="text-[10px] text-slate-500 font-semibold mt-1 leading-tight">Alta prioridad</div>
+            <div class="bg-primary-50 rounded-xl px-2 py-3 text-center">
+              <div class="text-[24px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</div>
+              <div class="text-[9px] text-primary-400 font-black uppercase tracking-wide mt-1">Alta Prio.</div>
             </div>
           </div>
         </div>
 
         <!-- Pulso comercial -->
-        <div class="bg-white border border-slate-200 rounded-xl px-4 py-3">
-          <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Pulso comercial</div>
-          <div class="text-[13px] font-bold text-slate-900 mb-3">Dónde atacar primero</div>
-          <div class="flex flex-col gap-2.5">
-            <div v-for="(item, i) in pulsoItems" :key="i" class="flex items-start gap-2.5">
-              <i :class="['fas', item.icon, item.color, 'text-[11px] mt-0.5 shrink-0']"></i>
-              <span class="text-[12px] text-slate-700 leading-snug">{{ item.text }}</span>
+        <div class="bg-white border border-slate-100 rounded-2xl px-5 py-4">
+          <div class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-0.5">Pulso comercial</div>
+          <div class="text-[14px] font-black text-slate-900 mb-3.5">Dónde atacar primero</div>
+          <div class="flex flex-col gap-3">
+            <div v-for="(item, i) in pulsoItems" :key="i" class="flex items-start gap-3">
+              <div class="w-7 h-7 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 mt-0.5">
+                <i :class="['fas', item.icon, item.color, 'text-[11px]']"></i>
+              </div>
+              <span class="text-[12px] text-slate-600 leading-snug font-medium">{{ item.text }}</span>
             </div>
           </div>
         </div>
 
-        <!-- Nota de foco (dark) -->
-        <div class="sm:col-span-2 xl:col-span-1 bg-gradient-to-br from-indigo-900 to-violet-900 rounded-xl px-4 py-3.5 text-white relative overflow-hidden">
-          <div class="absolute -top-8 -right-8 w-28 h-28 bg-violet-400/10 rounded-full blur-2xl pointer-events-none"></div>
+        <!-- Nota de foco (dark premium) -->
+        <div class="sm:col-span-2 xl:col-span-1 rounded-2xl px-5 py-4 text-white relative overflow-hidden"
+          style="background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 60%, #1e1b4b 100%);">
+          <div class="absolute top-0 right-0 w-36 h-36 pointer-events-none opacity-20"
+            style="background: radial-gradient(circle, #8b5cf6 0%, transparent 70%); transform: translate(25%,-25%)"></div>
+          <div class="absolute bottom-0 left-0 w-24 h-24 pointer-events-none opacity-10"
+            style="background: radial-gradient(circle, #6366f1 0%, transparent 70%); transform: translate(-30%,30%)"></div>
           <div class="relative">
-            <div class="flex items-center gap-2 mb-1.5">
-              <i class="fas fa-bullseye text-indigo-300 text-[11px]"></i>
-              <div class="text-[10px] font-bold uppercase tracking-widest text-indigo-300">Nota de foco</div>
+            <div class="flex items-center gap-2 mb-2.5">
+              <div class="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center">
+                <i class="fas fa-gem text-primary-300 text-[9px]"></i>
+              </div>
+              <span class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-300">Nota de foco</span>
             </div>
-            <p class="text-[13px] font-semibold leading-relaxed">
-              {{ focusNote }}
-            </p>
+            <p class="text-[13px] font-semibold leading-relaxed text-white/85">{{ focusNote }}</p>
           </div>
         </div>
 
@@ -189,6 +204,12 @@ const teamStore = useTeamStore()
 const isRefreshing = ref(false)
 
 const firstName = computed(() => authStore.user?.name?.split(' ')[0] || 'Usuario')
+
+const todayLabel = computed(() => {
+  return new Date().toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })
+    .replace(/^\w/, c => c.toUpperCase())
+})
+
 const userRoleLabel = computed(() => ({
   admin: 'Administrador', manager: 'Manager', employee: 'Empleado',
   support: 'Soporte', development: 'Desarrollador', fullstack: 'Fullstack',
@@ -248,11 +269,11 @@ const quickActions = computed(() => {
 
 const statCards = computed(() => {
   const all = [
-    { label: 'Clientes', value: clientsStore.clients.length, tag: 'Base', tagColor: 'text-primary-500', icon: 'fa-users', iconBg: 'bg-primary-50', iconColor: 'text-primary-500', can: authStore.canViewClients },
-    { label: 'Actividades', value: activeActivities.value, tag: 'Activas', tagColor: 'text-green-500', icon: 'fa-clipboard-list', iconBg: 'bg-green-50', iconColor: 'text-green-500', can: authStore.canViewActivities },
-    { label: 'Casos', value: openCases.value, tag: 'Abiertos', tagColor: 'text-red-500', icon: 'fa-exclamation-triangle', iconBg: 'bg-red-50', iconColor: 'text-red-500', can: authStore.canViewCases },
-    { label: 'Tickets', value: pendingTickets.value, tag: 'Pendientes', tagColor: 'text-red-500', icon: 'fa-ticket-alt', iconBg: 'bg-slate-100', iconColor: 'text-slate-600', can: authStore.canViewCases },
-    { label: 'Equipo', value: teamStore.members.length, tag: 'Activos', tagColor: 'text-purple-500', icon: 'fa-user-friends', iconBg: 'bg-purple-50', iconColor: 'text-purple-500', can: authStore.canViewTeam },
+    { label: 'Clientes', value: clientsStore.clients.length, tag: 'Base', tagColor: 'text-primary-500', icon: 'fa-users', iconBg: 'bg-primary-50', iconColor: 'text-primary-500', accentBar: 'bg-gradient-to-r from-primary-400 to-primary-300', can: authStore.canViewClients },
+    { label: 'Actividades', value: activeActivities.value, tag: 'Activas', tagColor: 'text-emerald-500', icon: 'fa-clipboard-list', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-500', accentBar: 'bg-gradient-to-r from-emerald-400 to-emerald-300', can: authStore.canViewActivities },
+    { label: 'Casos', value: openCases.value, tag: 'Abiertos', tagColor: 'text-red-500', icon: 'fa-exclamation-triangle', iconBg: 'bg-red-50', iconColor: 'text-red-500', accentBar: 'bg-gradient-to-r from-red-400 to-red-300', can: authStore.canViewCases },
+    { label: 'Tickets', value: pendingTickets.value, tag: 'Pendientes', tagColor: 'text-orange-500', icon: 'fa-ticket-alt', iconBg: 'bg-orange-50', iconColor: 'text-orange-500', accentBar: 'bg-gradient-to-r from-orange-400 to-orange-300', can: authStore.canViewCases },
+    { label: 'Equipo', value: teamStore.members.length, tag: 'Activos', tagColor: 'text-violet-500', icon: 'fa-user-friends', iconBg: 'bg-violet-50', iconColor: 'text-violet-500', accentBar: 'bg-gradient-to-r from-violet-400 to-violet-300', can: authStore.canViewTeam },
   ]
   return all.filter(s => s.can)
 })
