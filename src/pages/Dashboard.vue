@@ -68,18 +68,18 @@
     </Transition>
 
     <!-- ══ Stat cards ════════════════════════════════════════════════════ -->
-    <div class="grid gap-2" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+    <div class="flex gap-2 overflow-x-auto pb-0.5 custom-scrollbar">
       <div v-for="card in statCards" :key="card.label"
-        class="bg-white border border-slate-100 rounded-2xl px-3.5 py-3 relative overflow-hidden hover:shadow-md transition-all group cursor-default">
-        <div class="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" :class="card.accentBar"></div>
-        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400 mb-1.5 truncate">{{ card.label }}</div>
-        <div class="flex items-end justify-between gap-1">
-          <div class="flex items-baseline gap-1.5 min-w-0">
-            <span class="text-[28px] font-black text-slate-900 leading-none">{{ card.value }}</span>
-            <span class="text-[10px] font-black truncate" :class="card.tagColor">{{ card.tag }}</span>
-          </div>
-          <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110" :class="card.iconBg">
-            <i :class="['fas', card.icon, card.iconColor, 'text-[12px]']"></i>
+        class="bg-white border border-slate-100 rounded-xl px-3 py-2 relative overflow-hidden hover:shadow-md transition-all group cursor-default flex items-center gap-2.5 shrink-0 min-w-[130px]">
+        <div class="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl" :class="card.accentBar"></div>
+        <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110" :class="card.iconBg">
+          <i :class="['fas', card.icon, card.iconColor, 'text-[11px]']"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="text-[8px] font-black uppercase tracking-[0.15em] text-slate-400 truncate leading-none mb-0.5">{{ card.label }}</div>
+          <div class="flex items-baseline gap-1 min-w-0">
+            <span class="text-[18px] font-black text-slate-900 leading-none">{{ card.value }}</span>
+            <span class="text-[9px] font-black truncate" :class="card.tagColor">{{ card.tag }}</span>
           </div>
         </div>
       </div>
