@@ -1,0 +1,333 @@
+<template>
+  <div class="flex flex-col gap-3">
+
+    <!-- ══ Top breadcrumb bar ══════════════════════════════════════════ -->
+    <div class="flex items-center justify-between gap-2 flex-wrap pr-12 sm:pr-14">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 hidden sm:inline">Dashboard Operativo</span>
+        <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 sm:hidden">Dashboard</span>
+        <span class="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase tracking-wider whitespace-nowrap">
+          {{ userRoleLabel }}
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button @click="refreshData" :disabled="isRefreshing"
+          class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-primary-500 hover:border-primary-200 hover:bg-primary-50 transition-colors disabled:opacity-50 shrink-0">
+          <i class="fas fa-sync-alt text-[11px]" :class="{ 'animate-spin': isRefreshing }"></i>
+        </button>
+        <router-link v-if="authStore.canCreateActivities" to="/activities"
+          class="flex items-center gap-1.5 px-3 sm:px-3.5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-lg text-[12px] font-semibold shadow-sm shadow-primary-500/20 transition-all shrink-0">
+          <i class="fas fa-plus text-[10px]"></i>
+          <span class="hidden sm:inline">Nueva actividad</span>
+          <span class="sm:hidden">Nueva</span>
+        </router-link>
+      </div>
+    </div>
+
+    <!-- ══ Greeting ═══════════════════════════════════════════════════ -->
+    <div>
+      <h1 class="text-xl sm:text-2xl xl:text-[26px] font-bold text-slate-900 tracking-tight leading-tight">Hola, {{ firstName }}</h1>
+      <p class="text-[12px] sm:text-[13px] text-slate-500 mt-0.5">
+        Tienes <span class="font-semibold text-slate-700">{{ criticalCount }}</span>
+        {{ criticalCount === 1 ? 'actividad' : 'actividades' }} que
+        {{ criticalCount === 1 ? 'requiere' : 'requieren' }} atención entre hoy y vencidas.
+      </p>
+    </div>
+
+    <!-- ══ Quick actions row ══════════════════════════════════════════ -->
+    <div class="grid gap-2.5" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+      <router-link v-for="qa in quickActions" :key="qa.label" :to="qa.to"
+        class="flex items-center gap-3 bg-white border border-slate-200 hover:shadow-md rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3 transition-all group"
+        :class="qa.hover">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center transition-colors shrink-0"
+          :class="qa.iconBg">
+          <i :class="['fas', qa.icon, qa.iconColor, 'text-[14px]']"></i>
+        </div>
+        <span class="text-[12px] sm:text-[13px] font-semibold text-slate-800 truncate">{{ qa.label }}</span>
+      </router-link>
+    </div>
+
+    <!-- ══ Stats row ══════════════════════════════════════════════════ -->
+    <div class="grid gap-2.5" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+      <div v-for="card in statCards" :key="card.label"
+        class="bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3">
+        <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1 sm:mb-1.5 truncate">{{ card.label }}</div>
+        <div class="flex items-end justify-between gap-2">
+          <div class="flex items-baseline gap-1.5 sm:gap-2 min-w-0">
+            <span class="text-xl sm:text-2xl xl:text-[26px] font-bold text-slate-900 leading-none">{{ card.value }}</span>
+            <span class="text-[10px] sm:text-[11px] font-semibold truncate" :class="card.tagColor">{{ card.tag }}</span>
+          </div>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0" :class="card.iconBg">
+            <i :class="['fas', card.icon, card.iconColor, 'text-[12px] sm:text-[13px]']"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Main grid ══════════════════════════════════════════════════ -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
+
+      <!-- ── Left: AI Insights + Agenda ─────────────────────────────── -->
+      <div class="xl:col-span-2 flex flex-col gap-3">
+
+        <AIInsightsWidget />
+
+        <!-- Agenda -->
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col">
+          <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100 shrink-0">
+            <div>
+              <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Agenda</div>
+              <div class="text-[13px] font-bold text-slate-900">Actividades próximas</div>
+            </div>
+            <router-link to="/activities"
+              class="text-[12px] text-primary-500 hover:text-primary-600 font-semibold transition-colors">
+              Ver todas
+            </router-link>
+          </div>
+          <div v-if="agendaActivities.length === 0" class="py-8">
+            <p class="text-[12px] text-slate-400 text-center">Sin actividades próximas</p>
+          </div>
+          <div v-else class="max-h-[420px] overflow-y-auto divide-y divide-slate-50">
+            <div v-for="act in agendaActivities" :key="act._id"
+              class="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 hover:bg-slate-50/60 transition-colors">
+              <span class="w-2 h-2 rounded-full shrink-0"
+                :class="act.priority === 'urgent' ? 'bg-red-500' : act.priority === 'high' ? 'bg-orange-500' : 'bg-primary-400'"></span>
+              <div class="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center sm:gap-1.5">
+                <span class="text-[12px] font-semibold text-slate-800 truncate">{{ act.title }}</span>
+                <span class="text-[11px] sm:text-[12px] text-slate-400 truncate">
+                  <span class="hidden sm:inline">· </span>{{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}
+                </span>
+              </div>
+              <span :class="['shrink-0 px-2 py-0.5 rounded text-[10px] font-semibold', agendaStatusClass(act)]">
+                {{ agendaStatusLabel(act) }}
+              </span>
+              <span class="shrink-0 hidden md:flex items-center gap-1 text-[11px] text-slate-500">
+                <i class="fas fa-clock text-red-400 text-[10px]"></i>
+                {{ formatDateShort(act.dueDate || act.date) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Right column ─────────────────────────────────────────── -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-3">
+
+        <!-- Ritmo del día -->
+        <div class="bg-white border border-slate-200 rounded-xl px-4 py-3">
+          <div class="flex items-start justify-between mb-2 gap-2">
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Ritmo del día</div>
+              <div class="text-[13px] font-bold text-slate-900">Foco operativo</div>
+            </div>
+            <span class="bg-slate-900 text-white text-[11px] font-bold px-2.5 py-1 rounded-full leading-none shrink-0">{{ focusProgress }}%</span>
+          </div>
+          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3.5">
+            <div class="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-700"
+              :style="{ width: focusProgress + '%' }"></div>
+          </div>
+          <div class="grid grid-cols-3 text-center gap-1">
+            <div>
+              <div class="text-xl font-bold text-red-500 leading-none">{{ overdueCount }}</div>
+              <div class="text-[10px] text-slate-500 font-semibold mt-1">Vencidas</div>
+            </div>
+            <div>
+              <div class="text-xl font-bold text-amber-500 leading-none">{{ todayCount }}</div>
+              <div class="text-[10px] text-slate-500 font-semibold mt-1">Hoy</div>
+            </div>
+            <div>
+              <div class="text-xl font-bold text-cyan-500 leading-none">{{ highPriorityCount }}</div>
+              <div class="text-[10px] text-slate-500 font-semibold mt-1 leading-tight">Alta prioridad</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pulso comercial -->
+        <div class="bg-white border border-slate-200 rounded-xl px-4 py-3">
+          <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Pulso comercial</div>
+          <div class="text-[13px] font-bold text-slate-900 mb-3">Dónde atacar primero</div>
+          <div class="flex flex-col gap-2.5">
+            <div v-for="(item, i) in pulsoItems" :key="i" class="flex items-start gap-2.5">
+              <i :class="['fas', item.icon, item.color, 'text-[11px] mt-0.5 shrink-0']"></i>
+              <span class="text-[12px] text-slate-700 leading-snug">{{ item.text }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nota de foco (dark) -->
+        <div class="sm:col-span-2 xl:col-span-1 bg-gradient-to-br from-indigo-900 to-violet-900 rounded-xl px-4 py-3.5 text-white relative overflow-hidden">
+          <div class="absolute -top-8 -right-8 w-28 h-28 bg-violet-400/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="relative">
+            <div class="flex items-center gap-2 mb-1.5">
+              <i class="fas fa-bullseye text-indigo-300 text-[11px]"></i>
+              <div class="text-[10px] font-bold uppercase tracking-widest text-indigo-300">Nota de foco</div>
+            </div>
+            <p class="text-[13px] font-semibold leading-relaxed">
+              {{ focusNote }}
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import { useAuthStore } from '../stores/auth'
+import { useClientsStore, useActivitiesStore, useIssuesStore, useTeamStore } from '../stores'
+import AIInsightsWidget from '../components/AIInsightsWidget.vue'
+
+const authStore = useAuthStore()
+const clientsStore = useClientsStore()
+const activitiesStore = useActivitiesStore()
+const issuesStore = useIssuesStore()
+const teamStore = useTeamStore()
+
+const isRefreshing = ref(false)
+
+const firstName = computed(() => authStore.user?.name?.split(' ')[0] || 'Usuario')
+const userRoleLabel = computed(() => ({
+  admin: 'Administrador', manager: 'Manager', employee: 'Empleado',
+  support: 'Soporte', development: 'Desarrollador', fullstack: 'Fullstack',
+  viewer: 'Viewer', client: 'Cliente',
+}[authStore.user?.role || ''] || authStore.user?.role || 'Usuario'))
+
+const todayMidnight = new Date()
+todayMidnight.setHours(0, 0, 0, 0)
+
+const overdueCount = computed(() =>
+  activitiesStore.activities.filter((a: any) => {
+    if (a.status === 'completed' || a.status === 'cancelled') return false
+    const d = new Date(a.dueDate || a.date); d.setHours(0, 0, 0, 0)
+    return d < todayMidnight
+  }).length
+)
+const todayCount = computed(() =>
+  activitiesStore.activities.filter((a: any) => {
+    if (a.status === 'completed' || a.status === 'cancelled') return false
+    const d = new Date(a.dueDate || a.date); d.setHours(0, 0, 0, 0)
+    return d.getTime() === todayMidnight.getTime()
+  }).length
+)
+const highPriorityCount = computed(() =>
+  activitiesStore.activities.filter((a: any) =>
+    (a.priority === 'high' || a.priority === 'urgent') &&
+    a.status !== 'completed' && a.status !== 'cancelled'
+  ).length
+)
+const criticalCount = computed(() => overdueCount.value + todayCount.value)
+
+const activeActivities = computed(() =>
+  activitiesStore.activities.filter((a: any) => a.status !== 'completed' && a.status !== 'cancelled').length
+)
+const openCases = computed(() =>
+  issuesStore.issues.filter((i: any) => i.status === 'open').length
+)
+const pendingTickets = computed(() =>
+  issuesStore.issues.filter((i: any) => i.status === 'pending' || i.status === 'in-progress').length
+)
+const focusProgress = computed(() => {
+  const total = activitiesStore.activities.length
+  if (!total) return 0
+  return Math.round(activitiesStore.activities.filter((a: any) => a.status === 'completed').length / total * 100)
+})
+
+const quickActions = computed(() => {
+  const all = [
+    { label: 'Nuevo cliente', to: '/clients', icon: 'fa-user-plus', iconBg: 'bg-primary-50 group-hover:bg-primary-100', iconColor: 'text-primary-500', hover: 'hover:border-primary-200', can: authStore.canCreateClients },
+    { label: 'Nueva actividad', to: '/activities', icon: 'fa-plus-circle', iconBg: 'bg-green-50 group-hover:bg-green-100', iconColor: 'text-green-500', hover: 'hover:border-green-200', can: authStore.canCreateActivities },
+    { label: 'Revisar tickets', to: '/tickets', icon: 'fa-ticket-alt', iconBg: 'bg-slate-100 group-hover:bg-slate-200', iconColor: 'text-slate-600', hover: 'hover:border-slate-300', can: authStore.canViewCases },
+    { label: 'Nuevo caso', to: '/cases', icon: 'fa-exclamation-circle', iconBg: 'bg-orange-50 group-hover:bg-orange-100', iconColor: 'text-orange-500', hover: 'hover:border-orange-200', can: authStore.canCreateCases },
+    { label: 'Gestionar equipo', to: '/team', icon: 'fa-users-cog', iconBg: 'bg-purple-50 group-hover:bg-purple-100', iconColor: 'text-purple-500', hover: 'hover:border-purple-200', can: authStore.canCreateTeam },
+  ]
+  return all.filter(a => a.can)
+})
+
+const statCards = computed(() => {
+  const all = [
+    { label: 'Clientes', value: clientsStore.clients.length, tag: 'Base', tagColor: 'text-primary-500', icon: 'fa-users', iconBg: 'bg-primary-50', iconColor: 'text-primary-500', can: authStore.canViewClients },
+    { label: 'Actividades', value: activeActivities.value, tag: 'Activas', tagColor: 'text-green-500', icon: 'fa-clipboard-list', iconBg: 'bg-green-50', iconColor: 'text-green-500', can: authStore.canViewActivities },
+    { label: 'Casos', value: openCases.value, tag: 'Abiertos', tagColor: 'text-red-500', icon: 'fa-exclamation-triangle', iconBg: 'bg-red-50', iconColor: 'text-red-500', can: authStore.canViewCases },
+    { label: 'Tickets', value: pendingTickets.value, tag: 'Pendientes', tagColor: 'text-red-500', icon: 'fa-ticket-alt', iconBg: 'bg-slate-100', iconColor: 'text-slate-600', can: authStore.canViewCases },
+    { label: 'Equipo', value: teamStore.members.length, tag: 'Activos', tagColor: 'text-purple-500', icon: 'fa-user-friends', iconBg: 'bg-purple-50', iconColor: 'text-purple-500', can: authStore.canViewTeam },
+  ]
+  return all.filter(s => s.can)
+})
+
+const agendaActivities = computed(() => {
+  const list = [...activitiesStore.activities]
+    .filter((a: any) => a.status !== 'completed' && a.status !== 'cancelled')
+    .sort((a: any, b: any) => new Date(a.dueDate || a.date).getTime() - new Date(b.dueDate || b.date).getTime())
+  return list.slice(0, 20)
+})
+
+const pulsoItems = computed(() => {
+  const items: { icon: string; color: string; text: string }[] = []
+  if (overdueCount.value > 0)
+    items.push({ icon: 'fa-bolt', color: 'text-amber-500', text: 'Recupera primero las actividades vencidas antes de abrir nuevos frentes.' })
+  if (pendingTickets.value > 0 || openCases.value > 0) {
+    const n = pendingTickets.value + openCases.value
+    items.push({ icon: 'fa-chart-bar', color: 'text-slate-500', text: `${n} ${n === 1 ? 'caso/ticket activo puede afectar' : 'casos/tickets activos pueden afectar'} experiencia de clientes.` })
+  }
+  if (highPriorityCount.value > 0)
+    items.push({ icon: 'fa-check-circle', color: 'text-emerald-500', text: 'Ataca actividades urgentes o de alta prioridad en bloque.' })
+  if (items.length === 0)
+    items.push({ icon: 'fa-check-circle', color: 'text-emerald-500', text: 'Todo bajo control. Aprovecha para planear la siguiente semana.' })
+  return items
+})
+
+const focusNote = computed(() => {
+  if (criticalCount.value > 0)
+    return 'Prioriza seguimientos con fecha, casos abiertos y tickets sin resolver. El dashboard debe servir para decidir, no para decorar.'
+  return 'Aprovecha esta calma para revisar pipeline, planear seguimientos y consolidar relaciones con clientes clave.'
+})
+
+const agendaStatusLabel = (a: any) => {
+  const d = new Date(a.dueDate || a.date); d.setHours(0, 0, 0, 0)
+  if (d < todayMidnight) return 'Atrasada'
+  if (a.status === 'in-progress') return 'En curso'
+  return 'Pendiente'
+}
+const agendaStatusClass = (a: any) => {
+  const d = new Date(a.dueDate || a.date); d.setHours(0, 0, 0, 0)
+  if (d < todayMidnight) return 'bg-red-50 text-red-600'
+  if (a.status === 'in-progress') return 'bg-primary-50 text-primary-600'
+  return 'bg-amber-50 text-amber-600'
+}
+
+const formatDateShort = (d?: string) => {
+  if (!d) return '—'
+  const date = new Date(d)
+  const day = date.getDate()
+  const month = date.toLocaleString('es', { month: 'short' }).replace('.', '')
+  const time = date.toLocaleTimeString('es', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase()
+  return `${day} de ${month}, ${time}`
+}
+
+const refreshData = async () => {
+  if (isRefreshing.value) return
+  isRefreshing.value = true
+  try {
+    const ps: Promise<any>[] = []
+    if (authStore.canViewClients) ps.push(clientsStore.fetchClients())
+    if (authStore.canViewActivities) ps.push(activitiesStore.fetchActivities())
+    if (authStore.canViewCases) ps.push(issuesStore.fetchIssues())
+    if (authStore.canViewTeam) ps.push(teamStore.fetchTeam())
+    await Promise.all(ps)
+  } finally { isRefreshing.value = false }
+}
+
+onMounted(async () => {
+  try {
+    const ps: Promise<any>[] = []
+    if (authStore.canViewClients) ps.push(clientsStore.fetchClients())
+    if (authStore.canViewActivities) ps.push(activitiesStore.fetchActivities())
+    if (authStore.canViewCases) ps.push(issuesStore.fetchIssues())
+    if (authStore.canViewTeam) ps.push(teamStore.fetchTeam())
+    await Promise.all(ps)
+  } catch (e) { console.error('Error loading dashboard:', e) }
+})
+</script>
