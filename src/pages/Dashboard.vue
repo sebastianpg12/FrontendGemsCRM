@@ -1,16 +1,19 @@
 <template>
-  <div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-3 relative">
+    <!-- Glow de fondo GEMS -->
+    <div class="pointer-events-none fixed top-0 right-0 w-[500px] h-[400px] opacity-[0.035] -z-0"
+      style="background: radial-gradient(ellipse at top right, #8b5cf6 0%, transparent 70%)"></div>
 
     <!-- ══ Header ══════════════════════════════════════════════════════ -->
-    <div class="flex items-center justify-between gap-3 flex-wrap pr-12 sm:pr-14">
+    <div class="flex items-center justify-between gap-3 flex-wrap pr-12 sm:pr-14 relative z-10">
       <div>
         <div class="flex items-center gap-2 mb-0.5">
-          <i class="fas fa-gem text-primary-400 text-[9px]"></i>
+          <i class="fas fa-gem text-primary-400 text-[9px] animate-pulse-slow"></i>
           <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
           <span class="w-1 h-1 rounded-full bg-primary-200 inline-block"></span>
           <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black rounded-full uppercase tracking-widest">{{ userRoleLabel }}</span>
         </div>
-        <h1 class="text-[26px] sm:text-[30px] font-black text-slate-900 tracking-tight leading-tight">
+        <h1 class="text-[26px] sm:text-[30px] font-black tracking-tight leading-tight gems-title">
           Hola, {{ firstName }}<span class="text-primary-500">.</span>
         </h1>
         <p class="text-[11px] text-slate-400 mt-0.5 font-medium">
@@ -120,8 +123,11 @@
 
           <div v-else class="max-h-[360px] overflow-y-auto custom-scrollbar">
             <div v-for="(act, idx) in agendaActivities" :key="act._id"
-              class="flex items-center gap-3 px-5 py-2.5 hover:bg-slate-50/60 transition-colors"
-              :class="{ 'border-t border-slate-50/80': idx > 0 }">
+              class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50/30 transition-colors border-l-2"
+              :class="[
+                { 'border-t border-slate-50/80': idx > 0 },
+                act.priority === 'urgent' ? 'border-l-red-400' : act.priority === 'high' ? 'border-l-amber-400' : 'border-l-primary-200'
+              ]">
               <!-- Priority dot -->
               <div class="w-1.5 h-1.5 rounded-full shrink-0"
                 :class="act.priority === 'urgent' ? 'bg-red-500' : act.priority === 'high' ? 'bg-amber-500' : 'bg-primary-400'">
@@ -387,6 +393,17 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+/* Título con shimmer sutil */
+.gems-title {
+  background: linear-gradient(90deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gems-title span {
+  -webkit-text-fill-color: #8b5cf6;
+}
+
 /* Panel de acciones: slide-down con fade */
 .actions-panel-enter-active {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);

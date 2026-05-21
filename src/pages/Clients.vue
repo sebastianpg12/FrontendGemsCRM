@@ -1,10 +1,14 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-40 animate-fade-in">
+  <div class="animate-fade-in">
     <!-- Header with Title -->
-    <div class="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div class="mb-3 flex items-center justify-between gap-3 pr-12 sm:pr-14">
       <div>
-        <h1 class="text-4xl font-black text-slate-900 tracking-tight">Clientes</h1>
-        <p class="text-slate-400 text-sm font-medium">Gestiona tus contactos y relaciones comerciales.</p>
+        <div class="flex items-center gap-2 mb-0.5">
+          <i class="fas fa-gem text-primary-400 text-[9px]"></i>
+          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
+        </div>
+        <h1 class="text-[22px] font-black text-slate-900 tracking-tight leading-tight">Clientes</h1>
+        <p class="text-slate-400 text-[11px] font-medium">Gestiona tus contactos y relaciones comerciales.</p>
       </div>
       
       <PermissionGuard :permissions="['create-clients']" :fallback="false">
@@ -19,7 +23,7 @@
     </div>
 
     <!-- Toolbar & Filters -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm mb-6 p-4">
+    <div class="bg-white rounded-xl border border-slate-100 shadow-sm mb-3 p-3">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <!-- Search & Sort -->
         <div class="flex flex-col sm:flex-row items-center gap-3 flex-1 lg:justify-end">
@@ -49,8 +53,8 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="space-y-4 pb-20">
-      <div class="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col min-h-[400px] relative">
+    <div class="space-y-2 pb-10">
+      <div class="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-[400px] relative">
         <div v-if="loading" class="flex items-center justify-center absolute inset-0 z-10 bg-white/60 backdrop-blur-[2px]">
           <div class="flex flex-col items-center gap-3">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
@@ -75,11 +79,11 @@
             <table class="min-w-full divide-y divide-slate-100">
               <thead>
                 <tr class="bg-slate-50/50">
-                  <th class="px-8 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
-                  <th class="px-8 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Empresa</th>
-                  <th class="px-8 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Contacto</th>
-                  <th class="px-8 py-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">Registro</th>
-                  <th class="px-8 py-4 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Acciones</th>
+                  <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
+                  <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Empresa</th>
+                  <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Contacto</th>
+                  <th class="px-4 py-3 text-center text-[9px] font-black text-slate-400 uppercase tracking-widest">Registro</th>
+                  <th class="px-4 py-3 text-right text-[9px] font-black text-slate-400 uppercase tracking-widest">Acciones</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-50">
@@ -88,54 +92,51 @@
                   :key="client._id"
                   class="hover:bg-slate-50/80 transition-all group"
                 >
-                  <td class="px-8 py-6 whitespace-nowrap">
-                    <div class="flex items-center gap-4">
-                      <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100/50 flex items-center justify-center text-primary-600 font-black text-sm shadow-sm ring-1 ring-primary-100">
+                  <td class="px-4 py-2.5 whitespace-nowrap">
+                    <div class="flex items-center gap-3">
+                      <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-primary-50 to-primary-100/60 flex items-center justify-center text-primary-600 font-black text-[11px] ring-1 ring-primary-100 shrink-0">
                         {{ client.name.charAt(0).toUpperCase() }}
                       </div>
-                      <div>
-                        <div class="text-slate-900 font-bold text-sm leading-tight group-hover:text-primary-600 transition-colors">{{ client.name }}</div>
-                        <div class="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-0.5">Persona Física</div>
+                      <div class="min-w-0">
+                        <div class="text-slate-900 font-black text-[12px] leading-tight group-hover:text-primary-600 transition-colors truncate">{{ client.name }}</div>
+                        <div class="text-slate-400 text-[9px] font-black uppercase tracking-widest">Contacto</div>
                       </div>
                     </div>
                   </td>
-                  <td class="px-8 py-6 whitespace-nowrap">
-                    <div class="flex items-center gap-2">
-                      <div class="w-2 h-2 rounded-full bg-slate-200"></div>
-                      <span class="text-slate-700 text-xs font-black">{{ client.company }}</span>
-                    </div>
+                  <td class="px-4 py-2.5 whitespace-nowrap">
+                    <span class="text-slate-700 text-[11px] font-bold">{{ client.company || '—' }}</span>
                   </td>
-                  <td class="px-8 py-6 whitespace-nowrap">
-                    <div class="space-y-1">
-                      <div class="text-slate-600 text-[11px] font-bold flex items-center gap-2">
-                        <i class="fas fa-envelope text-slate-300 w-3 text-center"></i> 
+                  <td class="px-4 py-2.5 whitespace-nowrap">
+                    <div class="space-y-0.5">
+                      <div class="text-slate-600 text-[11px] font-medium flex items-center gap-1.5">
+                        <i class="fas fa-envelope text-slate-300 text-[9px] w-3 text-center"></i>
                         {{ client.email }}
                       </div>
-                      <div class="text-slate-400 text-[11px] font-medium flex items-center gap-2">
-                        <i class="fas fa-phone text-slate-300 w-3 text-center"></i> 
+                      <div class="text-slate-400 text-[10px] font-medium flex items-center gap-1.5">
+                        <i class="fas fa-phone text-slate-300 text-[9px] w-3 text-center"></i>
                         {{ client.phone }}
                       </div>
                     </div>
                   </td>
-                  <td class="px-8 py-6 whitespace-nowrap">
+                  <td class="px-4 py-2.5 whitespace-nowrap">
                     <div class="flex flex-col items-center">
-                      <span class="text-slate-700 text-xs font-bold">{{ formatDate(client.createdAt) }}</span>
-                      <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Confirmado</span>
+                      <span class="text-slate-700 text-[11px] font-bold">{{ formatDate(client.createdAt) }}</span>
+                      <span class="text-slate-400 text-[9px] font-black uppercase tracking-widest">Activo</span>
                     </div>
                   </td>
-                  <td class="px-8 py-6 whitespace-nowrap text-right">
-                    <div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                      <router-link :to="`/clients/${client._id}`" class="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-xl transition-all" title="Ver Perfil">
-                        <i class="fas fa-arrow-right text-sm"></i>
+                  <td class="px-4 py-2.5 whitespace-nowrap text-right">
+                    <div class="flex items-center justify-end gap-0.5 opacity-0 group-hover:opacity-100 transition-all translate-x-1 group-hover:translate-x-0">
+                      <router-link :to="`/clients/${client._id}`" class="p-1.5 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all" title="Ver Perfil">
+                        <i class="fas fa-arrow-right text-[11px]"></i>
                       </router-link>
                       <PermissionGuard :permissions="['edit-clients']" :fallback="false">
-                        <button @click="editClient(client)" class="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-xl transition-all" title="Editar">
-                          <PencilIcon class="w-4 h-4" />
+                        <button @click="editClient(client)" class="p-1.5 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all" title="Editar">
+                          <PencilIcon class="w-3.5 h-3.5" />
                         </button>
                       </PermissionGuard>
                       <PermissionGuard :permissions="['delete-clients']" :fallback="false">
-                        <button @click="confirmDelete(client)" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Eliminar">
-                          <TrashIcon class="w-4 h-4" />
+                        <button @click="confirmDelete(client)" class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all" title="Eliminar">
+                          <TrashIcon class="w-3.5 h-3.5" />
                         </button>
                       </PermissionGuard>
                     </div>

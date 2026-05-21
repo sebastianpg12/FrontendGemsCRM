@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 export interface ThemeConfig {
   logo: string | null
@@ -46,6 +46,10 @@ export const useThemeStore = defineStore('theme', () => {
     localStorage.removeItem(STORAGE_KEY)
     apply()
   }
+
+  // Aplica acento inmediatamente cuando cambia en el store (live preview)
+  watch(() => config.value.accentColor, apply)
+  watch(() => config.value.darkMode, apply)
 
   return { config, load, apply, update, reset }
 })

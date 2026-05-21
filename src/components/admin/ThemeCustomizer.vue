@@ -1,9 +1,13 @@
 <template>
-  <div class="space-y-8">
-    <!-- Header -->
+  <div class="space-y-6">
+    <!-- Header GEMS style -->
     <div>
-      <h2 class="text-2xl font-black text-slate-800 mb-2">Personalización de Marca</h2>
-      <p class="text-slate-500 text-sm">Configura el logo, color de acento y nombre de tu organización en GEMS CRM</p>
+      <div class="flex items-center gap-2 mb-1">
+        <i class="fas fa-gem text-primary-400 text-[9px]"></i>
+        <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
+      </div>
+      <h2 class="text-[22px] font-black text-slate-900 tracking-tight">Personalización de Marca</h2>
+      <p class="text-slate-400 text-[11px] font-medium mt-0.5">Logo, color de acento y nombre de tu organización — cambios en tiempo real</p>
     </div>
 
     <!-- Theme Preview -->

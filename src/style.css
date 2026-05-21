@@ -175,6 +175,34 @@ body {
     box-shadow: 0 8px 20px -4px rgba(139, 92, 246, 0.35); /* Soft violet shadow */
 }
 
+/* ── Accent dinámico (ThemeCustomizer) ────────────────────────────────
+   Estas clases usan la CSS var --brand-accent para que el color
+   se actualice en tiempo real al guardar desde Personalización.        */
+.accent-bg {
+  background-color: var(--brand-accent) !important;
+}
+.accent-text {
+  color: var(--brand-accent) !important;
+}
+.accent-border {
+  border-color: var(--brand-accent) !important;
+}
+.accent-ring {
+  box-shadow: 0 0 0 3px var(--brand-accent-light) !important;
+}
+.accent-shadow {
+  box-shadow: 0 8px 20px -4px var(--brand-accent-light) !important;
+}
+
+/* Sidebar nav activo responde al acento */
+.nav-active {
+  background-color: var(--brand-accent-light) !important;
+  color: var(--brand-accent) !important;
+}
+.nav-active-bar {
+  background-color: var(--brand-accent) !important;
+}
+
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none text-sm;
