@@ -155,7 +155,7 @@
       class="fixed z-[9999] pointer-events-none transition-opacity duration-100"
       :style="{ top: navTooltip.y + 'px', left: navTooltip.x + 'px', transform: 'translateY(-50%)' }"
     >
-      <span class="block px-2.5 py-1.5 bg-slate-900 dark:bg-[#1e293b] border border-slate-700 dark:border-[#334155] text-white text-[11px] font-black rounded-lg whitespace-nowrap shadow-xl">
+      <span class="nav-tooltip block px-2.5 py-1.5 text-white text-[11px] font-black rounded-lg whitespace-nowrap tracking-wide">
         {{ navTooltip.label }}
       </span>
     </div>
@@ -308,6 +308,46 @@ onMounted(async () => {
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Tooltip metálico con brillo sweep ─────────────────────────── */
+@keyframes tooltip-shine {
+  0%   { background-position: -150% center; }
+  100% { background-position: 250% center; }
+}
+
+.nav-tooltip {
+  background: linear-gradient(
+    110deg,
+    #1e293b 0%,
+    #334155 35%,
+    rgba(255, 255, 255, 0.13) 50%,
+    #334155 65%,
+    #1e293b 100%
+  );
+  background-size: 250% auto;
+  animation: tooltip-shine 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+.dark .nav-tooltip {
+  background: linear-gradient(
+    110deg,
+    #0f172a 0%,
+    #1e293b 35%,
+    rgba(139, 92, 246, 0.18) 50%,
+    #1e293b 65%,
+    #0f172a 100%
+  );
+  background-size: 250% auto;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.5),
+    0 0 12px rgba(139,92,246,0.08),
+    inset 0 1px 0 rgba(139,92,246,0.1);
 }
 
 .animate-fade-in {
