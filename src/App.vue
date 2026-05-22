@@ -4,10 +4,10 @@
     <router-view v-if="!authStore.isAuthenticated || $route.path === '/login'" />
     
     <!-- Show main app if authenticated -->
-  <div v-else class="min-h-screen bg-slate-50">
+  <div v-else class="min-h-screen bg-slate-50 dark:bg-[#0f172a]">
       <!-- Navigation Sidebar -->
       <div
-        class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white border-r border-slate-100 transition-all duration-300 ease-in-out lg:translate-x-0"
+        class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white dark:bg-[#1e293b] border-r border-slate-100 dark:border-[#334155] transition-all duration-300 ease-in-out lg:translate-x-0"
         :class="[
           !sidebarOpen && !isDesktop ? '-translate-x-full' : 'translate-x-0',
           isSidebarMini ? 'w-20' : 'w-64'
@@ -19,7 +19,7 @@
         <!-- Toggle Button -->
         <button
           @click="isSidebarMini = !isSidebarMini"
-          class="hidden lg:flex absolute -right-3 top-6 w-6 h-6 bg-white text-slate-400 rounded-md items-center justify-center shadow-sm border border-slate-100 z-[60] transition-all hover:text-primary-600 hover:border-primary-200 active:scale-95"
+          class="hidden lg:flex absolute -right-3 top-6 w-6 h-6 bg-white dark:bg-[#1e293b] text-slate-400 rounded-md items-center justify-center shadow-sm border border-slate-100 dark:border-[#334155] z-[60] transition-all hover:text-primary-600 hover:border-primary-200 active:scale-95"
           :class="isSidebarMini ? 'rotate-180' : ''"
         >
           <i class="fas fa-chevron-left text-[9px]"></i>
@@ -27,7 +27,7 @@
 
         <!-- Logo + Brand -->
         <div
-          class="flex flex-col items-center justify-center border-b border-slate-50 shrink-0 overflow-hidden transition-all duration-300"
+          class="flex flex-col items-center justify-center border-b border-slate-50 dark:border-[#334155] shrink-0 overflow-hidden transition-all duration-300"
           :class="isSidebarMini ? 'py-4 h-16' : 'py-5 h-[88px]'"
         >
           <img
@@ -46,7 +46,7 @@
 
         <!-- User Info -->
         <div
-          class="border-b border-slate-50 shrink-0 transition-all duration-300"
+          class="border-b border-slate-50 dark:border-[#334155] shrink-0 transition-all duration-300"
           :class="isSidebarMini ? 'flex justify-center py-4 px-2' : 'px-5 py-4'"
         >
           <div class="flex items-center gap-3 min-w-0">
@@ -75,8 +75,8 @@
             :class="[
               'flex items-center py-2.5 rounded-xl transition-all duration-150 group relative',
               $route.path === module.path
-                ? 'bg-primary-50 text-primary-700 ring-1 ring-primary-100'
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
+                ? 'bg-primary-50 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 ring-1 ring-primary-100 dark:ring-primary-500/30'
+                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#334155] hover:text-slate-800 dark:hover:text-slate-200',
               isSidebarMini ? 'justify-center px-0' : 'px-3.5'
             ]"
           >
@@ -89,7 +89,7 @@
               module.icon,
               'text-[13px] shrink-0 transition-all duration-150 group-hover:scale-110',
               !isSidebarMini ? 'mr-3' : '',
-              $route.path === module.path ? 'text-primary-500' : 'text-slate-400 group-hover:text-slate-600'
+              $route.path === module.path ? 'text-primary-500 dark:text-primary-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
             ]"></i>
             <span
               v-if="!isSidebarMini"
@@ -105,7 +105,7 @@
 
         <!-- Logout -->
         <div
-          class="border-t border-slate-50 shrink-0 transition-all duration-300"
+          class="border-t border-slate-50 dark:border-[#334155] shrink-0 transition-all duration-300"
           :class="isSidebarMini ? 'flex justify-center p-3' : 'px-4 py-3'"
         >
           <button
@@ -125,7 +125,7 @@
       <div class="lg:hidden fixed top-3 left-4 z-50">
         <button
           @click="sidebarOpen = !sidebarOpen"
-          class="p-2 rounded-xl bg-white shadow-md text-slate-600 border border-slate-200"
+          class="p-2 rounded-xl bg-white dark:bg-[#1e293b] shadow-md text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#334155]"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -139,7 +139,7 @@
         :class="isSidebarMini ? 'lg:ml-20' : 'lg:ml-64'"
       >
         <!-- Main Content Area -->
-        <main class="p-4 pb-8 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+        <main class="p-4 pb-8 flex-1 min-h-0 overflow-y-auto custom-scrollbar dark:bg-[#0f172a]">
           <router-view />
         </main>
       </div>
