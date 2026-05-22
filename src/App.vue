@@ -71,7 +71,6 @@
             v-for="module in availableModules"
             :key="module.id"
             :to="module.path"
-            :title="isSidebarMini ? module.name : ''"
             :class="[
               'flex items-center py-2.5 rounded-xl transition-all duration-150 group relative',
               $route.path === module.path
@@ -100,6 +99,11 @@
               v-if="isSidebarMini && $route.path === module.path"
               class="absolute right-1.5 top-1.5 w-1.5 h-1.5 bg-primary-500 rounded-full"
             ></span>
+            <!-- Tooltip en mini mode -->
+            <span
+              v-if="isSidebarMini"
+              class="pointer-events-none absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 dark:bg-[#1e293b] dark:border dark:border-[#334155] text-white text-[11px] font-black rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-[100] shadow-lg"
+            >{{ module.name }}</span>
           </router-link>
         </nav>
 
@@ -187,7 +191,7 @@ const themeStore = useThemeStore()
 
 // Reactive data
 const sidebarOpen = ref(true)
-const isSidebarMini = ref(false)
+const isSidebarMini = ref(true)
 const showUserMenu = ref(false)
 const isDesktop = ref(true)
 // Removed navbar mini-popup; use NewMessageToast instead

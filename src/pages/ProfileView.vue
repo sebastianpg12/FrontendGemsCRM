@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Header -->
-    <div class="bg-white/70 backdrop-blur-md rounded-3xl p-8 border border-slate-200/60 shadow-sm transition-all duration-300">
+    <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm transition-all duration-300">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <!-- Profile Avatar -->
         <div class="relative">
@@ -15,7 +15,7 @@
         <!-- Basic Info -->
         <div class="text-center md:text-left flex-1">
           <div class="flex flex-col md:flex-row md:items-center gap-2 mb-2">
-            <h1 class="text-3xl font-black text-slate-800 tracking-tight">{{ profileData?.name || 'Cargando...' }}</h1>
+            <h1 class="text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{{ profileData?.name || 'Cargando...' }}</h1>
             <span class="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-black uppercase tracking-widest border border-primary-100/50">
               {{ getRoleDisplayName(profileData?.role || '') }}
             </span>
@@ -55,9 +55,9 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Personal Information (Left Column) -->
       <div class="lg:col-span-2 space-y-6">
-        <div class="bg-white/70 backdrop-blur-md rounded-3xl p-8 border border-slate-200/60 shadow-sm h-full">
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm h-full">
           <div class="flex items-center justify-between mb-8">
-            <h2 class="text-xl font-black text-slate-800 flex items-center">
+            <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 flex items-center">
               <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center mr-4">
                 <i class="fas fa-id-card text-primary-500"></i>
               </div>
@@ -76,12 +76,12 @@
                 <input
                   v-model="editForm.name"
                   type="text"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="Tu nombre completo"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl">
-                <p class="text-slate-700 font-bold">{{ profileData?.name || 'No especificado' }}</p>
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+                <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.name || 'No especificado' }}</p>
               </div>
             </div>
 
@@ -95,12 +95,12 @@
                 <input
                   v-model="editForm.email"
                   type="email"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="tu@email.com"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl">
-                <p class="text-slate-700 font-bold">{{ profileData?.email || 'No especificado' }}</p>
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+                <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.email || 'No especificado' }}</p>
               </div>
             </div>
 
@@ -114,12 +114,12 @@
                 <input
                   v-model="editForm.phone"
                   type="tel"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="+57 300 000 0000"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl">
-                <p class="text-slate-700 font-bold">{{ profileData?.phone || 'No especificado' }}</p>
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+                <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.phone || 'No especificado' }}</p>
               </div>
             </div>
 
@@ -133,12 +133,12 @@
                 <input
                   v-model="editForm.department"
                   type="text"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="Tu departamento"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl">
-                <p class="text-slate-700 font-bold">{{ profileData?.department || 'No especificado' }}</p>
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+                <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.department || 'No especificado' }}</p>
               </div>
             </div>
 
@@ -187,8 +187,8 @@
 
       <!-- Security / Password (Right Column) -->
       <div class="space-y-6">
-        <div class="bg-white/70 backdrop-blur-md rounded-3xl p-8 border border-slate-200/60 shadow-sm">
-          <h2 class="text-xl font-black text-slate-800 mb-8 flex items-center">
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+          <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-8 flex items-center">
             <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-shield-alt text-amber-500"></i>
             </div>
@@ -203,7 +203,7 @@
               <input
                 v-model="passwordForm.currentPassword"
                 type="password"
-                class="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                 placeholder="••••••••"
                 required
               />
@@ -216,7 +216,7 @@
               <input
                 v-model="passwordForm.newPassword"
                 type="password"
-                class="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                 placeholder="••••••••"
                 required
               />
@@ -229,7 +229,7 @@
               <input
                 v-model="passwordForm.confirmPassword"
                 type="password"
-                class="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                 placeholder="••••••••"
                 required
               />

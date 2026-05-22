@@ -324,7 +324,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     if (canViewTeam.value) {
-      modules.push({ id: 'team', name: 'Equipo', icon: 'fas fa-people-group', path: '/team', canAccess: true })
+      modules.push({ id: 'team', name: 'Equipo', icon: 'fas fa-user-group', path: '/team', canAccess: true })
     }
 
     if (user.value.role === 'admin') {
