@@ -14,9 +14,9 @@
       <PermissionGuard :permissions="['create-clients']" :fallback="false">
         <button 
           @click="showModal = true; editingClient = null; resetForm()" 
-          class="btn-primary"
+          class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[11px] font-black shadow-md shadow-primary-500/20 transition-all"
         >
-          <PlusIcon class="w-5 h-5" />
+          <PlusIcon class="w-3.5 h-3.5" />
           Añadir Cliente
         </button>
       </PermissionGuard>
