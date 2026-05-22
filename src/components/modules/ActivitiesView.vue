@@ -1,114 +1,84 @@
 <template>
   <div class="space-y-4">
     <!-- Header con controles -->
-    <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-50/50 p-2 rounded-xl border border-slate-100 shadow-sm">
-      <div class="flex items-center gap-4 flex-wrap">
-        <!-- Toggle vista -->
-        <div class="flex bg-slate-100 rounded-lg p-1 border border-slate-200 shadow-inner">
-          <button
-            @click="currentView = 'kanban'"
-            :class="currentView === 'kanban' 
-              ? 'bg-white text-primary-600 shadow-sm font-bold border-slate-200' 
-              : 'text-slate-500 hover:text-slate-800'"
-            class="px-3 py-1.5 rounded-md text-xs font-medium transition-all"
-          >
-            <i class="fas fa-columns mr-1.5"></i>
-            Kanban
-          </button>
-          <button
-            @click="currentView = 'tasks'"
-            :class="currentView === 'tasks' 
-              ? 'bg-white text-primary-600 shadow-sm font-bold border-slate-200' 
-              : 'text-slate-500 hover:text-slate-800'"
-            class="px-3 py-1.5 rounded-md text-xs font-medium transition-all"
-          >
-            <i class="fas fa-list mr-1.5"></i>
-            Lista
-          </button>
-          <button
-            @click="currentView = 'calendar'"
-            :class="currentView === 'calendar' 
-              ? 'bg-white text-primary shadow-sm font-bold border-slate-200' 
-              : 'text-slate-500 hover:text-slate-800'"
-            class="px-3 py-1.5 rounded-md text-xs font-medium transition-all"
-          >
-            <i class="fas fa-calendar-alt mr-1.5"></i>
-            Cal.
-          </button>
-          <button
-            @click="currentView = 'daily'"
-            :class="currentView === 'daily' 
-              ? 'bg-white text-primary shadow-sm font-bold border-slate-200' 
-              : 'text-slate-500 hover:text-slate-800'"
-            class="px-3 py-1.5 rounded-md text-xs font-medium transition-all"
-          >
-            <i class="fas fa-sun mr-1.5"></i>
-            Daily
-          </button>
-          <button
-            v-if="authStore.isLeader"
-            @click="currentView = 'team'"
-            :class="currentView === 'team' 
-              ? 'bg-white text-primary shadow-sm font-bold border-slate-200' 
-              : 'text-slate-500 hover:text-slate-800'"
-            class="px-3 py-1.5 rounded-md text-xs font-medium transition-all"
-          >
-            <i class="fas fa-users-viewfinder mr-1.5"></i>
-            Equipo
-          </button>
-        </div>
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-1">
+      <!-- View Toggle — pills premium -->
+      <div class="flex items-center bg-slate-50 rounded-xl p-1 border border-slate-100 gap-0.5">
+        <button
+          v-for="v in viewOptions" :key="v.id"
+          @click="currentView = v.id"
+          :class="currentView === v.id
+            ? 'bg-white text-primary-600 shadow-sm ring-1 ring-slate-200 font-black'
+            : 'text-slate-400 hover:text-slate-700 font-bold'"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] transition-all duration-150"
+        >
+          <i :class="v.icon + ' text-[10px]'"></i>
+          <span class="hidden sm:inline">{{ v.label }}</span>
+        </button>
+        <button
+          v-if="authStore.isLeader"
+          @click="currentView = 'team'"
+          :class="currentView === 'team'
+            ? 'bg-white text-primary-600 shadow-sm ring-1 ring-slate-200 font-black'
+            : 'text-slate-400 hover:text-slate-700 font-bold'"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] transition-all duration-150"
+        >
+          <i class="fas fa-users text-[10px]"></i>
+          <span class="hidden sm:inline">Equipo</span>
+        </button>
+      </div>
 
-        <!-- Search Input -->
-        <div class="relative w-64 hidden md:block">
-          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+      <div class="flex items-center gap-2">
+        <!-- Search -->
+        <div class="relative hidden md:block">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 text-[10px]"></i>
           <input
             :value="searchTerm"
             @input="$emit('update:searchTerm', ($event.target as HTMLInputElement).value)"
             type="text"
             placeholder="Buscar actividad..."
-            class="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-primary-500 transition-all outline-none"
+            class="w-52 pl-8 pr-3 py-1.5 bg-white border border-slate-100 rounded-xl text-[11px] text-slate-700 placeholder-slate-300 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none"
           />
         </div>
-      </div>
 
-      <div class="flex items-center gap-3">
-        <!-- Stats (Only Desktop) -->
-        <div class="hidden lg:flex items-center gap-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mr-2 pr-12">
-          <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {{ pendingActivities.length }}</span>
-          <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary-400"></span> {{ inProgressActivities.length }}</span>
+        <!-- Mini stats -->
+        <div class="hidden lg:flex items-center gap-2 text-[10px] font-black uppercase tracking-wider">
+          <span class="flex items-center gap-1 px-2 py-1 bg-amber-50 text-amber-600 rounded-lg">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {{ pendingActivities.length }}
+          </span>
+          <span class="flex items-center gap-1 px-2 py-1 bg-primary-50 text-primary-600 rounded-lg">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary-400"></span> {{ inProgressActivities.length }}
+          </span>
         </div>
 
-        <!-- Botón crear (Sober y Profesional) -->
+        <!-- Botón nueva -->
         <button
           v-if="authStore.canCreateActivities"
           @click="showCreateModal = true"
-          class="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-primary-600 hover:bg-primary-50 border border-slate-200 hover:border-primary-200 transition-all active:bg-primary-100"
+          class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[11px] font-black shadow-md shadow-primary-500/20 transition-all"
           title="Nueva Actividad"
         >
-          <i class="fas fa-plus text-xs"></i>
+          <i class="fas fa-plus text-[9px]"></i>
+          <span class="hidden sm:inline">Nueva</span>
         </button>
       </div>
     </div>
 
     <!-- Barra de tarea rápida -->
-    <div 
-      class="bg-indigo-50 rounded-xl p-2 border border-indigo-100 shadow-sm relative"
-    >
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2 text-indigo-700 ml-1">
-          <i class="fas fa-bolt text-xs"></i>
-          <span class="font-bold text-xs tracking-wide uppercase">Tarea Rápida</span>
-          <!-- Indicador de configuración -->
-          <div class="flex items-center text-[9px] bg-indigo-200/50 text-indigo-800 font-bold px-2 py-0.5 rounded">
-            <i class="fas fa-clock mr-1 text-[8px]"></i>
-            <span>{{ quickTaskSettings.dueDays }}d</span>
-            <span class="mx-1">·</span>
-            <span>{{ quickTaskSettings.priority === 'low' ? 'Baja' : quickTaskSettings.priority === 'medium' ? 'Media' : quickTaskSettings.priority === 'high' ? 'Alta' : 'Urgente' }}</span>
-            <span class="mx-1">·</span>
-            <span>{{ quickTaskSettings.estimatedTime }}</span>
-          </div>
+    <div class="bg-primary-50/60 rounded-xl p-2 border border-primary-100/80 relative">
+      <div class="flex items-center gap-2.5">
+        <!-- Label -->
+        <div class="flex items-center gap-1.5 text-primary-700 shrink-0 ml-0.5">
+          <i class="fas fa-bolt text-[10px]"></i>
+          <span class="font-black text-[10px] tracking-widest uppercase hidden sm:inline">Tarea Rápida</span>
+          <span class="text-[9px] bg-primary-100 text-primary-700 font-black px-1.5 py-0.5 rounded-lg hidden lg:inline-flex items-center gap-1">
+            <i class="fas fa-clock text-[8px]"></i> {{ quickTaskSettings.dueDays }}d ·
+            {{ quickTaskSettings.priority === 'low' ? 'Baja' : quickTaskSettings.priority === 'medium' ? 'Media' : quickTaskSettings.priority === 'high' ? 'Alta' : 'Urgente' }} ·
+            {{ quickTaskSettings.estimatedTime }}
+          </span>
         </div>
-        
+
+        <!-- Input -->
         <div class="flex-1 relative">
           <input
             v-model="quickTaskTitle"
@@ -117,8 +87,8 @@
             @focus="showQuickTaskHints = true"
             @blur="setTimeout(() => showQuickTaskHints = false, 200)"
             type="text"
-            placeholder="¿Qué necesitas hacer? (Enter para crear, Esc para limpiar)"
-            class="w-full pl-3 pr-16 py-1.5 bg-white border border-indigo-200 rounded-lg text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none font-medium text-xs shadow-sm"
+            placeholder="¿Qué necesitas hacer? Enter para crear..."
+            class="w-full pl-3 pr-10 py-1.5 bg-white border border-primary-100 rounded-xl text-slate-800 placeholder-slate-300 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none font-medium text-[11px]"
           />
           <VoiceDictateButton
             v-model="quickTaskTitle"
@@ -126,93 +96,81 @@
             size="xs"
             class="!absolute right-1.5 top-1/2 -translate-y-1/2"
           />
-          
-          <!-- Hints para atajos de teclado -->
-          <div 
+          <div
             v-if="showQuickTaskHints && quickTaskTitle"
-            class="absolute top-full left-0 mt-1 bg-slate-800 border border-slate-700 shadow-xl rounded-lg p-2 text-[10px] text-white z-20 font-medium"
+            class="absolute top-full left-0 mt-1 bg-slate-900 shadow-xl rounded-xl p-2 text-[10px] text-white z-20 font-medium flex gap-3"
           >
-            <div class="flex gap-3">
-              <span><kbd class="bg-slate-700 text-white border border-slate-600 px-1 py-0.5 rounded shadow-sm mr-1">Enter</kbd>Crear</span>
-              <span><kbd class="bg-slate-700 text-white border border-slate-600 px-1 py-0.5 rounded shadow-sm mr-1">Esc</kbd>Limpiar</span>
-            </div>
+            <span><kbd class="bg-slate-700 px-1 py-0.5 rounded mr-1">Enter</kbd>Crear</span>
+            <span><kbd class="bg-slate-700 px-1 py-0.5 rounded mr-1">Esc</kbd>Limpiar</span>
           </div>
         </div>
-        
+
+        <!-- Crear -->
         <button
           @click="createQuickTaskNow"
           :disabled="!quickTaskTitle.trim()"
-          class="px-4 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-bold text-xs shadow-sm disabled:opacity-50 flex items-center gap-1"
+          class="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl font-black text-[11px] shadow-md shadow-primary-500/20 transition-all disabled:opacity-40 flex items-center gap-1.5 shrink-0"
         >
-          <i class="fas fa-bolt"></i>
-          Crear
+          <i class="fas fa-bolt text-[9px]"></i> Crear
         </button>
 
-        <!-- Configuración rápida (desplegable) -->
-        <div class="relative">
-          <button
-            @click="showQuickSettings = !showQuickSettings"
-            class="p-1.5 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-100/50 rounded-lg transition-colors"
-            title="Configuración rápida"
-          >
-            <i class="fas fa-cog text-sm"></i>
-          </button>
-        </div>
+        <!-- Config -->
+        <button
+          @click="showQuickSettings = !showQuickSettings"
+          class="p-1.5 text-primary-400 hover:text-primary-600 hover:bg-primary-100/50 rounded-lg transition-colors shrink-0"
+          title="Configuración"
+        >
+          <i class="fas fa-cog text-[11px]"></i>
+        </button>
       </div>
     </div>
 
     <!-- Filtros -->
-    <div 
+    <div
       class="bg-white rounded-xl border shadow-sm transition-all"
-      :class="filtersLocked ? 'border-primary-200 ring-2 ring-primary-100' : 'border-slate-200'"
+      :class="filtersLocked ? 'border-primary-200 ring-2 ring-primary-100/60' : 'border-slate-100'"
     >
       <!-- Filter Header -->
-      <div class="flex items-center justify-between px-4 pt-2.5 pb-2 border-b border-slate-100">
-        <div class="flex items-center gap-2">
-          <i class="fas fa-filter text-xs text-slate-400"></i>
-          <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Filtros Activos</span>
-          <span v-if="hasActiveFilters" class="w-4 h-4 bg-primary-500 text-white text-[8px] font-black rounded-full flex items-center justify-center">
+      <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-50">
+        <div class="flex items-center gap-1.5">
+          <i class="fas fa-filter text-[10px] text-slate-400"></i>
+          <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Filtros</span>
+          <span v-if="hasActiveFilters"
+            class="w-4 h-4 bg-primary-500 text-white text-[8px] font-black rounded-full flex items-center justify-center">
             {{ [selectedDepartment, selectedTeamMember, selectedStatus].filter(Boolean).length }}
           </span>
         </div>
-        <div class="flex items-center gap-2">
-          <!-- Indicador de filtro guardado -->
-          <span v-if="filtersLocked" class="text-[10px] text-primary-600 font-bold flex items-center gap-1">
-            <i class="fas fa-lock text-[9px]"></i> Guardado
+        <div class="flex items-center gap-1.5">
+          <span v-if="filtersLocked" class="text-[9px] text-primary-600 font-black flex items-center gap-1">
+            <i class="fas fa-lock text-[8px]"></i> Guardado
           </span>
-          <!-- Botón candado -->
           <button
             @click="toggleLockFilters"
-            :title="filtersLocked ? 'Filtro guardado como predeterminado. Click para desbloquear' : 'Guardar filtro actual como predeterminado'"
-            :class="filtersLocked 
-              ? 'bg-primary-500 text-white shadow-md shadow-primary-100' 
-              : 'bg-slate-100 text-slate-400 hover:text-primary-500 hover:bg-primary-50'"
-            class="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
+            :class="filtersLocked ? 'bg-primary-500 text-white' : 'bg-slate-100 text-slate-400 hover:text-primary-500 hover:bg-primary-50'"
+            class="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+            title="Guardar filtro"
           >
-            <i :class="filtersLocked ? 'fas fa-lock' : 'fas fa-lock-open'" class="text-xs"></i>
+            <i :class="filtersLocked ? 'fas fa-lock' : 'fas fa-lock-open'" class="text-[10px]"></i>
           </button>
-          
-          <!-- Botón Copiar Resumen (Compacto) -->
           <button
             @click="copyActivitiesSummary"
-            title="Copiar resumen para WhatsApp/Slack"
-            class="w-8 h-8 rounded-lg flex items-center justify-center bg-indigo-500 text-white hover:bg-indigo-600 shadow-md shadow-indigo-100 transition-all"
+            title="Copiar resumen"
+            class="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-500 text-white hover:bg-primary-600 transition-all"
           >
-            <i class="fas fa-copy text-xs"></i>
+            <i class="fas fa-copy text-[10px]"></i>
           </button>
-          <!-- Mis Tareas shortcut -->
           <button
             @click="setMyTasksFilter"
             :class="selectedTeamMember === authStore.user?._id ? 'bg-primary-500 text-white' : 'bg-slate-100 text-slate-500 hover:bg-primary-50 hover:text-primary-600'"
-            class="px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-1.5"
+            class="px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-1"
           >
-            <i class="fas fa-user text-[9px]"></i> Mis Tareas
+            <i class="fas fa-user text-[8px]"></i> Mis tareas
           </button>
           <button
             @click="clearFilters"
-            class="px-3.5 py-1.5 bg-slate-100 text-slate-500 hover:bg-slate-200 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
+            class="px-2.5 py-1 bg-slate-100 text-slate-400 hover:bg-slate-200 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all"
           >
-            <i class="fas fa-times mr-1"></i> Limpiar
+            <i class="fas fa-times mr-0.5"></i> Limpiar
           </button>
         </div>
       </div>
@@ -2718,6 +2676,13 @@ import DailyScrum from '../../pages/DailyScrum.vue'
 import TeamActivities from '../../pages/TeamActivities.vue'
 
 const currentView = ref<'kanban' | 'tasks' | 'calendar' | 'daily' | 'team'>('kanban')
+
+const viewOptions = [
+  { id: 'kanban', label: 'Kanban', icon: 'fas fa-columns' },
+  { id: 'tasks',  label: 'Lista',  icon: 'fas fa-list' },
+  { id: 'calendar', label: 'Cal.',  icon: 'fas fa-calendar-alt' },
+  { id: 'daily',  label: 'Daily',  icon: 'fas fa-sun' },
+] as const
 
 // Gestión de expansión de tarjetas Kanban
 const expandedCards = ref<Set<string>>(new Set())

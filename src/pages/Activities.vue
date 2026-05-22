@@ -1,11 +1,18 @@
 <template>
-  <div class="flex flex-col h-full min-h-0 relative">
-    <!-- Activities View Wrapper -->
-    <div class="flex-1 min-h-0 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col overflow-hidden">
-      <!-- Contenedor con scroll con márgenes para no chocar con las esquinas redondeadas -->
-      <div class="flex-1 overflow-y-auto custom-scrollbar my-4">
-        <div class="p-6 pr-8 pt-4">
-          <ActivitiesView 
+  <div class="flex flex-col gap-3 relative">
+    <!-- Eyebrow GEMS -->
+    <div class="flex items-center gap-2 pr-12 sm:pr-14">
+      <i class="fas fa-gem text-primary-400 text-[9px] animate-pulse-slow"></i>
+      <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
+      <span class="w-1 h-1 rounded-full bg-primary-200 inline-block"></span>
+      <h1 class="text-[22px] font-black text-slate-900 tracking-tight leading-none gems-title">Actividades</h1>
+    </div>
+
+    <!-- Activities View -->
+    <div class="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+      <div class="overflow-y-auto custom-scrollbar">
+        <div class="p-4">
+          <ActivitiesView
             ref="activitiesViewRef"
             v-model:searchTerm="searchTerm"
             @create="openCreateModal"
@@ -17,16 +24,22 @@
     </div>
 
     <!-- Create/Edit Modal -->
-    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-      <div class="bg-white rounded-2xl shadow-xl border border-slate-100 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto animate-fade-in">
-        <div class="flex items-center justify-between p-5 border-b border-slate-100">
-          <h3 class="text-lg font-black text-slate-800">
-            {{ editingActivity ? 'Editar Actividad' : 'Nueva Actividad' }}
-          </h3>
-          <button @click="closeModal" class="text-slate-400 hover:text-slate-600 hover:bg-slate-50 p-1.5 rounded-lg transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
+    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+      <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto animate-scale-up">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-50">
+          <div>
+            <div class="flex items-center gap-2 mb-0.5">
+              <i class="fas fa-gem text-primary-400 text-[8px]"></i>
+              <span class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-400">GEMS CRM</span>
+            </div>
+            <h3 class="text-[16px] font-black text-slate-900 leading-tight">
+              {{ editingActivity ? 'Editar Actividad' : 'Nueva Actividad' }}
+            </h3>
+          </div>
+          <button @click="closeModal"
+            class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-all">
+            <i class="fas fa-times text-[12px]"></i>
           </button>
         </div>
         <div class="p-5">
@@ -38,8 +51,6 @@
         </div>
       </div>
     </div>
-    
-    <!-- Modal de configuración de notificaciones - REMOVED -->
   </div>
 </template>
 
@@ -75,9 +86,17 @@ const closeModal = () => {
 
 const handleSave = () => {
   closeModal()
-  // Recargar las actividades después de guardar
   if (activitiesViewRef.value?.loadActivities) {
     activitiesViewRef.value.loadActivities()
   }
 }
 </script>
+
+<style scoped>
+.gems-title {
+  background: linear-gradient(90deg, #0f172a 0%, #1e1b4b 60%, #0f172a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+</style>
