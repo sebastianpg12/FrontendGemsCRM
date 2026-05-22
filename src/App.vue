@@ -78,6 +78,8 @@
                 : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#334155] hover:text-slate-800 dark:hover:text-slate-200',
               isSidebarMini ? 'justify-center px-0' : 'px-3.5'
             ]"
+            @mouseenter="isSidebarMini && showNavTooltip($event, module.name)"
+            @mouseleave="hideNavTooltip"
           >
             <!-- Active left bar -->
             <span
@@ -99,11 +101,6 @@
               v-if="isSidebarMini && $route.path === module.path"
               class="absolute right-1.5 top-1.5 w-1.5 h-1.5 bg-primary-500 rounded-full"
             ></span>
-            <!-- Tooltip en mini mode -->
-            <span
-              v-if="isSidebarMini"
-              class="pointer-events-none absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 dark:bg-[#1e293b] dark:border dark:border-[#334155] text-white text-[11px] font-black rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-[100] shadow-lg"
-            >{{ module.name }}</span>
           </router-link>
         </nav>
 
@@ -151,6 +148,19 @@
   <!-- Mobile backdrop -->
   <div v-if="sidebarOpen" class="lg:hidden fixed inset-0 z-40 bg-black/50" @click="sidebarOpen = false"></div>
 
+  <!-- Sidebar nav tooltip (Teleport para evitar clipping del overflow-y-auto) -->
+  <Teleport to="body">
+    <div
+      v-if="navTooltip.visible"
+      class="fixed z-[9999] pointer-events-none transition-opacity duration-100"
+      :style="{ top: navTooltip.y + 'px', left: navTooltip.x + 'px', transform: 'translateY(-50%)' }"
+    >
+      <span class="block px-2.5 py-1.5 bg-slate-900 dark:bg-[#1e293b] border border-slate-700 dark:border-[#334155] text-white text-[11px] font-black rounded-lg whitespace-nowrap shadow-xl">
+        {{ navTooltip.label }}
+      </span>
+    </div>
+  </Teleport>
+
   <!-- Global toast for nuevos mensajes (Hidden by user request) -->
   <!-- <NewMessageToast /> -->
 
@@ -171,7 +181,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useChatStore } from './stores/chatStore'
@@ -194,6 +204,17 @@ const sidebarOpen = ref(true)
 const isSidebarMini = ref(true)
 const showUserMenu = ref(false)
 const isDesktop = ref(true)
+
+// Nav tooltip (fixed position para evitar clipping del overflow)
+const navTooltip = reactive({ visible: false, label: '', x: 0, y: 0 })
+const showNavTooltip = (e: MouseEvent, label: string) => {
+  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+  navTooltip.label = label
+  navTooltip.x = rect.right + 10
+  navTooltip.y = rect.top + rect.height / 2
+  navTooltip.visible = true
+}
+const hideNavTooltip = () => { navTooltip.visible = false }
 // Removed navbar mini-popup; use NewMessageToast instead
 
 // Computed properties
