@@ -1,15 +1,15 @@
 <template>
-  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col h-full">
 
     <!-- Header -->
     <div class="flex items-center justify-between gap-2 px-3 sm:px-4 py-3 border-b border-slate-100">
       <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
-          <i class="fas fa-brain text-primary-500 text-[13px] sm:text-[14px]"></i>
+        <div class="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+          <i class="fas fa-brain text-primary-500 text-[11px]"></i>
         </div>
         <div class="min-w-0">
-          <p class="text-[10px] font-bold text-primary-500 uppercase tracking-widest leading-none mb-1">IA Personalizada</p>
-          <h3 class="text-[12px] sm:text-[13px] font-bold text-slate-900 leading-none truncate">Insights para {{ userName }}</h3>
+          <p class="text-[9px] font-black text-primary-500 uppercase tracking-widest leading-none mb-0.5">IA Personalizada</p>
+          <h3 class="text-[11px] font-black text-slate-900 leading-none truncate">Insights para {{ userName }}</h3>
         </div>
       </div>
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -31,56 +31,56 @@
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="flex items-center justify-center gap-3 py-10">
+    <div v-if="loading" class="flex-1 flex items-center justify-center gap-3 py-10">
       <i class="fas fa-brain text-primary-400 text-lg animate-pulse"></i>
       <p class="text-slate-400 text-xs font-medium">Analizando tu situación...</p>
     </div>
 
     <!-- Content: 3 columnas con dividers (verticales en md+, horizontales en mobile) -->
-    <div v-else-if="insights" class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+    <div v-else-if="insights" class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
 
       <!-- LECTURA (amarillo) -->
-      <div class="px-4 py-3.5">
-        <div class="flex items-center gap-1.5 mb-2.5">
-          <i class="fas fa-lightbulb text-amber-500 text-[11px]"></i>
-          <h4 class="text-[10px] font-bold text-amber-500 uppercase tracking-widest">Lectura</h4>
+      <div class="px-3 py-2.5">
+        <div class="flex items-center gap-1 mb-1.5">
+          <i class="fas fa-lightbulb text-amber-500 text-[9px]"></i>
+          <h4 class="text-[8px] font-black text-amber-500 uppercase tracking-widest">Lectura</h4>
         </div>
-        <p class="text-[12px] text-slate-600 leading-relaxed" :class="!expanded && 'line-clamp-5'">
+        <p class="text-[10px] text-slate-500 leading-relaxed" :class="!expanded && 'line-clamp-6'">
           {{ insights.lectura }}
         </p>
       </div>
 
       <!-- ACCIONES (verde) -->
-      <div class="px-4 py-3.5">
-        <div class="flex items-center gap-1.5 mb-2.5">
-          <i class="fas fa-bullseye text-emerald-500 text-[11px]"></i>
-          <h4 class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Acciones</h4>
+      <div class="px-3 py-2.5">
+        <div class="flex items-center gap-1 mb-1.5">
+          <i class="fas fa-bullseye text-emerald-500 text-[9px]"></i>
+          <h4 class="text-[8px] font-black text-emerald-500 uppercase tracking-widest">Acciones</h4>
         </div>
-        <ul class="space-y-2">
+        <ul class="space-y-1.5">
           <li
             v-for="(accion, i) in (expanded ? insights.acciones : insights.acciones.slice(0, 3))"
             :key="i"
-            class="flex items-start gap-2 text-[12px] text-slate-600 leading-snug"
+            class="flex items-start gap-1.5 text-[10px] text-slate-500 leading-snug"
           >
-            <span class="w-1 h-1 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+            <span class="w-1 h-1 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
             <span :class="!expanded && 'line-clamp-2'">{{ accion }}</span>
           </li>
         </ul>
       </div>
 
       <!-- RIESGOS (azul) -->
-      <div class="px-4 py-3.5">
-        <div class="flex items-center gap-1.5 mb-2.5">
-          <i class="fas fa-chart-line text-primary-500 text-[11px]"></i>
-          <h4 class="text-[10px] font-bold text-primary-500 uppercase tracking-widest">Riesgos</h4>
+      <div class="px-3 py-2.5">
+        <div class="flex items-center gap-1 mb-1.5">
+          <i class="fas fa-chart-line text-primary-500 text-[9px]"></i>
+          <h4 class="text-[8px] font-black text-primary-500 uppercase tracking-widest">Riesgos</h4>
         </div>
-        <ul class="space-y-2">
+        <ul class="space-y-1.5">
           <li
             v-for="(riesgo, i) in (expanded ? insights.riesgos : insights.riesgos.slice(0, 3))"
             :key="i"
-            class="flex items-start gap-2 text-[12px] text-slate-600 leading-snug"
+            class="flex items-start gap-1.5 text-[10px] text-slate-500 leading-snug"
           >
-            <span class="w-1 h-1 rounded-full bg-primary-500 mt-1.5 shrink-0"></span>
+            <span class="w-1 h-1 rounded-full bg-primary-400 mt-1.5 shrink-0"></span>
             <span :class="!expanded && 'line-clamp-2'">{{ riesgo }}</span>
           </li>
         </ul>
@@ -88,7 +88,7 @@
     </div>
 
     <!-- Error -->
-    <div v-else-if="error" class="flex flex-col items-center justify-center gap-3 py-8 px-6">
+    <div v-else-if="error" class="flex-1 flex flex-col items-center justify-center gap-3 py-8 px-6">
       <i class="fas fa-exclamation-triangle text-red-400 text-2xl"></i>
       <p class="text-red-500 text-xs font-medium text-center">{{ error }}</p>
       <button @click="generateInsights(false)"
@@ -98,7 +98,7 @@
     </div>
 
     <!-- Empty -->
-    <div v-else class="flex flex-col items-center justify-center gap-2 py-8 px-6">
+    <div v-else class="flex-1 flex flex-col items-center justify-center gap-2 py-8 px-6">
       <i class="fas fa-brain text-2xl text-slate-200"></i>
       <p class="text-slate-400 text-xs font-medium">Sin análisis disponible</p>
       <button @click="generateInsights(false)"

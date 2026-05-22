@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-3 relative">
+  <div class="flex flex-col gap-3 relative pt-3">
     <!-- Glow de fondo GEMS -->
     <div class="pointer-events-none fixed top-0 right-0 w-[500px] h-[400px] opacity-[0.035] -z-0"
       style="background: radial-gradient(ellipse at top right, #8b5cf6 0%, transparent 70%)"></div>
@@ -70,100 +70,102 @@
       </div>
     </Transition>
 
-    <!-- ══ Stat cards ════════════════════════════════════════════════════ -->
-    <div class="flex gap-2 overflow-x-auto pb-0.5 custom-scrollbar">
+    <!-- ══ Stat cards — minimalista ═══════════════════════════════════ -->
+    <div class="grid gap-1.5" :style="`grid-template-columns: repeat(${statCards.length}, minmax(0, 1fr))`">
       <div v-for="card in statCards" :key="card.label"
-        class="bg-white border border-slate-100 rounded-xl px-3 py-2 relative overflow-hidden hover:shadow-md transition-all group cursor-default flex items-center gap-2.5 shrink-0 min-w-[130px]">
-        <div class="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl" :class="card.accentBar"></div>
-        <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110" :class="card.iconBg">
-          <i :class="['fas', card.icon, card.iconColor, 'text-[11px]']"></i>
-        </div>
-        <div class="min-w-0">
-          <div class="text-[8px] font-black uppercase tracking-[0.15em] text-slate-400 truncate leading-none mb-0.5">{{ card.label }}</div>
-          <div class="flex items-baseline gap-1 min-w-0">
-            <span class="text-[18px] font-black text-slate-900 leading-none">{{ card.value }}</span>
-            <span class="text-[9px] font-black truncate" :class="card.tagColor">{{ card.tag }}</span>
-          </div>
-        </div>
+        class="bg-white border border-slate-100 rounded-xl py-2.5 px-3 flex flex-col items-center text-center group cursor-default hover:border-slate-200 transition-all duration-150">
+        <!-- Number -->
+        <span class="text-[20px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
+        <!-- Label -->
+        <span class="text-[8px] font-black uppercase tracking-[0.18em] text-slate-400 mt-1 truncate w-full text-center">{{ card.label }}</span>
+        <!-- Tag -->
+        <span class="text-[8px] font-medium text-slate-300 mt-0.5">{{ card.tag }}</span>
       </div>
     </div>
 
     <!-- ══ Main grid ═════════════════════════════════════════════════════ -->
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-3 xl:h-[420px]">
 
       <!-- ── Left: AI Insights + Agenda en dos columnas ──────────────── -->
-      <div class="xl:col-span-2 flex flex-col gap-3">
+      <div class="xl:col-span-2 h-full min-h-0">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-full">
 
-        <!-- Fila de dos columnas: Insights | Agenda -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <AIInsightsWidget />
+          <!-- AI Insights -->
+          <div class="h-full min-h-0 overflow-hidden">
+            <AIInsightsWidget class="h-full" />
+          </div>
 
           <!-- Agenda -->
-        <div class="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-          <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-50">
-            <div class="flex items-center gap-2.5">
-              <div class="w-7 h-7 rounded-xl bg-primary-50 flex items-center justify-center shrink-0">
-                <i class="fas fa-calendar-alt text-primary-500 text-[10px]"></i>
+          <div class="bg-white border border-slate-100 rounded-2xl overflow-hidden flex flex-col h-full min-h-0">
+            <!-- Card header — patrón unificado -->
+            <div class="flex items-center justify-between px-4 py-3 border-b border-slate-50 shrink-0">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                  <i class="fas fa-calendar-alt text-primary-500 text-[9px]"></i>
+                </div>
+                <div>
+                  <div class="text-[8px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Agenda operativa</div>
+                  <div class="text-[12px] font-black text-slate-900 leading-tight">Actividades próximas</div>
+                </div>
               </div>
-              <div>
-                <div class="text-[9px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none mb-0.5">Agenda operativa</div>
-                <div class="text-[13px] font-black text-slate-900 leading-tight">Actividades próximas</div>
+              <router-link to="/activities"
+                class="flex items-center gap-1 text-[9px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors shrink-0">
+                Ver todas <i class="fas fa-arrow-right text-[8px]"></i>
+              </router-link>
+            </div>
+
+            <!-- Empty -->
+            <div v-if="agendaActivities.length === 0" class="flex-1 flex flex-col items-center justify-center gap-2 py-8">
+              <div class="w-9 h-9 rounded-2xl bg-slate-50 flex items-center justify-center">
+                <i class="fas fa-calendar-check text-slate-300 text-[12px]"></i>
+              </div>
+              <p class="text-[10px] text-slate-400 font-black uppercase tracking-wide">Sin actividades</p>
+            </div>
+
+            <!-- List -->
+            <div v-else class="flex-1 overflow-y-auto custom-scrollbar">
+              <div v-for="(act, idx) in agendaActivities" :key="act._id"
+                class="flex items-center gap-2.5 px-4 py-2 hover:bg-primary-50/30 transition-colors border-l-[3px]"
+                :class="[
+                  { 'border-t border-slate-50': idx > 0 },
+                  act.priority === 'urgent' ? 'border-l-red-400' : act.priority === 'high' ? 'border-l-amber-400' : 'border-l-slate-100'
+                ]">
+                <div class="flex-1 min-w-0">
+                  <p class="text-[11px] font-black text-slate-800 truncate">{{ act.title }}</p>
+                  <p class="text-[10px] text-slate-400 truncate">{{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}</p>
+                </div>
+                <span :class="['shrink-0 px-2 py-0.5 rounded-full text-[9px] font-black', agendaStatusClass(act)]">
+                  {{ agendaStatusLabel(act) }}
+                </span>
+                <span class="shrink-0 hidden lg:flex items-center gap-1 text-[9px] text-slate-400">
+                  <i class="fas fa-clock text-[8px]"></i>
+                  {{ formatDateShort(act.dueDate || act.date) }}
+                </span>
               </div>
             </div>
-            <router-link to="/activities"
-              class="flex items-center gap-1 text-[10px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors">
-              Ver todas <i class="fas fa-arrow-right text-[9px]"></i>
-            </router-link>
           </div>
 
-          <div v-if="agendaActivities.length === 0" class="py-8 flex flex-col items-center gap-2">
-            <div class="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center">
-              <i class="fas fa-calendar-check text-slate-300 text-[13px]"></i>
-            </div>
-            <p class="text-[11px] text-slate-400 font-black uppercase tracking-wide">Sin actividades próximas</p>
-          </div>
-
-          <div v-else class="max-h-[320px] overflow-y-auto custom-scrollbar">
-            <div v-for="(act, idx) in agendaActivities" :key="act._id"
-              class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50/30 transition-colors border-l-2"
-              :class="[
-                { 'border-t border-slate-50/80': idx > 0 },
-                act.priority === 'urgent' ? 'border-l-red-400' : act.priority === 'high' ? 'border-l-amber-400' : 'border-l-primary-200'
-              ]">
-              <!-- Priority dot -->
-              <div class="w-1.5 h-1.5 rounded-full shrink-0"
-                :class="act.priority === 'urgent' ? 'bg-red-500' : act.priority === 'high' ? 'bg-amber-500' : 'bg-primary-400'">
-              </div>
-              <div class="flex-1 min-w-0">
-                <p class="text-[12px] font-black text-slate-800 truncate">{{ act.title }}</p>
-                <p class="text-[10px] text-slate-400 font-medium truncate">{{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}</p>
-              </div>
-              <span :class="['shrink-0 px-2 py-0.5 rounded-full text-[10px] font-black', agendaStatusClass(act)]">
-                {{ agendaStatusLabel(act) }}
-              </span>
-              <span class="shrink-0 hidden md:flex items-center gap-1 text-[10px] text-slate-400">
-                <i class="fas fa-clock text-[8px]"></i>
-                {{ formatDateShort(act.dueDate || act.date) }}
-              </span>
-            </div>
-          </div>
         </div>
-
-        </div><!-- /grid md:grid-cols-2 -->
       </div>
 
       <!-- ── Right column ─────────────────────────────────────────────── -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-3">
+      <div class="flex flex-col gap-3 h-full min-h-0">
 
         <!-- Ritmo del día -->
-        <div class="bg-white border border-slate-100 rounded-2xl px-4 py-3.5">
-          <div class="flex items-center justify-between mb-2.5 gap-2">
-            <div class="min-w-0">
-              <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400 mb-0.5">Ritmo del día</div>
-              <div class="text-[13px] font-black text-slate-900">Foco operativo</div>
+        <div class="bg-white border border-slate-100 rounded-2xl px-4 py-3.5 shrink-0">
+          <!-- Card header — patrón unificado -->
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                <i class="fas fa-fire text-primary-500 text-[9px]"></i>
+              </div>
+              <div>
+                <div class="text-[8px] font-black uppercase tracking-[0.18em] text-slate-400 leading-none">Ritmo del día</div>
+                <div class="text-[12px] font-black text-slate-900 leading-tight">Foco operativo</div>
+              </div>
             </div>
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shrink-0 shadow-md shadow-primary-500/20">
-              <span class="text-[13px] font-black text-white leading-none">{{ focusProgress }}%</span>
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-md shadow-primary-500/20">
+              <span class="text-[11px] font-black text-white leading-none">{{ focusProgress }}%</span>
             </div>
           </div>
           <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3">
@@ -171,23 +173,23 @@
               :style="{ width: focusProgress + '%' }"></div>
           </div>
           <div class="grid grid-cols-3 gap-1.5">
-            <div class="bg-red-50 rounded-xl px-2 py-2.5 text-center">
-              <div class="text-[22px] font-black text-red-500 leading-none">{{ overdueCount }}</div>
-              <div class="text-[9px] text-red-400 font-black uppercase tracking-wide mt-0.5">Vencidas</div>
+            <div class="bg-red-50 rounded-xl py-2.5 text-center">
+              <div class="text-[20px] font-black text-red-500 leading-none">{{ overdueCount }}</div>
+              <div class="text-[8px] text-red-400 font-black uppercase tracking-wide mt-0.5">Vencidas</div>
             </div>
-            <div class="bg-amber-50 rounded-xl px-2 py-2.5 text-center">
-              <div class="text-[22px] font-black text-amber-500 leading-none">{{ todayCount }}</div>
-              <div class="text-[9px] text-amber-400 font-black uppercase tracking-wide mt-0.5">Hoy</div>
+            <div class="bg-amber-50 rounded-xl py-2.5 text-center">
+              <div class="text-[20px] font-black text-amber-500 leading-none">{{ todayCount }}</div>
+              <div class="text-[8px] text-amber-400 font-black uppercase tracking-wide mt-0.5">Hoy</div>
             </div>
-            <div class="bg-primary-50 rounded-xl px-2 py-2.5 text-center">
-              <div class="text-[22px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</div>
-              <div class="text-[9px] text-primary-400 font-black uppercase tracking-wide mt-0.5">Alta Prio.</div>
+            <div class="bg-primary-50 rounded-xl py-2.5 text-center">
+              <div class="text-[20px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</div>
+              <div class="text-[8px] text-primary-400 font-black uppercase tracking-wide mt-0.5">Alta Prio.</div>
             </div>
           </div>
         </div>
 
         <!-- Pulso comercial -->
-        <div class="bg-white border border-slate-100 rounded-2xl px-4 py-3.5">
+        <div class="bg-white border border-slate-100 rounded-2xl px-4 py-3.5 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
           <div class="flex items-center gap-2 mb-3">
             <div class="w-6 h-6 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
               <i class="fas fa-chart-line text-amber-500 text-[10px]"></i>
@@ -208,7 +210,7 @@
         </div>
 
         <!-- Nota de foco GEMS -->
-        <div class="sm:col-span-2 xl:col-span-1 rounded-2xl px-4 py-4 text-white relative overflow-hidden"
+        <div class="rounded-2xl px-4 py-3.5 text-white relative overflow-hidden shrink-0"
           style="background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 60%, #1e1b4b 100%);">
           <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-0 right-0 w-32 h-32 opacity-25" style="background: radial-gradient(circle, #8b5cf6 0%, transparent 70%); transform: translate(20%,-20%)"></div>

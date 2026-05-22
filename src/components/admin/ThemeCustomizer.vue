@@ -1,176 +1,147 @@
 <template>
-  <div class="space-y-6">
+  <div class="space-y-4">
     <!-- Header GEMS style -->
     <div>
-      <div class="flex items-center gap-2 mb-1">
+      <div class="flex items-center gap-2 mb-0.5">
         <i class="fas fa-gem text-primary-400 text-[9px]"></i>
         <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
       </div>
-      <h2 class="text-[22px] font-black text-slate-900 tracking-tight">Personalización de Marca</h2>
-      <p class="text-slate-400 text-[11px] font-medium mt-0.5">Logo, color de acento y nombre de tu organización — cambios en tiempo real</p>
+      <h2 class="text-[18px] font-black text-slate-900 tracking-tight">Personalización de Marca</h2>
+      <p class="text-slate-400 text-[10px] font-medium mt-0.5">Logo, color de acento y nombre — cambios en tiempo real</p>
     </div>
 
-    <!-- Theme Preview -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Grid principal -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
       <!-- Settings Panel -->
-      <div class="space-y-6">
+      <div class="space-y-3">
+
         <!-- Logo Upload -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-          <label class="block text-sm font-black text-slate-700 mb-3 uppercase tracking-wide">
-            <i class="fas fa-image text-primary-500 mr-2"></i>Logo
+        <div class="bg-white p-4 rounded-xl border border-slate-100">
+          <label class="block text-[9px] font-black text-slate-500 mb-2 uppercase tracking-[0.18em]">
+            <i class="fas fa-image text-primary-400 mr-1.5"></i>Logo
           </label>
-          <div class="space-y-3">
-            <div v-if="themeStore.config.logo" class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
-              <img :src="themeStore.config.logo" alt="Current logo" class="h-12 w-auto object-contain" />
-              <button
-                @click="removeLogo"
-                class="ml-auto text-xs font-bold text-rose-500 hover:text-rose-600 transition-colors"
-              >
-                <i class="fas fa-trash"></i> Eliminar
+          <div class="space-y-2">
+            <div v-if="themeStore.config.logo" class="flex items-center gap-2.5 p-2.5 bg-slate-50 rounded-lg">
+              <img :src="themeStore.config.logo" alt="Current logo" class="h-8 w-auto object-contain" />
+              <button @click="removeLogo" class="ml-auto text-[10px] font-black text-rose-400 hover:text-rose-600 transition-colors">
+                <i class="fas fa-trash mr-1"></i>Eliminar
               </button>
             </div>
             <input
               type="text"
               v-model="logoUrl"
               placeholder="https://ejemplo.com/logo.png"
-              class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-[11px] focus:ring-1 focus:ring-primary-500/20 focus:border-primary-400 outline-none transition-all"
             />
-            <p class="text-xs text-slate-400">Ingresa la URL completa del logo (PNG, SVG o JPG)</p>
+            <p class="text-[9px] text-slate-300">URL completa del logo (PNG, SVG o JPG)</p>
           </div>
         </div>
 
         <!-- Brand Name -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-          <label class="block text-sm font-black text-slate-700 mb-3 uppercase tracking-wide">
-            <i class="fas fa-gem text-primary-500 mr-2"></i>Nombre de Marca
+        <div class="bg-white p-4 rounded-xl border border-slate-100">
+          <label class="block text-[9px] font-black text-slate-500 mb-2 uppercase tracking-[0.18em]">
+            <i class="fas fa-gem text-primary-400 mr-1.5"></i>Nombre de Marca
           </label>
           <input
             type="text"
             v-model="brandName"
             placeholder="GEMS CRM"
-            class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+            class="w-full px-3 py-2 border border-slate-200 rounded-lg text-[11px] font-semibold focus:ring-1 focus:ring-primary-500/20 focus:border-primary-400 outline-none transition-all"
           />
-          <p class="text-xs text-slate-400 mt-2">Nombre de tu organización en el sistema</p>
+          <p class="text-[9px] text-slate-300 mt-1.5">Nombre visible en la barra lateral</p>
         </div>
 
         <!-- Accent Color -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-          <label class="block text-sm font-black text-slate-700 mb-3 uppercase tracking-wide">
-            <i class="fas fa-palette text-primary-500 mr-2"></i>Color Secundario
+        <div class="bg-white p-4 rounded-xl border border-slate-100">
+          <label class="block text-[9px] font-black text-slate-500 mb-2 uppercase tracking-[0.18em]">
+            <i class="fas fa-palette text-primary-400 mr-1.5"></i>Color de Acento
           </label>
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2.5">
             <input
               type="color"
               v-model="accentColor"
-              class="w-16 h-16 rounded-xl cursor-pointer border-2 border-slate-200 transition-all hover:border-primary-400"
+              class="w-9 h-9 rounded-lg cursor-pointer border border-slate-200 transition-all hover:border-primary-300 shrink-0"
             />
-            <div class="flex-1">
-              <input
-                type="text"
-                v-model="accentColor"
-                class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
-              />
-              <p class="text-xs text-slate-400 mt-1">Usa hexadecimal (#8b5cf6)</p>
-            </div>
+            <input
+              type="text"
+              v-model="accentColor"
+              class="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-[11px] font-mono focus:ring-1 focus:ring-primary-500/20 focus:border-primary-400 outline-none transition-all"
+            />
           </div>
+          <p class="text-[9px] text-slate-300 mt-1.5">Formato hexadecimal (#8b5cf6)</p>
         </div>
 
-        <!-- Dark Mode Toggle -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-          <label class="flex items-center cursor-pointer group">
+        <!-- Dark Mode -->
+        <div class="bg-white p-4 rounded-xl border border-slate-100">
+          <label class="flex items-center gap-2.5 cursor-pointer group">
             <input
               type="checkbox"
               v-model="darkMode"
-              class="peer appearance-none w-5 h-5 rounded-md border-2 border-slate-200 checked:bg-primary-500 checked:border-primary-500 transition-all cursor-pointer"
+              class="peer appearance-none w-4 h-4 rounded border border-slate-200 checked:bg-primary-500 checked:border-primary-500 transition-all cursor-pointer shrink-0"
             />
-            <i class="fas fa-check absolute text-white text-sm pointer-events-none opacity-0 peer-checked:opacity-100"></i>
-            <span class="ml-3 text-sm font-bold text-slate-700 group-hover:text-primary-600 transition-colors">
-              <i class="fas fa-moon text-primary-500 mr-2"></i>Modo Oscuro
+            <span class="text-[11px] font-black text-slate-600 group-hover:text-primary-600 transition-colors">
+              <i class="fas fa-moon text-primary-400 mr-1.5"></i>Modo Oscuro
             </span>
           </label>
-          <p class="text-xs text-slate-400 mt-2 ml-8">Aplicar tema oscuro a toda la interfaz</p>
+          <p class="text-[9px] text-slate-300 mt-1.5 ml-6">Aplicar tema oscuro a toda la interfaz</p>
         </div>
 
-        <!-- Save Button -->
-        <button
-          @click="saveTheme"
-          class="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-black rounded-2xl transition-all duration-300 shadow-lg shadow-primary-500/20 active:scale-95"
-        >
-          <i class="fas fa-save mr-2"></i>Guardar Personalización
-        </button>
-
-        <!-- Reset Button -->
-        <button
-          @click="resetTheme"
-          class="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-colors"
-        >
-          <i class="fas fa-redo mr-2"></i>Restaurar Valores Predeterminados
-        </button>
+        <!-- Actions -->
+        <div class="flex gap-2">
+          <button
+            @click="saveTheme"
+            class="flex-1 py-2 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white text-[11px] font-black rounded-xl transition-all shadow-md shadow-primary-500/20"
+          >
+            <i class="fas fa-save mr-1.5"></i>Guardar
+          </button>
+          <button
+            @click="resetTheme"
+            class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-500 text-[11px] font-black rounded-xl transition-colors"
+          >
+            <i class="fas fa-redo mr-1"></i>Restaurar
+          </button>
+        </div>
       </div>
 
       <!-- Live Preview -->
-      <div class="space-y-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-          <p class="text-xs font-black text-slate-400 uppercase tracking-wide mb-4">Vista Previa en Vivo</p>
+      <div class="space-y-3">
 
-          <!-- Mini Login Preview -->
+        <!-- Preview card -->
+        <div class="bg-white p-4 rounded-xl border border-slate-100">
+          <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.18em] mb-3">Vista Previa</p>
           <div
-            class="relative rounded-2xl overflow-hidden border-2"
-            :style="{ borderColor: previewAccentColor }"
+            class="relative rounded-xl overflow-hidden border"
+            :style="{ borderColor: previewAccentColor + '40' }"
           >
-            <!-- Background gradient -->
-            <div
-              class="absolute inset-0 opacity-5"
-              :style="{ backgroundColor: accentColor }"
-            ></div>
-
-            <div class="relative p-6 space-y-4">
-              <!-- Logo preview -->
-              <div class="flex justify-center mb-4">
-                <img
-                  v-if="logoUrl"
-                  :src="logoUrl"
-                  alt="Preview logo"
-                  class="h-16 w-auto object-contain"
-                  @error="logoError = true"
-                />
-                <div v-else class="h-16 w-16 bg-slate-200 rounded-xl flex items-center justify-center text-slate-400">
-                  <i class="fas fa-image text-2xl"></i>
+            <div class="absolute inset-0 opacity-[0.04]" :style="{ backgroundColor: accentColor }"></div>
+            <div class="relative p-4 space-y-3">
+              <!-- Logo -->
+              <div class="flex justify-center">
+                <img v-if="logoUrl" :src="logoUrl" alt="Preview" class="h-10 w-auto object-contain" @error="logoError = true" />
+                <div v-else class="h-10 w-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-image text-slate-300"></i>
                 </div>
               </div>
-
-              <!-- Brand name preview -->
-              <h3 class="text-center text-2xl font-black" :style="{ color: accentColor }">
+              <!-- Brand -->
+              <h3 class="text-center text-[14px] font-black" :style="{ color: accentColor }">
                 {{ brandName || 'GEMS CRM' }}
               </h3>
-
-              <!-- Sample input with accent color -->
-              <div class="space-y-2">
-                <div class="relative">
-                  <input
-                    type="text"
-                    placeholder="usuario@email.com"
-                    disabled
-                    class="w-full px-4 py-3 bg-slate-50 border-2 rounded-xl text-sm"
-                    :style="{ borderColor: `${accentColor}40` }"
-                  />
-                </div>
-                <button
-                  disabled
-                  class="w-full py-3 text-white font-bold rounded-xl transition-all text-sm"
-                  :style="{ backgroundColor: accentColor }"
-                >
+              <!-- Sample input -->
+              <div class="space-y-1.5">
+                <input type="text" placeholder="usuario@email.com" disabled
+                  class="w-full px-3 py-2 bg-slate-50 border rounded-lg text-[11px]"
+                  :style="{ borderColor: `${accentColor}30` }" />
+                <button disabled
+                  class="w-full py-2 text-white text-[11px] font-black rounded-lg"
+                  :style="{ backgroundColor: accentColor }">
                   Acceder
                 </button>
               </div>
-
-              <!-- Theme indicators -->
-              <div class="flex justify-center gap-2 pt-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Tema:</span>
-                <span
-                  class="px-3 py-1 rounded-full text-[10px] font-black text-white"
-                  :style="{ backgroundColor: accentColor }"
-                >
+              <!-- Mode badge -->
+              <div class="flex justify-center">
+                <span class="px-2 py-0.5 rounded-full text-[9px] font-black text-white"
+                  :style="{ backgroundColor: accentColor }">
                   {{ darkMode ? 'Oscuro' : 'Claro' }}
                 </span>
               </div>
@@ -179,24 +150,25 @@
         </div>
 
         <!-- Color Presets -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-          <p class="text-xs font-black text-slate-400 uppercase tracking-wide mb-3">Colores Rápidos</p>
-          <div class="grid grid-cols-4 gap-2">
+        <div class="bg-white p-4 rounded-xl border border-slate-100">
+          <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.18em] mb-2.5">Colores rápidos</p>
+          <div class="grid grid-cols-8 gap-1.5">
             <button
               v-for="preset in colorPresets"
               :key="preset.value"
               @click="accentColor = preset.value"
-              class="h-12 rounded-xl border-2 transition-all hover:scale-105 active:scale-95"
+              class="h-7 rounded-lg border-2 transition-all hover:scale-110 active:scale-95"
               :style="{
                 backgroundColor: preset.value,
-                borderColor: accentColor === preset.value ? '#000' : preset.value + '40'
+                borderColor: accentColor === preset.value ? '#1e1b4b' : preset.value + '30'
               }"
               :title="preset.name"
             >
-              <i v-if="accentColor === preset.value" class="fas fa-check text-white text-sm"></i>
+              <i v-if="accentColor === preset.value" class="fas fa-check text-white text-[9px]"></i>
             </button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -228,33 +200,21 @@ const colorPresets = [
 ]
 
 const previewAccentColor = computed(() => {
-  try {
-    return accentColor.value
-  } catch {
-    return '#8b5cf6'
-  }
+  try { return accentColor.value } catch { return '#8b5cf6' }
 })
 
 const saveTheme = () => {
-  if (logoUrl.value && logoError.value) {
-    showError('El URL del logo no es válido')
-    return
-  }
-
+  if (logoUrl.value && logoError.value) { showError('El URL del logo no es válido'); return }
   themeStore.update({
     logo: logoUrl.value || null,
     brandName: brandName.value || 'GEMS CRM',
     accentColor: accentColor.value || '#8b5cf6',
     darkMode: darkMode.value
   })
-
-  showSuccess('Personalización guardada exitosamente')
+  showSuccess('Personalización guardada')
 }
 
-const removeLogo = () => {
-  logoUrl.value = ''
-  logoError.value = false
-}
+const removeLogo = () => { logoUrl.value = ''; logoError.value = false }
 
 const resetTheme = () => {
   logoUrl.value = ''
@@ -263,10 +223,8 @@ const resetTheme = () => {
   darkMode.value = false
   logoError.value = false
   themeStore.reset()
-  showSuccess('Tema restaurado a valores predeterminados')
+  showSuccess('Tema restaurado')
 }
 
-onMounted(() => {
-  themeStore.load()
-})
+onMounted(() => { themeStore.load() })
 </script>
