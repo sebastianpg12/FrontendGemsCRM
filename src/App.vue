@@ -152,7 +152,7 @@
   <Teleport to="body">
     <div
       v-if="navTooltip.visible"
-      class="fixed z-[9999] pointer-events-none transition-opacity duration-100"
+      class="nav-tooltip-wrap fixed z-[9999] pointer-events-none"
       :style="{ top: navTooltip.y + 'px', left: navTooltip.x + 'px', transform: 'translateY(-50%)' }"
     >
       <span class="nav-tooltip block px-2.5 py-1.5 text-white text-[11px] font-black rounded-lg whitespace-nowrap tracking-wide">
@@ -310,44 +310,52 @@ onMounted(async () => {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Tooltip metálico con brillo sweep ─────────────────────────── */
+/* ── Tooltip: entrada suave + brillo metálico tenue ─────────────── */
+@keyframes tooltip-enter {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 @keyframes tooltip-shine {
-  0%   { background-position: -150% center; }
-  100% { background-position: 250% center; }
+  0%   { background-position: -200% center; }
+  100% { background-position: 300% center; }
+}
+
+.nav-tooltip-wrap {
+  animation: tooltip-enter 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .nav-tooltip {
   background: linear-gradient(
     110deg,
     #1e293b 0%,
-    #334155 35%,
-    rgba(255, 255, 255, 0.13) 50%,
-    #334155 65%,
+    #2d3f55 40%,
+    rgba(255, 255, 255, 0.07) 52%,
+    #2d3f55 64%,
     #1e293b 100%
   );
-  background-size: 250% auto;
-  animation: tooltip-shine 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  background-size: 300% auto;
+  animation: tooltip-shine 1.4s ease-out forwards;
+  border: 1px solid rgba(148, 163, 184, 0.14);
   box-shadow:
-    0 4px 16px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.07);
+    0 4px 14px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .dark .nav-tooltip {
   background: linear-gradient(
     110deg,
     #0f172a 0%,
-    #1e293b 35%,
-    rgba(139, 92, 246, 0.18) 50%,
-    #1e293b 65%,
+    #1e293b 40%,
+    rgba(139, 92, 246, 0.1) 52%,
+    #1e293b 64%,
     #0f172a 100%
   );
-  background-size: 250% auto;
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background-size: 300% auto;
+  border: 1px solid rgba(139, 92, 246, 0.2);
   box-shadow:
-    0 4px 20px rgba(0,0,0,0.5),
-    0 0 12px rgba(139,92,246,0.08),
-    inset 0 1px 0 rgba(139,92,246,0.1);
+    0 4px 18px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(139, 92, 246, 0.08);
 }
 
 .animate-fade-in {
