@@ -47,19 +47,19 @@
         <!-- User Info -->
         <div
           class="border-b border-slate-50 dark:border-[#334155] shrink-0 transition-all duration-300"
-          :class="isSidebarMini ? 'flex justify-center py-4 px-2' : 'px-5 py-4'"
+          :class="isSidebarMini ? 'flex justify-center py-3 px-2' : 'px-4 py-3'"
         >
-          <div class="flex items-center gap-3 min-w-0">
+          <div class="flex items-center gap-2.5 min-w-0">
             <UserAvatar
               :name="authStore.user?.name || 'Usuario'"
               :avatar="authStore.user?.avatar"
-              size="md"
+              size="sm"
               :clickable="true"
               @click="router.push('/profile')"
-              class="border border-slate-100 shadow-sm flex-shrink-0"
+              class="border border-slate-100 dark:border-[#334155] shadow-sm flex-shrink-0"
             />
             <div v-if="!isSidebarMini" class="min-w-0 transition-opacity duration-200">
-              <p class="text-[13px] font-black text-slate-800 truncate leading-tight">{{ authStore.user?.name }}</p>
+              <p class="text-[11px] font-black text-slate-800 dark:text-slate-200 truncate leading-tight">{{ authStore.user?.name }}</p>
               <p class="text-[9px] font-black uppercase tracking-[0.18em] text-primary-400 truncate mt-0.5">{{ getRoleDisplayName(authStore.user?.role) }}</p>
             </div>
           </div>

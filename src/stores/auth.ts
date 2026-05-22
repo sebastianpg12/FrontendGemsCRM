@@ -299,37 +299,36 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const modules = [
-      { id: 'dashboard', name: 'Dashboard', icon: 'fas fa-tachometer-alt', path: '/', canAccess: canViewDashboard.value }
+      { id: 'dashboard', name: 'Dashboard', icon: 'fas fa-house', path: '/', canAccess: canViewDashboard.value }
     ]
-    
+
     if (canViewClients.value) {
-      modules.push({ id: 'clients', name: 'Clientes', icon: 'fas fa-users', path: '/clients', canAccess: true })
-      modules.push({ id: 'prospects', name: 'Prospectos IA (Beta)', icon: 'fas fa-wand-magic-sparkles', path: '/prospectos', canAccess: true })
-    }
-    
-    if (canViewActivities.value) {
-      modules.push({ id: 'activities', name: 'Actividades', icon: 'fas fa-tasks', path: '/activities', canAccess: true })
+      modules.push({ id: 'clients', name: 'Clientes', icon: 'fas fa-address-book', path: '/clients', canAccess: true })
+      modules.push({ id: 'prospects', name: 'Prospectos IA', icon: 'fas fa-wand-magic-sparkles', path: '/prospectos', canAccess: true })
     }
 
-    
+    if (canViewActivities.value) {
+      modules.push({ id: 'activities', name: 'Actividades', icon: 'fas fa-list-check', path: '/activities', canAccess: true })
+    }
+
     if (canViewReports.value) {
-      modules.push({ id: 'reports', name: 'Reportes', icon: 'fas fa-chart-bar', path: '/reports', canAccess: true })
+      modules.push({ id: 'reports', name: 'Reportes', icon: 'fas fa-chart-line', path: '/reports', canAccess: true })
     }
-    
+
     if (canViewTickets.value) {
-      modules.push({ id: 'tickets', name: 'Tickets', icon: 'fas fa-ticket-alt', path: '/tickets', canAccess: true })
+      modules.push({ id: 'tickets', name: 'Tickets', icon: 'fas fa-headset', path: '/tickets', canAccess: true })
     }
-    
+
     if (canViewCases.value) {
-      modules.push({ id: 'cases', name: 'Casos', icon: 'fas fa-folder', path: '/cases', canAccess: true })
+      modules.push({ id: 'cases', name: 'Casos', icon: 'fas fa-folder-tree', path: '/cases', canAccess: true })
     }
-    
+
     if (canViewTeam.value) {
-      modules.push({ id: 'team', name: 'Equipo', icon: 'fas fa-users-cog', path: '/team', canAccess: true })
+      modules.push({ id: 'team', name: 'Equipo', icon: 'fas fa-people-group', path: '/team', canAccess: true })
     }
 
     if (user.value.role === 'admin') {
-      modules.push({ id: 'theme-settings', name: 'Personalización', icon: 'fas fa-palette', path: '/settings/theme', canAccess: true })
+      modules.push({ id: 'theme-settings', name: 'Personalización', icon: 'fas fa-sliders', path: '/settings/theme', canAccess: true })
     }
 
     return modules.filter(m => m.canAccess)
