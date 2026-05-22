@@ -127,17 +127,17 @@
           <!-- Title & Emoji -->
           <div class="mb-10 relative">
             <div class="absolute -top-16 left-0 text-6xl drop-shadow-sm">📂</div>
-            <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-4">
+            <h1 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-4">
               {{ selectedCase.titulo }}
             </h1>
             
             <!-- Metadata Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 border-y border-slate-100 py-6 no-print">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 border-y border-slate-100 dark:border-[#334155] py-6 no-print">
               <div class="space-y-1">
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado</p>
                 <div class="flex items-center gap-2">
                   <div class="w-2 h-2 rounded-full" :class="getStatusDot(selectedCase.estado)"></div>
-                  <span class="text-xs font-bold text-slate-700 capitalize">{{ selectedCase.estado?.replace('_', ' ') }}</span>
+                  <span class="text-xs font-bold text-slate-700 dark:text-slate-300 capitalize">{{ selectedCase.estado?.replace('_', ' ') }}</span>
                 </div>
               </div>
               <div class="space-y-1">
@@ -152,7 +152,7 @@
                   <div class="w-4 h-4 rounded bg-slate-100 flex items-center justify-center text-[8px] font-bold text-slate-500">
                     {{ getClientInitials(selectedCase.cliente_id) }}
                   </div>
-                  <span class="text-xs font-medium text-slate-700">{{ getClientName(selectedCase.cliente_id) }}</span>
+                  <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{{ getClientName(selectedCase.cliente_id) }}</span>
                 </div>
               </div>
               <div class="space-y-1">
@@ -163,16 +163,18 @@
           </div>
 
           <!-- Document Content Tabs -->
-          <div class="mb-8 flex gap-6 border-b border-slate-100 no-print">
-            <button 
-              v-for="tab in tabs" :key="tab.id" 
+          <div class="mb-8 flex gap-6 border-b border-slate-100 dark:border-[#334155] no-print">
+            <button
+              v-for="tab in tabs" :key="tab.id"
               @click="activeViewTab = tab.id"
-              :class="activeViewTab === tab.id ? 'text-slate-900 border-b-2 border-slate-900' : 'text-slate-400 hover:text-slate-600'"
+              :class="activeViewTab === tab.id
+                ? 'text-slate-900 dark:text-slate-100 border-b-2 border-primary-500'
+                : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'"
               class="pb-2 text-xs font-bold transition-all flex items-center gap-2"
             >
               <i :class="tab.icon" class="text-[10px]"></i>
               {{ tab.label }}
-              <span v-if="tab.count" class="text-[9px] px-1.5 py-0.5 bg-slate-100 rounded-full">{{ tab.count }}</span>
+              <span v-if="tab.count" class="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-[#334155] dark:text-slate-300 rounded-full">{{ tab.count }}</span>
             </button>
           </div>
 
@@ -215,8 +217,8 @@
                 <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest m-0">Registro de Actividad</h3>
                 <button @click="showAddDailyLog = true" class="px-4 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg shadow-md hover:shadow-lg transition-all">Nueva Entrada</button>
               </div>
-              <div class="space-y-6 relative pl-6 border-l border-slate-100">
-                <div v-for="log in sortedDailyLogs" :key="log._id" class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm relative group hover:shadow-md transition-all">
+              <div class="space-y-6 relative pl-6 border-l border-slate-100 dark:border-[#334155]">
+                <div v-for="log in sortedDailyLogs" :key="log._id" class="bg-white dark:bg-[#1e293b] p-5 rounded-2xl border border-slate-100 dark:border-[#334155] shadow-sm relative group hover:shadow-md transition-all">
                   <div class="absolute -left-[31px] top-6 w-2.5 h-2.5 bg-white rounded-full border-2 border-slate-200 group-hover:border-primary-500 transition-colors"></div>
                   <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-3">
