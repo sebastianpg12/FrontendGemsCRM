@@ -54,7 +54,7 @@
            <PermissionGuard :permissions="['create-team']" :fallback="false">
             <button 
               @click="showCreateModal = true"
-              class="w-9 h-9 bg-violet-600 hover:bg-violet-700 text-white rounded-xl shadow-lg shadow-violet-200 transition-all active:scale-95 flex items-center justify-center"
+              class="w-9 h-9 bg-violet-600 hover:bg-violet-700 text-white rounded-xl shadow-lg shadow-violet-500/20 transition-all active:scale-95 flex items-center justify-center"
             >
               <i class="fas fa-plus text-xs"></i>
             </button>
@@ -274,7 +274,7 @@
                          <button
                            type="button"
                            @click="formData.departmentRole = 'leader'"
-                           :class="formData.departmentRole === 'leader' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-100' : 'bg-slate-50 text-slate-500 border-slate-200'"
+                           :class="formData.departmentRole === 'leader' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-slate-50 text-slate-500 border-slate-200'"
                            class="p-3 rounded-2xl border text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2"
                          >
                            <i class="fas fa-crown"></i> Líder
@@ -290,7 +290,7 @@
 
              <div class="flex gap-4 pt-10">
                 <button type="button" @click="closeModal" class="flex-1 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest hover:bg-slate-50 rounded-2xl transition-all">Cancelar</button>
-                <button type="submit" :disabled="isSubmitting" class="flex-[2] py-4 bg-violet-600 text-[11px] font-black text-white uppercase tracking-widest rounded-2xl shadow-lg shadow-violet-200 hover:bg-violet-700 transition-all">
+                <button type="submit" :disabled="isSubmitting" class="flex-[2] py-4 bg-violet-600 text-[11px] font-black text-white uppercase tracking-widest rounded-2xl shadow-lg shadow-violet-500/20 hover:bg-violet-700 transition-all">
                    {{ isSubmitting ? 'Guardando...' : (showCreateModal ? 'Crear Colaborador' : 'Actualizar Información') }}
                 </button>
              </div>
