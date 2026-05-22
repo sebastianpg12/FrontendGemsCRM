@@ -91,12 +91,14 @@
     <!-- ══ Main grid ═════════════════════════════════════════════════════ -->
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
 
-      <!-- ── Left: AI Insights + Agenda ──────────────────────────────── -->
+      <!-- ── Left: AI Insights + Agenda en dos columnas ──────────────── -->
       <div class="xl:col-span-2 flex flex-col gap-3">
 
-        <AIInsightsWidget />
+        <!-- Fila de dos columnas: Insights | Agenda -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <AIInsightsWidget />
 
-        <!-- Agenda -->
+          <!-- Agenda -->
         <div class="bg-white border border-slate-100 rounded-2xl overflow-hidden">
           <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-50">
             <div class="flex items-center gap-2.5">
@@ -121,7 +123,7 @@
             <p class="text-[11px] text-slate-400 font-black uppercase tracking-wide">Sin actividades próximas</p>
           </div>
 
-          <div v-else class="max-h-[360px] overflow-y-auto custom-scrollbar">
+          <div v-else class="max-h-[320px] overflow-y-auto custom-scrollbar">
             <div v-for="(act, idx) in agendaActivities" :key="act._id"
               class="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50/30 transition-colors border-l-2"
               :class="[
@@ -147,6 +149,7 @@
           </div>
         </div>
 
+        </div><!-- /grid md:grid-cols-2 -->
       </div>
 
       <!-- ── Right column ─────────────────────────────────────────────── -->
