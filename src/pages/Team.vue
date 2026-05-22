@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#F8FAFC] p-8 pb-24 font-['Inter',sans-serif]">
+  <div class="min-h-screen bg-[#F8FAFC] dark:bg-[#0f172a] p-8 pb-24 font-['Inter',sans-serif]">
     <!-- Top Controls & Departments (Minimalist) -->
     <div class="flex flex-col gap-6 mb-8">
       <!-- Departments Mini-Overview -->
@@ -7,7 +7,7 @@
         <div
           v-for="dept in ['TI', 'Comercial', 'Marketing', 'Customer Success']"
           :key="dept"
-          class="bg-white border border-slate-100 rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-sm hover:shadow-md transition-all group"
+          class="bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-sm hover:shadow-md transition-all group"
         >
           <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs"
             :class="{
@@ -47,7 +47,7 @@
 
         <!-- Add & Stats (Floating right on desktop) -->
         <div class="md:ml-auto flex items-center gap-2">
-           <div class="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-100 rounded-xl shadow-sm">
+           <div class="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-xl shadow-sm">
              <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
              <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">{{ activeMembers }} Activos</span>
            </div>
@@ -63,7 +63,7 @@
       </div>
 
       <!-- Filters & Search (Ultra-Compact) -->
-      <div class="bg-white border border-slate-100 rounded-2xl p-2 shadow-sm flex flex-col md:flex-row items-center gap-3">
+      <div class="bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-2xl p-2 shadow-sm flex flex-col md:flex-row items-center gap-3">
          <div class="flex-1 relative group w-full">
             <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] group-focus-within:text-violet-500 transition-colors"></i>
             <input 
@@ -101,7 +101,7 @@
     <!-- Team List View (Compact & Efficient) -->
     <div class="space-y-2 pb-20">
       <!-- Header de Tabla Compacta -->
-      <div class="px-8 py-3 flex items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 mb-2">
+      <div class="px-8 py-3 flex items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-[#334155] mb-2">
         <div class="min-w-[280px]">Colaborador</div>
         <div class="w-24 text-center">Rol</div>
         <div class="flex-1">Departamento</div>
@@ -112,7 +112,7 @@
       <div 
         v-for="member in filteredMembers" 
         :key="member._id"
-        class="group bg-white border border-slate-100 rounded-2xl p-2 px-6 shadow-sm hover:shadow-md hover:border-violet-200 transition-all duration-200 flex items-center justify-between gap-6"
+        class="group bg-white dark:bg-[#1a2438] border border-slate-100 dark:border-[#334155] rounded-2xl p-2 px-6 shadow-sm hover:shadow-md hover:border-violet-200 dark:hover:border-violet-500/40 transition-all duration-200 flex items-center justify-between gap-6"
       >
         <!-- Left: Basic Info & Avatar -->
         <div class="flex items-center gap-4 min-w-[280px]">

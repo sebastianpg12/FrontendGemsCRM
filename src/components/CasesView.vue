@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen bg-white font-['Inter',sans-serif] text-slate-900 flex overflow-hidden">
-    
+  <div class="min-h-screen bg-white dark:bg-[#0f172a] font-['Inter',sans-serif] text-slate-900 dark:text-slate-100 flex overflow-hidden">
+
     <!-- Notion-Style Sidebar -->
-    <aside class="w-64 md:w-72 bg-[#FBFBFA] border-r border-[#EFEFEF] flex flex-col h-screen transition-all duration-300">
+    <aside class="w-64 md:w-72 bg-[#FBFBFA] dark:bg-[#1a2438] border-r border-[#EFEFEF] dark:border-[#334155] flex flex-col h-screen transition-all duration-300">
       <div class="p-4 flex items-center justify-between">
         <div class="flex items-center gap-2 px-2">
-          <div class="w-6 h-6 bg-slate-900 rounded flex items-center justify-center text-white text-[10px] font-black">W</div>
-          <span class="text-sm font-semibold text-slate-700">Workspace</span>
+          <div class="w-6 h-6 bg-slate-800 dark:bg-[#334155] rounded flex items-center justify-center text-white text-[10px] font-black">W</div>
+          <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Workspace</span>
         </div>
         <button @click="openCreateModal" class="p-1.5 hover:bg-slate-200 rounded-md text-slate-500 transition-colors">
           <i class="fas fa-plus text-xs"></i>
@@ -15,18 +15,18 @@
 
       <!-- Mode Switcher -->
       <div class="px-4 py-2">
-        <div class="flex bg-slate-200/50 p-1 rounded-lg">
-          <button 
+        <div class="flex bg-slate-200/50 dark:bg-[#0f172a] p-1 rounded-lg">
+          <button
             @click="viewMode = 'cases'"
-            :class="viewMode === 'cases' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+            :class="viewMode === 'cases' ? 'bg-white dark:bg-[#1e293b] text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
             class="flex-1 py-1 text-[10px] font-bold rounded-md transition-all flex items-center justify-center gap-1.5"
           >
             <i class="fas fa-tasks text-[9px]"></i>
             Casos
           </button>
-          <button 
+          <button
             @click="viewMode = 'wiki'"
-            :class="viewMode === 'wiki' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+            :class="viewMode === 'wiki' ? 'bg-white dark:bg-[#1e293b] text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
             class="flex-1 py-1 text-[10px] font-bold rounded-md transition-all flex items-center justify-center gap-1.5"
           >
             <i class="fas fa-book text-[9px]"></i>
@@ -42,7 +42,7 @@
           <input 
             v-model="searchTerm"
             placeholder="Buscar..."
-            class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+            class="w-full pl-8 pr-3 py-1.5 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg text-xs focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
           />
         </div>
       </div>
@@ -64,7 +64,7 @@
               <button 
                 v-for="c in group" :key="c._id"
                 @click="selectCase(c)"
-                :class="selectedCase?._id === c._id ? 'bg-[#EFEFEF] text-slate-900' : 'text-slate-600 hover:bg-slate-200/50'"
+                :class="selectedCase?._id === c._id ? 'bg-[#EFEFEF] dark:bg-[#1e293b] text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-[#1e293b]'"
                 class="w-full text-left px-3 py-1.5 rounded-md text-xs transition-all flex items-center gap-2 group"
               >
                 <i class="far fa-file-alt text-[10px] text-slate-400 group-hover:text-primary-500"></i>
@@ -89,7 +89,7 @@
               <button 
                 v-for="w in group" :key="w._id"
                 @click="selectedWiki = w"
-                :class="selectedWiki?._id === w._id ? 'bg-[#EFEFEF] text-slate-900' : 'text-slate-600 hover:bg-slate-200/50'"
+                :class="selectedWiki?._id === w._id ? 'bg-[#EFEFEF] dark:bg-[#1e293b] text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-[#1e293b]'"
                 class="w-full text-left px-3 py-1.5 rounded-md text-xs transition-all flex items-center gap-2 group"
               >
                 <i class="far fa-file-alt text-[10px] text-slate-400 group-hover:text-primary-500"></i>
@@ -103,7 +103,7 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto relative bg-white custom-scrollbar">
+    <main class="flex-1 overflow-y-auto relative bg-white dark:bg-[#0f172a] custom-scrollbar">
       
       <!-- Cases Detail Mode -->
       <template v-if="viewMode === 'cases'">
