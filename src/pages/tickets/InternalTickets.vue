@@ -134,12 +134,12 @@
         <div 
           v-for="col in columns" 
           :key="col.id" 
-          class="flex flex-col flex-1 min-w-[350px] bg-gradient-to-b from-slate-50/50 to-white rounded-[2rem] border border-slate-200/60 shadow-inner"
+          class="flex flex-col flex-1 min-w-[350px] bg-slate-50/50 dark:bg-[#161f2e] rounded-[2rem] border border-slate-200/60 dark:border-[#334155] shadow-inner"
         >
           <!-- Column Header -->
           <div class="flex-shrink-0 p-5 pb-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <div :class="col.textColor" class="w-8 h-8 rounded-xl bg-white shadow-sm border border-slate-100 flex items-center justify-center">
+              <div :class="col.textColor" class="w-8 h-8 rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-slate-100 dark:border-[#334155] flex items-center justify-center">
                 <i :class="col.icon" class="text-xs"></i>
               </div>
               <div>
@@ -168,7 +168,7 @@
               v-for="ticket in getTicketsByStatus(col.id)" 
               :key="ticket._id"
               @click="openTicketDetail(ticket)"
-            class="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-primary-300/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
+            class="bg-white dark:bg-[#1e293b] rounded-2xl p-4 border border-slate-100 dark:border-[#334155] shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-primary-300/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
             >
               <!-- Card Content -->
               <div class="flex items-center justify-between">

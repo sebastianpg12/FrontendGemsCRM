@@ -254,6 +254,31 @@ body {
 .dark ::-webkit-scrollbar-thumb { background: rgba(51,65,85,0.6); }
 .dark .custom-scrollbar { scrollbar-color: rgba(51,65,85,0.6) transparent; }
 
+/* ── Fondos con opacidad (Tailwind /XX modifier) ────────────────── */
+.dark .bg-slate-50\/50  { background-color: #0f172a !important; }
+.dark .bg-slate-50\/80  { background-color: rgba(15,23,42,0.9) !important; }
+.dark .bg-white\/80     { background-color: rgba(30,41,59,0.9) !important; }
+.dark .bg-white\/60     { background-color: rgba(30,41,59,0.7) !important; }
+
+/* ── Gradientes con colores claros → invisibles en dark ─────────── */
+/* Neutraliza fondos tipo from-slate-50/50 to-white que crean manchas */
+.dark .from-white             { --tw-gradient-from: #1e293b !important; }
+.dark .to-white               { --tw-gradient-to:   #1e293b !important; }
+.dark .from-slate-50\/50      { --tw-gradient-from: transparent !important; }
+.dark .from-slate-50\/40      { --tw-gradient-from: transparent !important; }
+.dark .from-primary-50\/40    { --tw-gradient-from: transparent !important; }
+.dark .from-amber-100         { --tw-gradient-from: rgba(245,158,11,0.15) !important; }
+.dark .from-slate-100         { --tw-gradient-from: #1e293b !important; }
+.dark .from-slate-200         { --tw-gradient-from: #334155 !important; }
+.dark .to-transparent         { --tw-gradient-to:   transparent !important; }
+
+/* Casos especiales: backdrop / glassmorphism */
+.dark .backdrop-blur-md { backdrop-filter: blur(12px); }
+.dark [class*="bg-gradient-to-b"][class*="from-slate-50"],
+.dark [class*="bg-gradient-to-b"][class*="from-white"] {
+  background: #1e293b !important;
+}
+
 /* ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Accent dinámico (ThemeCustomizer) ────────────────────────────────

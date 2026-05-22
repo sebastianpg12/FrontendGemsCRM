@@ -78,7 +78,7 @@
           <div class="hidden md:block overflow-x-auto">
             <table class="min-w-full divide-y divide-slate-100">
               <thead>
-                <tr class="bg-slate-50/50">
+                <tr class="bg-slate-50/50 dark:bg-[#161f2e]">
                   <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
                   <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Empresa</th>
                   <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Contacto</th>
@@ -86,11 +86,11 @@
                   <th class="px-4 py-3 text-right text-[9px] font-black text-slate-400 uppercase tracking-widest">Acciones</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-50">
+              <tbody class="divide-y divide-slate-50 dark:divide-[#334155]">
                 <tr 
                   v-for="client in paginatedClients" 
                   :key="client._id"
-                  class="hover:bg-slate-50/80 transition-all group"
+                  class="hover:bg-slate-50/80 dark:hover:bg-[#1e293b] transition-all group"
                 >
                   <td class="px-4 py-2.5 whitespace-nowrap">
                     <div class="flex items-center gap-3">

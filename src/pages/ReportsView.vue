@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col gap-6 h-full min-h-0 bg-slate-50/50 p-4 lg:p-8 relative">
-    <!-- Background Accents -->
-    <div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-primary-50/40 to-transparent pointer-events-none"></div>
+  <div class="flex flex-col gap-6 h-full min-h-0 p-4 lg:p-8 relative">
+    <!-- Background Accents — hidden in dark mode -->
+    <div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-primary-50/40 to-transparent pointer-events-none dark:hidden"></div>
 
     <!-- ══ Page Tabs ══════════════════════════════════════════════════ -->
-    <div class="flex-shrink-0 flex items-center gap-1 bg-white/80 backdrop-blur-md rounded-2xl p-1.5 border border-white/60 shadow-[0_4px_20px_rgb(0,0,0,0.03)] self-start relative z-20">
+    <div class="flex-shrink-0 flex items-center gap-1 bg-white dark:bg-[#1e293b] rounded-2xl p-1.5 border border-slate-100 dark:border-[#334155] shadow-sm self-start relative z-20">
       <button @click="activePageTab = 'reports'"
         class="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all"
         :class="activePageTab === 'reports' ? 'bg-gradient-to-r from-primary-600 to-indigo-500 text-white shadow-[0_4px_12px_rgb(99,102,241,0.3)]' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'">
