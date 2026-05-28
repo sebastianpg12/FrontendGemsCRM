@@ -1,10 +1,10 @@
-<template>
+﻿<template>
   <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
     <!-- Header -->
     <div class="px-6 py-5 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white">
       <div class="flex items-start justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white shadow-lg shadow-violet-500/30">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white shadow-lg shadow-primary-500/30">
             <i class="fas fa-wand-magic-sparkles text-sm"></i>
           </div>
           <div>
@@ -46,7 +46,7 @@
             v-model="company"
             type="text"
             placeholder="Ej. Acme Corp"
-            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all"
+            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all"
           />
         </div>
         <div>
@@ -55,7 +55,7 @@
             v-model="contactName"
             type="text"
             placeholder="Nombre del contacto"
-            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all"
+            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all"
           />
         </div>
       </div>
@@ -73,7 +73,7 @@
             v-model="inputText"
             rows="5"
             placeholder="Describe la empresa, sector, problemas detectados, oportunidades, contexto comercial... o haz click en Dictar y habla."
-            class="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all resize-none leading-relaxed"
+            class="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all resize-none leading-relaxed"
           ></textarea>
         </div>
         <div class="flex justify-between items-center mt-1.5 px-1">
@@ -86,27 +86,39 @@
 
       <!-- Architect-only fields -->
       <transition name="expand">
-        <div v-if="mode === 'architect'" class="space-y-3 pt-1 border-t border-slate-100">
+        <div v-if="mode === 'architect'" class="space-y-4 pt-3 border-t border-slate-100">
+          <!-- Módulos a proponer -->
           <div>
-            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
-              Mapa conceptual (opcional)
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">
+              Módulos GEMS Hub a incluir
             </label>
-            <textarea
-              v-model="conceptMap"
-              rows="3"
-              placeholder="Describe el flujo o pega un esquema JSON con la arquitectura propuesta..."
-              class="w-full px-3.5 py-3 bg-slate-900 text-emerald-300 border border-slate-700 rounded-xl text-xs font-mono placeholder-slate-500 focus:border-violet-500 outline-none transition-all resize-none"
-            ></textarea>
+            <div class="flex flex-wrap gap-2">
+              <button
+                v-for="mod in GEMS_MODULES"
+                :key="mod.id"
+                type="button"
+                @click="toggleModule(mod.id)"
+                :class="[
+                  'px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all flex items-center gap-1.5',
+                  selectedModules.includes(mod.id)
+                    ? 'bg-primary-600 text-white border-primary-600 shadow-sm shadow-primary-500/20'
+                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-primary-300 hover:text-primary-600'
+                ]"
+              >
+                <span>{{ mod.icon }}</span>{{ mod.label }}
+              </button>
+            </div>
           </div>
+          <!-- Notas adicionales -->
           <div>
             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
-              Notas técnicas (opcional)
+              Contexto adicional (opcional)
             </label>
             <textarea
               v-model="techNotes"
               rows="2"
-              placeholder="APIs, integraciones, restricciones técnicas..."
-              class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all resize-none"
+              placeholder="Integraciones existentes, restricciones, presupuesto aproximado..."
+              class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all resize-none"
             ></textarea>
           </div>
         </div>
@@ -162,7 +174,7 @@
         :class="[
           'w-full py-3.5 rounded-xl text-sm font-black transition-all flex items-center justify-center gap-2 shadow-lg',
           canGenerate && !loading
-            ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white hover:shadow-violet-500/30 active:scale-[0.99]'
+            ? 'bg-gradient-to-br from-primary-600 to-primary-800 text-white hover:shadow-primary-500/30 active:scale-[0.99]'
             : 'bg-slate-100 text-slate-400 cursor-not-allowed',
         ]"
       >
@@ -193,14 +205,32 @@ const { showError } = useNotifications()
 
 type Mode = 'simple' | 'architect'
 
+const GEMS_MODULES = [
+  { id: 'clientes', icon: '👥', label: 'Clientes' },
+  { id: 'tickets', icon: '🎫', label: 'Tickets' },
+  { id: 'casos', icon: '📁', label: 'Casos' },
+  { id: 'kanban', icon: '✅', label: 'Kanban' },
+  { id: 'chat', icon: '💬', label: 'Chat' },
+  { id: 'reportes', icon: '📊', label: 'Reportes' },
+  { id: 'actividades', icon: '📅', label: 'Seguimientos' },
+  { id: 'ia', icon: '🤖', label: 'Asistente IA' },
+  { id: 'minutas', icon: '🧾', label: 'Minutas' },
+]
+
 const mode = ref<Mode>('simple')
 const company = ref('')
 const contactName = ref('')
 const inputText = ref('')
-const conceptMap = ref('')
 const techNotes = ref('')
+const selectedModules = ref<string[]>([])
 const loading = ref(false)
 const fileInput = ref<HTMLInputElement | null>(null)
+
+const toggleModule = (id: string) => {
+  const idx = selectedModules.value.indexOf(id)
+  if (idx === -1) selectedModules.value.push(id)
+  else selectedModules.value.splice(idx, 1)
+}
 
 interface ImageItem {
   mimeType: string
@@ -255,9 +285,15 @@ const buildPrompt = () => {
   const userCompany = sanitize(company.value || '(empresa no especificada)')
   const userContact = sanitize(contactName.value || '(no especificado)')
 
+  const modulesLine = selectedModules.value.length
+    ? `MÓDULOS A PROPONER: ${selectedModules.value.join(', ')}`
+    : ''
+
   if (mode.value === 'simple') {
-    return `Eres un consultor comercial senior de GEMS, una empresa de soluciones tecnológicas
-(telefonía IP, agentes de IA, CRM, automatización de WhatsApp, integraciones API).
+    return `Eres un consultor comercial senior de GEMS Innovations.
+Nuestro producto es GEMS Hub: plataforma operativa todo-en-uno para equipos de servicio
+(gestión de clientes, tickets de soporte, casos internos, Kanban de tareas, chat de equipo,
+reportes, seguimientos, asistente IA y minutas). Alternativa económica a HubSpot y Salesforce.
 
 Genera una propuesta comercial breve y persuasiva en formato Markdown para este prospecto.
 
@@ -269,18 +305,20 @@ ${userBrief}
 """
 
 ESTRUCTURA REQUERIDA:
-1. **Resumen ejecutivo** (3 líneas, qué problema resolvemos)
-2. **Dolor identificado** (lo que están sufriendo en sus palabras)
-3. **Solución propuesta** (qué servicios de GEMS aplican)
-4. **Beneficios clave** (3 bullets, ROI tangible)
-5. **Próximos pasos** (CTA claro)
+1. **Resumen ejecutivo** (3 líneas, qué problema resolvemos con GEMS Hub)
+2. **Dolor identificado** (lo que están sufriendo hoy, en sus propias palabras)
+3. **Solución con GEMS Hub** (módulos concretos que aplican a su caso)
+4. **Beneficios clave** (3 bullets, ROI tangible vs lo que usan hoy)
+5. **Próximos pasos** (CTA claro: demo, piloto 30 días, etc.)
 
 Tono: profesional, directo, en español neutral. Sin alucinar datos. Si falta info, márcala como "(a confirmar con cliente)".
-Si las imágenes adjuntas muestran capturas, dashboards o diagramas, úsalas como contexto adicional.`
+Si hay imágenes adjuntas, úsalas como contexto adicional.`
   }
 
-  return `Eres un arquitecto de soluciones de GEMS (telefonía IP/Asterisk, agentes de IA voz+texto,
-CRM, automatización de WhatsApp con InConcert/Cloud API, webhooks, dashboards realtime, consultoría técnica).
+  return `Eres un consultor técnico-comercial de GEMS Innovations.
+Nuestro producto es GEMS Hub: plataforma operativa todo-en-uno (clientes, tickets, casos, Kanban,
+chat, reportes, seguimientos, asistente IA, minutas). Corre en Oracle Cloud Free Tier.
+Apuntamos a: agencias creativas, empresas de TI/MSP y mantenimiento/field service (5–150 personas).
 
 Genera una propuesta TÉCNICA-COMERCIAL detallada en Markdown.
 
@@ -292,26 +330,26 @@ DIAGNÓSTICO DEL CLIENTE:
 ${userBrief}
 """
 
-${conceptMap.value ? `MAPA CONCEPTUAL PROPUESTO:\n"""\n${sanitize(conceptMap.value)}\n"""\n` : ''}
-${techNotes.value ? `NOTAS TÉCNICAS:\n"""\n${sanitize(techNotes.value)}\n"""\n` : ''}
+${modulesLine ? modulesLine + '\n' : ''}
+${techNotes.value ? `CONTEXTO ADICIONAL:\n"""\n${sanitize(techNotes.value)}\n"""\n` : ''}
 
 ESTRUCTURA REQUERIDA:
 ## 1. Diagnóstico
-3 retos críticos detectados, ordenados por impacto.
+3 retos críticos detectados en su operación, ordenados por impacto.
 
-## 2. Arquitectura propuesta
-Componentes, integraciones (APIs, webhooks, BD), flujo de datos. Sé concreto.
+## 2. Solución con GEMS Hub
+Qué módulos resuelven cada dolor. Sé concreto y específico a su sector.
 
-## 3. Servicios GEMS aplicables
-Tabla con: Servicio | Por qué | Esfuerzo estimado.
+## 3. Comparativa de valor
+Tabla: Situación actual | Con GEMS Hub | Beneficio.
 
-## 4. Plan de implementación
-Fases con entregables y duración aproximada.
+## 4. Plan de adopción
+3 fases: arranque (semana 1), adopción (mes 1), optimización (mes 2+).
 
-## 5. Pitch comercial
-Cierre vendedor en 4-5 líneas con propuesta de valor única.
+## 5. Cierre comercial
+Propuesta de valor única en 4–5 líneas. Por qué GEMS Hub vs HubSpot/Salesforce/Excel.
 
-Tono: técnico pero comercial. Sin alucinar precios. Si las imágenes muestran arquitecturas, intégralas en el análisis.`
+Tono: técnico pero comercial. Sin alucinar precios. Si hay imágenes, intégralas en el análisis.`
 }
 
 const generateName = async (proposalText: string): Promise<string> => {
@@ -343,22 +381,29 @@ const generate = async () => {
 
     const name = await generateName(proposal)
 
+    // Crea el prospecto con el diagnóstico como mensaje del asesor
     const created = await prospectService.create({
       prospectName: name,
       company: company.value.trim() || undefined,
-      initialMessage: `**Diagnóstico inicial:**\n${inputText.value}\n\n---\n\n${proposal}`,
+      initialMessage: inputText.value.trim(),
     })
 
     if (contactName.value.trim()) {
       prospectService.setMetadata(created._id, { contactName: contactName.value.trim() })
     }
 
+    // Agrega la propuesta IA como mensaje del asistente (se renderiza en markdown)
+    await prospectService.sendMessage(created._id, {
+      role: 'assistant',
+      content: proposal,
+    })
+
     // Reset form
     company.value = ''
     contactName.value = ''
     inputText.value = ''
-    conceptMap.value = ''
     techNotes.value = ''
+    selectedModules.value = []
     images.value = []
 
     emit('created', created._id)

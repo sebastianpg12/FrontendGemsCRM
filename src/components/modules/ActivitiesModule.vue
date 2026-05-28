@@ -1,14 +1,14 @@
-<template>
+﻿<template>
   <div class="space-y-6">
     <!-- Header with stats -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-primary-500/20">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-gray-400 text-sm">Total Actividades</p>
             <p class="text-2xl font-bold text-white">{{ activities.length }}</p>
           </div>
-          <i class="fas fa-tasks text-purple-400 text-2xl"></i>
+          <i class="fas fa-tasks text-primary-400 text-2xl"></i>
         </div>
       </div>
       
@@ -70,7 +70,7 @@
 
       <button
         @click="$emit('create')"
-        class="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105 shadow-lg shadow-purple-500/25"
+        class="px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200 transform hover:scale-105 shadow-lg shadow-primary-500/25"
       >
         <i class="fas fa-plus mr-2"></i>
         Nueva Actividad
@@ -78,13 +78,13 @@
     </div>
 
     <!-- Activities Timeline -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 overflow-hidden">
+    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-primary-500/20 overflow-hidden">
       <div class="p-6">
         <h3 class="text-xl font-bold text-white mb-6">Línea de Tiempo de Actividades</h3>
         
         <!-- Loading state -->
         <div v-if="loading" class="flex items-center justify-center py-12">
-          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
         </div>
 
         <!-- Activities list -->
@@ -155,7 +155,7 @@
               <div class="flex items-center space-x-2">
                 <button
                   @click="editActivity(activity)"
-                  class="p-2 text-gray-400 hover:text-purple-400 transition-colors"
+                  class="p-2 text-gray-400 hover:text-primary-400 transition-colors"
                   title="Editar"
                 >
                   <i class="fas fa-edit"></i>
@@ -186,7 +186,7 @@
           <p class="text-gray-400 mb-6">Comienza creando tu primera actividad</p>
           <button
             @click="$emit('create')"
-            class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105"
+            class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200 transform hover:scale-105"
           >
             <i class="fas fa-plus mr-2"></i>
             Crear Actividad
@@ -314,7 +314,6 @@ const formatDate = (dateString: string) => {
 }
 
 const editActivity = (activity: any) => {
-  console.log('Edit activity:', activity)
   // Emit edit event
 }
 
@@ -338,6 +337,5 @@ const deleteActivity = async (activity: any) => {
 // Load data on mount
 onMounted(() => {
   // In production, this would load from API/store
-  console.log('Activities module loaded')
 })
 </script>

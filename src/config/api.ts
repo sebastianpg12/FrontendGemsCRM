@@ -1,9 +1,6 @@
 // Configuración automática de API según el ambiente
 const getBaseURL = (): string => {
-  const devURL = 'https://gems-crm-backend.onrender.com/api'
-  const prodURL = 'https://gems-crm-backend.onrender.com/api'
-  
-  return prodURL
+  return import.meta.env.VITE_API_URL || 'https://gems-crm-backend.onrender.com/api'
 }
 
 // Función para obtener timeout personalizado
@@ -25,15 +22,6 @@ export const isDebugMode = (): boolean => {
 }
 
 
-if (isDebugMode()) {
-  console.log('🌐 API Configuration:', {
-    environment: import.meta.env.DEV ? 'development' : 'production',
-    hostname: window.location.hostname,
-    baseURL: API_CONFIG.BASE_URL,
-    timeout: API_CONFIG.TIMEOUT,
-    mode: import.meta.env.MODE
-  })
-}
 
 export const ENDPOINTS = {
   CLIENTS: '/clients',

@@ -1,9 +1,9 @@
-<template>
+﻿<template>
   <div class="space-y-6">
     <!-- Header -->
     <button
       @click="showCreateForm = true"
-      class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 flex items-center gap-2 font-medium transform hover:scale-105 shadow-lg shadow-purple-500/25"
+      class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200 flex items-center gap-2 font-medium transform hover:scale-105 shadow-lg shadow-primary-500/25"
     >
       <i class="fas fa-plus"></i>
       <span>Nuevo Caso</span>
@@ -61,16 +61,16 @@
     </div>
 
     <!-- Filtros y búsqueda -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-purple-500/20">
+    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-primary-500/20">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            <i class="fas fa-tag mr-2 text-purple-400"></i>Tipo
+            <i class="fas fa-tag mr-2 text-primary-400"></i>Tipo
           </label>
           <select
             v-model="filters.tipo"
             @change="loadCases"
-            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           >
             <option value="">Todos los tipos</option>
             <option value="documento">Documentos</option>
@@ -81,12 +81,12 @@
         
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            <i class="fas fa-flag mr-2 text-purple-400"></i>Estado
+            <i class="fas fa-flag mr-2 text-primary-400"></i>Estado
           </label>
           <select
             v-model="filters.estado"
             @change="loadCases"
-            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           >
             <option value="">Todos los estados</option>
             <option value="abierto">Abierto</option>
@@ -98,12 +98,12 @@
         
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            <i class="fas fa-star mr-2 text-purple-400"></i>Prioridad
+            <i class="fas fa-star mr-2 text-primary-400"></i>Prioridad
           </label>
           <select
             v-model="filters.prioridad"
             @change="loadCases"
-            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           >
             <option value="">Todas las prioridades</option>
             <option value="baja">Baja</option>
@@ -115,21 +115,21 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            <i class="fas fa-search mr-2 text-purple-400"></i>Buscar
+            <i class="fas fa-search mr-2 text-primary-400"></i>Buscar
           </label>
           <input
             v-model="searchTerm"
             type="text"
             placeholder="Buscar casos..."
-            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+            class="w-full bg-gray-700/50 border border-gray-600/50 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           />
         </div>
       </div>
     </div>
 
     <!-- Loading State -->
-    <div v-if="loading" class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-12 border border-purple-500/20 text-center">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
+    <div v-if="loading" class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-12 border border-primary-500/20 text-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
       <p class="text-gray-400">Cargando casos...</p>
     </div>
 
@@ -153,7 +153,7 @@
     <!-- Cases List -->
     <div v-else class="space-y-4">
       <!-- Empty State -->
-      <div v-if="filteredCases.length === 0" class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-12 border border-purple-500/20 text-center">
+      <div v-if="filteredCases.length === 0" class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-12 border border-primary-500/20 text-center">
         <i class="fas fa-folder text-6xl text-gray-500 mb-4"></i>
         <h3 class="text-xl font-medium text-gray-300 mb-2">
           {{ searchTerm || hasActiveFilters ? 'No se encontraron casos' : 'No hay casos registrados' }}
@@ -164,7 +164,7 @@
         <button
           v-if="!searchTerm && !hasActiveFilters"
           @click="showCreateForm = true"
-          class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 flex items-center gap-2 mx-auto font-medium transform hover:scale-105 shadow-lg shadow-purple-500/25"
+          class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200 flex items-center gap-2 mx-auto font-medium transform hover:scale-105 shadow-lg shadow-primary-500/25"
         >
           <i class="fas fa-plus"></i>
           Crear Primer Caso
@@ -176,7 +176,7 @@
         <div 
           v-for="caseItem in filteredCases" 
           :key="caseItem._id"
-          class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-purple-500/20 hover:shadow-xl hover:border-purple-400/40 transition-all duration-300 transform hover:scale-105 cursor-pointer"
+          class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg border border-primary-500/20 hover:shadow-xl hover:border-primary-400/40 transition-all duration-300 transform hover:scale-105 cursor-pointer"
           @click="selectCase(caseItem)"
         >
           <div class="p-6">

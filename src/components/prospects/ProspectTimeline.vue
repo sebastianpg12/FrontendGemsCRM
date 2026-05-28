@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="p-5">
     <div v-if="timeline.length" class="relative">
       <!-- Vertical line -->
@@ -41,17 +41,17 @@ interface Props {
 defineProps<Props>()
 
 const STYLES: Record<TimelineEventType, { icon: string; bg: string }> = {
-  created:           { icon: 'fa-sparkles',     bg: 'bg-gradient-to-br from-violet-500 to-fuchsia-500' },
+  created:           { icon: 'fa-sparkles',     bg: 'bg-gradient-to-br from-primary-500 to-primary-700' },
   status:            { icon: 'fa-arrow-right',  bg: 'bg-gradient-to-br from-primary-500 to-cyan-500' },
-  outreach_email:    { icon: 'fa-envelope',     bg: 'bg-gradient-to-br from-violet-500 to-fuchsia-500' },
+  outreach_email:    { icon: 'fa-envelope',     bg: 'bg-gradient-to-br from-primary-500 to-primary-700' },
   outreach_whatsapp: { icon: 'fa-comment-dots', bg: 'bg-gradient-to-br from-emerald-500 to-emerald-600' },
   outreach_call:     { icon: 'fa-phone',        bg: 'bg-gradient-to-br from-cyan-500 to-primary-500' },
   note:              { icon: 'fa-note-sticky',  bg: 'bg-gradient-to-br from-amber-400 to-amber-500' },
   task_created:      { icon: 'fa-list-check',   bg: 'bg-gradient-to-br from-indigo-500 to-primary-500' },
   task_completed:    { icon: 'fa-check',        bg: 'bg-gradient-to-br from-emerald-500 to-emerald-600' },
   converted:         { icon: 'fa-trophy',       bg: 'bg-gradient-to-br from-amber-500 to-orange-500' },
-  ai_summary:        { icon: 'fa-wand-magic-sparkles', bg: 'bg-gradient-to-br from-fuchsia-500 to-pink-500' },
-  ai_action:         { icon: 'fa-brain',        bg: 'bg-gradient-to-br from-violet-500 to-purple-500' },
+  ai_summary:        { icon: 'fa-wand-magic-sparkles', bg: 'bg-gradient-to-br from-primary-500 to-primary-700' },
+  ai_action:         { icon: 'fa-brain',        bg: 'bg-gradient-to-br from-primary-500 to-purple-500' },
 }
 
 const styleFor = (type: TimelineEventType) => STYLES[type] || { icon: 'fa-circle', bg: 'bg-slate-400' }

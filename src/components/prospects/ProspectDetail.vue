@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="grid grid-cols-12 gap-3 h-full">
     <!-- Main pane -->
     <div class="col-span-12 lg:col-span-9 flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden min-h-0">
@@ -6,7 +6,7 @@
       <div class="px-5 py-4 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white">
         <div class="flex items-start justify-between gap-3 mb-3">
           <div class="flex items-center gap-3 min-w-0 flex-1">
-            <div class="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-black flex-shrink-0 bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-violet-500/30">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-black flex-shrink-0 bg-gradient-to-br from-primary-500 to-primary-700 text-white shadow-lg shadow-primary-500/30">
               {{ initials }}
             </div>
             <div class="min-w-0 flex-1">
@@ -56,7 +56,7 @@
       <!-- Action Bar -->
       <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-2 overflow-x-auto custom-scrollbar bg-white">
         <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap mr-1">Atacar:</span>
-        <button @click="openOutreach('email')" class="px-3 py-1.5 bg-violet-50 hover:bg-violet-100 text-violet-700 border border-violet-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
+        <button @click="openOutreach('email')" class="px-3 py-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 border border-primary-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
           <i class="fas fa-envelope text-[10px]"></i>Email
         </button>
         <button @click="openOutreach('whatsapp')" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
@@ -252,7 +252,7 @@ const isStageActive = (stage: ProspectStatus, idx: number) => {
 const activeColorFor = (stage: ProspectStatus) => {
   if (props.prospect.status === 'perdido') return 'bg-rose-400'
   if (stage === 'ganado') return 'bg-emerald-500'
-  return 'bg-gradient-to-r from-violet-500 to-fuchsia-500'
+  return 'bg-gradient-to-r from-primary-500 to-primary-700'
 }
 
 const tabs = computed(() => [

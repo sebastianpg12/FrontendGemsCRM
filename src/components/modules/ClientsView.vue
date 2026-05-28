@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="space-y-6">
     <!-- Header con controles -->
     <div class="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
@@ -27,7 +27,7 @@
             :class="[
               'px-3 py-2 text-sm font-medium rounded-md transition-colors',
               viewMode === 'list' 
-                ? 'bg-purple-600 text-white' 
+                ? 'bg-primary-600 text-white' 
                 : 'text-gray-400 hover:text-white'
             ]"
           >
@@ -60,7 +60,7 @@
 
     <!-- Loading state -->
     <div v-if="loading" class="flex items-center justify-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
     </div>
 
     <!-- Error state -->
@@ -90,7 +90,7 @@
         <!-- Header del cliente -->
         <div class="flex items-start justify-between mb-4">
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+            <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
               <span class="text-white font-bold text-lg">
                 {{ getInitials(client.name) }}
               </span>
@@ -205,7 +205,7 @@
                 <div class="flex items-center gap-2">
                   <button
                     @click="$emit('edit', client)"
-                    class="p-2 text-gray-400 hover:text-purple-400 hover:bg-purple-500/20 rounded-lg transition-all duration-200"
+                    class="p-2 text-gray-400 hover:text-primary-400 hover:bg-primary-500/20 rounded-lg transition-all duration-200"
                   >
                     <i class="fas fa-edit"></i>
                   </button>
@@ -225,7 +225,7 @@
 
     <!-- Estado vacío -->
     <div v-else-if="!loading && filteredClients.length === 0" class="text-center py-12">
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20">
         <i class="fas fa-users text-6xl text-gray-600 mb-4"></i>
         <h3 class="text-xl font-bold text-white mb-2">No hay clientes</h3>
         <p class="text-gray-400 mb-6">
@@ -233,7 +233,7 @@
         </p>
         <button
           @click="$emit('create')"
-          class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
+          class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200"
         >
           <i class="fas fa-plus mr-2"></i>
           Crear Primer Cliente

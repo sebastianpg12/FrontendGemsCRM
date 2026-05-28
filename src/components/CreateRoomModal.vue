@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="fixed inset-0 z-50 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen px-4">
       <!-- Backdrop -->
@@ -36,7 +36,7 @@
                 :class="[
                   'p-3 rounded-lg border transition-all text-center',
                   formData.type === type.value
-                    ? 'border-purple-500 bg-purple-500/20 text-white'
+                    ? 'border-primary-500 bg-primary-500/20 text-white'
                     : 'border-white/20 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
                 ]"
               >
@@ -57,7 +57,7 @@
               type="text"
               required
               :placeholder="getNamePlaceholder()"
-              class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
+              class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500"
             />
           </div>
 
@@ -71,7 +71,7 @@
               v-model="formData.description"
               rows="3"
               placeholder="Describe el propósito de este chat..."
-              class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 resize-none"
+              class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500 resize-none"
             ></textarea>
           </div>
 
@@ -83,7 +83,7 @@
             
             <!-- Loading -->
             <div v-if="loading" class="flex items-center justify-center py-4">
-              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-500"></div>
+              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-500"></div>
             </div>
             
             <!-- Users List -->
@@ -95,13 +95,13 @@
                 :class="[
                   'flex items-center p-2 rounded-lg cursor-pointer transition-colors',
                   selectedUsers.includes(user._id)
-                    ? 'bg-purple-500/30 border border-purple-500/50'
+                    ? 'bg-primary-500/30 border border-primary-500/50'
                     : 'hover:bg-white/10'
                 ]"
               >
                 <div class="flex items-center flex-1">
                   <!-- Avatar -->
-                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mr-3">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-primary-700 flex items-center justify-center mr-3">
                     <span class="text-white text-xs font-medium">
                       {{ user.name.charAt(0).toUpperCase() }}
                     </span>
@@ -121,7 +121,7 @@
                   :class="[
                     'w-4 h-4 rounded border flex items-center justify-center',
                     selectedUsers.includes(user._id)
-                      ? 'bg-purple-500 border-purple-500'
+                      ? 'bg-primary-500 border-primary-500'
                       : 'border-gray-400'
                   ]"
                 >
@@ -155,7 +155,7 @@
             <button
               type="submit"
               :disabled="!canCreate"
-              class="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+              class="flex-1 px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
             >
               {{ creating ? 'Creando...' : 'Crear chat' }}
             </button>

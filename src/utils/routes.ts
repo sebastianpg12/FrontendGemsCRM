@@ -38,7 +38,6 @@ export const isDevelopment = (): boolean => {
 
 // Log de configuración de rutas
 export const logRouteConfig = (): void => {
-  console.log('🛣️ Route Configuration:', {
     baseUrl: getBaseUrl(),
     environment: isProduction() ? 'production' : 'development',
     hostname: window.location.hostname,

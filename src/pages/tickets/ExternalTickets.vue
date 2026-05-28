@@ -11,7 +11,7 @@
              <i class="fas fa-headset text-sm"></i>
            </div>
            <div>
-             <h1 class="text-lg font-black text-slate-800 tracking-tight">GEMS CRM</h1>
+             <h1 class="text-lg font-black text-slate-800 tracking-tight">GEMS Hub</h1>
              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Centro de Soporte</p>
            </div>
          </div>

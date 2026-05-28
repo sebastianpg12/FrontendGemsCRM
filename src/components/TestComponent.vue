@@ -5,5 +5,4 @@
 </template>
 
 <script setup lang="ts">
-console.log('🧪 COMPONENTE TEST CARGADO')
 </script>

@@ -1,4 +1,5 @@
 import { API_CONFIG } from '../config/api'
+import { authHeaders } from './authHeaders'
 
 export interface WikiArticle {
   _id?: string
@@ -31,13 +32,13 @@ class WikiService {
     if (filters.categoria) queryParams.append('categoria', filters.categoria)
     if (filters.search) queryParams.append('search', filters.search)
     
-    const response = await fetch(`${this.apiUrl}?${queryParams}`)
+    const response = await fetch(`${this.apiUrl}?${queryParams}`, { headers: authHeaders() })
     if (!response.ok) throw new Error('Error al obtener la wiki')
     return await response.json()
   }
 
   async getById(id: string): Promise<WikiArticle> {
-    const response = await fetch(`${this.apiUrl}/${id}`)
+    const response = await fetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
     if (!response.ok) throw new Error('Error al obtener el artículo')
     return await response.json()
   }
@@ -117,7 +118,7 @@ class WikiService {
   async linkTicket(wikiId: string, ticketId: string): Promise<WikiArticle> {
     const response = await fetch(`${this.apiUrl}/${wikiId}/tickets`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify({ ticketId })
     })
     if (!response.ok) throw new Error('Error al vincular el ticket')

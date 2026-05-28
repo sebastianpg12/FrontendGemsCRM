@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="relative" @keydown.escape.stop="open = false">
     <button
       @click="toggle"
@@ -29,7 +29,7 @@
         <div v-if="onlineCount === 0" class="text-center text-gray-400 text-sm py-6">Nadie en línea</div>
         <ul v-else class="space-y-1">
           <li v-for="u in onlineList" :key="u._id" class="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/5">
-            <div class="relative w-7 h-7 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-semibold">
+            <div class="relative w-7 h-7 rounded-full bg-gradient-to-r from-primary-500 to-primary-700 flex items-center justify-center text-white text-xs font-semibold">
               {{ u.name.charAt(0).toUpperCase() }}
               <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-dark-900"></span>
             </div>

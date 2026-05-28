@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <!-- Header para Roles -->
     <div class="flex justify-between items-center mb-6">
@@ -8,7 +8,7 @@
       </div>
       <button
         @click="openModal()"
-        class="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all flex items-center gap-2"
+        class="px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all flex items-center gap-2"
       >
         <i class="fas fa-plus"></i> Nuevo Rol
       </button>
@@ -16,15 +16,15 @@
 
     <!-- Lista de Roles -->
     <div v-if="loading" class="text-center py-8">
-      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-400"></div>
     </div>
     
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="role in roles" :key="role._id" class="bg-gray-800/80 rounded-xl p-5 border border-purple-500/20 shadow-lg">
+      <div v-for="role in roles" :key="role._id" class="bg-gray-800/80 rounded-xl p-5 border border-primary-500/20 shadow-lg">
         <div class="flex justify-between items-start mb-4">
           <div>
             <h3 class="text-xl font-bold text-white">{{ role.name }}</h3>
-            <span v-if="role.isSystem" class="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded mt-1 inline-block">Rol del Sistema</span>
+            <span v-if="role.isSystem" class="text-xs bg-primary-500/20 text-primary-400 px-2 py-1 rounded mt-1 inline-block">Rol del Sistema</span>
             <span v-else class="text-xs bg-primary-500/20 text-primary-400 px-2 py-1 rounded mt-1 inline-block">Personalizado</span>
           </div>
           <div class="flex gap-2">
@@ -47,7 +47,7 @@
 
     <!-- Modal Formulario de Rol -->
     <div v-if="showModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div class="bg-gray-800 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col border border-purple-500/20">
+      <div class="bg-gray-800 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col border border-primary-500/20">
         
         <div class="p-6 border-b border-gray-700 flex justify-between items-center">
           <h3 class="text-2xl font-bold text-white">{{ editingRole ? 'Editar Rol' : 'Nuevo Rol' }}</h3>
@@ -70,7 +70,7 @@
           
           <div class="space-y-6">
             <div class="flex items-center gap-2">
-              <input type="checkbox" v-model="form.permissions.dashboard" id="perm-dashboard" class="rounded border-gray-600 text-purple-600 focus:ring-purple-600 bg-gray-700">
+              <input type="checkbox" v-model="form.permissions.dashboard" id="perm-dashboard" class="rounded border-gray-600 text-primary-600 focus:ring-primary-600 bg-gray-700">
               <label for="perm-dashboard" class="text-gray-200">Acceso al Dashboard</label>
             </div>
 
@@ -79,23 +79,23 @@
               <h5 class="text-md font-medium text-purple-300 mb-3 capitalize">{{ module.label }}</h5>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div v-if="'view' in form.permissions[module.key]" class="flex items-center gap-2">
-                  <input type="checkbox" v-model="form.permissions[module.key]['view']" :id="`perm-${module.key}-view`" class="rounded border-gray-600 text-purple-600 focus:ring-purple-600">
+                  <input type="checkbox" v-model="form.permissions[module.key]['view']" :id="`perm-${module.key}-view`" class="rounded border-gray-600 text-primary-600 focus:ring-primary-600">
                   <label :for="`perm-${module.key}-view`" class="text-sm text-gray-300">Ver</label>
                 </div>
                 <div v-if="'create' in form.permissions[module.key]" class="flex items-center gap-2">
-                  <input type="checkbox" v-model="form.permissions[module.key]['create']" :id="`perm-${module.key}-create`" class="rounded border-gray-600 text-purple-600 focus:ring-purple-600">
+                  <input type="checkbox" v-model="form.permissions[module.key]['create']" :id="`perm-${module.key}-create`" class="rounded border-gray-600 text-primary-600 focus:ring-primary-600">
                   <label :for="`perm-${module.key}-create`" class="text-sm text-gray-300">Crear</label>
                 </div>
                 <div v-if="'edit' in form.permissions[module.key]" class="flex items-center gap-2">
-                  <input type="checkbox" v-model="form.permissions[module.key]['edit']" :id="`perm-${module.key}-edit`" class="rounded border-gray-600 text-purple-600 focus:ring-purple-600">
+                  <input type="checkbox" v-model="form.permissions[module.key]['edit']" :id="`perm-${module.key}-edit`" class="rounded border-gray-600 text-primary-600 focus:ring-primary-600">
                   <label :for="`perm-${module.key}-edit`" class="text-sm text-gray-300">Editar</label>
                 </div>
                 <div v-if="'delete' in form.permissions[module.key]" class="flex items-center gap-2">
-                  <input type="checkbox" v-model="form.permissions[module.key]['delete']" :id="`perm-${module.key}-delete`" class="rounded border-gray-600 text-purple-600 focus:ring-purple-600">
+                  <input type="checkbox" v-model="form.permissions[module.key]['delete']" :id="`perm-${module.key}-delete`" class="rounded border-gray-600 text-primary-600 focus:ring-primary-600">
                   <label :for="`perm-${module.key}-delete`" class="text-sm text-gray-300">Eliminar</label>
                 </div>
                 <div v-if="'export' in form.permissions[module.key]" class="flex items-center gap-2">
-                  <input type="checkbox" v-model="form.permissions[module.key]['export']" :id="`perm-${module.key}-export`" class="rounded border-gray-600 text-purple-600 focus:ring-purple-600">
+                  <input type="checkbox" v-model="form.permissions[module.key]['export']" :id="`perm-${module.key}-export`" class="rounded border-gray-600 text-primary-600 focus:ring-primary-600">
                   <label :for="`perm-${module.key}-export`" class="text-sm text-gray-300">Exportar</label>
                 </div>
               </div>
@@ -106,7 +106,7 @@
 
         <div class="p-6 border-t border-gray-700 flex justify-end gap-3 bg-gray-800/80">
           <button @click="closeModal" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-500">Cancelar</button>
-          <button @click="saveRole" :disabled="saving || !form.name.trim()" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-500 disabled:opacity-50">
+          <button @click="saveRole" :disabled="saving || !form.name.trim()" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-500 disabled:opacity-50">
             {{ saving ? 'Guardando...' : 'Guardar Perfil' }}
           </button>
         </div>

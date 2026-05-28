@@ -1,4 +1,5 @@
 import { API_CONFIG } from '../config/api'
+import { authHeaders } from './authHeaders'
 
 export interface Transaction {
   _id?: string
@@ -30,7 +31,7 @@ class AccountingService {
   // TRANSACTIONS
   async getAllTransactions(): Promise<Transaction[]> {
     try {
-      const response = await fetch(`${this.baseUrl}/transactions`)
+      const response = await fetch(`${this.baseUrl}/transactions`, { headers: authHeaders() })
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`)
       }
@@ -45,9 +46,7 @@ class AccountingService {
     try {
       const response = await fetch(`${this.baseUrl}/transactions`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify(transaction),
       })
       if (!response.ok) {
@@ -64,9 +63,7 @@ class AccountingService {
     try {
       const response = await fetch(`${this.baseUrl}/transactions/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify(transaction),
       })
       if (!response.ok) {
@@ -96,7 +93,7 @@ class AccountingService {
   // FIXED EXPENSES
   async getAllFixedExpenses(): Promise<FixedExpense[]> {
     try {
-      const response = await fetch(`${this.baseUrl}/fixed-expenses`)
+      const response = await fetch(`${this.baseUrl}/fixed-expenses`, { headers: authHeaders() })
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`)
       }
@@ -111,9 +108,7 @@ class AccountingService {
     try {
       const response = await fetch(`${this.baseUrl}/fixed-expenses`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify(expense),
       })
       if (!response.ok) {
@@ -130,9 +125,7 @@ class AccountingService {
     try {
       const response = await fetch(`${this.baseUrl}/fixed-expenses/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify(expense),
       })
       if (!response.ok) {
@@ -162,7 +155,7 @@ class AccountingService {
   // RECURRING PAYMENTS
   async getRecurringPayments(): Promise<Transaction[]> {
     try {
-      const response = await fetch(`${this.baseUrl}/recurring-payments`)
+      const response = await fetch(`${this.baseUrl}/recurring-payments`, { headers: authHeaders() })
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`)
       }
@@ -177,9 +170,7 @@ class AccountingService {
     try {
       const response = await fetch(`${this.baseUrl}/transactions/${id}/mark-paid`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
       })
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`)
@@ -205,7 +196,7 @@ class AccountingService {
         url += `?startDate=${startDate}&endDate=${endDate}`
       }
       
-      const response = await fetch(url)
+      const response = await fetch(url, { headers: authHeaders() })
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`)
       }

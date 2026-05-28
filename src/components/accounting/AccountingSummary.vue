@@ -1,13 +1,13 @@
-<template>
+﻿<template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Resumen Financiero -->
     <div class="lg:col-span-2">
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-primary-500/20">
         <h3 class="text-xl font-bold text-white mb-6">Resumen Financiero</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Ingresos vs Egresos -->
-          <div class="bg-gradient-to-br from-green-500/10 to-red-500/10 rounded-xl p-4 border border-purple-500/20">
+          <div class="bg-gradient-to-br from-green-500/10 to-red-500/10 rounded-xl p-4 border border-primary-500/20">
             <h4 class="text-lg font-semibold text-white mb-4">Flujo de Efectivo</h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center">
@@ -44,7 +44,7 @@
           <!-- Gastos Fijos -->
           
           <!-- Gastos Fijos -->
-          <div class="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-xl p-4 border border-purple-500/20">
+          <div class="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-xl p-4 border border-primary-500/20">
             <h4 class="text-lg font-semibold text-white mb-4">Gastos Fijos</h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center">
@@ -82,7 +82,7 @@
 
     <!-- Pagos Pendientes -->
     <div>
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-primary-500/20">
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-xl font-bold text-white">Pagos Pendientes</h3>
           <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-medium">
@@ -99,7 +99,7 @@
           <div
             v-for="pago in summary.pagos_pendientes"
             :key="pago._id"
-            class="p-4 bg-gradient-to-r from-red-500/10 to-pink-500/10 rounded-xl border border-red-500/20"
+            class="p-4 bg-gradient-to-r from-red-500/10 to-primary-700/10 rounded-xl border border-red-500/20"
           >
             <div class="flex justify-between items-start">
               <div class="flex-1">

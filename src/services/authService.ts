@@ -37,33 +37,56 @@ apiClient.interceptors.response.use(
   }
 )
 
+export interface OrganizationSummary {
+  _id: string
+  name: string
+  slug: string
+  branding?: {
+    displayName?: string | null
+    logo?: string | null
+    primaryColor?: string
+    accentColor?: string
+    darkMode?: boolean
+  }
+}
+
+export interface MembershipSummary {
+  organizationId: string
+  organizationName: string
+  organizationSlug: string
+  branding?: OrganizationSummary['branding']
+  role: string
+  isOwner: boolean
+  status: string
+}
+
 export interface AuthResponse {
   success: boolean
   message?: string
   user?: User
   token?: string
+  organization?: OrganizationSummary | null
+  memberships?: MembershipSummary[]
+  requiresOrgSelection?: boolean
+  membership?: { role: string; isOwner: boolean; permissions: any } | null
 }
 
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      console.log('🔗 Making login request to:', `${apiClient.defaults.baseURL}/auth/login`)
-      console.log('📤 Credentials:', credentials)
-      
       const response = await apiClient.post('/auth/login', credentials)
-      
-      console.log('📥 Backend response:', response.data)
-      console.log('📊 Response status:', response.status)
-      
       if (response.data.success) {
-        console.log('✅ Login successful, processing data:', response.data.data)
+        const d = response.data.data
         return {
           success: true,
-          user: response.data.data.user,  // Los datos están en response.data.data
-          token: response.data.data.token
+          user: d.user,
+          token: d.token,
+          organization: d.organization || null,
+          memberships: d.memberships || [],
+          membership: d.membership || null,
+          requiresOrgSelection: !!d.requiresOrgSelection
         }
       } else {
-        console.log('❌ Login failed from backend:', response.data)
         return {
           success: false,
           message: response.data.message || 'Credenciales inválidas'
@@ -100,12 +123,43 @@ export const authService = {
   async verifyToken(): Promise<AuthResponse> {
     try {
       const response = await apiClient.post('/auth/verify-token')
+      const d = response.data.data || {}
       return {
         success: response.data.success,
-        user: response.data.user
+        user: d.user,
+        organization: d.organization || null,
+        requiresOrgSelection: !!d.requiresOrgSelection
       }
     } catch (error) {
       return { success: false }
+    }
+  },
+
+  async selectOrganization(organizationId: string): Promise<AuthResponse> {
+    try {
+      const response = await apiClient.post('/auth/select-org', { organizationId })
+      if (response.data.success) {
+        const d = response.data.data
+        return {
+          success: true,
+          user: d.user,
+          token: d.token,
+          organization: d.organization,
+          membership: d.membership
+        }
+      }
+      return { success: false, message: response.data.message }
+    } catch (error: any) {
+      return { success: false, message: error.response?.data?.message || 'Error al seleccionar organización' }
+    }
+  },
+
+  async getMemberships(): Promise<MembershipSummary[]> {
+    try {
+      const response = await apiClient.get('/auth/memberships')
+      return response.data.data || []
+    } catch {
+      return []
     }
   },
 

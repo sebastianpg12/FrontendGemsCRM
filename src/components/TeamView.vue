@@ -1,10 +1,10 @@
-<template>
+﻿<template>
   <div class="p-6">
     <!-- Header with Tabs -->
     <div class="mb-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-          <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 class="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
             Equipo y Accesos
           </h1>
           <p class="text-gray-600 mt-2">Gestiona los miembros de tu equipo y sus permisos</p>
@@ -12,7 +12,7 @@
         <button
           v-if="activeTab === 'miembros'"
           @click="openCreateForm"
-          class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
+          class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
         >
           <i class="fas fa-plus"></i>
           Agregar Miembro
@@ -23,13 +23,13 @@
       <div class="flex space-x-1 border-b border-gray-700">
         <button
           @click="activeTab = 'miembros'"
-          :class="['px-6 py-3 text-sm font-medium transition-colors border-b-2', activeTab === 'miembros' ? 'border-purple-500 text-purple-400' : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500']"
+          :class="['px-6 py-3 text-sm font-medium transition-colors border-b-2', activeTab === 'miembros' ? 'border-primary-500 text-primary-400' : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500']"
         >
           <i class="fas fa-users mr-2"></i> Miembros del Equipo
         </button>
         <button
           @click="activeTab = 'roles'"
-          :class="['px-6 py-3 text-sm font-medium transition-colors border-b-2', activeTab === 'roles' ? 'border-purple-500 text-purple-400' : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500']"
+          :class="['px-6 py-3 text-sm font-medium transition-colors border-b-2', activeTab === 'roles' ? 'border-primary-500 text-primary-400' : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500']"
         >
           <i class="fas fa-id-badge mr-2"></i> Roles y Perfiles
         </button>
@@ -39,19 +39,19 @@
     <!-- Miembros Tab Content -->
     <div v-if="activeTab === 'miembros'">
     <!-- Filters and Search -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-purple-500/20">
+    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-primary-500/20">
       <div class="flex flex-col sm:flex-row gap-4">
         <div class="flex-1">
           <input
             v-model="searchTerm"
             type="text"
             placeholder="Buscar por nombre, rol o email..."
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
         <select
           v-model="roleFilter"
-          class="px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+          class="px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
         >
           <option value="" class="bg-gray-700">Todos los roles</option>
           <option v-for="role in allAvailableRoles" :key="role._id || role.name" :value="role.name" class="bg-gray-700">
@@ -63,7 +63,7 @@
 
     <!-- Team Grid -->
     <div v-if="loading" class="text-center py-8">
-      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-400"></div>
       <p class="mt-2 text-gray-300">Cargando miembros del equipo...</p>
     </div>
 
@@ -76,27 +76,27 @@
       <div
         v-for="member in filteredMembers"
         :key="member._id"
-        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-purple-500/20 hover:border-purple-400 transform hover:-translate-y-1"
+        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-500/20 hover:border-primary-400 transform hover:-translate-y-1"
       >
         <!-- Member Avatar -->
         <div class="flex items-center mb-4">
-          <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+          <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white font-bold text-lg">
             {{ getInitials(member.name) }}
           </div>
           <div class="ml-4 flex-1">
             <h3 class="font-bold text-white text-lg">{{ member.name }}</h3>
-            <p class="text-purple-400 font-medium">{{ member.role }}</p>
+            <p class="text-primary-400 font-medium">{{ member.role }}</p>
           </div>
         </div>
 
         <!-- Member Info -->
         <div class="space-y-3 mb-4">
           <div class="flex items-center text-gray-300">
-            <i class="fas fa-envelope w-4 mr-3 text-purple-400"></i>
+            <i class="fas fa-envelope w-4 mr-3 text-primary-400"></i>
             <span class="text-sm">{{ member.email }}</span>
           </div>
           <div class="flex items-center text-gray-300">
-            <i class="fas fa-calendar w-4 mr-3 text-purple-400"></i>
+            <i class="fas fa-calendar w-4 mr-3 text-primary-400"></i>
             <span class="text-sm">Desde {{ formatDate(member.createdAt) }}</span>
           </div>
         </div>

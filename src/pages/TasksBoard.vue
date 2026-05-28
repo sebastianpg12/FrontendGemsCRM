@@ -166,7 +166,7 @@
     <!-- Loading -->
     <div v-if="loading" class="flex flex-col items-center justify-center py-24 gap-4">
       <div class="w-16 h-16 border-4 border-primary-100 border-t-primary-500 rounded-full animate-spin"></div>
-      <p class="text-[10px] font-black text-primary-500 uppercase tracking-[0.2em]">Sincronizando GEMS CRM...</p>
+      <p class="text-[10px] font-black text-primary-500 uppercase tracking-[0.2em]">Sincronizando GEMS Hub...</p>
     </div>
 
     <!-- Kanban View -->
@@ -338,7 +338,7 @@
       <div class="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center border border-slate-100 mb-8 animate-bounce duration-[3s]">
         <i class="fas fa-rocket text-4xl text-primary-200"></i>
       </div>
-      <h3 class="text-2xl font-black text-slate-800 tracking-tight mb-2">Comienza tu viaje en GEMS CRM</h3>
+      <h3 class="text-2xl font-black text-slate-800 tracking-tight mb-2">Comienza tu viaje en GEMS Hub</h3>
       <p class="text-slate-400 font-medium text-sm max-w-md">
         Selecciona un tablero para visualizar el flujo de trabajo y comenzar a gestionar la productividad de tu equipo.
       </p>
@@ -378,7 +378,6 @@ import { clientService } from '@/services/clientService'
 import ActivityFormModal from '../components/forms/ActivityFormModal.vue'
 import { useNotifications } from '@/composables/useNotifications'
 
-console.log('TasksBoard initialized')
 
 const authStore = useAuthStore()
 const boardsStore = useBoardsStore()
@@ -398,11 +397,9 @@ const clients = ref([])
 const departments = ref<string[]>(['TI', 'Comercial', 'Marketing'])
 
 watch(showTaskModal, (val) => {
-  console.log('showTaskModal changed to:', val)
 })
 
 watch(selectedTask, (val) => {
-  console.log('selectedTask changed to:', val)
 })
 
 const filters = ref({
@@ -583,7 +580,6 @@ function openTaskModal(columnId?: string) {
 }
 
 function openTaskDetail(task: Task) {
-  console.log('openTaskDetail called with task:', task)
   selectedTask.value = task
   showTaskModal.value = true
 }
@@ -598,7 +594,6 @@ async function onTaskSaved() {
 }
 
 onMounted(async () => {
-  console.log('TasksBoard onMounted started')
   try {
     // Cargar filtros guardados
     const saved = localStorage.getItem('gems_crm_filters')
@@ -621,7 +616,6 @@ onMounted(async () => {
     ])
     teamMembers.value = team
     clients.value = cls
-    console.log('TasksBoard data loaded:', { teamMembers: team.length, clients: cls.length })
   } catch (error) {
     console.error('Error in TasksBoard onMounted:', error)
   }

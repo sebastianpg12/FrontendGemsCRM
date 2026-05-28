@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div 
     class="task-card bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow"
     :class="cardClasses"
@@ -132,7 +132,7 @@ const typeIconClass = computed(() => {
   const classes: Record<string, string> = {
     'task': 'text-primary-600',
     'bug': 'text-red-600',
-    'feature': 'text-purple-600',
+    'feature': 'text-primary-600',
     'user-story': 'text-green-600',
     'epic': 'text-orange-600'
   }

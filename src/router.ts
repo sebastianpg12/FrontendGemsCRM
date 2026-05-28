@@ -23,6 +23,9 @@ import ExternalTickets from './pages/tickets/ExternalTickets.vue'
 import DailyScrum from './pages/DailyScrum.vue'
 import Prospects from './pages/Prospects.vue'
 import ThemeSettings from './pages/ThemeSettings.vue'
+import PricingCalculator from './pages/PricingCalculator.vue'
+import OrgSelector from './pages/OrgSelector.vue'
+import OrganizationsAdmin from './pages/admin/OrganizationsAdmin.vue'
 
 const routes = [
   {
@@ -60,6 +63,18 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: { requiresGuest: true }
+  },
+  {
+    path: '/select-org',
+    name: 'OrgSelector',
+    component: OrgSelector,
+    meta: { requiresAuth: true, skipOrgCheck: true }
+  },
+  {
+    path: '/admin/organizations',
+    name: 'AdminOrganizations',
+    component: OrganizationsAdmin,
+    meta: { requiresAuth: true, requiresSuperAdmin: true }
   },
   {
     path: '/clients/:id',
@@ -198,6 +213,15 @@ const routes = [
     }
   },
   {
+    path: '/pricing-calculator',
+    name: 'PricingCalculator',
+    component: PricingCalculator,
+    meta: {
+      requiresAuth: true,
+      requiredRoles: ['admin']
+    }
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }
@@ -229,11 +253,24 @@ router.beforeEach(async (to, _from, next) => {
   if (!authStore.isAuthenticated) {
     // Try to restore session from localStorage
     const restored = await authStore.checkAuth()
-    
+
     if (!restored) {
       next('/login')
       return
     }
+  }
+
+  // Multi-tenant: si el usuario tiene varias orgs y no eligió una, mandar al selector.
+  // Excepto si la propia ruta es /select-org.
+  if (authStore.requiresOrgSelection && !to.meta.skipOrgCheck) {
+    next('/select-org')
+    return
+  }
+
+  // Rutas de super-admin
+  if (to.meta.requiresSuperAdmin && !authStore.isSuperAdmin) {
+    next('/')
+    return
   }
   
   // Check role-based permissions (legacy support)

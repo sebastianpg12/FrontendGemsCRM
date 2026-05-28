@@ -1,16 +1,16 @@
-<template>
+﻿<template>
   <form @submit.prevent="handleSubmit" class="space-y-6">
     <!-- Información básica -->
     <div class="grid grid-cols-1 gap-6">
       <div>
         <label class="block text-sm font-medium text-gray-300 mb-2">
-          <i class="fas fa-heading mr-2 text-purple-400"></i>Título del Caso *
+          <i class="fas fa-heading mr-2 text-primary-400"></i>Título del Caso *
         </label>
         <input
           v-model="form.titulo"
           type="text"
           required
-          class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+          class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           placeholder="Ej: Actualización de documentos contractuales"
         />
       </div>
@@ -18,12 +18,12 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            <i class="fas fa-tag mr-2 text-purple-400"></i>Tipo *
+            <i class="fas fa-tag mr-2 text-primary-400"></i>Tipo *
           </label>
           <select
             v-model="form.tipo"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           >
             <option value="" disabled>Selecciona un tipo</option>
             <option value="documento">Documento</option>
@@ -34,11 +34,11 @@
         
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            <i class="fas fa-flag mr-2 text-purple-400"></i>Estado
+            <i class="fas fa-flag mr-2 text-primary-400"></i>Estado
           </label>
           <select
             v-model="form.estado"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           >
             <option value="abierto">Abierto</option>
             <option value="en_progreso">En Progreso</option>
@@ -49,11 +49,11 @@
         
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            <i class="fas fa-star mr-2 text-purple-400"></i>Prioridad
+            <i class="fas fa-star mr-2 text-primary-400"></i>Prioridad
           </label>
           <select
             v-model="form.prioridad"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
           >
             <option value="baja">Baja</option>
             <option value="media">Media</option>
@@ -67,13 +67,13 @@
     <!-- Descripción -->
     <div>
       <label class="block text-sm font-medium text-gray-300 mb-2">
-        <i class="fas fa-align-left mr-2 text-purple-400"></i>Descripción *
+        <i class="fas fa-align-left mr-2 text-primary-400"></i>Descripción *
       </label>
       <textarea
         v-model="form.descripcion"
         rows="4"
         required
-        class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-none"
+        class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
         placeholder="Describe los detalles del caso..."
       ></textarea>
     </div>
@@ -81,7 +81,7 @@
     <!-- Progreso (solo para casos en progreso) -->
     <div v-if="form.estado === 'en_progreso'">
       <label class="block text-sm font-medium text-gray-300 mb-2">
-        <i class="fas fa-tasks mr-2 text-purple-400"></i>Progreso
+        <i class="fas fa-tasks mr-2 text-primary-400"></i>Progreso
       </label>
       <div class="space-y-3">
         <input
@@ -94,7 +94,7 @@
         />
         <div class="flex justify-between text-sm text-gray-400">
           <span>0%</span>
-          <span class="text-purple-400 font-medium">{{ form.progreso || 0 }}%</span>
+          <span class="text-primary-400 font-medium">{{ form.progreso || 0 }}%</span>
           <span>100%</span>
         </div>
       </div>
@@ -103,7 +103,7 @@
     <!-- Archivos adjuntos -->
     <div>
       <label class="block text-sm font-medium text-gray-300 mb-2">
-        <i class="fas fa-paperclip mr-2 text-purple-400"></i>Archivos Adjuntos
+        <i class="fas fa-paperclip mr-2 text-primary-400"></i>Archivos Adjuntos
       </label>
       
       <!-- Upload area -->
@@ -111,8 +111,8 @@
         @drop="handleDrop"
         @dragover.prevent
         @dragenter.prevent
-        class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-purple-500 transition-colors cursor-pointer"
-        :class="{ 'border-purple-500 bg-purple-500/5': isDragging }"
+        class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-primary-500 transition-colors cursor-pointer"
+        :class="{ 'border-primary-500 bg-primary-500/5': isDragging }"
       >
         <input 
           ref="fileInput"
@@ -139,7 +139,7 @@
           class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg"
         >
           <div class="flex items-center gap-3">
-            <i :class="getFileIcon(file.name)" class="text-purple-400"></i>
+            <i :class="getFileIcon(file.name)" class="text-primary-400"></i>
             <div>
               <p class="text-white text-sm">{{ file.name }}</p>
               <p class="text-gray-400 text-xs">{{ formatFileSize(file.size) }}</p>
@@ -164,7 +164,7 @@
           class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg"
         >
           <div class="flex items-center gap-3">
-            <i :class="getFileIcon(file.nombre)" class="text-purple-400"></i>
+            <i :class="getFileIcon(file.nombre)" class="text-primary-400"></i>
             <div>
               <p class="text-white text-sm">{{ file.nombre }}</p>
               <p class="text-gray-400 text-xs">{{ formatFileSize(file.tamaño) }}</p>
@@ -174,7 +174,7 @@
             <button 
               @click="downloadFile(file)"
               type="button"
-              class="text-purple-400 hover:text-purple-300 transition-colors"
+              class="text-primary-400 hover:text-purple-300 transition-colors"
             >
               <i class="fas fa-download"></i>
             </button>
@@ -210,7 +210,7 @@
       <button
         type="submit"
         :disabled="loading"
-        class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg shadow-purple-500/25"
+        class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg shadow-primary-500/25"
       >
         <span v-if="loading" class="flex items-center">
           <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -352,7 +352,6 @@ const downloadFile = (file: CaseFile) => {
     const baseUrl = API_CONFIG.BASE_URL.replace('/api', '') // Remover /api del final
     const fileUrl = `${baseUrl}${file.url}`
     
-    console.log('Downloading file:', file.nombre, 'from URL:', fileUrl)
     
     // Crear un enlace temporal y hacer clic en él
     const link = document.createElement('a')
@@ -463,19 +462,19 @@ const handleDragLeave = () => {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #8b5cf6, #ec4899);
+  background: linear-gradient(45deg, var(--brand-accent), var(--brand-accent));
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 8px var(--brand-accent-light);
 }
 
 .slider::-moz-range-thumb {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #8b5cf6, #ec4899);
+  background: linear-gradient(45deg, var(--brand-accent), var(--brand-accent));
   cursor: pointer;
   border: none;
-  box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 8px var(--brand-accent-light);
 }
 
 .slider::-webkit-slider-track {

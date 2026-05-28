@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="flex flex-col h-full">
     <!-- Chat Header -->
     <div class="p-3 bg-gray-800/50 border-b border-gray-700 flex items-center justify-between">
@@ -53,7 +53,7 @@
         v-if="loadingMore" 
         class="text-center py-2"
       >
-        <div class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-purple-400"></div>
+        <div class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-primary-400"></div>
       </div>
 
       <!-- Messages -->
@@ -75,7 +75,7 @@
             <!-- Reply indicator -->
             <div
               v-if="message.replyTo"
-              class="mb-2 p-2 rounded-lg bg-black/20 border-l-2 border-purple-400 text-xs"
+              class="mb-2 p-2 rounded-lg bg-black/20 border-l-2 border-primary-400 text-xs"
             >
               <p class="text-gray-300 font-medium">Respondiendo a:</p>
               <p class="text-gray-400">{{ getReplyContent(message.replyTo) }}</p>
@@ -144,7 +144,7 @@
         class="mb-2 p-2 bg-gray-700/50 rounded-lg flex items-center justify-between"
       >
         <div class="text-xs">
-          <p class="text-purple-400 font-medium">Respondiendo a {{ getReplyingToName }}</p>
+          <p class="text-primary-400 font-medium">Respondiendo a {{ getReplyingToName }}</p>
           <p class="text-gray-400">{{ getReplyContent(replyingTo) }}</p>
         </div>
         <button
@@ -160,7 +160,7 @@
         <!-- Emoji button -->
         <button
           @click="showEmojiPicker = !showEmojiPicker"
-          class="text-gray-400 hover:text-purple-400 transition-colors p-2 hover:bg-gray-700/50 rounded-lg"
+          class="text-gray-400 hover:text-primary-400 transition-colors p-2 hover:bg-gray-700/50 rounded-lg"
           title="Emojis"
         >
           <i class="fas fa-smile"></i>
@@ -173,7 +173,7 @@
             @keydown="handleKeydown"
             @input="handleInput"
             placeholder="Escribe un mensaje..."
-            class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-2 text-white placeholder-gray-400 resize-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+            class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-2 text-white placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
             rows="1"
             ref="messageInput"
           ></textarea>
@@ -183,7 +183,7 @@
         <button
           @click="sendMessage"
           :disabled="!newMessage.trim()"
-          class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-600 disabled:to-gray-700 text-white p-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed"
+          class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 disabled:from-gray-600 disabled:to-gray-700 text-white p-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed"
         >
           <i class="fas fa-paper-plane"></i>
         </button>
@@ -265,7 +265,7 @@ const avatarClass = computed(() => {
     case 'group':
       return 'bg-gradient-to-r from-orange-500 to-orange-600'
     case 'direct':
-      return 'bg-gradient-to-r from-purple-500 to-pink-500'
+      return 'bg-gradient-to-r from-primary-500 to-primary-700'
     default:
       return 'bg-gradient-to-r from-gray-500 to-gray-600'
   }
@@ -321,7 +321,7 @@ const showSenderName = (message: ChatMessage) => {
 const getMessageBubbleClass = (message: ChatMessage) => {
   const isOwn = message.senderId === currentUserId.value
   const baseClass = isOwn 
-    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+    ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white'
     : 'bg-gray-700 text-gray-100'
   
   return `${baseClass} ${isOwn ? 'rounded-bl-lg' : 'rounded-br-lg'}`

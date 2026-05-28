@@ -1,7 +1,7 @@
-<template>
+﻿<template>
   <div class="space-y-4 p-5">
     <!-- Add task -->
-    <div class="bg-white border border-slate-200 rounded-xl p-3 focus-within:border-violet-300 focus-within:ring-2 focus-within:ring-violet-500/10 transition-all">
+    <div class="bg-white border border-slate-200 rounded-xl p-3 focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-500/10 transition-all">
       <input
         v-model="newTitle"
         type="text"
@@ -13,7 +13,7 @@
         <input
           v-model="newDueDate"
           type="datetime-local"
-          class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-[10px] font-bold text-slate-700 outline-none focus:border-violet-500"
+          class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-[10px] font-bold text-slate-700 outline-none focus:border-primary-500"
         />
         <button
           @click="addTask"

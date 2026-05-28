@@ -1,4 +1,5 @@
 import { API_CONFIG } from '@/config/api'
+import { authHeaders } from './authHeaders'
 const API_BASE_URL = API_CONFIG.BASE_URL
 
 export interface ApiResponse<T = any> {
@@ -22,10 +23,7 @@ export class ApiService {
     const url = `${this.baseUrl}${endpoint}`
     
     const defaultOptions: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
+      headers: authHeaders((options.headers as Record<string, string>) || {})
     }
 
     try {

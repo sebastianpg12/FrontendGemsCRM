@@ -1,6 +1,6 @@
-<template>
+﻿<template>
   <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-    <div class="bg-gray-900 rounded-xl border border-purple-500/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="bg-gray-900 rounded-xl border border-primary-500/30 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
       <!-- Header -->
       <div class="flex justify-between items-center p-6 border-b border-gray-700">
         <h2 class="text-2xl font-bold text-white">
@@ -26,7 +26,7 @@
               v-model="form.titulo"
               type="text"
               required
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
               placeholder="Título del caso"
             >
           </div>
@@ -38,7 +38,7 @@
             <select
               v-model="form.tipo"
               required
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               <option value="">Seleccionar tipo</option>
               <option value="documento">Documento</option>
@@ -57,7 +57,7 @@
             v-model="form.descripcion"
             required
             rows="4"
-            class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
             placeholder="Descripción detallada del caso"
           ></textarea>
         </div>
@@ -71,7 +71,7 @@
             <select
               v-model="form.estado"
               required
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               <option value="abierto">Abierto</option>
               <option value="en_progreso">En Progreso</option>
@@ -87,7 +87,7 @@
             <select
               v-model="form.prioridad"
               required
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               <option value="baja">Baja</option>
               <option value="media">Media</option>
@@ -121,7 +121,7 @@
             </label>
             <select
               v-model="form.cliente_id"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               <option value="">Sin asignar</option>
               <option v-for="client in clients" :key="client._id" :value="client._id">
@@ -136,7 +136,7 @@
             </label>
             <select
               v-model="form.asignado_a"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               <option value="">Sin asignar</option>
               <option v-for="member in teamMembers" :key="member._id" :value="member._id">
@@ -155,7 +155,7 @@
             <input
               v-model="form.fecha_limite"
               type="date"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
           </div>
 
@@ -166,7 +166,7 @@
             <input
               v-model="form.fecha_resolucion"
               type="date"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
           </div>
         </div>
@@ -179,7 +179,7 @@
             </label>
             <select
               v-model="form.gravedad"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               <option value="">Seleccionar gravedad</option>
               <option value="menor">Menor</option>
@@ -195,7 +195,7 @@
             </label>
             <select
               v-model="form.impacto"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
               <option value="">Seleccionar impacto</option>
               <option value="bajo">Bajo</option>
@@ -214,7 +214,7 @@
             <input
               v-model="form.categoria"
               type="text"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
               placeholder="Categoría del caso"
             >
           </div>
@@ -227,14 +227,14 @@
               v-model="tagsInput"
               @keyup.enter="addTag"
               type="text"
-              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
               placeholder="Escribir tag y presionar Enter"
             >
             <div v-if="form.tags.length > 0" class="flex flex-wrap gap-2 mt-2">
               <span
                 v-for="(tag, index) in form.tags"
                 :key="index"
-                class="bg-purple-600 text-white px-2 py-1 rounded-full text-xs flex items-center space-x-1"
+                class="bg-primary-600 text-white px-2 py-1 rounded-full text-xs flex items-center space-x-1"
               >
                 <span>{{ tag }}</span>
                 <button
@@ -269,7 +269,7 @@
               <button
                 type="button"
                 @click="$refs.fileInput.click()"
-                class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+                class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors"
               >
                 Seleccionar archivos
               </button>
@@ -319,7 +319,7 @@
           <button
             type="submit"
             :disabled="submitting"
-            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50"
+            class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50"
           >
             <i v-if="submitting" class="fas fa-spinner fa-spin mr-2"></i>
             {{ isEditing ? 'Actualizar' : 'Crear' }} Caso

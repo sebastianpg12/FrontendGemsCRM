@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="fixed bottom-4 right-4 z-[9999]" data-chat-widget>
     <div class="bg-red-500 text-white p-2 rounded mb-2 text-xs">
       DEBUG: ChatWidget OK - Puerto 5174
@@ -7,7 +7,7 @@
     <!-- Chat Toggle Button -->
     <button
       @click="toggleChat"
-      class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full p-4 shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-110"
+      class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 text-white rounded-full p-4 shadow-2xl hover:shadow-primary-500/25 transition-all duration-300 transform hover:scale-110"
       :class="{ 'animate-bounce': chatStore.unreadTotal > 0 }"
     >
       <i class="fas fa-comments text-xl"></i>
@@ -22,11 +22,11 @@
     <!-- Chat Widget -->
     <div
       v-if="showWidget"
-      class="fixed bottom-20 right-4 flex flex-col bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-500/30 overflow-hidden z-[9998]"
+      class="fixed bottom-20 right-4 flex flex-col bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-primary-500/30 overflow-hidden z-[9998]"
       style="width: 380px; height: 600px;"
     >
       <!-- Header -->
-      <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-4 flex items-center justify-between">
+      <div class="bg-gradient-to-r from-primary-600 to-primary-700 p-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <i class="fas fa-comments text-white text-xl"></i>
           <div>
@@ -53,7 +53,7 @@
           <!-- Chat List -->
           <div class="flex-1 overflow-y-auto p-2 space-y-2 max-h-[480px]">
             <!-- Chat General -->
-            <div class="relative p-2 rounded-lg cursor-pointer transition-colors hover:bg-gray-700/50 group bg-purple-600/30 border border-purple-500/50">
+            <div class="relative p-2 rounded-lg cursor-pointer transition-colors hover:bg-gray-700/50 group bg-primary-600/30 border border-primary-500/50">
               <div class="flex justify-center mb-1">
                 <div class="relative">
                   <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-gradient-to-r from-primary-500 to-primary-600">
@@ -137,7 +137,7 @@
               <div class="max-w-[70%] group">
                 <div class="bg-gray-700 text-gray-100 px-4 py-2 rounded-2xl rounded-bl-lg">
                   <p class="text-xs font-medium mb-1 text-purple-300">Admin</p>
-                  <p class="text-sm">¡Bienvenidos al sistema de chat interno de GEMS CRM!</p>
+                  <p class="text-sm">¡Bienvenidos al sistema de chat interno de GEMS Hub!</p>
                   <div class="text-xs mt-1 opacity-70 text-gray-400">
                     10:30 AM
                   </div>
@@ -161,7 +161,7 @@
             <!-- Mensaje propio de ejemplo -->
             <div class="flex justify-end">
               <div class="max-w-[70%] group">
-                <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-2xl rounded-br-lg">
+                <div class="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-4 py-2 rounded-2xl rounded-br-lg">
                   <p class="text-sm">¡Excelente! ¿Cuándo estará completamente funcional?</p>
                   <div class="text-xs mt-1 opacity-70 text-purple-200">
                     10:35 AM
@@ -196,7 +196,7 @@
             
             <div class="flex items-end gap-2">
               <button
-                class="text-gray-400 hover:text-purple-400 transition-colors p-2 hover:bg-gray-700/50 rounded-lg"
+                class="text-gray-400 hover:text-primary-400 transition-colors p-2 hover:bg-gray-700/50 rounded-lg"
                 title="Emojis"
                 @click="/* TODO: abrir picker */ void 0"
               >
@@ -207,7 +207,7 @@
                 <textarea
                   v-model="demoMessage"
                   placeholder="Escribe un mensaje..."
-                  class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-2 text-white placeholder-gray-400 resize-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                  class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-2 text-white placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                   rows="1"
                   @keydown.enter.prevent="sendDemoMessage"
                 ></textarea>
@@ -216,7 +216,7 @@
               <button
                 @click="sendDemoMessage"
                 :disabled="!demoMessage.trim()"
-                class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-600 disabled:to-gray-700 text-white p-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed"
+                class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 disabled:from-gray-600 disabled:to-gray-700 text-white p-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed"
               >
                 <i class="fas fa-paper-plane"></i>
               </button>
@@ -238,12 +238,9 @@ const authStore = useAuthStore()
 const showWidget = ref(false)
 const demoMessage = ref('')
 
-console.log('💬 CHATWIDGET SCRIPT CARGADO')
 
 const toggleChat = () => {
-  console.log('🔄 Toggle chat clicked, showWidget actual:', showWidget.value)
   showWidget.value = !showWidget.value
-  console.log('🔄 Toggle chat después:', showWidget.value)
   chatStore.toggleChatWidget()
 }
 
@@ -251,7 +248,6 @@ const sendDemoMessage = () => {
   if (!demoMessage.value.trim()) return
   
   // Simular envío de mensaje
-  console.log('📨 Mensaje demo enviado:', demoMessage.value)
   
   // Limpiar input
   demoMessage.value = ''
@@ -261,43 +257,28 @@ const sendDemoMessage = () => {
 }
 
 onMounted(async () => {
-  console.log('🎯 ===== CHATWIDGET MONTADO =====')
-  console.log('🎯 Elemento montado correctamente')
-  console.log('🎯 authStore:', authStore)
-  console.log('🎯 chatStore:', chatStore)
-  console.log('🎯 authStore.isAuthenticated:', authStore.isAuthenticated)
-  console.log('🎯 showWidget inicial:', showWidget.value)
   
   // Verificar que el elemento esté en el DOM
   setTimeout(() => {
     const element = document.querySelector('[data-chat-widget]')
-    console.log('🎯 Elemento en DOM:', !!element)
     if (element) {
-      console.log('🎯 Estilos del elemento:', window.getComputedStyle(element))
-      console.log('🎯 Posición del elemento:', element.getBoundingClientRect())
     }
   }, 500)
   
   if (authStore.isAuthenticated) {
-    console.log('🎯 Usuario autenticado, inicializando chat...')
     try {
       await chatStore.initialize()
-      console.log('🎯 Chat inicializado exitosamente')
     } catch (error) {
-      console.log('⚠️ Error inicializando chat (esperado sin backend):', error)
     }
   } else {
-    console.log('🎯 Usuario NO autenticado')
   }
   
-  console.log('🎯 ===== FIN DEBUG CHATWIDGET =====')
 })
 
 onUnmounted(() => {
   try {
     chatStore.disconnect()
   } catch (error) {
-    console.log('⚠️ Error desconectando chat:', error)
   }
 })
 </script>

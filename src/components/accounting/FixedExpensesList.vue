@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -8,7 +8,7 @@
       </div>
       <button
         @click="$emit('create')"
-        class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
+        class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
       >
         <i class="fas fa-plus"></i>
         Nuevo Gasto Fijo
@@ -16,19 +16,19 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-purple-500/20">
+    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-primary-500/20">
       <div class="flex flex-col sm:flex-row gap-4">
         <div class="flex-1">
           <input
             v-model="searchTerm"
             type="text"
             placeholder="Buscar por nombre..."
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
         <select
           v-model="statusFilter"
-          class="px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+          class="px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
         >
           <option value="" class="bg-gray-700">Todos los estados</option>
           <option value="true" class="bg-gray-700">Activos</option>
@@ -39,7 +39,7 @@
 
     <!-- Loading -->
     <div v-if="loading" class="text-center py-8">
-      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-400"></div>
       <p class="mt-2 text-gray-300">Cargando gastos fijos...</p>
     </div>
 
@@ -50,7 +50,7 @@
     </div>
 
     <!-- Summary Card -->
-    <div v-else class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-2xl shadow-lg p-6 mb-6 border border-purple-500/30">
+    <div v-else class="bg-gradient-to-r from-primary-600/20 to-primary-700/20 rounded-2xl shadow-lg p-6 mb-6 border border-primary-500/30">
       <div class="text-center">
         <h3 class="text-xl font-bold text-white mb-2">Total Gastos Fijos Activos</h3>
         <p class="text-3xl font-bold text-purple-300">
@@ -67,7 +67,7 @@
       <div
         v-for="expense in filteredExpenses"
         :key="expense._id"
-        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-purple-500/20 hover:border-purple-400"
+        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-500/20 hover:border-primary-400"
       >
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <!-- Expense Info -->

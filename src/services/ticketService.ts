@@ -13,18 +13,18 @@ class TicketService {
     };
   }
 
-  // Create ticket from public form (no auth)
-  // Create ticket from public form (supports FormData for files)
-  async createPublic(data: any): Promise<{ success: boolean; data?: Ticket; error?: string }> {
+  // Create ticket from public form (no auth) — requiere orgSlug para multi-tenant.
+  // Si no se pasa, usa VITE_DEFAULT_ORG_SLUG o "gems".
+  async createPublic(data: any, orgSlug?: string): Promise<{ success: boolean; data?: Ticket; error?: string }> {
     try {
+      const slug = orgSlug || (import.meta as any).env?.VITE_DEFAULT_ORG_SLUG || 'gems';
       const isFormData = data instanceof FormData || (data && data.constructor && data.constructor.name === 'FormData');
       const headers: any = {};
       if (!isFormData) {
         headers['Content-Type'] = 'application/json';
       }
 
-
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/public`, {
+      const response = await fetch(`${this.baseUrl}${this.endpoint}/public/${encodeURIComponent(slug)}`, {
         method: 'POST',
         headers,
         body: isFormData ? data : JSON.stringify(data),

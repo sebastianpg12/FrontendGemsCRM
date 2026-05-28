@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="flex flex-col h-full">
     <!-- Messages -->
     <div ref="messagesContainer" class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-4">
@@ -14,7 +14,7 @@
       >
         <div
           v-if="msg.role === 'assistant'"
-          class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/20"
+          class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-primary-500/20"
         >
           <i class="fas fa-wand-magic-sparkles text-[11px]"></i>
         </div>
@@ -23,7 +23,7 @@
           :class="[
             'max-w-[85%] rounded-2xl px-4 py-3 shadow-sm',
             msg.role === 'user'
-              ? 'bg-violet-600 text-white rounded-br-md'
+              ? 'bg-primary-600 text-white rounded-br-md'
               : 'bg-white text-slate-800 border border-slate-100 rounded-bl-md',
           ]"
         >
@@ -34,14 +34,14 @@
           ></div>
           <p v-else class="text-[12.5px] leading-relaxed whitespace-pre-wrap font-medium">{{ msg.content }}</p>
 
-          <div class="flex items-center justify-between gap-3 mt-2 pt-2 border-t" :class="msg.role === 'user' ? 'border-violet-500/30' : 'border-slate-100'">
-            <span :class="['text-[9px] font-bold', msg.role === 'user' ? 'text-violet-200' : 'text-slate-400']">
+          <div class="flex items-center justify-between gap-3 mt-2 pt-2 border-t" :class="msg.role === 'user' ? 'border-primary-500/30' : 'border-slate-100'">
+            <span :class="['text-[9px] font-bold', msg.role === 'user' ? 'text-primary-200' : 'text-slate-400']">
               {{ formatTime(msg.timestamp) }}
             </span>
             <button
               v-if="msg.role === 'assistant'"
               @click="copyMessage(msg.content)"
-              class="text-[9px] font-bold text-slate-400 hover:text-violet-600 transition-colors flex items-center gap-1"
+              class="text-[9px] font-bold text-slate-400 hover:text-primary-600 transition-colors flex items-center gap-1"
             >
               <i class="fas fa-copy"></i>Copiar
             </button>
@@ -58,14 +58,14 @@
 
       <!-- AI thinking -->
       <div v-if="aiThinking" class="flex gap-3 justify-start">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white flex items-center justify-center flex-shrink-0">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center flex-shrink-0">
           <i class="fas fa-wand-magic-sparkles text-[11px]"></i>
         </div>
         <div class="bg-white border border-slate-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
           <div class="flex gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-bounce" style="animation-delay: 0ms"></span>
-            <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-bounce" style="animation-delay: 150ms"></span>
-            <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-bounce" style="animation-delay: 300ms"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-bounce" style="animation-delay: 0ms"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-bounce" style="animation-delay: 150ms"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-bounce" style="animation-delay: 300ms"></span>
           </div>
         </div>
       </div>
@@ -77,33 +77,26 @@
         <div class="flex-1 relative">
           <textarea
             v-model="newMessage"
-            @keydown.enter.exact.prevent="sendMessage"
+            @keydown.enter.exact.prevent="askAI"
             @keydown.shift.enter.exact="newMessage += '\n'"
             rows="1"
-            placeholder="Pregúntale a la IA o escribe una nota de seguimiento..."
-            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all resize-none max-h-32"
+            placeholder="Pregúntale al coach: ¿Qué le digo? ¿Cómo lo cierro? ¿Cuál es el siguiente paso?..."
+            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all resize-none max-h-32"
             :disabled="aiThinking"
           ></textarea>
         </div>
         <button
           @click="askAI"
           :disabled="!newMessage.trim() || aiThinking"
-          class="px-3.5 py-2.5 bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white rounded-xl text-[10px] font-black shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 whitespace-nowrap"
+          class="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-800 text-white rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center"
+          title="Enviar y obtener respuesta IA (Enter)"
         >
-          <i class="fas fa-wand-magic-sparkles text-[10px]"></i>IA
-        </button>
-        <button
-          @click="sendMessage"
-          :disabled="!newMessage.trim() || aiThinking"
-          class="w-10 h-10 bg-slate-900 text-white rounded-xl shadow hover:bg-slate-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center"
-          title="Guardar (Enter)"
-        >
-          <i class="fas fa-paper-plane text-[11px]"></i>
+          <i v-if="aiThinking" class="fas fa-circle-notch fa-spin text-[11px]"></i>
+          <i v-else class="fas fa-paper-plane text-[11px]"></i>
         </button>
       </div>
       <p class="text-[9px] text-slate-400 mt-1.5 px-1 font-medium">
-        <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[8px] font-mono">Enter</kbd> guardar ·
-        <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[8px] font-mono">IA</kbd> respuesta de Gemini ·
+        <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[8px] font-mono">Enter</kbd> enviar y obtener respuesta ·
         <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[8px] font-mono">Shift+Enter</kbd> salto de línea
       </p>
     </div>
@@ -176,31 +169,42 @@ const askAI = async () => {
   if (!userQuestion || aiThinking.value) return
 
   aiThinking.value = true
+  newMessage.value = ''
   try {
-    await prospectService.sendMessage(props.prospect._id, { role: 'user', content: userQuestion })
-    newMessage.value = ''
+    const userMsgSaved = await prospectService.sendMessage(props.prospect._id, { role: 'user', content: userQuestion })
+    emit('updated', userMsgSaved)
 
     const history = (props.prospect.messages || [])
       .slice(-8)
       .map((m) => `${m.role === 'user' ? 'Asesor' : 'IA'}: ${m.content}`)
       .join('\n\n')
 
-    const prompt = `Eres el asistente comercial de GEMS. Estás ayudando a un asesor a cerrar a este prospecto.
+    const prompt = `Eres un coach comercial interno de GEMS Innovations.
+Tu rol es ayudar AL ASESOR DE VENTAS (quien escribe) a gestionar y cerrar este prospecto.
+NUNCA hables como si le escribieras al prospecto/cliente. Siempre habla CON el asesor.
 
-PROSPECTO: ${props.prospect.prospectName}
-EMPRESA: ${props.prospect.company || '(no especificada)'}
+Nuestro producto: GEMS Hub — plataforma operativa todo-en-uno (clientes, tickets, casos,
+Kanban, chat, reportes, seguimientos, asistente IA). Alternativa a HubSpot y Salesforce.
+Nichos: agencias creativas, empresas TI/MSP, mantenimiento y field service.
 
-HISTORIAL RECIENTE:
+PROSPECTO QUE SE ESTÁ TRABAJANDO:
+- Nombre: ${props.prospect.prospectName}
+- Empresa: ${props.prospect.company || '(no especificada)'}
+- Estado en pipeline: ${props.prospect.status || 'nuevo'}
+
+HISTORIAL DE LA CONVERSACIÓN INTERNA:
 ${history}
 
-NUEVA PREGUNTA DEL ASESOR:
+PREGUNTA DEL ASESOR:
 "${userQuestion}"
 
-Responde en Markdown, en español, breve y accionable. Si te piden recomendar pasos siguientes, da máximo 3.`
+Responde siempre en primera persona dirigiéndote al asesor (usa "te recomiendo", "puedes decirle", "el próximo paso es").
+Si el asesor pide un mensaje o script para enviarle al cliente, redáctalo en un bloque separado con el label "📝 Mensaje sugerido:".
+Responde en Markdown, en español, breve y accionable. Máximo 3 pasos si piden acciones.`
 
     const aiResponse = await prospectService.generateWithGemini({ prompt })
-    const updated = await prospectService.sendMessage(props.prospect._id, { role: 'assistant', content: aiResponse })
-    emit('updated', updated)
+    const aiMsgSaved = await prospectService.sendMessage(props.prospect._id, { role: 'assistant', content: aiResponse })
+    emit('updated', aiMsgSaved)
   } catch (err: any) {
     showError(err?.message || 'No se pudo generar respuesta')
   } finally {

@@ -1,7 +1,7 @@
-<template>
+﻿<template>
   <div class="space-y-4 p-5">
     <!-- Add note -->
-    <div class="bg-white border border-slate-200 rounded-xl p-3 focus-within:border-violet-300 focus-within:ring-2 focus-within:ring-violet-500/10 transition-all">
+    <div class="bg-white border border-slate-200 rounded-xl p-3 focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-500/10 transition-all">
       <textarea
         v-model="newNote"
         rows="2"

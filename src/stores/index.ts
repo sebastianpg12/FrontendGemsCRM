@@ -554,8 +554,6 @@ export const useTeamStore = defineStore('team', {
     async fetchTeam(page = 1, limit = 500) {
       this.loading = true
       try {
-        console.log('🔄 Fetching team data...')
-        console.log('📦 Token:', localStorage.getItem('token') ? 'Present' : 'Missing')
         
         const response = await axios.get(`${API_BASE_URL}/team`, {
           params: { page, limit },
@@ -564,7 +562,6 @@ export const useTeamStore = defineStore('team', {
           }
         })
         
-        console.log('✅ Team response:', response.data)
         if (response.data.success) {
           this.members = response.data.data
           return response.data.pagination

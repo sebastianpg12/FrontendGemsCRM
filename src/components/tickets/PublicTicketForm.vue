@@ -5,7 +5,7 @@
       <!-- Premium Header Context -->
       <div v-if="!authStore.isAuthenticated" class="text-center space-y-2 mb-10">
         <h3 class="text-2xl font-black text-slate-800 tracking-tight">Centro de Soporte</h3>
-        <p class="text-slate-400 text-sm font-medium">Estamos aquí para ayudarte a crecer con GEMS CRM</p>
+        <p class="text-slate-400 text-sm font-medium">Estamos aquí para ayudarte a crecer con GEMS Hub</p>
       </div>
 
       <!-- Form -->
@@ -313,7 +313,7 @@
           </button>
 
           <p class="text-[10px] text-center text-slate-300 font-bold uppercase tracking-[0.2em] mt-6 leading-relaxed">
-            GEMS CRM Support &middot; Centro de Soluciones Digitales
+            GEMS Hub Support &middot; Centro de Soluciones Digitales
           </p>
         </div>
       </form>

@@ -18,7 +18,7 @@
       <div class="flex items-center justify-center h-20 transition-all duration-300 overflow-hidden">
         <img
           :src="themeStore?.config?.logo || '/gems-logo.png'"
-          alt="GEMS CRM"
+          alt="GEMS Hub"
           class="h-24 w-auto transition-all object-contain"
           :class="isSidebarCollapsed ? 'scale-75' : ''"
         />
@@ -200,7 +200,9 @@ import {
   ChatBubbleLeftRightIcon,
   Squares2X2Icon,
   TicketIcon,
-  PresentationChartLineIcon
+  PresentationChartLineIcon,
+  SparklesIcon,
+  SwatchIcon,
 } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
@@ -226,11 +228,22 @@ const navigation = [
   { name: 'Gestión de Casos', path: '/cases', icon: FolderIcon },
   { name: 'Equipo', path: '/team', icon: DocumentTextIcon },
   { name: 'Chat Interno', path: '/chat', icon: ChatBubbleLeftRightIcon },
+  { name: 'Prospectos IA', path: '/prospectos', icon: SparklesIcon },
+  { name: 'Personalización', path: '/settings/theme', icon: SwatchIcon },
 ]
 
 const pageTitle = computed(() => {
   const current = navigation.find(item => item.path === route.path)
-  return current ? current.name : 'Dashboard'
+  if (current) return current.name
+  // Sub-route fallback
+  const sub: Record<string, string> = {
+    '/profile': 'Mi Perfil',
+    '/reports': 'Reportes',
+    '/tasks': 'Tareas',
+    '/daily-scrum': 'Daily Scrum',
+    '/pricing-calculator': 'Calculadora de Precios',
+  }
+  return sub[route.path] ?? 'GEMS Hub'
 })
 
 const pageDescription = computed(() => {
@@ -244,7 +257,9 @@ const pageDescription = computed(() => {
     '/cases': 'Gestión estratégica y documentación wiki',
     '/team': 'Gestión del equipo de trabajo',
     '/chat': 'Chat interno del equipo',
-    '/tickets': 'Gestión de incidencias y soporte técnico'
+    '/tickets': 'Gestión de incidencias y soporte técnico',
+    '/prospectos': 'Pipeline de ventas con coach IA',
+    '/settings/theme': 'Logo, color de acento y modo oscuro',
   }
   return descriptions[route.path] || ''
 })
@@ -284,11 +299,11 @@ const getRoleDisplayName = () => {
   return roles[user.value?.role || ''] || user.value?.role || 'Usuario'
 }
 
-onMounted(() => {
+onMounted(async () => {
   chatStore.initializeChat()
   chatStore.loadChatRooms()
-  
-  // Resetear errores
   avatarError.value = false
+  // Load brand theme from DB so accent color & logo apply on startup
+  await themeStore.load()
 })
 </script>

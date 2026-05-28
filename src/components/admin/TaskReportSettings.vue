@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="space-y-6">
     <!-- Encabezado y resumen de configuración -->
     <div class="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -32,7 +32,7 @@
       <!-- Indicador de último envío -->
       <div class="flex flex-wrap gap-4 text-sm text-gray-400">
         <div v-if="settings.lastDailyRun" class="flex items-center gap-1">
-          <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+          <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
           <span>Último resumen: {{ formatDateShort(settings.lastDailyRun) }}</span>
         </div>
         <div v-if="settings.lastDueTomorrowRun" class="flex items-center gap-1">
@@ -44,18 +44,18 @@
     
     <!-- Cargando -->
     <div v-if="loading" class="flex items-center justify-center p-8">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-500"></div>
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
     </div>
     
     <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Panel de Resumen diario -->
-      <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-xl border border-purple-500/20 overflow-hidden">
+      <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-xl border border-primary-500/20 overflow-hidden">
         <!-- Encabezado -->
-        <div class="bg-gradient-to-r from-purple-900/30 to-purple-800/30 px-5 py-4 border-b border-purple-500/20">
+        <div class="bg-gradient-to-r from-primary-900/30 to-purple-800/30 px-5 py-4 border-b border-primary-500/20">
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-3">
-              <div class="p-2 rounded-lg bg-purple-700/30">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="p-2 rounded-lg bg-primary-700/30">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
@@ -71,7 +71,7 @@
                   v-model="settings.dailySummaryEnabled" 
                   @change="updateSettings"
                 >
-                <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
               </label>
             </div>
           </div>
@@ -89,7 +89,7 @@
               <div class="relative">
                 <input 
                   type="time" 
-                  class="bg-gray-700 text-white border border-gray-600 rounded-lg px-3 py-1 pr-8 focus:border-purple-500 focus:outline-none"
+                  class="bg-gray-700 text-white border border-gray-600 rounded-lg px-3 py-1 pr-8 focus:border-primary-500 focus:outline-none"
                   v-model="settings.dailySummaryTime"
                   @change="updateSettings"
                 >
@@ -99,7 +99,7 @@
               </div>
               
               <!-- Visualización en texto -->
-              <span class="text-xs text-purple-400 bg-purple-900/30 px-2 py-1 rounded">
+              <span class="text-xs text-primary-400 bg-primary-900/30 px-2 py-1 rounded">
                 {{ formatTimeDescription(settings.dailySummaryTime) }}
               </span>
             </div>
@@ -120,7 +120,7 @@
                     :class="[
                       'w-8 h-8 rounded-full text-xs font-medium transition-colors',
                       settings.dailySummaryDays?.includes(index) 
-                        ? 'bg-purple-600 text-white' 
+                        ? 'bg-primary-600 text-white' 
                         : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                     ]"
                   >
@@ -142,7 +142,7 @@
           <!-- Botón enviar ahora -->
           <div class="flex justify-end">
             <button 
-              class="mt-3 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm flex items-center gap-2"
+              class="mt-3 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors text-sm flex items-center gap-2"
               @click="sendManualDailySummary"
               :disabled="sending.daily || !whatsappStatus"
             >
@@ -388,7 +388,6 @@ async function loadSettings() {
   try {
     const data = await taskReportService.getSettings()
     settings.value = data
-    console.log('Configuraciones cargadas:', data)
   } catch (error) {
     console.error('Error cargando configuraciones:', error)
     showError('Error al cargar configuraciones', error instanceof Error ? error.message : 'Error desconocido')

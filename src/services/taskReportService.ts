@@ -1,4 +1,5 @@
 import { API_CONFIG } from '../config/api'
+import { authHeaders } from './authHeaders'
 
 class TaskReportService {
   private baseUrl = API_CONFIG.BASE_URL
@@ -8,9 +9,7 @@ class TaskReportService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/settings`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
       })
       
       if (!response.ok) {
@@ -36,9 +35,7 @@ class TaskReportService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/settings`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify(settings),
       })
       
@@ -57,9 +54,7 @@ class TaskReportService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/send-daily-summary`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
+        headers: authHeaders()
       })
       
       if (!response.ok) {
@@ -77,9 +72,7 @@ class TaskReportService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/send-due-tomorrow`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
+        headers: authHeaders()
       })
       
       if (!response.ok) {
@@ -97,9 +90,7 @@ class TaskReportService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/send-custom-report`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify({ taskIds }),
       })
       

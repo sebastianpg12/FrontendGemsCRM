@@ -436,7 +436,6 @@ const getAssignedToName = (assignedUser?: any): string => {
 
 const viewMemberActivities = (member: TeamMember & { activities: ActivityData[] }) => {
   // Implementar navegación o modal para ver todas las actividades del miembro
-  console.log('Ver actividades de:', member.name)
 }
 
 const reassignActivity = (activity: ActivityData) => {

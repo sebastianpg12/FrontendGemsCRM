@@ -1,10 +1,10 @@
-<template>
+﻿<template>
   <div class="p-5 space-y-4">
     <!-- TL;DR Card -->
-    <div class="bg-gradient-to-br from-violet-50 to-fuchsia-50 border border-violet-100 rounded-2xl p-4">
+    <div class="bg-gradient-to-br from-primary-50 to-primary-100 border border-primary-100 rounded-2xl p-4">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white flex items-center justify-center shadow-sm">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center shadow-sm">
             <i class="fas fa-wand-magic-sparkles text-[10px]"></i>
           </div>
           <h3 class="text-xs font-black text-slate-900">TL;DR del prospect</h3>
@@ -12,7 +12,7 @@
         <button
           @click="generateSummary"
           :disabled="loadingSummary"
-          class="text-[10px] font-black text-violet-600 hover:text-violet-800 disabled:opacity-50 flex items-center gap-1"
+          class="text-[10px] font-black text-primary-600 hover:text-primary-800 disabled:opacity-50 flex items-center gap-1"
         >
           <i :class="['fas text-[9px]', loadingSummary ? 'fa-circle-notch fa-spin' : summary ? 'fa-arrows-rotate' : 'fa-bolt']"></i>
           {{ loadingSummary ? 'Generando...' : summary ? 'Regenerar' : 'Generar' }}

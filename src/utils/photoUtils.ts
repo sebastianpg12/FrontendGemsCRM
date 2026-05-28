@@ -49,6 +49,5 @@ export const getUserInitials = (name?: string): string => {
  * Maneja errores de carga de imágenes
  */
 export const handleImageError = (event: Event) => {
-  console.log('Error loading user image:', event)
   // La imagen se ocultará automáticamente y se mostrarán las iniciales
 }

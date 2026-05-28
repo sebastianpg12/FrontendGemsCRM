@@ -233,7 +233,6 @@ const selectedTask = ref<Task | null>(null)
 
 function openTaskModal(columnId?: string) {
   // TODO: Implementar modal de creación de tarea
-  console.log('Open task modal for column:', columnId)
 }
 
 async function openTaskDetail(task: Task) {

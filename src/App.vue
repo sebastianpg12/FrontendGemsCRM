@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <!-- Show login page if not authenticated -->
-    <router-view v-if="!authStore.isAuthenticated || $route.path === '/login'" />
+    <!-- Rutas standalone (sin sidebar): login y selector de organización -->
+    <router-view v-if="!authStore.isAuthenticated || $route.path === '/login' || $route.path === '/select-org'" />
     
     <!-- Show main app if authenticated -->
   <div v-else class="min-h-screen bg-slate-50 dark:bg-[#0f172a]">
@@ -32,7 +32,7 @@
         >
           <img
             :src="themeStore.config.logo || '/gems-logo.png'"
-            alt="GEMS CRM"
+            alt="GEMS Hub"
             class="object-contain transition-all duration-300"
             :class="isSidebarMini ? 'h-8 w-8' : 'h-12 w-auto'"
           />
@@ -312,7 +312,7 @@ onMounted(async () => {
 
 /* ── Tooltip: entrada suave + brillo metálico tenue ─────────────── */
 @keyframes tooltip-enter {
-  from { opacity: 0; transform: translateX(-6px); }
+  from { opacity: 0; transform: translateX(-3px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
@@ -322,40 +322,40 @@ onMounted(async () => {
 }
 
 .nav-tooltip-wrap {
-  animation: tooltip-enter 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: tooltip-enter 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .nav-tooltip {
   background: linear-gradient(
     110deg,
     #1e293b 0%,
-    #2d3f55 40%,
-    rgba(255, 255, 255, 0.07) 52%,
-    #2d3f55 64%,
+    #263447 42%,
+    rgba(255, 255, 255, 0.045) 52%,
+    #263447 62%,
     #1e293b 100%
   );
   background-size: 300% auto;
-  animation: tooltip-shine 1.4s ease-out forwards;
-  border: 1px solid rgba(148, 163, 184, 0.14);
+  animation: tooltip-shine 2.8s ease-out forwards;
+  border: 1px solid rgba(148, 163, 184, 0.12);
   box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    0 4px 14px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .dark .nav-tooltip {
   background: linear-gradient(
     110deg,
     #0f172a 0%,
-    #1e293b 40%,
-    rgba(139, 92, 246, 0.1) 52%,
-    #1e293b 64%,
+    #1a2540 42%,
+    rgba(139, 92, 246, 0.065) 52%,
+    #1a2540 62%,
     #0f172a 100%
   );
   background-size: 300% auto;
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.15);
   box-shadow:
-    0 4px 18px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(139, 92, 246, 0.08);
+    0 4px 18px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(139, 92, 246, 0.05);
 }
 
 .animate-fade-in {

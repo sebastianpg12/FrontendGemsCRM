@@ -8,20 +8,21 @@ module.exports = {
   theme: {
     extend: {
       "colors": {
+        // Primary uses CSS vars so the accent color updates live without rebuild
         "primary": {
-          DEFAULT: "#8b5cf6",
-          "50": "#f5f3ff",
-          "100": "#ede9fe",
-          "200": "#ddd6fe",
-          "300": "#c4b5fd",
-          "400": "#a78bfa",
-          "500": "#8b5cf6",
-          "600": "#7c3aed",
-          "700": "#6d28d9",
-          "800": "#5b21b6",
-          "900": "#4c1d95",
-          "container": "#ede9fe",
-          "fixed": "#ddd6fe",
+          DEFAULT: "rgb(var(--p-500) / <alpha-value>)",
+          "50":  "rgb(var(--p-50)  / <alpha-value>)",
+          "100": "rgb(var(--p-100) / <alpha-value>)",
+          "200": "rgb(var(--p-200) / <alpha-value>)",
+          "300": "rgb(var(--p-300) / <alpha-value>)",
+          "400": "rgb(var(--p-400) / <alpha-value>)",
+          "500": "rgb(var(--p-500) / <alpha-value>)",
+          "600": "rgb(var(--p-600) / <alpha-value>)",
+          "700": "rgb(var(--p-700) / <alpha-value>)",
+          "800": "rgb(var(--p-800) / <alpha-value>)",
+          "900": "rgb(var(--p-900) / <alpha-value>)",
+          "container": "rgb(var(--p-100) / <alpha-value>)",
+          "fixed":     "rgb(var(--p-200) / <alpha-value>)",
         },
         "secondary": {
           DEFAULT: "#6366f1",

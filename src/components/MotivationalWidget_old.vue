@@ -1,5 +1,5 @@
-<template>
-  <div class="bg-gradient-to-br from-purple-900/20 to-indigo-900/20 backdrop-blur-xl rounded-xl shadow-lg p-3 border border-purple-500/20 animate-fade-in animation-delay-2000">
+﻿<template>
+  <div class="bg-gradient-to-br from-primary-900/20 to-indigo-900/20 backdrop-blur-xl rounded-xl shadow-lg p-3 border border-primary-500/20 animate-fade-in animation-delay-2000">
     <div class="flex items-center mb-2">
       <i class="fas fa-lightbulb text-yellow-400 mr-2 text-sm"></i>
       <h4 class="text-xs font-semibold text-white">Inspiración</h4>
@@ -8,7 +8,7 @@
     <!-- Motivational Quote - Compact -->
     <div v-if="currentContent" class="text-center">
       <div class="bg-white/5 rounded-lg p-2 border border-white/10 mb-2">
-        <i class="fas fa-quote-left text-purple-400 text-xs mb-1 block opacity-60"></i>
+        <i class="fas fa-quote-left text-primary-400 text-xs mb-1 block opacity-60"></i>
         <p class="text-white text-xs font-medium leading-tight mb-1 line-clamp-3">{{ currentContent.quote || currentContent.title }}</p>
         <p class="text-purple-300 text-xs opacity-80">- {{ currentContent.author || 'Anónimo' }}</p>
       </div>
@@ -16,7 +16,7 @@
 
     <!-- Loading state -->
     <div v-else class="text-center py-2">
-      <div class="animate-spin rounded-full h-3 w-3 border-b-2 border-purple-400 mx-auto"></div>
+      <div class="animate-spin rounded-full h-3 w-3 border-b-2 border-primary-400 mx-auto"></div>
     </div>
   </div>
 </template>
@@ -142,9 +142,7 @@ const loadTodaysContent = () => {
 }
 
 onMounted(() => {
-  console.log('[MotivationalWidget] Loading content...')
   loadTodaysContent()
-  console.log('[MotivationalWidget] Content loaded:', currentContent.value)
 })
 </script>
 

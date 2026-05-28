@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <button
     v-if="isSupported"
     type="button"
@@ -78,7 +78,7 @@ const iconSize = computed(() => {
 
 const variantClass = computed(() =>
   props.variant === 'primary'
-    ? 'bg-violet-50 hover:bg-violet-100 text-violet-700 border-violet-200'
+    ? 'bg-primary-50 hover:bg-primary-100 text-primary-700 border-primary-200'
     : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border-slate-200'
 )
 

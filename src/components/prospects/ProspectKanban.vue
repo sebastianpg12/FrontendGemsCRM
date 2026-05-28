@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="h-full overflow-x-auto custom-scrollbar bg-white rounded-2xl border border-slate-200 p-4">
     <div class="flex gap-3 h-full min-w-max">
       <div
@@ -9,7 +9,7 @@
         @drop.prevent="onDrop($event, status.value)"
         @dragenter.prevent="dragOverColumn = status.value"
         @dragleave="dragOverColumn = null"
-        :class="{ 'ring-2 ring-violet-300 ring-offset-2': dragOverColumn === status.value }"
+        :class="{ 'ring-2 ring-primary-300 ring-offset-2': dragOverColumn === status.value }"
       >
         <!-- Column Header -->
         <div class="px-3 py-2.5 border-b border-slate-200 flex items-center justify-between bg-white">
@@ -175,11 +175,11 @@ const initials = (prospect: Prospect) => {
 }
 
 const avatarPalette = [
-  'bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white',
+  'bg-gradient-to-br from-primary-500 to-primary-700 text-white',
   'bg-gradient-to-br from-cyan-500 to-primary-500 text-white',
   'bg-gradient-to-br from-emerald-500 to-teal-500 text-white',
   'bg-gradient-to-br from-amber-500 to-orange-500 text-white',
-  'bg-gradient-to-br from-rose-500 to-pink-500 text-white',
+  'bg-gradient-to-br from-rose-500 to-primary-700 text-white',
   'bg-gradient-to-br from-slate-700 to-slate-900 text-white',
 ]
 const avatarClass = (prospect: Prospect) => {

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="min-h-screen bg-white dark:bg-[#0f172a] font-['Inter',sans-serif] text-slate-900 dark:text-slate-100 flex overflow-hidden">
 
     <!-- Notion-Style Sidebar -->
@@ -1001,7 +1001,7 @@ const exportToPDF = () => {
       </head>
       <body>
         <h1>${title}</h1>
-        <div class="metadata">Documento Generado por GEMS CRM • ${new Date().toLocaleDateString()}</div>
+        <div class="metadata">Documento Generado por GEMS Hub • ${new Date().toLocaleDateString()}</div>
         <div class="content">${content}</div>
       </body>
     </html>
@@ -1120,10 +1120,10 @@ const getClientInitials = (id?: string) => getClientName(id).split(' ').map(n =>
 const getStatusDot = (s?: string) => ({ abierto: 'bg-emerald-500', en_progreso: 'bg-amber-500', resueltos: 'bg-primary-500', cerrado: 'bg-slate-900' }[s || ''] || 'bg-slate-300')
 const getPriorityClass = (p?: string) => ({ baja: 'bg-emerald-50 text-emerald-600', media: 'bg-amber-50 text-amber-600', alta: 'bg-orange-50 text-orange-600', critica: 'bg-rose-50 text-rose-600' }[p || ''] || 'bg-slate-50 text-slate-500')
 const getCoverGradient = (p?: string) => ({ baja: 'bg-gradient-to-br from-emerald-400 to-teal-600', media: 'bg-gradient-to-br from-amber-400 to-orange-500', alta: 'bg-gradient-to-br from-orange-400 to-rose-600', critica: 'bg-gradient-to-br from-rose-500 to-slate-900' }[p || ''] || 'bg-gradient-to-br from-slate-400 to-slate-600')
-const getWikiCoverGradient = (cat?: string) => ({ proceso: 'bg-gradient-to-br from-primary-400 to-indigo-600', codigo: 'bg-gradient-to-br from-emerald-400 to-cyan-600', manual: 'bg-gradient-to-br from-purple-400 to-fuchsia-600' }[cat || ''] || 'bg-gradient-to-br from-slate-400 to-slate-600')
+const getWikiCoverGradient = (cat?: string) => ({ proceso: 'bg-gradient-to-br from-primary-400 to-indigo-600', codigo: 'bg-gradient-to-br from-emerald-400 to-cyan-600', manual: 'bg-gradient-to-br from-primary-400 to-primary-800' }[cat || ''] || 'bg-gradient-to-br from-slate-400 to-slate-600')
 const getCaseIcon = (t?: string) => ({ documento: 'fas fa-file-contract', incidencia: 'fas fa-bug', seguimiento: 'fas fa-project-diagram' }[t || ''] || 'fas fa-folder')
 const getWikiIcon = (cat?: string) => ({ proceso: 'fas fa-cogs', codigo: 'fas fa-code', manual: 'fas fa-book' }[cat || ''] || 'fas fa-file-alt')
-const getWikiCatClass = (cat?: string) => ({ proceso: 'bg-primary-50 text-primary-600', codigo: 'bg-emerald-50 text-emerald-600', manual: 'bg-purple-50 text-purple-600' }[cat || ''] || 'bg-slate-50 text-slate-500')
+const getWikiCatClass = (cat?: string) => ({ proceso: 'bg-primary-50 text-primary-600', codigo: 'bg-emerald-50 text-emerald-600', manual: 'bg-purple-50 text-primary-600' }[cat || ''] || 'bg-slate-50 text-slate-500')
 const formatDateRelative = (date: any) => date ? formatDistanceToNow(new Date(date), { addSuffix: true, locale: es }) : ''
 const getFileIcon = (name: string) => casesService.getFileIcon(name)
 const isHtmlContent = (content?: string) => !!content && /<[a-z][\s\S]*>/i.test(content)

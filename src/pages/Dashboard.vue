@@ -1,15 +1,15 @@
-<template>
+﻿<template>
   <div class="flex flex-col gap-3 relative pt-3">
     <!-- Glow de fondo GEMS -->
     <div class="pointer-events-none fixed top-0 right-0 w-[500px] h-[400px] opacity-[0.035] -z-0"
-      style="background: radial-gradient(ellipse at top right, #8b5cf6 0%, transparent 70%)"></div>
+      style="background: radial-gradient(ellipse at top right, var(--brand-accent) 0%, transparent 70%)"></div>
 
     <!-- ══ Header ══════════════════════════════════════════════════════ -->
     <div class="flex items-center justify-between gap-3 flex-wrap pr-12 sm:pr-14 relative z-10">
       <div>
         <div class="flex items-center gap-2 mb-0.5">
           <i class="fas fa-gem text-primary-400 text-[9px] animate-pulse-slow"></i>
-          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
+          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
           <span class="w-1 h-1 rounded-full bg-primary-200 inline-block"></span>
           <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black rounded-full uppercase tracking-widest">{{ userRoleLabel }}</span>
         </div>
@@ -213,7 +213,7 @@
         <div class="rounded-2xl px-4 py-3.5 text-white relative overflow-hidden shrink-0"
           style="background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 60%, #1e1b4b 100%);">
           <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-0 right-0 w-32 h-32 opacity-25" style="background: radial-gradient(circle, #8b5cf6 0%, transparent 70%); transform: translate(20%,-20%)"></div>
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-25" style="background: radial-gradient(circle, var(--brand-accent) 0%, transparent 70%); transform: translate(20%,-20%)"></div>
             <div class="absolute bottom-0 left-0 w-20 h-20 opacity-15" style="background: radial-gradient(circle, #6366f1 0%, transparent 70%); transform: translate(-25%,25%)"></div>
           </div>
           <div class="relative">
@@ -306,7 +306,7 @@ const quickActions = computed(() => {
     { label: 'Nueva actividad', to: '/activities', icon: 'fa-plus-circle', iconBg: 'bg-green-50 group-hover:bg-green-100', iconColor: 'text-green-500', hover: 'hover:border-green-200', can: authStore.canCreateActivities },
     { label: 'Revisar tickets', to: '/tickets', icon: 'fa-ticket-alt', iconBg: 'bg-slate-100 group-hover:bg-slate-200', iconColor: 'text-slate-600', hover: 'hover:border-slate-300', can: authStore.canViewCases },
     { label: 'Nuevo caso', to: '/cases', icon: 'fa-exclamation-circle', iconBg: 'bg-orange-50 group-hover:bg-orange-100', iconColor: 'text-orange-500', hover: 'hover:border-orange-200', can: authStore.canCreateCases },
-    { label: 'Gestionar equipo', to: '/team', icon: 'fa-users-cog', iconBg: 'bg-purple-50 group-hover:bg-purple-100', iconColor: 'text-purple-500', hover: 'hover:border-purple-200', can: authStore.canCreateTeam },
+    { label: 'Gestionar equipo', to: '/team', icon: 'fa-users-cog', iconBg: 'bg-purple-50 group-hover:bg-purple-100', iconColor: 'text-purple-500', hover: 'hover:border-primary-200', can: authStore.canCreateTeam },
   ]
   return all.filter(a => a.can)
 })
@@ -317,7 +317,7 @@ const statCards = computed(() => {
     { label: 'Actividades', value: activeActivities.value, tag: 'Activas', tagColor: 'text-emerald-500', icon: 'fa-clipboard-list', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-500', accentBar: 'bg-gradient-to-r from-emerald-400 to-emerald-300', can: authStore.canViewActivities },
     { label: 'Casos', value: openCases.value, tag: 'Abiertos', tagColor: 'text-red-500', icon: 'fa-exclamation-triangle', iconBg: 'bg-red-50', iconColor: 'text-red-500', accentBar: 'bg-gradient-to-r from-red-400 to-red-300', can: authStore.canViewCases },
     { label: 'Tickets', value: pendingTickets.value, tag: 'Pendientes', tagColor: 'text-orange-500', icon: 'fa-ticket-alt', iconBg: 'bg-orange-50', iconColor: 'text-orange-500', accentBar: 'bg-gradient-to-r from-orange-400 to-orange-300', can: authStore.canViewCases },
-    { label: 'Equipo', value: teamStore.members.length, tag: 'Activos', tagColor: 'text-violet-500', icon: 'fa-user-friends', iconBg: 'bg-violet-50', iconColor: 'text-violet-500', accentBar: 'bg-gradient-to-r from-violet-400 to-violet-300', can: authStore.canViewTeam },
+    { label: 'Equipo', value: teamStore.members.length, tag: 'Activos', tagColor: 'text-primary-500', icon: 'fa-user-friends', iconBg: 'bg-primary-50', iconColor: 'text-primary-500', accentBar: 'bg-gradient-to-r from-primary-400 to-primary-300', can: authStore.canViewTeam },
   ]
   return all.filter(s => s.can)
 })
@@ -406,7 +406,7 @@ onMounted(async () => {
   background-clip: text;
 }
 .gems-title span {
-  -webkit-text-fill-color: #8b5cf6;
+  -webkit-text-fill-color: var(--brand-accent);
 }
 
 /* Panel de acciones: slide-down con fade */

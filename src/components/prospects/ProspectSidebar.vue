@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <aside class="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col h-full">
     <!-- Score + Temperatura -->
     <div class="px-5 py-4 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white">
@@ -29,19 +29,19 @@
               (forecast: ${{ formatMoney(weighted) }})
             </span>
           </p>
-          <p v-else class="text-xs font-bold text-slate-400 group-hover:text-violet-600">+ Añadir valor</p>
+          <p v-else class="text-xs font-bold text-slate-400 group-hover:text-primary-600">+ Añadir valor</p>
         </div>
         <div v-else class="flex gap-2">
           <input
             v-model.number="valueInput"
             type="number"
             placeholder="USD"
-            class="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold focus:bg-white focus:border-violet-500 outline-none"
+            class="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold focus:bg-white focus:border-primary-500 outline-none"
             @keydown.enter="saveValue"
             @keydown.escape="editingValue = false"
             ref="valueInputRef"
           />
-          <button @click="saveValue" class="px-2 bg-violet-600 text-white rounded-lg text-[10px] font-black">OK</button>
+          <button @click="saveValue" class="px-2 bg-primary-600 text-white rounded-lg text-[10px] font-black">OK</button>
         </div>
       </div>
 
@@ -51,7 +51,7 @@
         <select
           :value="prospect.source || ''"
           @change="updateSource(($event.target as HTMLSelectElement).value as ProspectSource)"
-          class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:bg-white focus:border-violet-500 outline-none cursor-pointer"
+          class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:bg-white focus:border-primary-500 outline-none cursor-pointer"
         >
           <option value="">— Sin definir —</option>
           <option v-for="src in PROSPECT_SOURCES" :key="src.value" :value="src.value">
@@ -247,7 +247,7 @@ const SidebarField = defineComponent({
             onClick: start,
           },
           [
-            h('i', { class: `fas ${props.icon} text-[10px] text-slate-400 group-hover:text-violet-600` }),
+            h('i', { class: `fas ${props.icon} text-[10px] text-slate-400 group-hover:text-primary-600` }),
             props.value
               ? h('span', { class: 'text-[11px] font-bold text-slate-700 truncate flex-1' }, props.value)
               : h('span', { class: 'text-[11px] font-bold text-slate-400 italic flex-1' }, props.placeholder),
@@ -260,7 +260,7 @@ const SidebarField = defineComponent({
           type: props.type,
           value: input.value,
           placeholder: props.placeholder,
-          class: 'flex-1 px-2.5 py-1.5 bg-white border border-violet-300 rounded-lg text-[11px] font-bold focus:border-violet-500 outline-none',
+          class: 'flex-1 px-2.5 py-1.5 bg-white border border-primary-300 rounded-lg text-[11px] font-bold focus:border-primary-500 outline-none',
           onInput: (e: any) => (input.value = e.target.value),
           onKeydown: (e: KeyboardEvent) => {
             if (e.key === 'Enter') save()
@@ -268,7 +268,7 @@ const SidebarField = defineComponent({
           },
         }),
         h('button', {
-          class: 'px-2 bg-violet-600 text-white rounded-lg text-[10px] font-black',
+          class: 'px-2 bg-primary-600 text-white rounded-lg text-[10px] font-black',
           onClick: save,
         }, 'OK'),
       ])

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="fixed inset-0 z-50 flex items-center justify-center">
     <!-- Backdrop -->
     <div 
@@ -7,9 +7,9 @@
     ></div>
     
     <!-- Modal -->
-    <div class="relative bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-500/30 w-full max-w-md mx-4">
+    <div class="relative bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-primary-500/30 w-full max-w-md mx-4">
       <!-- Header -->
-      <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-4 rounded-t-2xl">
+      <div class="bg-gradient-to-r from-primary-600 to-primary-700 p-4 rounded-t-2xl">
         <div class="flex items-center justify-between">
           <h3 class="text-white font-semibold text-lg">Nuevo Chat</h3>
           <button
@@ -29,7 +29,7 @@
             @click="activeTab = 'direct'"
             class="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
             :class="activeTab === 'direct' 
-              ? 'bg-purple-600 text-white' 
+              ? 'bg-primary-600 text-white' 
               : 'text-gray-400 hover:text-white hover:bg-gray-700/50'"
           >
             <i class="fas fa-user mr-2"></i>
@@ -39,7 +39,7 @@
             @click="activeTab = 'group'"
             class="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
             :class="activeTab === 'group' 
-              ? 'bg-purple-600 text-white' 
+              ? 'bg-primary-600 text-white' 
               : 'text-gray-400 hover:text-white hover:bg-gray-700/50'"
           >
             <i class="fas fa-users mr-2"></i>
@@ -55,7 +55,7 @@
               v-model="searchTerm"
               type="text"
               placeholder="Buscar usuarios..."
-              class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 pl-10 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 pl-10 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             >
             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
           </div>
@@ -78,7 +78,7 @@
                 >
                 <div
                   v-else
-                  class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold"
+                  class="w-10 h-10 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white font-bold"
                 >
                   {{ getUserInitials(user.name) }}
                 </div>
@@ -131,7 +131,7 @@
                 v-model="groupName"
                 type="text"
                 placeholder="Ej: Equipo de Marketing"
-                class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               >
             </div>
             
@@ -142,7 +142,7 @@
               <textarea
                 v-model="groupDescription"
                 placeholder="Describe el propósito del grupo..."
-                class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
                 rows="2"
               ></textarea>
             </div>
@@ -154,7 +154,7 @@
               v-model="searchTerm"
               type="text"
               placeholder="Buscar usuarios para agregar..."
-              class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 pl-10 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 pl-10 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             >
             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
           </div>
@@ -168,7 +168,7 @@
               <div
                 v-for="member in selectedMembers"
                 :key="member._id"
-                class="flex items-center gap-2 bg-purple-600/20 text-purple-300 px-3 py-1 rounded-full text-sm"
+                class="flex items-center gap-2 bg-primary-600/20 text-purple-300 px-3 py-1 rounded-full text-sm"
               >
                 <img
                   v-if="member.photo"
@@ -178,7 +178,7 @@
                 >
                 <div
                   v-else
-                  class="w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                  class="w-5 h-5 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white text-xs font-bold"
                 >
                   {{ getUserInitials(member.name).substring(0, 1) }}
                 </div>
@@ -201,7 +201,7 @@
               @click="toggleMember(user)"
               class="flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors"
               :class="isSelected(user._id) 
-                ? 'bg-purple-600/20 border border-purple-500/50' 
+                ? 'bg-primary-600/20 border border-primary-500/50' 
                 : 'bg-gray-800/30 hover:bg-gray-700/50 border border-transparent'"
             >
               <!-- User Avatar -->
@@ -214,7 +214,7 @@
                 >
                 <div
                   v-else
-                  class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                  class="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white text-sm font-bold"
                 >
                   {{ getUserInitials(user.name) }}
                 </div>
@@ -236,7 +236,7 @@
               <div
                 class="w-5 h-5 rounded-full border-2 flex items-center justify-center"
                 :class="isSelected(user._id) 
-                  ? 'border-purple-500 bg-purple-500' 
+                  ? 'border-primary-500 bg-primary-500' 
                   : 'border-gray-500'"
               >
                 <i 
@@ -251,7 +251,7 @@
           <button
             @click="createGroup"
             :disabled="!canCreateGroup"
-            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-600 disabled:to-gray-700 text-white py-3 px-4 rounded-xl font-medium transition-all duration-200 disabled:cursor-not-allowed"
+            class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 disabled:from-gray-600 disabled:to-gray-700 text-white py-3 px-4 rounded-xl font-medium transition-all duration-200 disabled:cursor-not-allowed"
           >
             <i class="fas fa-users mr-2"></i>
             Crear Grupo

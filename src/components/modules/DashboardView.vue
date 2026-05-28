@@ -1,11 +1,11 @@
-<template>
+﻿<template>
   <div class="space-y-6">
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div
         v-for="stat in stats"
         :key="stat.name"
-        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 transform hover:scale-105"
+        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20 hover:border-primary-500/40 transition-all duration-300 transform hover:scale-105"
       >
         <div class="flex items-center justify-between">
           <div>
@@ -23,7 +23,7 @@
               <span class="text-gray-500 text-sm ml-2">vs último mes</span>
             </div>
           </div>
-          <div class="p-3 rounded-full bg-gradient-to-br from-purple-600 to-pink-600">
+          <div class="p-3 rounded-full bg-gradient-to-br from-primary-600 to-primary-700">
             <i :class="stat.icon" class="text-white text-xl"></i>
           </div>
         </div>
@@ -33,7 +33,7 @@
     <!-- Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Revenue Chart -->
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-xl font-bold text-white">Ingresos Mensuales</h3>
           <select class="bg-gray-700 text-white rounded-lg px-3 py-1 text-sm">
@@ -52,10 +52,10 @@
       </div>
 
       <!-- Activity Chart -->
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-xl font-bold text-white">Actividades por Tipo</h3>
-          <button class="text-purple-400 hover:text-purple-300 text-sm">Ver detalles</button>
+          <button class="text-primary-400 hover:text-purple-300 text-sm">Ver detalles</button>
         </div>
         <div class="h-64 flex items-center justify-center">
           <div class="text-gray-400 text-center">
@@ -70,10 +70,10 @@
     <!-- Recent Activities and Quick Actions -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Recent Activities -->
-      <div class="lg:col-span-2 bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
+      <div class="lg:col-span-2 bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-xl font-bold text-white">Actividades Recientes</h3>
-          <button class="text-purple-400 hover:text-purple-300 text-sm">Ver todas</button>
+          <button class="text-primary-400 hover:text-purple-300 text-sm">Ver todas</button>
         </div>
         <div class="space-y-4">
           <div
@@ -82,7 +82,7 @@
             class="flex items-center p-4 bg-gray-900/30 rounded-lg hover:bg-gray-900/50 transition-colors"
           >
             <div class="flex-shrink-0">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center">
                 <i :class="activity.icon" class="text-white text-sm"></i>
               </div>
             </div>
@@ -96,16 +96,16 @@
       </div>
 
       <!-- Quick Actions -->
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20">
         <h3 class="text-xl font-bold text-white mb-6">Acciones Rápidas</h3>
         <div class="space-y-3">
           <button
             v-for="action in quickActions"
             :key="action.name"
             @click="handleQuickAction(action.action)"
-            class="w-full flex items-center p-4 bg-gray-900/30 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 rounded-lg transition-all duration-200 transform hover:scale-105 group"
+            class="w-full flex items-center p-4 bg-gray-900/30 hover:bg-gradient-to-r hover:from-primary-600 hover:to-primary-700 rounded-lg transition-all duration-200 transform hover:scale-105 group"
           >
-            <i :class="action.icon" class="text-purple-400 group-hover:text-white text-lg mr-3"></i>
+            <i :class="action.icon" class="text-primary-400 group-hover:text-white text-lg mr-3"></i>
             <span class="text-white group-hover:text-white">{{ action.name }}</span>
           </button>
         </div>
@@ -115,10 +115,10 @@
     <!-- Upcoming Tasks and Notifications -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Upcoming Tasks -->
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-xl font-bold text-white">Próximas Tareas</h3>
-          <span class="bg-purple-600 text-white px-2 py-1 rounded-full text-sm">{{ upcomingTasks.length }}</span>
+          <span class="bg-primary-600 text-white px-2 py-1 rounded-full text-sm">{{ upcomingTasks.length }}</span>
         </div>
         <div class="space-y-3">
           <div
@@ -138,7 +138,7 @@
               <p class="text-white font-medium">{{ task.title }}</p>
               <p class="text-gray-400 text-sm">{{ task.dueDate }}</p>
             </div>
-            <button class="text-purple-400 hover:text-purple-300">
+            <button class="text-primary-400 hover:text-purple-300">
               <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -146,17 +146,17 @@
       </div>
 
       <!-- Recent Notifications -->
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-primary-500/20">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-xl font-bold text-white">Notificaciones</h3>
-          <button class="text-purple-400 hover:text-purple-300 text-sm">Marcar como leídas</button>
+          <button class="text-primary-400 hover:text-purple-300 text-sm">Marcar como leídas</button>
         </div>
         <div class="space-y-3">
           <div
             v-for="notification in notifications"
             :key="notification.id"
             class="flex items-start p-3 bg-gray-900/30 rounded-lg hover:bg-gray-900/50 transition-colors"
-            :class="{ 'border-l-4 border-purple-500': !notification.read }"
+            :class="{ 'border-l-4 border-primary-500': !notification.read }"
           >
             <div class="flex-shrink-0 mt-1">
               <div
@@ -316,7 +316,6 @@ const notifications = ref([
 
 // Methods
 const handleQuickAction = (action: string) => {
-  console.log('Quick action:', action)
   
   // Emit a custom event that the parent can listen to
   const event = new CustomEvent('quickAction', {
@@ -327,7 +326,6 @@ const handleQuickAction = (action: string) => {
 
 onMounted(() => {
   // Load dashboard data
-  console.log('Dashboard loaded')
   
   // Listen for quick actions
   window.addEventListener('quickAction', (event: any) => {

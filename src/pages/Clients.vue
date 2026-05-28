@@ -5,7 +5,7 @@
       <div>
         <div class="flex items-center gap-2 mb-0.5">
           <i class="fas fa-gem text-primary-400 text-[9px]"></i>
-          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS CRM</span>
+          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
         </div>
         <h1 class="text-[22px] font-black text-slate-900 tracking-tight leading-tight">Clientes</h1>
         <p class="text-slate-400 text-[11px] font-medium">Gestiona tus contactos y relaciones comerciales.</p>

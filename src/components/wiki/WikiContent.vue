@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="wiki-content" v-html="sanitized"></div>
 </template>
 
@@ -42,7 +42,7 @@ const sanitized = computed(() => {
 .wiki-content ul[data-type="taskList"] { list-style: none; padding-left: 0.25rem; }
 .wiki-content ul[data-type="taskList"] li { display: flex; align-items: flex-start; gap: 0.5rem; }
 .wiki-content blockquote {
-  border-left: 4px solid #8b5cf6;
+  border-left: 4px solid var(--brand-accent);
   padding: 0.25rem 1rem;
   margin: 0.75rem 0;
   color: #475569;
@@ -64,7 +64,7 @@ const sanitized = computed(() => {
 }
 .wiki-content pre code { background: transparent; color: inherit; padding: 0; border-radius: 0; }
 .wiki-content hr { border: none; border-top: 2px solid #e2e8f0; margin: 1.5rem 0; }
-.wiki-content a { color: #8b5cf6; text-decoration: underline; }
+.wiki-content a { color: var(--brand-accent); text-decoration: underline; }
 .wiki-content mark { background: #fef08a; padding: 0 0.2rem; border-radius: 0.25rem; }
 .wiki-content img { max-width: 100%; height: auto; border-radius: 0.75rem; margin: 0.75rem 0; box-shadow: 0 4px 16px -8px rgba(0,0,0,0.15); }
 .wiki-content table { border-collapse: collapse; margin: 0.75rem 0; table-layout: fixed; width: 100%; overflow: hidden; border-radius: 0.5rem; }
@@ -80,7 +80,7 @@ const sanitized = computed(() => {
 .dark .wiki-content strong { color: #e2e8f0; }
 .dark .wiki-content blockquote {
   background: rgba(139,92,246,0.08);
-  border-left-color: #8b5cf6;
+  border-left-color: var(--brand-accent);
   color: #94a3b8;
 }
 .dark .wiki-content code {

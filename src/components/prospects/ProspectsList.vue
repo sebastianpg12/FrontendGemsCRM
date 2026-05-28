@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="flex flex-col h-full bg-white rounded-2xl border border-slate-200 overflow-hidden">
     <!-- Header con búsqueda -->
     <div class="px-4 py-4 border-b border-slate-100">
@@ -18,7 +18,7 @@
           </button>
           <button
             @click="$emit('new')"
-            class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-violet-500/30 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center"
+            class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white shadow-lg shadow-primary-500/30 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center"
             title="Nuevo prospecto"
           >
             <i class="fas fa-plus text-xs"></i>
@@ -32,7 +32,7 @@
           v-model="search"
           type="text"
           placeholder="Buscar por empresa, nombre..."
-          class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all"
+          class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all"
         />
       </div>
     </div>
@@ -91,7 +91,7 @@
           :class="[
             'w-full text-left p-3 rounded-xl transition-all group',
             selectedId === prospect._id
-              ? 'bg-violet-50 ring-1 ring-violet-200'
+              ? 'bg-primary-50 ring-1 ring-primary-200'
               : 'hover:bg-slate-50',
           ]"
         >
@@ -111,9 +111,18 @@
                 <h4 class="text-xs font-black text-slate-900 truncate leading-tight">
                   {{ prospect.prospectName }}
                 </h4>
-                <div class="flex items-center gap-1 flex-shrink-0">
-                  <span :title="`Lead score: ${scoreOf(prospect)}/100`" class="text-[10px]" v-if="tempOf(prospect)">
-                    {{ tempOf(prospect) }}
+                <div class="flex items-center gap-1.5 flex-shrink-0">
+                  <span
+                    v-if="scoreOf(prospect) > 0"
+                    :title="`Lead score: ${scoreOf(prospect)}/100`"
+                    :class="[
+                      'text-[9px] font-black px-1.5 py-0.5 rounded-md',
+                      scoreOf(prospect) >= 70 ? 'bg-rose-100 text-rose-600' :
+                      scoreOf(prospect) >= 40 ? 'bg-amber-100 text-amber-600' :
+                      'bg-slate-100 text-slate-500'
+                    ]"
+                  >
+                    {{ tempOf(prospect) }} {{ scoreOf(prospect) }}
                   </span>
                   <ProspectStatusBadge :status="prospect.status" mini />
                 </div>
@@ -203,11 +212,11 @@ const initials = (prospect: Prospect) => {
 }
 
 const avatarPalette = [
-  'bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white',
+  'bg-gradient-to-br from-primary-500 to-primary-700 text-white',
   'bg-gradient-to-br from-cyan-500 to-primary-500 text-white',
   'bg-gradient-to-br from-emerald-500 to-teal-500 text-white',
   'bg-gradient-to-br from-amber-500 to-orange-500 text-white',
-  'bg-gradient-to-br from-rose-500 to-pink-500 text-white',
+  'bg-gradient-to-br from-rose-500 to-primary-700 text-white',
   'bg-gradient-to-br from-slate-700 to-slate-900 text-white',
 ]
 const avatarClass = (prospect: Prospect) => {

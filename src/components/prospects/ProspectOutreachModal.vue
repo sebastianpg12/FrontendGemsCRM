@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm" @click.self="$emit('close')">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
       <!-- Header -->
@@ -20,7 +20,7 @@
       <!-- Loading -->
       <div v-if="loading" class="flex-1 flex items-center justify-center p-12">
         <div class="text-center">
-          <i class="fas fa-circle-notch fa-spin text-3xl text-violet-400 mb-3 block"></i>
+          <i class="fas fa-circle-notch fa-spin text-3xl text-primary-400 mb-3 block"></i>
           <p class="text-xs font-bold text-slate-500">Generando con Gemini...</p>
         </div>
       </div>
@@ -33,7 +33,7 @@
           <input
             v-model="result.subject"
             type="text"
-            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all"
+            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all"
           />
         </div>
 
@@ -45,7 +45,7 @@
           <textarea
             v-model="result.body"
             :rows="channel === 'call' ? 14 : 8"
-            class="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 leading-relaxed focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all resize-y font-mono"
+            class="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 leading-relaxed focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all resize-y font-mono"
           ></textarea>
         </div>
 
@@ -59,7 +59,7 @@
               v-model="contactInput"
               :type="channel === 'email' ? 'email' : 'tel'"
               :placeholder="channel === 'email' ? 'cliente@empresa.com' : '+57 300 123 4567'"
-              class="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 placeholder-slate-400 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 outline-none transition-all"
+              class="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 placeholder-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all"
             />
             <span v-if="contactInput && saved" class="text-[9px] font-black text-emerald-600">
               <i class="fas fa-check-circle mr-1"></i>Guardado
@@ -102,7 +102,7 @@
           v-if="channel === 'email'"
           @click="openMail"
           :disabled="!contactInput.trim()"
-          class="px-5 py-2.5 bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white text-xs font-black rounded-xl shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+          class="px-5 py-2.5 bg-gradient-to-br from-primary-600 to-primary-800 text-white text-xs font-black rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
         >
           <i class="fas fa-paper-plane text-[11px]"></i>
           Abrir cliente de email
@@ -149,7 +149,7 @@ const contactInput = ref('')
 
 const headerConfig = computed(() => {
   if (props.channel === 'email') {
-    return { title: 'Email de prospección', icon: 'fa-envelope', color: 'bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-violet-500/30' }
+    return { title: 'Email de prospección', icon: 'fa-envelope', color: 'bg-gradient-to-br from-primary-500 to-primary-700 shadow-primary-500/30' }
   }
   if (props.channel === 'whatsapp') {
     return { title: 'Mensaje de WhatsApp', icon: 'fa-comment-dots', color: 'bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-emerald-500/30' }

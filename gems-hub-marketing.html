@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GEMS Hub — Plan de Marketing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #04060d;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 20%, rgba(139,92,246,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 80%, rgba(99,102,241,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 100%, rgba(168,85,247,0.10) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 60px 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 52px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; }
+
+    .brand-logo {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 8px 24px -4px rgba(109,40,217,0.6);
+    }
+
+    .brand-name { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+    .brand-name span {
+      background: linear-gradient(135deg, #a78bfa, #818cf8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .brand-sub { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.35em; margin-top: 2px; }
+
+    .header-badge {
+      background: rgba(251,191,36,0.1);
+      border: 1px solid rgba(251,191,36,0.25);
+      color: #fbbf24;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      padding: 6px 14px; border-radius: 99px;
+    }
+
+    /* ── Hero ── */
+    .hero { margin-bottom: 48px; }
+
+    .hero-label {
+      font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.4em;
+      color: #fbbf24; margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: 40px; font-weight: 900;
+      color: #fff; line-height: 1.1;
+      letter-spacing: -1px; margin-bottom: 18px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 600px;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 44px; }
+
+    .section-title {
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.3); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+
+    /* ── Why card ── */
+    .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+    .why-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 16px 18px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+
+    .why-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    .why-title { font-size: 12.5px; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+    .why-desc { font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,0.38); line-height: 1.5; }
+
+    /* ── Pain quote ── */
+    .pain-block {
+      margin-bottom: 44px;
+      padding: 22px 26px;
+      background: rgba(251,191,36,0.06);
+      border: 1px solid rgba(251,191,36,0.18);
+      border-left: 3px solid #f59e0b;
+      border-radius: 16px;
+    }
+
+    .pain-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.35em; color: #f59e0b; margin-bottom: 10px; }
+
+    .pain-text { font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,0.6); line-height: 1.7; font-style: italic; }
+
+    /* ── Weeks timeline ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .week {
+      display: flex; gap: 0; position: relative;
+    }
+
+    .week-left {
+      display: flex; flex-direction: column; align-items: center;
+      width: 56px; flex-shrink: 0;
+    }
+
+    .week-dot {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(109,40,217,0.5));
+      border: 1px solid rgba(139,92,246,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 900; color: #c4b5fd;
+      flex-shrink: 0; z-index: 1;
+    }
+
+    .week-line {
+      width: 2px; flex: 1; min-height: 24px;
+      background: linear-gradient(to bottom, rgba(139,92,246,0.3), rgba(139,92,246,0.05));
+      margin-top: 4px; margin-bottom: 4px;
+    }
+
+    .week:last-child .week-line { display: none; }
+
+    .week-content {
+      flex: 1;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 16px 20px;
+      margin-bottom: 12px; margin-left: 10px;
+    }
+
+    .week-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em; color: #a78bfa; margin-bottom: 6px; }
+    .week-title { font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.85); margin-bottom: 10px; }
+
+    .week-items { display: flex; flex-direction: column; gap: 6px; }
+
+    .week-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.45); line-height: 1.5;
+    }
+
+    .week-item::before {
+      content: '→';
+      color: #7c3aed; font-weight: 700; font-size: 11px;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ── Pitch ── */
+    .pitch-card {
+      background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(99,102,241,0.08));
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 18px; padding: 28px 32px;
+      text-align: center;
+    }
+
+    .pitch-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4em; color: #a78bfa; margin-bottom: 14px; }
+
+    .pitch-text {
+      font-size: 18px; font-weight: 700;
+      color: rgba(255,255,255,0.85); line-height: 1.5;
+      font-style: italic;
+    }
+
+    .pitch-text em {
+      font-style: normal;
+      background: linear-gradient(135deg, #a78bfa, #818cf8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 52px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-brand { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 0.3em; }
+    .footer-copy { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.15); }
+
+    @media print {
+      body { background: #04060d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body::before { display: none; }
+      .page { padding: 40px 44px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <div class="brand-logo">💎</div>
+      <div>
+        <div class="brand-name">GEMS <span>Hub</span></div>
+        <div class="brand-sub">Galactic Intelligence Suite</div>
+      </div>
+    </div>
+    <div class="header-badge">Plan de Marketing</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-label">Nicho objetivo</div>
+    <h1 class="hero-title">Agencias creativas<br/><em>jóvenes</em></h1>
+    <p class="hero-desc">
+      Diseño, marketing digital, contenido, branding y social media.
+      El primer cliente ideal está en tu círculo cercano — ciclo de venta corto,
+      decisión rápida y alto potencial de caso de éxito.
+    </p>
+  </div>
+
+  <!-- Why this niche -->
+  <div class="section">
+    <div class="section-title">Por qué este nicho primero</div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">🎯</div>
+        <div>
+          <div class="why-title">Decisión rápida</div>
+          <div class="why-desc">El dueño o socio decide solo. Sin comités ni aprobaciones internas.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💸</div>
+        <div>
+          <div class="why-title">Sin presupuesto para HubSpot</div>
+          <div class="why-desc">Necesitan orden pero no pueden pagar $800/mes. GEMS Hub es la alternativa perfecta.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✨</div>
+        <div>
+          <div class="why-title">Valoran el diseño</div>
+          <div class="why-desc">La interfaz premium de GEMS Hub los enamora en el primer demo.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🤝</div>
+        <div>
+          <div class="why-title">Ya están en tu red</div>
+          <div class="why-desc">Puedes llegar sin cold outreach. Contacto directo desde el día uno.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🔧</div>
+        <div>
+          <div class="why-title">Fácil de reemplazar</div>
+          <div class="why-desc">Hoy usan Notion, Trello o nada. La barra de entrada es baja.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">📣</div>
+        <div>
+          <div class="why-title">Alto poder de referidos</div>
+          <div class="why-desc">Las agencias se conocen entre sí. Un cliente satisfecho trae tres más.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pain -->
+  <div class="pain-block">
+    <div class="pain-label">El dolor real que tienen</div>
+    <p class="pain-text">
+      Manejan 5–20 clientes activos, cada uno con tareas, entregables, revisiones y pagos.
+      Todo vive en WhatsApp, un Excel compartido y carpetas de Drive con nombres como
+      "FINAL_v3_revisado_ESTE". Nadie sabe qué está pendiente, los clientes preguntan por
+      todo y el equipo siempre está apagando incendios.
+    </p>
+  </div>
+
+  <!-- 4-week plan -->
+  <div class="section">
+    <div class="section-title">Plan de ataque — 4 semanas</div>
+    <div class="timeline">
+
+      <div class="week">
+        <div class="week-left">
+          <div class="week-dot">1</div>
+          <div class="week-line"></div>
+        </div>
+        <div class="week-content">
+          <div class="week-label">Semana 1</div>
+          <div class="week-title">Prepara el campo</div>
+          <div class="week-items">
+            <div class="week-item">Lista de 10–15 agencias creativas conocidas o cercanas (Instagram, LinkedIn, contactos directos)</div>
+            <div class="week-item">Monta instancia demo con datos ficticios de una agencia: clientes, tareas, tickets, chat</div>
+            <div class="week-item">Graba video corto de 2–3 min mostrando el flujo real: cliente → tarea → seguimiento → reporte</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="week-left">
+          <div class="week-dot">2</div>
+          <div class="week-line"></div>
+        </div>
+        <div class="week-content">
+          <div class="week-label">Semana 2</div>
+          <div class="week-title">Primer contacto — muestra, no vendas</div>
+          <div class="week-items">
+            <div class="week-item">Mensaje directo: "Estoy construyendo algo para agencias como la tuya, ¿me das 15 minutos para mostrártelo y me dices qué le cambiarías?"</div>
+            <div class="week-item">Objetivo: 3–5 demos. No cerrar ventas todavía</div>
+            <div class="week-item">Escucha activa — lo que digan que les falta es tu pitch exacto</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="week-left">
+          <div class="week-dot">3</div>
+          <div class="week-line"></div>
+        </div>
+        <div class="week-content">
+          <div class="week-label">Semana 3</div>
+          <div class="week-title">Primer cliente piloto</div>
+          <div class="week-items">
+            <div class="week-item">Ofrece entrada gratis 60 días a cambio de feedback real y testimonio</div>
+            <div class="week-item">Onboarding de 30 min: configura sus clientes y un tablero personalizado</div>
+            <div class="week-item">Que lo usen en producción real — ahí se genera el valor verdadero</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="week-left">
+          <div class="week-dot">4</div>
+          <div class="week-line"></div>
+        </div>
+        <div class="week-content">
+          <div class="week-label">Semana 4</div>
+          <div class="week-title">Caso de éxito → escalar</div>
+          <div class="week-items">
+            <div class="week-item">Capturas reales del sistema con sus datos (con permiso del cliente)</div>
+            <div class="week-item">Testimonio: "Antes todo era WhatsApp, ahora tenemos orden"</div>
+            <div class="week-item">Con ese caso atacar las otras 14 agencias de la lista inicial</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pitch -->
+  <div class="pitch-card">
+    <div class="pitch-label">El pitch en una línea para este nicho</div>
+    <p class="pitch-text">
+      "Es como tener <em>Notion + Trello + bandeja de soporte</em>,<br/>
+      todo junto, con tu marca, sin pagar $800 al mes."
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">💎 GEMS Hub · GEMS Innovations</div>
+    <div class="footer-copy">© 2026 · Uso interno</div>
+  </div>
+
+</div>
+</body>
+</html>

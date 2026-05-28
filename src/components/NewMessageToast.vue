@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <transition name="slide-up">
     <div
       v-if="visible && msg"
@@ -11,7 +11,7 @@
       </button>
       <div class="p-3 cursor-pointer" @click="openChat">
         <div class="flex items-start gap-2.5">
-          <div class="relative w-8 h-8 rounded-md bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white text-sm font-semibold">
+          <div class="relative w-8 h-8 rounded-md bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center text-white text-sm font-semibold">
             {{ (msg.sender?.name || '?').charAt(0).toUpperCase() }}
             <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-pink-500 border-2 border-dark-900"></span>
           </div>

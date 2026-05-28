@@ -75,7 +75,6 @@ class ChatService {
     })
 
     this.socket.on('connect', () => {
-      console.log('Connected to chat server')
       // Join user's personal room
       this.socket?.emit('join_user_room', userId)
     })

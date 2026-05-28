@@ -408,7 +408,6 @@ const uniqueUsers = computed(() => {
     }
   });
   
-  console.log('Unique users found:', Object.values(users));
   return Object.values(users);
 })
 

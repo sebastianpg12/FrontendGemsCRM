@@ -1,4 +1,5 @@
 import { API_CONFIG } from '../config/api'
+import { authHeaders } from './authHeaders'
 
 export interface CaseFile {
   nombre: string
@@ -102,7 +103,7 @@ class CasesService {
     
     const url = queryParams.toString() ? `${this.apiUrl}?${queryParams}` : this.apiUrl
     
-    const response = await fetch(url)
+    const response = await fetch(url, { headers: authHeaders() })
     if (!response.ok) {
       throw new Error('Error al obtener los casos')
     }
@@ -117,7 +118,7 @@ class CasesService {
 
   // Obtener caso por ID
   async getCaseById(id: string): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${id}`)
+    const response = await fetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
     if (!response.ok) {
       throw new Error('Error al obtener el caso')
     }
@@ -146,8 +147,8 @@ class CasesService {
 
     const response = await fetch(this.apiUrl, {
       method: 'POST',
+      headers: authHeaders({}, { json: false }),
       body: formData,
-      // No establecer Content-Type header para FormData, el navegador lo hará con el boundary correcto
     })
     
     if (!response.ok) {
@@ -195,9 +196,10 @@ class CasesService {
 
     const response = await fetch(`${this.apiUrl}/${id}`, {
       method: 'PUT',
+      headers: authHeaders({}, { json: false }),
       body: formData,
     })
-    
+
     if (!response.ok) {
       throw new Error('Error al actualizar el caso')
     }
@@ -208,6 +210,7 @@ class CasesService {
   async deleteCase(id: string): Promise<void> {
     const response = await fetch(`${this.apiUrl}/${id}`, {
       method: 'DELETE',
+      headers: authHeaders(),
     })
     
     if (!response.ok) {
@@ -219,6 +222,7 @@ class CasesService {
   async create(formData: FormData): Promise<Case> {
     const response = await fetch(this.apiUrl, {
       method: 'POST',
+      headers: authHeaders({}, { json: false }),
       body: formData,
     })
     
@@ -231,6 +235,7 @@ class CasesService {
   async update(id: string, formData: FormData): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${id}`, {
       method: 'PUT',
+      headers: authHeaders({}, { json: false }),
       body: formData,
     })
     
@@ -250,6 +255,7 @@ class CasesService {
     
     const response = await fetch(`${this.apiUrl}/${caseId}/upload`, {
       method: 'POST',
+      headers: authHeaders({}, { json: false }),
       body: formData,
     })
     
@@ -263,6 +269,7 @@ class CasesService {
   async deleteFile(caseId: string, fileIndex: number): Promise<void> {
     const response = await fetch(`${this.apiUrl}/${caseId}/files/${fileIndex}`, {
       method: 'DELETE',
+      headers: authHeaders(),
     })
     
     if (!response.ok) {
@@ -274,9 +281,7 @@ class CasesService {
   async addComment(caseId: string, comment: Partial<CaseComment>): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${caseId}/comments`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: authHeaders(),
       body: JSON.stringify(comment),
     })
     
@@ -290,9 +295,7 @@ class CasesService {
   async addDailyLog(caseId: string, logData: Partial<CaseDailyLog>): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${caseId}/daily-logs`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: authHeaders(),
       body: JSON.stringify(logData),
     })
     
@@ -306,9 +309,7 @@ class CasesService {
   async updateProgress(caseId: string, progreso: number): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${caseId}/progress`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: authHeaders(),
       body: JSON.stringify({ progreso }),
     })
     
@@ -322,9 +323,7 @@ class CasesService {
   async addMilestone(caseId: string, milestone: Partial<CaseMilestone>): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${caseId}/milestones`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: authHeaders(),
       body: JSON.stringify(milestone),
     })
     
@@ -338,6 +337,7 @@ class CasesService {
   async completeMilestone(caseId: string, milestoneIndex: number): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${caseId}/milestones/${milestoneIndex}/complete`, {
       method: 'PUT',
+      headers: authHeaders(),
     })
     
     if (!response.ok) {
@@ -348,7 +348,7 @@ class CasesService {
 
   // Obtener estadísticas
   async getStats(): Promise<CaseStats> {
-    const response = await fetch(`${this.apiUrl}/stats/summary`)
+    const response = await fetch(`${this.apiUrl}/stats/summary`, { headers: authHeaders() })
     if (!response.ok) {
       throw new Error('Error al obtener las estadísticas')
     }
@@ -410,7 +410,7 @@ class CasesService {
   async linkTicket(caseId: string, ticketId: string): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${caseId}/tickets`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify({ ticketId })
     })
     if (!response.ok) throw new Error('Error al vincular el ticket')
@@ -420,6 +420,7 @@ class CasesService {
   // Desvincular ticket
   async unlinkTicket(caseId: string, ticketId: string): Promise<Case> {
     const response = await fetch(`${this.apiUrl}/${caseId}/tickets/${ticketId}`, {
+      headers: authHeaders(),
       method: 'DELETE'
     })
     if (!response.ok) throw new Error('Error al desvincular el ticket')

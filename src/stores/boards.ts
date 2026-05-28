@@ -355,21 +355,17 @@ export const useBoardsStore = defineStore('boards', () => {
   }
 
   async function deleteSprint(boardId: string, sprintId: string) {
-    console.log('🗑️ deleteSprint store - boardId:', boardId, 'sprintId:', sprintId)
     try {
       const response = await axios.delete(
         `${API_URL}/api/boards/${boardId}/sprints/${sprintId}`,
         config.value
       )
-      console.log('✅ Sprint eliminado - Response:', response.data)
       const index = boards.value.findIndex(b => b._id === boardId)
       if (index !== -1) {
         boards.value[index] = response.data
-        console.log('✅ Board actualizado en el store')
       }
       if (currentBoard.value?._id === boardId) {
         currentBoard.value = response.data
-        console.log('✅ currentBoard actualizado')
       }
       return response.data
     } catch (err: any) {

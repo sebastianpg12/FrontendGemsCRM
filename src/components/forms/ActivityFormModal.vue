@@ -17,7 +17,7 @@
             </h2>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
-              GEMS CRM · Gestión de Productividad
+              GEMS Hub · Gestión de Productividad
             </p>
           </div>
         </div>
@@ -436,8 +436,8 @@ import { useTasksStore } from '../../stores/tasks'
 import { useAuthStore } from '../../stores/auth'
 import { useNotifications } from '../../composables/useNotifications'
 import type { TeamMember, Client } from '../../types'
+import DOMPurify from 'dompurify'
 
-console.log('ActivityFormModal script setup initialized')
 
 const boardsStore = useBoardsStore()
 const tasksStore = useTasksStore()
@@ -485,7 +485,6 @@ const form = reactive({
 
 const populateForm = () => {
   try {
-    console.log('Populating ActivityFormModal with:', props.activity)
     if (props.activity) {
       form.title = props.activity.title || ''
       form.description = props.activity.description || ''
@@ -731,13 +730,9 @@ function selectMention(member: any) {
 }
 
 function renderMentions(text: string): string {
-  // escapar HTML básico
-  const escaped = text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-  // Resaltar menciones @nombre (acepta tildes/ñ)
-  return escaped.replace(/@([\p{L}\p{N}_]+)/gu, '<span class="text-primary-500 font-bold bg-primary-50 px-1 rounded">@$1</span>')
+  // Sanitizar primero con DOMPurify para prevenir XSS, luego resaltar menciones
+  const clean = DOMPurify.sanitize(text, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] })
+  return clean.replace(/@([\p{L}\p{N}_]+)/gu, '<span class="text-primary-500 font-bold bg-primary-50 px-1 rounded">@$1</span>')
 }
 
 // ── Editar / eliminar comentarios ─────────────────────────────────────────────

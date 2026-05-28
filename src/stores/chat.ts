@@ -56,12 +56,10 @@ export const useChatStore = defineStore('chat', () => {
       
       socket.on('connect', () => {
         isConnected.value = true
-        console.log('Chat conectado')
       })
       
       socket.on('disconnect', () => {
         isConnected.value = false
-        console.log('Chat desconectado')
       })
       
       // Configurar event listeners

@@ -1,10 +1,10 @@
-<template>
+﻿<template>
   <div class="p-6">
     <!-- Header -->
   <!-- ...existing code... -->
 
     <!-- Tabs -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-purple-500/20">
+    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-primary-500/20">
       <div class="flex flex-wrap gap-2">
         <button
           v-for="tab in tabs"
@@ -13,7 +13,7 @@
           :class="[
             'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
             activeTab === tab.id
-              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+              ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white'
               : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
           ]"
         >

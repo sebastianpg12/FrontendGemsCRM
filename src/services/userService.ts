@@ -48,7 +48,6 @@ class UserService {
         throw new Error('No hay token de autenticación')
       }
 
-      console.log('🌐 Llamando a API de perfil...')
       const response = await fetch(`${this.baseUrl}${this.endpoint}/profile`, {
         method: 'GET',
         headers: {
@@ -57,7 +56,6 @@ class UserService {
         },
       })
 
-      console.log('📡 Respuesta de API:', response.status)
 
       if (!response.ok) {
         const errorText = await response.text()
@@ -66,7 +64,6 @@ class UserService {
       }
 
       const data = await response.json()
-      console.log('📦 Datos recibidos:', data)
 
       // El backend puede devolver data.user o data.data.user
       const user = data.user || data.data?.user
@@ -139,7 +136,6 @@ class UserService {
         throw new Error('No hay token de autenticación')
       }
 
-      console.log('📸 Subiendo foto:', file.name, 'Tamaño:', file.size)
       
       const formData = new FormData()
       formData.append('photo', file)
@@ -152,7 +148,6 @@ class UserService {
         body: formData,
       })
 
-      console.log('📡 Respuesta de subida:', response.status)
 
       if (!response.ok) {
         const errorText = await response.text()
@@ -161,7 +156,6 @@ class UserService {
       }
 
   const data = await response.json()
-  console.log('📦 Respuesta de foto:', data)
       
   // Devolver URL absoluta para usarla directamente en <img>
   return this.toAbsoluteUrl(data.photoUrl)

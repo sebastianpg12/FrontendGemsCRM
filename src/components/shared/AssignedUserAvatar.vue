@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="flex items-center gap-2">
     <!-- Foto de perfil del usuario asignado -->
     <div class="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
@@ -11,7 +11,7 @@
       >
       <div
         v-else
-        class="w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold"
+        class="w-full h-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-xs font-bold"
       >
         {{ userInitials }}
       </div>
@@ -24,7 +24,7 @@
     <button
       v-if="showAssignButton"
       @click="$emit('assign')"
-      class="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+      class="text-xs text-primary-400 hover:text-purple-300 transition-colors"
       title="Asignar actividad"
     >
       <i class="fas fa-user-plus"></i>

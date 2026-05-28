@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div ref="bellRoot" class="fixed bottom-6 right-6 z-50">
     <!-- Botón campana — minimalista, sin animaciones, perfectamente circular -->
     <button
@@ -295,7 +295,7 @@ async function onNotificationClick(n: AppNotification) {
 // ── Iconos por categoría ──
 function categoryIcon(category: string): string {
   switch (category) {
-    case 'mention': return 'fas fa-at text-violet-500'
+    case 'mention': return 'fas fa-at text-primary-500'
     case 'assignment': return 'fas fa-user-tag text-primary-500'
     case 'comment': return 'fas fa-comment text-emerald-500'
     case 'due-soon': return 'fas fa-clock text-amber-500'
@@ -306,7 +306,7 @@ function categoryIcon(category: string): string {
 
 function categoryIconBg(category: string): string {
   switch (category) {
-    case 'mention': return 'bg-violet-50'
+    case 'mention': return 'bg-primary-50'
     case 'assignment': return 'bg-primary-50'
     case 'comment': return 'bg-emerald-50'
     case 'due-soon': return 'bg-amber-50'

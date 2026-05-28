@@ -1,4 +1,5 @@
 import { API_CONFIG } from '@/config/api'
+import { authHeaders } from './authHeaders'
 import type {
   Prospect,
   ProspectMessage,
@@ -80,14 +81,14 @@ class ProspectService {
   // ──────────── CRUD básico ────────────
 
   async list(): Promise<Prospect[]> {
-    const response = await fetch(this.apiUrl)
+    const response = await fetch(this.apiUrl, { headers: authHeaders() })
     if (!response.ok) throw new Error('No se pudieron cargar los prospectos')
     const data = (await response.json()) as Prospect[]
     return data.map((p) => this.hydrate(p))
   }
 
   async get(id: string): Promise<Prospect> {
-    const response = await fetch(`${this.apiUrl}/${id}`)
+    const response = await fetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
     if (!response.ok) throw new Error('No se pudo cargar el prospecto')
     return this.hydrate(await response.json())
   }
@@ -99,7 +100,7 @@ class ProspectService {
   }): Promise<Prospect> {
     const response = await fetch(this.apiUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify(payload),
     })
     if (!response.ok) throw new Error('No se pudo crear el prospecto')
@@ -109,7 +110,7 @@ class ProspectService {
   async sendMessage(id: string, message: { role: 'user' | 'assistant'; content: string }): Promise<Prospect> {
     const response = await fetch(`${this.apiUrl}/${id}/message`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify(message),
     })
     if (!response.ok) throw new Error('No se pudo enviar el mensaje')
@@ -138,7 +139,7 @@ class ProspectService {
     try {
       const response = await fetch(`${this.apiUrl}/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders(),
         body: JSON.stringify(body),
       })
       if (!response.ok) return null
@@ -194,7 +195,7 @@ class ProspectService {
     try {
       const response = await fetch(`${this.apiUrl}/${id}/notes`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders(),
         body: JSON.stringify({ content, author }),
       })
       if (response.ok) {
@@ -252,7 +253,7 @@ class ProspectService {
     try {
       const response = await fetch(`${this.apiUrl}/${id}/tasks`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders(),
         body: JSON.stringify(payload),
       })
       if (response.ok) {
@@ -327,7 +328,7 @@ class ProspectService {
     try {
       await fetch(`${this.apiUrl}/${id}/timeline`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeaders(),
         body: JSON.stringify(partial),
       })
     } catch { /* offline */ }
@@ -416,7 +417,7 @@ class ProspectService {
   }): Promise<string> {
     const response = await fetch(`${API_CONFIG.BASE_URL}/ai/gemini-generate`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify({
         prompt: input.prompt,
         images: input.images,

@@ -11,7 +11,7 @@
       ]"
     >
       <div class="flex items-center gap-2 truncate">
-        <span v-if="selectedOption?.icon" v-html="selectedOption.icon" class="text-slate-400"></span>
+        <i v-if="selectedOption?.icon" :class="selectedOption.icon" class="text-slate-400 text-xs"></i>
         <span :class="selectedOption?.specialClass || 'font-medium truncate'">
           {{ selectedOption?.label || placeholder }}
         </span>
@@ -70,7 +70,7 @@
             ]"
           >
             <div class="flex items-center gap-2 truncate">
-              <span v-if="option.icon" v-html="option.icon" :class="option.value === modelValue ? 'text-primary-500' : 'text-slate-400 group-hover/item:text-slate-600'"></span>
+              <i v-if="option.icon" :class="[option.icon, option.value === modelValue ? 'text-primary-500' : 'text-slate-400 group-hover/item:text-slate-600', 'text-xs']"></i>
               <span :class="[
                 option.specialClass || 'font-medium',
                 size === 'sm' ? 'text-xs' : 'text-sm'

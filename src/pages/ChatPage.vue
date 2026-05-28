@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="h-[100dvh] max-h-[100dvh] bg-transparent text-white">
     <div class="h-[100dvh] p-4 sm:p-6">
       <div class="grid grid-cols-1 lg:grid-cols-[320px,1fr] h-full rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm overflow-hidden">
@@ -23,7 +23,7 @@
           </div>
 
           <div v-else-if="chatStore.chatRooms.length === 0" class="py-10 text-center">
-            <ChatBubbleLeftEllipsisIcon class="w-12 h-12 text-purple-400/70 mx-auto mb-2" />
+            <ChatBubbleLeftEllipsisIcon class="w-12 h-12 text-primary-400/70 mx-auto mb-2" />
             <p class="text-sm text-gray-300 mb-3">No hay conversaciones</p>
             <button @click="showCreateRoom = true" class="text-sm rounded-md px-3 py-1.5 bg-white/10 border border-white/10 hover:bg-white/15">Crear conversación</button>
           </div>
@@ -35,13 +35,13 @@
                 class="w-full text-left flex items-center gap-3 rounded-xl border px-3 py-3 transition-colors"
                 :class="[
                   currentRoom?._id === room._id
-                    ? 'bg-white/10 border-purple-400/40'
+                    ? 'bg-white/10 border-primary-400/40'
                     : 'bg-white/5 border-white/10 hover:bg-white/10'
                 ]"
               >
                 <div
                   class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                  :class="room.type === 'direct' ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : room.type === 'team' ? 'bg-gradient-to-br from-primary-500 to-indigo-500' : 'bg-gradient-to-br from-purple-500 to-pink-500'"
+                  :class="room.type === 'direct' ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : room.type === 'team' ? 'bg-gradient-to-br from-primary-500 to-indigo-500' : 'bg-gradient-to-br from-primary-500 to-primary-700'"
                 >
                   <UserIcon v-if="room.type === 'direct'" class="w-5 h-5" />
                   <UsersIcon v-else-if="room.type === 'team'" class="w-5 h-5" />
@@ -79,7 +79,7 @@
             <div class="flex items-center gap-3 min-w-0">
               <div
                 class="w-11 h-11 rounded-lg flex items-center justify-center shrink-0"
-                :class="currentRoom.type === 'direct' ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : currentRoom.type === 'team' ? 'bg-gradient-to-br from-primary-500 to-indigo-500' : 'bg-gradient-to-br from-purple-500 to-pink-500'"
+                :class="currentRoom.type === 'direct' ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : currentRoom.type === 'team' ? 'bg-gradient-to-br from-primary-500 to-indigo-500' : 'bg-gradient-to-br from-primary-500 to-primary-700'"
               >
                 <UserIcon v-if="currentRoom.type === 'direct'" class="w-6 h-6" />
                 <UsersIcon v-else-if="currentRoom.type === 'team'" class="w-6 h-6" />
@@ -114,7 +114,7 @@
         >
           <div v-if="!currentRoom" class="h-full grid place-items-center">
             <div class="text-center">
-              <ChatBubbleLeftEllipsisIcon class="w-16 h-16 text-purple-400/70 mx-auto mb-3" />
+              <ChatBubbleLeftEllipsisIcon class="w-16 h-16 text-primary-400/70 mx-auto mb-3" />
               <p class="text-gray-300">Elige un chat para empezar</p>
             </div>
           </div>
@@ -136,7 +136,7 @@
               >
                 <div
                   class="max-w-[80%] rounded-xl border px-4 py-3"
-          :class="isOwnMessage(message) ? 'bg-gradient-to-br from-purple-600 to-pink-600 border-pink-500 text-white' : 'bg-slate-800 border-slate-700 text-white'"
+          :class="isOwnMessage(message) ? 'bg-gradient-to-br from-primary-600 to-primary-700 border-pink-500 text-white' : 'bg-slate-800 border-slate-700 text-white'"
                 >
                   <div v-if="!isOwnMessage(message)" class="mb-1 text-xs text-purple-200 font-medium">
                     {{ message.sender.name }}
@@ -179,7 +179,7 @@
                 :key="p.id"
                 class="flex justify-end"
               >
-                <div class="max-w-[80%] rounded-xl border px-4 py-3 bg-purple-600 border-purple-500 text-white">
+                <div class="max-w-[80%] rounded-xl border px-4 py-3 bg-primary-600 border-primary-500 text-white">
                   <div class="whitespace-pre-wrap break-words">{{ p.content }}</div>
                   <div class="mt-1 text-xs text-white/70">🕒 {{ formatTimeShort(p.createdAt) }} · Enviando…</div>
                 </div>
@@ -188,14 +188,14 @@
           </div>
 
           <!-- Scroll edge overlays -->
-          <div v-if="!atTop" class="pointer-events-none absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-purple-500/15 to-transparent"></div>
-          <div v-if="!atBottom" class="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-pink-500/15 to-transparent"></div>
+          <div v-if="!atTop" class="pointer-events-none absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-primary-500/15 to-transparent"></div>
+          <div v-if="!atBottom" class="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-primary-600/15 to-transparent"></div>
 
           <!-- Scroll to bottom -->
           <button
             v-if="!atBottom"
             @click="scrollToBottom"
-            class="absolute bottom-4 right-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-2 text-sm shadow"
+            class="absolute bottom-4 right-4 rounded-full bg-gradient-to-r from-primary-600 to-primary-700 px-3 py-2 text-sm shadow"
             title="Bajar al final"
           >
             <div class="flex items-center gap-2"><ArrowDownIcon class="w-5 h-5" /><span class="hidden sm:inline">Bajar</span></div>
@@ -232,14 +232,14 @@
                 @keydown.escape.prevent="cancelEdit"
                 @input="handleTyping"
                 :placeholder="editingMessage ? 'Editar mensaje…' : 'Escribe un mensaje…'"
-                class="w-full rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm px-4 py-3 outline-none focus:border-purple-400"
+                class="w-full rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm px-4 py-3 outline-none focus:border-primary-400"
               />
             </div>
             <button @click="toggleEmojiPicker" class="p-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10" title="Emojis">😊</button>
             <button
               @click="editingMessage ? saveEdit() : sendMessage()"
               :disabled="!newMessage.trim()"
-              class="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-3 disabled:opacity-50"
+              class="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-primary-600 to-primary-700 px-4 py-3 disabled:opacity-50"
             >
               <PaperAirplaneIcon v-if="!editingMessage" class="w-5 h-5" />
               <CheckIcon v-else class="w-5 h-5" />
@@ -269,7 +269,7 @@
               >
                 <div
                   class="w-10 h-10 rounded-lg flex items-center justify-center"
-                  :class="room.type === 'direct' ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : room.type === 'team' ? 'bg-gradient-to-br from-primary-500 to-indigo-500' : 'bg-gradient-to-br from-purple-500 to-pink-500'"
+                  :class="room.type === 'direct' ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : room.type === 'team' ? 'bg-gradient-to-br from-primary-500 to-indigo-500' : 'bg-gradient-to-br from-primary-500 to-primary-700'"
                 >
                   <UserIcon v-if="room.type === 'direct'" class="w-5 h-5" />
                   <UsersIcon v-else-if="room.type === 'team'" class="w-5 h-5" />
@@ -291,7 +291,7 @@
 
     <!-- Mobile FAB: create room -->
     <button
-      class="lg:hidden fixed bottom-5 right-5 z-40 rounded-full p-4 shadow-xl bg-gradient-to-r from-purple-600 to-pink-600"
+      class="lg:hidden fixed bottom-5 right-5 z-40 rounded-full p-4 shadow-xl bg-gradient-to-r from-primary-600 to-primary-700"
       title="Nuevo chat"
       @click="showCreateRoom = true"
     >
@@ -322,7 +322,7 @@
               <div class="text-gray-400">Participantes ({{ currentRoom.participants.length }})</div>
               <div class="mt-2 space-y-2 max-h-56 overflow-y-auto custom-scrollbar">
                 <div v-for="p in currentRoom.participants" :key="p._id" class="flex items-center gap-3 rounded-md bg-white/5 border border-white/10 px-3 py-2">
-                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-primary-700 flex items-center justify-center">
                     <span class="text-xs font-semibold">{{ p.name.charAt(0).toUpperCase() }}</span>
                   </div>
                   <div class="min-w-0">

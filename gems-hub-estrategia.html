@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GEMS Hub — Estrategia de Mercado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #04060d;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 20%, rgba(139,92,246,0.16) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 75%, rgba(99,102,241,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 100%, rgba(168,85,247,0.09) 0%, transparent 55%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 64px 56px;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 56px; padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-logo {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+      box-shadow: 0 8px 24px -4px rgba(109,40,217,0.6);
+    }
+    .brand-name { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+    .brand-name span {
+      background: linear-gradient(135deg, #a78bfa, #818cf8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .brand-sub { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.35em; margin-top: 2px; }
+    .header-badge {
+      background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);
+      color: #a78bfa; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      padding: 6px 14px; border-radius: 99px;
+    }
+
+    /* ── Hero ── */
+    .hero { margin-bottom: 56px; }
+    .hero-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4em; color: #a78bfa; margin-bottom: 14px; }
+    .hero-title { font-size: 42px; font-weight: 900; color: #fff; line-height: 1.1; letter-spacing: -1px; margin-bottom: 18px; }
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, #a78bfa 0%, #818cf8 60%, #60a5fa 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-desc { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.42); line-height: 1.75; max-width: 620px; }
+
+    /* ── Section title ── */
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.28); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+
+    /* ── Funnel overview ── */
+    .funnel {
+      display: flex; gap: 0; margin-bottom: 48px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px; overflow: hidden;
+    }
+    .funnel-step {
+      flex: 1; padding: 20px 18px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+    }
+    .funnel-step:last-child { border-right: none; }
+    .funnel-step::after {
+      content: '›';
+      position: absolute; right: -8px; top: 50%; transform: translateY(-50%);
+      color: rgba(255,255,255,0.12); font-size: 18px; font-weight: 900; z-index: 2;
+    }
+    .funnel-step:last-child::after { display: none; }
+    .funnel-num { font-size: 22px; font-weight: 900; color: #7c3aed; margin-bottom: 4px; }
+    .funnel-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.6); margin-bottom: 3px; }
+    .funnel-sub { font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.28); line-height: 1.4; }
+
+    /* ── Niche cards ── */
+    .niche-card {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 16px;
+    }
+
+    .niche-card.priority-1 { border-color: rgba(139,92,246,0.3); }
+    .niche-card.priority-2 { border-color: rgba(99,102,241,0.2); }
+    .niche-card.priority-3 { border-color: rgba(255,255,255,0.07); }
+
+    .niche-header {
+      padding: 20px 24px;
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .niche-card.priority-1 .niche-header { background: rgba(139,92,246,0.08); border-bottom-color: rgba(139,92,246,0.15); }
+    .niche-card.priority-2 .niche-header { background: rgba(99,102,241,0.06); }
+
+    .niche-emoji { font-size: 28px; flex-shrink: 0; }
+
+    .niche-info { flex: 1; }
+    .niche-name { font-size: 17px; font-weight: 800; color: rgba(255,255,255,0.9); margin-bottom: 3px; }
+    .niche-desc { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.38); }
+
+    .niche-badge {
+      font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em;
+      padding: 5px 12px; border-radius: 99px; flex-shrink: 0;
+    }
+    .badge-first { background: rgba(139,92,246,0.18); border: 1px solid rgba(139,92,246,0.35); color: #c4b5fd; }
+    .badge-second { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.25); color: #a5b4fc; }
+    .badge-third { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.35); }
+
+    .niche-body { padding: 22px 24px; }
+
+    .niche-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+    .niche-col-title {
+      font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em;
+      margin-bottom: 10px;
+    }
+    .col-pain .niche-col-title { color: #f87171; }
+    .col-hook .niche-col-title { color: #34d399; }
+
+    .niche-list { display: flex; flex-direction: column; gap: 7px; }
+    .niche-list-item {
+      font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.5);
+      display: flex; align-items: flex-start; gap: 8px; line-height: 1.45;
+    }
+    .col-pain .niche-list-item::before { content: '✗'; color: #f87171; font-weight: 800; font-size: 10px; margin-top: 1px; flex-shrink: 0; }
+    .col-hook .niche-list-item::before { content: '✓'; color: #34d399; font-weight: 800; font-size: 10px; margin-top: 1px; flex-shrink: 0; }
+
+    .niche-pitch {
+      margin-top: 18px; padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.65); font-style: italic;
+      line-height: 1.55;
+    }
+    .niche-card.priority-1 .niche-pitch { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.15); }
+    .niche-card.priority-2 .niche-pitch { background: rgba(99,102,241,0.06); border: 1px solid rgba(99,102,241,0.1); }
+    .niche-card.priority-3 .niche-pitch { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+
+    /* ── General strategy ── */
+    .strategy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    .strategy-item {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 18px 20px;
+    }
+
+    .strategy-icon { font-size: 20px; margin-bottom: 10px; }
+    .strategy-title { font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
+    .strategy-desc { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.38); line-height: 1.6; }
+
+    /* ── No hacer ── */
+    .nohaz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+    .nohaz-item {
+      background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.12);
+      border-radius: 14px; padding: 14px 16px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+
+    .nohaz-x { font-size: 11px; font-weight: 900; color: #f87171; flex-shrink: 0; margin-top: 1px; }
+    .nohaz-text { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); line-height: 1.45; }
+
+    /* ── Priority order visual ── */
+    .priority-row {
+      display: flex; gap: 12px; align-items: stretch; margin-bottom: 48px;
+    }
+
+    .priority-item {
+      flex: 1; border-radius: 16px; padding: 18px 16px; text-align: center;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+    }
+    .priority-item.active {
+      background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.3);
+    }
+    .priority-arrow {
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.12); font-size: 20px; font-weight: 900;
+      flex-shrink: 0; align-self: center;
+    }
+    .priority-phase { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(255,255,255,0.25); margin-bottom: 6px; }
+    .priority-item.active .priority-phase { color: #a78bfa; }
+    .priority-label { font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.75); margin-bottom: 4px; }
+    .priority-sub { font-size: 10.5px; font-weight: 500; color: rgba(255,255,255,0.3); line-height: 1.4; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 56px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-brand { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 0.3em; }
+    .footer-copy { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.15); }
+
+    @media print {
+      body { background: #04060d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body::before { display: none; }
+      .page { padding: 40px 44px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <div class="brand-logo">💎</div>
+      <div>
+        <div class="brand-name">GEMS <span>Hub</span></div>
+        <div class="brand-sub">Galactic Intelligence Suite</div>
+      </div>
+    </div>
+    <div class="header-badge">Estrategia de Mercado</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-label">Go-to-Market</div>
+    <h1 class="hero-title">Tres nichos,<br/>una <em>entrada clara</em></h1>
+    <p class="hero-desc">
+      GEMS Hub no va a todo el mercado. Se enfoca en sectores donde el dolor operativo
+      es real, el presupuesto es limitado y el ciclo de venta es corto.
+      El primer cliente valida el producto. Los siguientes escalan el negocio.
+    </p>
+  </div>
+
+  <!-- Funnel overview -->
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="funnel-num">1</div>
+      <div class="funnel-label">Primer cliente</div>
+      <div class="funnel-sub">Agencia creativa cercana. Piloto gratis 60 días.</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-num">3–5</div>
+      <div class="funnel-label">Caso de éxito</div>
+      <div class="funnel-sub">Screenshots reales + testimonio. Munición de ventas.</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-num">10+</div>
+      <div class="funnel-label">Expansión</div>
+      <div class="funnel-sub">Atacar TI/MSP y mantenimiento con credibilidad.</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-num">∞</div>
+      <div class="funnel-label">Referidos</div>
+      <div class="funnel-sub">Cada cliente conectado al nicho trae los siguientes.</div>
+    </div>
+  </div>
+
+  <!-- Priority order -->
+  <div class="section">
+    <div class="section-title">Orden de prioridad</div>
+    <div class="priority-row">
+      <div class="priority-item active">
+        <div class="priority-phase">Fase 1 · Ahora</div>
+        <div class="priority-label">🎨 Agencias Creativas</div>
+        <div class="priority-sub">Primer contacto, validación y caso de éxito</div>
+      </div>
+      <div class="priority-arrow">›</div>
+      <div class="priority-item">
+        <div class="priority-phase">Fase 2 · Mes 2–3</div>
+        <div class="priority-label">💻 Empresas de TI / MSP</div>
+        <div class="priority-sub">Mayor volumen de tickets y casos. Ticket más alto.</div>
+      </div>
+      <div class="priority-arrow">›</div>
+      <div class="priority-item">
+        <div class="priority-phase">Fase 3 · Mes 4+</div>
+        <div class="priority-label">🔧 Mantenimiento / Field</div>
+        <div class="priority-sub">Proceso más largo pero contratos más estables</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nichos -->
+  <div class="section">
+    <div class="section-title">Análisis por nicho</div>
+
+    <!-- Niche 1 -->
+    <div class="niche-card priority-1">
+      <div class="niche-header">
+        <div class="niche-emoji">🎨</div>
+        <div class="niche-info">
+          <div class="niche-name">Agencias Creativas Jóvenes</div>
+          <div class="niche-desc">Diseño, marketing digital, contenido, branding, social media</div>
+        </div>
+        <div class="niche-badge badge-first">Primer objetivo</div>
+      </div>
+      <div class="niche-body">
+        <div class="niche-cols">
+          <div class="col-pain">
+            <div class="niche-col-title">Su dolor hoy</div>
+            <div class="niche-list">
+              <div class="niche-list-item">Clientes gestionados por WhatsApp y Excel</div>
+              <div class="niche-list-item">Carpetas de Drive con nombres tipo "FINAL_v3_ESTE"</div>
+              <div class="niche-list-item">Nadie sabe qué está pendiente sin preguntar</div>
+              <div class="niche-list-item">Los clientes preguntan por todo constantemente</div>
+              <div class="niche-list-item">Sin visibilidad de pagos ni seguimientos</div>
+            </div>
+          </div>
+          <div class="col-hook">
+            <div class="niche-col-title">Por qué entra GEMS Hub</div>
+            <div class="niche-list">
+              <div class="niche-list-item">El dueño decide solo — ciclo de venta corto</div>
+              <div class="niche-list-item">No tienen presupuesto para HubSpot ($800/mes)</div>
+              <div class="niche-list-item">Valoran el diseño — la interfaz los convence</div>
+              <div class="niche-list-item">Ya están en tu red de contactos directos</div>
+              <div class="niche-list-item">Alto poder de referidos entre agencias</div>
+            </div>
+          </div>
+        </div>
+        <div class="niche-pitch">
+          💬 "Es como tener Notion + Trello + bandeja de soporte, todo junto, con tu marca, sin pagar $800 al mes."
+        </div>
+      </div>
+    </div>
+
+    <!-- Niche 2 -->
+    <div class="niche-card priority-2">
+      <div class="niche-header">
+        <div class="niche-emoji">💻</div>
+        <div class="niche-info">
+          <div class="niche-name">Empresas de TI / MSP</div>
+          <div class="niche-desc">Soporte técnico, infraestructura, proveedores de servicios gestionados</div>
+        </div>
+        <div class="niche-badge badge-second">Segunda fase</div>
+      </div>
+      <div class="niche-body">
+        <div class="niche-cols">
+          <div class="col-pain">
+            <div class="niche-col-title">Su dolor hoy</div>
+            <div class="niche-list">
+              <div class="niche-list-item">Tickets de clientes sin sistema unificado</div>
+              <div class="niche-list-item">Casos críticos mezclados con solicitudes menores</div>
+              <div class="niche-list-item">Difícil medir tiempos de respuesta y resolución</div>
+              <div class="niche-list-item">Comunicación interna fragmentada</div>
+              <div class="niche-list-item">Sin trazabilidad de quién hizo qué y cuándo</div>
+            </div>
+          </div>
+          <div class="col-hook">
+            <div class="niche-col-title">Por qué entra GEMS Hub</div>
+            <div class="niche-list">
+              <div class="niche-list-item">Módulo de tickets + casos diseñado para esto</div>
+              <div class="niche-list-item">Chat de equipo integrado — no dependen de Slack extra</div>
+              <div class="niche-list-item">Reportes de actividad y seguimientos por cliente</div>
+              <div class="niche-list-item">Ticket promedio más alto — mayor disposición a pagar</div>
+              <div class="niche-list-item">Les hablas en su idioma técnico — credibilidad inmediata</div>
+            </div>
+          </div>
+        </div>
+        <div class="niche-pitch">
+          💬 "Un solo lugar para tus tickets, casos, clientes y equipo — sin pagar licencias de Zendesk + HubSpot + Slack por separado."
+        </div>
+      </div>
+    </div>
+
+    <!-- Niche 3 -->
+    <div class="niche-card priority-3">
+      <div class="niche-header">
+        <div class="niche-emoji">🔧</div>
+        <div class="niche-info">
+          <div class="niche-name">Mantenimiento / Field Service</div>
+          <div class="niche-desc">Técnicos en campo, mantenimiento industrial, instalaciones, servicios domiciliarios</div>
+        </div>
+        <div class="niche-badge badge-third">Tercera fase</div>
+      </div>
+      <div class="niche-body">
+        <div class="niche-cols">
+          <div class="col-pain">
+            <div class="niche-col-title">Su dolor hoy</div>
+            <div class="niche-list">
+              <div class="niche-list-item">Órdenes de trabajo en papel o WhatsApp</div>
+              <div class="niche-list-item">Sin visibilidad de dónde está cada técnico</div>
+              <div class="niche-list-item">Clientes llaman para saber estado de su caso</div>
+              <div class="niche-list-item">Historial de servicios por cliente inexistente</div>
+              <div class="niche-list-item">Cobros y seguimientos sin trazabilidad</div>
+            </div>
+          </div>
+          <div class="col-hook">
+            <div class="niche-col-title">Por qué entra GEMS Hub</div>
+            <div class="niche-list">
+              <div class="niche-list-item">Casos + tickets = órdenes de trabajo digitales</div>
+              <div class="niche-list-item">Seguimientos y actividades por cliente y técnico</div>
+              <div class="niche-list-item">Historial completo por cliente centralizado</div>
+              <div class="niche-list-item">Contratos más largos y recurrentes una vez entran</div>
+              <div class="niche-list-item">Poca competencia directa en este segmento en Latam</div>
+            </div>
+          </div>
+        </div>
+        <div class="niche-pitch">
+          💬 "Tus órdenes de trabajo, clientes e historial de servicio en un sistema — no en la memoria de tus técnicos."
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- General strategy -->
+  <div class="section">
+    <div class="section-title">Estrategia general de adquisición</div>
+    <div class="strategy-grid">
+      <div class="strategy-item">
+        <div class="strategy-icon">🎯</div>
+        <div class="strategy-title">Venta directa primero</div>
+        <div class="strategy-desc">Antes de cualquier pauta o contenido, el primer cliente llega por relación directa. Una conversación, un demo de 15 minutos y una propuesta simple.</div>
+      </div>
+      <div class="strategy-item">
+        <div class="strategy-icon">🖥️</div>
+        <div class="strategy-title">Demo pública siempre activa</div>
+        <div class="strategy-desc">Una instancia con datos ficticios accesible 24/7. Elimina la fricción de "agendemos una llamada" y deja que el producto se venda solo.</div>
+      </div>
+      <div class="strategy-item">
+        <div class="strategy-icon">✍️</div>
+        <div class="strategy-title">Contenido de opinión en LinkedIn</div>
+        <div class="strategy-desc">No ventas directas. Puntos de vista sobre por qué los CRM tradicionales no sirven para equipos de servicio. Posiciona como experto, los clientes llegan solos.</div>
+      </div>
+      <div class="strategy-item">
+        <div class="strategy-icon">🏆</div>
+        <div class="strategy-title">Caso de éxito como motor</div>
+        <div class="strategy-desc">Un cliente real con capturas y testimonio vale más que cualquier anuncio. Es el activo de ventas más poderoso en los primeros 6 meses.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lo que NO hacer -->
+  <div class="section">
+    <div class="section-title">Lo que NO hacer todavía</div>
+    <div class="nohaz-grid">
+      <div class="nohaz-item">
+        <div class="nohaz-x">✗</div>
+        <div class="nohaz-text">Pauta en Google o Meta — muy costoso sin casos de éxito previos</div>
+      </div>
+      <div class="nohaz-item">
+        <div class="nohaz-x">✗</div>
+        <div class="nohaz-text">Marketplace de apps — demasiado ruido, muy baja conversión</div>
+      </div>
+      <div class="nohaz-item">
+        <div class="nohaz-x">✗</div>
+        <div class="nohaz-text">SEO agresivo — tarda 6–12 meses en dar resultados reales</div>
+      </div>
+      <div class="nohaz-item">
+        <div class="nohaz-x">✗</div>
+        <div class="nohaz-text">Ir a todos los nichos al mismo tiempo — dilución de esfuerzo</div>
+      </div>
+      <div class="nohaz-item">
+        <div class="nohaz-x">✗</div>
+        <div class="nohaz-text">Construir features sin tener clientes — producto sin validación</div>
+      </div>
+      <div class="nohaz-item">
+        <div class="nohaz-x">✗</div>
+        <div class="nohaz-text">Esperar que el producto esté "perfecto" para salir a vender</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">💎 GEMS Hub · GEMS Innovations</div>
+    <div class="footer-copy">© 2026 · Uso interno</div>
+  </div>
+
+</div>
+</body>
+</html>

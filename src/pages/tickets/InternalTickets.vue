@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="flex flex-col h-full min-h-0 gap-4">
     <!-- Header Controls (New Ticket & Refresh) -->
     <div class="flex-shrink-0 flex items-center justify-end pr-24">
@@ -831,7 +831,7 @@ const columnLimits = reactive<Record<string, number>>({
 })
 
 const columns = [
-  { id: 'new', title: 'Nuevos', icon: 'fas fa-inbox', color: 'bg-violet-500', textColor: 'text-violet-500' },
+  { id: 'new', title: 'Nuevos', icon: 'fas fa-inbox', color: 'bg-primary-500', textColor: 'text-primary-500' },
   { id: 'open', title: 'En Proceso', icon: 'fas fa-spinner', color: 'bg-primary-500', textColor: 'text-primary-500' },
   { id: 'resolved', title: 'Resueltos', icon: 'fas fa-check-circle', color: 'bg-emerald-500', textColor: 'text-emerald-500' }
 ]

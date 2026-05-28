@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="flex flex-col gap-6 h-full min-h-0 p-4 lg:p-8 relative">
     <!-- Background Accents — hidden in dark mode -->
     <div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-primary-50/40 to-transparent pointer-events-none dark:hidden"></div>
@@ -735,9 +735,13 @@ const monthlyComparison = computed(() => [
 ])
 
 // -- ApexCharts Configuration --
+// primary reads the current accent color from the CSS variable at render time
+const getAccent = () =>
+  getComputedStyle(document.documentElement).getPropertyValue('--brand-accent').trim() || '#8b5cf6'
+
 const CHART_COLORS = {
   emerald: '#10b981',
-  primary: '#6366f1',
+  get primary() { return getAccent() },
   amber: '#f59e0b',
   red: '#ef4444',
   text: '#64748b'
@@ -796,7 +800,7 @@ const workloadChartOptions = computed(() => {
     plotOptions: {
       bar: { borderRadius: 6, columnWidth: '45%', distributed: true }
     },
-    colors: [CHART_COLORS.primary, '#8b5cf6', '#3b82f6', '#14b8a6', '#f59e0b'],
+    colors: [getAccent(), getAccent(), '#3b82f6', '#14b8a6', '#f59e0b'],
     dataLabels: { enabled: true, formatter: (val: any) => val, style: { fontSize: '10px', fontWeight: 900 } },
     legend: { show: false },
     xaxis: {
@@ -881,7 +885,7 @@ const kpiStatCards = computed(() => {
     { label: 'Resolución', value: t.avgResolution, suffix: 'días', valueColor: 'text-slate-900', icon: 'fa-clock', iconBg: 'bg-slate-100 border-slate-200', iconColor: 'text-slate-600' },
     { label: 'Pendientes', value: t.totalWorkload, valueColor: 'text-slate-900', icon: 'fa-clipboard-list', iconBg: 'bg-amber-50 border-amber-100', iconColor: 'text-amber-600' },
     { label: 'Vencidas', value: t.totalOverdue, valueColor: t.totalOverdue > 0 ? 'text-red-600' : 'text-slate-900', icon: 'fa-exclamation-triangle', iconBg: t.totalOverdue > 0 ? 'bg-red-50 border-red-100' : 'bg-slate-100 border-slate-200', iconColor: t.totalOverdue > 0 ? 'text-red-600' : 'text-slate-400' },
-    { label: 'Horas', value: t.totalHours, suffix: 'h', valueColor: 'text-slate-900', icon: 'fa-stopwatch', iconBg: 'bg-purple-50 border-purple-100', iconColor: 'text-purple-600' },
+    { label: 'Horas', value: t.totalHours, suffix: 'h', valueColor: 'text-slate-900', icon: 'fa-stopwatch', iconBg: 'bg-purple-50 border-primary-100', iconColor: 'text-primary-600' },
   ]
 })
 

@@ -1,6 +1,6 @@
-<template>
+﻿<template>
   <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-    <div class="bg-gray-900 rounded-xl border border-purple-500/30 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="bg-gray-900 rounded-xl border border-primary-500/30 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
       <!-- Header -->
       <div class="flex justify-between items-center p-6 border-b border-gray-700">
         <div>
@@ -52,7 +52,7 @@
             </div>
             <div class="bg-gray-700 rounded-full h-3">
               <div 
-                class="bg-gradient-to-r from-purple-500 to-pink-500 h-3 rounded-full transition-all duration-300"
+                class="bg-gradient-to-r from-primary-500 to-primary-700 h-3 rounded-full transition-all duration-300"
                 :style="{ width: `${caseItem.progreso}%` }"
               ></div>
             </div>
@@ -66,7 +66,7 @@
                 :class="[
                   'px-3 py-1 rounded text-xs transition-colors',
                   caseItem.progreso >= progress
-                    ? 'bg-purple-600 text-white'
+                    ? 'bg-primary-600 text-white'
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                 ]"
               >
@@ -81,7 +81,7 @@
               <h3 class="text-lg font-semibold text-white">Hitos</h3>
               <button
                 @click="showMilestoneForm = true"
-                class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                class="bg-primary-600 hover:bg-primary-700 text-white px-3 py-1 rounded text-sm transition-colors"
               >
                 <i class="fas fa-plus mr-1"></i>
                 Agregar
@@ -105,7 +105,7 @@
                       'w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors',
                       hito.completado
                         ? 'bg-green-500 border-green-500'
-                        : 'border-gray-400 hover:border-purple-400'
+                        : 'border-gray-400 hover:border-primary-400'
                     ]"
                   >
                     <i v-if="hito.completado" class="fas fa-check text-white text-xs"></i>
@@ -133,7 +133,7 @@
               <h3 class="text-lg font-semibold text-white">Archivos</h3>
               <button
                 @click="$refs.fileInput.click()"
-                class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                class="bg-primary-600 hover:bg-primary-700 text-white px-3 py-1 rounded text-sm transition-colors"
               >
                 <i class="fas fa-upload mr-1"></i>
                 Subir
@@ -172,7 +172,7 @@
                   <a
                     :href="getFileUrl(archivo.url)"
                     target="_blank"
-                    class="text-purple-400 hover:text-purple-300 transition-colors"
+                    class="text-primary-400 hover:text-purple-300 transition-colors"
                     title="Descargar"
                   >
                     <i class="fas fa-download"></i>
@@ -200,12 +200,12 @@
                   v-model="newComment"
                   placeholder="Agregar un comentario..."
                   rows="3"
-                  class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 ></textarea>
                 <div class="flex flex-col space-y-2">
                   <select
                     v-model="commentType"
-                    class="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    class="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     <option value="comentario">Comentario</option>
                     <option value="actualizacion">Actualización</option>
@@ -214,7 +214,7 @@
                   <button
                     @click="addComment"
                     :disabled="!newComment.trim()"
-                    class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm transition-colors disabled:opacity-50"
+                    class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm transition-colors disabled:opacity-50"
                   >
                     Enviar
                   </button>
@@ -235,7 +235,7 @@
               >
                 <div class="flex justify-between items-start mb-2">
                   <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
                       <i class="fas fa-user text-white text-sm"></i>
                     </div>
                     <div>
@@ -330,7 +330,7 @@
                   <span
                     v-for="tag in caseItem.tags"
                     :key="tag"
-                    class="bg-purple-600 text-white px-2 py-1 rounded-full text-xs"
+                    class="bg-primary-600 text-white px-2 py-1 rounded-full text-xs"
                   >
                     {{ tag }}
                   </span>
@@ -383,7 +383,7 @@
               v-model="milestoneForm.nombre"
               type="text"
               required
-              class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
           </div>
           
@@ -392,7 +392,7 @@
             <textarea
               v-model="milestoneForm.descripcion"
               rows="3"
-              class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             ></textarea>
           </div>
           
@@ -402,7 +402,7 @@
               v-model="milestoneForm.fecha_objetivo"
               type="date"
               required
-              class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
           </div>
           
@@ -416,7 +416,7 @@
             </button>
             <button
               type="submit"
-              class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded transition-colors"
+              class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded transition-colors"
             >
               Agregar
             </button>

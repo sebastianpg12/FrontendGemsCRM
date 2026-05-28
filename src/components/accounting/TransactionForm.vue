@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <!-- Modal Backdrop -->
   <div
     v-if="show"
@@ -7,7 +7,7 @@
   >
     <!-- Modal Content -->
     <div
-      class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-purple-500/20"
+      class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-primary-500/20"
       @click.stop
     >
       <!-- Header -->
@@ -35,7 +35,7 @@
           <select
             v-model="form.tipo"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
             <option value="" class="bg-gray-700">Seleccionar tipo</option>
             <option value="ingreso" class="bg-gray-700">Ingreso</option>
@@ -53,7 +53,7 @@
             type="text"
             required
             placeholder="Descripción de la transacción"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
 
@@ -69,7 +69,7 @@
             min="0"
             step="0.01"
             placeholder="0.00"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
 
@@ -82,7 +82,7 @@
             v-model="form.fecha"
             type="date"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
 
@@ -93,7 +93,7 @@
           </label>
           <select
             v-model="form.metodo"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
             <option value="" class="bg-gray-700">Seleccionar método</option>
             <option value="efectivo" class="bg-gray-700">Efectivo</option>
@@ -114,7 +114,7 @@
           </label>
           <select
             v-model="form.cliente_id"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
             <option value="" class="bg-gray-700">Sin cliente asignado</option>
             <option 
@@ -135,7 +135,7 @@
               v-model="form.es_recurrente"
               type="checkbox"
               id="es_recurrente"
-              class="h-4 w-4 text-purple-600 focus:ring-purple-500 bg-gray-700 border-gray-600 rounded"
+              class="h-4 w-4 text-primary-600 focus:ring-primary-500 bg-gray-700 border-gray-600 rounded"
             >
             <label for="es_recurrente" class="ml-3 text-white">
               Es un pago recurrente
@@ -150,7 +150,7 @@
             <select
               v-model="form.frecuencia"
               required
-              class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+              class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
             >
               <option value="" class="bg-gray-700">Seleccionar frecuencia</option>
               <option value="mensual" class="bg-gray-700">Mensual</option>
@@ -173,7 +173,7 @@
           <button
             type="submit"
             :disabled="loading"
-            class="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 transition-all duration-300 disabled:opacity-50"
+            class="flex-1 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-700 transition-all duration-300 disabled:opacity-50"
           >
             <span v-if="loading">
               <i class="fas fa-spinner fa-spin mr-2"></i>

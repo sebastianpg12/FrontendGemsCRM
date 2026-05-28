@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { authService } from '../services/authService'
+import { authService, type MembershipSummary, type OrganizationSummary } from '../services/authService'
 
 export interface User {
   _id: string
@@ -10,6 +10,7 @@ export interface User {
   department: string
   position: string
   avatar?: string
+  isSuperAdmin?: boolean
   permissions?: {
     dashboard: boolean
     clients: {
@@ -60,11 +61,18 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(localStorage.getItem('token'))
   const isLoading = ref(false)
   const error = ref<string | null>(null)
+  // Multi-tenant
+  const organization = ref<OrganizationSummary | null>(
+    (() => { try { return JSON.parse(localStorage.getItem('organization') || 'null') } catch { return null } })()
+  )
+  const memberships = ref<MembershipSummary[]>([])
+  const requiresOrgSelection = ref<boolean>(false)
 
   // Getters
   const isAuthenticated = computed(() => !!user.value && !!token.value)
   const userRole = computed(() => user.value?.role || null)
   const isAdmin = computed(() => user.value?.role === 'admin')
+  const isSuperAdmin = computed(() => !!user.value?.isSuperAdmin)
   const isManager = computed(() => user.value?.role === 'manager' || user.value?.role === 'admin')
   const isSupport = computed(() => user.value?.role === 'support' || user.value?.role === 'admin')
   const isClient = computed(() => user.value?.role === 'client')
@@ -182,28 +190,29 @@ export const useAuthStore = defineStore('auth', () => {
       isLoading.value = true
       error.value = null
       
-      console.log('🚀 Attempting login with:', credentials.email)
       
       const response = await authService.login(credentials)
-      
+
       if (response.success && response.user && response.token) {
         user.value = response.user
         token.value = response.token
         localStorage.setItem('token', response.token)
-        // Persist user
         localStorage.setItem('user', JSON.stringify(user.value))
-        
-        console.log('✅ Login successful!')
-        console.log('👤 User:', response.user?.name, '- Role:', response.user?.role)
-        
-        return { success: true }
+        memberships.value = response.memberships || []
+        requiresOrgSelection.value = !!response.requiresOrgSelection
+        if (response.organization) {
+          organization.value = response.organization
+          localStorage.setItem('organization', JSON.stringify(response.organization))
+        } else {
+          organization.value = null
+          localStorage.removeItem('organization')
+        }
+        return { success: true, requiresOrgSelection: requiresOrgSelection.value }
       } else {
-        console.log('❌ Login failed:', response.message)
         error.value = response.message || 'Error al iniciar sesión'
         return { success: false, message: error.value }
       }
     } catch (err: any) {
-      console.log('❌ Login error:', err)
       error.value = err.message || 'Error de conexión'
       return { success: false, message: error.value }
     } finally {
@@ -221,22 +230,42 @@ export const useAuthStore = defineStore('auth', () => {
     } finally {
       user.value = null
       token.value = null
+      organization.value = null
+      memberships.value = []
+      requiresOrgSelection.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('user')
+      localStorage.removeItem('organization')
       window.location.href = '/login'
     }
   }
 
+  const selectOrganization = async (organizationId: string) => {
+    isLoading.value = true
+    error.value = null
+    try {
+      const response = await authService.selectOrganization(organizationId)
+      if (response.success && response.token && response.organization) {
+        token.value = response.token
+        organization.value = response.organization
+        requiresOrgSelection.value = false
+        localStorage.setItem('token', response.token)
+        localStorage.setItem('organization', JSON.stringify(response.organization))
+        return { success: true }
+      }
+      error.value = response.message || 'No se pudo seleccionar la organización'
+      return { success: false, message: error.value }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   const checkAuth = async () => {
-    console.log('🔍 Checking auth...')
     const storedToken = localStorage.getItem('token')
     const storedUser = localStorage.getItem('user')
     
-    console.log('📦 Stored token:', !!storedToken)
-    console.log('👤 Stored user:', !!storedUser)
     
     if (!storedToken || !storedUser) {
-      console.log('❌ No stored credentials found')
       return false
     }
 
@@ -244,21 +273,20 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = storedToken
       user.value = JSON.parse(storedUser)
       
-      console.log('✅ Auth restored from localStorage')
-      console.log('👤 User:', user.value?.name, '- Role:', user.value?.role)
       
       // Verify token is still valid
       const response = await authService.verifyToken()
       if (!response.success) {
-        console.log('❌ Token verification failed')
         await logout()
         return false
       }
-      
-      console.log('✅ Token verified successfully')
+      requiresOrgSelection.value = !!response.requiresOrgSelection
+      if (response.organization) {
+        organization.value = response.organization
+        localStorage.setItem('organization', JSON.stringify(response.organization))
+      }
       return true
     } catch (err) {
-      console.log('❌ Error restoring auth:', err)
       await logout()
       return false
     }
@@ -329,6 +357,11 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (user.value.role === 'admin') {
       modules.push({ id: 'theme-settings', name: 'Personalización', icon: 'fas fa-sliders', path: '/settings/theme', canAccess: true })
+      modules.push({ id: 'pricing-calculator', name: 'Calculadora', icon: 'fas fa-calculator', path: '/pricing-calculator', canAccess: true })
+    }
+
+    if (user.value.isSuperAdmin) {
+      modules.push({ id: 'admin-orgs', name: 'Organizaciones', icon: 'fas fa-building', path: '/admin/organizations', canAccess: true })
     }
 
     return modules.filter(m => m.canAccess)
@@ -360,6 +393,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     userRole,
     isAdmin,
+    isSuperAdmin,
     isManager,
     
     // Permission computed properties
@@ -389,10 +423,16 @@ export const useAuthStore = defineStore('auth', () => {
     canViewMarketingSection,
     canViewSalesSection,
     
+    // Multi-tenant state
+    organization,
+    memberships,
+    requiresOrgSelection,
+
     // Actions
     login,
     logout,
     checkAuth,
+    selectOrganization,
     updateProfile,
     updateUserAvatar,
     updateUserProfile,

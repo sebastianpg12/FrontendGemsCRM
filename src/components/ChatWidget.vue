@@ -1,10 +1,10 @@
-<template>
+﻿<template>
   <div class="fixed bottom-4 right-4 z-50">
     <!-- Chat Toggle Button -->
     <button
       v-if="!isOpen"
       @click="toggleChat"
-      class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+      class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
     >
       <ChatBubbleLeftRightIcon class="w-6 h-6" />
       <span
@@ -21,7 +21,7 @@
       class="bg-gradient-to-br from-dark-800/95 to-dark-900/95 backdrop-blur-xl rounded-xl border border-white/20 shadow-2xl w-96 h-[500px] flex flex-col"
     >
       <!-- Header -->
-      <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-t-xl flex items-center justify-between">
+      <div class="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-4 rounded-t-xl flex items-center justify-between">
         <div class="flex items-center">
           <ChatBubbleLeftRightIcon class="w-6 h-6 mr-2" />
           <h3 class="font-semibold">
@@ -62,7 +62,7 @@
             v-if="chatStore.isLoading"
             class="flex items-center justify-center h-full"
           >
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
           </div>
           
           <div v-else-if="chatStore.chatRooms.length === 0" class="text-center text-gray-400 py-8">
@@ -70,7 +70,7 @@
             <p>No hay chats disponibles</p>
             <button
               @click="showCreateRoom = true"
-              class="mt-2 text-purple-400 hover:text-purple-300 text-sm"
+              class="mt-2 text-primary-400 hover:text-purple-300 text-sm"
             >
               Crear el primer chat
             </button>
@@ -88,7 +88,7 @@
                   <div class="flex items-center">
                     <div
                       class="w-8 h-8 rounded-full flex items-center justify-center mr-3"
-                      :class="room.type === 'direct' ? 'bg-green-500' : room.type === 'team' ? 'bg-primary-500' : 'bg-purple-500'"
+                      :class="room.type === 'direct' ? 'bg-green-500' : room.type === 'team' ? 'bg-primary-500' : 'bg-primary-500'"
                     >
                       <UserIcon v-if="room.type === 'direct'" class="w-4 h-4 text-white" />
                       <UsersIcon v-else-if="room.type === 'team'" class="w-4 h-4 text-white" />
@@ -118,7 +118,7 @@
               v-if="chatStore.isLoading"
               class="flex items-center justify-center h-full"
             >
-              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
             </div>
 
             <div v-else-if="currentMessages.length === 0" class="text-center text-gray-400 py-8">
@@ -137,14 +137,14 @@
                 <div
                   class="max-w-[70%] rounded-lg p-3"
                   :class="isOwnMessage(message) 
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white' 
+                    ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white' 
                     : 'bg-white/10 border border-white/20 text-white'"
                 >
                   <!-- Reply to message -->
                   <div
                     v-if="message.replyTo"
                     class="mb-2 p-2 rounded border-l-2"
-                    :class="isOwnMessage(message) ? 'border-white/30 bg-black/20' : 'border-purple-500/50 bg-purple-500/10'"
+                    :class="isOwnMessage(message) ? 'border-white/30 bg-black/20' : 'border-primary-500/50 bg-primary-500/10'"
                   >
                     <p class="text-xs opacity-75">{{ message.replyTo.sender.name }}</p>
                     <p class="text-xs">{{ message.replyTo.content }}</p>
@@ -234,12 +234,12 @@
                 @keydown.escape="cancelEdit"
                 @input="handleTyping"
                 :placeholder="editingMessage ? 'Editar mensaje...' : 'Escribe un mensaje...'"
-                class="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm placeholder-gray-400 focus:outline-none focus:border-purple-500"
+                class="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm placeholder-gray-400 focus:outline-none focus:border-primary-500"
               />
               <button
                 @click="editingMessage ? saveEdit() : sendMessage()"
                 :disabled="!newMessage.trim()"
-                class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-lg transition-colors"
+                class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-lg transition-colors"
               >
                 <PaperAirplaneIcon class="w-4 h-4" />
               </button>

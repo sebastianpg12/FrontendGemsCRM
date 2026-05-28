@@ -128,14 +128,43 @@
               <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">
                 Departamento
               </label>
-              <div v-if="isEditing" class="relative group">
-                <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors"></i>
-                <input
-                  v-model="editForm.department"
-                  type="text"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
-                  placeholder="Tu departamento"
-                />
+              <div v-if="isEditing">
+                <!-- Adding new custom dept -->
+                <div v-if="profileAddingDept" class="flex gap-2">
+                  <input
+                    v-model="profileNewDept"
+                    @keydown.enter.prevent="confirmProfileDept"
+                    @keydown.escape="profileAddingDept = false; profileNewDept = ''"
+                    autofocus
+                    placeholder="Nombre del departamento..."
+                    class="flex-1 pl-4 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-primary-200 dark:border-primary-500/40 rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 transition-all outline-none"
+                  />
+                  <button type="button" @click="confirmProfileDept" :disabled="!profileNewDept.trim()"
+                    class="px-4 bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white rounded-2xl text-xs font-black transition-all">
+                    <i class="fas fa-check"></i>
+                  </button>
+                  <button type="button" @click="profileAddingDept = false; profileNewDept = ''"
+                    class="px-4 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 text-slate-500 rounded-2xl text-xs font-black transition-all">
+                    <i class="fas fa-xmark"></i>
+                  </button>
+                </div>
+                <!-- Normal select -->
+                <div v-else class="relative group">
+                  <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors z-10 pointer-events-none"></i>
+                  <select
+                    v-model="editForm.department"
+                    class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none appearance-none"
+                  >
+                    <option value="">Sin departamento</option>
+                    <option v-for="dept in allProfileDepartments" :key="dept" :value="dept">{{ dept }}</option>
+                  </select>
+                  <button type="button" @click="profileAddingDept = true"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg bg-primary-100 dark:bg-primary-500/20 text-primary-500 hover:bg-primary-200 dark:hover:bg-primary-500/30 transition-all flex items-center justify-center text-[9px]"
+                    title="Crear departamento personalizado"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
               </div>
               <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.department || 'No especificado' }}</p>
@@ -255,7 +284,7 @@
             <div>
               <h4 class="font-black text-primary-900 text-sm uppercase tracking-tight mb-1">Dato curioso</h4>
               <p class="text-primary-700/80 text-xs leading-relaxed font-medium">
-                Tu avatar representa tu identidad en GEMS CRM. Puedes cambiarlo en cualquier momento para reflejar tu enfoque de trabajo.
+                Tu avatar representa tu identidad en GEMS Hub. Puedes cambiarlo en cualquier momento para reflejar tu enfoque de trabajo.
               </p>
             </div>
           </div>
@@ -280,6 +309,33 @@ import { API_CONFIG } from '@/config/api'
 
 const authStore = useAuthStore()
 const { showSuccess, showError } = useNotifications()
+
+// ── Department picker ─────────────────────────────────────────────
+const DEPT_STORAGE_KEY = 'gems-custom-departments'
+const DEFAULT_DEPARTMENTS = ['TI', 'Comercial', 'Marketing', 'Customer Success']
+
+const customDepartments = ref<string[]>(
+  JSON.parse(localStorage.getItem(DEPT_STORAGE_KEY) || '[]')
+)
+
+const allProfileDepartments = computed(() => {
+  return [...new Set([...DEFAULT_DEPARTMENTS, ...customDepartments.value])]
+})
+
+const profileAddingDept = ref(false)
+const profileNewDept = ref('')
+
+const confirmProfileDept = () => {
+  const name = profileNewDept.value.trim()
+  if (!name) return
+  if (!customDepartments.value.includes(name) && !DEFAULT_DEPARTMENTS.includes(name)) {
+    customDepartments.value.push(name)
+    localStorage.setItem(DEPT_STORAGE_KEY, JSON.stringify(customDepartments.value))
+  }
+  editForm.value.department = name
+  profileAddingDept.value = false
+  profileNewDept.value = ''
+}
 
 // State
 const loading = ref(false)
@@ -463,6 +519,16 @@ const updateProfile = async () => {
 }
 
 const updatePassword = async () => {
+  if (passwordForm.value.newPassword.length < 12) {
+    showError('La contraseña debe tener al menos 12 caracteres')
+    return
+  }
+  const hasUppercase = /[A-Z]/.test(passwordForm.value.newPassword)
+  const hasNumber = /[0-9]/.test(passwordForm.value.newPassword)
+  if (!hasUppercase || !hasNumber) {
+    showError('La contraseña debe incluir al menos una mayúscula y un número')
+    return
+  }
   try {
     loading.value = true
     await userService.updatePassword({

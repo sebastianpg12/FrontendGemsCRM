@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="boards-page h-full">
     <div class="container mx-auto px-6 py-8">
       <!-- Header -->
@@ -9,7 +9,7 @@
         </div>
         <button
           @click="openCreateModal"
-          class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 flex items-center space-x-2 shadow-lg"
+          class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-700 flex items-center space-x-2 shadow-lg"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -21,7 +21,7 @@
       <!-- Loading -->
       <div v-if="loading" class="flex items-center justify-center py-12">
         <div class="text-center">
-          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
           <p class="mt-4 text-gray-400">Cargando tableros...</p>
         </div>
       </div>
@@ -32,7 +32,7 @@
           v-for="board in boards"
           :key="board._id"
           @click="openBoard(board._id)"
-          class="board-card bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-purple-500/20 p-6 hover:border-purple-500/50"
+          class="board-card bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-primary-500/20 p-6 hover:border-primary-500/50"
         >
           <!-- Board Type Badge -->
           <div class="flex items-center justify-between mb-4">
@@ -63,7 +63,7 @@
               <div class="text-xs text-gray-500">Tareas</div>
             </div>
             <div class="text-center">
-              <div class="text-2xl font-bold text-purple-600">{{ board.members.length }}</div>
+              <div class="text-2xl font-bold text-primary-600">{{ board.members.length }}</div>
               <div class="text-xs text-gray-500">Miembros</div>
             </div>
             <div class="text-center">
@@ -111,7 +111,7 @@
         <p class="text-gray-400 mb-6">Crea tu primer tablero para comenzar a gestionar tareas</p>
         <button
           @click="openCreateModal"
-          class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 shadow-lg"
+          class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-700 shadow-lg"
         >
           Crear Tablero
         </button>
@@ -120,7 +120,7 @@
 
     <!-- Create Board Modal -->
     <div v-if="showCreateModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999]" @click.self="showCreateModal = false">
-      <div class="bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-purple-500/20">
+      <div class="bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-primary-500/20">
         <h2 class="text-xl font-bold text-white mb-4">Crear Nuevo Tablero</h2>
         
         <form @submit.prevent="createBoard">
@@ -130,7 +130,7 @@
               v-model="newBoard.name"
               type="text"
               required
-              class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="Mi Proyecto"
             />
           </div>
@@ -140,7 +140,7 @@
             <textarea
               v-model="newBoard.description"
               rows="3"
-              class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="Descripción del proyecto..."
             ></textarea>
           </div>
@@ -166,7 +166,7 @@
 
               <label 
                 class="relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors"
-                :class="newBoard.type === 'scrum' ? 'border-purple-500 bg-purple-500/10' : 'border-gray-600 hover:border-gray-500 bg-gray-700/30'"
+                :class="newBoard.type === 'scrum' ? 'border-primary-500 bg-primary-500/10' : 'border-gray-600 hover:border-gray-500 bg-gray-700/30'"
               >
                 <input
                   v-model="newBoard.type"
@@ -193,7 +193,7 @@
             <button
               type="submit"
               :disabled="!newBoard.name"
-              class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Crear Tablero
             </button>
@@ -226,9 +226,7 @@ const loading = computed(() => boardsStore.loading)
 
 // Debug
 function openCreateModal() {
-  console.log('Opening create modal...')
   showCreateModal.value = true
-  console.log('Modal state:', showCreateModal.value)
 }
 
 function getBoardTypeClass(type: string): string {
@@ -269,14 +267,11 @@ function openBoard(boardId: string): void {
 
 function openBoardSettings(board: any): void {
   // TODO: Implementar modal de configuración
-  console.log('Open board settings:', board)
 }
 
 async function createBoard(): Promise<void> {
   try {
-    console.log('Creating board with data:', newBoard.value)
     const board = await boardsStore.createBoard(newBoard.value)
-    console.log('Board created successfully:', board)
     showCreateModal.value = false
     newBoard.value = {
       name: '',
@@ -291,11 +286,8 @@ async function createBoard(): Promise<void> {
 }
 
 onMounted(async () => {
-  console.log('BoardsPage mounted, fetching boards...')
   try {
     await boardsStore.fetchBoards()
-    console.log('Boards fetched:', boardsStore.boards)
-    console.log('My boards:', boardsStore.myBoards)
   } catch (error) {
     console.error('Error fetching boards:', error)
   }

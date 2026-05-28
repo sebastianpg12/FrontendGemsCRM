@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="flex flex-col h-full min-h-0 relative">
     <div class="flex-1 min-h-0 overflow-y-auto space-y-12 p-1 custom-scrollbar">
 
@@ -7,7 +7,7 @@
         
         <!-- Live Tracking Bar (Premium Glassmorphism) -->
         <div v-if="activeSessions.length > 0" class="relative group animate-in slide-in-from-top-4 duration-700">
-          <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-[2.5rem] blur opacity-10 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
+          <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-primary-700 rounded-[2.5rem] blur opacity-10 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
           <div class="relative bg-white/60 backdrop-blur-xl border border-white shadow-2xl shadow-indigo-100/20 rounded-[2rem] p-6 flex items-center justify-between">
             <div class="flex items-center gap-6">
               <div class="flex items-center gap-3 px-5 py-2.5 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200 ring-4 ring-indigo-50">
@@ -177,7 +177,7 @@
     <Teleport to="body">
       <div v-if="showEmailModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 animate-in fade-in duration-500">
         <div class="bg-white rounded-[3rem] p-10 w-full max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] border border-slate-200 relative overflow-hidden animate-in zoom-in-95 duration-500">
-          <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+          <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-primary-700"></div>
           
           <div class="text-center space-y-6 mb-10">
             <div class="w-20 h-20 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto border border-indigo-100 shadow-xl shadow-indigo-100/50">

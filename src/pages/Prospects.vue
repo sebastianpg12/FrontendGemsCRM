@@ -1,21 +1,18 @@
-<template>
+﻿<template>
   <div class="h-full flex flex-col gap-4">
     <!-- Page Header -->
     <div class="flex items-center justify-between gap-4 flex-shrink-0">
       <div>
         <div class="flex items-center gap-2.5 mb-1 flex-wrap">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white shadow-lg shadow-violet-500/20">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white shadow-lg shadow-primary-500/20">
             <i class="fas fa-wand-magic-sparkles text-xs"></i>
           </div>
           <h1 class="text-xl font-black text-slate-900">Prospectos IA</h1>
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 text-[10px] font-black uppercase tracking-wider">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-            En desarrollo
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-black uppercase tracking-wider">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            IA Activa
           </span>
         </div>
-        <p class="text-xs font-medium text-amber-700 ml-12 font-bold">
-          ⚠️ Módulo en construcción — no usar en producción aún
-        </p>
       </div>
 
       <div class="flex items-center gap-3 flex-wrap">
@@ -38,7 +35,7 @@
           </div>
           <div
             v-if="forecastWeighted > 0"
-            class="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-gradient-to-br from-violet-50 to-fuchsia-50 text-violet-700 border-violet-200"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-gradient-to-br from-primary-50 to-primary-100 text-primary-700 border-primary-200"
             :title="`Pipeline bruto: $${formatMoney(pipelineGross)} · Forecast ponderado por probabilidad`"
           >
             <i class="fas fa-chart-line text-[10px] opacity-70"></i>
@@ -112,7 +109,7 @@
             class="bg-white rounded-2xl border border-slate-200 h-full flex items-center justify-center"
           >
             <div class="text-center">
-              <i class="fas fa-circle-notch fa-spin text-3xl text-violet-400 mb-3 block"></i>
+              <i class="fas fa-circle-notch fa-spin text-3xl text-primary-400 mb-3 block"></i>
               <p class="text-xs font-bold text-slate-400">Cargando prospectos...</p>
             </div>
           </div>
@@ -203,9 +200,14 @@ const loadProspects = async () => {
   }
 }
 
-const selectProspect = (prospect: Prospect) => {
-  selected.value = prospect
+const selectProspect = async (prospect: Prospect) => {
+  selected.value = prospect   // carga inmediata para que la UI responda
   showGenerator.value = false
+  try {
+    // Fetch completo para traer messages, notes, tasks, timeline
+    const full = await prospectService.get(prospect._id)
+    selected.value = full
+  } catch { /* mantiene la versión parcial de la lista */ }
 }
 
 const openGenerator = () => {

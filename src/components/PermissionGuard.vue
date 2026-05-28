@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div v-if="hasPermission">
     <slot />
   </div>
@@ -11,7 +11,7 @@
       <p class="text-gray-400 text-sm mb-4">No tienes permisos para acceder a esta sección.</p>
       <router-link
         to="/"
-        class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
+        class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white text-sm rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200"
       >
         <i class="fas fa-home mr-1 text-sm"></i>
         Volver al Dashboard

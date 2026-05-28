@@ -1,4 +1,5 @@
 import { API_CONFIG } from '../config/api'
+import { authHeaders } from './authHeaders'
 
 export interface ClientData {
   _id?: string
@@ -20,9 +21,7 @@ class ClientService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
       })
       
       if (!response.ok) {
@@ -41,9 +40,7 @@ class ClientService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
       })
       
       if (!response.ok) {
@@ -61,9 +58,7 @@ class ClientService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify(clientData),
       })
       
@@ -82,9 +77,7 @@ class ClientService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
         body: JSON.stringify(clientData),
       })
       
@@ -103,9 +96,7 @@ class ClientService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
       })
       
       if (!response.ok) {
@@ -121,9 +112,7 @@ class ClientService {
     try {
       const response = await fetch(`${this.baseUrl}${this.endpoint}/search?q=${encodeURIComponent(query)}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeaders(),
       })
       
       if (!response.ok) {

@@ -6,8 +6,25 @@
 @tailwind utilities;
 
 :root {
+  /* Default primary palette: violet #8b5cf6
+     These are overridden at runtime by the ThemeStore (generatePalette)
+     Format: R G B  (space-separated so Tailwind opacity modifiers work) */
+  --p-50:  245 243 255;
+  --p-100: 237 233 254;
+  --p-200: 221 214 254;
+  --p-300: 196 181 253;
+  --p-400: 167 139 250;
+  --p-500: 139  92 246;
+  --p-600: 124  58 237;
+  --p-700: 109  40 217;
+  --p-800:  91  33 182;
+  --p-900:  76  29 149;
+
+  /* Legacy single-var (kept for inline styles / old CSS) */
   --brand-accent: #8b5cf6;
   --brand-accent-light: rgba(139, 92, 246, 0.12);
+  /* Raw RGB channels: use as rgba(var(--brand-accent-rgb), 0.15) */
+  --brand-accent-rgb: 139, 92, 246;
 }
 
 * {

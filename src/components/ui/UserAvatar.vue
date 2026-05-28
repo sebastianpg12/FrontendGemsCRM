@@ -1,9 +1,9 @@
-<template>
+﻿<template>
   <div 
     :class="[
       'relative overflow-hidden flex items-center justify-center text-white font-semibold',
       sizeClasses[size],
-      bordered ? 'ring-2 ring-purple-500/50' : '',
+      bordered ? 'ring-2 ring-primary-500/50' : '',
       clickable ? 'cursor-pointer hover:opacity-80 transition-opacity' : '',
       className
     ]"
@@ -116,7 +116,7 @@ const statusClasses = {
 }
 
 // Gradiente por defecto (no se usa directamente; preferimos finalGradient)
-const defaultGradient = 'bg-gradient-to-br from-purple-600 to-pink-600'
+const defaultGradient = 'bg-gradient-to-br from-primary-600 to-primary-700'
 
 // State for image error to fallback to initials
 const imgError = ref(false)
@@ -164,11 +164,11 @@ watch(() => props.photo, () => {
 // Generar gradiente basado en el nombre (para consistencia)
 const generateGradient = (name: string) => {
   const colors = [
-    'from-purple-600 to-pink-600',
+    'from-primary-600 to-primary-700',
     'from-primary-600 to-indigo-600',
     'from-green-600 to-teal-600',
     'from-yellow-600 to-orange-600',
-    'from-red-600 to-pink-600',
+    'from-red-600 to-primary-700',
     'from-indigo-600 to-purple-600',
     'from-teal-600 to-cyan-600',
     'from-orange-600 to-red-600'

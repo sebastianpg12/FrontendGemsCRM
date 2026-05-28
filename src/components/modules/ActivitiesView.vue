@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="space-y-4">
     <!-- Header con controles -->
     <div class="flex flex-wrap items-center justify-between gap-3 mb-1">
@@ -3186,17 +3186,14 @@ const loadActivities = async () => {
   try {
     // Cargar actividades tradicionales
     activities.value = await activityService.getAll()
-    console.log('✅ Activities loaded:', activities.value.length)
     
     // Cargar boards y tasks del nuevo sistema
     await boardsStore.fetchBoards()
-    console.log('✅ Boards loaded:', boardsStore.myBoards.length)
     
     // Si hay boards, cargar las tareas del primer board por defecto
     if (boardsStore.myBoards.length > 0) {
       const firstBoard = boardsStore.myBoards[0]
       await tasksStore.fetchTasks(firstBoard._id)
-      console.log('✅ Tasks loaded:', tasksStore.tasks.length)
     }
   } catch (err) {
     console.error('❌ Error loading activities:', err)
@@ -3384,7 +3381,6 @@ const updateOverdueActivities = async () => {
     }
 
     if (overdueActivitiesToUpdate.length > 0) {
-      console.log(`✅ Se marcaron ${overdueActivitiesToUpdate.length} actividades como vencidas`)
     }
   } catch (err) {
     console.error('❌ Error al actualizar actividades vencidas:', err)
@@ -3392,22 +3388,15 @@ const updateOverdueActivities = async () => {
 }
 
 const loadTeamMembers = async () => {
-  console.log('🔄 Iniciando carga de miembros del equipo...')
-  console.log('👤 Usuario actual:', authStore.user?.name, '- Rol:', authStore.user?.role)
-  console.log('🔐 Puede ver equipo:', authStore.canViewTeam)
   
   try {
-    console.log('🔄 Cargando miembros del equipo...')
     teamMembers.value = await teamService.getActiveMembers()
-    console.log('✅ Miembros del equipo cargados:', teamMembers.value)
   } catch (err) {
     console.error('❌ Error loading team members:', err)
     // Intentar cargar todos los miembros si falla getActiveMembers
     try {
-      console.log('🔄 Intentando cargar todos los miembros...')
       const allMembers = await teamService.getAll()
       teamMembers.value = allMembers.filter(member => member.isActive)
-      console.log('✅ Miembros activos filtrados:', teamMembers.value)
     } catch (err2) {
       console.error('❌ Error loading all team members:', err2)
     }
@@ -3418,7 +3407,6 @@ const loadClients = async () => {
   loadingClients.value = true
   try {
     clients.value = await clientService.getAll()
-    console.log('✅ Clientes cargados:', clients.value.length, clients.value)
   } catch (err) {
     console.error('❌ Error loading clients:', err)
   } finally {
@@ -3961,8 +3949,6 @@ const completeSprint = async (sprintId: string) => {
 }
 
 const deleteSprint = async (sprintId: string) => {
-  console.log('🗑️ Eliminando sprint:', sprintId)
-  console.log('📋 Board seleccionado:', selectedBoardId.value)
   
   if (!selectedBoardId.value) {
     showError('Error', 'No hay tablero seleccionado')
@@ -3970,14 +3956,10 @@ const deleteSprint = async (sprintId: string) => {
   }
   
   try {
-    console.log('🔄 Llamando a boardsStore.deleteSprint...')
     await boardsStore.deleteSprint(selectedBoardId.value, sprintId)
-    console.log('✅ Sprint eliminado exitosamente')
     toast('Sprint eliminado', 'success')
     
-    console.log('🔄 Recargando tablero...')
     await boardsStore.fetchBoardById(selectedBoardId.value)
-    console.log('✅ Tablero recargado')
   } catch (err) {
     console.error('❌ Error al eliminar sprint:', err)
     showError('Error al eliminar sprint', err instanceof Error ? err.message : 'Error desconocido')
@@ -3995,31 +3977,26 @@ const redirectToClients = () => {
 
 // También crear una función auxiliar más simple para los casos actuales
 const getActivityAssignedName = (assignedUser?: any): string => {
-  console.log('🔍 getActivityAssignedName received:', assignedUser)
   
   // Si no hay usuario asignado
   if (!assignedUser) return 'Sin asignar'
   
   // Si es un objeto con nombre (nuevo formato populate)
   if (typeof assignedUser === 'object' && assignedUser.name) {
-    console.log('✅ Found user name:', assignedUser.name)
     return assignedUser.name
   }
   
   // Si es solo un string ID, buscar en teamMembers
   if (typeof assignedUser === 'string') {
     const member = teamMembers.value.find(m => m._id === assignedUser)
-    console.log('🔍 Looking for member with ID:', assignedUser, 'Found:', member)
     return member?.name || 'Sin asignar'
   }
   
-  console.log('❌ Could not determine user name')
   return 'Sin asignar'
 }
 
 // Función que busca en las actividades actuales para encontrar la asignación correcta
 const getActivityAssignmentByContext = (activityId: string): string => {
-  console.log('🔍 Looking for activity:', activityId)
   
   // Buscar en todas las listas de actividades
   const allActivities = [
@@ -4032,27 +4009,22 @@ const getActivityAssignmentByContext = (activityId: string): string => {
   const activity = allActivities.find(a => a._id === activityId)
   
   if (activity) {
-    console.log('✅ Found activity:', activity)
     return getAssignedToNameSmart(activity)
   }
   
-  console.log('❌ Activity not found')
   return 'Sin asignar'
 }
 
 // Función especial para buscar el assignment en cualquier lugar de la actividad
 const getAssignedToNameSmart = (param?: any): string => {
-  console.log('🧠 getAssignedToNameSmart received:', param)
   
   // Si no hay parámetro, no podemos hacer nada
   if (!param) {
-    console.log('❌ No parameter')
     return 'Sin asignar'
   }
   
   // Si recibimos directamente un usuario (objeto con name o string ID)
   if (typeof param === 'string' || (typeof param === 'object' && param.name)) {
-    console.log('👤 Direct user parameter')
     return getActivityAssignedName(param)
   }
   
@@ -4060,22 +4032,18 @@ const getAssignedToNameSmart = (param?: any): string => {
   if (typeof param === 'object') {
     // Prioridad: assignedTo (nuevo formato)
     if (param.assignedTo) {
-      console.log('✅ Found assignedTo')
       return getActivityAssignedName(param.assignedTo)
     }
     
     // Fallback: assignedToUser (formato legacy)
     if (param.assignedToUser) {
-      console.log('⚠️ Found assignedToUser') 
       return getActivityAssignedName(param.assignedToUser)
     }
     
     // Si llegamos aquí, probablemente el parámetro era undefined/null de assignedToUser
     // pero tenemos la actividad padre. Necesitamos acceso a la actividad completa.
-    console.log('🔍 Parameter appears to be empty assignedToUser, checking context')
   }
   
-  console.log('❌ Could not find assignment')
   return 'Sin asignar'
 }
 
@@ -4104,55 +4072,44 @@ const getAssignedToNameByContext = (activityId?: string): string => {
 
 // Función que maneja el caso cuando assignedToUser es undefined pero assignedTo tiene datos
 const getAssignedToNameFixed = (activity: any): string => {
-  console.log('🔧 getAssignedToNameFixed received activity:', activity)
   
   if (!activity) {
-    console.log('❌ No activity provided')
     return 'Sin asignar'
   }
   
   // Prioridad: assignedTo (nuevo formato con populate del backend)
   if (activity.assignedTo) {
-    console.log('✅ Using assignedTo field:', activity.assignedTo)
     return getActivityAssignedName(activity.assignedTo)
   }
   
   // Fallback: assignedToUser (formato anterior)
   if (activity.assignedToUser) {
-    console.log('⚠️ Using assignedToUser field:', activity.assignedToUser)
     return getActivityAssignedName(activity.assignedToUser)
   }
   
-  console.log('❌ No assignment found in activity')
   return 'Sin asignar'
 }
 
 // Función específica para obtener el nombre del asignado que maneja tanto assignedTo como assignedToUser
 const getAssignmentDisplay = (activity: any): string => {
-  console.log('🎯 getAssignmentDisplay for activity:', activity?._id, activity)
   
   if (!activity) {
-    console.log('❌ No activity provided to getAssignmentDisplay')
     return 'Sin asignar'
   }
   
   // Prioridad 1: assignedTo con populate (formato nuevo del backend)
   if (activity.assignedTo) {
-    console.log('✅ Found assignedTo:', activity.assignedTo)
     if (typeof activity.assignedTo === 'object' && activity.assignedTo.name) {
-      console.log('✅ assignedTo has name:', activity.assignedTo.name)
       return activity.assignedTo.name
     }
     if (typeof activity.assignedTo === 'string') {
       const member = teamMembers.value.find(m => m._id === activity.assignedTo)
-      console.log('🔍 assignedTo is string ID, found member:', member)
       return member?.name || 'Sin asignar'
     }
   }
   
   // Prioridad 2: assignedToUser (formato legacy)
   if (activity.assignedToUser) {
-    console.log('⚠️ Using legacy assignedToUser:', activity.assignedToUser)
     if (typeof activity.assignedToUser === 'object' && activity.assignedToUser.name) {
       return activity.assignedToUser.name
     }
@@ -4162,7 +4119,6 @@ const getAssignmentDisplay = (activity: any): string => {
     }
   }
   
-  console.log('❌ No assignment found')
   return 'Sin asignar'
 }
 
@@ -4206,35 +4162,28 @@ const getSmartAssignedName = (activity: any): string => {
 
 // Función antigua modificada para usar la nueva función internamente
 const getAssignedToName = (assignedParam?: any, activity?: any): string => {
-  console.log('🔍 getAssignedToName called with:', assignedParam, 'typeof:', typeof assignedParam)
-  console.log('🔍 Activity context:', activity)
   
   // Si el parámetro es undefined, intentamos usar el contexto de la actividad si está disponible
   if (assignedParam === undefined && activity) {
-    console.log('🚨 assignedParam is undefined! Trying to use activity context...')
     return getSmartAssignedName(activity)
   }
   
   // Si el parámetro es undefined y no hay contexto, devolvemos sin asignar
   if (assignedParam === undefined) {
-    console.log('🚨 assignedParam is undefined! Returning Sin asignar')
     return 'Sin asignar'
   }
   
   // Si es un objeto con nombre
   if (typeof assignedParam === 'object' && assignedParam?.name) {
-    console.log('✅ Found user name:', assignedParam.name)
     return assignedParam.name
   }
   
   // Si es solo un string ID, buscar en teamMembers
   if (typeof assignedParam === 'string') {
     const member = teamMembers.value.find(m => m._id === assignedParam)
-    console.log('� Looking for member with ID:', assignedParam, 'Found:', member)
     return member?.name || 'Sin asignar'
   }
   
-  console.log('❌ Could not determine user name')
   return 'Sin asignar'
 }
 
@@ -4611,7 +4560,6 @@ const handleBoardChange = async () => {
       try {
         await githubStore.fetchRepositories(authStore.user.githubUsername)
       } catch (err) {
-        console.log('No se pudieron cargar repositorios de GitHub')
       }
     }
   }
@@ -4826,7 +4774,7 @@ const getStatusBadgeClass = (status: string) => {
     backlog: 'bg-gray-600/50 text-gray-300',
     todo: 'bg-primary-600/50 text-primary-300',
     'in-progress': 'bg-yellow-600/50 text-yellow-300',
-    review: 'bg-purple-600/50 text-purple-300',
+    review: 'bg-primary-600/50 text-purple-300',
     testing: 'bg-orange-600/50 text-orange-300',
     done: 'bg-green-600/50 text-green-300'
   }
@@ -4937,7 +4885,6 @@ const confirmCascadeDelete = async () => {
         
         if (task.github.pullRequest?.number) {
           try {
-            console.log(`🔄 Sincronizando PR de tarea ${task.title}...`)
             const response = await axios.post(
               `${API_URL}/api/github/tasks/${id}/sync-pr`,
               {},
@@ -4953,7 +4900,6 @@ const confirmCascadeDelete = async () => {
               // Solo prevenir si está abierto y no mergeado
               if (prStatus === 'open' && !prMerged) {
                 canDelete = false
-                console.log(`⚠️ Rama "${task.github.branch}" tiene PR #${response.data.task.github.pullRequest.number} abierto`)
               }
             }
           } catch (syncError) {
@@ -4988,7 +4934,6 @@ const confirmCascadeDelete = async () => {
         if (relatedActivity && relatedActivity._id) {
           try {
             await activityService.deleteActivity(relatedActivity._id)
-            console.log(`🗑️ Actividad eliminada del Kanban: ${relatedActivity.title}`)
           } catch (error) {
             console.warn(`⚠️ No se pudo eliminar actividad del Kanban:`, error)
           }
@@ -5001,7 +4946,6 @@ const confirmCascadeDelete = async () => {
     
     // 🌿 Eliminar ramas de GitHub (en segundo plano, no bloquear si falla)
     if (branchesToDelete.length > 0) {
-      console.log(`🌿 Eliminando ${branchesToDelete.length} ramas de GitHub...`)
       
       for (const branchInfo of branchesToDelete) {
         try {
@@ -5010,11 +4954,9 @@ const confirmCascadeDelete = async () => {
             branchInfo.repoName,
             branchInfo.branch
           )
-          console.log(`✅ Rama eliminada: ${branchInfo.branch}`)
         } catch (error: any) {
           // Si la rama no existe (404), solo registrar
           if (error.response?.status === 404) {
-            console.log(`⚠️ Rama ya no existe en GitHub: ${branchInfo.branch}`)
           } else {
             console.error(`❌ Error eliminando rama ${branchInfo.branch}:`, error.message)
           }
@@ -5280,9 +5222,6 @@ const createGitHubBranch = async () => {
     // Extraer owner y repo del full_name (formato: "owner/repo")
     const [repoOwner, repoName] = branchForm.value.repository.split('/')
     
-    console.log('🔧 Configurando repositorio en tarea...')
-    console.log('Repository:', repoOwner, '/', repoName)
-    console.log('Base branch:', branchForm.value.baseBranch)
     
     // Primero actualizar la tarea con la información del repositorio
     await tasksStore.updateTask(selectedTask.value._id, {
@@ -5297,8 +5236,6 @@ const createGitHubBranch = async () => {
       }
     })
     
-    console.log('✅ Repositorio configurado en tarea')
-    console.log('🌿 Creando rama en GitHub...')
     
     // Crear rama con nombre personalizado (si existe) o auto-generado
     const customBranchName = branchForm.value.customName || generateBranchName()
@@ -5308,7 +5245,6 @@ const createGitHubBranch = async () => {
       customBranchName
     )
     
-    console.log('✅ Rama creada:', result)
     
     // Actualizar la vista local
     if (selectedTask.value.github) {
@@ -5423,7 +5359,6 @@ const deleteGitHubBranch = async () => {
     if (selectedTask.value.github.pullRequest?.number) {
       try {
         showLoading('Verificando estado del PR...')
-        console.log('🔄 Sincronizando estado del PR desde GitHub...')
         
         // Llamar al endpoint de sincronización
         const response = await axios.post(
@@ -5435,7 +5370,6 @@ const deleteGitHubBranch = async () => {
         // Actualizar tarea con datos frescos
         if (response.data.task) {
           selectedTask.value.github = response.data.task.github
-          console.log('✅ Estado del PR actualizado:', response.data.task.github.pullRequest)
         }
         
         closeLoading()
@@ -5450,7 +5384,6 @@ const deleteGitHubBranch = async () => {
       const prStatus = selectedTask.value.github.pullRequest.status
       const prMerged = selectedTask.value.github.pullRequest.mergedAt
       
-      console.log('📊 Estado del PR:', { status: prStatus, merged: prMerged })
       
       // Si el PR está abierto (no cerrado ni mergeado)
       if (prStatus === 'open' && !prMerged) {
@@ -5476,7 +5409,6 @@ const deleteGitHubBranch = async () => {
     } catch (deleteError: any) {
       // Si la rama ya no existe en GitHub (404), solo limpiar localmente
       if (deleteError.response?.status === 404) {
-        console.log('⚠️ Rama no encontrada en GitHub, limpiando solo localmente...')
         await toast('Rama no encontrada en GitHub, limpiando asociación local', 'warning')
       } else {
         throw deleteError
@@ -5570,7 +5502,7 @@ const getTypeIcon = (type: string) => {
     feature: 'fas fa-star text-yellow-400',
     task: 'fas fa-tasks text-primary-400',
     improvement: 'fas fa-arrow-up text-green-400',
-    documentation: 'fas fa-book text-purple-400'
+    documentation: 'fas fa-book text-primary-400'
   }
   return icons[type as keyof typeof icons] || icons.task
 }
@@ -5691,8 +5623,6 @@ onMounted(async () => {
   // Verificar usuario autenticado
   const token = localStorage.getItem('token')
   const userStr = localStorage.getItem('user')
-  console.log('🔐 Token presente:', !!token)
-  console.log('👤 Usuario en localStorage:', userStr ? JSON.parse(userStr) : null)
   
   // Cargar datos iniciales
   await Promise.all([
@@ -5714,7 +5644,6 @@ onMounted(async () => {
       selectedBoardId.value = defaultBoard._id
       // Cargar tareas del board recién creado
       await tasksStore.fetchTasks(defaultBoard._id)
-      console.log('✅ Board por defecto creado y tareas cargadas')
     } catch (error) {
       console.error('Error creando tablero por defecto:', error)
     }
@@ -5724,7 +5653,6 @@ onMounted(async () => {
     selectedBoardId.value = firstBoardId
     // Cargar tareas del board seleccionado
     await tasksStore.fetchTasks(firstBoardId)
-    console.log('📋 Board seleccionado y tareas cargadas:', firstBoardId)
   }
   
   // Actualizar estado de actividades vencidas
@@ -5760,10 +5688,8 @@ onMounted(async () => {
 // Watch para cargar tareas cuando cambia el board seleccionado
 watch(() => selectedBoardId.value, async (newBoardId, oldBoardId) => {
   if (newBoardId && newBoardId !== oldBoardId) {
-    console.log('📋 Cargando tareas del board:', newBoardId)
     try {
       await tasksStore.fetchTasks(newBoardId)
-      console.log('✅ Tareas cargadas:', tasksStore.tasks.length)
     } catch (error) {
       console.error('❌ Error cargando tareas:', error)
     }

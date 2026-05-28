@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <!-- Modal Backdrop -->
   <div
     v-if="show"
@@ -7,7 +7,7 @@
   >
     <!-- Modal Content -->
     <div
-      class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-purple-500/20"
+      class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-primary-500/20"
       @click.stop
     >
       <!-- Header -->
@@ -37,7 +37,7 @@
             type="text"
             required
             placeholder="Ej: Arriendo oficina, Servicios públicos, etc."
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
 
@@ -54,7 +54,7 @@
               min="0"
               step="0.01"
               placeholder="0.00"
-              class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+              class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
             >
             <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <span class="text-gray-400 text-sm">/ mes</span>
@@ -75,7 +75,7 @@
                 type="radio"
                 id="activo"
                 name="estado"
-                class="h-4 w-4 text-purple-600 focus:ring-purple-500 bg-gray-700 border-gray-600"
+                class="h-4 w-4 text-primary-600 focus:ring-primary-500 bg-gray-700 border-gray-600"
               >
               <label for="activo" class="ml-3 flex items-center">
                 <span class="text-white font-medium">Activo</span>
@@ -91,7 +91,7 @@
                 type="radio"
                 id="inactivo"
                 name="estado"
-                class="h-4 w-4 text-purple-600 focus:ring-purple-500 bg-gray-700 border-gray-600"
+                class="h-4 w-4 text-primary-600 focus:ring-primary-500 bg-gray-700 border-gray-600"
               >
               <label for="inactivo" class="ml-3 flex items-center">
                 <span class="text-white font-medium">Inactivo</span>
@@ -105,7 +105,7 @@
 
         <!-- Preview Card -->
         <div v-if="form.nombre && form.monto_mensual > 0" 
-             class="bg-gradient-to-r from-purple-600/10 to-pink-600/10 rounded-xl p-4 border border-purple-500/20">
+             class="bg-gradient-to-r from-primary-600/10 to-primary-700/10 rounded-xl p-4 border border-primary-500/20">
           <h3 class="text-sm font-medium text-gray-300 mb-2">Vista Previa:</h3>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -152,7 +152,7 @@
           <button
             type="submit"
             :disabled="loading"
-            class="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 transition-all duration-300 disabled:opacity-50"
+            class="flex-1 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-700 transition-all duration-300 disabled:opacity-50"
           >
             <span v-if="loading">
               <i class="fas fa-spinner fa-spin mr-2"></i>

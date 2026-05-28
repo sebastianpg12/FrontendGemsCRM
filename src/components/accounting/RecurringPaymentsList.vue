@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -17,7 +17,7 @@
 
     <!-- Loading -->
     <div v-if="loading" class="text-center py-8">
-      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-400"></div>
       <p class="mt-2 text-gray-300">Cargando pagos recurrentes...</p>
     </div>
 
@@ -32,7 +32,7 @@
       <div
         v-for="payment in payments"
         :key="payment._id"
-        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-purple-500/20 hover:border-purple-400"
+        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-500/20 hover:border-primary-400"
       >
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <!-- Payment Info -->
