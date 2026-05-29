@@ -7,16 +7,37 @@
           <div class="flex items-center gap-2 text-xs font-bold text-primary-600 uppercase tracking-widest mb-1">
             <i class="fas fa-crown"></i> Super-administración
           </div>
-          <h1 class="text-2xl font-black text-slate-900 dark:text-white">Organizaciones</h1>
-          <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Tenants de la plataforma GEMS Hub</p>
+          <h1 class="text-2xl font-black text-slate-900 dark:text-white">Panel de Control</h1>
+          <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Gestión de tenants y auditoría</p>
         </div>
         <button
+          v-if="activeTab === 'orgs'"
           @click="openCreate"
           class="px-5 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-primary-600/20"
         >
           <i class="fas fa-plus text-xs"></i> Nueva organización
         </button>
       </div>
+
+      <!-- Tabs -->
+      <div class="flex gap-4 border-b border-slate-200 dark:border-slate-800 mb-6">
+        <button
+          @click="activeTab = 'orgs'"
+          class="pb-3 text-sm font-bold transition-all border-b-2"
+          :class="activeTab === 'orgs' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white'"
+        >
+          <i class="fas fa-building mr-1.5"></i> Organizaciones
+        </button>
+        <button
+          @click="activeTab = 'audit'; loadAudit()"
+          class="pb-3 text-sm font-bold transition-all border-b-2"
+          :class="activeTab === 'audit' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white'"
+        >
+          <i class="fas fa-shield-alt mr-1.5"></i> Auditoría de Accesos
+        </button>
+      </div>
+
+      <div v-if="activeTab === 'orgs'">
 
       <!-- Filters -->
       <div class="flex flex-col sm:flex-row gap-3 mb-6">
@@ -115,6 +136,52 @@
           </div>
         </div>
       </div>
+      </div>
+
+      <div v-else-if="activeTab === 'audit'">
+        <div v-if="loadingAudit" class="text-center py-20 text-slate-400 text-sm">
+          <i class="fas fa-circle-notch fa-spin text-2xl mb-3"></i>
+          <p>Cargando auditoría…</p>
+        </div>
+        <div v-else-if="auditLogs.length === 0" class="text-center py-20 text-slate-400 text-sm">
+          <p>No hay registros de auditoría.</p>
+        </div>
+        <div v-else class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+              <tr>
+                <th class="px-6 py-4 font-bold">Fecha / Hora</th>
+                <th class="px-6 py-4 font-bold">Super Admin</th>
+                <th class="px-6 py-4 font-bold">Organización</th>
+                <th class="px-6 py-4 font-bold">IP</th>
+                <th class="px-6 py-4 font-bold">User Agent</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tr v-for="log in auditLogs" :key="log._id" class="hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors">
+                <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300">
+                  {{ new Date(log.createdAt).toLocaleString() }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="font-bold text-slate-900 dark:text-white">{{ log.superAdminId?.name || 'Desconocido' }}</div>
+                  <div class="text-[11px] text-slate-500">{{ log.superAdminId?.email }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-300">
+                    {{ log.organizationId?.name || 'Eliminada' }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-slate-500 font-mono text-xs">
+                  {{ log.ipAddress || 'N/A' }}
+                </td>
+                <td class="px-6 py-4 text-slate-500 text-xs truncate max-w-xs" :title="log.userAgent">
+                  {{ log.userAgent || 'N/A' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <!-- Create/Edit modal -->
@@ -211,6 +278,10 @@ const orgs = ref<OrganizationAdmin[]>([])
 const loading = ref(true)
 const search = ref('')
 const statusFilter = ref('')
+const activeTab = ref('orgs')
+
+const auditLogs = ref<any[]>([])
+const loadingAudit = ref(false)
 
 const modal = reactive({
   open: false,
@@ -259,6 +330,19 @@ async function load() {
   loading.value = true
   try { orgs.value = await adminService.listOrganizations() }
   finally { loading.value = false }
+}
+
+async function loadAudit() {
+  if (auditLogs.value.length > 0) return
+  loadingAudit.value = true
+  try {
+    const response = await adminService.getAuditLogs(1, 100)
+    auditLogs.value = response.data || []
+  } catch (err) {
+    console.error(err)
+  } finally {
+    loadingAudit.value = false
+  }
 }
 
 function resetForm() {

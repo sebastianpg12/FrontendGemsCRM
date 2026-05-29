@@ -23,16 +23,73 @@ apiClient.interceptors.request.use((config) => {
   return config
 })
 
+let isRefreshing = false
+let failedQueue: any[] = []
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error)
+    } else {
+      prom.resolve(token)
+    }
+  })
+  failedQueue = []
+}
+
 // Response interceptor to handle auth errors
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Token expired or invalid
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      window.location.href = '/login'
+  async (error) => {
+    const originalRequest = error.config
+
+    // Si da 401 y no es el endpoint de refresh o login
+    if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url.includes('/auth/')) {
+      if (isRefreshing) {
+        return new Promise(function(resolve, reject) {
+          failedQueue.push({ resolve, reject })
+        }).then(token => {
+          originalRequest.headers['Authorization'] = 'Bearer ' + token
+          return apiClient(originalRequest)
+        }).catch(err => {
+          return Promise.reject(err)
+        })
+      }
+
+      originalRequest._retry = true
+      isRefreshing = true
+
+      try {
+        const refreshToken = localStorage.getItem('refreshToken')
+        if (!refreshToken) throw new Error('No refresh token available')
+
+        // Pedir un nuevo access token usando el refresh token
+        const response = await axios.post(`${API_BASE_URL}/auth/refresh`, { refreshToken })
+        const newToken = response.data.data.token
+        const newRefreshToken = response.data.data.refreshToken
+
+        // Guardar nuevos tokens
+        localStorage.setItem('token', newToken)
+        if (newRefreshToken) localStorage.setItem('refreshToken', newRefreshToken)
+
+        apiClient.defaults.headers.common['Authorization'] = `Bearer ${newToken}`
+        originalRequest.headers['Authorization'] = `Bearer ${newToken}`
+
+        processQueue(null, newToken)
+        return apiClient(originalRequest)
+      } catch (err) {
+        processQueue(err, null)
+        // Token expired or invalid
+        localStorage.removeItem('token')
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('user')
+        window.location.href = '/login'
+        return Promise.reject(err)
+      } finally {
+        isRefreshing = false
+      }
     }
+
     return Promise.reject(error)
   }
 )
@@ -65,10 +122,13 @@ export interface AuthResponse {
   message?: string
   user?: User
   token?: string
+  refreshToken?: string
   organization?: OrganizationSummary | null
   memberships?: MembershipSummary[]
   requiresOrgSelection?: boolean
   membership?: { role: string; isOwner: boolean; permissions: any } | null
+  require2FA?: boolean
+  tempToken?: string
 }
 
 export const authService = {
@@ -77,10 +137,19 @@ export const authService = {
       const response = await apiClient.post('/auth/login', credentials)
       if (response.data.success) {
         const d = response.data.data
+        if (d.require2FA) {
+          return {
+            success: true,
+            require2FA: true,
+            tempToken: d.tempToken,
+            message: response.data.message
+          }
+        }
         return {
           success: true,
           user: d.user,
           token: d.token,
+          refreshToken: d.refreshToken,
           organization: d.organization || null,
           memberships: d.memberships || [],
           membership: d.membership || null,
@@ -112,9 +181,62 @@ export const authService = {
     }
   },
 
+  async registerOrg(data: { orgName: string; userName: string; email: string; password: string }): Promise<AuthResponse> {
+    try {
+      const response = await apiClient.post('/auth/register-org', data)
+      return {
+        success: response.data.success,
+        message: response.data.message
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Error al registrar organización'
+      }
+    }
+  },
+
+  async verifyEmail(token: string): Promise<AuthResponse> {
+    try {
+      const response = await apiClient.get(`/auth/verify-email/${token}`)
+      return {
+        success: response.data.success,
+        message: response.data.message
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Error al verificar correo'
+      }
+    }
+  },
+
+  async verify2FA(tempToken: string, code: string): Promise<AuthResponse> {
+    try {
+      const response = await apiClient.post('/auth/verify-2fa', { tempToken, code })
+      if (response.data.success) {
+        const d = response.data.data
+        return {
+          success: true,
+          user: d.user,
+          token: d.token,
+          refreshToken: d.refreshToken,
+          organization: d.organization || null,
+          memberships: d.memberships || [],
+          membership: d.membership || null,
+          requiresOrgSelection: !!d.requiresOrgSelection
+        }
+      }
+      return { success: false, message: response.data.message }
+    } catch (error: any) {
+      return { success: false, message: error.response?.data?.message || 'Error verificando 2FA' }
+    }
+  },
+
   async logout(): Promise<void> {
     try {
-      await apiClient.post('/auth/logout')
+      const refreshToken = localStorage.getItem('refreshToken')
+      await apiClient.post('/auth/logout', { refreshToken })
     } catch (error) {
       console.error('Logout error:', error)
     }
@@ -144,6 +266,7 @@ export const authService = {
           success: true,
           user: d.user,
           token: d.token,
+          refreshToken: d.refreshToken,
           organization: d.organization,
           membership: d.membership
         }

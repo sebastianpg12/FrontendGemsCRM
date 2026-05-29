@@ -193,11 +193,16 @@ export const useAuthStore = defineStore('auth', () => {
       
       const response = await authService.login(credentials)
 
-      if (response.success && response.user && response.token) {
-        user.value = response.user
-        token.value = response.token
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('user', JSON.stringify(user.value))
+      if (response.success) {
+        if (response.require2FA) {
+          return { success: true, require2FA: true, tempToken: response.tempToken }
+        }
+
+        user.value = response.user || null
+        token.value = response.token || null
+        if (response.token) localStorage.setItem('token', response.token)
+        if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
+        if (response.user) localStorage.setItem('user', JSON.stringify(response.user))
         memberships.value = response.memberships || []
         requiresOrgSelection.value = !!response.requiresOrgSelection
         if (response.organization) {
@@ -210,6 +215,41 @@ export const useAuthStore = defineStore('auth', () => {
         return { success: true, requiresOrgSelection: requiresOrgSelection.value }
       } else {
         error.value = response.message || 'Error al iniciar sesión'
+        return { success: false, message: error.value }
+      }
+    } catch (err: any) {
+      error.value = err.message || 'Error de conexión'
+      return { success: false, message: error.value }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const verify2FA = async (tempToken: string, code: string) => {
+    try {
+      isLoading.value = true
+      error.value = null
+      
+      const response = await authService.verify2FA(tempToken, code)
+
+      if (response.success) {
+        user.value = response.user || null
+        token.value = response.token || null
+        if (response.token) localStorage.setItem('token', response.token)
+        if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
+        if (response.user) localStorage.setItem('user', JSON.stringify(response.user))
+        memberships.value = response.memberships || []
+        requiresOrgSelection.value = !!response.requiresOrgSelection
+        if (response.organization) {
+          organization.value = response.organization
+          localStorage.setItem('organization', JSON.stringify(response.organization))
+        } else {
+          organization.value = null
+          localStorage.removeItem('organization')
+        }
+        return { success: true, requiresOrgSelection: requiresOrgSelection.value }
+      } else {
+        error.value = response.message || 'Código incorrecto'
         return { success: false, message: error.value }
       }
     } catch (err: any) {
@@ -234,9 +274,40 @@ export const useAuthStore = defineStore('auth', () => {
       memberships.value = []
       requiresOrgSelection.value = false
       localStorage.removeItem('token')
+      localStorage.removeItem('refreshToken')
       localStorage.removeItem('user')
       localStorage.removeItem('organization')
       window.location.href = '/login'
+    }
+  }
+
+  const resetPassword = async (token: string, newPassword: string) => {
+    isLoading.value = true
+    error.value = null
+    try {
+      return await authService.resetPassword(token, newPassword)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const registerOrg = async (data: { orgName: string; userName: string; email: string; password: string }) => {
+    isLoading.value = true
+    error.value = null
+    try {
+      return await authService.registerOrg(data)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const verifyEmail = async (token: string) => {
+    isLoading.value = true
+    error.value = null
+    try {
+      return await authService.verifyEmail(token)
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -246,11 +317,12 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const response = await authService.selectOrganization(organizationId)
       if (response.success && response.token && response.organization) {
-        token.value = response.token
-        organization.value = response.organization
+        token.value = response.token || null
+        organization.value = response.organization || null
         requiresOrgSelection.value = false
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('organization', JSON.stringify(response.organization))
+        if (response.token) localStorage.setItem('token', response.token)
+        if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
+        if (response.organization) localStorage.setItem('organization', JSON.stringify(response.organization))
         return { success: true }
       }
       error.value = response.message || 'No se pudo seleccionar la organización'
@@ -430,6 +502,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     // Actions
     login,
+    verify2FA,
     logout,
     checkAuth,
     selectOrganization,
@@ -437,5 +510,8 @@ export const useAuthStore = defineStore('auth', () => {
     updateUserAvatar,
     updateUserProfile,
     getAvailableModules,
+    registerOrg,
+    verifyEmail,
+    checkPermission: getUserPermission
   }
 })

@@ -355,9 +355,11 @@ import { wikiService, type WikiArticle } from '../../services/wikiService'
 import { useNotifications } from '../../composables/useNotifications'
 import { useAuthStore } from '../../stores/auth'
 import WikiContent from '../wiki/WikiContent.vue'
+import { useRoute } from 'vue-router'
 
 const { showError, showSuccess } = useNotifications()
 const authStore = useAuthStore()
+const route = useRoute()
 
 const loading = ref(false)
 const submitted = ref(false)
@@ -609,7 +611,8 @@ const handleSubmit = async () => {
       }
     }
 
-    const response = await ticketService.createPublic(submissionData)
+    const orgSlug = route.params.orgSlug ? String(route.params.orgSlug) : undefined
+    const response = await ticketService.createPublic(submissionData, orgSlug)
     if (response.success && response.data) {
       ticketId.value = response.data.ticketNumber
       if (response.data.assignedTo && typeof response.data.assignedTo === 'object') {

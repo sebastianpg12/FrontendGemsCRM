@@ -88,5 +88,10 @@ export const adminService = {
   async revokeSuperAdmin(userId: string) {
     const { data } = await client.post(`/admin/super-admins/${userId}/revoke`)
     return data.data
+  },
+
+  async getAuditLogs(page = 1, limit = 50) {
+    const { data } = await client.get('/admin/audit-logs', { params: { page, limit } })
+    return data
   }
 }

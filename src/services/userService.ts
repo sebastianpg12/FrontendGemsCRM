@@ -5,8 +5,10 @@ interface UserProfileData {
   department?: string
   avatar?: string
   role?: string
+  role?: string
   createdAt?: string
   updatedAt?: string
+  isTwoFactorEnabled?: boolean
 }
 
 interface UpdateProfileData {
@@ -161,6 +163,63 @@ class UserService {
   return this.toAbsoluteUrl(data.photoUrl)
     } catch (error) {
       console.error('❌ Error uploading photo:', error)
+      throw error
+    }
+  }
+
+  async setup2FA(): Promise<{ secret: string; qrCode: string }> {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch(`${this.baseUrl}${this.endpoint}/setup-2fa`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (!response.ok) throw new Error('Error configurando 2FA')
+      const data = await response.json()
+      return data.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async enable2FA(code: string): Promise<void> {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch(`${this.baseUrl}${this.endpoint}/enable-2fa`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ code })
+      })
+      if (!response.ok) {
+        const err = await response.json()
+        throw new Error(err.message || 'Error habilitando 2FA')
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async disable2FA(password: string): Promise<void> {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch(`${this.baseUrl}${this.endpoint}/disable-2fa`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password })
+      })
+      if (!response.ok) {
+        const err = await response.json()
+        throw new Error(err.message || 'Error deshabilitando 2FA')
+      }
+    } catch (error) {
       throw error
     }
   }

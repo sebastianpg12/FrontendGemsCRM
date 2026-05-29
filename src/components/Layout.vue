@@ -203,6 +203,7 @@ import {
   PresentationChartLineIcon,
   SparklesIcon,
   SwatchIcon,
+  BookOpenIcon,
 } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
@@ -227,6 +228,7 @@ const navigation = [
   { name: 'Contabilidad', path: '/accounting', icon: CurrencyDollarIcon },
   { name: 'Gestión de Casos', path: '/cases', icon: FolderIcon },
   { name: 'Equipo', path: '/team', icon: DocumentTextIcon },
+  { name: 'Wiki', path: '/wiki', icon: BookOpenIcon },
   { name: 'Chat Interno', path: '/chat', icon: ChatBubbleLeftRightIcon },
   { name: 'Prospectos IA', path: '/prospectos', icon: SparklesIcon },
   { name: 'Personalización', path: '/settings/theme', icon: SwatchIcon },
@@ -258,6 +260,7 @@ const pageDescription = computed(() => {
     '/team': 'Gestión del equipo de trabajo',
     '/chat': 'Chat interno del equipo',
     '/tickets': 'Gestión de incidencias y soporte técnico',
+    '/wiki': 'Base de conocimiento y documentación',
     '/prospectos': 'Pipeline de ventas con coach IA',
     '/settings/theme': 'Logo, color de acento y modo oscuro',
   }

@@ -5,6 +5,8 @@ import { useAuthStore } from './stores/auth'
 // Pages
 import Dashboard from './pages/Dashboard.vue'
 import Login from './pages/Login.vue'
+import Register from './pages/Register.vue'
+import VerifyEmail from './pages/VerifyEmail.vue'
 import Clients from './pages/Clients.vue'
 import Activities from './pages/Activities.vue'
 import ReportsView from './pages/ReportsView.vue'
@@ -26,6 +28,7 @@ import ThemeSettings from './pages/ThemeSettings.vue'
 import PricingCalculator from './pages/PricingCalculator.vue'
 import OrgSelector from './pages/OrgSelector.vue'
 import OrganizationsAdmin from './pages/admin/OrganizationsAdmin.vue'
+import Wiki from './pages/Wiki.vue'
 
 const routes = [
   {
@@ -44,7 +47,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/support',
+    path: '/support/:orgSlug?',
     name: 'Support',
     component: ExternalTickets
   },
@@ -62,6 +65,18 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+    meta: { requiresGuest: true }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { requiresGuest: true }
+  },
+  {
+    path: '/verify-email',
+    name: 'VerifyEmail',
+    component: VerifyEmail,
     meta: { requiresGuest: true }
   },
   {
@@ -222,6 +237,14 @@ const routes = [
     }
   },
   {
+    path: '/wiki',
+    name: 'Wiki',
+    component: Wiki,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }
@@ -236,10 +259,10 @@ const router = createRouter({
 router.beforeEach(async (to, _from, next) => {
   const authStore = useAuthStore()
   
-  // Always allow access to login and support pages
-  if (to.path === '/login' || to.path === '/support') {
-    // If already authenticated and trying to access login, redirect to dashboard
-    if (to.path === '/login' && authStore.isAuthenticated) {
+  // Always allow access to public pages
+  if (to.name === 'Login' || to.name === 'Register' || to.name === 'VerifyEmail' || to.name === 'Support') {
+    // If already authenticated and trying to access auth pages, redirect to dashboard
+    if ((to.name === 'Login' || to.name === 'Register' || to.name === 'VerifyEmail') && authStore.isAuthenticated) {
       const redirectPath = authStore.user?.role === 'client' ? '/support' : '/';
       next(redirectPath)
       return

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="min-h-screen flex items-center justify-center font-['Inter',sans-serif] overflow-hidden relative" style="background: #04060d;">
 
     <!-- ── Background: Nebula layers (accent-reactive) ── -->
@@ -74,8 +74,12 @@
 
         <!-- Card header -->
         <div class="mb-7 relative z-10">
-          <h2 class="text-white/90 text-lg font-bold mb-0.5">Bienvenido de vuelta</h2>
-          <p class="text-white/35 text-[11px] font-medium">Ingresa tus credenciales para continuar</p>
+          <h2 class="text-white/90 text-lg font-bold mb-0.5">
+            {{ requires2FA ? 'Verificación de Seguridad' : 'Bienvenido de vuelta' }}
+          </h2>
+          <p class="text-white/35 text-[11px] font-medium">
+            {{ requires2FA ? 'Ingresa el código de 6 dígitos de tu app autenticadora' : 'Ingresa tus credenciales para continuar' }}
+          </p>
         </div>
 
         <!-- Error message -->
@@ -85,7 +89,7 @@
         </div>
 
         <!-- Form -->
-        <form @submit.prevent="handleLogin" class="space-y-3.5 relative z-10">
+        <form v-if="!requires2FA" @submit.prevent="handleLogin" class="space-y-3.5 relative z-10">
 
           <!-- Email -->
           <div class="relative group">
@@ -174,6 +178,44 @@
 
         </form>
 
+        <!-- 2FA Form -->
+        <form v-else @submit.prevent="handleVerify2FA" class="space-y-4 relative z-10">
+          <div class="relative group">
+            <div class="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300"
+                 :class="twoFactorCode ? 'text-primary-400' : 'text-white/25 group-focus-within:text-primary-400'">
+              <i class="fas fa-shield-halved text-sm"></i>
+            </div>
+            <input
+              v-model="twoFactorCode"
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="6"
+              required
+              placeholder="000000"
+              class="login-input w-full rounded-xl py-4 pl-11 pr-5 text-center text-2xl tracking-[0.5em] font-mono text-white placeholder:text-white/25 outline-none transition-all duration-300"
+            />
+          </div>
+
+          <button
+            type="submit"
+            :disabled="isLoading || twoFactorCode.length !== 6"
+            class="login-btn w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none mt-2 text-[11px] uppercase tracking-widest"
+          >
+            <i v-if="isLoading" class="fas fa-circle-notch fa-spin text-sm"></i>
+            <template v-else>
+              <i class="fas fa-check text-xs opacity-75"></i>
+              Verificar
+            </template>
+          </button>
+          
+          <div class="text-center mt-4">
+             <button type="button" @click="cancel2FA" class="text-[10px] text-white/40 hover:text-white transition-colors uppercase tracking-wider font-bold">
+               Cancelar
+             </button>
+          </div>
+        </form>
+
         <!-- Card footer -->
         <div class="mt-7 pt-5 flex items-center justify-center gap-2 relative z-10" style="border-top: 1px solid rgba(255,255,255,0.06);">
           <i class="fas fa-gem text-primary-500/30 text-[7px]"></i>
@@ -256,6 +298,9 @@ const passwordError = ref('')
 const showForgotPassword = ref(false)
 const forgotPasswordEmail = ref('')
 const forgotPasswordLoading = ref(false)
+const requires2FA = ref(false)
+const twoFactorCode = ref('')
+const tempToken = ref('')
 const currentYear = new Date().getFullYear()
 
 // El login es genérico — siempre branding GEMS Hub, sin theme de tenant.
@@ -356,6 +401,12 @@ const handleLogin = async () => {
   if (checkLockout()) return
   const result = await authStore.login(credentials.value)
   if (result.success) {
+    if (result.require2FA) {
+      requires2FA.value = true
+      tempToken.value = result.tempToken!
+      return
+    }
+
     localStorage.removeItem(LOGIN_ATTEMPTS_KEY)
     if (result.requiresOrgSelection) {
       await router.push('/select-org')
@@ -368,6 +419,29 @@ const handleLogin = async () => {
   } else {
     recordFailedAttempt()
   }
+}
+
+const handleVerify2FA = async () => {
+  if (twoFactorCode.value.length !== 6) return
+  const result = await authStore.verify2FA(tempToken.value, twoFactorCode.value)
+  if (result.success) {
+    localStorage.removeItem(LOGIN_ATTEMPTS_KEY)
+    if (result.requiresOrgSelection) {
+      await router.push('/select-org')
+      return
+    }
+    try { await themeStore.load() } catch {}
+    const redirectPath = authStore.user?.role === 'client' ? '/support' : '/'
+    await router.push(redirectPath)
+  } else {
+    recordFailedAttempt()
+  }
+}
+
+const cancel2FA = () => {
+  requires2FA.value = false
+  twoFactorCode.value = ''
+  tempToken.value = ''
 }
 
 const handleForgotPassword = async () => {

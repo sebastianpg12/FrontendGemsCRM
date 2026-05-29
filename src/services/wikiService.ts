@@ -1,5 +1,4 @@
-import { API_CONFIG } from '../config/api'
-import { authHeaders } from './authHeaders'
+import apiClient from './authService'
 
 export interface WikiArticle {
   _id?: string
@@ -25,22 +24,20 @@ export interface WikiArticle {
 }
 
 class WikiService {
-  private apiUrl = `${API_CONFIG.BASE_URL}/wiki`
+  private apiUrl = '/wiki'
 
   async getAll(filters: { categoria?: string, search?: string } = {}): Promise<WikiArticle[]> {
     const queryParams = new URLSearchParams()
     if (filters.categoria) queryParams.append('categoria', filters.categoria)
     if (filters.search) queryParams.append('search', filters.search)
     
-    const response = await fetch(`${this.apiUrl}?${queryParams}`, { headers: authHeaders() })
-    if (!response.ok) throw new Error('Error al obtener la wiki')
-    return await response.json()
+    const response = await apiClient.get(`${this.apiUrl}?${queryParams}`)
+    return response.data
   }
 
   async getById(id: string): Promise<WikiArticle> {
-    const response = await fetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
-    if (!response.ok) throw new Error('Error al obtener el artículo')
-    return await response.json()
+    const response = await apiClient.get(`${this.apiUrl}/${id}`)
+    return response.data
   }
 
   async create(data: Partial<WikiArticle>): Promise<WikiArticle> {
@@ -61,13 +58,8 @@ class WikiService {
       }
     })
 
-    const response = await fetch(this.apiUrl, {
-      method: 'POST',
-      body: formData,
-    })
-    
-    if (!response.ok) throw new Error('Error al crear artículo')
-    return await response.json()
+    const response = await apiClient.post(this.apiUrl, formData)
+    return response.data
   }
 
   async update(id: string, data: Partial<WikiArticle>): Promise<WikiArticle> {
@@ -98,40 +90,24 @@ class WikiService {
       }
     })
 
-    const response = await fetch(`${this.apiUrl}/${id}`, {
-      method: 'PUT',
-      body: formData,
-    })
-
-    if (!response.ok) throw new Error('Error al actualizar artículo')
-    return await response.json()
+    const response = await apiClient.put(`${this.apiUrl}/${id}`, formData)
+    return response.data
   }
 
   async delete(id: string): Promise<void> {
-    const response = await fetch(`${this.apiUrl}/${id}`, {
-      method: 'DELETE'
-    })
-    if (!response.ok) throw new Error('Error al eliminar el artículo')
+    await apiClient.delete(`${this.apiUrl}/${id}`)
   }
 
   // Vincular ticket
   async linkTicket(wikiId: string, ticketId: string): Promise<WikiArticle> {
-    const response = await fetch(`${this.apiUrl}/${wikiId}/tickets`, {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify({ ticketId })
-    })
-    if (!response.ok) throw new Error('Error al vincular el ticket')
-    return await response.json()
+    const response = await apiClient.post(`${this.apiUrl}/${wikiId}/tickets`, { ticketId })
+    return response.data
   }
 
   // Desvincular ticket
   async unlinkTicket(wikiId: string, ticketId: string): Promise<WikiArticle> {
-    const response = await fetch(`${this.apiUrl}/${wikiId}/tickets/${ticketId}`, {
-      method: 'DELETE'
-    })
-    if (!response.ok) throw new Error('Error al desvincular el ticket')
-    return await response.json()
+    const response = await apiClient.delete(`${this.apiUrl}/${wikiId}/tickets/${ticketId}`)
+    return response.data
   }
 }
 

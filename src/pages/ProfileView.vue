@@ -275,6 +275,115 @@
           </form>
         </div>
 
+        <!-- 2FA Section -->
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+          <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+            <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mr-4">
+              <i class="fas fa-mobile-screen-button text-indigo-500"></i>
+            </div>
+            Autenticación de 2 Factores
+          </h2>
+          
+          <div v-if="!profileData.isTwoFactorEnabled && !setup2FAData" class="space-y-4">
+            <p class="text-sm text-slate-600 dark:text-slate-300 font-medium">
+              Protege tu cuenta agregando una capa adicional de seguridad con una aplicación autenticadora (Google Authenticator, Authy, etc).
+            </p>
+            <button
+              @click="init2FASetup"
+              :disabled="loading"
+              class="w-full px-6 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
+            >
+              <i class="fas fa-shield-halved mr-2"></i>
+              Configurar 2FA
+            </button>
+          </div>
+
+          <div v-if="setup2FAData && !profileData.isTwoFactorEnabled" class="space-y-6">
+            <div class="bg-slate-50 dark:bg-[#0f172a] rounded-2xl p-4 border border-slate-100 dark:border-[#334155] text-center">
+              <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-4">1. Escanea este código QR</p>
+              <img :src="setup2FAData.qrCode" alt="2FA QR Code" class="mx-auto rounded-xl shadow-sm bg-white p-2 mb-4" />
+              <p class="text-[10px] text-slate-500 font-bold break-all">O ingresa esta clave manual:<br/><span class="font-mono text-indigo-500">{{ setup2FAData.secret }}</span></p>
+            </div>
+            
+            <div class="space-y-2">
+              <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                2. Ingresa el código de 6 dígitos
+              </label>
+              <input
+                v-model="twoFactorCode"
+                type="text"
+                maxlength="6"
+                placeholder="000000"
+                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-center text-2xl font-mono tracking-[0.5em] text-slate-700 dark:text-slate-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 transition-all outline-none"
+              />
+            </div>
+            
+            <div class="flex gap-3">
+              <button
+                @click="setup2FAData = null; twoFactorCode = ''"
+                class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-black text-xs uppercase tracking-widest transition-all"
+              >
+                Cancelar
+              </button>
+              <button
+                @click="confirm2FA"
+                :disabled="loading || twoFactorCode.length !== 6"
+                class="flex-1 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
+              >
+                Activar
+              </button>
+            </div>
+          </div>
+
+          <div v-if="profileData.isTwoFactorEnabled" class="space-y-4">
+            <div class="flex items-center gap-3 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+              <i class="fas fa-shield-check text-emerald-500 text-xl"></i>
+              <div>
+                <p class="text-sm font-bold text-emerald-800">2FA Activado</p>
+                <p class="text-xs text-emerald-600">Tu cuenta está protegida.</p>
+              </div>
+            </div>
+            
+            <div v-if="!showDisable2FAForm" class="pt-2">
+               <button
+                 @click="showDisable2FAForm = true"
+                 class="w-full px-6 py-3.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all"
+               >
+                 Desactivar 2FA
+               </button>
+            </div>
+            
+            <div v-if="showDisable2FAForm" class="space-y-4 pt-4 border-t border-slate-100">
+              <div class="space-y-2">
+                <label class="text-[11px] font-black text-rose-400 uppercase tracking-widest ml-1">
+                  Ingresa tu contraseña actual
+                </label>
+                <input
+                  v-model="disable2FAPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  class="w-full px-4 py-3.5 bg-rose-50/30 border border-rose-200 rounded-2xl text-slate-700 focus:ring-4 focus:ring-rose-100 transition-all outline-none"
+                />
+              </div>
+              <div class="flex gap-3">
+                <button
+                  @click="showDisable2FAForm = false; disable2FAPassword = ''"
+                  class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all"
+                >
+                  Cancelar
+                </button>
+                <button
+                  @click="disable2FA"
+                  :disabled="loading || !disable2FAPassword"
+                  class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all disabled:opacity-50"
+                >
+                  Confirmar Desactivación
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Help Box -->
         <div class="bg-primary-50 rounded-3xl p-6 border border-primary-100">
           <div class="flex items-start gap-4">
@@ -369,6 +478,12 @@ const passwordForm = ref({
   newPassword: '',
   confirmPassword: ''
 })
+
+// 2FA state
+const setup2FAData = ref<{ secret: string; qrCode: string } | null>(null)
+const twoFactorCode = ref('')
+const showDisable2FAForm = ref(false)
+const disable2FAPassword = ref('')
 
 // Computed
 const selectedAvatarData = computed(() => {
@@ -549,6 +664,48 @@ const updatePassword = async () => {
   }
 }
 
+const init2FASetup = async () => {
+  try {
+    loading.value = true
+    const data = await userService.setup2FA()
+    setup2FAData.value = data
+  } catch (error: any) {
+    showError(error.message || 'Error iniciando configuración 2FA')
+  } finally {
+    loading.value = false
+  }
+}
+
+const confirm2FA = async () => {
+  try {
+    loading.value = true
+    await userService.enable2FA(twoFactorCode.value)
+    profileData.value.isTwoFactorEnabled = true
+    setup2FAData.value = null
+    twoFactorCode.value = ''
+    showSuccess('Autenticación de 2 Factores activada')
+  } catch (error: any) {
+    showError(error.message || 'Código incorrecto')
+  } finally {
+    loading.value = false
+  }
+}
+
+const disable2FA = async () => {
+  try {
+    loading.value = true
+    await userService.disable2FA(disable2FAPassword.value)
+    profileData.value.isTwoFactorEnabled = false
+    showDisable2FAForm.value = false
+    disable2FAPassword.value = ''
+    showSuccess('2FA desactivado correctamente')
+  } catch (error: any) {
+    showError(error.message || 'Error desactivando 2FA')
+  } finally {
+    loading.value = false
+  }
+}
+
 const loadProfile = async () => {
   try {
     loading.value = true
@@ -563,7 +720,8 @@ const loadProfile = async () => {
         avatar: (authStore.user as any).avatar || null,
         photo: (authStore.user as any).photo || null,
         createdAt: (authStore.user as any).createdAt || '',
-        updatedAt: (authStore.user as any).updatedAt || ''
+        updatedAt: (authStore.user as any).updatedAt || '',
+        isTwoFactorEnabled: (authStore.user as any).isTwoFactorEnabled || false
       }
     }
     
@@ -578,7 +736,8 @@ const loadProfile = async () => {
         avatar: profile.avatar || null,
         photo: profile.photo || null,
         createdAt: profile.createdAt || '',
-        updatedAt: profile.updatedAt || ''
+        updatedAt: profile.updatedAt || '',
+        isTwoFactorEnabled: profile.isTwoFactorEnabled || false
       }
       photoErrored.value = false
     } catch (serverError) {
