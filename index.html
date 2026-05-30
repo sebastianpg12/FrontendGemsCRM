@@ -21,10 +21,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <title>GEMS Hub</title>
     <meta name="description" content="GEMS Hub - Plataforma de gestión para equipos de servicio" />
-    <script type="module" crossorigin src="/assets/index-BE7nWovy.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DlhOBoWW.css">
+    <script type="module" crossorigin src="/assets/index-Cak9ukFQ.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C8hHjLeg.css">
   </head>
   <body>
+    <script>
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
     <div id="app"></div>
   </body>
 </html>
