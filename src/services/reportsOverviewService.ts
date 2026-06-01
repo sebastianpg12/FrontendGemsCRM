@@ -16,9 +16,13 @@ export interface OverviewData {
   meta: { period: string; from: string; to: string; prevFrom: string; prevTo: string; generatedAt: string }
   executive: {
     activitiesCompleted: number;  activitiesDelta: number
+    activitiesTotal: number
+    completionRate: number
     ticketsResolved: number;      ticketsDelta: number
-    prospectsValue: number;       forecast: number;       forecastDelta: number
+    avgTicketHrs: number
+    casesClosed: number;          casesDelta: number
     newClients: number;           clientsDelta: number
+    totalClients: number
     teamSize: number
     atRiskClientCount: number
     overdueActivityCount: number
@@ -32,13 +36,7 @@ export interface OverviewData {
     casesByStatus: Record<string, number>
     casesOpen: any[]
     slaBreach: { total: number; overdue: number }
-  }
-  commercial: {
-    pipelineByStatus: { status: string; count: number; value: number }[]
-    pipelineValue: number
-    forecast: number
-    conversionRate: number
-    totalProspects: number
+    avgTicketResolutionHrs: number
   }
   team: {
     byOwner: { _id: string; name?: string; email?: string; total: number; completed: number; overdue: number }[]

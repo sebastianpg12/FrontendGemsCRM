@@ -85,32 +85,46 @@
         <p class="text-xs">{{ error }}</p>
       </div>
 
-      <!-- ══ TAB: RESUMEN EJECUTIVO ══ -->
+      <!-- ══ TAB: RESUMEN EJECUTIVO (operativo) ══ -->
       <div v-else-if="activeTab === 'executive' && data" class="space-y-5">
+        <!-- KPIs de rendimiento operativo del período -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <KpiCard label="Pipeline" icon="fa-chart-line" :value="data.executive.prospectsValue" format="currency" :delta="data.executive.forecastDelta" sublabel="Valor total de prospectos" />
-          <KpiCard label="Forecast" icon="fa-wand-magic-sparkles" :value="data.commercial.forecast" format="currency" sublabel="Ponderado por probabilidad" />
-          <KpiCard label="Actividades completadas" icon="fa-circle-check" :value="data.executive.activitiesCompleted" :delta="data.executive.activitiesDelta" :sublabel="`Equipo: ${data.executive.teamSize} miembros`" />
+          <KpiCard label="Actividades completadas" icon="fa-circle-check" :value="data.executive.activitiesCompleted" :delta="data.executive.activitiesDelta" :sublabel="`${data.executive.completionRate}% de ${data.executive.activitiesTotal} totales`" />
           <KpiCard label="Tickets resueltos" icon="fa-headset" :value="data.executive.ticketsResolved" :delta="data.executive.ticketsDelta" sublabel="En el período seleccionado" />
+          <KpiCard label="Casos cerrados" icon="fa-folder-tree" :value="data.executive.casesClosed" :delta="data.executive.casesDelta" sublabel="Resueltos + cerrados" />
+          <KpiCard label="Tiempo prom. resolución" icon="fa-stopwatch" :value="data.executive.avgTicketHrs" unit="hrs" sublabel="De tickets resueltos" />
         </div>
 
+        <!-- Salud de la operación: lo que requiere acción -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <KpiCard label="Clientes nuevos" icon="fa-user-plus" :value="data.executive.newClients" :delta="data.executive.clientsDelta" sublabel="Adquisición del período" />
-          <KpiCard label="Clientes en riesgo" icon="fa-circle-exclamation" :value="data.executive.atRiskClientCount" :invertDelta="true" sublabel="Sin actividad en 30 días" />
-          <KpiCard label="Actividades vencidas" icon="fa-clock-rotate-left" :value="data.executive.overdueActivityCount" :invertDelta="true" sublabel="Requieren atención inmediata" />
-          <KpiCard label="Tickets fuera de SLA" icon="fa-stopwatch" :value="data.executive.slaBreachCount" :invertDelta="true" sublabel="Más de 2h sin respuesta" />
+          <KpiCard label="Actividades vencidas" icon="fa-clock-rotate-left" :value="data.executive.overdueActivityCount" :invertDelta="true" sublabel="Requieren atención" />
+          <KpiCard label="Tickets fuera de SLA" icon="fa-triangle-exclamation" :value="data.executive.slaBreachCount" :invertDelta="true" sublabel="Más de 2h sin respuesta" />
+          <KpiCard label="Clientes en riesgo" icon="fa-circle-exclamation" :value="data.executive.atRiskClientCount" :invertDelta="true" sublabel="Sin actividad 30 días" />
+          <KpiCard label="Equipo activo" icon="fa-users" :value="data.executive.teamSize" :sublabel="`${data.executive.totalClients} clientes en cartera`" />
         </div>
 
+        <!-- Cards de adquisición y tendencia -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 lg:col-span-2">
-            <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3">Actividad por semana</h3>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-black text-slate-900 dark:text-white">Actividad por semana</h3>
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tendencia del período</span>
+            </div>
             <div class="h-40">
               <MiniBarChart :points="weeklyPoints" />
             </div>
           </div>
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
-            <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3">Pipeline por etapa</h3>
-            <StatusBars :items="pipelineBars" />
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-black text-slate-900 dark:text-white">Adquisición</h3>
+              <TrendBadge v-if="data.executive.clientsDelta !== null" :value="data.executive.clientsDelta" />
+            </div>
+            <p class="text-4xl font-black text-slate-900 dark:text-white tabular-nums mb-1">{{ data.executive.newClients }}</p>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Clientes nuevos</p>
+            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="text-[11px] text-slate-500">Cartera total</span>
+              <span class="text-sm font-black tabular-nums text-slate-800 dark:text-white">{{ data.executive.totalClients }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -205,36 +219,6 @@
         />
       </div>
 
-      <!-- ══ TAB: COMERCIAL ══ -->
-      <div v-else-if="activeTab === 'commercial' && data" class="space-y-5">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <KpiCard label="Valor pipeline" icon="fa-sack-dollar" :value="data.commercial.pipelineValue" format="currency" />
-          <KpiCard label="Forecast" icon="fa-wand-magic-sparkles" :value="data.commercial.forecast" format="currency" sublabel="Ponderado" />
-          <KpiCard label="Conversión" icon="fa-percent" :value="data.commercial.conversionRate" format="percent" sublabel="Ganados / Total" />
-          <KpiCard label="Total prospectos" icon="fa-users-viewfinder" :value="data.commercial.totalProspects" />
-        </div>
-
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
-          <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3">Embudo por etapa</h3>
-          <StatusBars :items="pipelineBars" />
-        </div>
-
-        <DataTable
-          title="Distribución del pipeline"
-          :columns="[
-            { key: 'status', label: 'Etapa' },
-            { key: 'count', label: 'Prospectos', align: 'right' },
-            { key: 'value', label: 'Valor', align: 'right' }
-          ]"
-          :rows="data.commercial.pipelineByStatus"
-        >
-          <template #status="{ value }">
-            <span class="font-bold capitalize">{{ value }}</span>
-          </template>
-          <template #value="{ value }">${{ (value as number).toLocaleString('es-CR') }}</template>
-        </DataTable>
-      </div>
-
       <!-- ══ TAB: EQUIPO ══ -->
       <div v-else-if="activeTab === 'team' && data" class="space-y-5">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -280,6 +264,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
 import KpiCard from '@/components/reports/KpiCard.vue'
+import TrendBadge from '@/components/reports/TrendBadge.vue'
 import MiniBarChart from '@/components/reports/MiniBarChart.vue'
 import StatusBars from '@/components/reports/StatusBars.vue'
 import DataTable from '@/components/reports/DataTable.vue'
@@ -290,7 +275,7 @@ import { teamService } from '@/services/teamService'
 const data = ref<OverviewData | null>(null)
 const loading = ref(false)
 const error = ref<string | null>(null)
-const activeTab = ref<'executive' | 'operations' | 'commercial' | 'team'>('executive')
+const activeTab = ref<'executive' | 'operations' | 'team'>('executive')
 
 const filters = reactive<OverviewFilters>({
   period: 'month',
@@ -302,7 +287,6 @@ const filters = reactive<OverviewFilters>({
 const tabs = [
   { id: 'executive',   label: 'Resumen ejecutivo', icon: 'fa-chart-pie' },
   { id: 'operations',  label: 'Operaciones',       icon: 'fa-list-check' },
-  { id: 'commercial',  label: 'Comercial',         icon: 'fa-chart-line' },
   { id: 'team',        label: 'Equipo',            icon: 'fa-users-gear' }
 ] as const
 
@@ -382,16 +366,6 @@ const toStatusBars = (obj: Record<string, number>) => Object.entries(obj).map(([
 const actStatusBars    = computed(() => data.value ? toStatusBars(data.value.operations.activitiesByStatus) : [])
 const ticketStatusBars = computed(() => data.value ? toStatusBars(data.value.operations.ticketsByStatus) : [])
 const caseStatusBars   = computed(() => data.value ? toStatusBars(data.value.operations.casesByStatus) : [])
-
-const pipelineBars = computed(() => {
-  if (!data.value) return []
-  return data.value.commercial.pipelineByStatus.map(p => ({
-    label: p.status,
-    value: p.count,
-    dotClass: statusPalette[p.status]?.dot || 'bg-slate-400',
-    barClass: statusPalette[p.status]?.bar || 'bg-slate-400'
-  }))
-})
 
 const weeklyPoints = computed(() => {
   if (!data.value) return []
