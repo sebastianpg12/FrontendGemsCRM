@@ -567,8 +567,7 @@ const handleSubmit = async () => {
     if (isTask) {
       taskData.boardId = props.boardId || props.activity?.boardId
       taskData.boardStatus = props.initialBoardStatus || props.activity?.boardStatus
-      // En Task, assignedTo es usualmente el primer elemento o manejado diferente en el backend
-      taskData.assignedTo = form.assignedTo[0] || null
+      taskData.assignedTo = form.assignedTo.filter(Boolean)
       taskData.client = form.clientId || undefined
       // Convertir estimatedTime (1.5h) a estimatedHours (1.5)
       const hours = parseFloat(form.estimatedTime.replace('h', ''))
