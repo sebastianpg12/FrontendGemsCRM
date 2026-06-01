@@ -13,6 +13,10 @@
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
             Análisis de rentabilidad por escenario: costos plataforma, planes vendidos, margen, break-even.
           </p>
+          <p class="text-[10px] text-amber-600 dark:text-amber-400 font-bold mt-1.5">
+            <i class="fas fa-circle-info mr-1"></i>
+            Backend desplegado en <strong>Oracle Cloud</strong> — Always Free tier cubre casi todo (Ampere A1 24GB / 4 OCPU + 10TB egress).
+          </p>
         </div>
         <div class="flex items-center gap-2">
           <button @click="exportJson" class="px-3 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-300 transition-colors">
@@ -282,18 +286,18 @@ interface Plan { key: string; label: string; description: string; price: number;
 
 const DEFAULTS = {
   fixedCosts: [
-    { key: 'render',    label: 'Render backend',       icon: 'fa-server',         value: 25, hint: 'Render Standard (1GB RAM, 1 CPU)' },
-    { key: 'mongo',     label: 'MongoDB Atlas M10',    icon: 'fa-database',       value: 57, hint: '~$0.08/h dedicado, autoscale básico' },
-    { key: 'github',    label: 'GitHub Pages + DNS',   icon: 'fa-globe',          value: 2,  hint: 'Dominio gemsinnovations.com prorrateado' },
-    { key: 'email',     label: 'Email transaccional',  icon: 'fa-envelope',       value: 0,  hint: 'Gmail SMTP (incluido). Migrar a SendGrid: $19' },
-    { key: 'backups',   label: 'Backups MongoDB',      icon: 'fa-database',       value: 4,  hint: 'Continuous Cloud Backup' },
-    { key: 'misc',      label: 'Monitoring + logs',    icon: 'fa-chart-area',     value: 0,  hint: 'Si suma Sentry: ~$26' }
+    { key: 'oracle',    label: 'Oracle Cloud Compute',   icon: 'fa-server',         value: 0,  hint: 'VM Ampere A1 Always Free (24GB RAM / 4 OCPU). Solo se cobra si excedes el tier gratuito.' },
+    { key: 'oracle-net',label: 'Oracle Networking + LB', icon: 'fa-network-wired',  value: 0,  hint: '10TB egress/mes incluido en Always Free. Load Balancer básico también free.' },
+    { key: 'mongo',     label: 'MongoDB Atlas',          icon: 'fa-database',       value: 0,  hint: 'M0 free tier (512MB) sirve para arrancar. Subir a M10 ($57) cuando se llene.' },
+    { key: 'domain',    label: 'Dominio + DNS',          icon: 'fa-globe',          value: 2,  hint: 'gemsinnovations.com prorrateado (~$15/año + DNS Cloudflare free)' },
+    { key: 'email',     label: 'Email transaccional',    icon: 'fa-envelope',       value: 0,  hint: 'Gmail SMTP free. Migrar a SendGrid/Resend ~$15-20 cuando escale.' },
+    { key: 'misc',      label: 'Monitoring + logs',      icon: 'fa-chart-area',     value: 0,  hint: 'Oracle Cloud incluye monitoring básico. Si agregas Sentry: ~$26' }
   ] as CostLine[],
   variableCosts: [
-    { key: 'storage',   label: 'Storage promedio (5GB)', icon: 'fa-hard-drive',  value: 0.5,  hint: '~$0.10/GB en Atlas' },
-    { key: 'egress',    label: 'Egress + bandwidth',     icon: 'fa-arrow-up',    value: 0.3,  hint: 'Render incluido hasta 100GB' },
-    { key: 'gemini',    label: 'Gemini API (IA)',        icon: 'fa-microchip',   value: 1.5,  hint: 'Asumiendo ~500 prompts/mes promedio' },
-    { key: 'attach',    label: 'Adjuntos extra',         icon: 'fa-paperclip',   value: 0.2,  hint: 'Tickets + casos con archivos' }
+    { key: 'storage',   label: 'Storage promedio (5GB)', icon: 'fa-hard-drive',  value: 0.10, hint: 'Oracle Block Volume: ~$0.0255/GB. Mongo: $0.10/GB después del free tier.' },
+    { key: 'egress',    label: 'Egress + bandwidth',     icon: 'fa-arrow-up',    value: 0,    hint: 'Oracle: 10TB/mes gratis (extra $0.0085/GB). En la práctica $0 para SaaS típico.' },
+    { key: 'gemini',    label: 'Gemini API (IA)',        icon: 'fa-microchip',   value: 1.5,  hint: 'Asumiendo ~500 prompts/mes promedio por tenant (Gemini Flash es muy barato).' },
+    { key: 'attach',    label: 'Adjuntos extra',         icon: 'fa-paperclip',   value: 0.2,  hint: 'Object Storage Oracle: $0.0255/GB. Tickets + casos con archivos.' }
   ] as CostLine[],
   plans: [
     { key: 'free',       label: 'Free trial',  description: '14 días',                  price: 0,    tenants: 2 },
