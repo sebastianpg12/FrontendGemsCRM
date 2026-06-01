@@ -150,7 +150,7 @@ const { showSuccess, showError, confirmDelete: confirmDeleteNotification, showLo
 const activeTab = ref<'miembros' | 'roles'>('miembros')
 const members = ref<TeamMember[]>([])
 const roles = ref<Role[]>([])
-const baseRolesNames = ['admin', 'manager', 'support', 'development', 'fullstack', 'employee', 'viewer', 'client']
+const baseRolesNames = ['admin', 'supervisor', 'collaborator', 'support', 'viewer', 'client']
 
 const allAvailableRoles = computed(() => {
   const combined = [...roles.value]

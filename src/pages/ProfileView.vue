@@ -508,10 +508,10 @@ const getInitials = (name: string) => {
 const getRoleDisplayName = (role: string) => {
   const roles: { [key: string]: string } = {
     'admin': 'Administrador',
-    'manager': 'Gerente',
-    'user': 'Usuario',
-    'employee': 'Empleado',
+    'supervisor': 'Supervisor',
+    'collaborator': 'Colaborador',
     'support': 'Soporte',
+    'viewer': 'Consultor',
     'client': 'Cliente'
   }
   return roles[role] || role || 'Miembro'

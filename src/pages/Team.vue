@@ -423,7 +423,7 @@ const showCreateModal = ref(false)
 const showEditModal = ref(false)
 const isSubmitting = ref(false)
 const roles = ref<Role[]>([])
-const baseRolesNames = ['admin', 'manager', 'support', 'development', 'fullstack', 'employee', 'viewer', 'client']
+const baseRolesNames = ['admin', 'supervisor', 'collaborator', 'support', 'viewer', 'client']
 
 const allAvailableRoles = computed(() => {
   // Start with dynamic roles
@@ -506,11 +506,9 @@ const formatDate = (dateString?: string) => {
 const getRoleDisplayName = (role: string) => {
   const roleNames: Record<string, string> = {
     admin: 'Administrador',
-    manager: 'Gerencia',
-    support: 'Soporte Técnico',
-    development: 'Especialista TI',
-    fullstack: 'Ingeniero Soft.',
-    employee: 'Colaborador',
+    supervisor: 'Supervisor',
+    collaborator: 'Colaborador',
+    support: 'Soporte',
     viewer: 'Consultor',
     client: 'Cliente'
   }
@@ -520,12 +518,11 @@ const getRoleDisplayName = (role: string) => {
 const getRoleBadgeClass = (role: string) => {
   const classes: Record<string, string> = {
     admin: 'bg-rose-500 text-white',
-    manager: 'bg-orange-500 text-white',
+    supervisor: 'bg-orange-500 text-white',
+    collaborator: 'bg-emerald-500 text-white',
     support: 'bg-primary-600 text-white',
-    development: 'bg-indigo-600 text-white',
-    fullstack: 'bg-slate-900 text-white',
-    employee: 'bg-emerald-500 text-white',
-    viewer: 'bg-slate-200 text-slate-500'
+    viewer: 'bg-slate-200 text-slate-600',
+    client: 'bg-slate-100 text-slate-500'
   }
   return classes[role] || classes.viewer
 }

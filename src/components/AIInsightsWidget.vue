@@ -148,7 +148,7 @@ const generateInsights = async (background = false) => {
   if (!background) insights.value = null
   try {
     const firstName = authStore.user?.name?.split(' ')[0] || 'Usuario'
-    const userRole = (authStore.user?.role || 'employee') as string
+    const userRole = (authStore.user?.role || 'collaborator') as string
     const todayDate = new Date(); const tm = new Date(todayDate); tm.setHours(0,0,0,0)
     const clientMap = new Map(clientsStore.clients.map((c: any) => [c._id, c.name]))
     const overdueActs = activitiesStore.activities.filter((a: any) => { if (a.status==='completed'||a.status==='cancelled') return false; const d=new Date(a.dueDate||a.date);d.setHours(0,0,0,0);return d<tm }).slice(0,6)

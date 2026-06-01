@@ -294,10 +294,11 @@ const onAvatarError = () => {
 const getRoleDisplayName = () => {
   const roles: Record<string, string> = {
     'admin': 'Administrador',
-    'manager': 'Gerente',
-    'user': 'Usuario',
-    'employee': 'Empleado',
-    'viewer': 'Visualizador'
+    'supervisor': 'Supervisor',
+    'collaborator': 'Colaborador',
+    'support': 'Soporte',
+    'viewer': 'Consultor',
+    'client': 'Cliente'
   }
   return roles[user.value?.role || ''] || user.value?.role || 'Usuario'
 }

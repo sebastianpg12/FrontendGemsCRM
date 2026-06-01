@@ -6,7 +6,7 @@ export interface User {
   _id: string
   name: string
   email: string
-  role: 'admin' | 'manager' | 'employee' | 'support' | 'development' | 'fullstack' | 'viewer' | 'client'
+  role: 'admin' | 'supervisor' | 'collaborator' | 'support' | 'viewer' | 'client'
   department: string
   position: string
   avatar?: string
@@ -73,8 +73,8 @@ export const useAuthStore = defineStore('auth', () => {
   const userRole = computed(() => user.value?.role || null)
   const isAdmin = computed(() => user.value?.role === 'admin')
   const isSuperAdmin = computed(() => !!user.value?.isSuperAdmin)
-  const isManager = computed(() => user.value?.role === 'manager' || user.value?.role === 'admin')
-  const isSupport = computed(() => user.value?.role === 'support' || user.value?.role === 'admin')
+  const isManager = computed(() => ['admin', 'supervisor'].includes(user.value?.role || ''))
+  const isSupport = computed(() => ['admin', 'supervisor', 'support'].includes(user.value?.role || ''))
   const isClient = computed(() => user.value?.role === 'client')
   
   // Helper function to safely access permissions
@@ -95,93 +95,95 @@ export const useAuthStore = defineStore('auth', () => {
     return user.value?.permissions?.[module] || false
   }
 
-  // Role-based permissions usando la estructura de permisos del backend con fallbacks
-  const canViewDashboard = computed(() => getUserModulePermission('dashboard') || !!user.value)
-  
-  // Clientes: Admin y Manager pueden ver, Empleado NO
-  const canViewClients = computed(() => {
-    if (user.value?.role === 'employee') return false // Empleado NO puede ver clientes
-    return getUserPermission('clients', 'view') || ['admin', 'manager'].includes(user.value?.role || '')
-  })
-  
-  const canViewActivities = computed(() => getUserPermission('activities', 'view') || !!user.value)
-  const canViewReports = computed(() => getUserPermission('reports', 'view') || ['admin', 'manager'].includes(user.value?.role || ''))
-  const canViewAccounting = computed(() => getUserPermission('accounting', 'view') || ['admin', 'manager'].includes(user.value?.role || ''))
-  
-  const canViewCases = computed(() => {
-    if (user.value?.role === 'client') return false
-    return getUserPermission('cases', 'view') || ['admin', 'manager', 'employee', 'support'].includes(user.value?.role || '')
-  })
-  
-  const canViewTickets = computed(() => {
-    // Colaborador (employee) NO tiene acceso a Tickets por decisión del equipo
-    return ['admin', 'manager', 'support'].includes(user.value?.role || '')
-  })
-  
-  // Equipo: Admin, Manager y Empleado pueden ver  
-  const canViewTeam = computed(() => {
+  const INTERNAL_ROLES = ['admin', 'supervisor', 'collaborator', 'support', 'viewer']
+  const MANAGE_ROLES = ['admin', 'supervisor']
+
+  // Dashboard: todos los roles internos
+  const canViewDashboard = computed(() => {
     if (!user.value) return false
-    const role = user.value.role?.toLowerCase() || ''
-    return getUserPermission('team', 'view') || 
-           ['admin', 'manager', 'employee', 'support', 'ti', 'soporte'].includes(role)
+    return INTERNAL_ROLES.includes(user.value.role)
   })
-  
-  // Create/Edit permissions with fallbacks
-  // Clientes: Solo Admin y Manager pueden crear/editar
-  const canCreateClients = computed(() => getUserPermission('clients', 'create') || ['admin', 'manager'].includes(user.value?.role || ''))
-  const canEditClients = computed(() => getUserPermission('clients', 'edit') || ['admin', 'manager'].includes(user.value?.role || ''))
-  const canDeleteClients = computed(() => getUserPermission('clients', 'delete') || ['admin'].includes(user.value?.role || ''))
-  
-  // Actividades: Todos los roles internos pueden hacer todo (cualquiera que no sea cliente)
+
+  // Clientes: admin y supervisor ven+crean+editan; collaborator solo ve
+  const canViewClients = computed(() => {
+    if (!user.value) return false
+    return getUserPermission('clients', 'view') || ['admin', 'supervisor', 'collaborator'].includes(user.value.role)
+  })
+  const canCreateClients = computed(() => getUserPermission('clients', 'create') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canEditClients = computed(() => getUserPermission('clients', 'edit') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canDeleteClients = computed(() => getUserPermission('clients', 'delete') || user.value?.role === 'admin')
+
+  // Actividades: todos los roles internos excepto viewer solo ve
+  const canViewActivities = computed(() => {
+    if (!user.value) return false
+    return getUserPermission('activities', 'view') || INTERNAL_ROLES.includes(user.value.role)
+  })
   const canCreateActivities = computed(() => {
     if (!user.value) return false
-    return user.value.role?.toLowerCase() !== 'client'
+    return getUserPermission('activities', 'create') || ['admin', 'supervisor', 'collaborator', 'support'].includes(user.value.role)
   })
   const canEditActivities = computed(() => {
     if (!user.value) return false
-    return user.value.role?.toLowerCase() !== 'client'
+    return getUserPermission('activities', 'edit') || ['admin', 'supervisor', 'collaborator', 'support'].includes(user.value.role)
   })
   const canDeleteActivities = computed(() => {
     if (!user.value) return false
-    return user.value.role?.toLowerCase() !== 'client'
+    return getUserPermission('activities', 'delete') || MANAGE_ROLES.includes(user.value.role)
   })
-  
+
+  // Reportes y contabilidad: admin y supervisor
+  const canViewReports = computed(() => getUserPermission('reports', 'view') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canViewAccounting = computed(() => getUserPermission('accounting', 'view') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canManageAccounting = computed(() => getUserPermission('accounting', 'create') || getUserPermission('accounting', 'edit') || MANAGE_ROLES.includes(user.value?.role || ''))
+
+  // Tickets: admin, supervisor y support
+  const canViewTickets = computed(() => {
+    if (!user.value) return false
+    return ['admin', 'supervisor', 'support'].includes(user.value.role)
+  })
+
+  // Casos: admin, supervisor, collaborator y support
+  const canViewCases = computed(() => {
+    if (!user.value) return false
+    return getUserPermission('cases', 'view') || ['admin', 'supervisor', 'collaborator', 'support'].includes(user.value.role)
+  })
+  const canCreateCases = computed(() => getUserPermission('cases', 'create') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canEditCases = computed(() => getUserPermission('cases', 'edit') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canDeleteCases = computed(() => getUserPermission('cases', 'delete') || user.value?.role === 'admin')
+
+  // Equipo: todos los roles internos pueden ver; solo admin y supervisor crean/editan
+  const canViewTeam = computed(() => {
+    if (!user.value) return false
+    return getUserPermission('team', 'view') || INTERNAL_ROLES.includes(user.value.role)
+  })
+  const canCreateTeam = computed(() => getUserPermission('team', 'create') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canEditTeam = computed(() => getUserPermission('team', 'edit') || MANAGE_ROLES.includes(user.value?.role || ''))
+  const canDeleteTeam = computed(() => getUserPermission('team', 'delete') || user.value?.role === 'admin')
+  const canManageTeam = computed(() => canCreateTeam.value || canEditTeam.value || canDeleteTeam.value)
+
   const canViewTeamActivities = computed(() => {
     if (!user.value) return false
-    return user.value.role?.toLowerCase() !== 'client'
+    return INTERNAL_ROLES.includes(user.value.role)
   })
 
-  // Leader check: En este CRM, cualquier miembro interno puede ver el resumen de equipo (política sin límites)
   const isLeader = computed(() => {
     if (!user.value) return false
-    return user.value.role?.toLowerCase() !== 'client'
+    return INTERNAL_ROLES.includes(user.value.role)
   })
-  
-  // Casos: Solo Admin y Manager pueden crear/editar, Empleado solo ve
-  const canCreateCases = computed(() => getUserPermission('cases', 'create') || ['admin', 'manager'].includes(user.value?.role || ''))
-  const canEditCases = computed(() => getUserPermission('cases', 'edit') || ['admin', 'manager'].includes(user.value?.role || ''))
-  const canDeleteCases = computed(() => getUserPermission('cases', 'delete') || ['admin'].includes(user.value?.role || ''))
-  
-  // Equipo: Solo Admin y Manager pueden crear/editar, Empleado solo ve
-  const canCreateTeam = computed(() => getUserPermission('team', 'create') || ['admin', 'manager'].includes(user.value?.role || ''))
-  const canEditTeam = computed(() => getUserPermission('team', 'edit') || ['admin', 'manager'].includes(user.value?.role || ''))
-  const canDeleteTeam = computed(() => getUserPermission('team', 'delete') || ['admin'].includes(user.value?.role || ''))
-  const canManageTeam = computed(() => canCreateTeam.value || canEditTeam.value || canDeleteTeam.value)
-  const canManageAccounting = computed(() => getUserPermission('accounting', 'create') || getUserPermission('accounting', 'edit') || ['admin', 'manager'].includes(user.value?.role || ''))
 
-  // Department-based access (for more granular control)
+  // Department-based access
   const canViewMarketingSection = computed(() => {
     if (!user.value) return false
-    return user.value.role === 'admin' || 
-           (user.value.role === 'manager' && user.value.department === 'Marketing') ||
-           (user.value.department === 'Marketing')
+    return user.value.role === 'admin' ||
+           (user.value.role === 'supervisor' && user.value.department === 'Marketing') ||
+           user.value.department === 'Marketing'
   })
-  
+
   const canViewSalesSection = computed(() => {
     if (!user.value) return false
-    return user.value.role === 'admin' || 
-           (user.value.role === 'manager' && user.value.department === 'Ventas') ||
-           (user.value.department === 'Ventas')
+    return user.value.role === 'admin' ||
+           (user.value.role === 'supervisor' && user.value.department === 'Ventas') ||
+           user.value.department === 'Ventas'
   })
 
   // Actions
@@ -427,7 +429,7 @@ export const useAuthStore = defineStore('auth', () => {
       modules.push({ id: 'team', name: 'Equipo', icon: 'fas fa-user-group', path: '/team', canAccess: true })
     }
 
-    if (user.value.role === 'admin') {
+    if (['admin', 'supervisor'].includes(user.value.role)) {
       modules.push({ id: 'theme-settings', name: 'Personalización', icon: 'fas fa-sliders', path: '/settings/theme', canAccess: true })
     }
 

@@ -863,7 +863,7 @@ const filteredTickets = computed(() => {
 const supportAgents = computed(() => {
   return teamMembers.value.filter(member => 
     member.role !== 'client' && 
-    ['admin', 'manager', 'support', 'development', 'fullstack'].includes(member.role)
+    ['admin', 'supervisor', 'support'].includes(member.role)
   )
 })
 
@@ -1209,7 +1209,7 @@ const loadTeamMembers = async () => {
 onMounted(async () => {
   await loadTeamMembers()
   // Set default filter if current user is support
-  const isSupport = ['support', 'development', 'fullstack'].includes(authStore.user?.role || '')
+  const isSupport = ['support', 'supervisor'].includes(authStore.user?.role || '')
   if (isSupport && authStore.user?._id) {
     filterAssignedTo.value = authStore.user._id
   }

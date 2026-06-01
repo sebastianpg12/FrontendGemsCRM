@@ -50,8 +50,7 @@ const routes = [
     component: InternalTickets,
     meta: {
       requiresAuth: true,
-      // Colaborador (employee) NO tiene acceso a Tickets
-      requiredRoles: ['admin', 'manager', 'support']
+      requiredRoles: ['admin', 'supervisor', 'support']
     }
   },
   {
@@ -129,16 +128,16 @@ const routes = [
     component: ReportsView,
     meta: { 
       requiresAuth: true,
-      requiredRoles: ['admin', 'manager']
+      requiredRoles: ['admin', 'supervisor']
     }
   },
   {
     path: '/accounting',
     name: 'Accounting',
     component: AccountingView,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredRoles: ['admin', 'manager']
+      requiredRoles: ['admin', 'supervisor']
     }
   },
   {
@@ -217,7 +216,7 @@ const routes = [
     component: ThemeSettings,
     meta: {
       requiresAuth: true,
-      requiredRoles: ['admin']
+      requiredRoles: ['admin', 'supervisor']
     }
   },
   {
@@ -256,7 +255,7 @@ router.beforeEach(async (to, _from, next) => {
   if (to.name === 'Login' || to.name === 'Register' || to.name === 'VerifyEmail' || to.name === 'Support') {
     // If already authenticated and trying to access auth pages, redirect to dashboard
     if ((to.name === 'Login' || to.name === 'Register' || to.name === 'VerifyEmail') && authStore.isAuthenticated) {
-      const redirectPath = authStore.user?.role === 'client' ? '/support' : '/';
+      const redirectPath = authStore.user?.role === 'client' ? '/support' : '/'
       next(redirectPath)
       return
     }

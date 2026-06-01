@@ -26,10 +26,10 @@ export const authGuard = async (
   
   // Define route permissions
   const routePermissions: Record<string, (role: string, department?: string) => boolean> = {
-    '/reports': (role) => ['admin', 'manager'].includes(role),
-    '/accounting': (role) => ['admin', 'manager'].includes(role),
-    '/team': (role) => ['admin', 'manager'].includes(role),
-    '/cases': (role) => ['admin', 'manager', 'employee'].includes(role),
+    '/reports': (role) => ['admin', 'supervisor'].includes(role),
+    '/accounting': (role) => ['admin', 'supervisor'].includes(role),
+    '/team': (role) => ['admin', 'supervisor', 'collaborator', 'support', 'viewer'].includes(role),
+    '/cases': (role) => ['admin', 'supervisor', 'collaborator', 'support'].includes(role),
   }
   
   const permission = routePermissions[to.path]
