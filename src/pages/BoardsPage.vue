@@ -120,37 +120,40 @@
 
     <!-- Create Board Modal -->
     <div v-if="showCreateModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999]" @click.self="showCreateModal = false">
-      <div class="bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-primary-500/20">
-        <h2 class="text-xl font-bold text-white mb-4">Crear Nuevo Tablero</h2>
+      <div class="bg-white rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
+        <div class="px-6 py-4 border-b border-slate-100">
+          <h2 class="text-base font-black text-slate-800">Crear Nuevo Tablero</h2>
+        </div>
+        <div class="p-6">
         
         <form @submit.prevent="createBoard">
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-300 mb-2">Nombre</label>
+            <label class="label-base">Nombre</label>
             <input
               v-model="newBoard.name"
               type="text"
               required
-              class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              class="input-base"
               placeholder="Mi Proyecto"
             />
           </div>
 
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-300 mb-2">Descripción</label>
+            <label class="label-base">Descripción</label>
             <textarea
               v-model="newBoard.description"
               rows="3"
-              class="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              class="input-base"
               placeholder="Descripción del proyecto..."
             ></textarea>
           </div>
 
           <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-300 mb-2">Tipo de Tablero</label>
+            <label class="label-base">Tipo de Tablero</label>
             <div class="grid grid-cols-2 gap-3">
               <label 
                 class="relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors"
-                :class="newBoard.type === 'kanban' ? 'border-primary-500 bg-primary-500/10' : 'border-gray-600 hover:border-gray-500 bg-gray-700/30'"
+                :class="newBoard.type === 'kanban' ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-slate-50'"
               >
                 <input
                   v-model="newBoard.type"
@@ -159,14 +162,14 @@
                   class="sr-only"
                 />
                 <div class="flex-1">
-                  <div class="font-medium text-white">Kanban</div>
-                  <div class="text-xs text-gray-400">Flujo continuo</div>
+                  <div class="font-bold text-slate-700 text-sm">Kanban</div>
+                  <div class="text-xs text-slate-400">Flujo continuo</div>
                 </div>
               </label>
 
               <label 
                 class="relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors"
-                :class="newBoard.type === 'scrum' ? 'border-primary-500 bg-primary-500/10' : 'border-gray-600 hover:border-gray-500 bg-gray-700/30'"
+                :class="newBoard.type === 'scrum' ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-slate-50'"
               >
                 <input
                   v-model="newBoard.type"
@@ -175,30 +178,19 @@
                   class="sr-only"
                 />
                 <div class="flex-1">
-                  <div class="font-medium text-white">Scrum</div>
-                  <div class="text-xs text-gray-400">Con sprints</div>
+                  <div class="font-bold text-slate-700 text-sm">Scrum</div>
+                  <div class="text-xs text-slate-400">Con sprints</div>
                 </div>
               </label>
             </div>
           </div>
 
-          <div class="flex justify-end space-x-3">
-            <button
-              type="button"
-              @click="showCreateModal = false"
-              class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded-lg hover:bg-gray-600"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              :disabled="!newBoard.name"
-              class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg hover:from-primary-700 hover:to-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Crear Tablero
-            </button>
+          <div class="flex justify-end gap-2 pt-2">
+            <button type="button" @click="showCreateModal = false" class="btn btn-secondary btn-sm">Cancelar</button>
+            <button type="submit" :disabled="!newBoard.name" class="btn btn-primary btn-sm">Crear Tablero</button>
           </div>
         </form>
+        </div>
       </div>
     </div>
   </div>

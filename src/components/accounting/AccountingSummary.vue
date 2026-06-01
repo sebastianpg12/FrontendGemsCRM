@@ -2,13 +2,13 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Resumen Financiero -->
     <div class="lg:col-span-2">
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-primary-500/20">
-        <h3 class="text-xl font-bold text-white mb-6">Resumen Financiero</h3>
+      <div class="card p-6">
+        <h3 class="text-base font-black text-slate-800 mb-4">Resumen Financiero</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Ingresos vs Egresos -->
-          <div class="bg-gradient-to-br from-green-500/10 to-red-500/10 rounded-xl p-4 border border-primary-500/20">
-            <h4 class="text-lg font-semibold text-white mb-4">Flujo de Efectivo</h4>
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+            <h4 class="text-sm font-black text-slate-700 mb-3">Flujo de Efectivo</h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center">
                 <span class="text-green-400 flex items-center">
@@ -28,9 +28,9 @@
                   ${{ formatCurrency(summary.egresos) }}
                 </span>
               </div>
-              <hr class="border-gray-600">
+              <hr class="border-slate-200">
               <div class="flex justify-between items-center">
-                <span class="text-white font-semibold">Balance</span>
+                <span class="text-slate-700 font-bold">Balance</span>
                 <span :class="[
                   'font-bold text-lg',
                   summary.balance >= 0 ? 'text-green-400' : 'text-red-400'
@@ -44,8 +44,8 @@
           <!-- Gastos Fijos -->
           
           <!-- Gastos Fijos -->
-          <div class="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-xl p-4 border border-primary-500/20">
-            <h4 class="text-lg font-semibold text-white mb-4">Gastos Fijos</h4>
+          <div class="bg-amber-50 rounded-xl p-4 border border-amber-100">
+            <h4 class="text-sm font-black text-slate-700 mb-3">Gastos Fijos</h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center">
                 <span class="text-yellow-400 flex items-center">
@@ -82,7 +82,7 @@
 
     <!-- Pagos Pendientes -->
     <div>
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-primary-500/20">
+      <div class="card p-6">
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-xl font-bold text-white">Pagos Pendientes</h3>
           <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-medium">

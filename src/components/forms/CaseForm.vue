@@ -3,27 +3,27 @@
     <!-- Información básica -->
     <div class="grid grid-cols-1 gap-6">
       <div>
-        <label class="block text-sm font-medium text-gray-300 mb-2">
+        <label class="label-base">
           <i class="fas fa-heading mr-2 text-primary-400"></i>Título del Caso *
         </label>
         <input
           v-model="form.titulo"
           type="text"
           required
-          class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+          class="input-base"
           placeholder="Ej: Actualización de documentos contractuales"
         />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
+          <label class="label-base">
             <i class="fas fa-tag mr-2 text-primary-400"></i>Tipo *
           </label>
           <select
             v-model="form.tipo"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+            class="select-base"
           >
             <option value="" disabled>Selecciona un tipo</option>
             <option value="documento">Documento</option>
@@ -33,12 +33,12 @@
         </div>
         
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
+          <label class="label-base">
             <i class="fas fa-flag mr-2 text-primary-400"></i>Estado
           </label>
           <select
             v-model="form.estado"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+            class="select-base"
           >
             <option value="abierto">Abierto</option>
             <option value="en_progreso">En Progreso</option>
@@ -48,12 +48,12 @@
         </div>
         
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
+          <label class="label-base">
             <i class="fas fa-star mr-2 text-primary-400"></i>Prioridad
           </label>
           <select
             v-model="form.prioridad"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+            class="select-base"
           >
             <option value="baja">Baja</option>
             <option value="media">Media</option>
@@ -73,7 +73,7 @@
         v-model="form.descripcion"
         rows="4"
         required
-        class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
+        class="input-base resize-none"
         placeholder="Describe los detalles del caso..."
       ></textarea>
     </div>
@@ -111,7 +111,7 @@
         @drop="handleDrop"
         @dragover.prevent
         @dragenter.prevent
-        class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-primary-500 transition-colors cursor-pointer"
+        class="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center hover:border-primary-400 hover:bg-primary-50/30 transition-colors cursor-pointer"
         :class="{ 'border-primary-500 bg-primary-500/5': isDragging }"
       >
         <input 
@@ -136,7 +136,7 @@
         <div 
           v-for="(file, index) in selectedFiles" 
           :key="index"
-          class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg"
+          class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100"
         >
           <div class="flex items-center gap-3">
             <i :class="getFileIcon(file.name)" class="text-primary-400"></i>
@@ -161,7 +161,7 @@
         <div 
           v-for="(file, index) in existingFiles" 
           :key="`existing-${index}`"
-          class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg"
+          class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100"
         >
           <div class="flex items-center gap-3">
             <i :class="getFileIcon(file.nombre)" class="text-primary-400"></i>
@@ -199,29 +199,11 @@
     </div>
 
     <!-- Actions -->
-    <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-700">
-      <button
-        type="button"
-        @click="$emit('cancel')"
-        class="px-6 py-3 text-gray-400 hover:text-white transition-colors"
-      >
-        Cancelar
-      </button>
-      <button
-        type="submit"
-        :disabled="loading"
-        class="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-700 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg shadow-primary-500/25"
-      >
-        <span v-if="loading" class="flex items-center">
-          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          Guardando...
-        </span>
-        <span v-else>
-          {{ mode === 'create' ? 'Crear Caso' : 'Actualizar Caso' }}
-        </span>
+    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+      <button type="button" @click="$emit('cancel')" class="btn btn-ghost">Cancelar</button>
+      <button type="submit" :disabled="loading" class="btn btn-primary">
+        <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+        {{ loading ? 'Guardando...' : (mode === 'create' ? 'Crear Caso' : 'Actualizar') }}
       </button>
     </div>
   </form>

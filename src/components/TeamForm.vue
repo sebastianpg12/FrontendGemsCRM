@@ -1,22 +1,20 @@
 <template>
   <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-    <div class="bg-gray-800 rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto border border-primary-500/20">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-slate-100">
+      <div class="flex justify-between items-center px-6 py-4 border-b border-slate-100">
+        <h2 class="text-base font-black text-slate-800">
           {{ isEditing ? 'Editar Miembro' : 'Nuevo Miembro' }}
         </h2>
-        <button
-          @click="closeForm"
-          class="text-gray-400 hover:text-white text-2xl"
-        >
-          ×
+        <button @click="closeForm" class="btn-icon text-sm">
+          <i class="fas fa-times"></i>
         </button>
       </div>
+      <div class="p-6">
 
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <!-- Nombre -->
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+          <label for="name" class="label-base">
             Nombre Completo *
           </label>
           <input
@@ -24,21 +22,21 @@
             v-model="form.name"
             type="text"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            class="input-base"
             placeholder="Ej: Juan Pérez"
           >
         </div>
 
         <!-- Rol -->
         <div>
-          <label for="role" class="block text-sm font-medium text-gray-300 mb-2">
+          <label for="role" class="label-base">
             Rol *
           </label>
           <select
             id="role"
             v-model="form.role"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            class="select-base"
           >
             <option value="" class="bg-gray-700">Selecciona un rol</option>
             <option v-for="role in roles" :key="role._id" :value="role.name" class="bg-gray-700">
@@ -49,7 +47,7 @@
 
         <!-- Email -->
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+          <label for="email" class="label-base">
             Email *
           </label>
           <input
@@ -57,21 +55,21 @@
             v-model="form.email"
             type="email"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            class="input-base"
             placeholder="ejemplo@empresa.com"
           >
         </div>
 
         <!-- Departamento -->
         <div>
-          <label for="department" class="block text-sm font-medium text-gray-300 mb-2">
+          <label for="department" class="label-base">
             Departamento *
           </label>
           <select
             id="department"
             v-model="form.department"
             required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            class="select-base"
           >
             <option value="" class="bg-gray-700">Selecciona un departamento</option>
             <option value="TI" class="bg-gray-700">TI</option>
@@ -82,29 +80,15 @@
         </div>
 
         <!-- Actions -->
-        <div class="flex gap-4 pt-6">
-          <button
-            type="button"
-            @click="closeForm"
-            class="flex-1 px-6 py-3 bg-gray-600 text-gray-200 rounded-xl hover:bg-gray-500 transition-colors"
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            :disabled="loading || !isFormValid"
-            class="flex-1 px-6 py-3 bg-primary-500 text-white rounded-xl hover:bg-primary-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-bold"
-          >
-            <span v-if="loading">
-              <i class="fas fa-spinner fa-spin mr-2"></i>
-              {{ isEditing ? 'Actualizando...' : 'Creando...' }}
-            </span>
-            <span v-else>
-              {{ isEditing ? 'Actualizar' : 'Crear' }}
-            </span>
+        <div class="flex gap-2 pt-4 border-t border-slate-100">
+          <button type="button" @click="closeForm" class="btn btn-secondary flex-1">Cancelar</button>
+          <button type="submit" :disabled="loading || !isFormValid" class="btn btn-primary flex-1">
+            <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+            {{ loading ? (isEditing ? 'Actualizando...' : 'Creando...') : (isEditing ? 'Actualizar' : 'Crear') }}
           </button>
         </div>
       </form>
+      </div>
     </div>
   </div>
 </template>

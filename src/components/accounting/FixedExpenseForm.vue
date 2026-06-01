@@ -7,29 +7,24 @@
   >
     <!-- Modal Content -->
     <div
-      class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-primary-500/20"
+      class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-slate-100"
       @click.stop
     >
       <!-- Header -->
-      <div class="p-6 border-b border-gray-700">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-bold text-white">
-            {{ editingExpense ? 'Editar Gasto Fijo' : 'Nuevo Gasto Fijo' }}
-          </h2>
-          <button
-            @click="closeModal"
-            class="text-gray-400 hover:text-white transition-colors"
-          >
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+        <h2 class="text-base font-black text-slate-800">
+          {{ editingExpense ? 'Editar Gasto Fijo' : 'Nuevo Gasto Fijo' }}
+        </h2>
+        <button @click="closeModal" class="btn-icon text-sm">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
       <!-- Form -->
       <form @submit.prevent="handleSubmit" class="p-6 space-y-6">
         <!-- Nombre -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
+          <label class="label-base">
             Nombre del Gasto *
           </label>
           <input
@@ -43,7 +38,7 @@
 
         <!-- Monto Mensual -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
+          <label class="label-base">
             Monto Mensual *
           </label>
           <div class="relative">
@@ -54,7 +49,7 @@
               min="0"
               step="0.01"
               placeholder="0.00"
-              class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+              class="input-base"
             >
             <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <span class="text-gray-400 text-sm">/ mes</span>
@@ -64,7 +59,7 @@
 
         <!-- Estado -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
+          <label class="label-base">
             Estado
           </label>
           <div class="space-y-3">
