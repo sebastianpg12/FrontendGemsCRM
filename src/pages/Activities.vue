@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3 relative">
     <!-- Eyebrow GEMS -->
-    <div class="flex items-center gap-2 pr-12 sm:pr-14">
+    <div class="flex items-center gap-2">
       <i class="fas fa-gem text-primary-400 text-[9px] animate-pulse-slow"></i>
       <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
       <span class="w-1 h-1 rounded-full bg-primary-200 inline-block"></span>
