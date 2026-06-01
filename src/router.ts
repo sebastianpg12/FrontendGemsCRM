@@ -226,7 +226,7 @@ const routes = [
     component: PricingCalculator,
     meta: {
       requiresAuth: true,
-      requiredRoles: ['admin']
+      requiresSuperAdmin: true
     }
   },
   {

@@ -429,11 +429,11 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (user.value.role === 'admin') {
       modules.push({ id: 'theme-settings', name: 'Personalización', icon: 'fas fa-sliders', path: '/settings/theme', canAccess: true })
-      modules.push({ id: 'pricing-calculator', name: 'Calculadora', icon: 'fas fa-calculator', path: '/pricing-calculator', canAccess: true })
     }
 
     if (user.value.isSuperAdmin) {
       modules.push({ id: 'admin-orgs', name: 'Organizaciones', icon: 'fas fa-building', path: '/admin/organizations', canAccess: true })
+      modules.push({ id: 'pricing-calculator', name: 'Calculadora', icon: 'fas fa-calculator', path: '/pricing-calculator', canAccess: true })
     }
 
     return modules.filter(m => m.canAccess)
