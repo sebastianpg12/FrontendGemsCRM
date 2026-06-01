@@ -327,27 +327,67 @@ body {
 }
 
 @layer components {
+
+  /* ── Buttons ────────────────────────────────────────────────────── */
   .btn {
     @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none text-sm;
   }
-  
   .btn-sm {
-    @apply px-4 py-1.5 text-xs;
+    @apply px-3.5 py-1.5 text-xs;
   }
-  
   .btn-primary {
-    @apply btn bg-primary text-white shadow-lg shadow-primary/20 hover:bg-primary-600 hover:shadow-primary/30;
+    @apply btn bg-primary text-white shadow-sm shadow-primary/20 hover:bg-primary-600;
   }
-  
   .btn-secondary {
-    @apply btn bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200;
+    @apply btn bg-white text-slate-600 hover:bg-slate-50 border border-slate-200;
   }
-  
   .btn-danger {
-    @apply btn bg-red-500 text-white shadow-lg shadow-red-500/20 hover:bg-red-600 hover:shadow-red-500/30;
+    @apply btn bg-red-500 text-white shadow-sm shadow-red-500/20 hover:bg-red-600;
   }
-  
   .btn-ghost {
-    @apply btn bg-transparent text-slate-400 hover:bg-slate-50 hover:text-slate-600;
+    @apply btn bg-transparent text-slate-500 hover:bg-slate-100 hover:text-slate-700;
+  }
+  .btn-icon {
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-all duration-200 active:scale-95;
+  }
+
+  /* ── Inputs & Selects ───────────────────────────────────────────── */
+  .input-base {
+    @apply w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-slate-400 focus:bg-white focus:border-primary-400 focus:ring-4 focus:ring-primary-500/10 focus:outline-none transition-all;
+  }
+  .input-sm {
+    @apply input-base py-1.5 text-xs;
+  }
+  .select-base {
+    @apply w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:bg-white focus:border-primary-400 focus:ring-4 focus:ring-primary-500/10 focus:outline-none transition-all cursor-pointer;
+  }
+  .select-sm {
+    @apply select-base py-1.5 text-xs;
+  }
+
+  /* ── Cards ──────────────────────────────────────────────────────── */
+  .card {
+    @apply bg-white border border-slate-100 rounded-2xl shadow-sm;
+  }
+  .card-hover {
+    @apply card hover:shadow-md hover:border-slate-200 transition-all duration-200;
+  }
+
+  /* ── Dropdown panel (custom selects, popovers) ──────────────────── */
+  .dropdown-panel {
+    @apply absolute z-50 w-full mt-1.5 bg-white border border-slate-100 rounded-2xl shadow-lg shadow-slate-200/60 overflow-hidden;
+  }
+
+  /* ── Form labels ────────────────────────────────────────────────── */
+  .label-base {
+    @apply block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5;
+  }
+
+  /* ── Section header ─────────────────────────────────────────────── */
+  .page-title {
+    @apply text-xl font-black text-slate-800 tracking-tight;
+  }
+  .section-title {
+    @apply text-sm font-black text-slate-700 uppercase tracking-widest;
   }
 }

@@ -33,7 +33,7 @@
     >
       <div
         v-if="isOpen"
-        class="absolute z-50 w-full mt-2 bg-white border border-slate-100 rounded-2xl shadow-xl overflow-hidden shadow-slate-200/50"
+        class="dropdown-panel"
       >
         <!-- Search input -->
         <div v-if="searchable" class="p-2 border-b border-slate-100">

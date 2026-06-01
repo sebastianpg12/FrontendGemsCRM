@@ -7,61 +7,46 @@
   >
     <!-- Modal Content -->
     <div
-      class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-primary-500/20"
+      class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-slate-100"
       @click.stop
     >
       <!-- Header -->
-      <div class="p-6 border-b border-gray-700">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-bold text-white">
-            {{ editingTransaction ? 'Editar Transacción' : 'Nueva Transacción' }}
-          </h2>
-          <button
-            @click="closeModal"
-            class="text-gray-400 hover:text-white transition-colors"
-          >
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+        <h2 class="text-base font-black text-slate-800">
+          {{ editingTransaction ? 'Editar Transacción' : 'Nueva Transacción' }}
+        </h2>
+        <button @click="closeModal" class="btn-icon">
+          <i class="fas fa-times text-sm"></i>
+        </button>
       </div>
 
       <!-- Form -->
-      <form @submit.prevent="handleSubmit" class="p-6 space-y-6">
+      <form @submit.prevent="handleSubmit" class="p-6 space-y-4">
         <!-- Tipo -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
-            Tipo de Transacción *
-          </label>
-          <select
-            v-model="form.tipo"
-            required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-          >
-            <option value="" class="bg-gray-700">Seleccionar tipo</option>
-            <option value="ingreso" class="bg-gray-700">Ingreso</option>
-            <option value="egreso" class="bg-gray-700">Egreso</option>
+          <label class="label-base">Tipo de Transacción *</label>
+          <select v-model="form.tipo" required class="select-base">
+            <option value="">Seleccionar tipo</option>
+            <option value="ingreso">Ingreso</option>
+            <option value="egreso">Egreso</option>
           </select>
         </div>
 
         <!-- Concepto -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
-            Concepto *
-          </label>
+          <label class="label-base">Concepto *</label>
           <input
             v-model="form.concepto"
             type="text"
             required
             placeholder="Descripción de la transacción"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            class="input-base"
           >
         </div>
 
         <!-- Monto -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
-            Monto *
-          </label>
+          <label class="label-base">Monto *</label>
           <input
             v-model.number="form.monto"
             type="number"
@@ -69,119 +54,74 @@
             min="0"
             step="0.01"
             placeholder="0.00"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            class="input-base"
           >
         </div>
 
         <!-- Fecha -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
-            Fecha *
-          </label>
-          <input
-            v-model="form.fecha"
-            type="date"
-            required
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-          >
+          <label class="label-base">Fecha *</label>
+          <input v-model="form.fecha" type="date" required class="input-base">
         </div>
 
         <!-- Método de Pago -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">
-            Método de Pago
-          </label>
-          <select
-            v-model="form.metodo"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-          >
-            <option value="" class="bg-gray-700">Seleccionar método</option>
-            <option value="efectivo" class="bg-gray-700">Efectivo</option>
-            <option value="transferencia" class="bg-gray-700">Transferencia</option>
-            <option value="tarjeta_credito" class="bg-gray-700">Tarjeta de Crédito</option>
-            <option value="tarjeta_debito" class="bg-gray-700">Tarjeta de Débito</option>
-            <option value="cheque" class="bg-gray-700">Cheque</option>
-            <option value="pse" class="bg-gray-700">PSE</option>
-            <option value="nequi" class="bg-gray-700">Nequi</option>
-            <option value="daviplata" class="bg-gray-700">Daviplata</option>
+          <label class="label-base">Método de Pago</label>
+          <select v-model="form.metodo" class="select-base">
+            <option value="">Seleccionar método</option>
+            <option value="efectivo">Efectivo</option>
+            <option value="transferencia">Transferencia</option>
+            <option value="tarjeta_credito">Tarjeta de Crédito</option>
+            <option value="tarjeta_debito">Tarjeta de Débito</option>
+            <option value="cheque">Cheque</option>
+            <option value="pse">PSE</option>
+            <option value="nequi">Nequi</option>
+            <option value="daviplata">Daviplata</option>
           </select>
         </div>
 
-        <!-- Cliente (solo si hay clientes disponibles) -->
+        <!-- Cliente -->
         <div v-if="clients.length > 0">
-          <label class="block text-sm font-medium text-gray-300 mb-2">
-            Cliente (opcional)
-          </label>
-          <select
-            v-model="form.cliente_id"
-            class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-          >
-            <option value="" class="bg-gray-700">Sin cliente asignado</option>
-            <option 
-              v-for="client in clients" 
-              :key="client._id" 
-              :value="client._id"
-              class="bg-gray-700"
-            >
+          <label class="label-base">Cliente (opcional)</label>
+          <select v-model="form.cliente_id" class="select-base">
+            <option value="">Sin cliente asignado</option>
+            <option v-for="client in clients" :key="client._id" :value="client._id">
               {{ client.nombre }} {{ client.apellido }}
             </option>
           </select>
         </div>
 
-        <!-- Pago Recurrente (solo para ingresos) -->
+        <!-- Pago Recurrente -->
         <div v-if="form.tipo === 'ingreso'">
-          <div class="flex items-center mb-4">
+          <label class="flex items-center gap-3 cursor-pointer">
             <input
               v-model="form.es_recurrente"
               type="checkbox"
-              id="es_recurrente"
-              class="h-4 w-4 text-primary-600 focus:ring-primary-500 bg-gray-700 border-gray-600 rounded"
+              class="h-4 w-4 text-primary-600 focus:ring-primary-500 rounded border-slate-300"
             >
-            <label for="es_recurrente" class="ml-3 text-white">
-              Es un pago recurrente
-            </label>
-          </div>
+            <span class="text-sm font-medium text-slate-700">Es un pago recurrente</span>
+          </label>
 
-          <!-- Frecuencia (solo si es recurrente) -->
-          <div v-if="form.es_recurrente">
-            <label class="block text-sm font-medium text-gray-300 mb-2">
-              Frecuencia de Pago *
-            </label>
-            <select
-              v-model="form.frecuencia"
-              required
-              class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-            >
-              <option value="" class="bg-gray-700">Seleccionar frecuencia</option>
-              <option value="mensual" class="bg-gray-700">Mensual</option>
-              <option value="trimestral" class="bg-gray-700">Trimestral</option>
-              <option value="semestral" class="bg-gray-700">Semestral</option>
-              <option value="anual" class="bg-gray-700">Anual</option>
+          <div v-if="form.es_recurrente" class="mt-3">
+            <label class="label-base">Frecuencia *</label>
+            <select v-model="form.frecuencia" required class="select-base">
+              <option value="">Seleccionar frecuencia</option>
+              <option value="mensual">Mensual</option>
+              <option value="trimestral">Trimestral</option>
+              <option value="semestral">Semestral</option>
+              <option value="anual">Anual</option>
             </select>
           </div>
         </div>
 
         <!-- Buttons -->
-        <div class="flex gap-3 pt-4">
-          <button
-            type="button"
-            @click="closeModal"
-            class="flex-1 px-4 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-colors"
-          >
+        <div class="flex gap-2 pt-2">
+          <button type="button" @click="closeModal" class="btn btn-secondary flex-1">
             Cancelar
           </button>
-          <button
-            type="submit"
-            :disabled="loading"
-            class="flex-1 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-700 transition-all duration-300 disabled:opacity-50"
-          >
-            <span v-if="loading">
-              <i class="fas fa-spinner fa-spin mr-2"></i>
-              Guardando...
-            </span>
-            <span v-else>
-              {{ editingTransaction ? 'Actualizar' : 'Crear' }}
-            </span>
+          <button type="submit" :disabled="loading" class="btn btn-primary flex-1">
+            <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+            <span>{{ loading ? 'Guardando...' : (editingTransaction ? 'Actualizar' : 'Crear') }}</span>
           </button>
         </div>
       </form>

@@ -4,17 +4,17 @@
   <!-- ...existing code... -->
 
     <!-- Tabs -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-primary-500/20">
-      <div class="flex flex-wrap gap-2">
+    <div class="card p-2 mb-6">
+      <div class="flex flex-wrap gap-1">
         <button
           v-for="tab in tabs"
           :key="tab.id"
           @click="activeTab = tab.id"
           :class="[
-            'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+            'px-4 py-2 rounded-xl text-sm font-bold transition-all',
             activeTab === tab.id
-              ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white'
-              : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+              ? 'bg-primary-600 text-white shadow-sm'
+              : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
           ]"
         >
           <i :class="tab.icon" class="mr-2"></i>
@@ -26,56 +26,55 @@
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
       <!-- Total Ingresos -->
-      <div class="bg-gradient-to-br from-green-500/20 to-green-600/10 rounded-2xl p-6 border border-green-500/20">
+      <div class="card p-5">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-green-400 text-sm font-medium">Ingresos Totales</p>
-            <p class="text-2xl font-bold text-white">${{ formatCurrency(totalIngresos) }}</p>
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Ingresos Totales</p>
+            <p class="text-2xl font-black text-emerald-600">${{ formatCurrency(totalIngresos) }}</p>
           </div>
-          <div class="p-3 bg-green-500/20 rounded-full">
-            <i class="fas fa-arrow-up text-green-400 text-xl"></i>
+          <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+            <i class="fas fa-arrow-up text-emerald-500"></i>
           </div>
         </div>
       </div>
 
       <!-- Total Egresos -->
-      <div class="bg-gradient-to-br from-red-500/20 to-red-600/10 rounded-2xl p-6 border border-red-500/20">
+      <div class="card p-5">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-red-400 text-sm font-medium">Egresos Totales</p>
-            <p class="text-2xl font-bold text-white">${{ formatCurrency(totalEgresos) }}</p>
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Egresos Totales</p>
+            <p class="text-2xl font-black text-red-500">${{ formatCurrency(totalEgresos) }}</p>
           </div>
-          <div class="p-3 bg-red-500/20 rounded-full">
-            <i class="fas fa-arrow-down text-red-400 text-xl"></i>
+          <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+            <i class="fas fa-arrow-down text-red-500"></i>
           </div>
         </div>
       </div>
 
       <!-- Balance -->
-      <div class="bg-gradient-to-br from-primary-500/20 to-primary-600/10 rounded-2xl p-6 border border-primary-500/20">
+      <div class="card p-5">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-primary-400 text-sm font-medium">Balance Neto</p>
-            <p :class="[
-              'text-2xl font-bold',
-              balance >= 0 ? 'text-white' : 'text-red-400'
-            ]">${{ formatCurrency(balance) }}</p>
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Balance Neto</p>
+            <p :class="['text-2xl font-black', balance >= 0 ? 'text-primary-600' : 'text-red-500']">
+              ${{ formatCurrency(balance) }}
+            </p>
           </div>
-          <div class="p-3 bg-primary-500/20 rounded-full">
-            <i class="fas fa-balance-scale text-primary-400 text-xl"></i>
+          <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
+            <i class="fas fa-balance-scale text-primary-500"></i>
           </div>
         </div>
       </div>
 
       <!-- Pagos Pendientes -->
-      <div class="bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 rounded-2xl p-6 border border-yellow-500/20">
+      <div class="card p-5">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-yellow-400 text-sm font-medium">Pagos Pendientes</p>
-            <p class="text-2xl font-bold text-white">{{ summaryData.pagos_pendientes.length }}</p>
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Pagos Pendientes</p>
+            <p class="text-2xl font-black text-amber-500">{{ summaryData.pagos_pendientes.length }}</p>
           </div>
-          <div class="p-3 bg-yellow-500/20 rounded-full">
-            <i class="fas fa-clock text-yellow-400 text-xl"></i>
+          <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
+            <i class="fas fa-clock text-amber-500"></i>
           </div>
         </div>
       </div>
