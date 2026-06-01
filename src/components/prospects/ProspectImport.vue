@@ -240,7 +240,6 @@ const HEADER_MAP: Record<string, keyof Row> = {
   teléfono: 'phone',
   phone: 'phone',
   movil: 'phone',
-  whatsapp: 'phone',
   notas: 'notes',
   notes: 'notes',
   observaciones: 'notes',

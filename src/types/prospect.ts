@@ -8,7 +8,6 @@ export type ProspectStatus =
 
 export type ProspectSource =
   | 'web'
-  | 'whatsapp'
   | 'referido'
   | 'linkedin'
   | 'evento'
@@ -42,7 +41,6 @@ export type TimelineEventType =
   | 'created'
   | 'status'
   | 'outreach_email'
-  | 'outreach_whatsapp'
   | 'outreach_call'
   | 'note'
   | 'task_created'
@@ -86,7 +84,6 @@ export const PROSPECT_STATUSES: { value: ProspectStatus; label: string; color: s
 
 export const PROSPECT_SOURCES: { value: ProspectSource; label: string; icon: string }[] = [
   { value: 'web',       label: 'Web',       icon: 'fa-globe' },
-  { value: 'whatsapp',  label: 'WhatsApp',  icon: 'fa-comment-dots' },
   { value: 'referido',  label: 'Referido',  icon: 'fa-user-plus' },
   { value: 'linkedin',  label: 'LinkedIn',  icon: 'fa-linkedin' },
   { value: 'evento',    label: 'Evento',    icon: 'fa-calendar-day' },

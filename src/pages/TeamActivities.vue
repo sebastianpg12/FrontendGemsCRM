@@ -35,7 +35,7 @@
             class="flex items-center justify-center gap-3 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all font-black text-sm shadow-lg shadow-emerald-200/50 group"
           >
             <i class="fas fa-file-export group-hover:translate-x-1 transition-transform"></i>
-            COPIAR RESUMEN PARA WHATSAPP
+            COPIAR RESUMEN
           </button>
         </div>
 

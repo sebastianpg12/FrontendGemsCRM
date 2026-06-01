@@ -49,16 +49,16 @@
           ></textarea>
         </div>
 
-        <!-- Contact destination -->
-        <div v-if="channel !== 'call'" class="bg-slate-50 rounded-xl p-3 border border-slate-200">
+        <!-- Contact destination (solo email queda como canal con destino) -->
+        <div v-if="channel === 'email'" class="bg-slate-50 rounded-xl p-3 border border-slate-200">
           <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
-            {{ channel === 'email' ? 'Email del contacto' : 'WhatsApp del contacto' }}
+            Email del contacto
           </label>
           <div class="flex items-center gap-2">
             <input
               v-model="contactInput"
-              :type="channel === 'email' ? 'email' : 'tel'"
-              :placeholder="channel === 'email' ? 'cliente@empresa.com' : '+57 300 123 4567'"
+              type="email"
+              placeholder="cliente@empresa.com"
               class="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 placeholder-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all"
             />
             <span v-if="contactInput && saved" class="text-[9px] font-black text-emerald-600">
@@ -89,15 +89,6 @@
           Guardar en historial
         </button>
         <div class="flex-1"></div>
-        <button
-          v-if="channel === 'whatsapp'"
-          @click="openWhatsApp"
-          :disabled="!contactInput.trim()"
-          class="px-5 py-2.5 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white text-xs font-black rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
-        >
-          <i class="fab fa-whatsapp text-sm"></i>
-          Abrir WhatsApp
-        </button>
         <button
           v-if="channel === 'email'"
           @click="openMail"
@@ -150,9 +141,6 @@ const contactInput = ref('')
 const headerConfig = computed(() => {
   if (props.channel === 'email') {
     return { title: 'Email de prospección', icon: 'fa-envelope', color: 'bg-gradient-to-br from-primary-500 to-primary-700 shadow-primary-500/30' }
-  }
-  if (props.channel === 'whatsapp') {
-    return { title: 'Mensaje de WhatsApp', icon: 'fa-comment-dots', color: 'bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-emerald-500/30' }
   }
   return { title: 'Script de llamada', icon: 'fa-phone', color: 'bg-gradient-to-br from-cyan-500 to-primary-500 shadow-cyan-500/30' }
 })
@@ -210,8 +198,6 @@ const persistContact = () => {
   if (!contactInput.value.trim()) return
   if (props.channel === 'email') {
     prospectService.setMetadata(props.prospect._id, { contactEmail: contactInput.value.trim() })
-  } else if (props.channel === 'whatsapp') {
-    prospectService.setMetadata(props.prospect._id, { contactPhone: contactInput.value.trim() })
   }
   saved.value = true
   setTimeout(() => (saved.value = false), 1500)
@@ -223,7 +209,7 @@ const saveToHistory = async () => {
     const note =
       props.channel === 'email'
         ? `📧 **Email enviado**\n**Asunto:** ${result.value.subject}\n\n${result.value.body}`
-        : `💬 **WhatsApp enviado**\n${result.value.body}`
+        : `📞 **Script de llamada**\n${result.value.body}`
     const updated = await prospectService.sendMessage(props.prospect._id, { role: 'user', content: note })
     persistContact()
     emit('updated', updated)
@@ -231,14 +217,6 @@ const saveToHistory = async () => {
   } catch (err: any) {
     showError(err?.message || 'No se pudo guardar')
   }
-}
-
-const openWhatsApp = () => {
-  if (!result.value || !contactInput.value.trim()) return
-  const link = outreachService.buildWhatsAppLink(contactInput.value, result.value.body)
-  window.open(link, '_blank', 'noopener,noreferrer')
-  persistContact()
-  saveToHistory()
 }
 
 const openMail = () => {

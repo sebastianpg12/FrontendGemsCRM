@@ -59,9 +59,6 @@
         <button @click="openOutreach('email')" class="px-3 py-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 border border-primary-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
           <i class="fas fa-envelope text-[10px]"></i>Email
         </button>
-        <button @click="openOutreach('whatsapp')" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
-          <i class="fab fa-whatsapp text-[12px]"></i>WhatsApp
-        </button>
         <button @click="openOutreach('call')" class="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 text-cyan-700 border border-cyan-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
           <i class="fas fa-phone text-[10px]"></i>Script llamada
         </button>
@@ -278,11 +275,10 @@ const openOutreach = (channel: OutreachChannel) => {
 }
 
 const onOutreachUpdated = async (updated: Prospect) => {
-  const eventType = outreachChannel.value === 'email' ? 'outreach_email'
-    : outreachChannel.value === 'whatsapp' ? 'outreach_whatsapp' : 'outreach_call'
+  const eventType = outreachChannel.value === 'email' ? 'outreach_email' : 'outreach_call'
   await prospectService.addTimelineEntry(updated._id, {
     type: eventType,
-    description: outreachChannel.value === 'email' ? 'Email enviado' : outreachChannel.value === 'whatsapp' ? 'WhatsApp enviado' : 'Script de llamada generado',
+    description: outreachChannel.value === 'email' ? 'Email enviado' : 'Script de llamada generado',
   })
   loadExtras()
   emit('updated', updated)

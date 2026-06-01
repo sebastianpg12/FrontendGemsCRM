@@ -1,7 +1,7 @@
 import { prospectService } from './prospectService'
 import type { Prospect } from '@/types/prospect'
 
-export type OutreachChannel = 'email' | 'whatsapp' | 'call'
+export type OutreachChannel = 'email' | 'call'
 
 const lastAssistantMessage = (p: Prospect): string => {
   const msgs = p.messages || []
@@ -42,21 +42,6 @@ FORMATO DE SALIDA (estricto, sin texto adicional):
 Asunto: <asunto aquí>
 
 <cuerpo del email aquí>`,
-
-  whatsapp: (ctx) => `Eres un comercial senior de GEMS. Redacta un mensaje de WhatsApp de primer contacto.
-
-${ctx}
-
-REQUISITOS:
-- Máximo 4 líneas, cada una corta
-- Tutea, lenguaje natural y conversacional (no "estimado")
-- Hook específico al negocio del prospecto
-- 1 pregunta abierta al final que invite a responder
-- SIN emojis excesivos (uno solo si suma, normalmente ninguno)
-- SIN saludos formales largos
-
-FORMATO DE SALIDA (estricto, devuelve SOLO el mensaje, sin "Mensaje:" ni explicaciones):
-<mensaje aquí>`,
 
   call: (ctx) => `Eres un comercial senior de GEMS. Redacta un SCRIPT de llamada en frío de 60 segundos.
 
@@ -99,11 +84,6 @@ export const outreachService = {
     }
 
     return { channel, body: raw, raw }
-  },
-
-  buildWhatsAppLink(phone: string, message: string): string {
-    const cleanPhone = phone.replace(/[^\d]/g, '')
-    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`
   },
 
   buildMailtoLink(email: string, subject: string, body: string): string {

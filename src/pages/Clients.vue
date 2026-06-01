@@ -267,7 +267,7 @@
               </div>
               
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">WhatsApp / Tel</label>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Teléfono</label>
                 <input v-model="form.phone" type="tel" required placeholder="+57 ..." class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
               </div>
             </div>
