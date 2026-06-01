@@ -1,7 +1,7 @@
 <template>
   <div class="animate-fade-in">
     <!-- Header with Title -->
-    <div class="mb-3 flex items-center justify-between gap-3 pr-12 sm:pr-14">
+    <div class="mb-3 flex items-center justify-between gap-3">
       <div>
         <div class="flex items-center gap-2 mb-0.5">
           <i class="fas fa-gem text-primary-400 text-[9px]"></i>

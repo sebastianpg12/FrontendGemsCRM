@@ -5,7 +5,7 @@
       style="background: radial-gradient(ellipse at top right, var(--brand-accent) 0%, transparent 70%)"></div>
 
     <!-- ══ Header ══════════════════════════════════════════════════════ -->
-    <div class="flex items-center justify-between gap-3 flex-wrap pr-12 sm:pr-14 relative z-10">
+    <div class="flex items-center justify-between gap-3 flex-wrap relative z-10">
       <div>
         <div class="flex items-center gap-2 mb-0.5">
           <i class="fas fa-gem text-primary-400 text-[9px] animate-pulse-slow"></i>
