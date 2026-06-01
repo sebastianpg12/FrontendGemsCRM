@@ -1,6 +1,6 @@
 // Configuración automática de API según el ambiente
 const getBaseURL = (): string => {
-  return import.meta.env.VITE_API_URL || 'https://gems-crm-backend.onrender.com/api'
+  return import.meta.env.VITE_API_URL || 'https://hub-backend-16mh.onrender.com/api'
 }
 
 // Función para obtener timeout personalizado

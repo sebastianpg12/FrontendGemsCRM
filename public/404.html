@@ -106,15 +106,9 @@
     </div>
 
     <script>
-      // Detectar base para GitHub Pages (repo) o dominio personalizado
       (function() {
-        var path = location.pathname || '/';
-        var base = path.startsWith('/GEMS-CRM/') ? '/GEMS-CRM/' : '/';
-        var home = base;
-        document.getElementById('home-link').setAttribute('href', home);
-        var sec = 5;
-        var cd = document.getElementById('cd');
-        var interval = setInterval(function(){ cd.textContent = String(--sec); if(sec <= 0){ clearInterval(interval); location.replace(home); } }, 1000);
+        sessionStorage.redirect = location.href;
+        location.replace('/');
       })();
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

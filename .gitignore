@@ -36,3 +36,6 @@ diff.txt
 *.njsproj
 *.sln
 *.sw?
+
+# Test payload con credenciales — no subir
+payload.json
