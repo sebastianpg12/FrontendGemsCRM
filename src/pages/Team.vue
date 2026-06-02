@@ -342,7 +342,6 @@ import { useTeamStore } from '../stores'
 import { useNotifications } from '../composables/useNotifications'
 import PermissionGuard from '../components/PermissionGuard.vue'
 import UserAvatar from '../components/ui/UserAvatar.vue'
-import { rolesService, type Role } from '../services/rolesService'
 import type { TeamMember } from '../types'
 
 const authStore = useAuthStore()
@@ -422,26 +421,14 @@ const selectedDepartment = ref('')
 const showCreateModal = ref(false)
 const showEditModal = ref(false)
 const isSubmitting = ref(false)
-const roles = ref<Role[]>([])
-const baseRolesNames = ['admin', 'supervisor', 'collaborator', 'support', 'viewer', 'client']
-
-const allAvailableRoles = computed(() => {
-  // Start with dynamic roles
-  const combined = [...roles.value]
-  
-  // Add base roles if they are not already present (by name)
-  baseRolesNames.forEach(name => {
-    if (!combined.some(r => r.name.toLowerCase() === name.toLowerCase())) {
-      combined.push({
-        name: name,
-        isSystem: true,
-        permissions: {} as any // Will use backend defaults
-      })
-    }
-  })
-  
-  return combined
-})
+const allAvailableRoles = [
+  { name: 'Administrador' },
+  { name: 'Supervisor' },
+  { name: 'Colaborador' },
+  { name: 'Soporte' },
+  { name: 'Consultor' },
+  { name: 'Cliente' },
+]
 
 const editingMember = ref<TeamMember | null>(null)
 const pagination = reactive({
@@ -622,13 +609,6 @@ const changePage = (page: number) => {
 }
 
 onMounted(async () => {
-  // Load roles
-  try {
-    roles.value = await rolesService.getAll()
-  } catch (error) {
-    console.error('Error loading roles:', error)
-  }
-
   if (authStore.canViewTeam) {
     const res = await teamStore.fetchTeam(pagination.page, pagination.limit)
     if (res) Object.assign(pagination, res)
