@@ -131,7 +131,6 @@ import { ref, computed, onMounted } from 'vue'
 import { teamService, type TeamMember } from '../services/teamService'
 import TeamForm from './TeamForm.vue'
 import RolesManager from './RolesManager.vue'
-import { rolesService, type Role } from '../services/rolesService'
 import { useNotifications } from '../composables/useNotifications'
 
 // Composables
@@ -139,22 +138,14 @@ const { showSuccess, showError, confirmDelete: confirmDeleteNotification, showLo
 
 const activeTab = ref<'miembros' | 'roles'>('miembros')
 const members = ref<TeamMember[]>([])
-const roles = ref<Role[]>([])
-const baseRolesNames = ['admin', 'supervisor', 'collaborator', 'support', 'viewer', 'client']
-
-const allAvailableRoles = computed(() => {
-  const combined = [...roles.value]
-  baseRolesNames.forEach(name => {
-    if (!combined.some(r => r.name.toLowerCase() === name.toLowerCase())) {
-      combined.push({
-        name: name,
-        isSystem: true,
-        permissions: {} as any
-      })
-    }
-  })
-  return combined
-})
+const allAvailableRoles = [
+  { name: 'Administrador' },
+  { name: 'Supervisor' },
+  { name: 'Colaborador' },
+  { name: 'Soporte' },
+  { name: 'Consultor' },
+  { name: 'Cliente' },
+]
 
 const loading = ref(false)
 const searchTerm = ref('')
@@ -247,13 +238,8 @@ const formatDate = (dateString?: string): string => {
   })
 }
 
-onMounted(async () => {
+onMounted(() => {
   loadMembers()
-  try {
-    roles.value = await rolesService.getAll()
-  } catch (error) {
-    console.error('Error loading roles:', error)
-  }
 })
 
 defineExpose({

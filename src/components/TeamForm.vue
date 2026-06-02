@@ -96,8 +96,16 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { teamService, type TeamMember } from '../services/teamService'
-import { rolesService, type Role } from '../services/rolesService'
 import { useNotifications } from '../composables/useNotifications'
+
+const SYSTEM_ROLES = [
+  { name: 'Administrador' },
+  { name: 'Supervisor' },
+  { name: 'Colaborador' },
+  { name: 'Soporte' },
+  { name: 'Consultor' },
+  { name: 'Cliente' },
+]
 
 // Props
 interface Props {
@@ -115,7 +123,7 @@ const emit = defineEmits<{
 
 // Reactive state
 const loading = ref(false)
-const roles = ref<Role[]>([])
+const roles = ref(SYSTEM_ROLES)
 const form = ref({
   name: '',
   role: '',
@@ -198,12 +206,8 @@ const handleSubmit = async () => {
 }
 
 // Hooks
-onMounted(async () => {
-  try {
-    roles.value = await rolesService.getAll()
-  } catch (error) {
-    console.error('Error loading roles:', error)
-  }
+onMounted(() => {
+  loadMemberData()
 })
 
 // Watchers
