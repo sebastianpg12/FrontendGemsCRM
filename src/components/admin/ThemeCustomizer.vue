@@ -132,11 +132,11 @@
           <label class="flex items-center gap-3 cursor-pointer group">
             <div
               @click="darkMode = !darkMode"
-              class="relative w-10 h-5.5 rounded-full cursor-pointer transition-colors duration-200"
+              class="relative w-11 h-6 rounded-full cursor-pointer transition-colors duration-200 flex-shrink-0"
               :class="darkMode ? 'bg-primary-600' : 'bg-slate-200'"
             >
-              <div class="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200"
-                :class="darkMode ? 'translate-x-[18px]' : 'translate-x-0'">
+              <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200"
+                :class="darkMode ? 'translate-x-5' : 'translate-x-0'">
               </div>
             </div>
             <div>

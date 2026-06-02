@@ -248,11 +248,11 @@ const getCurrentModuleDescription = () => {
 const getRoleDisplayName = (role?: string) => {
   const roleNames: Record<string, string> = {
     admin: 'Administrador',
-    manager: 'Gerente',
-    employee: 'Empleado',
-    support: 'Soporte Técnico',
+    supervisor: 'Supervisor',
+    collaborator: 'Colaborador',
+    support: 'Soporte',
+    viewer: 'Consultor',
     client: 'Cliente',
-    viewer: 'Visualizador'
   }
   return roleNames[role || ''] || role
 }
