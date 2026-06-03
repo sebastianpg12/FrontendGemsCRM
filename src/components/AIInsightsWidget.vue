@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col h-full">
 
     <!-- Header -->
@@ -115,6 +115,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useClientsStore, useActivitiesStore, useIssuesStore, useTeamStore } from '../stores'
 import { API_CONFIG } from '@/config/api'
+import { apiFetch } from '@/services/authHeaders'
 
 interface InsightsData { lectura: string; acciones: string[]; riesgos: string[] }
 
@@ -172,7 +173,7 @@ Accion2: [segunda acción prioritaria]
 Accion3: [tercera acción táctica]
 Riesgo1: [riesgo específico con consecuencia]
 Riesgo2: [segundo riesgo diferente]`
-    const response = await fetch(`${API_CONFIG.BASE_URL}/ai/gemini-generate`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({prompt}) })
+    const response = await apiFetch(`${API_CONFIG.BASE_URL}/ai/gemini-generate`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({prompt}) })
     if (!response.ok) { const e=await response.json().catch(()=>({})); throw new Error(e.error||`Error ${response.status}`) }
     const result = await response.json(); const aiText: string = result.text||''; if (!aiText) throw new Error('Sin contenido')
     const lines = aiText.split('\n').map((l:string)=>l.trim()).filter(Boolean)
@@ -186,3 +187,4 @@ Riesgo2: [segundo riesgo diferente]`
 
 onMounted(() => { const c=getCached(); if(c) insights.value=c; generateInsights(true) })
 </script>
+

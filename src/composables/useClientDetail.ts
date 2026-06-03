@@ -1,5 +1,6 @@
-import { reactive, ref, computed } from 'vue'
+﻿import { reactive, ref, computed } from 'vue'
 import { API_CONFIG } from '@/config/api'
+import { apiFetch } from '@/services/authHeaders'
 import { useNotifications } from '@/composables/useNotifications'
 
 export function useClientDetail(clientId: string) {
@@ -21,9 +22,9 @@ export function useClientDetail(clientId: string) {
   const fetchDetail = async () => {
     isLoading.value = true
     try {
-      let res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/detail`)
+      let res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/detail`)
       if (res.status === 404) {
-        res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}`)
+        res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}`)
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = await parseJsonSafe(res)
@@ -49,14 +50,14 @@ export function useClientDetail(clientId: string) {
         customFields: draft.customFields
       }
 
-      let res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/detail`, {
+      let res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/detail`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       })
 
       if (res.status === 404) {
-        res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}`, {
+        res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -86,7 +87,7 @@ export function useClientDetail(clientId: string) {
 
   const addNote = async (content: string) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/notes`, {
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/notes`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content })
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -102,7 +103,7 @@ export function useClientDetail(clientId: string) {
 
   const togglePinNote = async (n: any) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/notes/${n._id}`, {
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/notes/${n._id}`, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pinned: !n.pinned })
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -116,7 +117,7 @@ export function useClientDetail(clientId: string) {
 
   const deleteNote = async (noteId: string) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/notes/${noteId}`, { method: 'DELETE' })
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/notes/${noteId}`, { method: 'DELETE' })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       client.notes = (client.notes || []).filter((n: any) => n._id !== noteId)
     } catch (err) {
@@ -128,7 +129,7 @@ export function useClientDetail(clientId: string) {
   // --- Services API ---
   const createService = async (payload: any) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/services`, {
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/services`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -144,7 +145,7 @@ export function useClientDetail(clientId: string) {
 
   const updateService = async (serviceId: string, payload: any) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/services/${serviceId}`, {
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/services/${serviceId}`, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -161,7 +162,7 @@ export function useClientDetail(clientId: string) {
 
   const deleteService = async (serviceId: string) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/services/${serviceId}`, { method: 'DELETE' })
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/services/${serviceId}`, { method: 'DELETE' })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       client.services = (client.services || []).filter((s: any) => s._id !== serviceId)
     } catch (err) {
@@ -173,7 +174,7 @@ export function useClientDetail(clientId: string) {
   // --- Commitments API ---
   const createCommitment = async (payload: any) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/commitments`, {
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/commitments`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -189,7 +190,7 @@ export function useClientDetail(clientId: string) {
 
   const updateCommitment = async (commitmentId: string, payload: any) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/commitments/${commitmentId}`, {
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/commitments/${commitmentId}`, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -206,7 +207,7 @@ export function useClientDetail(clientId: string) {
 
   const deleteCommitment = async (commitmentId: string) => {
     try {
-      const res = await fetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/commitments/${commitmentId}`, { method: 'DELETE' })
+      const res = await apiFetch(`${API_CONFIG.BASE_URL}/clients/${clientId}/commitments/${commitmentId}`, { method: 'DELETE' })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       client.commitments = (client.commitments || []).filter((c: any) => c._id !== commitmentId)
     } catch (err) {
@@ -264,3 +265,4 @@ export function useClientDetail(clientId: string) {
     removeCustomField
   }
 }
+
