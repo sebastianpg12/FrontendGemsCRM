@@ -28,10 +28,11 @@
             :style="{ background: m.branding?.accentColor || '#8b5cf6' }"
           >
             <img
-              v-if="m.branding?.logo"
+              v-if="m.branding?.logo && !failedLogos.has(m.branding.logo)"
               :src="m.branding.logo"
-              :alt="m.organizationName"
+              alt=""
               class="w-full h-full object-contain rounded-xl"
+              @error="failedLogos.add(m.branding.logo)"
             />
             <span v-else>{{ initials(m.organizationName) }}</span>
           </div>
@@ -62,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useThemeStore } from '../stores/theme'
@@ -75,6 +76,8 @@ const themeStore = useThemeStore()
 const loading = ref(false)
 const error = ref<string | null>(null)
 const memberships = computed(() => authStore.memberships)
+// Logos que fallaron al cargar — muestra iniciales en su lugar
+const failedLogos = reactive(new Set<string>())
 
 function initials(name: string) {
   return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()

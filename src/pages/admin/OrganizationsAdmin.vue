@@ -95,7 +95,13 @@
               class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-black shrink-0 overflow-hidden"
               :style="{ background: org.branding?.accentColor || '#8b5cf6' }"
             >
-              <img v-if="org.branding?.logo" :src="org.branding.logo" class="w-full h-full object-contain" />
+              <img
+                v-if="org.branding?.logo && !failedLogos.has(org.branding.logo)"
+                :src="org.branding.logo"
+                alt=""
+                class="w-full h-full object-contain"
+                @error="failedLogos.add(org.branding.logo)"
+              />
               <span v-else>{{ initials(org.name) }}</span>
             </div>
             <div class="flex-1 min-w-0">
@@ -289,6 +295,7 @@ const themeStore = useThemeStore()
 
 const orgs = ref<OrganizationAdmin[]>([])
 const loading = ref(true)
+const failedLogos = reactive(new Set<string>())
 const search = ref('')
 const statusFilter = ref('')
 const activeTab = ref('orgs')

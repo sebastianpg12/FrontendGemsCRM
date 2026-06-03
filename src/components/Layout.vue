@@ -17,10 +17,11 @@
       <!-- Logo -->
       <div class="flex items-center justify-center h-20 transition-all duration-300 overflow-hidden">
         <img
-          :src="themeStore?.config?.logo || '/gems-logo.png'"
+          :src="logoSrc"
           alt="GEMS Hub"
           class="h-24 w-auto transition-all object-contain"
           :class="isSidebarCollapsed ? 'scale-75' : ''"
+          @error="logoSrc = '/gems-logo.png'"
         />
       </div>
       
@@ -179,7 +180,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useChatStore } from '../stores/chatStore'
@@ -213,6 +214,9 @@ const themeStore = useThemeStore()
 
 const avatarError = ref(false)
 const isSidebarCollapsed = ref(false)
+// Logo con fallback — si la URL del tenant da 404 el @error lo resetea a /gems-logo.png
+const logoSrc = ref<string>(themeStore?.config?.logo || '/gems-logo.png')
+watch(() => themeStore?.config?.logo, (val) => { logoSrc.value = val || '/gems-logo.png' })
 
 // Acceso al usuario actual
 const user = computed(() => authStore.user)
