@@ -17,6 +17,17 @@
         >
           <i class="fas fa-plus text-xs"></i> Nueva organización
         </button>
+        <button
+          v-else-if="activeTab === 'audit' && auditLogs.length > 0"
+          @click="downloadAuditPDF"
+          :disabled="exportingPdf"
+          class="px-5 py-2.5 rounded-xl text-white font-bold text-sm flex items-center gap-2 transition-all shadow-lg disabled:opacity-50"
+          style="background:linear-gradient(135deg,#4f46e5,#7c3aed);box-shadow:0 4px 14px rgba(124,58,237,.3)"
+        >
+          <i v-if="exportingPdf" class="fas fa-spinner fa-spin text-xs"></i>
+          <i v-else class="fas fa-file-pdf text-xs"></i>
+          {{ exportingPdf ? 'Generando…' : 'Descargar PDF' }}
+        </button>
       </div>
 
       <!-- Tabs -->
@@ -266,6 +277,8 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
 import { adminService, type OrganizationAdmin } from '@/services/adminService'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
@@ -282,6 +295,7 @@ const activeTab = ref('orgs')
 
 const auditLogs = ref<any[]>([])
 const loadingAudit = ref(false)
+const exportingPdf = ref(false)
 
 const modal = reactive({
   open: false,
@@ -342,6 +356,84 @@ async function loadAudit() {
     console.error(err)
   } finally {
     loadingAudit.value = false
+  }
+}
+
+async function downloadAuditPDF() {
+  exportingPdf.value = true
+  try {
+    // Traer todos los registros para el PDF (hasta 1000)
+    let source = auditLogs.value
+    try {
+      const res = await adminService.getAuditLogs(1, 1000)
+      source = res.data || auditLogs.value
+    } catch { /* usa los ya cargados */ }
+
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
+
+    // Header violeta
+    doc.setFillColor(79, 70, 229)
+    doc.rect(0, 0, 297, 22, 'F')
+    doc.setTextColor(255, 255, 255)
+    doc.setFontSize(14)
+    doc.setFont('helvetica', 'bold')
+    doc.text('GEMS Hub — Auditoría de Acceso Super-Admin', 14, 14)
+    doc.setFontSize(9)
+    doc.setFont('helvetica', 'normal')
+    doc.text(`Generado: ${new Date().toLocaleString('es-CR')}`, 185, 14)
+
+    // Sub-header
+    doc.setTextColor(80, 80, 80)
+    doc.setFontSize(8)
+    doc.text(`Total registros exportados: ${source.length}`, 14, 30)
+
+    autoTable(doc, {
+      startY: 35,
+      head: [['Fecha / Hora', 'Administrador', 'Email', 'Organización', 'IP', 'User Agent']],
+      body: source.map(l => [
+        new Date(l.createdAt).toLocaleString('es-CR'),
+        l.superAdminId?.name || 'Sistema',
+        l.superAdminId?.email || '—',
+        l.organizationId?.name || '—',
+        l.ipAddress || '—',
+        l.userAgent ? l.userAgent.slice(0, 80) : '—',
+      ]),
+      headStyles: {
+        fillColor: [79, 70, 229],
+        textColor: 255,
+        fontSize: 8,
+        fontStyle: 'bold',
+      },
+      bodyStyles: { fontSize: 7, textColor: [30, 30, 30] },
+      alternateRowStyles: { fillColor: [247, 248, 251] },
+      columnStyles: {
+        0: { cellWidth: 30 },
+        1: { cellWidth: 32 },
+        2: { cellWidth: 52 },
+        3: { cellWidth: 35 },
+        4: { cellWidth: 28 },
+        5: { cellWidth: 'auto' },
+      },
+      margin: { left: 14, right: 14 },
+      didDrawPage: (data: any) => {
+        doc.setFontSize(7)
+        doc.setTextColor(150)
+        doc.text(
+          `GEMS Hub — Auditoría Super-Admin — Pág. ${data.pageNumber}`,
+          14, doc.internal.pageSize.height - 8
+        )
+        doc.text(
+          `© ${new Date().getFullYear()} GEMS Innovations`,
+          245, doc.internal.pageSize.height - 8
+        )
+      }
+    })
+
+    doc.save(`gems-hub-auditoria-superadmin-${new Date().toISOString().slice(0, 10)}.pdf`)
+  } catch (e) {
+    console.error('Error generando PDF:', e)
+  } finally {
+    exportingPdf.value = false
   }
 }
 
