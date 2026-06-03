@@ -261,7 +261,10 @@ onBeforeUnmount(() => {
   border-radius: 1rem;
   background: white;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
+  /* overflow: clip en vez de hidden: mantiene el clipping visual del border-radius
+     pero NO crea un scroll-container, permitiendo que .wiki-editor__toolbar
+     funcione con position:sticky relativo al padre scrollable (main). */
+  overflow: clip;
 }
 
 .wiki-editor--focused {

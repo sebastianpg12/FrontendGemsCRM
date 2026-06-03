@@ -187,9 +187,9 @@
                   v-model="selectedCase.wikiContent"
                   placeholder="Escribe la documentación del caso aquí..."
                 />
-                <div class="flex justify-end gap-3">
-                  <button @click="isEditingWiki = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-lg">Cancelar</button>
-                  <button @click="saveWiki" class="px-6 py-2 bg-slate-900 text-white text-xs font-bold rounded-lg shadow-lg hover:bg-slate-800 transition-all">Guardar cambios</button>
+                <div class="flex justify-end gap-3 sticky bottom-0 bg-white dark:bg-[#0f172a] py-3 px-1 border-t border-slate-100 dark:border-[#334155] z-20">
+                  <button @click="isEditingWiki = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-[#1e293b] rounded-lg transition-all">Cancelar</button>
+                  <button @click="saveWiki" class="px-6 py-2 bg-slate-900 dark:bg-primary-600 text-white text-xs font-bold rounded-lg shadow-lg hover:bg-slate-800 dark:hover:bg-primary-700 transition-all">Guardar cambios</button>
                 </div>
               </div>
               <div v-else class="group relative">
@@ -376,14 +376,14 @@
                   v-model="selectedWiki.contenido"
                   placeholder="Comienza a escribir tu documentación..."
                 />
-                <div class="flex justify-end gap-3 pt-2">
-                  <label class="mr-auto cursor-pointer px-4 py-2 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-lg hover:bg-slate-200 transition-all flex items-center gap-2">
+                <div class="flex justify-end gap-3 sticky bottom-0 bg-white dark:bg-[#0f172a] py-3 px-1 border-t border-slate-100 dark:border-[#334155] z-20">
+                  <label class="mr-auto cursor-pointer px-4 py-2 bg-slate-100 dark:bg-[#1e293b] text-slate-500 text-[10px] font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-[#334155] transition-all flex items-center gap-2">
                     <i class="fas fa-paperclip"></i>
                     Adjuntar archivos
                     <input type="file" multiple class="hidden" @change="(e: any) => selectedWiki!.archivos = [...(selectedWiki!.archivos || []), ...Array.from(e.target.files)]">
                   </label>
-                  <button @click="isEditingWikiItem = false" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-slate-900">Cancelar</button>
-                  <button @click="handleUpdateWiki" class="px-6 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-lg hover:bg-slate-800 transition-all">Guardar página</button>
+                  <button @click="isEditingWikiItem = false" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg transition-all">Cancelar</button>
+                  <button @click="handleUpdateWiki" class="px-6 py-2 bg-slate-900 dark:bg-primary-600 text-white text-xs font-bold rounded-xl shadow-lg hover:bg-slate-800 dark:hover:bg-primary-700 transition-all">Guardar página</button>
                 </div>
               </div>
             </template>
