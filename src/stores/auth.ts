@@ -334,11 +334,23 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  // Limpia el estado local sin hacer redirect (para uso en guards de ruta)
+  const clearSession = () => {
+    user.value = null
+    token.value = null
+    organization.value = null
+    memberships.value = []
+    requiresOrgSelection.value = false
+    localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('user')
+    localStorage.removeItem('organization')
+  }
+
   const checkAuth = async () => {
     const storedToken = localStorage.getItem('token')
     const storedUser = localStorage.getItem('user')
-    
-    
+
     if (!storedToken || !storedUser) {
       return false
     }
@@ -346,12 +358,12 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       token.value = storedToken
       user.value = JSON.parse(storedUser)
-      
-      
+
       // Verify token is still valid
       const response = await authService.verifyToken()
       if (!response.success) {
-        await logout()
+        // Limpiar silenciosamente — el router guard hará next('/login') sin reload
+        clearSession()
         return false
       }
       requiresOrgSelection.value = !!response.requiresOrgSelection
@@ -361,7 +373,7 @@ export const useAuthStore = defineStore('auth', () => {
       }
       return true
     } catch (err) {
-      await logout()
+      clearSession()
       return false
     }
   }

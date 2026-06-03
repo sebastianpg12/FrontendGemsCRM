@@ -79,11 +79,13 @@ apiClient.interceptors.response.use(
         return apiClient(originalRequest)
       } catch (err) {
         processQueue(err, null)
-        // Token expired or invalid
         localStorage.removeItem('token')
         localStorage.removeItem('refreshToken')
         localStorage.removeItem('user')
-        window.location.href = '/login'
+        const p = window.location.pathname
+        if (!p.startsWith('/login') && !p.startsWith('/register') && !p.startsWith('/verify-email') && !p.startsWith('/forgot-password') && !p.startsWith('/reset-password')) {
+          window.location.href = '/login'
+        }
         return Promise.reject(err)
       } finally {
         isRefreshing = false

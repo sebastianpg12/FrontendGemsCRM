@@ -48,7 +48,11 @@ function forceLogout() {
   localStorage.removeItem('token')
   localStorage.removeItem('refreshToken')
   localStorage.removeItem('user')
-  window.location.href = '/login'
+  // No redirigir si ya estamos en una página de autenticación
+  const p = window.location.pathname
+  if (!p.startsWith('/login') && !p.startsWith('/register') && !p.startsWith('/verify-email') && !p.startsWith('/forgot-password') && !p.startsWith('/reset-password')) {
+    window.location.href = '/login'
+  }
 }
 
 /**
