@@ -153,12 +153,41 @@ const emit = defineEmits<{
 
 const imageInput = ref<HTMLInputElement | null>(null)
 
+// ── Deduplicador de HTML corrupto ────────────────────────────────────────────
+// El bug de loop anterior podía guardar el mismo párrafo repetido N veces.
+// Esta función lo detecta y lo corrige antes de mostrar o guardar.
+function dedupeHtml(html: string): string {
+  if (!html || typeof document === 'undefined') return html
+  try {
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+    const els = Array.from(doc.body.children)
+    if (els.length <= 1) return html
+
+    // Caso más común: todos los hijos son idénticos → conservar solo el primero
+    const allSame = els.every(el => el.outerHTML === els[0].outerHTML)
+    if (allSame) return els[0].outerHTML
+
+    // Caso general: eliminar consecutivos idénticos
+    const result: string[] = []
+    let prev = ''
+    for (const el of els) {
+      if (el.outerHTML !== prev) {
+        result.push(el.outerHTML)
+        prev = el.outerHTML
+      }
+    }
+    return result.join('')
+  } catch {
+    return html
+  }
+}
+
 // Flag para bloquear el watch mientras setContent está en curso y evitar
 // el loop: onUpdate → emit → watch → setContent → onUpdate → …
 const isSettingFromProp = ref(false)
 
 const editor = useEditor({
-  content: props.modelValue || '',
+  content: dedupeHtml(props.modelValue || ''),
   extensions: [
     StarterKit.configure({
       heading: { levels: [1, 2, 3] },
@@ -212,7 +241,7 @@ watch(
     const incoming = (newValue || '').trim()
     if (incoming !== current) {
       isSettingFromProp.value = true
-      editor.value.commands.setContent(newValue || '', false)
+      editor.value.commands.setContent(dedupeHtml(newValue || ''), false)
       // Liberar el flag después del ciclo de render
       nextTick(() => { isSettingFromProp.value = false })
     }
