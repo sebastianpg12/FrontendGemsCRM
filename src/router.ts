@@ -27,6 +27,7 @@ import ThemeSettings from './pages/ThemeSettings.vue'
 import PricingCalculator from './pages/PricingCalculator.vue'
 import OrgSelector from './pages/OrgSelector.vue'
 import OrganizationsAdmin from './pages/admin/OrganizationsAdmin.vue'
+import AuditLog from './pages/admin/AuditLog.vue'
 import Wiki from './pages/Wiki.vue'
 
 const routes = [
@@ -81,6 +82,12 @@ const routes = [
     path: '/admin/organizations',
     name: 'AdminOrganizations',
     component: OrganizationsAdmin,
+    meta: { requiresAuth: true, requiresSuperAdmin: true }
+  },
+  {
+    path: '/admin/audit-log',
+    name: 'AuditLog',
+    component: AuditLog,
     meta: { requiresAuth: true, requiresSuperAdmin: true }
   },
   {

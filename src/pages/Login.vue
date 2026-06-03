@@ -83,10 +83,24 @@
         </div>
 
         <!-- Error message -->
-        <div v-if="error" class="mb-5 p-3.5 rounded-xl flex items-start gap-2.5 relative z-10 animate-shake" style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.2);">
-          <i class="fas fa-circle-exclamation text-rose-400 shrink-0 mt-0.5 text-sm"></i>
-          <p class="text-[11px] font-bold text-rose-300 leading-tight">{{ error }}</p>
-        </div>
+        <Transition name="err-fade">
+          <div v-if="error" class="mb-5 rounded-xl relative z-10" style="background:rgba(239,68,68,0.10);border:1px solid rgba(239,68,68,0.22);">
+            <div class="flex items-start gap-3 p-3.5">
+              <span class="shrink-0 mt-0.5 text-base" :title="error">
+                <i v-if="error?.includes('contraseña')" class="fas fa-lock text-rose-400"></i>
+                <i v-else-if="error?.includes('correo') || error?.includes('verificar')" class="fas fa-envelope text-amber-400"></i>
+                <i v-else-if="error?.includes('inactivo')" class="fas fa-user-slash text-rose-400"></i>
+                <i v-else-if="error?.includes('organización')" class="fas fa-building-circle-xmark text-rose-400"></i>
+                <i v-else class="fas fa-circle-exclamation text-rose-400"></i>
+              </span>
+              <div>
+                <p class="text-[12px] font-bold text-rose-300 leading-snug">{{ error }}</p>
+                <p v-if="error?.includes('verificar')" class="text-[11px] text-rose-400/70 mt-1">Revisa tu bandeja de entrada y sigue el enlace de activación.</p>
+                <p v-if="error?.includes('inactivo')" class="text-[11px] text-rose-400/70 mt-1">Contacta al administrador de tu organización.</p>
+              </div>
+            </div>
+          </div>
+        </Transition>
 
         <!-- Form -->
         <form v-if="!requires2FA" @submit.prevent="handleLogin" class="space-y-3.5 relative z-10">
@@ -280,6 +294,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useThemeStore } from '../stores/theme'
@@ -316,7 +331,7 @@ const refreshAccentRgb = () => {
 }
 watch(() => themeStore.config.accentColor, refreshAccentRgb)
 
-const { isLoading, error } = authStore
+const { isLoading, error } = storeToRefs(authStore)
 
 // ── Star field ──
 const stars = Array.from({ length: 140 }, (_, i) => ({
@@ -544,5 +559,13 @@ onMounted(async () => {
 }
 .animate-shake {
   animation: shake 0.4s ease-out;
+}
+
+/* ── Error transition ── */
+.err-fade-enter-active { animation: errIn 0.3s cubic-bezier(0.22,0.68,0,1.2); }
+.err-fade-leave-active { animation: errIn 0.2s reverse; }
+@keyframes errIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
 }
 </style>
