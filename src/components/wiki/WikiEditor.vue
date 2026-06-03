@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { onBeforeUnmount, ref, watch, nextTick } from 'vue'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import { Image } from '@tiptap/extension-image'
@@ -152,6 +152,10 @@ const emit = defineEmits<{
 }>()
 
 const imageInput = ref<HTMLInputElement | null>(null)
+
+// Flag para bloquear el watch mientras setContent está en curso y evitar
+// el loop: onUpdate → emit → watch → setContent → onUpdate → …
+const isSettingFromProp = ref(false)
 
 const editor = useEditor({
   content: props.modelValue || '',
@@ -193,6 +197,8 @@ const editor = useEditor({
     TableCell,
   ],
   onUpdate: ({ editor }) => {
+    // Si el cambio viene de setContent (prop externa), no re-emitir
+    if (isSettingFromProp.value) return
     emit('update:modelValue', editor.getHTML())
   },
 })
@@ -200,10 +206,15 @@ const editor = useEditor({
 watch(
   () => props.modelValue,
   (newValue) => {
-    if (!editor.value) return
-    const current = editor.value.getHTML()
-    if (newValue !== current) {
+    if (!editor.value || isSettingFromProp.value) return
+    // Normalizar (trim) para evitar falsos diffs por saltos de línea trailing
+    const current = editor.value.getHTML().trim()
+    const incoming = (newValue || '').trim()
+    if (incoming !== current) {
+      isSettingFromProp.value = true
       editor.value.commands.setContent(newValue || '', false)
+      // Liberar el flag después del ciclo de render
+      nextTick(() => { isSettingFromProp.value = false })
     }
   }
 )
