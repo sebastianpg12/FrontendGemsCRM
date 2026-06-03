@@ -1,5 +1,5 @@
-import { API_CONFIG } from '../config/api'
-import { authHeaders } from './authHeaders'
+﻿import { API_CONFIG } from '../config/api'
+import { authHeaders, apiFetch } from './authHeaders'
 
 export interface CaseFile {
   nombre: string
@@ -103,7 +103,7 @@ class CasesService {
     
     const url = queryParams.toString() ? `${this.apiUrl}?${queryParams}` : this.apiUrl
     
-    const response = await fetch(url, { headers: authHeaders() })
+    const response = await apiFetch(url, { headers: authHeaders() })
     if (!response.ok) {
       throw new Error('Error al obtener los casos')
     }
@@ -118,7 +118,7 @@ class CasesService {
 
   // Obtener caso por ID
   async getCaseById(id: string): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
+    const response = await apiFetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
     if (!response.ok) {
       throw new Error('Error al obtener el caso')
     }
@@ -145,7 +145,7 @@ class CasesService {
       }
     })
 
-    const response = await fetch(this.apiUrl, {
+    const response = await apiFetch(this.apiUrl, {
       method: 'POST',
       headers: authHeaders({}, { json: false }),
       body: formData,
@@ -194,7 +194,7 @@ class CasesService {
       }
     })
 
-    const response = await fetch(`${this.apiUrl}/${id}`, {
+    const response = await apiFetch(`${this.apiUrl}/${id}`, {
       method: 'PUT',
       headers: authHeaders({}, { json: false }),
       body: formData,
@@ -208,7 +208,7 @@ class CasesService {
 
   // Eliminar caso
   async deleteCase(id: string): Promise<void> {
-    const response = await fetch(`${this.apiUrl}/${id}`, {
+    const response = await apiFetch(`${this.apiUrl}/${id}`, {
       method: 'DELETE',
       headers: authHeaders(),
     })
@@ -220,7 +220,7 @@ class CasesService {
 
   // Alias para compatibilidad con el formulario
   async create(formData: FormData): Promise<Case> {
-    const response = await fetch(this.apiUrl, {
+    const response = await apiFetch(this.apiUrl, {
       method: 'POST',
       headers: authHeaders({}, { json: false }),
       body: formData,
@@ -233,7 +233,7 @@ class CasesService {
   }
 
   async update(id: string, formData: FormData): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${id}`, {
+    const response = await apiFetch(`${this.apiUrl}/${id}`, {
       method: 'PUT',
       headers: authHeaders({}, { json: false }),
       body: formData,
@@ -253,7 +253,7 @@ class CasesService {
       formData.append('files', files[i])
     }
     
-    const response = await fetch(`${this.apiUrl}/${caseId}/upload`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/upload`, {
       method: 'POST',
       headers: authHeaders({}, { json: false }),
       body: formData,
@@ -267,7 +267,7 @@ class CasesService {
 
   // Eliminar archivo de un caso
   async deleteFile(caseId: string, fileIndex: number): Promise<void> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/files/${fileIndex}`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/files/${fileIndex}`, {
       method: 'DELETE',
       headers: authHeaders(),
     })
@@ -279,7 +279,7 @@ class CasesService {
 
   // Agregar comentario
   async addComment(caseId: string, comment: Partial<CaseComment>): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/comments`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/comments`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify(comment),
@@ -293,7 +293,7 @@ class CasesService {
 
   // Agregar log diario
   async addDailyLog(caseId: string, logData: Partial<CaseDailyLog>): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/daily-logs`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/daily-logs`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify(logData),
@@ -307,7 +307,7 @@ class CasesService {
 
   // Actualizar progreso
   async updateProgress(caseId: string, progreso: number): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/progress`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/progress`, {
       method: 'PUT',
       headers: authHeaders(),
       body: JSON.stringify({ progreso }),
@@ -321,7 +321,7 @@ class CasesService {
 
   // Agregar hito
   async addMilestone(caseId: string, milestone: Partial<CaseMilestone>): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/milestones`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/milestones`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify(milestone),
@@ -335,7 +335,7 @@ class CasesService {
 
   // Completar hito
   async completeMilestone(caseId: string, milestoneIndex: number): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/milestones/${milestoneIndex}/complete`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/milestones/${milestoneIndex}/complete`, {
       method: 'PUT',
       headers: authHeaders(),
     })
@@ -348,7 +348,7 @@ class CasesService {
 
   // Obtener estadísticas
   async getStats(): Promise<CaseStats> {
-    const response = await fetch(`${this.apiUrl}/stats/summary`, { headers: authHeaders() })
+    const response = await apiFetch(`${this.apiUrl}/stats/summary`, { headers: authHeaders() })
     if (!response.ok) {
       throw new Error('Error al obtener las estadísticas')
     }
@@ -408,7 +408,7 @@ class CasesService {
 
   // Vincular ticket
   async linkTicket(caseId: string, ticketId: string): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/tickets`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/tickets`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify({ ticketId })
@@ -419,7 +419,7 @@ class CasesService {
 
   // Desvincular ticket
   async unlinkTicket(caseId: string, ticketId: string): Promise<Case> {
-    const response = await fetch(`${this.apiUrl}/${caseId}/tickets/${ticketId}`, {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/tickets/${ticketId}`, {
       headers: authHeaders(),
       method: 'DELETE'
     })
@@ -429,3 +429,5 @@ class CasesService {
 }
 
 export const casesService = new CasesService()
+
+

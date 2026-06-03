@@ -1,5 +1,5 @@
-import { API_CONFIG } from '@/config/api'
-import { authHeaders } from './authHeaders'
+﻿import { API_CONFIG } from '@/config/api'
+import { authHeaders, apiFetch } from './authHeaders'
 import type {
   Prospect,
   ProspectMessage,
@@ -81,14 +81,14 @@ class ProspectService {
   // ──────────── CRUD básico ────────────
 
   async list(): Promise<Prospect[]> {
-    const response = await fetch(this.apiUrl, { headers: authHeaders() })
+    const response = await apiFetch(this.apiUrl, { headers: authHeaders() })
     if (!response.ok) throw new Error('No se pudieron cargar los prospectos')
     const data = (await response.json()) as Prospect[]
     return data.map((p) => this.hydrate(p))
   }
 
   async get(id: string): Promise<Prospect> {
-    const response = await fetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
+    const response = await apiFetch(`${this.apiUrl}/${id}`, { headers: authHeaders() })
     if (!response.ok) throw new Error('No se pudo cargar el prospecto')
     return this.hydrate(await response.json())
   }
@@ -98,7 +98,7 @@ class ProspectService {
     company?: string
     initialMessage: string
   }): Promise<Prospect> {
-    const response = await fetch(this.apiUrl, {
+    const response = await apiFetch(this.apiUrl, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify(payload),
@@ -108,7 +108,7 @@ class ProspectService {
   }
 
   async sendMessage(id: string, message: { role: 'user' | 'assistant'; content: string }): Promise<Prospect> {
-    const response = await fetch(`${this.apiUrl}/${id}/message`, {
+    const response = await apiFetch(`${this.apiUrl}/${id}/message`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify(message),
@@ -123,7 +123,7 @@ class ProspectService {
 
   async delete(id: string): Promise<void> {
     try {
-      const response = await fetch(`${this.apiUrl}/${id}`, { method: 'DELETE' })
+      const response = await apiFetch(`${this.apiUrl}/${id}`, { method: 'DELETE' })
       if (!response.ok && response.status !== 404) {
         throw new Error('No se pudo eliminar el prospecto')
       }
@@ -137,7 +137,7 @@ class ProspectService {
 
   private async patch(id: string, body: Record<string, any>): Promise<Prospect | null> {
     try {
-      const response = await fetch(`${this.apiUrl}/${id}`, {
+      const response = await apiFetch(`${this.apiUrl}/${id}`, {
         method: 'PATCH',
         headers: authHeaders(),
         body: JSON.stringify(body),
@@ -193,7 +193,7 @@ class ProspectService {
 
     // Backend
     try {
-      const response = await fetch(`${this.apiUrl}/${id}/notes`, {
+      const response = await apiFetch(`${this.apiUrl}/${id}/notes`, {
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify({ content, author }),
@@ -222,7 +222,7 @@ class ProspectService {
     writeJson(NOTES_KEY, all)
     // Backend
     try {
-      await fetch(`${this.apiUrl}/${prospectId}/notes/${noteId}`, { method: 'DELETE' })
+      await apiFetch(`${this.apiUrl}/${prospectId}/notes/${noteId}`, { method: 'DELETE' })
     } catch { /* offline */ }
   }
 
@@ -251,7 +251,7 @@ class ProspectService {
     writeJson(TASKS_KEY, all)
 
     try {
-      const response = await fetch(`${this.apiUrl}/${id}/tasks`, {
+      const response = await apiFetch(`${this.apiUrl}/${id}/tasks`, {
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify(payload),
@@ -277,7 +277,7 @@ class ProspectService {
       writeJson(TASKS_KEY, all)
     }
     try {
-      const response = await fetch(`${this.apiUrl}/${prospectId}/tasks/${taskId}/toggle`, { method: 'PATCH' })
+      const response = await apiFetch(`${this.apiUrl}/${prospectId}/tasks/${taskId}/toggle`, { method: 'PATCH' })
       if (response.ok) {
         const updated = await response.json()
         if (updated.tasks) {
@@ -293,7 +293,7 @@ class ProspectService {
     all[prospectId] = (all[prospectId] || []).filter((t) => t.id !== taskId)
     writeJson(TASKS_KEY, all)
     try {
-      await fetch(`${this.apiUrl}/${prospectId}/tasks/${taskId}`, { method: 'DELETE' })
+      await apiFetch(`${this.apiUrl}/${prospectId}/tasks/${taskId}`, { method: 'DELETE' })
     } catch { /* offline */ }
   }
 
@@ -326,7 +326,7 @@ class ProspectService {
     writeJson(TIMELINE_KEY, all)
 
     try {
-      await fetch(`${this.apiUrl}/${id}/timeline`, {
+      await apiFetch(`${this.apiUrl}/${id}/timeline`, {
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify(partial),
@@ -415,7 +415,7 @@ class ProspectService {
     prompt: string
     images?: Array<{ mimeType: string; data: string }>
   }): Promise<string> {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/ai/gemini-generate`, {
+    const response = await apiFetch(`${API_CONFIG.BASE_URL}/ai/gemini-generate`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify({
@@ -545,3 +545,5 @@ DEVUELVE EN MARKDOWN (NADA MÁS):
 
 export const prospectService = new ProspectService()
 export type { MetaOverride }
+
+

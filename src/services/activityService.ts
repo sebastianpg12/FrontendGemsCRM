@@ -1,4 +1,5 @@
-import { API_CONFIG } from '../config/api'
+﻿import { API_CONFIG } from '../config/api'
+import { apiFetch } from './authHeaders'
 
 export interface ActivityData {
   _id?: string
@@ -54,7 +55,7 @@ class ActivityService {
 
   async getAll(): Promise<ActivityData[]> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}`, {
         method: 'GET',
         headers: this.getHeaders(),
       })
@@ -73,7 +74,7 @@ class ActivityService {
 
   async getById(id: string): Promise<ActivityData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'GET',
         headers: this.getHeaders(),
       })
@@ -91,7 +92,7 @@ class ActivityService {
 
   async create(activityData: Omit<ActivityData, '_id' | 'createdAt' | 'updatedAt'>): Promise<ActivityData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify(activityData),
@@ -110,7 +111,7 @@ class ActivityService {
 
   async update(id: string, activityData: Partial<ActivityData>): Promise<ActivityData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'PUT',
         headers: this.getHeaders(),
         body: JSON.stringify(activityData),
@@ -129,7 +130,7 @@ class ActivityService {
 
   async deleteActivity(id: string): Promise<void> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'DELETE',
         headers: this.getHeaders(),
       })
@@ -146,7 +147,7 @@ class ActivityService {
   // Métodos específicos para asignaciones
   async getByAssignedUser(userId: string): Promise<ActivityData[]> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/assigned/${userId}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/assigned/${userId}`, {
         method: 'GET',
         headers: this.getHeaders(),
       })
@@ -169,7 +170,7 @@ class ActivityService {
       if (filters.assignedTo) params.append('assignedTo', filters.assignedTo)
       if (filters.status) params.append('status', filters.status)
 
-      const response = await fetch(`${this.baseUrl}${this.endpoint}?${params.toString()}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}?${params.toString()}`, {
         method: 'GET',
         headers: this.getHeaders(),
       })
@@ -188,7 +189,7 @@ class ActivityService {
 
   async updateStatus(id: string, status: 'pending' | 'in-progress' | 'completed' | 'cancelled' | 'overdue'): Promise<ActivityData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}/status`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}/status`, {
         method: 'PATCH',
         headers: this.getHeaders(),
         body: JSON.stringify({ status }),
@@ -207,7 +208,7 @@ class ActivityService {
 
   async reassignActivity(id: string, assignedTo: string | null): Promise<ActivityData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}/assign`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}/assign`, {
         method: 'PATCH',
         headers: this.getHeaders(),
         body: JSON.stringify({ assignedTo }),
@@ -226,7 +227,7 @@ class ActivityService {
 
   async updateProgress(id: string, completionPercentage: number): Promise<ActivityData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}/progress`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}/progress`, {
         method: 'PATCH',
         headers: this.getHeaders(),
         body: JSON.stringify({ completionPercentage }),
@@ -245,7 +246,7 @@ class ActivityService {
 
   async toggleTimer(id: string, action: 'start' | 'stop' | 'add_manual', userId: string, minutes?: number): Promise<ActivityData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}/timer`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}/timer`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify({ action, userId, minutes }),
@@ -269,7 +270,7 @@ class ActivityService {
     if (images && images.length > 0) {
       images.forEach(img => formData.append('images', img))
     }
-    const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}/comments`, {
+    const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}/comments`, {
       method: 'POST',
       headers: token ? { Authorization: `Bearer ${token}` } : {},
       body: formData,
@@ -283,3 +284,5 @@ class ActivityService {
 }
 
 export const activityService = new ActivityService()
+
+

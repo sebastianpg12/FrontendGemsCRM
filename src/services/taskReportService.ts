@@ -1,5 +1,5 @@
-import { API_CONFIG } from '../config/api'
-import { authHeaders } from './authHeaders'
+﻿import { API_CONFIG } from '../config/api'
+import { authHeaders, apiFetch } from './authHeaders'
 
 class TaskReportService {
   private baseUrl = API_CONFIG.BASE_URL
@@ -7,7 +7,7 @@ class TaskReportService {
 
   async getSettings(): Promise<any> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/settings`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/settings`, {
         method: 'GET',
         headers: authHeaders(),
       })
@@ -33,7 +33,7 @@ class TaskReportService {
     dueTomorrowAdvanceDays?: number | string
   }): Promise<any> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/settings`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/settings`, {
         method: 'PUT',
         headers: authHeaders(),
         body: JSON.stringify(settings),
@@ -52,7 +52,7 @@ class TaskReportService {
 
   async sendDailySummary(): Promise<any> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/send-daily-summary`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/send-daily-summary`, {
         method: 'POST',
         headers: authHeaders()
       })
@@ -70,7 +70,7 @@ class TaskReportService {
 
   async sendDueTomorrowReminder(): Promise<any> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/send-due-tomorrow`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/send-due-tomorrow`, {
         method: 'POST',
         headers: authHeaders()
       })
@@ -88,7 +88,7 @@ class TaskReportService {
 
   async sendCustomReport(taskIds: string[]): Promise<any> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/send-custom-report`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/send-custom-report`, {
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify({ taskIds }),
@@ -107,3 +107,4 @@ class TaskReportService {
 }
 
 export const taskReportService = new TaskReportService()
+

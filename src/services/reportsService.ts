@@ -1,4 +1,5 @@
-import { API_CONFIG } from '../config/api'
+﻿import { API_CONFIG } from '../config/api'
+import { apiFetch } from './authHeaders'
 
 // Tipos para las estadísticas
 export interface DashboardStats {
@@ -144,7 +145,7 @@ class ReportsService {
   // Estadísticas del dashboard
   async getDashboardStats(filters?: any): Promise<DashboardStats> {
     const qs = this.buildQueryString(filters)
-    const response = await fetch(`${this.baseUrl}${this.endpoint}/dashboard${qs}`, {
+    const response = await apiFetch(`${this.baseUrl}${this.endpoint}/dashboard${qs}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -161,7 +162,7 @@ class ReportsService {
 
   // Datos financieros por período
   async getFinancialData(period: 'month' | 'quarter' | 'year'): Promise<FinancialData> {
-    const response = await fetch(`${this.baseUrl}${this.endpoint}/financial/${period}`, {
+    const response = await apiFetch(`${this.baseUrl}${this.endpoint}/financial/${period}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -179,7 +180,7 @@ class ReportsService {
   // Estadísticas de actividades
   async getActivityStats(filters?: any): Promise<ActivityStats> {
     const qs = this.buildQueryString(filters)
-    const response = await fetch(`${this.baseUrl}${this.endpoint}/activities/stats${qs}`, {
+    const response = await apiFetch(`${this.baseUrl}${this.endpoint}/activities/stats${qs}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -197,7 +198,7 @@ class ReportsService {
   // Estadísticas de clientes
   async getClientStats(filters?: any): Promise<ClientStats> {
     const qs = this.buildQueryString(filters)
-    const response = await fetch(`${this.baseUrl}${this.endpoint}/clients/stats${qs}`, {
+    const response = await apiFetch(`${this.baseUrl}${this.endpoint}/clients/stats${qs}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -215,7 +216,7 @@ class ReportsService {
   // Performance del equipo
   async getTeamPerformance(filters?: any): Promise<TeamPerformance> {
     const qs = this.buildQueryString(filters)
-    const response = await fetch(`${this.baseUrl}${this.endpoint}/team/performance${qs}`, {
+    const response = await apiFetch(`${this.baseUrl}${this.endpoint}/team/performance${qs}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -233,7 +234,7 @@ class ReportsService {
   // Resumen ejecutivo
   async getExecutiveSummary(filters?: any): Promise<ExecutiveSummary> {
     const qs = this.buildQueryString(filters)
-    const response = await fetch(`${this.baseUrl}${this.endpoint}/executive-summary${qs}`, {
+    const response = await apiFetch(`${this.baseUrl}${this.endpoint}/executive-summary${qs}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -450,13 +451,13 @@ const kpiBase = API_CONFIG.BASE_URL + '/reports'
 async function kpiGet(path: string, params: Record<string, string> = {}) {
   const qs = new URLSearchParams(params).toString()
   const url = `${kpiBase}${path}${qs ? `?${qs}` : ''}`
-  const res = await fetch(url, { headers: authHeaders() })
+  const res = await apiFetch(url, { headers: authHeaders() })
   if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`)
   return (await res.json()).data
 }
 
 async function kpiPost(path: string, body: any = {}) {
-  const res = await fetch(`${kpiBase}${path}`, {
+  const res = await apiFetch(`${kpiBase}${path}`, {
     method: 'POST',
     headers: authHeaders(),
     body: JSON.stringify(body),
@@ -467,7 +468,7 @@ async function kpiPost(path: string, body: any = {}) {
 }
 
 async function kpiPut(path: string, body: any = {}) {
-  const res = await fetch(`${kpiBase}${path}`, {
+  const res = await apiFetch(`${kpiBase}${path}`, {
     method: 'PUT',
     headers: authHeaders(),
     body: JSON.stringify(body),
@@ -514,3 +515,5 @@ export const teamReportsService = {
     return kpiPut('/schedule-config', config)
   },
 }
+
+

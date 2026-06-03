@@ -1,5 +1,5 @@
-import { API_CONFIG } from '@/config/api'
-import { authHeaders } from './authHeaders'
+﻿import { API_CONFIG } from '@/config/api'
+import { authHeaders, apiFetch } from './authHeaders'
 
 export type ReportPeriod = 'week' | 'month' | 'quarter' | 'year' | 'custom'
 
@@ -50,9 +50,11 @@ export const reportsOverviewService = {
   async fetch(filters: OverviewFilters = {}): Promise<OverviewData> {
     const params = new URLSearchParams()
     Object.entries(filters).forEach(([k, v]) => { if (v) params.append(k, String(v)) })
-    const res = await fetch(`${API_CONFIG.BASE_URL}/reports/overview?${params}`, { headers: authHeaders() })
+    const res = await apiFetch(`${API_CONFIG.BASE_URL}/reports/overview?${params}`, { headers: authHeaders() })
     if (!res.ok) throw new Error(`Error ${res.status} cargando reportes`)
     const json = await res.json()
     return json.data as OverviewData
   }
 }
+
+

@@ -1,5 +1,5 @@
-import { API_CONFIG } from '../config/api'
-import { authHeaders } from './authHeaders'
+﻿import { API_CONFIG } from '../config/api'
+import { authHeaders, apiFetch } from './authHeaders'
 
 export interface ClientData {
   _id?: string
@@ -19,7 +19,7 @@ class ClientService {
 
   async getAll(): Promise<ClientData[]> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}`, {
         method: 'GET',
         headers: authHeaders(),
       })
@@ -38,7 +38,7 @@ class ClientService {
 
   async getById(id: string): Promise<ClientData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'GET',
         headers: authHeaders(),
       })
@@ -56,7 +56,7 @@ class ClientService {
 
   async create(clientData: Omit<ClientData, '_id' | 'createdAt' | 'updatedAt'>): Promise<ClientData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}`, {
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify(clientData),
@@ -75,7 +75,7 @@ class ClientService {
 
   async update(id: string, clientData: Partial<ClientData>): Promise<ClientData> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'PUT',
         headers: authHeaders(),
         body: JSON.stringify(clientData),
@@ -94,7 +94,7 @@ class ClientService {
 
   async deleteClient(id: string): Promise<void> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/${id}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/${id}`, {
         method: 'DELETE',
         headers: authHeaders(),
       })
@@ -110,7 +110,7 @@ class ClientService {
 
   async search(query: string): Promise<ClientData[]> {
     try {
-      const response = await fetch(`${this.baseUrl}${this.endpoint}/search?q=${encodeURIComponent(query)}`, {
+      const response = await apiFetch(`${this.baseUrl}${this.endpoint}/search?q=${encodeURIComponent(query)}`, {
         method: 'GET',
         headers: authHeaders(),
       })
@@ -129,3 +129,5 @@ class ClientService {
 }
 
 export const clientService = new ClientService()
+
+

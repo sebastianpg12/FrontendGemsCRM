@@ -1,4 +1,5 @@
-import { API_CONFIG } from '@/config/api'
+﻿import { API_CONFIG } from '@/config/api'
+import { apiFetch } from './authHeaders'
 
 const BASE = API_CONFIG.BASE_URL
 
@@ -18,7 +19,7 @@ export const settingsService = {
   /** Carga la config de marca desde la BD */
   async getBrand(): Promise<BrandConfig | null> {
     try {
-      const res = await fetch(`${BASE}/settings/brand`, {
+      const res = await apiFetch(`${BASE}/settings/brand`, {
         headers: { ...authHeaders() },
       })
       if (!res.ok) return null
@@ -30,7 +31,7 @@ export const settingsService = {
 
   /** Guarda la config de marca en la BD */
   async saveBrand(config: BrandConfig): Promise<BrandConfig> {
-    const res = await fetch(`${BASE}/settings/brand`, {
+    const res = await apiFetch(`${BASE}/settings/brand`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', ...authHeaders() },
       body: JSON.stringify(config),
@@ -43,7 +44,7 @@ export const settingsService = {
   async uploadLogo(file: File): Promise<string> {
     const fd = new FormData()
     fd.append('logo', file)
-    const res = await fetch(`${BASE}/settings/logo`, {
+    const res = await apiFetch(`${BASE}/settings/logo`, {
       method: 'POST',
       headers: { ...authHeaders() },
       body: fd,
@@ -61,9 +62,11 @@ export const settingsService = {
 
   /** Elimina el logo del servidor */
   async deleteLogo(): Promise<void> {
-    await fetch(`${BASE}/settings/logo`, {
+    await apiFetch(`${BASE}/settings/logo`, {
       method: 'DELETE',
       headers: { ...authHeaders() },
     })
   },
 }
+
+
