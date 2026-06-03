@@ -2652,7 +2652,7 @@ const emit = defineEmits<{
 }>()
 
 // Composables
-const { showSuccess, showError, confirmDelete, toast, showLoading, closeLoading } = useNotifications()
+const { showSuccess, showError, confirmDelete, showPlanLimitModal, toast, showLoading, closeLoading } = useNotifications()
 const authStore = useAuthStore()
 const boardsStore = useBoardsStore()
 const tasksStore = useTasksStore()
@@ -3729,8 +3729,13 @@ const handleQuickTaskCreate = async (taskData: any) => {
     toast('Tarea rápida creada correctamente', 'success')
     showQuickTaskModal.value = false
     selectedDateForQuickTask.value = null
-  } catch (err) {
-    showError('Error al crear tarea rápida', err instanceof Error ? err.message : 'Error desconocido')
+  } catch (err: any) {
+    const data = err.response?.data
+    if (data?.code === 'LIMIT_TASKS') {
+      showPlanLimitModal({ message: data.message, limit: data.limit, current: data.current, type: 'tasks' })
+    } else {
+      showError('Error al crear tarea rápida', err instanceof Error ? err.message : 'Error desconocido')
+    }
   } finally {
     closeLoading()
   }
@@ -3778,8 +3783,13 @@ const createQuickTaskForStatus = async (status: string) => {
     setTimeout(() => {
       editActivity(newActivity)
     }, 500)
-  } catch (err) {
-    showError('Error al crear tarea rápida', err instanceof Error ? err.message : 'Error desconocido')
+  } catch (err: any) {
+    const data = err.response?.data
+    if (data?.code === 'LIMIT_TASKS') {
+      showPlanLimitModal({ message: data.message, limit: data.limit, current: data.current, type: 'tasks' })
+    } else {
+      showError('Error al crear tarea rápida', err instanceof Error ? err.message : 'Error desconocido')
+    }
   } finally {
     closeLoading()
   }

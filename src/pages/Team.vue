@@ -346,7 +346,7 @@ import type { TeamMember } from '../types'
 
 const authStore = useAuthStore()
 const teamStore = useTeamStore()
-const { confirmDelete, showSuccess, showError } = useNotifications()
+const { confirmDelete, showSuccess, showError, showPlanLimitModal } = useNotifications()
 
 // ── Departments ──────────────────────────────────────────────────────
 const DEFAULT_DEPARTMENTS = ['TI', 'Comercial', 'Marketing', 'Customer Success']
@@ -565,9 +565,17 @@ const submitForm = async () => {
     }
     closeModal()
   } catch (error: any) {
-    console.error('Error submitting form:', error)
-    const message = error.response?.data?.message || error.message || 'Error al guardar los datos'
-    showError('Error en el formulario', message)
+    const data = error.response?.data
+    if (data?.code === 'LIMIT_USERS') {
+      showPlanLimitModal({
+        message: data.message,
+        limit: data.limit,
+        current: data.current,
+        type: 'users',
+      })
+    } else {
+      showError('Error al guardar', data?.message || error.message || 'Error al guardar los datos')
+    }
   } finally {
     isSubmitting.value = false
   }

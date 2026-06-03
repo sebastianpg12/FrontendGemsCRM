@@ -442,7 +442,7 @@ import DOMPurify from 'dompurify'
 const boardsStore = useBoardsStore()
 const tasksStore = useTasksStore()
 const authStore = useAuthStore()
-const { showSuccess, showError, confirmDelete } = useNotifications()
+const { showSuccess, showError, confirmDelete, showPlanLimitModal } = useNotifications()
 
 interface Props {
   activity?: any | null
@@ -599,8 +599,18 @@ const handleSubmit = async () => {
     
     emit('saved', savedData)
     emit('close')
-  } catch (error) {
-    showError('Error al sincronizar la información')
+  } catch (error: any) {
+    const data = error.response?.data
+    if (data?.code === 'LIMIT_TASKS') {
+      showPlanLimitModal({
+        message: data.message,
+        limit: data.limit,
+        current: data.current,
+        type: 'tasks',
+      })
+    } else {
+      showError('Error al sincronizar la información')
+    }
     console.error('Submit Error:', error)
   } finally {
     loading.value = false

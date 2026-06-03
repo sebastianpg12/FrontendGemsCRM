@@ -55,6 +55,52 @@ export const useNotifications = () => {
     })
   }
 
+  /** Modal de límite de plan — invita al upgrade */
+  const showPlanLimitModal = (opts: {
+    message: string
+    limit: number
+    current: number
+    type?: 'users' | 'tasks' | string
+  }) => {
+    const labels: Record<string, string> = {
+      users: 'usuarios',
+      tasks: 'tareas',
+    }
+    const label = labels[opts.type ?? ''] ?? 'registros'
+    return Swal.fire({
+      ...base,
+      position: 'center',
+      backdrop: 'rgba(15,23,42,0.55)',
+      allowOutsideClick: true,
+      timer: undefined,
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Mejorar plan',
+      cancelButtonText: 'Cerrar',
+      customClass: {
+        popup: 'crm-plan-limit-modal',
+        confirmButton: 'crm-btn-upgrade',
+        cancelButton: 'crm-btn-keep',
+      },
+      html: `
+        <div class="crm-plan-limit-body">
+          <div class="crm-plan-limit-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3 class="crm-plan-limit-title">Límite del plan alcanzado</h3>
+          <p class="crm-plan-limit-msg">${opts.message}</p>
+          <div class="crm-plan-limit-meter">
+            <div class="crm-plan-limit-meter-bar">
+              <div class="crm-plan-limit-meter-fill" style="width:100%"></div>
+            </div>
+            <span class="crm-plan-limit-meter-label">${opts.current} / ${opts.limit} ${label}</span>
+          </div>
+          <p class="crm-plan-limit-cta">Actualiza tu plan para seguir creciendo con GEMS.</p>
+        </div>
+      `,
+    })
+  }
+
   /** Confirmación de eliminación — Manteniendo minimalismo */
   const confirmDelete = (itemName: string) =>
     Swal.fire({
@@ -100,6 +146,7 @@ export const useNotifications = () => {
     showError,
     showWarning,
     showInfo,
+    showPlanLimitModal,
     confirmDelete,
     showLoading,
     closeLoading,
@@ -181,10 +228,71 @@ export const injectSwalStyles = () => {
 .swal2-timer-progress-bar { display: none !important; }
 .swal2-timer-progress-bar-container { display: none !important; }
 
+/* ── Plan Limit Modal ── */
+.crm-plan-limit-modal {
+  background: white !important;
+  border-radius: 1.75rem !important;
+  padding: 2rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15) !important;
+  max-width: 420px !important;
+}
+.crm-plan-limit-body {
+  display: flex; flex-direction: column; align-items: center; gap: 0.75rem; text-align: center;
+}
+.crm-plan-limit-icon {
+  width: 56px; height: 56px; border-radius: 1rem;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.5rem;
+  box-shadow: 0 8px 20px -6px rgba(124,58,237,0.5);
+  margin-bottom: 0.25rem;
+}
+.crm-plan-limit-title {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1rem !important; font-weight: 800 !important;
+  color: #0f172a !important; margin: 0 !important;
+}
+.crm-plan-limit-msg {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.8125rem !important; font-weight: 500 !important;
+  color: #64748b !important; margin: 0 !important; line-height: 1.5 !important;
+}
+.crm-plan-limit-meter {
+  width: 100%; display: flex; flex-direction: column; gap: 0.375rem; margin: 0.25rem 0;
+}
+.crm-plan-limit-meter-bar {
+  width: 100%; height: 6px; background: #f1f5f9; border-radius: 99px; overflow: hidden;
+}
+.crm-plan-limit-meter-fill {
+  height: 100%; background: linear-gradient(90deg, #f43f5e, #fb923c);
+  border-radius: 99px; transition: width 0.6s ease;
+}
+.crm-plan-limit-meter-label {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.7rem !important; font-weight: 700 !important;
+  color: #f43f5e !important; text-align: right !important;
+}
+.crm-plan-limit-cta {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.75rem !important; color: #94a3b8 !important;
+  margin: 0 !important;
+}
+.crm-btn-upgrade {
+  background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+  color: white !important; padding: 0.65rem 1.75rem !important;
+  border-radius: 0.875rem !important; font-weight: 800 !important;
+  font-size: 0.75rem !important; margin: 0 5px !important;
+  box-shadow: 0 4px 12px -4px rgba(124,58,237,0.4) !important;
+  border: none !important; cursor: pointer !important;
+}
+.crm-btn-upgrade:hover { opacity: 0.9 !important; }
+
 /* ── Limpieza global ── */
 .swal2-backdrop-show { background: transparent !important; backdrop-filter: none !important; }
 .swal2-container { pointer-events: none !important; }
 .swal2-popup { pointer-events: auto !important; }
+/* Plan limit modal necesita backdrop interactivo */
+.swal2-container:has(.crm-plan-limit-modal) { pointer-events: auto !important; }
 `
   const existing = document.getElementById('crm-swal-styles')
   if (existing) existing.remove()
