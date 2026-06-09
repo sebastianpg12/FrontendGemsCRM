@@ -17,20 +17,20 @@
           <button
             @click="mode = 'simple'"
             :class="[
-              'px-3 py-1.5 rounded-lg text-[11px] font-black transition-all',
-              mode === 'simple' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700',
+              'px-3 py-1.5 rounded-lg text-[11px] font-black transition-all flex items-center gap-1.5',
+              mode === 'simple' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700',
             ]"
           >
-            <i class="fas fa-bolt mr-1.5"></i>Rápido
+            <i class="fas fa-bolt"></i>Rápido
           </button>
           <button
             @click="mode = 'architect'"
             :class="[
-              'px-3 py-1.5 rounded-lg text-[11px] font-black transition-all',
-              mode === 'architect' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700',
+              'px-3 py-1.5 rounded-lg text-[11px] font-black transition-all flex items-center gap-1.5',
+              mode === 'architect' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700',
             ]"
           >
-            <i class="fas fa-sitemap mr-1.5"></i>Arquitecto
+            <i class="fas fa-sitemap"></i>Arquitecto
           </button>
         </div>
       </div>
@@ -101,11 +101,11 @@
                 :class="[
                   'px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all flex items-center gap-1.5',
                   selectedModules.includes(mod.id)
-                    ? 'bg-primary-600 text-white border-primary-600 shadow-sm shadow-primary-500/20'
+                    ? 'bg-primary-50 text-primary-700 border-primary-400 ring-1 ring-primary-300 shadow-sm'
                     : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-primary-300 hover:text-primary-600'
                 ]"
               >
-                <span>{{ mod.icon }}</span>{{ mod.label }}
+                <span class="text-base leading-none">{{ mod.icon }}</span>{{ mod.label }}
               </button>
             </div>
           </div>
@@ -169,13 +169,13 @@
 
       <!-- Submit -->
       <button
-        @click="generate"
-        :disabled="!canGenerate || loading"
+        @click="handleGenerate"
+        :disabled="loading"
         :class="[
           'w-full py-3.5 rounded-xl text-sm font-black transition-all flex items-center justify-center gap-2 shadow-lg',
           canGenerate && !loading
             ? 'bg-gradient-to-br from-primary-600 to-primary-800 text-white hover:shadow-primary-500/30 active:scale-[0.99]'
-            : 'bg-slate-100 text-slate-400 cursor-not-allowed',
+            : loading ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-slate-100 text-slate-400 hover:bg-slate-200 cursor-pointer',
         ]"
       >
         <template v-if="loading">
@@ -239,7 +239,8 @@ interface ImageItem {
 }
 const images = ref<ImageItem[]>([])
 
-const canGenerate = computed(() => inputText.value.trim().length >= 15)
+const MIN_CHARS = 30
+const canGenerate = computed(() => inputText.value.trim().length >= MIN_CHARS)
 
 const onFilesSelected = (e: Event) => {
   const target = e.target as HTMLInputElement
@@ -368,6 +369,20 @@ Responde SOLO con el nombre, nada más.`
   } catch {
     return company.value.trim() || 'Prospecto sin nombre'
   }
+}
+
+const handleGenerate = () => {
+  if (loading.value) return
+  if (!canGenerate.value) {
+    const chars = inputText.value.trim().length
+    if (chars === 0) {
+      showError('Escribe el diagnóstico del prospecto antes de generar.')
+    } else {
+      showError(`El diagnóstico necesita al menos ${MIN_CHARS} caracteres para generar una propuesta de calidad. Llevas ${chars}.`)
+    }
+    return
+  }
+  generate()
 }
 
 const generate = async () => {

@@ -8,7 +8,7 @@
           <UserAvatar
             :name="profileData?.name || 'U'"
             size="2xl"
-            class="w-36 h-36 !rounded-full border-4 border-white shadow-xl ring-4 ring-primary-100/50"
+            class="w-44 h-44 !rounded-full border-4 border-white shadow-xl ring-4 ring-primary-100/50"
           />
         </div>
         

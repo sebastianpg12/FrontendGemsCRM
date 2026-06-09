@@ -126,16 +126,16 @@
                   </td>
                   <td class="px-4 py-2.5 whitespace-nowrap text-right">
                     <div class="flex items-center justify-end gap-0.5 opacity-0 group-hover:opacity-100 transition-all translate-x-1 group-hover:translate-x-0">
-                      <router-link :to="`/clients/${client._id}`" class="p-1.5 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all" title="Ver Perfil">
+                      <router-link :to="`/clients/${client._id}`" class="p-1.5 rounded-lg transition-all text-primary-500 hover:bg-primary-50" title="Ver Perfil">
                         <i class="fas fa-arrow-right text-[11px]"></i>
                       </router-link>
                       <PermissionGuard :permissions="['edit-clients']" :fallback="false">
-                        <button @click="editClient(client)" class="p-1.5 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-all" title="Editar">
+                        <button @click="editClient(client)" class="p-1.5 rounded-lg transition-all text-amber-500 hover:bg-amber-50" title="Editar">
                           <PencilIcon class="w-3.5 h-3.5" />
                         </button>
                       </PermissionGuard>
                       <PermissionGuard :permissions="['delete-clients']" :fallback="false">
-                        <button @click="confirmDelete(client)" class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all" title="Eliminar">
+                        <button @click="confirmDelete(client)" class="p-1.5 rounded-lg transition-all text-red-400 hover:bg-red-50 hover:text-red-500" title="Eliminar">
                           <TrashIcon class="w-3.5 h-3.5" />
                         </button>
                       </PermissionGuard>
@@ -239,7 +239,7 @@
     
     <!-- Create/Edit Modal -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" @click="showModal = false"></div>
+      <div class="absolute inset-0 bg-slate-900/50" @click="showModal = false"></div>
       <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden animate-fade-in border border-slate-100">
         <div class="flex items-center justify-between p-8 border-b border-slate-50">
           <div>
@@ -292,7 +292,7 @@
     
     <!-- Delete Confirmation Modal -->
     <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" @click="showDeleteModal = false"></div>
+      <div class="absolute inset-0 bg-slate-900/50" @click="showDeleteModal = false"></div>
       <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden animate-fade-in border border-slate-100 p-8 text-center">
         <div class="w-20 h-20 bg-red-50 text-red-500 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
           <TrashIcon class="w-10 h-10" />

@@ -137,7 +137,7 @@
     <!-- Detail dialog from kanban -->
     <div
       v-if="kanbanDetailProspect"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50"
       @click.self="kanbanDetailProspect = null"
     >
       <div class="bg-transparent w-full max-w-4xl h-[85vh]">

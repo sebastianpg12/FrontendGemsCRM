@@ -4,26 +4,29 @@
       <h3 class="text-lg font-black text-slate-800">Compromisos y Tareas</h3>
     </div>
     <!-- Inline add commitment -->
-    <div class="flex flex-wrap gap-3 items-center bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm">
+    <div class="flex flex-wrap gap-3 items-end bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm">
       <div class="flex-1 min-w-[200px]">
-        <label class="sr-only">Título del compromiso</label>
-        <input v-model="commitTitle" placeholder="Ej: Enviar propuesta comercial" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm" />
+        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Título</label>
+        <input v-model="commitTitle" placeholder="Ej: Enviar propuesta comercial" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none shadow-sm transition-all" />
       </div>
       <div class="w-full sm:w-auto">
-        <label class="sr-only">Fecha límite</label>
-        <input v-model="commitDueDate" type="date" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm" />
+        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5"><i class="fas fa-calendar-alt mr-1"></i>Fecha límite</label>
+        <input v-model="commitDueDate" type="date" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-slate-700 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none shadow-sm transition-all cursor-pointer" />
       </div>
       <div class="w-full sm:w-auto">
-        <label class="sr-only">Estado</label>
-        <select v-model="commitStatus" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm">
-          <option value="pending">Pendiente</option>
-          <option value="in_progress">En progreso</option>
-          <option value="completed">Completado</option>
-          <option value="cancelled">Cancelado</option>
-        </select>
+        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5"><i class="fas fa-flag mr-1"></i>Estado</label>
+        <div class="relative">
+          <select v-model="commitStatus" class="w-full appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-9 py-2.5 text-slate-700 font-bold text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none shadow-sm transition-all cursor-pointer">
+            <option value="pending">⏳ Pendiente</option>
+            <option value="in_progress">🔄 En progreso</option>
+            <option value="completed">✅ Completado</option>
+            <option value="cancelled">❌ Cancelado</option>
+          </select>
+          <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
+        </div>
       </div>
-      <button @click="handleCreate" class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-primary-600 text-white font-bold hover:bg-primary-700 shadow-sm transition-colors">
-        <i class="fas fa-plus mr-1"></i> Agregar
+      <button @click="handleCreate" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-700 shadow-sm transition-colors flex items-center justify-center gap-1.5">
+        <i class="fas fa-plus text-xs"></i> Agregar
       </button>
     </div>
     
@@ -50,7 +53,7 @@
           </div>
           <div class="flex gap-2 sm:flex-col self-end sm:self-center">
             <button @click="startEdit(c)" class="px-3 py-1.5 text-xs font-bold bg-primary-50 text-primary-700 border border-primary-100 hover:bg-primary-100 rounded-lg transition-colors">Editar</button>
-            <button @click="deleteCommitment(c._id)" class="px-3 py-1.5 text-xs font-bold bg-red-50 text-red-700 border border-red-100 hover:bg-red-100 rounded-lg transition-colors">Eliminar</button>
+            <button @click="requestDelete(c._id)" class="px-3 py-1.5 text-xs font-bold bg-red-50 text-red-700 border border-red-100 hover:bg-red-100 rounded-lg transition-colors">Eliminar</button>
           </div>
         </div>
         <!-- edit mode -->
@@ -76,6 +79,22 @@
       <i class="fas fa-check-circle text-3xl text-slate-300 mb-3"></i>
       <p class="text-slate-500 font-medium">No hay compromisos pendientes.</p>
     </div>
+
+    <!-- Confirmación eliminar compromiso — sin blur -->
+    <div v-if="commitToDelete" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-slate-900/50" @click="commitToDelete = null"></div>
+      <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center border border-slate-100 animate-fade-in">
+        <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-trash text-red-500 text-xl"></i>
+        </div>
+        <h4 class="text-base font-black text-slate-900 mb-1">¿Eliminar compromiso?</h4>
+        <p class="text-sm text-slate-400 font-medium mb-5">Esta acción no se puede deshacer.</p>
+        <div class="flex gap-3">
+          <button @click="commitToDelete = null" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-colors">Cancelar</button>
+          <button @click="confirmDelete" class="flex-1 px-4 py-2.5 rounded-xl bg-red-500 text-white font-bold text-sm hover:bg-red-600 transition-colors">Eliminar</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -85,6 +104,18 @@ import { ref, inject } from 'vue'
 const ctx = inject('clientContext') as any
 const client = ctx.client
 const { createCommitment, updateCommitment, deleteCommitment } = ctx
+
+const commitToDelete = ref<string | null>(null)
+
+const requestDelete = (id: string) => {
+  commitToDelete.value = id
+}
+
+const confirmDelete = async () => {
+  if (!commitToDelete.value) return
+  await deleteCommitment(commitToDelete.value)
+  commitToDelete.value = null
+}
 
 const commitTitle = ref('')
 const commitDueDate = ref<string>('')
