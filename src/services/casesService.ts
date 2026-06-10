@@ -277,6 +277,20 @@ class CasesService {
     }
   }
 
+  // Cambiar estado (el backend registra el cambio en el timeline)
+  async changeStatus(caseId: string, estado: Case['estado']): Promise<Case> {
+    const response = await apiFetch(`${this.apiUrl}/${caseId}/estado`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: JSON.stringify({ estado }),
+    })
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.error || 'Error al cambiar el estado')
+    }
+    return await response.json()
+  }
+
   // Agregar comentario
   async addComment(caseId: string, comment: Partial<CaseComment>): Promise<Case> {
     const response = await apiFetch(`${this.apiUrl}/${caseId}/comments`, {
