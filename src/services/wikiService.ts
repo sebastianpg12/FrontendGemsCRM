@@ -19,8 +19,21 @@ export interface WikiArticle {
   }>
   vistas?: number
   linkedTickets?: any[]
+  parentId?: string | null
+  order?: number
+  archived?: boolean
+  icon?: string
   createdAt?: Date
   updatedAt?: Date
+}
+
+export interface WikiTreeNode {
+  _id: string
+  titulo: string
+  parentId: string | null
+  order: number
+  icon?: string
+  updatedAt?: string
 }
 
 class WikiService {
@@ -94,8 +107,32 @@ class WikiService {
     return response.data
   }
 
-  async delete(id: string): Promise<void> {
-    await apiClient.delete(`${this.apiUrl}/${id}`)
+  async delete(id: string, permanent = false): Promise<void> {
+    await apiClient.delete(`${this.apiUrl}/${id}${permanent ? '?permanent=true' : ''}`)
+  }
+
+  async getTree(): Promise<WikiTreeNode[]> {
+    const response = await apiClient.get(`${this.apiUrl}/tree`)
+    return response.data.data
+  }
+
+  async getArchived(): Promise<WikiTreeNode[]> {
+    const response = await apiClient.get(`${this.apiUrl}/archived`)
+    return response.data.data
+  }
+
+  async move(id: string, payload: { parentId?: string | null; order?: number }): Promise<WikiArticle> {
+    const response = await apiClient.patch(`${this.apiUrl}/${id}/move`, payload)
+    return response.data.data
+  }
+
+  async archive(id: string): Promise<void> {
+    await apiClient.patch(`${this.apiUrl}/${id}/archive`)
+  }
+
+  async restore(id: string): Promise<WikiArticle> {
+    const response = await apiClient.patch(`${this.apiUrl}/${id}/restore`)
+    return response.data.data
   }
 
   // Vincular ticket

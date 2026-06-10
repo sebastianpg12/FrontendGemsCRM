@@ -236,7 +236,7 @@ const routes = [
     }
   },
   {
-    path: '/wiki',
+    path: '/wiki/:pageId?',
     name: 'Wiki',
     component: Wiki,
     meta: {

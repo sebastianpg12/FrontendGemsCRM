@@ -1,379 +1,657 @@
 <template>
-  <div class="space-y-6">
-    <!-- Header & Search -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <h2 class="text-2xl font-black text-slate-800 tracking-tight">Base de Conocimiento (Wiki)</h2>
-        <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">
-          Documentación, manuales y guías de procesos
-        </p>
-      </div>
-      <div class="flex items-center gap-3">
-        <button 
-          @click="openCreateModal"
-          class="flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl shadow-lg shadow-primary-600/20 transition-all hover:-translate-y-0.5"
-        >
-          <i class="fas fa-plus"></i>
-          <span>Nuevo Artículo</span>
-        </button>
-      </div>
+  <div class="flex gap-4 h-[calc(100vh-3.5rem)] min-h-0">
+    <!-- Sidebar desktop -->
+    <div class="hidden lg:block h-full">
+      <WikiSidebar
+        :tree="tree"
+        :children-map="childrenMap"
+        :root-nodes="rootNodes"
+        :archived-pages="archivedPages"
+        :current-id="currentId"
+        :expanded-ids="expandedIds"
+        :show-archived="showArchived"
+        @select="navigateTo"
+        @toggle="toggleExpand"
+        @create-page="createPage"
+        @rename="renamePage"
+        @archive="askArchive"
+        @restore="restorePage"
+        @delete-permanent="askDeletePermanent"
+        @move-up="movePage($event, -1)"
+        @move-down="movePage($event, 1)"
+        @move-into="moveInto"
+        @move-to-root="moveToRoot"
+        @toggle-archived="showArchived = !showArchived"
+      />
     </div>
 
-    <!-- Filtros y Búsqueda -->
-    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4 justify-between items-center">
-      <!-- Tabs de Categoría -->
-      <div class="flex gap-2 p-1 bg-slate-50 rounded-xl">
-        <button 
-          v-for="cat in categorias" 
-          :key="cat.id"
-          @click="selectedCategory = cat.id"
-          class="px-4 py-2 text-sm font-bold rounded-lg transition-all"
-          :class="selectedCategory === cat.id ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'"
-        >
-          <i :class="cat.icon" class="mr-2"></i>{{ cat.label }}
-        </button>
-      </div>
-
-      <!-- Buscador -->
-      <div class="relative w-full md:w-80">
-        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-        <input 
-          v-model="searchQuery"
-          type="text"
-          placeholder="Buscar artículos..."
-          class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all font-medium text-sm"
-          @keyup.enter="fetchArticles"
+    <!-- Sidebar mobile (drawer) -->
+    <div v-if="mobileSidebarOpen" class="lg:hidden fixed inset-0 z-[90]">
+      <div class="absolute inset-0 bg-slate-900/50" @click="mobileSidebarOpen = false"></div>
+      <div class="absolute inset-y-0 left-0 p-3 w-72 max-w-[85vw]">
+        <WikiSidebar
+          class="!w-full shadow-2xl"
+          :tree="tree"
+          :children-map="childrenMap"
+          :root-nodes="rootNodes"
+          :archived-pages="archivedPages"
+          :current-id="currentId"
+          :expanded-ids="expandedIds"
+          :show-archived="showArchived"
+          @select="(id: string) => { navigateTo(id); mobileSidebarOpen = false }"
+          @toggle="toggleExpand"
+          @create-page="createPage"
+          @rename="renamePage"
+          @archive="askArchive"
+          @restore="restorePage"
+          @delete-permanent="askDeletePermanent"
+          @move-up="movePage($event, -1)"
+          @move-down="movePage($event, 1)"
+          @move-into="moveInto"
+          @move-to-root="moveToRoot"
+          @toggle-archived="showArchived = !showArchived"
         />
       </div>
     </div>
 
-    <!-- Estado de Carga -->
-    <div v-if="loading" class="flex justify-center items-center h-64">
-      <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-primary-600"></div>
-    </div>
+    <!-- Panel de contenido -->
+    <section class="flex-1 min-w-0 h-full flex flex-col bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-2xl overflow-hidden">
+      <!-- Barra superior -->
+      <header class="shrink-0 h-12 px-3 sm:px-4 flex items-center gap-2 border-b border-slate-100 dark:border-[#334155]">
+        <button
+          class="lg:hidden w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors shrink-0"
+          title="Páginas"
+          @click="mobileSidebarOpen = true"
+        >
+          <i class="fas fa-bars text-[12px]"></i>
+        </button>
 
-    <!-- Empty State -->
-    <div v-else-if="filteredArticles.length === 0" class="bg-white rounded-3xl border border-slate-100 p-12 text-center">
-      <div class="w-20 h-20 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-4">
-        <i class="fas fa-book-open text-3xl text-primary-500"></i>
-      </div>
-      <h3 class="text-xl font-bold text-slate-800 mb-2">No se encontraron artículos</h3>
-      <p class="text-slate-500 font-medium max-w-md mx-auto">
-        No hay documentos que coincidan con tu búsqueda en esta categoría. Puedes crear uno nuevo para empezar a documentar.
-      </p>
-    </div>
+        <WikiBreadcrumb :trail="breadcrumb" @navigate="onBreadcrumbNavigate" />
 
-    <!-- Lista de Artículos -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div 
-        v-for="article in filteredArticles" 
-        :key="article._id"
-        class="bg-white rounded-2xl border border-slate-200 hover:border-primary-300 shadow-sm hover:shadow-xl hover:shadow-primary-600/5 transition-all p-6 cursor-pointer group flex flex-col"
-        @click="openViewModal(article)"
-      >
-        <div class="flex justify-between items-start mb-4">
-          <div 
-            class="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center gap-1.5"
-            :class="getCategoryStyle(article.categoria)"
-          >
-            <i :class="getCategoryIcon(article.categoria)"></i>
-            {{ getCategoryLabel(article.categoria) }}
-          </div>
-          <div class="text-xs font-bold text-slate-400 flex items-center gap-1" title="Vistas">
-            <i class="fas fa-eye"></i> {{ article.vistas || 0 }}
-          </div>
-        </div>
-        
-        <h3 class="text-lg font-black text-slate-800 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">
-          {{ article.titulo }}
-        </h3>
-        
-        <p class="text-sm font-medium text-slate-500 line-clamp-3 mb-4 flex-1">
-          {{ article.descripcion || 'Sin descripción detallada.' }}
-        </p>
+        <div class="flex-1"></div>
 
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-          <div class="flex items-center gap-2">
-            <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[8px] font-black text-slate-500">
-              {{ (article.autor?.name || 'U').substring(0,2).toUpperCase() }}
-            </div>
-            <span class="text-xs font-bold text-slate-600">{{ article.autor?.name || 'Usuario' }}</span>
-          </div>
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-            {{ new Date(article.updatedAt || new Date()).toLocaleDateString() }}
+        <template v-if="currentPage && !editing">
+          <span class="hidden sm:flex items-center gap-1.5 text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mr-1" title="Vistas">
+            <i class="fas fa-eye text-[10px]"></i>{{ currentPage.vistas || 0 }}
           </span>
-        </div>
-      </div>
-    </div>
+          <button class="btn-secondary" @click="startEditing">
+            <i class="fas fa-pen text-[10px]"></i><span class="hidden sm:inline">Editar</span>
+          </button>
+          <button
+            class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
+            title="Archivar página"
+            @click="askArchive(currentPage._id!)"
+          >
+            <i class="fas fa-box-archive text-[12px]"></i>
+          </button>
+        </template>
 
-    <!-- Modal Visor / Editor -->
-    <div v-if="isModalOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-900/40 backdrop-blur-sm">
-      <div class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl max-h-full flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        
-        <!-- Header Modal -->
-        <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-primary-500 border border-slate-200">
-              <i class="fas" :class="isEditing ? 'fa-edit' : 'fa-book-open'"></i>
-            </div>
-            <div>
-              <h3 class="text-lg font-black text-slate-800 tracking-tight">
-                {{ isEditing ? (currentArticle._id ? 'Editar Artículo' : 'Nuevo Artículo') : currentArticle.titulo }}
-              </h3>
-              <p v-if="!isEditing" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">
-                Por {{ currentArticle.autor?.name }} · {{ new Date(currentArticle.updatedAt || new Date()).toLocaleDateString() }}
-              </p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2">
-            <button 
-              v-if="!isEditing" 
-              @click="isEditing = true"
-              class="w-10 h-10 flex items-center justify-center text-slate-500 hover:text-primary-600 hover:bg-white rounded-xl transition-all shadow-sm border border-transparent hover:border-slate-200"
-              title="Editar"
-            >
-              <i class="fas fa-pen"></i>
-            </button>
-            <button 
-              v-if="!isEditing && currentArticle._id" 
-              @click="confirmDelete"
-              class="w-10 h-10 flex items-center justify-center text-slate-500 hover:text-rose-600 hover:bg-white rounded-xl transition-all shadow-sm border border-transparent hover:border-slate-200"
-              title="Eliminar"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-            <div class="w-px h-6 bg-slate-300 mx-1"></div>
-            <button 
-              @click="closeModal"
-              class="w-10 h-10 flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-white rounded-xl transition-all shadow-sm border border-transparent hover:border-slate-200"
-            >
-              <i class="fas fa-times text-lg"></i>
-            </button>
-          </div>
+        <template v-else-if="editing">
+          <button class="btn-secondary" @click="cancelEditing">Cancelar</button>
+          <button class="btn-primary" :disabled="saving" @click="savePage">
+            <i class="fas text-[10px]" :class="saving ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
+            Guardar
+          </button>
+        </template>
+      </header>
+
+      <!-- Cuerpo -->
+      <div class="flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+        <!-- Cargando -->
+        <div v-if="loadingPage || loadingTree" class="h-full flex items-center justify-center">
+          <div class="animate-spin rounded-full h-10 w-10 border-4 border-slate-200 dark:border-[#334155] border-t-primary-600"></div>
         </div>
 
-        <!-- Contenido Modal -->
-        <div class="p-6 overflow-y-auto flex-1 custom-scrollbar bg-white">
-          <template v-if="isEditing">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div class="md:col-span-2 space-y-4">
-                <div>
-                  <label class="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Título</label>
-                  <input v-model="editForm.titulo" type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 font-bold text-slate-800" placeholder="Ej: Guía de inducción" />
-                </div>
-                <div>
-                  <label class="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Descripción Corta</label>
-                  <textarea v-model="editForm.descripcion" rows="2" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 font-medium text-sm text-slate-700" placeholder="Breve resumen del contenido..."></textarea>
-                </div>
-                <div>
-                  <label class="block text-xs font-black text-slate-500 uppercase tracking-widest mb-1.5">Contenido</label>
-                  <WikiEditor v-model="editForm.contenido" />
-                </div>
-              </div>
-              <div class="space-y-4">
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                  <h4 class="text-xs font-black text-slate-800 uppercase tracking-widest mb-3">Configuración</h4>
-                  <div class="space-y-4">
-                    <div>
-                      <label class="block text-xs font-bold text-slate-500 mb-1.5">Categoría</label>
-                      <select v-model="editForm.categoria" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium focus:ring-2 focus:ring-primary-500">
-                        <option value="proceso">Procesos</option>
-                        <option value="manual">Manuales</option>
-                        <option value="codigo">Código</option>
-                        <option value="otros">Otros</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <!-- Estado vacío global -->
+        <div v-else-if="tree.length === 0" class="h-full flex flex-col items-center justify-center px-6 text-center">
+          <div class="w-20 h-20 bg-primary-50 dark:bg-primary-500/10 rounded-2xl flex items-center justify-center mb-5">
+            <i class="fas fa-book-open text-2xl text-primary-500"></i>
+          </div>
+          <h3 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-2">Tu base de conocimiento está vacía</h3>
+          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 max-w-sm mb-6 leading-relaxed">
+            Documenta procesos, manuales y guías de tu equipo. Organiza todo en páginas y sub-páginas, como en Notion.
+          </p>
+          <button class="btn-primary" @click="createPage(null)">
+            <i class="fas fa-plus text-[10px]"></i>Crear primera página
+          </button>
+        </div>
+
+        <!-- Sin página seleccionada -->
+        <div v-else-if="!currentPage" class="h-full flex flex-col items-center justify-center px-6 text-center">
+          <div class="w-20 h-20 bg-slate-50 dark:bg-[#0f172a] rounded-2xl flex items-center justify-center mb-5">
+            <i class="fas fa-hand-pointer text-2xl text-slate-300 dark:text-slate-600"></i>
+          </div>
+          <h3 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-2">Selecciona una página</h3>
+          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
+            Elige una página del panel izquierdo o crea una nueva para empezar.
+          </p>
+        </div>
+
+        <!-- Página -->
+        <div v-else class="max-w-3xl mx-auto px-6 sm:px-10 py-8">
+          <!-- Modo edición -->
+          <template v-if="editing">
+            <input
+              ref="titleInput"
+              v-model="editTitle"
+              type="text"
+              placeholder="Sin título"
+              class="w-full text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight bg-transparent outline-none placeholder:text-slate-300 dark:placeholder:text-slate-600 mb-4"
+              @keydown.enter.prevent="focusEditor"
+            />
+            <WikiEditor v-model="editContent" />
           </template>
-          
+
+          <!-- Modo lectura -->
           <template v-else>
-            <WikiContent :content="currentArticle.contenido" />
+            <h1 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">
+              {{ currentPage.titulo }}
+            </h1>
+            <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">
+              Por {{ currentPage.autor?.name || 'Usuario' }} · Actualizado {{ formatDate(currentPage.updatedAt) }}
+            </p>
+            <div v-if="hasContent">
+              <WikiContent :content="currentPage.contenido" />
+            </div>
+            <button
+              v-else
+              class="w-full py-10 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#334155] text-slate-400 dark:text-slate-500 hover:border-primary-300 hover:text-primary-500 transition-colors text-[11px] font-bold"
+              @click="startEditing"
+            >
+              <i class="fas fa-pen mr-2 text-[10px]"></i>Esta página está vacía — haz click para escribir
+            </button>
+
+            <!-- Sub-páginas -->
+            <div v-if="currentChildren.length" class="mt-8 pt-6 border-t border-slate-100 dark:border-[#334155]">
+              <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Sub-páginas</p>
+              <div class="space-y-1">
+                <button
+                  v-for="child in currentChildren"
+                  :key="child._id"
+                  class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors text-left"
+                  @click="navigateTo(child._id)"
+                >
+                  <i class="fas fa-file-lines text-[10px] text-slate-400"></i>
+                  <span class="text-[11px] font-bold">{{ child.titulo }}</span>
+                </button>
+              </div>
+            </div>
           </template>
         </div>
+      </div>
+    </section>
 
-        <!-- Footer Modal -->
-        <div v-if="isEditing" class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
-          <button @click="isEditing = false; if(!currentArticle._id) closeModal()" class="px-5 py-2.5 bg-white text-slate-600 font-bold rounded-xl border border-slate-200 hover:bg-slate-50 transition-all">
-            Cancelar
-          </button>
-          <button @click="saveArticle" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl shadow-lg shadow-primary-600/20 transition-all">
-            <i class="fas fa-save mr-2"></i> Guardar
+    <!-- Modal de confirmación (sin blur) -->
+    <div v-if="confirmDialog" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
+      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-slate-100 dark:border-[#334155]">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+          :class="confirmDialog.danger ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500' : 'bg-amber-50 dark:bg-amber-500/10 text-amber-500'">
+          <i class="fas text-[16px]" :class="confirmDialog.danger ? 'fa-trash' : 'fa-box-archive'"></i>
+        </div>
+        <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">{{ confirmDialog.title }}</h3>
+        <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 leading-relaxed mb-6">{{ confirmDialog.message }}</p>
+        <div class="flex justify-end gap-2">
+          <button class="btn-secondary" @click="confirmDialog = null">Cancelar</button>
+          <button
+            class="inline-flex items-center gap-2 h-9 px-4 text-[11px] font-bold rounded-lg text-white transition-colors"
+            :class="confirmDialog.danger ? 'bg-rose-600 hover:bg-rose-700' : 'bg-amber-500 hover:bg-amber-600'"
+            @click="confirmDialog.onConfirm(); confirmDialog = null"
+          >
+            {{ confirmDialog.confirmLabel }}
           </button>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
-import { wikiService, type WikiArticle } from '@/services/wikiService'
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { wikiService, type WikiArticle, type WikiTreeNode } from '@/services/wikiService'
 import WikiContent from '@/components/wiki/WikiContent.vue'
 import WikiEditor from '@/components/wiki/WikiEditor.vue'
+import WikiSidebar from '@/components/wiki/WikiSidebar.vue'
+import WikiBreadcrumb from '@/components/wiki/WikiBreadcrumb.vue'
 
-const categorias = [
-  { id: '', label: 'Todos', icon: 'fas fa-layer-group' },
-  { id: 'proceso', label: 'Procesos', icon: 'fas fa-project-diagram' },
-  { id: 'manual', label: 'Manuales', icon: 'fas fa-book' },
-  { id: 'codigo', label: 'Código', icon: 'fas fa-code' },
-  { id: 'otros', label: 'Otros', icon: 'fas fa-folder-open' }
-]
+const route = useRoute()
+const router = useRouter()
 
-const articles = ref<WikiArticle[]>([])
-const loading = ref(true)
-const selectedCategory = ref('')
-const searchQuery = ref('')
+const tree = ref<WikiTreeNode[]>([])
+const archivedPages = ref<WikiTreeNode[]>([])
+const currentPage = ref<WikiArticle | null>(null)
+const loadingTree = ref(true)
+const loadingPage = ref(false)
+const saving = ref(false)
 
-const isModalOpen = ref(false)
-const isEditing = ref(false)
-const currentArticle = ref<Partial<WikiArticle>>({})
-const editForm = ref<Partial<WikiArticle>>({
-  titulo: '',
-  descripcion: '',
-  categoria: 'proceso',
-  contenido: ''
+const expandedIds = ref<Set<string>>(new Set())
+const showArchived = ref(false)
+const mobileSidebarOpen = ref(false)
+
+const editing = ref(false)
+const editTitle = ref('')
+const editContent = ref('')
+const titleInput = ref<HTMLInputElement | null>(null)
+
+const confirmDialog = ref<{
+  title: string
+  message: string
+  confirmLabel: string
+  danger: boolean
+  onConfirm: () => void
+} | null>(null)
+
+const currentId = computed(() => (route.params.pageId as string) || null)
+
+const childrenMap = computed(() => {
+  const map: Record<string, WikiTreeNode[]> = {}
+  for (const node of tree.value) {
+    const key = node.parentId || '__root__'
+    if (!map[key]) map[key] = []
+    map[key].push(node)
+  }
+  for (const key of Object.keys(map)) {
+    map[key].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  }
+  return map
 })
 
-const filteredArticles = computed(() => {
-  let result = articles.value
-  if (selectedCategory.value) {
-    result = result.filter(a => a.categoria === selectedCategory.value)
+const rootNodes = computed(() => childrenMap.value['__root__'] || [])
+const currentChildren = computed(() => currentId.value ? (childrenMap.value[currentId.value] || []) : [])
+
+const breadcrumb = computed<WikiTreeNode[]>(() => {
+  if (!currentId.value) return []
+  const byId = new Map(tree.value.map(n => [n._id, n]))
+  const trail: WikiTreeNode[] = []
+  let node = byId.get(currentId.value)
+  while (node) {
+    trail.unshift(node)
+    node = node.parentId ? byId.get(node.parentId) : undefined
   }
-  if (searchQuery.value) {
-    const q = searchQuery.value.toLowerCase()
-    result = result.filter(a => 
-      a.titulo.toLowerCase().includes(q) || 
-      a.descripcion?.toLowerCase().includes(q)
-    )
+  return trail
+})
+
+const hasContent = computed(() => {
+  const text = (currentPage.value?.contenido || '').replace(/<[^>]*>/g, '').trim()
+  return text.length > 0
+})
+
+const formatDate = (d?: Date | string) => {
+  if (!d) return ''
+  return new Date(d).toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+// ── Navegación ───────────────────────────────────────────────────────────────
+
+const navigateTo = (id: string) => {
+  if (id === currentId.value) return
+  router.push(`/wiki/${id}`)
+}
+
+const onBreadcrumbNavigate = (id: string | null) => {
+  if (id) navigateTo(id)
+  else if (rootNodes.value.length) navigateTo(rootNodes.value[0]._id)
+}
+
+const toggleExpand = (id: string) => {
+  const next = new Set(expandedIds.value)
+  if (next.has(id)) next.delete(id)
+  else next.add(id)
+  expandedIds.value = next
+}
+
+const expandAncestorsOf = (id: string) => {
+  const byId = new Map(tree.value.map(n => [n._id, n]))
+  const next = new Set(expandedIds.value)
+  let node = byId.get(id)
+  while (node?.parentId) {
+    next.add(node.parentId)
+    node = byId.get(node.parentId)
+  }
+  expandedIds.value = next
+}
+
+// ── Carga de datos ───────────────────────────────────────────────────────────
+
+const loadTree = async () => {
+  loadingTree.value = true
+  try {
+    const [active, archived] = await Promise.all([
+      wikiService.getTree(),
+      wikiService.getArchived()
+    ])
+    tree.value = active
+    archivedPages.value = archived
+  } catch (err) {
+    console.error('Error cargando árbol de wiki:', err)
+  } finally {
+    loadingTree.value = false
+  }
+}
+
+const pendingEditId = ref<string | null>(null)
+
+const loadPage = async (id: string) => {
+  loadingPage.value = true
+  editing.value = false
+  try {
+    currentPage.value = await wikiService.getById(id)
+    expandAncestorsOf(id)
+    if (pendingEditId.value === id) {
+      pendingEditId.value = null
+      startEditing()
+    }
+  } catch (err) {
+    console.error('Error cargando página:', err)
+    currentPage.value = null
+  } finally {
+    loadingPage.value = false
+  }
+}
+
+watch(currentId, (id) => {
+  if (id) loadPage(id)
+  else currentPage.value = null
+}, { immediate: false })
+
+// ── Edición ──────────────────────────────────────────────────────────────────
+
+const startEditing = async () => {
+  if (!currentPage.value) return
+  editTitle.value = currentPage.value.titulo
+  editContent.value = currentPage.value.contenido || ''
+  editing.value = true
+  await nextTick()
+  titleInput.value?.focus()
+}
+
+const cancelEditing = () => {
+  editing.value = false
+}
+
+const focusEditor = () => {
+  const pm = document.querySelector('.wiki-editor__content .ProseMirror') as HTMLElement | null
+  pm?.focus()
+}
+
+const savePage = async () => {
+  if (!currentPage.value?._id || saving.value) return
+  const titulo = editTitle.value.trim() || 'Sin título'
+  saving.value = true
+  try {
+    const updated = await wikiService.update(currentPage.value._id, {
+      titulo,
+      contenido: editContent.value
+    })
+    currentPage.value = { ...currentPage.value, ...updated }
+    const node = tree.value.find(n => n._id === updated._id)
+    if (node) node.titulo = updated.titulo
+    editing.value = false
+  } catch (err) {
+    console.error('Error guardando página:', err)
+  } finally {
+    saving.value = false
+  }
+}
+
+const onKeydown = (e: KeyboardEvent) => {
+  if (editing.value && (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+    e.preventDefault()
+    savePage()
+  }
+}
+
+// ── Operaciones del árbol ────────────────────────────────────────────────────
+
+const createPage = async (parentId: string | null) => {
+  try {
+    const created = await wikiService.create({
+      titulo: 'Sin título',
+      contenido: '',
+      categoria: 'otros',
+      ...(parentId ? { parentId } : {})
+    } as Partial<WikiArticle>)
+    tree.value.push({
+      _id: created._id!,
+      titulo: created.titulo,
+      parentId: created.parentId || null,
+      order: created.order ?? 0
+    })
+    if (parentId) expandedIds.value = new Set([...expandedIds.value, parentId])
+    mobileSidebarOpen.value = false
+    pendingEditId.value = created._id!
+    await router.push(`/wiki/${created._id}`)
+  } catch (err) {
+    console.error('Error creando página:', err)
+  }
+}
+
+const renamePage = async (id: string, titulo: string) => {
+  const node = tree.value.find(n => n._id === id)
+  if (!node) return
+  const prev = node.titulo
+  node.titulo = titulo
+  try {
+    await wikiService.update(id, { titulo })
+    if (currentPage.value?._id === id) currentPage.value.titulo = titulo
+  } catch (err) {
+    node.titulo = prev
+    console.error('Error renombrando página:', err)
+  }
+}
+
+const movePage = async (id: string, direction: -1 | 1) => {
+  const node = tree.value.find(n => n._id === id)
+  if (!node) return
+  const siblings = childrenMap.value[node.parentId || '__root__'] || []
+  const idx = siblings.findIndex(s => s._id === id)
+  const swapWith = siblings[idx + direction]
+  if (!swapWith) return
+  const orderA = node.order ?? 0
+  const orderB = swapWith.order ?? 0
+  node.order = orderB
+  swapWith.order = orderA
+  try {
+    await Promise.all([
+      wikiService.move(id, { order: orderB }),
+      wikiService.move(swapWith._id, { order: orderA })
+    ])
+  } catch (err) {
+    node.order = orderA
+    swapWith.order = orderB
+    console.error('Error reordenando página:', err)
+  }
+}
+
+const moveInto = async (id: string, parentId: string) => {
+  if (id === parentId) return
+  // No permitir mover dentro de un descendiente propio (el backend también lo valida)
+  let cursor: string | null = parentId
+  const byId = new Map(tree.value.map(n => [n._id, n]))
+  while (cursor) {
+    if (cursor === id) return
+    cursor = byId.get(cursor)?.parentId || null
+  }
+  const node = tree.value.find(n => n._id === id)
+  if (!node || node.parentId === parentId) return
+  const prevParent = node.parentId
+  const siblings = childrenMap.value[parentId] || []
+  node.parentId = parentId
+  node.order = siblings.length ? Math.max(...siblings.map(s => s.order ?? 0)) + 1 : 0
+  expandedIds.value = new Set([...expandedIds.value, parentId])
+  try {
+    await wikiService.move(id, { parentId, order: node.order })
+  } catch (err) {
+    node.parentId = prevParent
+    console.error('Error moviendo página:', err)
+  }
+}
+
+const moveToRoot = async (id: string) => {
+  const node = tree.value.find(n => n._id === id)
+  if (!node || !node.parentId) return
+  const prevParent = node.parentId
+  node.parentId = null
+  node.order = rootNodes.value.length ? Math.max(...rootNodes.value.map(s => s.order ?? 0)) + 1 : 0
+  try {
+    await wikiService.move(id, { parentId: null, order: node.order })
+  } catch (err) {
+    node.parentId = prevParent
+    console.error('Error moviendo página:', err)
+  }
+}
+
+// ── Archivar / restaurar / eliminar ──────────────────────────────────────────
+
+const descendantsOf = (id: string): string[] => {
+  const result: string[] = []
+  const stack = [id]
+  while (stack.length) {
+    const current = stack.pop()!
+    const children = childrenMap.value[current] || []
+    for (const child of children) {
+      result.push(child._id)
+      stack.push(child._id)
+    }
   }
   return result
-})
+}
 
-const fetchArticles = async () => {
-  loading.value = true
-  try {
-    articles.value = await wikiService.getAll()
-  } catch (error) {
-    console.error(error)
-  } finally {
-    loading.value = false
+const askArchive = (id: string) => {
+  const node = tree.value.find(n => n._id === id)
+  if (!node) return
+  const childCount = descendantsOf(id).length
+  confirmDialog.value = {
+    title: 'Archivar página',
+    message: childCount
+      ? `«${node.titulo}» y sus ${childCount} sub-página${childCount === 1 ? '' : 's'} se moverán a Archivadas. Podrás restaurarlas cuando quieras.`
+      : `«${node.titulo}» se moverá a Archivadas. Podrás restaurarla cuando quieras.`,
+    confirmLabel: 'Archivar',
+    danger: false,
+    onConfirm: () => archivePage(id)
   }
 }
 
-const getCategoryLabel = (cat: string) => {
-  return categorias.find(c => c.id === cat)?.label || 'Otros'
-}
-
-const getCategoryIcon = (cat: string) => {
-  return categorias.find(c => c.id === cat)?.icon || 'fas fa-folder'
-}
-
-const getCategoryStyle = (cat: string) => {
-  const styles: Record<string, string> = {
-    'proceso': 'bg-blue-50 text-blue-600',
-    'manual': 'bg-emerald-50 text-emerald-600',
-    'codigo': 'bg-purple-50 text-purple-600',
-    'otros': 'bg-slate-100 text-slate-600'
-  }
-  return styles[cat] || styles['otros']
-}
-
-const openViewModal = async (article: WikiArticle) => {
-  isEditing.value = false
-  // Incrementar contador localmente o refetch
-  currentArticle.value = { ...article }
-  isModalOpen.value = true
+const archivePage = async (id: string) => {
   try {
-    // Al pedirlo por ID, el backend suma 1 vista
-    const fullArticle = await wikiService.getById(article._id!)
-    currentArticle.value = fullArticle
-    const index = articles.value.findIndex(a => a._id === article._id)
-    if(index !== -1) articles.value[index] = fullArticle
+    await wikiService.archive(id)
+    const removedIds = new Set([id, ...descendantsOf(id)])
+    const removed = tree.value.filter(n => removedIds.has(n._id))
+    tree.value = tree.value.filter(n => !removedIds.has(n._id))
+    archivedPages.value = [...removed, ...archivedPages.value]
+    if (currentId.value && removedIds.has(currentId.value)) {
+      const fallback = rootNodes.value[0]
+      router.push(fallback ? `/wiki/${fallback._id}` : '/wiki')
+    }
   } catch (err) {
-    console.error(err)
+    console.error('Error archivando página:', err)
   }
 }
 
-const openCreateModal = () => {
-  currentArticle.value = {}
-  editForm.value = {
-    titulo: '',
-    descripcion: '',
-    categoria: 'proceso',
-    contenido: ''
-  }
-  isEditing.value = true
-  isModalOpen.value = true
-}
-
-const closeModal = () => {
-  isModalOpen.value = false
-  currentArticle.value = {}
-}
-
-const saveArticle = async () => {
-  if(!editForm.value.titulo || !editForm.value.contenido) {
-    alert("El título y el contenido son requeridos")
-    return
-  }
+const restorePage = async (id: string) => {
   try {
-    if(currentArticle.value._id) {
-      const updated = await wikiService.update(currentArticle.value._id, editForm.value)
-      const index = articles.value.findIndex(a => a._id === updated._id)
-      if(index !== -1) articles.value[index] = updated
-      currentArticle.value = updated
-    } else {
-      const created = await wikiService.create(editForm.value)
-      articles.value.unshift(created)
-      currentArticle.value = created
-    }
-    isEditing.value = false
+    const restored = await wikiService.restore(id)
+    const node = archivedPages.value.find(n => n._id === id)
+    archivedPages.value = archivedPages.value.filter(n => n._id !== id)
+    tree.value.push({
+      _id: id,
+      titulo: node?.titulo || restored.titulo,
+      parentId: restored.parentId || null,
+      order: restored.order ?? 0
+    })
   } catch (err) {
-    console.error(err)
-    alert("Error al guardar")
+    console.error('Error restaurando página:', err)
   }
 }
 
-const confirmDelete = async () => {
-  if(!currentArticle.value._id) return
-  if(confirm("¿Estás seguro de eliminar este artículo? Esta acción no se puede deshacer.")) {
-    try {
-      await wikiService.delete(currentArticle.value._id)
-      articles.value = articles.value.filter(a => a._id !== currentArticle.value._id)
-      closeModal()
-    } catch (err) {
-      console.error(err)
-      alert("Error al eliminar")
-    }
+const askDeletePermanent = (id: string) => {
+  const node = archivedPages.value.find(n => n._id === id)
+  confirmDialog.value = {
+    title: 'Eliminar permanentemente',
+    message: `«${node?.titulo || 'Esta página'}» y sus sub-páginas se eliminarán para siempre. Esta acción no se puede deshacer.`,
+    confirmLabel: 'Eliminar',
+    danger: true,
+    onConfirm: () => deletePermanent(id)
   }
 }
 
-// Escuchar cambios de edición para autocompletar editForm
-watch(() => isEditing.value, (val) => {
-  if (val && currentArticle.value._id) {
-    editForm.value = {
-      titulo: currentArticle.value.titulo,
-      descripcion: currentArticle.value.descripcion,
-      categoria: currentArticle.value.categoria,
-      contenido: currentArticle.value.contenido
-    }
+const deletePermanent = async (id: string) => {
+  try {
+    await wikiService.delete(id, true)
+    archivedPages.value = archivedPages.value.filter(n => n._id !== id && n.parentId !== id)
+  } catch (err) {
+    console.error('Error eliminando página:', err)
+  }
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+
+onMounted(async () => {
+  window.addEventListener('keydown', onKeydown)
+  await loadTree()
+  if (currentId.value) {
+    loadPage(currentId.value)
+  } else if (rootNodes.value.length) {
+    router.replace(`/wiki/${rootNodes.value[0]._id}`)
   }
 })
 
-watch(() => selectedCategory.value, () => {
-  // Ya filtrado por computed
-})
-
-onMounted(() => {
-  fetchArticles()
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeydown)
 })
 </script>
 
 <style scoped>
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: var(--brand-accent, #4f46e5);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: white;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
+  transition: all 0.15s ease;
+}
+.btn-secondary:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.dark .btn-secondary {
+  background: #1e293b;
+  color: #cbd5e1;
+  border-color: #334155;
+}
+.dark .btn-secondary:hover {
+  background: #273449;
+  color: #f1f5f9;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -385,7 +663,7 @@ onMounted(() => {
   background: #cbd5e1;
   border-radius: 10px;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 </style>
