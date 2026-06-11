@@ -141,13 +141,35 @@
         :class="isSidebarMini ? 'lg:ml-20' : 'lg:ml-64'"
       >
         <!-- Main Content Area -->
-        <main class="p-4 pb-8 flex-1 min-h-0 overflow-y-auto custom-scrollbar dark:bg-[#0f172a]">
+        <main class="p-4 pb-24 lg:pb-8 flex-1 min-h-0 overflow-y-auto custom-scrollbar dark:bg-[#0f172a]">
           <router-view />
         </main>
       </div>
 
+      <!-- Bottom navigation (solo mobile) -->
+      <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-[#1e293b]/95 backdrop-blur-sm border-t border-slate-100 dark:border-[#334155] flex items-stretch px-1 pb-[env(safe-area-inset-bottom)]">
+        <router-link
+          v-for="item in bottomNavItems"
+          :key="item.path"
+          :to="item.path"
+          class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
+          :class="isModuleActive(item.path) ? 'text-primary-600 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500'"
+        >
+          <i :class="[item.icon, 'text-[15px]']"></i>
+          <span class="text-[9px] font-black tracking-tight truncate max-w-full px-0.5">{{ item.name }}</span>
+        </router-link>
+        <button
+          class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
+          :class="sidebarOpen ? 'text-primary-600 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500'"
+          @click="sidebarOpen = true"
+        >
+          <i class="fas fa-ellipsis text-[15px]"></i>
+          <span class="text-[9px] font-black tracking-tight">Más</span>
+        </button>
+      </nav>
+
   <!-- Mobile backdrop -->
-  <div v-if="sidebarOpen" class="lg:hidden fixed inset-0 z-40 bg-black/50" @click="sidebarOpen = false"></div>
+  <div v-if="sidebarOpen && !isDesktop" class="lg:hidden fixed inset-0 z-40 bg-black/50" @click="sidebarOpen = false"></div>
 
   <!-- Sidebar nav tooltip (Teleport para evitar clipping del overflow-y-auto) -->
   <Teleport to="body">
@@ -224,6 +246,9 @@ const availableModules = computed(() => authStore.getAvailableModules)
 // Activo también en sub-rutas (ej. /wiki/:pageId mantiene iluminado "Wiki")
 const isModuleActive = (path: string) =>
   route.path === path || (path !== '/' && route.path.startsWith(path + '/'))
+
+// Bottom bar móvil: primeros 4 módulos disponibles (Dashboard, Clientes, Actividades…) + botón "Más"
+const bottomNavItems = computed(() => availableModules.value.slice(0, 4))
 
 const currentModule = computed(() => {
   const current = availableModules.value.find(m => m.path === route.path)
