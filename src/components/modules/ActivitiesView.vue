@@ -272,7 +272,7 @@
 
     <!-- Vista de Calendario -->
     <div v-if="currentView === 'calendar'">
-      <MonthlyCalendar
+      <ActivityCalendar
         :activities="filteredActivities"
         :clients="clients"
         :team-members="teamMembers"
@@ -2632,7 +2632,7 @@ import VoiceDictateButton from '@/components/ui/VoiceDictateButton.vue'
 import ActivityFormModal from '../forms/ActivityFormModal.vue'
 import AssignActivityModal from '../modals/AssignActivityModal.vue'
 import CustomSelect from '../ui/CustomSelect.vue'
-import MonthlyCalendar from '../calendar/MonthlyCalendar.vue'
+import ActivityCalendar from '../calendar/ActivityCalendar.vue'
 import QuickTaskModal from '../modals/QuickTaskModal.vue'
 import AvatarInline from '../AvatarInline.vue'
 // import TaskNotifier from '../notifications/TaskNotifier.vue' // REMOVED
