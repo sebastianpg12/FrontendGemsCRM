@@ -4,12 +4,19 @@
     <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm transition-all duration-300">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <!-- Profile Avatar -->
-        <div class="relative">
+        <div class="relative group cursor-pointer" @click="togglePhotoUploader" title="Cambiar foto de perfil">
           <UserAvatar
             :name="profileData?.name || 'U'"
+            :photo="profileData?.photo || undefined"
+            :avatar="profileData?.avatar || undefined"
             size="2xl"
-            class="w-44 h-44 !rounded-full border-4 border-white shadow-xl ring-4 ring-primary-100/50"
+            class="w-44 h-44 !rounded-full border-4 border-white dark:border-[#1e293b] shadow-xl ring-4 ring-primary-100/50 dark:ring-primary-500/20"
           />
+          <!-- Overlay de cámara -->
+          <div class="absolute inset-0 rounded-full bg-slate-900/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <i class="fas fa-camera text-white text-xl mb-1"></i>
+            <span class="text-white text-[9px] font-black uppercase tracking-widest">Cambiar</span>
+          </div>
         </div>
         
         <!-- Basic Info -->
@@ -229,39 +236,57 @@
               <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">
                 Contraseña Actual
               </label>
-              <input
-                v-model="passwordForm.currentPassword"
-                type="password"
-                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
-                placeholder="••••••••"
-                required
-              />
+              <div class="relative">
+                <input
+                  v-model="passwordForm.currentPassword"
+                  :type="showPwd.current ? 'text' : 'password'"
+                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  placeholder="••••••••"
+                  required
+                />
+                <button type="button" @click="showPwd.current = !showPwd.current" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors" :title="showPwd.current ? 'Ocultar' : 'Mostrar'">
+                  <i :class="showPwd.current ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-sm"></i>
+                </button>
+              </div>
             </div>
-            
+
             <div class="space-y-2">
               <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">
                 Nueva Contraseña
               </label>
-              <input
-                v-model="passwordForm.newPassword"
-                type="password"
-                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
-                placeholder="••••••••"
-                required
-              />
+              <div class="relative">
+                <input
+                  v-model="passwordForm.newPassword"
+                  :type="showPwd.new ? 'text' : 'password'"
+                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  placeholder="••••••••"
+                  required
+                />
+                <button type="button" @click="showPwd.new = !showPwd.new" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors" :title="showPwd.new ? 'Ocultar' : 'Mostrar'">
+                  <i :class="showPwd.new ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-sm"></i>
+                </button>
+              </div>
             </div>
-            
+
             <div class="space-y-2">
               <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">
                 Confirmar Nueva Contraseña
               </label>
-              <input
-                v-model="passwordForm.confirmPassword"
-                type="password"
-                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
-                placeholder="••••••••"
-                required
-              />
+              <div class="relative">
+                <input
+                  v-model="passwordForm.confirmPassword"
+                  :type="showPwd.confirm ? 'text' : 'password'"
+                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  placeholder="••••••••"
+                  required
+                />
+                <button type="button" @click="showPwd.confirm = !showPwd.confirm" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors" :title="showPwd.confirm ? 'Ocultar' : 'Mostrar'">
+                  <i :class="showPwd.confirm ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-sm"></i>
+                </button>
+              </div>
+              <p v-if="passwordForm.confirmPassword && passwordForm.newPassword !== passwordForm.confirmPassword" class="text-[10px] font-bold text-rose-500 ml-1">
+                <i class="fas fa-circle-exclamation mr-1"></i>Las contraseñas no coinciden
+              </p>
             </div>
             
             <button
@@ -401,7 +426,23 @@
       </div>
     </div>
 
-    <!-- Photo/Avatar Modals removed by user request -->
+    <!-- Modal de foto de perfil (sin blur) -->
+    <div v-if="showPhotoUploader" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50" @click.self="showPhotoUploader = false">
+      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm border border-slate-100 dark:border-[#334155] max-h-[90vh] overflow-y-auto">
+        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between">
+          <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Foto de perfil</h3>
+          <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showPhotoUploader = false">
+            <i class="fas fa-times text-[12px]"></i>
+          </button>
+        </div>
+        <div class="p-5">
+          <ProfilePhotoUploader
+            :current-photo="profileData.photo"
+            @update="handlePhotoUpdate"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -479,6 +520,8 @@ const passwordForm = ref({
   confirmPassword: ''
 })
 
+const showPwd = ref({ current: false, new: false, confirm: false })
+
 // 2FA state
 const setup2FAData = ref<{ secret: string; qrCode: string } | null>(null)
 const twoFactorCode = ref('')
@@ -529,13 +572,10 @@ const togglePhotoUploader = () => {
 const handlePhotoUpdate = (data: { photo: string | null, avatar: string | null }) => {
   profileData.value.photo = data.photo
   profileData.value.avatar = data.avatar
-  
-  if (authStore.user) {
-    authStore.user.photo = data.photo
-    authStore.user.avatar = data.avatar
-    localStorage.setItem('user', JSON.stringify(authStore.user))
-  }
-  
+
+  // Propaga al store → navbar, sidebar, chat y equipo se actualizan sin recargar
+  authStore.updateUserProfile({ photo: data.photo, avatar: data.avatar } as any)
+
   showPhotoUploader.value = false
   photoErrored.value = false
   showSuccess('Foto actualizada correctamente')

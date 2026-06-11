@@ -18,7 +18,8 @@ const joinUrl = (base: string, path: string) => {
 export const getFullPhotoUrl = (photoPath?: string): string => {
   if (!photoPath) return ''
 
-  const p = String(photoPath).trim()
+  // Normaliza backslashes (paths guardados en Windows) a barras URL
+  const p = String(photoPath).trim().replace(/\\/g, '/')
   // Ya es absoluta
   if (/^(https?:)?\/\//i.test(p) || p.startsWith('data:')) {
     return p

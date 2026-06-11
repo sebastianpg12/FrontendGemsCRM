@@ -53,6 +53,7 @@
             <UserAvatar
               :name="authStore.user?.name || 'Usuario'"
               :avatar="authStore.user?.avatar"
+              :photo="authStore.user?.photo"
               size="sm"
               :clickable="true"
               @click="router.push('/profile')"

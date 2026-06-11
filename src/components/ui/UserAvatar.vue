@@ -10,8 +10,25 @@
     :title="name"
     @click="handleClick"
   >
-    <!-- Forzado a iniciales por solicitud de usuario (Abril 2026) -->
+    <!-- Foto subida (prioridad) -->
+    <img
+      v-if="resolvedPhoto"
+      :src="resolvedPhoto"
+      :alt="name"
+      class="w-full h-full object-cover"
+      @error="handleImageError"
+    />
+    <!-- Avatar ilustrado -->
+    <img
+      v-else-if="resolvedAvatar"
+      :src="resolvedAvatar.path"
+      :alt="name"
+      class="w-full h-full object-cover"
+      @error="handleImageError"
+    />
+    <!-- Fallback: iniciales sobre gradiente -->
     <div
+      v-else
       :class="[
         'w-full h-full flex items-center justify-center',
         (bgGradient || finalGradient),
