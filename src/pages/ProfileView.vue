@@ -178,6 +178,25 @@
               </div>
             </div>
 
+            <!-- Timezone -->
+            <div class="space-y-2">
+              <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                Zona Horaria
+              </label>
+              <div v-if="isEditing" class="relative group">
+                <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors z-10 pointer-events-none"></i>
+                <select
+                  v-model="editForm.timezone"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none appearance-none"
+                >
+                  <option v-for="tz in TIMEZONES" :key="tz.value" :value="tz.value">{{ tz.label }}</option>
+                </select>
+              </div>
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+                <p class="text-slate-700 dark:text-slate-200 font-bold">{{ timezoneLabel }}</p>
+              </div>
+            </div>
+
             <!-- Metadata (Read Only) -->
             <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100 mt-2">
               <div class="flex items-center gap-4">
@@ -409,19 +428,98 @@
           </div>
         </div>
 
-        <!-- Help Box -->
-        <div class="bg-primary-50 rounded-3xl p-6 border border-primary-100">
-          <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shrink-0">
-              <i class="fas fa-lightbulb text-primary-500"></i>
+        <!-- Preferencias -->
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+          <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+            <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center mr-4">
+              <i class="fas fa-sliders text-primary-500"></i>
             </div>
-            <div>
-              <h4 class="font-black text-primary-900 text-sm uppercase tracking-tight mb-1">Dato curioso</h4>
-              <p class="text-primary-700/80 text-xs leading-relaxed font-medium">
-                Tu avatar representa tu identidad en GEMS Hub. Puedes cambiarlo en cualquier momento para reflejar tu enfoque de trabajo.
-              </p>
+            Preferencias
+          </h2>
+
+          <div class="space-y-4">
+            <!-- Tema -->
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-[13px] font-black text-slate-700 dark:text-slate-200">Modo oscuro</p>
+                <p class="text-[10px] font-medium text-slate-400 mt-0.5">Tema oscuro de la interfaz</p>
+              </div>
+              <button type="button" @click="toggleDarkMode"
+                class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0"
+                :class="themeStore.config.darkMode ? 'bg-primary-600' : 'bg-slate-200'">
+                <span class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200"
+                  :class="themeStore.config.darkMode ? 'translate-x-5' : 'translate-x-0'"></span>
+              </button>
+            </div>
+
+            <!-- Idioma -->
+            <div class="flex items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-[#334155]">
+              <div>
+                <p class="text-[13px] font-black text-slate-700 dark:text-slate-200">Idioma</p>
+                <p class="text-[10px] font-medium text-slate-400 mt-0.5">Idioma de la interfaz</p>
+              </div>
+              <div class="flex bg-slate-100 dark:bg-[#0f172a] rounded-lg p-0.5">
+                <button type="button" @click="prefs.language = 'es'"
+                  class="px-3 h-7 rounded-md text-[11px] font-bold transition-all"
+                  :class="prefs.language === 'es' ? 'bg-white dark:bg-[#1e293b] text-primary-600 dark:text-primary-300 shadow-sm' : 'text-slate-500'">ES</button>
+                <button type="button" @click="prefs.language = 'en'"
+                  class="px-3 h-7 rounded-md text-[11px] font-bold transition-all"
+                  :class="prefs.language === 'en' ? 'bg-white dark:bg-[#1e293b] text-primary-600 dark:text-primary-300 shadow-sm' : 'text-slate-500'">EN</button>
+              </div>
+            </div>
+
+            <!-- Notificaciones push -->
+            <div class="flex items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-[#334155]">
+              <div>
+                <p class="text-[13px] font-black text-slate-700 dark:text-slate-200">Notificaciones push</p>
+                <p class="text-[10px] font-medium text-slate-400 mt-0.5">Avisos de actividad y menciones</p>
+              </div>
+              <button type="button" @click="prefs.pushNotifications = !prefs.pushNotifications"
+                class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0"
+                :class="prefs.pushNotifications ? 'bg-primary-600' : 'bg-slate-200'">
+                <span class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200"
+                  :class="prefs.pushNotifications ? 'translate-x-5' : 'translate-x-0'"></span>
+              </button>
+            </div>
+
+            <button
+              @click="savePreferences"
+              :disabled="savingPrefs"
+              class="w-full mt-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-primary-200 disabled:opacity-50"
+            >
+              <i class="fas mr-2" :class="savingPrefs ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
+              {{ savingPrefs ? 'Guardando...' : 'Guardar preferencias' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Mi actividad -->
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+          <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
+            <div class="w-10 h-10 bg-slate-50 dark:bg-[#0f172a] rounded-xl flex items-center justify-center mr-4">
+              <i class="fas fa-clock-rotate-left text-slate-500"></i>
+            </div>
+            Mi actividad
+          </h2>
+          <div v-if="profileData.loginHistory?.length" class="space-y-2">
+            <div
+              v-for="(entry, idx) in profileData.loginHistory"
+              :key="idx"
+              class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155]"
+            >
+              <div class="w-8 h-8 rounded-lg bg-white dark:bg-[#1e293b] flex items-center justify-center text-slate-400 shrink-0">
+                <i class="fas fa-right-to-bracket text-[11px]"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate">{{ formatLoginEntry(entry.userAgent) }}</p>
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{{ formatLoginTime(entry.at) }}<span v-if="entry.ip"> · {{ entry.ip }}</span></p>
+              </div>
+              <span v-if="idx === 0" class="text-[8px] font-black text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase tracking-widest shrink-0">Actual</span>
             </div>
           </div>
+          <p v-else class="text-[11px] font-medium text-slate-400 text-center py-4">
+            Aún no hay accesos registrados. Aparecerán la próxima vez que inicies sesión.
+          </p>
         </div>
       </div>
     </div>
@@ -449,6 +547,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useThemeStore } from '@/stores/theme'
 import { userService } from '@/services/userService'
 import { AvatarService } from '@/services/avatarService'
 import { useNotifications } from '@/composables/useNotifications'
@@ -458,6 +557,7 @@ import { getAvatarById, getDefaultAvatar } from '@/utils/avatarConfig'
 import { API_CONFIG } from '@/config/api'
 
 const authStore = useAuthStore()
+const themeStore = useThemeStore()
 const { showSuccess, showError } = useNotifications()
 
 // ── Department picker ─────────────────────────────────────────────
@@ -501,18 +601,36 @@ const profileData = ref({
   role: '',
   phone: '',
   department: '',
+  timezone: 'America/Bogota',
   avatar: null as string | null,
   photo: null as string | null,
   createdAt: '',
-  updatedAt: ''
+  updatedAt: '',
+  loginHistory: [] as Array<{ at: string; ip?: string; userAgent?: string }>
 })
 
 const editForm = ref({
   name: '',
   email: '',
   phone: '',
-  department: ''
+  department: '',
+  timezone: 'America/Bogota'
 })
+
+const TIMEZONES = [
+  { value: 'America/Bogota', label: 'Bogotá / Lima / Quito (GMT-5)' },
+  { value: 'America/Mexico_City', label: 'Ciudad de México (GMT-6)' },
+  { value: 'America/Argentina/Buenos_Aires', label: 'Buenos Aires (GMT-3)' },
+  { value: 'America/Santiago', label: 'Santiago (GMT-3/-4)' },
+  { value: 'America/Caracas', label: 'Caracas (GMT-4)' },
+  { value: 'America/New_York', label: 'Nueva York (GMT-5/-4)' },
+  { value: 'Europe/Madrid', label: 'Madrid (GMT+1/+2)' },
+  { value: 'UTC', label: 'UTC' }
+]
+
+// Preferencias (tema vive en el theme store; idioma y push se guardan en el usuario)
+const prefs = ref({ language: 'es' as 'es' | 'en', pushNotifications: true })
+const savingPrefs = ref(false)
 
 const passwordForm = ref({
   currentPassword: '',
@@ -529,6 +647,10 @@ const showDisable2FAForm = ref(false)
 const disable2FAPassword = ref('')
 
 // Computed
+const timezoneLabel = computed(() =>
+  TIMEZONES.find(t => t.value === profileData.value.timezone)?.label || profileData.value.timezone || 'No especificada'
+)
+
 const selectedAvatarData = computed(() => {
   const avatarId = profileData.value?.avatar
   return avatarId ? getAvatarById(avatarId) : null
@@ -636,20 +758,12 @@ const confirmAvatarSelection = async () => {
 const toggleEditMode = () => {
   if (!profileData.value) return
   
-  if (isEditing.value) {
-    editForm.value = {
-      name: profileData.value.name || '',
-      email: profileData.value.email || '',
-      phone: profileData.value.phone || '',
-      department: profileData.value.department || ''
-    }
-  } else {
-    editForm.value = {
-      name: profileData.value.name || '',
-      email: profileData.value.email || '',
-      phone: profileData.value.phone || '',
-      department: profileData.value.department || ''
-    }
+  editForm.value = {
+    name: profileData.value.name || '',
+    email: profileData.value.email || '',
+    phone: profileData.value.phone || '',
+    department: profileData.value.department || '',
+    timezone: profileData.value.timezone || 'America/Bogota'
   }
   isEditing.value = !isEditing.value
 }
@@ -661,6 +775,7 @@ const updateProfile = async () => {
     
     if (result.success) {
       Object.assign(profileData.value, editForm.value)
+      authStore.updateUserProfile({ ...editForm.value } as any)
       isEditing.value = false
       showSuccess('Perfil actualizado correctamente')
     } else {
@@ -671,6 +786,47 @@ const updateProfile = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const savePreferences = async () => {
+  savingPrefs.value = true
+  try {
+    await authStore.updateProfile({
+      name: profileData.value.name,
+      email: profileData.value.email,
+      preferences: { language: prefs.value.language, pushNotifications: prefs.value.pushNotifications }
+    } as any)
+    authStore.updateUserProfile({ preferences: { ...prefs.value } } as any)
+    showSuccess('Preferencias guardadas')
+  } catch {
+    showError('No se pudieron guardar las preferencias')
+  } finally {
+    savingPrefs.value = false
+  }
+}
+
+const toggleDarkMode = () => {
+  themeStore.config.darkMode = !themeStore.config.darkMode
+  themeStore.update({ darkMode: themeStore.config.darkMode })
+}
+
+const formatLoginEntry = (ua?: string) => {
+  if (!ua) return 'Dispositivo desconocido'
+  let device = 'Escritorio'
+  if (/mobile|android|iphone/i.test(ua)) device = 'Móvil'
+  else if (/ipad|tablet/i.test(ua)) device = 'Tablet'
+  let browser = 'Navegador'
+  if (/edg/i.test(ua)) browser = 'Edge'
+  else if (/chrome/i.test(ua)) browser = 'Chrome'
+  else if (/firefox/i.test(ua)) browser = 'Firefox'
+  else if (/safari/i.test(ua)) browser = 'Safari'
+  return `${device} · ${browser}`
+}
+
+const formatLoginTime = (at: string) => {
+  try {
+    return new Date(at).toLocaleString('es-CO', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+  } catch { return '' }
 }
 
 const updatePassword = async () => {
@@ -773,11 +929,19 @@ const loadProfile = async () => {
         role: profile.role || '',
         phone: profile.phone || '',
         department: profile.department || '',
+        timezone: profile.timezone || 'America/Bogota',
         avatar: profile.avatar || null,
         photo: profile.photo || null,
         createdAt: profile.createdAt || '',
         updatedAt: profile.updatedAt || '',
-        isTwoFactorEnabled: profile.isTwoFactorEnabled || false
+        isTwoFactorEnabled: profile.isTwoFactorEnabled || false,
+        loginHistory: profile.loginHistory || []
+      }
+      if (profile.preferences) {
+        prefs.value = {
+          language: profile.preferences.language || 'es',
+          pushNotifications: profile.preferences.pushNotifications !== false
+        }
       }
       photoErrored.value = false
     } catch (serverError) {
