@@ -79,7 +79,7 @@
 
     <!-- LIST VIEW: 3-pane -->
     <div v-if="viewMode === 'list'" class="flex-1 grid grid-cols-12 gap-4 min-h-0">
-      <div class="col-span-12 md:col-span-4 lg:col-span-3 min-h-0 h-[calc(100vh-160px)] md:h-auto">
+      <div class="col-span-12 md:col-span-4 lg:col-span-3 min-h-0 h-[calc(100vh-224px)] md:h-auto">
         <ProspectsList
           :prospects="prospects"
           :selected-id="selected?._id"
@@ -89,7 +89,7 @@
           @import="showImport = true"
         />
       </div>
-      <div class="col-span-12 md:col-span-8 lg:col-span-9 min-h-0 h-[calc(100vh-160px)] md:h-auto">
+      <div class="col-span-12 md:col-span-8 lg:col-span-9 min-h-0 h-[calc(100vh-224px)] md:h-auto">
         <transition name="fade" mode="out-in">
           <ProspectGenerator
             v-if="showGenerator || (!selected && !loading)"
