@@ -1,5 +1,5 @@
 ﻿<template>
-  <div ref="bellRoot" class="fixed bottom-6 right-6 z-50">
+  <div ref="bellRoot" class="fixed bottom-20 right-4 lg:bottom-6 lg:right-6 z-50">
     <!-- Botón campana — minimalista, sin animaciones, perfectamente circular -->
     <button
       type="button"
