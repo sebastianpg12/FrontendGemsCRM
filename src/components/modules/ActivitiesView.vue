@@ -3,13 +3,13 @@
     <!-- Header con controles -->
     <div class="flex flex-wrap items-center justify-between gap-3 mb-1">
       <!-- View Toggle — pills premium -->
-      <div class="flex items-center bg-slate-50 rounded-xl p-1 border border-slate-100 gap-0.5">
+      <div class="flex items-center bg-slate-100 dark:bg-[#1e293b] rounded-xl p-1 border border-slate-200 dark:border-[#334155] gap-0.5">
         <button
           v-for="v in viewOptions" :key="v.id"
           @click="currentView = v.id"
           :class="currentView === v.id
-            ? 'bg-white text-primary-600 shadow-sm ring-1 ring-slate-200 font-black'
-            : 'text-slate-400 hover:text-slate-700 font-bold'"
+            ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm ring-1 ring-slate-200 dark:ring-[#334155] font-black'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold'"
           class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] transition-all duration-150"
         >
           <i :class="v.icon + ' text-[10px]'"></i>
@@ -19,8 +19,8 @@
           v-if="authStore.isLeader"
           @click="currentView = 'team'"
           :class="currentView === 'team'
-            ? 'bg-white text-primary-600 shadow-sm ring-1 ring-slate-200 font-black'
-            : 'text-slate-400 hover:text-slate-700 font-bold'"
+            ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm ring-1 ring-slate-200 dark:ring-[#334155] font-black'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold'"
           class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] transition-all duration-150"
         >
           <i class="fas fa-users text-[10px]"></i>
@@ -37,16 +37,16 @@
             @input="$emit('update:searchTerm', ($event.target as HTMLInputElement).value)"
             type="text"
             placeholder="Buscar actividad..."
-            class="w-52 pl-8 pr-3 py-1.5 bg-white border border-slate-100 rounded-xl text-[11px] text-slate-700 placeholder-slate-300 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none"
+            class="w-52 pl-8 pr-3 py-1.5 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl text-[11px] text-slate-700 dark:text-slate-200 placeholder-slate-300 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none"
           />
         </div>
 
         <!-- Mini stats -->
         <div class="hidden lg:flex items-center gap-2 text-[10px] font-black uppercase tracking-wider">
-          <span class="flex items-center gap-1 px-2 py-1 bg-amber-50 text-amber-600 rounded-lg">
+          <span class="flex items-center gap-1 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-lg border border-amber-100 dark:border-amber-800/30">
             <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {{ pendingActivities.length }}
           </span>
-          <span class="flex items-center gap-1 px-2 py-1 bg-primary-50 text-primary-600 rounded-lg">
+          <span class="flex items-center gap-1 px-2 py-1 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 rounded-lg border border-primary-100 dark:border-primary-800/30">
             <span class="w-1.5 h-1.5 rounded-full bg-primary-400"></span> {{ inProgressActivities.length }}
           </span>
         </div>
@@ -65,13 +65,13 @@
     </div>
 
     <!-- Barra de tarea rápida -->
-    <div class="bg-primary-50/60 rounded-xl p-2 border border-primary-100/80 relative">
+    <div class="bg-primary-50/60 dark:bg-primary-900/15 rounded-xl p-2 border border-primary-100/80 dark:border-primary-700/30 relative">
       <div class="flex items-center gap-2.5">
         <!-- Label -->
-        <div class="flex items-center gap-1.5 text-primary-700 shrink-0 ml-0.5">
+        <div class="flex items-center gap-1.5 text-primary-700 dark:text-primary-400 shrink-0 ml-0.5">
           <i class="fas fa-bolt text-[10px]"></i>
           <span class="font-black text-[10px] tracking-widest uppercase hidden sm:inline">Tarea Rápida</span>
-          <span class="text-[9px] bg-primary-100 text-primary-700 font-black px-1.5 py-0.5 rounded-lg hidden lg:inline-flex items-center gap-1">
+          <span class="text-[9px] bg-primary-100 dark:bg-primary-800/30 text-primary-700 dark:text-primary-300 font-black px-1.5 py-0.5 rounded-lg hidden lg:inline-flex items-center gap-1">
             <i class="fas fa-clock text-[8px]"></i> {{ quickTaskSettings.dueDays }}d ·
             {{ quickTaskSettings.priority === 'low' ? 'Baja' : quickTaskSettings.priority === 'medium' ? 'Media' : quickTaskSettings.priority === 'high' ? 'Alta' : 'Urgente' }} ·
             {{ quickTaskSettings.estimatedTime }}
@@ -88,7 +88,7 @@
             @blur="setTimeout(() => showQuickTaskHints = false, 200)"
             type="text"
             placeholder="¿Qué necesitas hacer? Enter para crear..."
-            class="w-full pl-3 pr-10 py-1.5 bg-white border border-primary-100 rounded-xl text-slate-800 placeholder-slate-300 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none font-medium text-[11px]"
+            class="w-full pl-3 pr-10 py-1.5 bg-white dark:bg-[#1e293b] border border-primary-100 dark:border-[#334155] rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-300 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none font-medium text-[11px]"
           />
           <VoiceDictateButton
             v-model="quickTaskTitle"
@@ -116,22 +116,22 @@
 
         <!-- Config -->
         <button
-          @click="showQuickSettings = !showQuickSettings"
-          class="p-1.5 text-primary-400 hover:text-primary-600 hover:bg-primary-100/50 rounded-lg transition-colors shrink-0"
-          title="Configuración"
+          @click.stop="showQuickSettings = !showQuickSettings"
+          class="p-2 text-primary-400 dark:text-primary-300 hover:text-primary-600 dark:hover:text-primary-200 hover:bg-primary-100/50 dark:hover:bg-primary-800/30 rounded-lg transition-colors shrink-0"
+          title="Configuración rápida"
         >
-          <i class="fas fa-cog text-[11px]"></i>
+          <i class="fas fa-cog text-[13px]"></i>
         </button>
       </div>
     </div>
 
     <!-- Filtros -->
     <div
-      class="bg-white rounded-xl border shadow-sm transition-all"
-      :class="filtersLocked ? 'border-primary-200 ring-2 ring-primary-100/60' : 'border-slate-100'"
+      class="bg-white dark:bg-[#1e293b] rounded-xl border shadow-sm transition-all"
+      :class="filtersLocked ? 'border-primary-200 dark:border-primary-700/50 ring-2 ring-primary-100/60 dark:ring-primary-900/30' : 'border-slate-100 dark:border-[#334155]'"
     >
       <!-- Filter Header -->
-      <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-50">
+      <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-50 dark:border-[#334155]">
         <div class="flex items-center gap-1.5">
           <i class="fas fa-filter text-[10px] text-slate-400"></i>
           <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Filtros</span>
@@ -1620,21 +1620,21 @@
         
         <!-- Modal -->
         <div class="flex min-h-full items-center justify-center p-4">
-          <div class="relative bg-white rounded-2xl shadow-xl border border-slate-200 w-full max-w-md transform transition-all animate-fade-in">
+          <div class="relative bg-white dark:bg-[#1e293b] rounded-2xl shadow-xl border border-slate-200 dark:border-[#334155] w-full max-w-md transform transition-all animate-fade-in">
             <!-- Header del modal -->
-            <div class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50 rounded-t-2xl">
+            <div class="flex items-center justify-between p-6 border-b border-slate-100 dark:border-[#334155] bg-slate-50 dark:bg-[#0f172a] rounded-t-2xl">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center border border-amber-200 shadow-sm">
+                <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center border border-amber-200 dark:border-amber-700/40 shadow-sm">
                   <i class="fas fa-cog text-amber-500 text-lg"></i>
                 </div>
                 <div>
-                  <h3 class="text-xl font-black text-slate-800">Configuración</h3>
-                  <p class="text-sm font-medium text-slate-500">Tareas rápidas por defecto</p>
+                  <h3 class="text-xl font-black text-slate-800 dark:text-slate-100">Configuración</h3>
+                  <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Tareas rápidas por defecto</p>
                 </div>
               </div>
               <button
                 @click="showQuickSettings = false"
-                class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-lg transition-all duration-200"
+                class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#334155] rounded-lg transition-all duration-200"
               >
                 <i class="fas fa-times text-lg"></i>
               </button>
@@ -1644,7 +1644,7 @@
             <div class="p-6 space-y-6">
               <!-- Días de vencimiento -->
               <div>
-                <label class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">
+                <label class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-3">
                   <i class="fas fa-calendar-day text-amber-500"></i>
                   Días hasta vencimiento
                 </label>
@@ -1655,9 +1655,9 @@
                     @click="quickTaskSettings.dueDays = day"
                     :class="[
                       'px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 relative',
-                      quickTaskSettings.dueDays === day 
-                        ? 'bg-amber-100 text-amber-700 border-2 border-amber-400 shadow-sm' 
-                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
+                      quickTaskSettings.dueDays === day
+                        ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-2 border-amber-400 shadow-sm'
+                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50 hover:border-slate-300'
                     ]"
                   >
                     {{ day === 7 ? '1 sem' : `${day} día${day > 1 ? 's' : ''}` }}
@@ -1667,7 +1667,7 @@
 
               <!-- Prioridad por defecto -->
               <div>
-                <label class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">
+                <label class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-3">
                   <i class="fas fa-flag text-amber-500"></i>
                   Prioridad por defecto
                 </label>
@@ -1683,9 +1683,9 @@
                     @click="quickTaskSettings.priority = priority.value"
                     :class="[
                       'px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 relative',
-                      quickTaskSettings.priority === priority.value 
-                        ? `bg-${priority.color}-50 text-${priority.color}-700 border-2 border-${priority.color}-400 shadow-sm` 
-                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
+                      quickTaskSettings.priority === priority.value
+                        ? `bg-${priority.color}-50 dark:bg-${priority.color}-900/30 text-${priority.color}-700 dark:text-${priority.color}-300 border-2 border-${priority.color}-400 shadow-sm`
+                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50 hover:border-slate-300'
                     ]"
                   >
                     <i :class="`fas fa-circle text-${priority.color}-500 text-[10px]`"></i>
@@ -1696,7 +1696,7 @@
 
               <!-- Tiempo estimado -->
               <div>
-                <label class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">
+                <label class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-3">
                   <i class="fas fa-clock text-amber-500"></i>
                   Tiempo estimado
                 </label>
@@ -1707,9 +1707,9 @@
                     @click="quickTaskSettings.estimatedTime = time"
                     :class="[
                       'px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 relative',
-                      quickTaskSettings.estimatedTime === time 
-                        ? 'bg-amber-100 text-amber-700 border-2 border-amber-400 shadow-sm' 
-                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
+                      quickTaskSettings.estimatedTime === time
+                        ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-2 border-amber-400 shadow-sm'
+                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50 hover:border-slate-300'
                     ]"
                   >
                     {{ time }}
@@ -1718,7 +1718,7 @@
               </div>
 
               <!-- Auto-asignación -->
-              <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
+              <div class="bg-slate-50 dark:bg-[#0f172a] rounded-xl p-4 border border-slate-200 dark:border-[#334155] shadow-sm">
                 <label class="flex items-center gap-4 cursor-pointer">
                   <div class="relative">
                     <input
@@ -1728,7 +1728,7 @@
                     >
                     <div :class="[
                       'w-11 h-6 rounded-full transition-all duration-200 border border-transparent shadow-inner',
-                      quickTaskSettings.autoAssign ? 'bg-amber-500' : 'bg-slate-300'
+                      quickTaskSettings.autoAssign ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'
                     ]">
                       <div :class="[
                         'w-5 h-5 bg-white rounded-full transition-transform duration-200 mt-[1px] ml-[1px] shadow-sm',
@@ -1737,18 +1737,18 @@
                     </div>
                   </div>
                   <div>
-                    <span class="text-slate-800 font-bold text-sm block">Auto-asignación</span>
-                    <p class="text-xs text-slate-500 font-medium">Asignarme automáticamente las tareas rápidas</p>
+                    <span class="text-slate-800 dark:text-slate-100 font-bold text-sm block">Auto-asignación</span>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Asignarme automáticamente las tareas rápidas</p>
                   </div>
                 </label>
               </div>
             </div>
 
             <!-- Footer del modal -->
-            <div class="flex items-center justify-between gap-3 p-6 border-t border-slate-100 bg-slate-50 rounded-b-2xl">
+            <div class="flex items-center justify-between gap-3 p-6 border-t border-slate-100 dark:border-[#334155] bg-slate-50 dark:bg-[#0f172a] rounded-b-2xl">
               <button
                 @click="resetQuickSettings"
-                class="px-4 py-2.5 text-slate-600 hover:text-slate-800 font-bold hover:bg-slate-200 rounded-lg transition-all duration-200 text-sm flex items-center"
+                class="px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 font-bold hover:bg-slate-200 dark:hover:bg-[#334155] rounded-lg transition-all duration-200 text-sm flex items-center"
               >
                 <i class="fas fa-undo mr-2"></i>
                 Restablecer
@@ -1756,13 +1756,13 @@
               <div class="flex gap-3">
                 <button
                   @click="showQuickSettings = false"
-                  class="px-5 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold rounded-lg transition-all duration-200 shadow-sm text-sm"
+                  class="px-5 py-2.5 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#334155]/50 text-slate-700 dark:text-slate-300 font-bold rounded-lg transition-all duration-200 shadow-sm text-sm"
                 >
                   Cancelar
                 </button>
                 <button
                   @click="showQuickSettings = false"
-                  class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-lg transition-all duration-200 shadow-sm text-sm"
+                  class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg transition-all duration-200 shadow-sm text-sm"
                 >
                   <i class="fas fa-save mr-2"></i>
                   Guardar
