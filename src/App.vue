@@ -73,7 +73,7 @@
             :to="module.path"
             :class="[
               'flex items-center py-2.5 rounded-xl transition-all duration-150 group relative',
-              $route.path === module.path
+              isModuleActive(module.path)
                 ? 'bg-primary-50 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 ring-1 ring-primary-100 dark:ring-primary-500/30'
                 : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#334155] hover:text-slate-800 dark:hover:text-slate-200',
               isSidebarMini ? 'justify-center px-0' : 'px-3.5'
@@ -83,14 +83,14 @@
           >
             <!-- Active left bar -->
             <span
-              v-if="$route.path === module.path && !isSidebarMini"
+              v-if="isModuleActive(module.path) && !isSidebarMini"
               class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary-500 rounded-r-full"
             ></span>
             <i :class="[
               module.icon,
               'text-[13px] shrink-0 transition-all duration-150 group-hover:scale-110',
               !isSidebarMini ? 'mr-3' : '',
-              $route.path === module.path ? 'text-primary-500 dark:text-primary-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+              isModuleActive(module.path) ? 'text-primary-500 dark:text-primary-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
             ]"></i>
             <span
               v-if="!isSidebarMini"
@@ -98,7 +98,7 @@
             >{{ module.name }}</span>
             <!-- Active dot for mini mode -->
             <span
-              v-if="isSidebarMini && $route.path === module.path"
+              v-if="isSidebarMini && isModuleActive(module.path)"
               class="absolute right-1.5 top-1.5 w-1.5 h-1.5 bg-primary-500 rounded-full"
             ></span>
           </router-link>
@@ -219,6 +219,10 @@ const hideNavTooltip = () => { navTooltip.visible = false }
 
 // Computed properties
 const availableModules = computed(() => authStore.getAvailableModules)
+
+// Activo también en sub-rutas (ej. /wiki/:pageId mantiene iluminado "Wiki")
+const isModuleActive = (path: string) =>
+  route.path === path || (path !== '/' && route.path.startsWith(path + '/'))
 
 const currentModule = computed(() => {
   const current = availableModules.value.find(m => m.path === route.path)

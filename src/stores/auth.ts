@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+﻿import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { authService, type MembershipSummary, type OrganizationSummary } from '../services/authService'
 
@@ -67,12 +67,20 @@ export const useAuthStore = defineStore('auth', () => {
   )
   const memberships = ref<MembershipSummary[]>([])
   const requiresOrgSelection = ref<boolean>(false)
+  // Cuántas orgs tiene el usuario — persiste en localStorage para sobrevivir reloads
+  const membershipsCount = ref<number>(Number(localStorage.getItem('memberships_count') || 0))
 
   // Getters
   const isAuthenticated = computed(() => !!user.value && !!token.value)
   const userRole = computed(() => user.value?.role || null)
   const isAdmin = computed(() => user.value?.role === 'admin')
   const isSuperAdmin = computed(() => !!user.value?.isSuperAdmin)
+  // Visible para cualquier usuario (incluyendo no-superadmin) con 2+ orgs
+  const hasMultipleOrgs = computed(() =>
+    isSuperAdmin.value ||
+    memberships.value.length > 1 ||
+    membershipsCount.value > 1
+  )
   const isManager = computed(() => ['admin', 'supervisor'].includes(user.value?.role || ''))
   const isSupport = computed(() => ['admin', 'supervisor', 'support'].includes(user.value?.role || ''))
   const isClient = computed(() => user.value?.role === 'client')
@@ -206,6 +214,7 @@ export const useAuthStore = defineStore('auth', () => {
         if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
         if (response.user) localStorage.setItem('user', JSON.stringify(response.user))
         memberships.value = response.memberships || []
+        persistMembershipsCount(memberships.value.length)
         requiresOrgSelection.value = !!response.requiresOrgSelection
         if (response.organization) {
           organization.value = response.organization
@@ -241,6 +250,7 @@ export const useAuthStore = defineStore('auth', () => {
         if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
         if (response.user) localStorage.setItem('user', JSON.stringify(response.user))
         memberships.value = response.memberships || []
+        persistMembershipsCount(memberships.value.length)
         requiresOrgSelection.value = !!response.requiresOrgSelection
         if (response.organization) {
           organization.value = response.organization
@@ -274,11 +284,13 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = null
       organization.value = null
       memberships.value = []
+      membershipsCount.value = 0
       requiresOrgSelection.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('refreshToken')
       localStorage.removeItem('user')
       localStorage.removeItem('organization')
+      localStorage.removeItem('memberships_count')
       window.location.href = '/login'
     }
   }
@@ -334,17 +346,26 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  // Persiste el conteo de orgs para sobrevivir reloads
+  const persistMembershipsCount = (count: number) => {
+    membershipsCount.value = count
+    if (count > 1) localStorage.setItem('memberships_count', String(count))
+    else localStorage.removeItem('memberships_count')
+  }
+
   // Limpia el estado local sin hacer redirect (para uso en guards de ruta)
   const clearSession = () => {
     user.value = null
     token.value = null
     organization.value = null
     memberships.value = []
+    membershipsCount.value = 0
     requiresOrgSelection.value = false
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('user')
     localStorage.removeItem('organization')
+    localStorage.removeItem('memberships_count')
   }
 
   const checkAuth = async () => {
@@ -437,6 +458,9 @@ export const useAuthStore = defineStore('auth', () => {
       modules.push({ id: 'cases', name: 'Casos', icon: 'fas fa-folder-tree', path: '/cases', canAccess: true })
     }
 
+    // Base de conocimiento: visible para todo el equipo interno
+    modules.push({ id: 'wiki', name: 'Wiki', icon: 'fas fa-book-open', path: '/wiki', canAccess: true })
+
     if (canViewTeam.value) {
       modules.push({ id: 'team', name: 'Equipo', icon: 'fas fa-user-group', path: '/team', canAccess: true })
     }
@@ -512,6 +536,8 @@ export const useAuthStore = defineStore('auth', () => {
     // Multi-tenant state
     organization,
     memberships,
+    membershipsCount,
+    hasMultipleOrgs,
     requiresOrgSelection,
 
     // Actions
@@ -519,7 +545,9 @@ export const useAuthStore = defineStore('auth', () => {
     verify2FA,
     logout,
     checkAuth,
+    clearSession,
     selectOrganization,
+    persistMembershipsCount,
     updateProfile,
     updateUserAvatar,
     updateUserProfile,
@@ -529,3 +557,4 @@ export const useAuthStore = defineStore('auth', () => {
     checkPermission: getUserPermission
   }
 })
+
