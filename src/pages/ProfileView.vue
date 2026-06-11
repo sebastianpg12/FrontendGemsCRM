@@ -474,7 +474,7 @@
                 <p class="text-[13px] font-black text-slate-700 dark:text-slate-200">Notificaciones push</p>
                 <p class="text-[10px] font-medium text-slate-400 mt-0.5">Avisos de actividad y menciones</p>
               </div>
-              <button type="button" @click="prefs.pushNotifications = !prefs.pushNotifications"
+              <button type="button" @click="prefs.pushNotifications = !prefs.pushNotifications; handlePushToggle()"
                 class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0"
                 :class="prefs.pushNotifications ? 'bg-primary-600' : 'bg-slate-200'">
                 <span class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200"
@@ -548,6 +548,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
+import { useLocaleStore } from '@/stores/localeStore'
+import { usePushNotifications } from '@/composables/usePushNotifications'
 import { userService } from '@/services/userService'
 import { AvatarService } from '@/services/avatarService'
 import { useNotifications } from '@/composables/useNotifications'
@@ -558,7 +560,9 @@ import { API_CONFIG } from '@/config/api'
 
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
+const localeStore = useLocaleStore()
 const { showSuccess, showError } = useNotifications()
+const { isSupported: pushSupported, permission: pushPermission, requestPermission, notify } = usePushNotifications()
 
 // ── Department picker ─────────────────────────────────────────────
 const DEPT_STORAGE_KEY = 'gems-custom-departments'
@@ -788,6 +792,22 @@ const updateProfile = async () => {
   }
 }
 
+const handlePushToggle = async () => {
+  if (!prefs.value.pushNotifications) return
+  if (!pushSupported.value) {
+    prefs.value.pushNotifications = false
+    showError('Notificaciones no soportadas', 'Tu navegador no soporta notificaciones push.')
+    return
+  }
+  const result = await requestPermission()
+  if (result === 'granted') {
+    notify('GEMS Hub', { body: 'Notificaciones activadas correctamente.' })
+  } else {
+    prefs.value.pushNotifications = false
+    showError('Permiso denegado', 'Debes permitir notificaciones en la configuración del navegador.')
+  }
+}
+
 const savePreferences = async () => {
   savingPrefs.value = true
   try {
@@ -797,6 +817,7 @@ const savePreferences = async () => {
       preferences: { language: prefs.value.language, pushNotifications: prefs.value.pushNotifications }
     } as any)
     authStore.updateUserProfile({ preferences: { ...prefs.value } } as any)
+    localeStore.setLocale(prefs.value.language)
     showSuccess('Preferencias guardadas')
   } catch {
     showError('No se pudieron guardar las preferencias')
@@ -942,6 +963,7 @@ const loadProfile = async () => {
           language: profile.preferences.language || 'es',
           pushNotifications: profile.preferences.pushNotifications !== false
         }
+        localeStore.setLocale(prefs.value.language)
       }
       photoErrored.value = false
     } catch (serverError) {

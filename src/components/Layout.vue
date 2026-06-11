@@ -39,7 +39,7 @@
                 : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900',
               isSidebarCollapsed ? 'justify-center px-0' : 'px-4'
             ]"
-            :title="isSidebarCollapsed ? item.name : ''"
+            :title="isSidebarCollapsed ? localeStore.t(item.id) : ''"
           >
             <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
               <i v-if="item.icon === 'logo'" class="fas fa-th-large text-lg"></i>
@@ -49,7 +49,7 @@
               v-show="!isSidebarCollapsed" 
               class="ml-3 transition-opacity duration-300 whitespace-nowrap overflow-hidden font-bold"
             >
-              {{ item.name }}
+              {{ localeStore.t(item.id) }}
             </span>
           </router-link>
         </div>
@@ -184,6 +184,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useChatStore } from '../stores/chatStore'
+import { useLocaleStore } from '../stores/localeStore'
 import ChatWidget from './ChatWidget.vue'
 import OnlineUsersPopover from './OnlineUsersPopover.vue'
 import NewMessageToast from './NewMessageToast.vue'
@@ -211,6 +212,7 @@ const route = useRoute()
 const chatStore = useChatStore()
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
+const localeStore = useLocaleStore()
 
 const avatarError = ref(false)
 const isSidebarCollapsed = ref(false)
@@ -222,32 +224,31 @@ watch(() => themeStore?.config?.logo, (val) => { logoSrc.value = val || '/gems-l
 const user = computed(() => authStore.user)
 
 const navigation = [
-  { name: 'Dashboard', path: '/', icon: 'logo' },
-  { name: 'Clientes', path: '/clients', icon: UserGroupIcon },
-  { name: 'Tickets', path: '/tickets', icon: TicketIcon },
-  { name: 'Actividades', path: '/activities', icon: ClipboardDocumentListIcon },
-  { name: 'Tableros', path: '/boards', icon: Squares2X2Icon },
-  { name: 'Daily Scrum', path: '/daily-scrum', icon: PresentationChartLineIcon },
-  { name: 'Actividades por Equipo', path: '/team-activities', icon: UsersIcon },
-  { name: 'Contabilidad', path: '/accounting', icon: CurrencyDollarIcon },
-  { name: 'Gestión de Casos', path: '/cases', icon: FolderIcon },
-  { name: 'Equipo', path: '/team', icon: DocumentTextIcon },
-  { name: 'Wiki', path: '/wiki', icon: BookOpenIcon },
-  { name: 'Chat Interno', path: '/chat', icon: ChatBubbleLeftRightIcon },
-  { name: 'Prospectos IA', path: '/prospectos', icon: SparklesIcon },
-  { name: 'Personalización', path: '/settings/theme', icon: SwatchIcon },
+  { id: 'dashboard', name: 'Dashboard', path: '/', icon: 'logo' },
+  { id: 'clients', name: 'Clientes', path: '/clients', icon: UserGroupIcon },
+  { id: 'tickets', name: 'Tickets', path: '/tickets', icon: TicketIcon },
+  { id: 'activities', name: 'Actividades', path: '/activities', icon: ClipboardDocumentListIcon },
+  { id: 'boards', name: 'Tableros', path: '/boards', icon: Squares2X2Icon },
+  { id: 'daily-scrum', name: 'Daily Scrum', path: '/daily-scrum', icon: PresentationChartLineIcon },
+  { id: 'team-activities', name: 'Actividades por Equipo', path: '/team-activities', icon: UsersIcon },
+  { id: 'accounting', name: 'Contabilidad', path: '/accounting', icon: CurrencyDollarIcon },
+  { id: 'cases', name: 'Gestión de Casos', path: '/cases', icon: FolderIcon },
+  { id: 'team', name: 'Equipo', path: '/team', icon: DocumentTextIcon },
+  { id: 'wiki', name: 'Wiki', path: '/wiki', icon: BookOpenIcon },
+  { id: 'chat', name: 'Chat Interno', path: '/chat', icon: ChatBubbleLeftRightIcon },
+  { id: 'prospects', name: 'Prospectos IA', path: '/prospectos', icon: SparklesIcon },
+  { id: 'theme-settings', name: 'Personalización', path: '/settings/theme', icon: SwatchIcon },
 ]
 
 const pageTitle = computed(() => {
   const current = navigation.find(item => item.path === route.path)
-  if (current) return current.name
-  // Sub-route fallback
+  if (current) return localeStore.t(current.id)
   const sub: Record<string, string> = {
-    '/profile': 'Mi Perfil',
-    '/reports': 'Reportes',
+    '/profile': localeStore.t('profile.title'),
+    '/reports': localeStore.t('reports'),
     '/tasks': 'Tareas',
-    '/daily-scrum': 'Daily Scrum',
-    '/pricing-calculator': 'Calculadora de Precios',
+    '/daily-scrum': localeStore.t('daily-scrum'),
+    '/pricing-calculator': localeStore.t('pricing-calculator'),
   }
   return sub[route.path] ?? 'GEMS Hub'
 })

@@ -46,7 +46,7 @@
     </div>
 
     <!-- Modal Formulario de Rol -->
-    <div v-if="showModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div v-if="showModal" class="fixed inset-0 bg-slate-900/60 flex items-center justify-center z-50 p-4">
       <div class="bg-gray-800 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col border border-primary-500/20">
         
         <div class="p-6 border-b border-gray-700 flex justify-between items-center">

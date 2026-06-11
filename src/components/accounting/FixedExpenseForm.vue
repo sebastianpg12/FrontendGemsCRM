@@ -2,7 +2,7 @@
   <!-- Modal Backdrop -->
   <div
     v-if="show"
-    class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+    class="fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4"
     @click="closeModal"
   >
     <!-- Modal Content -->

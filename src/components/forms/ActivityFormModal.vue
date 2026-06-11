@@ -1,5 +1,5 @@
 11  |q1|<template>
-  <div class="fixed -inset-1 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center p-4 z-[100] animate-in fade-in duration-300" @click="closeOnOutsideClick">
+  <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-[100] animate-in fade-in duration-300" @click="closeOnOutsideClick">
     <div
       class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-200/60 w-full max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300"
       :class="isEditingTask ? 'max-w-6xl' : 'max-w-3xl'"

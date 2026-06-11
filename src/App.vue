@@ -79,7 +79,7 @@
                 : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#334155] hover:text-slate-800 dark:hover:text-slate-200',
               isSidebarMini ? 'justify-center px-0' : 'px-3.5'
             ]"
-            @mouseenter="isSidebarMini && showNavTooltip($event, module.name)"
+            @mouseenter="isSidebarMini && showNavTooltip($event, localeStore.t(module.id))"
             @mouseleave="hideNavTooltip"
           >
             <!-- Active left bar -->
@@ -96,7 +96,7 @@
             <span
               v-if="!isSidebarMini"
               class="text-[13px] font-black truncate whitespace-nowrap"
-            >{{ module.name }}</span>
+            >{{ localeStore.t(module.id) }}</span>
             <!-- Active dot for mini mode -->
             <span
               v-if="isSidebarMini && isModuleActive(module.path)"
@@ -118,7 +118,7 @@
             ]"
           >
             <i class="fas fa-power-off text-[12px] shrink-0 transition-transform group-hover:scale-110"></i>
-            <span v-if="!isSidebarMini" class="text-[10px] font-black uppercase tracking-[0.18em]">Cerrar sesión</span>
+            <span v-if="!isSidebarMini" class="text-[10px] font-black uppercase tracking-[0.18em]">{{ localeStore.t('nav.logout') }}</span>
           </button>
         </div>
       </div>
@@ -156,7 +156,7 @@
           :class="isModuleActive(item.path) ? 'text-primary-600 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500'"
         >
           <i :class="[item.icon, 'text-[15px]']"></i>
-          <span class="text-[9px] font-black tracking-tight truncate max-w-full px-0.5">{{ item.name }}</span>
+          <span class="text-[9px] font-black tracking-tight truncate max-w-full px-0.5">{{ localeStore.t(item.id) }}</span>
         </router-link>
         <button
           class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
@@ -164,7 +164,7 @@
           @click="sidebarOpen = true"
         >
           <i class="fas fa-ellipsis text-[15px]"></i>
-          <span class="text-[9px] font-black tracking-tight">Más</span>
+          <span class="text-[9px] font-black tracking-tight">{{ localeStore.t('nav.more') }}</span>
         </button>
       </nav>
 
@@ -214,6 +214,7 @@ import NotificationBell from './components/NotificationBell.vue'
 import ActivityFormModal from './components/forms/ActivityFormModal.vue'
 import { useActivityModalStore } from './stores/activityModal'
 import { useThemeStore } from './stores/theme'
+import { useLocaleStore } from './stores/localeStore'
 
 const route = useRoute()
 const router = useRouter()
@@ -221,6 +222,7 @@ const authStore = useAuthStore()
 const chatStore = useChatStore()
 const activityModalStore = useActivityModalStore()
 const themeStore = useThemeStore()
+const localeStore = useLocaleStore()
 
 // Reactive data
 const sidebarOpen = ref(true)
@@ -315,9 +317,11 @@ const handleClickOutside = (event: MouseEvent) => {
 }
 
 onMounted(async () => {
-  // Check authentication on app load
   await authStore.checkAuth()
-  
+
+  const savedLang = (authStore.user as any)?.preferences?.language
+  if (savedLang === 'es' || savedLang === 'en') localeStore.setLocale(savedLang)
+
   themeStore.load()
   handleResize()
   window.addEventListener('resize', handleResize)

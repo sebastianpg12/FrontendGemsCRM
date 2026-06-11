@@ -463,7 +463,7 @@
     <Teleport to="body">
       <div
         v-if="selectedTask"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="selectedTask = null"
       >
         <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] shadow-xl border border-slate-200 flex flex-col overflow-hidden animate-fade-in"
@@ -775,7 +775,7 @@
     <Teleport to="body">
       <div
         v-if="showCreateBranchModal && selectedTask"
-        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-[10000]"
+        class="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-[10000]"
         @click.self="showCreateBranchModal = false"
       >
         <div class="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 max-w-md w-full mx-4 animate-fade-in">
@@ -1054,8 +1054,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 backdrop-blur-sm hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 backdrop-blur-sm hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[7px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
               </div>
             </div>
           </div>
@@ -1234,8 +1234,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 backdrop-blur-sm hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 backdrop-blur-sm hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[7px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
               </div>
             </div>
           </div>
@@ -1382,8 +1382,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="markAsPending(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 backdrop-blur-sm hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Deshacer"><i class="fas fa-undo text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 backdrop-blur-sm hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="markAsPending(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Deshacer"><i class="fas fa-undo text-[7px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
               </div>
             </div>
           </div>
@@ -1547,8 +1547,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="extendDeadline(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 backdrop-blur-sm hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Extender"><i class="fas fa-calendar-plus text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 backdrop-blur-sm hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="extendDeadline(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Extender"><i class="fas fa-calendar-plus text-[7px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
               </div>
             </div>
           </div>
@@ -1614,7 +1614,7 @@
       >
         <!-- Overlay -->
         <div 
-          class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+          class="fixed inset-0 bg-slate-900/40 transition-opacity"
           @click="showQuickSettings = false"
         ></div>
         
@@ -1778,7 +1778,7 @@
     <Teleport to="body">
       <div
         v-if="showCreateTaskModal"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="closeTaskModal"
       >
         <div class="bg-white rounded-2xl w-full max-w-2xl shadow-xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col pt-0 animate-fade-in relative mt-4 sm:mt-0">
@@ -2017,7 +2017,7 @@
     <Teleport to="body">
       <div
         v-if="showCreateBoardModal"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="showCreateBoardModal = false"
       >
         <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl border border-slate-200 animate-fade-in relative mt-4 sm:mt-0">
@@ -2129,7 +2129,7 @@
     <Teleport to="body">
       <div
         v-if="showSprintsModal"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="showSprintsModal = false"
       >
         <div class="bg-white rounded-2xl w-full max-w-2xl shadow-xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col pt-0 animate-fade-in relative mt-4 sm:mt-0">
@@ -2428,7 +2428,7 @@
     <Teleport to="body">
       <div
         v-if="showCascadeDeleteModal"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="cancelCascadeDelete"
       >
         <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl border border-slate-200 animate-fade-in relative mt-4 sm:mt-0">
@@ -2532,7 +2532,7 @@
     <!-- Modales de Vinculación -->
     <Teleport to="body">
       <!-- Vincular Caso -->
-      <div v-if="showCaseLinkingModal" class="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+      <div v-if="showCaseLinkingModal" class="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-900/60 p-4">
         <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl border border-slate-200 animate-scale-up">
           <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 rounded-t-2xl">
             <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider">Vincular Caso Técnico</h3>
@@ -2571,7 +2571,7 @@
       </div>
 
       <!-- Vincular Wiki -->
-      <div v-if="showWikiLinkingModal" class="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+      <div v-if="showWikiLinkingModal" class="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-900/60 p-4">
         <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl border border-slate-200 animate-scale-up">
           <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 rounded-t-2xl">
             <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider">Vincular Documentación</h3>

@@ -240,7 +240,7 @@
     <!-- Create/Edit Modal -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50" @click="showModal = false"></div>
-      <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden animate-fade-in border border-slate-100">
+      <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-fade-in border border-slate-100">
         <div class="flex items-center justify-between p-8 border-b border-slate-50">
           <div>
             <h3 class="text-xl font-black text-slate-900 leading-tight">

@@ -2,7 +2,7 @@
   <Teleport to="body">
     <div v-if="isOpen && task" class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <!-- Backdrop -->
-      <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="close" />
+      <div class="absolute inset-0 bg-black/70" @click="close" />
 
       <!-- Modal -->
       <div class="relative w-full max-w-5xl max-h-[92vh] bg-gray-900 rounded-xl shadow-2xl flex flex-col overflow-hidden border border-gray-700">

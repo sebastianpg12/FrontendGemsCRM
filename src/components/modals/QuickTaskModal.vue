@@ -1,6 +1,6 @@
 <template>
-  <div class="fixed -inset-1 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300" @click.self="$emit('close')">
-    <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-200 w-full max-w-md animate-in zoom-in-95 duration-300 overflow-hidden">
+  <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300" @click.self="$emit('close')">
+    <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-200 w-full max-w-md max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
       <!-- Header -->
       <div class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50">
         <div class="flex items-center gap-4">

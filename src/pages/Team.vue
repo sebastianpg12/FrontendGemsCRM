@@ -96,8 +96,8 @@
 
     <!-- Team List View (Compact & Efficient) -->
     <div class="space-y-2 pb-20">
-      <!-- Header de Tabla Compacta -->
-      <div class="px-8 py-3 flex items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-[#334155] mb-2">
+      <!-- Header de Tabla Compacta (solo desktop) -->
+      <div class="hidden md:flex px-8 py-3 items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-[#334155] mb-2">
         <div class="min-w-[280px]">Colaborador</div>
         <div class="w-24 text-center">Rol</div>
         <div class="flex-1">Departamento</div>
@@ -105,35 +105,44 @@
         <div class="w-32 text-right">Acciones</div>
       </div>
 
-      <div 
-        v-for="member in filteredMembers" 
+      <div
+        v-for="member in filteredMembers"
         :key="member._id"
-        class="group bg-white dark:bg-[#1a2438] border border-slate-100 dark:border-[#334155] rounded-2xl p-2 px-6 shadow-sm hover:shadow-md hover:border-primary-200 dark:hover:border-primary-500/40 transition-all duration-200 flex items-center justify-between gap-6"
+        class="group bg-white dark:bg-[#1a2438] border border-slate-100 dark:border-[#334155] rounded-2xl p-4 md:p-2 md:px-6 shadow-sm hover:shadow-md hover:border-primary-200 dark:hover:border-primary-500/40 transition-all duration-200 flex flex-col md:flex-row md:items-center md:justify-between md:gap-6"
       >
-        <!-- Left: Basic Info & Avatar -->
-        <div class="flex items-center gap-4 min-w-[280px]">
-           <div class="relative">
+        <!-- Top row: avatar + name + mobile actions -->
+        <div class="flex items-center gap-4 md:min-w-[280px]">
+           <div class="relative shrink-0">
               <UserAvatar :name="member.name" :photo="member.photo" size="sm" class="w-10 h-10 rounded-xl shadow-inner" />
             <div v-if="member.departmentRole === 'leader'" class="absolute -top-1 -right-1 w-5 h-5 bg-amber-400 border-2 border-white rounded-full flex items-center justify-center shadow-sm">
               <i class="fas fa-crown text-white" style="font-size: 6px"></i>
             </div>
            </div>
-           <div class="min-w-0">
-              <h3 class="text-xs font-bold text-slate-800 truncate">{{ member.name }}</h3>
+           <div class="min-w-0 flex-1">
+              <h3 class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">{{ member.name }}</h3>
               <p class="text-[10px] font-medium text-slate-400 truncate">{{ member.email }}</p>
+           </div>
+           <!-- Acciones visibles solo en mobile -->
+           <div class="flex md:hidden items-center gap-1 shrink-0">
+             <button @click="editMember(member)" class="w-8 h-8 bg-slate-50 hover:bg-primary-100 text-slate-400 hover:text-primary-600 rounded-lg flex items-center justify-center transition-all">
+               <i class="fas fa-edit text-[10px]"></i>
+             </button>
+             <button @click="toggleMemberStatus(member)" :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'" class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center transition-all">
+               <i :class="member.isActive ? 'fas fa-user-slash' : 'fas fa-user-check'" class="text-[10px]"></i>
+             </button>
            </div>
         </div>
 
         <!-- Center: Role & Department -->
-        <div class="flex items-center gap-8 flex-1">
-           <div class="w-24">
-              <span :class="getRoleBadgeClass(member.role)" class="px-2 py-0.5 rounded-lg text-[7px] font-black uppercase tracking-widest block text-center">
+        <div class="flex items-center gap-4 md:gap-8 flex-1 mt-2 md:mt-0 pl-14 md:pl-0">
+           <div class="md:w-24">
+              <span :class="getRoleBadgeClass(member.role)" class="px-2 py-0.5 rounded-lg text-[7px] font-black uppercase tracking-widest inline-block md:block text-center">
                 {{ getRoleDisplayName(member.role) }}
               </span>
            </div>
-           
+
            <div class="flex-1">
-              <p class="text-[10px] font-bold text-slate-600 uppercase truncate">{{ member.department || 'General' }}</p>
+              <p class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase truncate">{{ member.department || 'General' }}</p>
            </div>
 
            <div class="hidden xl:block w-32">
@@ -141,24 +150,24 @@
            </div>
         </div>
 
-        <!-- Right: Actions -->
-        <div class="flex items-center justify-end gap-1 w-32">
-           <button 
-             @click="editMember(member)" 
+        <!-- Right: Actions (solo desktop) -->
+        <div class="hidden md:flex items-center justify-end gap-1 w-32">
+           <button
+             @click="editMember(member)"
              class="w-8 h-8 bg-slate-50 hover:bg-primary-100 text-slate-400 hover:text-primary-600 rounded-lg flex items-center justify-center transition-all"
            >
              <i class="fas fa-edit text-[10px]"></i>
            </button>
-           <button 
-             @click="toggleMemberStatus(member)" 
-             :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'" 
+           <button
+             @click="toggleMemberStatus(member)"
+             :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'"
              class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center transition-all"
            >
              <i :class="member.isActive ? 'fas fa-user-slash' : 'fas fa-user-check'" class="text-[10px]"></i>
            </button>
-           <button 
+           <button
              v-if="authStore.user?.role === 'admin'"
-             @click="permanentDeleteMember(member)" 
+             @click="permanentDeleteMember(member)"
              class="w-8 h-8 bg-slate-50 hover:bg-red-600 text-slate-400 hover:text-white rounded-lg flex items-center justify-center transition-all"
            >
              <i class="fas fa-trash-alt text-[10px]"></i>
@@ -205,8 +214,8 @@
 
     <!-- Create/Edit Modal (Premium) -->
     <div v-if="showCreateModal || showEditModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6 animate-fade-in">
-       <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" @click="closeModal"></div>
-       <div class="relative bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl p-10 space-y-10 animate-scale-up overflow-hidden">
+       <div class="absolute inset-0 bg-slate-900/60" @click="closeModal"></div>
+       <div class="relative bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[3rem] shadow-2xl p-10 space-y-10 animate-scale-up">
           <!-- Modal Decoration -->
           <div class="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 rounded-bl-[5rem] -mr-10 -mt-10"></div>
           
