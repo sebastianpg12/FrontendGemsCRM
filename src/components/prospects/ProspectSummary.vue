@@ -1,5 +1,24 @@
 ﻿<template>
   <div class="p-5 space-y-4">
+    <!-- Propuesta generada -->
+    <div v-if="proposal" class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+      <button
+        class="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors"
+        @click="proposalExpanded = !proposalExpanded"
+      >
+        <span class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-rose-500 to-rose-600 text-white flex items-center justify-center shadow-sm">
+            <i class="fas fa-file-lines text-[10px]"></i>
+          </span>
+          <span class="text-xs font-black text-slate-900">Propuesta comercial</span>
+        </span>
+        <i class="fas fa-chevron-down text-[9px] text-slate-400 transition-transform duration-150" :class="{ 'rotate-180': proposalExpanded }"></i>
+      </button>
+      <div v-if="proposalExpanded" class="px-4 pb-4 border-t border-slate-100">
+        <div class="prose-proposal text-xs font-medium text-slate-700 leading-relaxed pt-3" v-html="renderMd(proposal)"></div>
+      </div>
+    </div>
+
     <!-- TL;DR Card -->
     <div class="bg-gradient-to-br from-primary-50 to-primary-100 border border-primary-100 rounded-2xl p-4">
       <div class="flex items-center justify-between mb-3">
@@ -69,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import { prospectService } from '@/services/prospectService'
@@ -91,6 +110,11 @@ const { showError } = useNotifications()
 
 const summary = ref('')
 const action = ref('')
+const proposalExpanded = ref(true)
+
+const proposal = computed(() =>
+  props.prospect.messages?.find((m) => m.role === 'assistant')?.content || ''
+)
 const loadingSummary = ref(false)
 const loadingAction = ref(false)
 
@@ -128,4 +152,15 @@ const generateAction = async () => {
 .prose-md :deep(strong) { font-weight: 800; color: #0f172a; }
 .prose-md :deep(ul) { padding-left: 1.25rem; margin: 0.3rem 0; }
 .prose-md :deep(li) { margin: 0.15rem 0; }
+
+.prose-proposal :deep(h1) { font-size: 0.95rem; font-weight: 900; color: #0f172a; margin: 0.8rem 0 0.35rem; }
+.prose-proposal :deep(h2) { font-size: 0.85rem; font-weight: 900; color: #0f172a; margin: 0.8rem 0 0.3rem; }
+.prose-proposal :deep(h3) { font-size: 0.8rem; font-weight: 800; color: #1e293b; margin: 0.6rem 0 0.25rem; }
+.prose-proposal :deep(p) { margin: 0.35rem 0; }
+.prose-proposal :deep(strong) { font-weight: 800; color: #0f172a; }
+.prose-proposal :deep(ul), .prose-proposal :deep(ol) { padding-left: 1.25rem; margin: 0.35rem 0; }
+.prose-proposal :deep(li) { margin: 0.18rem 0; }
+.prose-proposal :deep(table) { border-collapse: collapse; width: 100%; margin: 0.5rem 0; font-size: 0.7rem; }
+.prose-proposal :deep(th), .prose-proposal :deep(td) { border: 1px solid #e2e8f0; padding: 0.3rem 0.5rem; text-align: left; }
+.prose-proposal :deep(th) { background: #f8fafc; font-weight: 800; }
 </style>

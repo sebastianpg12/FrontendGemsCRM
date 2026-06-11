@@ -76,11 +76,25 @@
             class="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all resize-none leading-relaxed"
           ></textarea>
         </div>
-        <div class="flex justify-between items-center mt-1.5 px-1">
-          <span class="text-[10px] text-slate-400 font-bold">{{ inputText.length }} caracteres</span>
-          <span v-if="inputText.length > 0 && inputText.length < 30" class="text-[10px] text-amber-600 font-bold">
-            <i class="fas fa-info-circle mr-1"></i>Añade más contexto para mejor calidad
-          </span>
+        <!-- Indicador de calidad del diagnóstico -->
+        <div v-if="inputText.trim().length > 0" class="mt-2 px-1">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[9px] font-black uppercase tracking-widest" :class="quality.textClass">
+              <i :class="quality.icon" class="mr-1 text-[9px]"></i>Calidad: {{ quality.label }}
+            </span>
+            <span class="text-[10px] text-slate-400 font-bold">{{ inputText.length }} caracteres</span>
+          </div>
+          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+            <div
+              class="h-full rounded-full transition-all duration-300"
+              :class="quality.barClass"
+              :style="{ width: `${quality.score}%` }"
+            ></div>
+          </div>
+          <p v-if="quality.missing.length" class="text-[10px] font-medium text-slate-400 mt-1.5 leading-relaxed">
+            Mejora la propuesta mencionando:
+            <span v-for="(m, i) in quality.missing" :key="m" class="font-bold text-slate-500">{{ m }}{{ i < quality.missing.length - 1 ? ', ' : '' }}</span>
+          </p>
         </div>
       </div>
 
@@ -241,6 +255,40 @@ const images = ref<ImageItem[]>([])
 
 const MIN_CHARS = 30
 const canGenerate = computed(() => inputText.value.trim().length >= MIN_CHARS)
+
+// ── Indicador de calidad del diagnóstico ──────────────────────────
+// Señales que la IA aprovecha para una propuesta específica y no genérica
+const QUALITY_SIGNALS = [
+  { label: 'el sector',             regex: /sector|industria|rubro|vertical|agencia|constructor|cl[ií]nica|restaurante|hotel|retail|log[ií]stica|inmobiliari/i },
+  { label: 'el problema actual',    regex: /problema|dolor|dificultad|queja|frustra|pierde|caos|desorden|demora|error|reclamo/i },
+  { label: 'sus herramientas hoy',  regex: /excel|whatsapp|correo|email|hubspot|salesforce|notion|sistema|software|papel|manual/i },
+  { label: 'el tamaño del equipo',  regex: /\d+\s*(personas?|empleados?|usuarios?|agentes?|t[eé]cnicos?|vendedor|sucursal)/i },
+  { label: 'presupuesto o valor',   regex: /presupuesto|inversi[oó]n|costo|precio|paga|factur|\$\s?\d/i },
+  { label: 'urgencia o plazos',     regex: /urgente|pronto|inmediato|este (mes|año)|trimestre|q[1-4]|deadline|plazo/i },
+  { label: 'el objetivo del cliente', regex: /objetivo|meta|busca|quiere|necesita|espera|crecer|escalar|mejorar/i },
+]
+
+const quality = computed(() => {
+  const text = inputText.value.trim()
+  const matched = QUALITY_SIGNALS.filter((s) => s.regex.test(text))
+  const missing = QUALITY_SIGNALS.filter((s) => !s.regex.test(text)).map((s) => s.label).slice(0, 3)
+
+  // 50 pts por longitud (tope en ~500 chars) + 50 pts por señales detectadas
+  const lengthScore = Math.min(text.length / 500, 1) * 50
+  const signalScore = (matched.length / QUALITY_SIGNALS.length) * 50
+  const score = Math.round(Math.min(lengthScore + signalScore, 100))
+
+  if (score < 35) {
+    return { score, missing, label: 'Básico', icon: 'fas fa-seedling',
+      textClass: 'text-amber-600', barClass: 'bg-amber-400' }
+  }
+  if (score < 70) {
+    return { score, missing, label: 'Bueno', icon: 'fas fa-thumbs-up',
+      textClass: 'text-sky-600', barClass: 'bg-sky-500' }
+  }
+  return { score, missing, label: 'Excelente', icon: 'fas fa-star',
+    textClass: 'text-emerald-600', barClass: 'bg-emerald-500' }
+})
 
 const onFilesSelected = (e: Event) => {
   const target = e.target as HTMLInputElement

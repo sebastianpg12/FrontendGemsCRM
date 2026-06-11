@@ -62,6 +62,20 @@
         <button @click="openOutreach('call')" class="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 text-cyan-700 border border-cyan-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
           <i class="fas fa-phone text-[10px]"></i>Script llamada
         </button>
+        <button
+          @click="scheduleOpen = true"
+          class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all"
+        >
+          <i class="fas fa-calendar-plus text-[10px]"></i>Agendar seguimiento
+        </button>
+        <button
+          v-if="proposalMarkdown"
+          @click="exportPdf"
+          class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all"
+          title="Descargar la propuesta en PDF"
+        >
+          <i class="fas fa-file-pdf text-[10px]"></i>PDF
+        </button>
         <div class="w-px h-5 bg-slate-200 mx-1"></div>
         <button
           @click="convertToClient"
@@ -141,6 +155,63 @@
       />
     </div>
 
+    <!-- Modal Agendar Seguimiento (se crea como Actividad) -->
+    <div v-if="scheduleOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
+      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm p-5 border border-slate-100 dark:border-[#334155]">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Agendar seguimiento</h3>
+          <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="scheduleOpen = false">
+            <i class="fas fa-times text-[12px]"></i>
+          </button>
+        </div>
+        <div class="space-y-3.5">
+          <div>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Acción *</label>
+            <input
+              v-model="scheduleForm.title"
+              type="text"
+              :placeholder="`Llamar a ${prospect.contactName || prospect.prospectName}`"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Fecha *</label>
+            <input
+              v-model="scheduleForm.date"
+              type="date"
+              :min="todayIso"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Notas</label>
+            <textarea
+              v-model="scheduleForm.notes"
+              rows="2"
+              placeholder="Contexto para el seguimiento..."
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all resize-none"
+            ></textarea>
+          </div>
+          <p class="text-[10px] font-medium text-slate-400 leading-relaxed">
+            <i class="fas fa-circle-info mr-1"></i>Se creará una actividad en el módulo de Actividades y una tarea en este prospecto.
+          </p>
+        </div>
+        <div class="flex justify-end gap-2 mt-5">
+          <button
+            class="inline-flex items-center gap-2 h-9 px-4 text-[11px] font-bold rounded-lg bg-white dark:bg-[#1e293b] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
+            @click="scheduleOpen = false"
+          >Cancelar</button>
+          <button
+            class="inline-flex items-center gap-2 h-9 px-4 text-[11px] font-bold rounded-lg text-white bg-primary-600 hover:bg-primary-700 transition-colors disabled:opacity-60"
+            :disabled="!scheduleForm.title.trim() || !scheduleForm.date || scheduling"
+            @click="scheduleFollowUp"
+          >
+            <i class="fas text-[10px]" :class="scheduling ? 'fa-circle-notch fa-spin' : 'fa-calendar-check'"></i>Agendar
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Outreach Modal -->
     <ProspectOutreachModal
       v-if="outreachOpen"
@@ -158,6 +229,8 @@ import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { prospectService } from '@/services/prospectService'
 import { clientService } from '@/services/clientService'
+import { activityService } from '@/services/activityService'
+import { exportProposalPdf } from '@/utils/proposalPdf'
 import type { Prospect, ProspectStatus, ProspectNote, ProspectTask, ProspectTimelineEntry } from '@/types/prospect'
 import { PROSPECT_STATUSES } from '@/types/prospect'
 import { useNotifications } from '@/composables/useNotifications'
@@ -306,6 +379,61 @@ const onToggleTask = async (id: string) => {
 const onRemoveTask = async (id: string) => {
   await prospectService.deleteTask(props.prospect._id, id)
   loadExtras()
+}
+
+// ─── Propuesta + PDF ───
+const proposalMarkdown = computed(() => {
+  // La propuesta es el primer mensaje del asistente IA
+  return props.prospect.messages?.find((m) => m.role === 'assistant')?.content || ''
+})
+
+const exportPdf = () => {
+  if (!proposalMarkdown.value) return
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--brand-accent').trim() || '#7c3aed'
+  exportProposalPdf(props.prospect, proposalMarkdown.value, accent)
+  showSuccess('PDF descargado')
+}
+
+// ─── Agendar seguimiento (integrado con Actividades) ───
+const scheduleOpen = ref(false)
+const scheduling = ref(false)
+const todayIso = new Date().toISOString().slice(0, 10)
+const scheduleForm = ref({ title: '', date: '', notes: '' })
+
+const scheduleFollowUp = async () => {
+  if (!scheduleForm.value.title.trim() || !scheduleForm.value.date || scheduling.value) return
+  scheduling.value = true
+  try {
+    await activityService.create({
+      title: scheduleForm.value.title.trim(),
+      description: [
+        `Seguimiento de prospecto: ${props.prospect.prospectName}`,
+        props.prospect.company ? `Empresa: ${props.prospect.company}` : '',
+        scheduleForm.value.notes.trim(),
+      ].filter(Boolean).join('\n'),
+      date: scheduleForm.value.date,
+      status: 'pending',
+      priority: 'medium',
+    } as any)
+
+    await prospectService.addTask(props.prospect._id, {
+      title: scheduleForm.value.title.trim(),
+      dueDate: scheduleForm.value.date,
+    })
+    await prospectService.addTimelineEntry(props.prospect._id, {
+      type: 'task_created',
+      description: `Seguimiento agendado para el ${new Date(scheduleForm.value.date + 'T12:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'long' })}`,
+    })
+    loadExtras()
+
+    scheduleOpen.value = false
+    scheduleForm.value = { title: '', date: '', notes: '' }
+    showSuccess('Seguimiento agendado en Actividades')
+  } catch (err: any) {
+    showError(err?.message || 'No se pudo agendar el seguimiento')
+  } finally {
+    scheduling.value = false
+  }
 }
 
 // ─── Convert to client ───
