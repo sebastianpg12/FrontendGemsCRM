@@ -229,6 +229,9 @@
 
       </div>
     </div>
+
+    <!-- ══ Tendencia semanal ═══════════════════════════════════════════ -->
+    <WeeklyTrendCard v-if="authStore.canViewActivities" class="relative z-10" />
   </div>
 </template>
 
@@ -237,6 +240,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useClientsStore, useActivitiesStore, useIssuesStore, useTeamStore } from '../stores'
 import AIInsightsWidget from '../components/AIInsightsWidget.vue'
+import WeeklyTrendCard from '../components/dashboard/WeeklyTrendCard.vue'
 
 const authStore = useAuthStore()
 const clientsStore = useClientsStore()
