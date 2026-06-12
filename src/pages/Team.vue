@@ -124,10 +124,10 @@
            </div>
            <!-- Acciones visibles solo en mobile -->
            <div class="flex md:hidden items-center gap-1 shrink-0">
-             <button @click="editMember(member)" class="w-8 h-8 bg-slate-50 hover:bg-primary-100 text-slate-400 hover:text-primary-600 rounded-lg flex items-center justify-center transition-all">
+             <button @click="editMember(member)" title="Editar" class="w-8 h-8 bg-slate-50 hover:bg-primary-100 text-slate-400 hover:text-primary-600 rounded-lg flex items-center justify-center transition-all">
                <i class="fas fa-edit text-[10px]"></i>
              </button>
-             <button @click="toggleMemberStatus(member)" :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'" class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center transition-all">
+             <button @click="toggleMemberStatus(member)" :title="member.isActive ? 'Deshabilitar' : 'Habilitar'" :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'" class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center transition-all">
                <i :class="member.isActive ? 'fas fa-user-slash' : 'fas fa-user-check'" class="text-[10px]"></i>
              </button>
            </div>
@@ -154,12 +154,14 @@
         <div class="hidden md:flex items-center justify-end gap-1 w-32">
            <button
              @click="editMember(member)"
+             title="Editar"
              class="w-8 h-8 bg-slate-50 hover:bg-primary-100 text-slate-400 hover:text-primary-600 rounded-lg flex items-center justify-center transition-all"
            >
              <i class="fas fa-edit text-[10px]"></i>
            </button>
            <button
              @click="toggleMemberStatus(member)"
+             :title="member.isActive ? 'Deshabilitar' : 'Habilitar'"
              :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'"
              class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center transition-all"
            >
@@ -168,6 +170,7 @@
            <button
              v-if="authStore.user?.role === 'admin'"
              @click="permanentDeleteMember(member)"
+             title="Eliminar"
              class="w-8 h-8 bg-slate-50 hover:bg-red-600 text-slate-400 hover:text-white rounded-lg flex items-center justify-center transition-all"
            >
              <i class="fas fa-trash-alt text-[10px]"></i>
@@ -240,19 +243,28 @@
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">
                         {{ showCreateModal ? 'Contraseña Temporal' : 'Cambiar Contraseña (Opcional)' }}
                       </label>
-                      <input v-model="formData.password" type="password" :required="showCreateModal" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
+                      <div class="relative">
+                        <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" :required="showCreateModal" class="w-full p-4 pr-12 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
+                        <button type="button" @click="showPassword = !showPassword" class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors rounded-lg">
+                          <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-[13px]"></i>
+                        </button>
+                      </div>
                    </div>
                 </div>
 
                 <div class="space-y-6">
                    <div class="space-y-2">
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Rol Operativo</label>
-                      <select v-model="formData.role" required class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5">
-                        <option value="" disabled>Selecciona un rol</option>
-                        <option v-for="role in allAvailableRoles" :key="role._id || role.name" :value="role.name">
-                          {{ getRoleDisplayName(role.name) }}
-                        </option>
-                      </select>
+                      <div class="relative">
+                        <i class="fas fa-shield-halved absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none"></i>
+                        <select v-model="formData.role" required class="w-full p-4 pl-10 pr-10 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none">
+                          <option value="" disabled>Selecciona un rol</option>
+                          <option v-for="role in allAvailableRoles" :key="role._id || role.name" :value="role.name">
+                            {{ getRoleDisplayName(role.name) }}
+                          </option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
+                      </div>
                    </div>
                    <div class="space-y-2">
                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Departamento</label>
@@ -286,9 +298,10 @@
 
                        <!-- Select normal con opción de agregar -->
                        <div v-else class="relative">
+                         <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none z-10"></i>
                          <select
                            v-model="formData.department"
-                           class="w-full p-4 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-200 border border-slate-100 dark:border-[#334155] rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none pr-10"
+                           class="w-full p-4 pl-10 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-200 border border-slate-100 dark:border-[#334155] rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none pr-10"
                          >
                            <option value="">Sin departamento</option>
                            <option v-for="dept in allDepartments" :key="dept" :value="dept">{{ dept }}</option>
@@ -430,6 +443,7 @@ const selectedDepartment = ref('')
 const showCreateModal = ref(false)
 const showEditModal = ref(false)
 const isSubmitting = ref(false)
+const showPassword = ref(false)
 const allAvailableRoles = [
   { name: 'Administrador' },
   { name: 'Supervisor' },
@@ -526,6 +540,7 @@ const getRoleBadgeClass = (role: string) => {
 const closeModal = () => {
   showCreateModal.value = false
   showEditModal.value = false
+  showPassword.value = false
   editingMember.value = null
   Object.assign(formData, { name: '', email: '', password: '', role: '', department: '', position: '', phone: '', supervisor: '', departmentRole: 'member' })
 }

@@ -135,6 +135,10 @@ import { TaskItem } from '@tiptap/extension-task-item'
 import { TextAlign } from '@tiptap/extension-text-align'
 import { Highlight } from '@tiptap/extension-highlight'
 import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import { createLowlight, common } from 'lowlight'
+
+const lowlight = createLowlight(common)
 
 interface Props {
   modelValue: string
@@ -190,6 +194,7 @@ const editor = useEditor({
   content: dedupeHtml(props.modelValue || ''),
   extensions: [
     StarterKit.configure({
+      codeBlock: false,
       heading: { levels: [1, 2, 3] },
       link: {
         openOnClick: false,
@@ -224,6 +229,7 @@ const editor = useEditor({
     TableRow,
     TableHeader,
     TableCell,
+    CodeBlockLowlight.configure({ lowlight }),
   ],
   onUpdate: ({ editor }) => {
     // Si el cambio viene de setContent (prop externa), no re-emitir
@@ -370,6 +376,8 @@ onBeforeUnmount(() => {
 
 .wiki-editor__content {
   min-height: 360px;
+  max-height: 60vh;
+  overflow-y: auto;
   padding: 24px 28px;
   font-family: 'Inter', sans-serif;
 }
@@ -499,6 +507,27 @@ onBeforeUnmount(() => {
   padding: 0;
   border-radius: 0;
 }
+
+/* Syntax highlighting (lowlight / highlight.js tokens) */
+.wiki-editor__content .ProseMirror pre .hljs-comment,
+.wiki-editor__content .ProseMirror pre .hljs-quote { color: #64748b; font-style: italic; }
+.wiki-editor__content .ProseMirror pre .hljs-keyword,
+.wiki-editor__content .ProseMirror pre .hljs-selector-tag,
+.wiki-editor__content .ProseMirror pre .hljs-built_in { color: #f472b6; }
+.wiki-editor__content .ProseMirror pre .hljs-string,
+.wiki-editor__content .ProseMirror pre .hljs-attr { color: #86efac; }
+.wiki-editor__content .ProseMirror pre .hljs-number,
+.wiki-editor__content .ProseMirror pre .hljs-literal { color: #fb923c; }
+.wiki-editor__content .ProseMirror pre .hljs-title,
+.wiki-editor__content .ProseMirror pre .hljs-function .hljs-title { color: #60a5fa; }
+.wiki-editor__content .ProseMirror pre .hljs-variable,
+.wiki-editor__content .ProseMirror pre .hljs-params { color: #f8fafc; }
+.wiki-editor__content .ProseMirror pre .hljs-type,
+.wiki-editor__content .ProseMirror pre .hljs-class .hljs-title { color: #a78bfa; }
+.wiki-editor__content .ProseMirror pre .hljs-tag { color: #f472b6; }
+.wiki-editor__content .ProseMirror pre .hljs-name { color: #60a5fa; }
+.wiki-editor__content .ProseMirror pre .hljs-attribute { color: #86efac; }
+.wiki-editor__content .ProseMirror pre .hljs-meta { color: #94a3b8; }
 
 .wiki-editor__content .ProseMirror hr {
   border: none;
