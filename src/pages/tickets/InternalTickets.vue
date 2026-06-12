@@ -1271,6 +1271,7 @@ onMounted(async () => {
   border-radius: 999px; padding: 0 10px 0 9px; height: 30px;
   cursor: pointer; transition: all 0.15s;
   font-size: 0.68rem; color: rgb(100 116 139);
+  color-scheme: light;
 }
 .tk-chip i:first-child { font-size: 0.58rem; }
 .tk-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
@@ -1283,8 +1284,12 @@ onMounted(async () => {
 }
 .tk-caret { font-size: 0.48rem; opacity: 0.5; }
 
-:global(.dark) .tk-chip { background: rgb(30 41 59); border-color: rgb(51 65 85); color: rgb(148 163 184); }
+:global(.dark) .tk-chip {
+  background: rgb(30 41 59); border-color: rgb(51 65 85);
+  color: rgb(148 163 184); color-scheme: dark;
+}
 :global(.dark) .tk-chip:hover { background: rgb(37 50 71); }
+:global(.dark) .tk-chip:focus-within { background: rgb(49 46 129 / 0.25); border-color: rgb(139 92 246); color: rgb(167 139 250); }
 :global(.dark) .tk-chip--on { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
-:global(.dark) .tk-select { color: inherit; }
+:global(.dark) .tk-select { color: inherit; background: transparent; }
 </style>

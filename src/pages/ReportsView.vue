@@ -470,6 +470,7 @@ onMounted(async () => {
   cursor: pointer;
   font-size: 0.7rem;
   color: rgb(100 116 139);
+  color-scheme: light;
 }
 .filter-chip i:first-child { font-size: 0.6rem; }
 .filter-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
@@ -494,9 +495,10 @@ onMounted(async () => {
   background: rgb(30 41 59);
   border-color: rgb(51 65 85);
   color: rgb(148 163 184);
+  color-scheme: dark;
 }
 :global(.dark) .filter-chip:hover { background: rgb(37 50 71); }
-:global(.dark) .filter-chip:focus-within { background: rgb(49 46 129 / 0.3); border-color: rgb(139 92 246); color: rgb(167 139 250); }
+:global(.dark) .filter-chip:focus-within { background: rgb(49 46 129 / 0.25); border-color: rgb(139 92 246); color: rgb(167 139 250); }
 :global(.dark) .filter-chip--active { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
-:global(.dark) .filter-chip select { color: inherit; }
+:global(.dark) .filter-chip select { color: inherit; background: transparent; }
 </style>
