@@ -85,8 +85,8 @@
         </div>
 
         <!-- Preview del miembro seleccionado -->
-        <div v-if="selectedMember" class="mt-6 p-5 bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-200/50 flex items-center gap-4 animate-in fade-in zoom-in-95 duration-300">
-          <div class="w-14 h-14 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 flex-shrink-0 shadow-sm">
+        <div v-if="selectedMember" class="mt-6 p-5 bg-white rounded-3xl shadow-xl shadow-slate-200/50 flex items-center gap-4 animate-in fade-in zoom-in-95 duration-300">
+          <div class="w-14 h-14 bg-slate-50 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm">
             <img v-if="selectedMember.photo || selectedMember.avatar" :src="selectedMember.photo || selectedMember.avatar" class="w-full h-full object-cover">
             <div v-else class="w-full h-full flex items-center justify-center text-primary-500 text-xl font-black">
               {{ selectedMember.name.charAt(0) }}
@@ -105,7 +105,7 @@
         <div class="flex items-center gap-4 mt-10">
           <button
             @click="$emit('close')"
-            class="flex-1 px-6 py-4 bg-white text-slate-500 hover:text-slate-900 border border-slate-100 rounded-2xl transition-all font-black text-xs uppercase tracking-widest hover:bg-slate-50 active:scale-95"
+            class="flex-1 px-6 py-4 bg-white text-slate-500 hover:text-slate-900 rounded-2xl transition-all font-black text-xs uppercase tracking-widest hover:bg-slate-50 active:scale-95"
           >
             Cancelar
           </button>

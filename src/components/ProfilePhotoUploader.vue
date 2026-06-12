@@ -67,7 +67,7 @@
       </div>
       
       <!-- Helper Messages -->
-      <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-center" v-if="!previewUrl && !uploading">
+      <div class="bg-slate-50 rounded-2xl p-4 text-center" v-if="!previewUrl && !uploading">
         <p class="text-slate-500 text-[11px] font-bold leading-relaxed">
           <i class="fas fa-info-circle mr-1"></i>
           Sube una foto cuadrada para mejores resultados.<br>

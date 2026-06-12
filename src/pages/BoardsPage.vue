@@ -120,7 +120,7 @@
 
     <!-- Create Board Modal -->
     <div v-if="showCreateModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999]" @click.self="showCreateModal = false">
-      <div class="bg-white rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
+      <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
         <div class="px-6 py-4 border-b border-slate-100">
           <h2 class="text-base font-black text-slate-800">Crear Nuevo Tablero</h2>
         </div>
@@ -153,7 +153,7 @@
             <div class="grid grid-cols-2 gap-3">
               <label 
                 class="relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors"
-                :class="newBoard.type === 'kanban' ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-slate-50'"
+                :class="newBoard.type === 'kanban' ? 'border-primary-500 bg-primary-50' : 'border-slate-200 bg-slate-50'"
               >
                 <input
                   v-model="newBoard.type"
@@ -169,7 +169,7 @@
 
               <label 
                 class="relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors"
-                :class="newBoard.type === 'scrum' ? 'border-primary-500 bg-primary-50' : 'border-slate-200 hover:border-slate-300 bg-slate-50'"
+                :class="newBoard.type === 'scrum' ? 'border-primary-500 bg-primary-50' : 'border-slate-200 bg-slate-50'"
               >
                 <input
                   v-model="newBoard.type"

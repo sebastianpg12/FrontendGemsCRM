@@ -1,11 +1,11 @@
 <template>
   <div class="space-y-3 flex flex-col h-full">
     <!-- Selected Users Chips -->
-    <div v-if="selectedUsers.length > 0" class="flex flex-wrap gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100 min-h-[46px] max-h-[120px] overflow-y-auto shrink-0 custom-scrollbar shadow-inner">
+    <div v-if="selectedUsers.length > 0" class="flex flex-wrap gap-2 p-3 bg-slate-50 rounded-xl min-h-[46px] max-h-[120px] overflow-y-auto shrink-0 custom-scrollbar shadow-inner">
       <span v-for="user in selectedUsers" :key="user?._id"
         class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg shadow-sm group transition-all hover:border-primary-300"
       >
-        <div v-if="user?.photo || user?.avatar" class="w-5 h-5 rounded-full overflow-hidden flex-shrink-0 border border-slate-100">
+        <div v-if="user?.photo || user?.avatar" class="w-5 h-5 rounded-full overflow-hidden flex-shrink-0">
            <img :src="user.photo || user.avatar" class="w-full h-full object-cover" />
         </div>
         <div v-else class="w-5 h-5 rounded-full bg-primary-100 flex items-center justify-center text-[10px] font-black text-primary-600 flex-shrink-0">
@@ -66,9 +66,9 @@
         class="flex items-center w-full px-3 py-2 rounded-xl transition-all border group"
         :class="isUserSelected(member._id!) 
           ? 'bg-primary-50 border-primary-200 text-primary-700 shadow-sm ring-1 ring-primary-200/50' 
-          : 'bg-white border-transparent text-slate-600 hover:bg-slate-50 hover:border-slate-200 hover:text-slate-900'"
+          : 'bg-white border-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-900'"
       >
-        <div class="w-7 h-7 rounded-full overflow-hidden mr-3 border border-slate-100 shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
+        <div class="w-7 h-7 rounded-full overflow-hidden mr-3 shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
           <img v-if="member.photo || member.avatar" :src="member.photo || member.avatar" class="w-full h-full object-cover" />
           <div v-else class="w-full h-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-400">
             {{ member.name.charAt(0) }}

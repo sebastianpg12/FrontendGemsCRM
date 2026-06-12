@@ -40,7 +40,7 @@
         </div>
 
         <!-- Bottom Row: Filters -->
-        <div class="flex flex-wrap items-center gap-3 bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+        <div class="flex flex-wrap items-center gap-3 bg-slate-50/50 p-3 rounded-xl">
           <div class="flex items-center gap-2">
             <i class="fas fa-filter text-slate-400 text-xs ml-1"></i>
             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Filtros:</span>
@@ -91,7 +91,7 @@
         <div
           v-for="member in teamMembersWithActivities"
           :key="member._id"
-          class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md hover:border-primary-200 transition-all duration-200"
+          class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200"
         >
           <!-- Header del miembro -->
           <div class="flex items-center gap-3 mb-4">
@@ -107,7 +107,7 @@
 
           <!-- Estadísticas -->
           <div class="grid grid-cols-3 gap-2 mb-4">
-            <div class="bg-slate-50 rounded-lg p-2 text-center border border-slate-100">
+            <div class="bg-slate-50 rounded-lg p-2 text-center">
               <div class="text-lg font-black text-slate-800">{{ member.activities.length }}</div>
               <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Total</div>
             </div>
@@ -132,7 +132,7 @@
               v-else
               v-for="activity in member.activities.slice(0, 3)"
               :key="activity._id"
-              class="bg-slate-50 rounded-lg p-3 border border-slate-100 hover:border-slate-200 transition-colors"
+              class="bg-slate-50 rounded-lg p-3 transition-colors"
             >
               <div class="flex items-start justify-between gap-2">
                 <div class="flex-1 min-w-0">

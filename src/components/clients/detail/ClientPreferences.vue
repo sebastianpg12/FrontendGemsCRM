@@ -15,7 +15,7 @@
       </button>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div v-for="p in (client.preferences || [])" :key="p._id || p.key" class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between shadow-sm hover:border-slate-300 transition-colors">
+      <div v-for="p in (client.preferences || [])" :key="p._id || p.key" class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between shadow-sm transition-colors">
         <div>
           <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1">{{ p.key }}</p>
           <p class="text-slate-800 font-medium">{{ p.value }}</p>

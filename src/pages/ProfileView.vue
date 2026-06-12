@@ -34,7 +34,7 @@
               <i class="fas fa-check-circle mr-2"></i>
               Activo
             </span>
-            <span class="inline-flex items-center px-4 py-1.5 bg-slate-50 text-slate-600 rounded-2xl text-xs font-bold border border-slate-100">
+            <span class="inline-flex items-center px-4 py-1.5 bg-slate-50 text-slate-600 rounded-2xl text-xs font-bold">
               <i class="fas fa-calendar-alt mr-2"></i>
               Miembro desde {{ formatDate(profileData?.createdAt || '') }}
             </span>
@@ -87,7 +87,7 @@
                   placeholder="Tu nombre completo"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.name || 'No especificado' }}</p>
               </div>
             </div>
@@ -106,7 +106,7 @@
                   placeholder="tu@email.com"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.email || 'No especificado' }}</p>
               </div>
             </div>
@@ -125,7 +125,7 @@
                   placeholder="+57 300 000 0000"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.phone || 'No especificado' }}</p>
               </div>
             </div>
@@ -173,7 +173,7 @@
                   </button>
                 </div>
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.department || 'No especificado' }}</p>
               </div>
             </div>
@@ -192,7 +192,7 @@
                   <option v-for="tz in TIMEZONES" :key="tz.value" :value="tz.value">{{ tz.label }}</option>
                 </select>
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ timezoneLabel }}</p>
               </div>
             </div>
@@ -343,7 +343,7 @@
           </div>
 
           <div v-if="setup2FAData && !profileData.isTwoFactorEnabled" class="space-y-6">
-            <div class="bg-slate-50 dark:bg-[#0f172a] rounded-2xl p-4 border border-slate-100 dark:border-[#334155] text-center">
+            <div class="bg-slate-50 dark:bg-[#0f172a] rounded-2xl p-4 text-center">
               <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-4">1. Escanea este código QR</p>
               <img :src="setup2FAData.qrCode" alt="2FA QR Code" class="mx-auto rounded-xl shadow-sm bg-white p-2 mb-4" />
               <p class="text-[10px] text-slate-500 font-bold break-all">O ingresa esta clave manual:<br/><span class="font-mono text-indigo-500">{{ setup2FAData.secret }}</span></p>
@@ -505,7 +505,7 @@
             <div
               v-for="(entry, idx) in profileData.loginHistory"
               :key="idx"
-              class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155]"
+              class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#0f172a]"
             >
               <div class="w-8 h-8 rounded-lg bg-white dark:bg-[#1e293b] flex items-center justify-center text-slate-400 shrink-0">
                 <i class="fas fa-right-to-bracket text-[11px]"></i>
@@ -526,7 +526,7 @@
 
     <!-- Modal de foto de perfil (sin blur) -->
     <div v-if="showPhotoUploader" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50" @click.self="showPhotoUploader = false">
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm border border-slate-100 dark:border-[#334155] max-h-[90vh] overflow-y-auto">
+      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto">
         <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Foto de perfil</h3>
           <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showPhotoUploader = false">

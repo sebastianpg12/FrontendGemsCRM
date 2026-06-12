@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS Hub — ¿También estás cansado?</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--gems:#8b5cf6;--gems2:#a78bfa}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
+  html,body{background:#04050f;height:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+  .stage{
+    position:relative;height:96vh;aspect-ratio:9/16;max-width:96vw;
+    background:#04050f;border-radius:20px;overflow:hidden;
+    box-shadow:0 40px 120px rgba(0,0,0,.7);
+  }
+
+  /* ── ESCENAS ── */
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:10% 8%;opacity:0;transition:opacity .6s;pointer-events:none;text-align:center}
+  .scene.show{opacity:1;pointer-events:auto}
+
+  /* Escena 1 – gancho */
+  .hook-pre{font-size:22px;font-weight:600;color:#6b7280;letter-spacing:.01em;
+    opacity:0;transform:translateY(16px);transition:.5s}
+  .hook-main{font-size:52px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.03em;margin-top:14px;
+    opacity:0;transform:translateY(20px);transition:.6s .1s}
+  .hook-main .hl{background:linear-gradient(120deg,var(--gems),var(--gems2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hook-sub{font-size:19px;font-weight:500;color:#6b7280;margin-top:18px;line-height:1.45;
+    opacity:0;transform:translateY(16px);transition:.5s .22s}
+  .scene.show .hook-pre,.scene.show .hook-main,.scene.show .hook-sub{opacity:1;transform:translateY(0)}
+
+  /* Escena 2 – herramientas caóticas */
+  .chaos-title{font-size:26px;font-weight:800;color:#fff;margin-bottom:28px;
+    opacity:0;transform:translateY(14px);transition:.5s}
+  .scene.show .chaos-title{opacity:1;transform:translateY(0)}
+  .tools-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:88%}
+  .tool{padding:11px 18px;border-radius:14px;font-size:15px;font-weight:700;
+    opacity:0;transform:scale(.85);transition:.4s}
+  .tool.dead{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#4b5563;text-decoration:line-through}
+  .tool.dead.in{opacity:1;transform:scale(1)}
+  .chaos-bottom{margin-top:28px;font-size:20px;font-weight:700;color:#ff5470;
+    opacity:0;transform:translateY(12px);transition:.5s}
+  .scene.show .chaos-bottom{opacity:1;transform:translateY(0)}
+
+  /* Escena 3 – GEMS reveal */
+  .reveal-bg{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 30%,#0e0b24 0%,#04050f 75%);z-index:-1}
+  .gems-logo{font-size:72px;font-weight:900;letter-spacing:-.03em;
+    background:linear-gradient(120deg,#fff 20%,var(--gems) 60%,var(--gems2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    opacity:0;transform:scale(.8);transition:.9s cubic-bezier(.2,1,.3,1)}
+  .scene.show .gems-logo{opacity:1;transform:scale(1)}
+  .gems-tag{font-size:21px;color:#aeb4c4;font-weight:500;margin-top:10px;
+    opacity:0;transition:.6s .3s}
+  .scene.show .gems-tag{opacity:1}
+  .gems-line{width:60px;height:3px;background:linear-gradient(90deg,var(--gems),var(--gems2));
+    border-radius:4px;margin:26px auto;opacity:0;transition:.5s .45s}
+  .scene.show .gems-line{opacity:1}
+  .gems-sol{font-size:24px;font-weight:700;color:#f1f5f9;line-height:1.4;
+    opacity:0;transform:translateY(10px);transition:.6s .55s}
+  .gems-sol span{color:var(--gems2)}
+  .scene.show .gems-sol{opacity:1;transform:translateY(0)}
+  .gems-cta{margin-top:36px;padding:18px 36px;border-radius:32px;font-size:18px;font-weight:800;color:#fff;
+    background:linear-gradient(120deg,var(--gems),var(--gems2));
+    box-shadow:0 16px 48px rgba(139,92,246,.5);
+    opacity:0;transform:translateY(12px);transition:.6s .8s}
+  .scene.show .gems-cta{opacity:1;transform:translateY(0)}
+  .gems-url{margin-top:16px;font-size:14px;color:#6b7280;opacity:0;transition:.5s 1s}
+  .scene.show .gems-url{opacity:1}
+
+  .progress{position:absolute;top:0;left:0;height:4px;
+    background:linear-gradient(90deg,var(--gems),var(--gems2));width:0;z-index:91;transition:width .3s linear}
+  .flash{position:absolute;inset:0;z-index:80;background:#fff;opacity:0;pointer-events:none}
+  .flash.fire{animation:fl .5s ease-out}
+  @keyframes fl{0%{opacity:0}15%{opacity:.85}100%{opacity:0}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="progress" id="prog"></div>
+  <div class="flash" id="flash"></div>
+
+  <!-- ESCENA 1: GANCHO -->
+  <div class="scene" id="s1">
+    <div class="hook-pre">Espera un momento…</div>
+    <div class="hook-main">¿También<br>estás<br><span class="hl">cansado?</span></div>
+    <div class="hook-sub">De que tu empresa sea un desorden<br>y tengas que usar 10 herramientas</div>
+  </div>
+
+  <!-- ESCENA 2: EL PROBLEMA -->
+  <div class="scene" id="s2">
+    <div class="chaos-title">Tu operación hoy 👇</div>
+    <div class="tools-grid" id="toolsGrid">
+      <div class="tool dead">CRM</div>
+      <div class="tool dead">Tareas</div>
+      <div class="tool dead">Chat</div>
+      <div class="tool dead">Wiki</div>
+      <div class="tool dead">Tickets</div>
+      <div class="tool dead">Reportes</div>
+      <div class="tool dead">Archivos</div>
+      <div class="tool dead">Correo</div>
+    </div>
+    <div class="chaos-bottom">Demasiado. Ya no da más.</div>
+  </div>
+
+  <!-- ESCENA 3: GEMS REVEAL -->
+  <div class="scene" id="s3">
+    <div class="reveal-bg"></div>
+    <div class="gems-logo">GEMS Hub</div>
+    <div class="gems-tag">Tu solución en un solo lugar</div>
+    <div class="gems-line"></div>
+    <div class="gems-sol">Todo lo que tu equipo necesita,<br><span>sin saltar entre apps</span></div>
+    <div class="gems-cta">Visita nuestro perfil →</div>
+    <div class="gems-url">gemsinnovations.com</div>
+  </div>
+</div>
+
+<script>
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const prog=document.getElementById('prog');
+const flash=document.getElementById('flash');
+const TOTAL=14000;
+
+async function play(){
+  prog.style.transition=`width ${TOTAL}ms linear`;prog.style.width='100%';
+
+  // S1 – gancho
+  document.getElementById('s1').classList.add('show');
+  await wait(4200);
+
+  // flash + S2
+  document.getElementById('s1').classList.remove('show');
+  await wait(300);
+  const tools=document.querySelectorAll('.tool.dead');
+  document.getElementById('s2').classList.add('show');
+  tools.forEach((t,i)=>setTimeout(()=>t.classList.add('in'),300+i*120));
+  await wait(4000);
+
+  // flash + S3
+  flash.classList.add('fire');
+  await wait(300);
+  document.getElementById('s2').classList.remove('show');
+  flash.classList.remove('fire');
+  await wait(200);
+  document.getElementById('s3').classList.add('show');
+  await wait(5500);
+
+  // loop
+  document.getElementById('s3').classList.remove('show');
+  prog.style.transition='none';prog.style.width='0';
+  tools.forEach(t=>t.classList.remove('in'));
+  await wait(200);
+  play();
+}
+
+window.addEventListener('load',()=>setTimeout(play,400));
+</script>
+</body>
+</html>

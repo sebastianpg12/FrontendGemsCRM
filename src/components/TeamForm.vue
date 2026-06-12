@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-slate-100">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center px-6 py-4 border-b border-slate-100">
         <h2 class="text-base font-black text-slate-800">
           {{ isEditing ? 'Editar Miembro' : 'Nuevo Miembro' }}

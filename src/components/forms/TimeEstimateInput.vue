@@ -15,7 +15,7 @@
         class="py-2.5 px-2 text-[10px] font-black uppercase tracking-wider rounded-xl transition-all duration-200 border"
         :class="modelValue === preset.value 
           ? 'bg-primary-600 text-white border-primary-600 shadow-lg shadow-primary-200 scale-105' 
-          : 'bg-white text-slate-500 border-slate-100 hover:bg-slate-50 hover:border-slate-200'"
+          : 'bg-white text-slate-500 border-slate-100 hover:bg-slate-50'"
       >
         <i :class="preset.icon" class="mr-1.5 opacity-70"></i>
         {{ preset.label }}
@@ -82,7 +82,7 @@
         <button
           type="button"
           @click="clear"
-          class="w-8 h-8 flex items-center justify-center bg-white text-slate-400 hover:text-red-500 rounded-lg transition-all border border-slate-100 hover:border-red-100 shadow-sm"
+          class="w-8 h-8 flex items-center justify-center bg-white text-slate-400 hover:text-red-500 rounded-lg transition-all hover:border-red-100 shadow-sm"
           title="Limpiar"
         >
           <i class="fas fa-times text-xs"></i>

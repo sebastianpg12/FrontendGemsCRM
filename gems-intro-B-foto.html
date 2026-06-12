@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS — Intro B (foto + zoom)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--purple:#8b5cf6;--purple-light:#a78bfa}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+  html,body{background:#04050f;height:100%;overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center}
+  .stage{position:relative;width:100vw;max-width:1280px;aspect-ratio:16/9;overflow:hidden;border-radius:16px;background:#0a0820;box-shadow:0 50px 140px rgba(0,0,0,.7)}
+
+  /* ===== AJUSTA AQUÍ =====
+     - Cambia la URL por tu imagen (o pon "office.jpg" si la guardas al lado del archivo).
+     - transform-origin = el punto al que la cámara se acerca (donde está el monitor en TU foto). */
+  .photo{position:absolute;inset:-6%;z-index:0;
+    background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80');
+    background-size:cover;background-position:center;
+    transform-origin:58% 46%;          /* ← punto de zoom */
+    transform:scale(1.05);
+    transition:transform 3.4s cubic-bezier(.52,0,.18,1);will-change:transform;
+    filter:brightness(.62) saturate(.85) contrast(1.05);}
+  .photo.zoom{transform:scale(2.9)}
+
+  /* fallback si la imagen no carga */
+  .fallback{position:absolute;inset:0;z-index:0;display:none;
+    background:radial-gradient(120% 90% at 58% 46%,#1a1640,#0a0820 60%,#04050f)}
+  .fallback.on{display:block}
+
+  /* brand tint + vignette */
+  .tint{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(20,16,58,.35),rgba(4,5,15,.55)),
+               radial-gradient(80% 70% at 58% 46%,transparent 30%,rgba(4,5,15,.7) 100%);
+    mix-blend-mode:multiply}
+  .glow{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;
+    background:radial-gradient(60% 55% at 58% 46%,rgba(139,92,246,.22),transparent 60%)}
+
+  /* glowing "screen" target the camera enters */
+  .target{position:absolute;z-index:2;left:58%;top:46%;width:140px;height:90px;
+    transform:translate(-50%,-50%);border-radius:8px;
+    box-shadow:0 0 0 2px rgba(167,139,250,.7),0 0 40px rgba(139,92,246,.6),inset 0 0 30px rgba(139,92,246,.3);
+    opacity:0;transition:opacity .8s 1.2s}
+  .target.show{opacity:1}
+
+  .cap{position:absolute;left:0;right:0;bottom:9%;z-index:5;text-align:center;opacity:0;transform:translateY(10px);transition:.6s;padding:0 8%}
+  .cap.show{opacity:1;transform:translateY(0)}
+  .cap .t{font-size:clamp(16px,2.2vw,28px);font-weight:800;color:#fff;letter-spacing:-.01em;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+  .cap .s{font-size:clamp(12px,1.3vw,15px);color:#cdd2de;margin-top:6px;font-weight:500;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+
+  .vig{position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:16px;box-shadow:inset 0 0 180px rgba(0,0,0,.7)}
+  .flash{position:absolute;inset:0;z-index:8;background:#fff;opacity:0;pointer-events:none}
+  .flash.fire{animation:fl 1s ease-out forwards}
+  @keyframes fl{0%{opacity:0}35%{opacity:1}100%{opacity:1}}
+  .progress{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--purple-light));width:0;z-index:20}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="progress" id="progress"></div>
+  <div class="fallback" id="fallback"></div>
+  <div class="photo" id="photo"></div>
+  <div class="tint"></div>
+  <div class="glow"></div>
+  <div class="target" id="target"></div>
+
+  <div class="cap" id="cap"><div class="t" id="capT"></div><div class="s" id="capS"></div></div>
+  <div class="vig"></div>
+  <div class="flash" id="flash"></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function cap(t,s){const c=$('#cap');c.classList.remove('show');setTimeout(()=>{$('#capT').textContent=t;$('#capS').textContent=s||'';c.classList.add('show')},100)}
+
+// detectar si la imagen carga; si no, usar fallback
+const test=new Image();
+test.onerror=()=>{$('#fallback').classList.add('on');$('#photo').style.display='none'};
+test.src=getComputedStyle($('#photo')).backgroundImage.slice(5,-2);
+
+async function play(){
+  $('#progress').style.transition='width 7000ms linear';$('#progress').style.width='100%';
+  cap('9:00 a.m. en cualquier empresa.','Todo el equipo, frente a sus pantallas.');
+  await wait(1600);
+  $('#cap').classList.remove('show');
+  await wait(300);
+  $('#photo').classList.add('zoom');
+  $('#target').classList.add('show');
+  await wait(2400);
+  cap('Y en cada una de esas pantallas…','el mismo desorden de herramientas.');
+  await wait(1900);
+  $('#cap').classList.remove('show');
+  await wait(300);
+  $('#flash').classList.add('fire');
+  await wait(1100);
+}
+window.addEventListener('load',()=>setTimeout(play,400));
+</script>
+</body>
+</html>

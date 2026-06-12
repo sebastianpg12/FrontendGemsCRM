@@ -39,7 +39,7 @@
             'px-4 py-2.5 rounded-lg whitespace-nowrap text-sm font-bold transition-colors flex items-center min-w-max',
             activeTab === t.key 
               ? 'bg-primary-600 text-white shadow-sm' 
-              : 'text-slate-600 hover:bg-white hover:text-slate-900 border border-transparent hover:border-slate-200'
+              : 'text-slate-600 hover:bg-white hover:text-slate-900 border border-transparent'
           ]">
           <i :class="[t.icon, 'mr-2', activeTab === t.key ? 'opacity-100' : 'opacity-70']"></i>{{ t.label }}
         </button>

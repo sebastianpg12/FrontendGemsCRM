@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Header -->
-    <div class="bg-white/70 backdrop-blur-md rounded-3xl shadow-sm p-6 border border-slate-100">
+    <div class="bg-white/70 backdrop-blur-md rounded-3xl shadow-sm p-6">
       <div class="flex flex-col lg:flex-row gap-6 lg:items-center lg:justify-between">
         <!-- Selector de Board -->
         <div class="flex items-center gap-4">
@@ -207,7 +207,7 @@
               draggable="true"
               @dragstart="onDragStart($event, task)"
               @dragend="onDragEnd"
-              class="bg-white rounded-[1.5rem] p-3 border border-slate-100 hover:border-primary-200 hover:shadow-xl hover:shadow-primary-500/5 transition-all cursor-move group relative animate-in fade-in duration-500"
+              class="bg-white rounded-[1.5rem] p-3 hover:shadow-xl hover:shadow-primary-500/5 transition-all cursor-move group relative animate-in fade-in duration-500"
             >
               <!-- Clickable Content Wrapper -->
               <div @click.stop="openTaskDetail(task)" class="cursor-pointer">
@@ -275,7 +275,7 @@
     </div>
 
     <!-- List View -->
-    <div v-else-if="currentView === 'list' && selectedBoardId" class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+    <div v-else-if="currentView === 'list' && selectedBoardId" class="bg-white rounded-3xl shadow-sm overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead class="bg-slate-50">
@@ -335,7 +335,7 @@
 
     <!-- Global Empty State -->
     <div v-else class="flex flex-col items-center justify-center py-32 text-center">
-      <div class="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center border border-slate-100 mb-8 animate-bounce duration-[3s]">
+      <div class="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mb-8 animate-bounce duration-[3s]">
         <i class="fas fa-rocket text-4xl text-primary-200"></i>
       </div>
       <h3 class="text-2xl font-black text-slate-800 tracking-tight mb-2">Comienza tu viaje en GEMS Hub</h3>

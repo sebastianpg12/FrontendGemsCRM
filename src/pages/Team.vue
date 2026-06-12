@@ -7,7 +7,7 @@
         <div
           v-for="dept in allDepartments"
           :key="dept"
-          class="bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-sm hover:shadow-md transition-all group"
+          class="bg-white dark:bg-[#1e293b] rounded-2xl px-4 py-2.5 flex items-center gap-3 shadow-sm hover:shadow-md transition-all group"
         >
           <div
             class="w-8 h-8 rounded-lg flex items-center justify-center text-xs"
@@ -46,7 +46,7 @@
 
         <!-- Add & Stats (Floating right on desktop) -->
         <div class="md:ml-auto flex items-center gap-2">
-           <div class="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-xl shadow-sm">
+           <div class="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-[#1e293b] rounded-xl shadow-sm">
              <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
              <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">{{ activeMembers }} Activos</span>
            </div>
@@ -62,7 +62,7 @@
       </div>
 
       <!-- Filters & Search (Ultra-Compact) -->
-      <div class="bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-2xl p-2 shadow-sm flex flex-col md:flex-row items-center gap-3">
+      <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-2 shadow-sm flex flex-col md:flex-row items-center gap-3">
          <div class="flex-1 relative group w-full">
             <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] group-focus-within:text-primary-500 transition-colors"></i>
             <input 
@@ -108,7 +108,7 @@
       <div
         v-for="member in filteredMembers"
         :key="member._id"
-        class="group bg-white dark:bg-[#1a2438] border border-slate-100 dark:border-[#334155] rounded-2xl p-4 md:p-2 md:px-6 shadow-sm hover:shadow-md hover:border-primary-200 dark:hover:border-primary-500/40 transition-all duration-200 flex flex-col md:flex-row md:items-center md:justify-between md:gap-6"
+        class="group bg-white dark:bg-[#1a2438] rounded-2xl p-4 md:p-2 md:px-6 shadow-sm hover:shadow-md dark:hover:border-primary-500/40 transition-all duration-200 flex flex-col md:flex-row md:items-center md:justify-between md:gap-6"
       >
         <!-- Top row: avatar + name + mobile actions -->
         <div class="flex items-center gap-4 md:min-w-[280px]">
@@ -179,7 +179,7 @@
       </div>
     </div>
       <!-- Empty State -->
-      <div v-if="filteredMembers.length === 0" class="py-20 text-center bg-white border border-slate-100 rounded-3xl">
+      <div v-if="filteredMembers.length === 0" class="py-20 text-center bg-white rounded-3xl">
         <i class="fas fa-users text-4xl text-slate-100 mb-4"></i>
         <p class="text-sm font-bold text-slate-400">No se encontraron miembros</p>
       </div>
@@ -189,12 +189,12 @@
        <button 
          @click="changePage(pagination.page - 1)"
          :disabled="pagination.page === 1"
-         class="w-12 h-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
        >
          <i class="fas fa-chevron-left"></i>
        </button>
        
-       <div class="flex items-center gap-2 bg-white border border-slate-100 p-1.5 rounded-2xl shadow-sm">
+       <div class="flex items-center gap-2 bg-white p-1.5 rounded-2xl shadow-sm">
           <button 
             v-for="p in pagination.pages" 
             :key="p"
@@ -209,7 +209,7 @@
        <button 
          @click="changePage(pagination.page + 1)"
          :disabled="pagination.page === pagination.pages"
-         class="w-12 h-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
        >
          <i class="fas fa-chevron-right"></i>
        </button>
@@ -233,18 +233,18 @@
                 <div class="space-y-6">
                    <div class="space-y-2">
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Nombre Completo</label>
-                      <input v-model="formData.name" required class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
+                      <input v-model="formData.name" required class="w-full p-4 bg-slate-50 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
                    </div>
                    <div class="space-y-2">
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Correo Electrónico</label>
-                      <input v-model="formData.email" type="email" required class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
+                      <input v-model="formData.email" type="email" required class="w-full p-4 bg-slate-50 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
                    </div>
                    <div v-if="showCreateModal || (showEditModal && authStore.user?.role === 'admin')" class="space-y-2">
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">
                         {{ showCreateModal ? 'Contraseña Temporal' : 'Cambiar Contraseña (Opcional)' }}
                       </label>
                       <div class="relative">
-                        <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" :required="showCreateModal" class="w-full p-4 pr-12 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
+                        <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" :required="showCreateModal" class="w-full p-4 pr-12 bg-slate-50 rounded-2xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
                         <button type="button" @click="showPassword = !showPassword" class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors rounded-lg">
                           <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-[13px]"></i>
                         </button>
@@ -257,7 +257,7 @@
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Rol Operativo</label>
                       <div class="relative">
                         <i class="fas fa-shield-halved absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none"></i>
-                        <select v-model="formData.role" required class="w-full p-4 pl-10 pr-10 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none">
+                        <select v-model="formData.role" required class="w-full p-4 pl-10 pr-10 bg-slate-50 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none">
                           <option value="" disabled>Selecciona un rol</option>
                           <option v-for="role in allAvailableRoles" :key="role._id || role.name" :value="role.name">
                             {{ getRoleDisplayName(role.name) }}
@@ -301,7 +301,7 @@
                          <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none z-10"></i>
                          <select
                            v-model="formData.department"
-                           class="w-full p-4 pl-10 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-200 border border-slate-100 dark:border-[#334155] rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none pr-10"
+                           class="w-full p-4 pl-10 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-200 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none pr-10"
                          >
                            <option value="">Sin departamento</option>
                            <option v-for="dept in allDepartments" :key="dept" :value="dept">{{ dept }}</option>
@@ -340,7 +340,7 @@
                     </div>
                    <div class="space-y-2">
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Teléfono Corporativo</label>
-                      <input v-model="formData.phone" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5">
+                      <input v-model="formData.phone" class="w-full p-4 bg-slate-50 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5">
                    </div>
                 </div>
              </div>

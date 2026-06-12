@@ -7,7 +7,7 @@
   >
     <!-- Modal Content -->
     <div
-      class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-slate-100"
+      class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto"
       @click.stop
     >
       <!-- Header -->

@@ -311,7 +311,7 @@
                 <div class="font-bold text-slate-800 text-sm tracking-tight cursor-pointer hover:text-primary-600 transition-colors" @click="toggleCardExpansion(activity._id!)">{{ activity.title }}</div>
                 <div 
                   class="text-[11px] text-slate-500 mt-1.5 max-w-md font-medium cursor-pointer transition-all duration-300"
-                  :class="expandedCards.has(activity._id!) ? 'line-clamp-none bg-slate-50 p-2 rounded border border-slate-100 mt-2' : 'line-clamp-1'"
+                  :class="expandedCards.has(activity._id!) ? 'line-clamp-none bg-slate-50 p-2 rounded mt-2' : 'line-clamp-1'"
                   @click="toggleCardExpansion(activity._id!)"
                 >
                   {{ activity.description || 'Sin descripción' }}
@@ -325,7 +325,7 @@
                   <div class="flex items-center gap-3">
                     <!-- Percentage Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[10px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded border border-slate-100 cursor-pointer hover:bg-white hover:border-primary-300 transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[10px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white hover:border-primary-300 transition-all">
                       <span class="text-primary-600">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
                       <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
@@ -538,7 +538,7 @@
           <!-- Asignado -->
           <div>
             <label class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 block">Persona asignada</label>
-            <div v-if="getFirstAssigned(selectedTask.assignedTo)" class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+            <div v-if="getFirstAssigned(selectedTask.assignedTo)" class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
               <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-black">
                 {{ getFirstAssigned(selectedTask.assignedTo)?.name?.charAt(0) || '?' }}
               </div>
@@ -547,7 +547,7 @@
                 <div class="text-xs text-slate-500">{{ getFirstAssigned(selectedTask.assignedTo)?.email || '' }}</div>
               </div>
             </div>
-            <div v-else class="text-sm text-slate-500 p-3 bg-slate-50/50 rounded-lg border border-slate-100 border-dashed text-center">Sin asignar</div>
+            <div v-else class="text-sm text-slate-500 p-3 bg-slate-50/50 rounded-lg border-dashed text-center">Sin asignar</div>
           </div>
 
           <!-- Fechas -->
@@ -737,7 +737,7 @@
               <div
                 v-for="comment in selectedTask.comments"
                 :key="comment._id"
-                class="p-4 bg-slate-50 border border-slate-100 rounded-lg shadow-sm"
+                class="p-4 bg-slate-50 rounded-lg shadow-sm"
               >
                 <div class="flex items-center gap-2 mb-2">
                   <div class="w-6 h-6 bg-primary-100 rounded-full flex items-center justify-center text-xs font-bold text-primary-600">
@@ -850,7 +850,7 @@
           </div>
 
           <!-- Diagrama visual -->
-          <div class="py-4 flex items-center justify-center gap-4 bg-slate-50 rounded-lg border border-slate-100 mt-2">
+          <div class="py-4 flex items-center justify-center gap-4 bg-slate-50 rounded-lg mt-2">
             <div class="flex flex-col items-center">
               <div class="w-3 h-3 bg-primary-500 rounded-full shadow-sm"></div>
               <div class="text-[10px] font-bold text-slate-500 mt-2 uppercase">{{ branchForm.baseBranch }}</div>
@@ -1022,7 +1022,7 @@
                     
                     <!-- Progress % with Inline Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded border border-slate-100 cursor-pointer hover:bg-white hover:border-amber-300 transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white hover:border-amber-300 transition-all">
                         <span class="text-amber-600">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
                       
@@ -1202,7 +1202,7 @@
                     
                     <!-- Progress % with Inline Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded border border-slate-100 cursor-pointer hover:bg-white hover:border-primary-300 transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white hover:border-primary-300 transition-all">
                         <span :class="activity.status === 'overdue' ? 'text-red-600' : 'text-primary-600'">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
 
@@ -1657,7 +1657,7 @@
                       'px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 relative',
                       quickTaskSettings.dueDays === day
                         ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-2 border-amber-400 shadow-sm'
-                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50 hover:border-slate-300'
+                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50'
                     ]"
                   >
                     {{ day === 7 ? '1 sem' : `${day} día${day > 1 ? 's' : ''}` }}
@@ -1685,7 +1685,7 @@
                       'px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2 relative',
                       quickTaskSettings.priority === priority.value
                         ? `bg-${priority.color}-50 dark:bg-${priority.color}-900/30 text-${priority.color}-700 dark:text-${priority.color}-300 border-2 border-${priority.color}-400 shadow-sm`
-                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50 hover:border-slate-300'
+                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50'
                     ]"
                   >
                     <i :class="`fas fa-circle text-${priority.color}-500 text-[10px]`"></i>
@@ -1709,7 +1709,7 @@
                       'px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200 relative',
                       quickTaskSettings.estimatedTime === time
                         ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-2 border-amber-400 shadow-sm'
-                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50 hover:border-slate-300'
+                        : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50'
                     ]"
                   >
                     {{ time }}
@@ -2404,7 +2404,7 @@
                 class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-md transition-colors border shadow-sm"
                 :class="taskFilters.tags.includes(tag) 
                   ? 'bg-primary-500 text-white border-primary-500' 
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300'"
+                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'"
               >
                 #{{ tag }}
               </button>
@@ -2554,7 +2554,7 @@
                 v-for="c in filteredCasesForLinking" 
                 :key="c._id"
                 @click="linkCase(c)"
-                class="p-3 bg-white border border-slate-100 rounded-xl hover:border-indigo-500 hover:bg-indigo-50/30 cursor-pointer transition-all flex items-center gap-3"
+                class="p-3 bg-white rounded-xl hover:border-indigo-500 hover:bg-indigo-50/30 cursor-pointer transition-all flex items-center gap-3"
               >
                 <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold text-[10px]">
                   {{ c.caseNumber?.slice(-3) }}
@@ -2593,7 +2593,7 @@
                 v-for="a in filteredWikiForLinking" 
                 :key="a._id"
                 @click="linkWiki(a)"
-                class="p-3 bg-white border border-slate-100 rounded-xl hover:border-emerald-500 hover:bg-emerald-50/30 cursor-pointer transition-all flex items-center gap-3"
+                class="p-3 bg-white rounded-xl hover:border-emerald-500 hover:bg-emerald-50/30 cursor-pointer transition-all flex items-center gap-3"
               >
                 <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600">
                   <i class="fas fa-book text-xs"></i>

@@ -35,7 +35,7 @@
 
             <div>
               <label class="field-label">Logo</label>
-              <div v-if="config.logo" class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#0f172a] rounded-xl mb-2.5 border border-slate-100 dark:border-[#334155]">
+              <div v-if="config.logo" class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#0f172a] rounded-xl mb-2.5">
                 <img :src="config.logo" alt="Logo actual" class="h-9 w-auto max-w-[110px] object-contain" />
                 <div class="flex-1 min-w-0">
                   <p class="text-[11px] font-bold text-slate-600 dark:text-slate-300">Logo activo</p>
@@ -110,7 +110,7 @@
               class="field-input flex-1 font-mono !font-bold"
               :class="{ '!border-rose-400 focus:!ring-rose-200': accentColor && !isValidHex }"
             />
-            <div class="w-9 h-9 rounded-lg border border-slate-100 dark:border-[#334155] shrink-0" :style="{ backgroundColor: safeAccent }"></div>
+            <div class="w-9 h-9 rounded-lg shrink-0" :style="{ backgroundColor: safeAccent }"></div>
           </div>
           <p v-if="accentColor && !isValidHex" class="text-[10px] font-bold text-rose-500 mt-1.5">
             <i class="fas fa-circle-exclamation mr-1"></i>Hex inválido — usa el formato #RRGGBB

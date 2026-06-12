@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS Hub — La Empresa Fragmentada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#04050f;
+    --bg2:#08071a;
+    --gems:#8b5cf6;
+    --gems2:#a78bfa;
+    --indigo:#6366f1;
+    --notado:#111114;
+    --hubshot:#ff7a59;
+    --tasco:#ff3d57;
+    --chatzy:#4a154b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
+  html,body{background:#04050f;height:100%;overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center}
+
+  /* ====== STAGE 16:9 ====== */
+  .stage{
+    position:relative;
+    width:100vw;max-width:1280px;aspect-ratio:16/9;
+    background:radial-gradient(120% 120% at 50% 0%,#0e0b24 0%,#04050f 70%);
+    border-radius:14px;overflow:hidden;
+    box-shadow:0 40px 120px rgba(0,0,0,.6);
+  }
+
+  /* ====== MONITOR / BROWSER ====== */
+  .monitor{
+    position:absolute;inset:5% 6% 8% 6%;
+    background:#0d0f15;border-radius:12px;overflow:hidden;
+    border:1px solid #20232e;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    display:flex;flex-direction:column;
+  }
+  .chrome{
+    height:42px;background:#15171f;display:flex;align-items:center;
+    gap:8px;padding:0 14px;border-bottom:1px solid #20232e;flex-shrink:0;
+  }
+  .dots{display:flex;gap:6px}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+  .tabs{display:flex;gap:4px;margin-left:10px;flex:1;overflow:hidden}
+  .tab{
+    display:flex;align-items:center;gap:7px;
+    padding:7px 13px;border-radius:8px 8px 0 0;
+    background:#0d0f15;color:#6b7280;font-size:12px;font-weight:600;
+    white-space:nowrap;transition:.35s;cursor:default;opacity:.55;
+    border:1px solid transparent;border-bottom:none;
+  }
+  .tab .fav{width:14px;height:14px;border-radius:4px;display:grid;place-items:center;font-size:9px;font-weight:800;color:#fff}
+  .tab.active{background:#0d0f15;color:#e6e8ee;opacity:1;box-shadow:inset 0 2px 0 var(--accent)}
+  .tab.live{opacity:1;color:#cfd3dc}
+  .tab .badge{
+    background:#ff3d57;color:#fff;font-size:9px;font-weight:800;
+    min-width:16px;height:16px;border-radius:9px;display:grid;place-items:center;padding:0 4px;
+  }
+  .urlbar{
+    height:42px;background:#0d0f15;border-bottom:1px solid #20232e;
+    display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;
+  }
+  .urlpill{
+    flex:1;height:26px;background:#181b24;border-radius:14px;
+    display:flex;align-items:center;padding:0 14px;color:#8a90a0;font-size:12px;gap:8px;
+  }
+  .lock{width:11px;height:11px;border:1.5px solid #4ade80;border-radius:3px;position:relative}
+
+  /* ====== VIEWPORTS ====== */
+  .viewport{position:relative;flex:1;overflow:hidden;background:#0d0f15}
+  .screen{
+    position:absolute;inset:0;opacity:0;transform:scale(1.04);
+    transition:opacity .5s, transform .5s;pointer-events:none;
+    padding:24px 30px;overflow:hidden;
+  }
+  .screen.show{opacity:1;transform:scale(1);pointer-events:auto}
+
+  .appbar{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .applogo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-weight:900;color:#fff;font-size:15px}
+  .apptitle{font-size:18px;font-weight:800}
+  .appsub{font-size:11px;color:#8a90a0;font-weight:500}
+  .crumb{margin-left:auto;font-size:11px;color:#6b7280}
+
+  .cols{display:flex;gap:14px;height:calc(100% - 70px)}
+  .panel{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:13px;flex:1;overflow:hidden}
+  .panel h4{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#8a90a0;margin-bottom:11px;font-weight:700}
+  .row{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:7px;background:rgba(255,255,255,.02);margin-bottom:7px;font-size:12px;color:#c3c7d1}
+  .pill{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:auto}
+  .av{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:9px;font-weight:800;color:#fff}
+  .chk{width:15px;height:15px;border-radius:4px;border:1.5px solid #4b5563;flex-shrink:0}
+  .ph{height:9px;border-radius:5px;background:rgba(255,255,255,.06)}
+
+  /* confusion overlay cursor */
+  .cursor{
+    position:absolute;width:22px;height:22px;z-index:40;
+    pointer-events:none;left:50%;top:50%;
+    transition:left .5s cubic-bezier(.5,0,.3,1), top .5s cubic-bezier(.5,0,.3,1);
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));
+  }
+  .cursor svg{width:100%;height:100%}
+
+  /* ====== NOTIFICATIONS ====== */
+  .notes{position:absolute;right:18px;bottom:18px;z-index:35;display:flex;flex-direction:column;gap:9px;align-items:flex-end}
+  .note{
+    background:#1a1d27;border:1px solid #2a2e3b;border-radius:11px;
+    padding:11px 14px;display:flex;gap:11px;align-items:center;min-width:250px;max-width:300px;
+    box-shadow:0 12px 30px rgba(0,0,0,.5);
+    transform:translateX(120%);opacity:0;transition:.45s cubic-bezier(.3,1.3,.5,1);
+  }
+  .note.in{transform:translateX(0);opacity:1}
+  .note .nicon{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-weight:900;color:#fff;font-size:13px;flex-shrink:0}
+  .note .ntxt{font-size:11px;line-height:1.4;color:#cfd3dc}
+  .note .ntxt b{color:#fff;font-weight:700}
+  .note .nt{font-size:9px;color:#6b7280;margin-top:2px}
+
+  /* ====== CAPTION ====== */
+  .caption{
+    position:absolute;left:0;right:0;bottom:0;z-index:50;
+    padding:26px 8%;text-align:center;
+    background:linear-gradient(to top,rgba(5,6,10,.92),transparent);
+  }
+  .caption .big{font-size:clamp(18px,2.4vw,30px);font-weight:800;color:#fff;letter-spacing:-.01em;opacity:0;transform:translateY(14px);transition:.5s;line-height:1.25}
+  .caption .small{font-size:clamp(12px,1.3vw,15px);font-weight:500;color:#9aa0b0;margin-top:8px;opacity:0;transform:translateY(14px);transition:.5s .08s}
+  .caption.show .big,.caption.show .small{opacity:1;transform:translateY(0)}
+  .caption .big .hl{color:var(--gems)}
+  .caption .big .red{color:#ff5470}
+
+  /* ====== GEMS REVEAL ====== */
+  .gems-reveal{
+    position:absolute;inset:0;z-index:60;
+    background:radial-gradient(120% 120% at 50% 30%,#0e0b24 0%,#04050f 75%);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    opacity:0;pointer-events:none;transition:opacity .7s;text-align:center;padding:5%;
+  }
+  .gems-reveal.show{opacity:1;pointer-events:auto}
+  .gems-mark{
+    width:clamp(78px,9vw,118px);height:auto;margin-bottom:18px;
+    border-radius:22px;
+    filter:drop-shadow(0 0 40px rgba(139,92,246,.55));
+    transform:scale(.6) rotate(-8deg);opacity:0;
+    transition:1s cubic-bezier(.2,1.3,.3,1);
+  }
+  .gems-reveal.show .gems-mark{transform:scale(1) rotate(0);opacity:1}
+  .gems-logo{
+    font-size:clamp(40px,6vw,76px);font-weight:900;letter-spacing:-.03em;
+    background:linear-gradient(120deg,#fff 20%,var(--gems) 60%,var(--gems2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    transform:scale(.85);opacity:0;transition:1s cubic-bezier(.2,1,.3,1);
+  }
+  .gems-reveal.show .gems-logo{transform:scale(1);opacity:1}
+  .gems-tag{font-size:clamp(14px,1.6vw,20px);color:#aeb4c4;margin-top:6px;font-weight:500;opacity:0;transition:.7s .4s}
+  .gems-reveal.show .gems-tag{opacity:1}
+  .gems-cat{
+    margin-top:18px;padding-top:18px;max-width:540px;
+    border-top:1px solid rgba(139,92,246,.32);
+    font-size:clamp(13px,1.5vw,18px);font-weight:600;color:#f1f5f9;line-height:1.5;
+    opacity:0;transform:translateY(10px);transition:.7s .55s;
+  }
+  .gems-cat .crm{color:#a78bfa;font-weight:700}
+  .gems-reveal.show .gems-cat{opacity:1;transform:translateY(0)}
+  .gems-mods{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:30px;max-width:680px}
+  .gmod{
+    padding:9px 16px;border-radius:30px;font-size:13px;font-weight:600;color:#dfe3ec;
+    background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.35);
+    opacity:0;transform:translateY(12px);transition:.5s;
+  }
+  .gems-reveal.show .gmod{opacity:1;transform:translateY(0)}
+  .gems-cta{
+    margin-top:34px;padding:14px 30px;border-radius:32px;font-size:15px;font-weight:700;color:#fff;
+    background:linear-gradient(120deg,var(--gems),var(--gems2));
+    box-shadow:0 14px 40px rgba(139,92,246,.45);opacity:0;transition:.6s .9s;
+  }
+  .gems-reveal.show .gems-cta{opacity:1}
+  .gems-url{margin-top:16px;font-size:13px;color:#8a90a0;opacity:0;transition:.6s 1s}
+  .gems-reveal.show .gems-url{opacity:1}
+
+  /* glitch flash on transition */
+  .flash{position:absolute;inset:0;z-index:55;background:#fff;opacity:0;pointer-events:none}
+  .flash.fire{animation:flash .6s ease-out}
+  @keyframes flash{0%{opacity:0}10%{opacity:.9}100%{opacity:0}}
+
+  /* shake while chaos */
+  @keyframes shake{0%,100%{transform:translate(0,0)}25%{transform:translate(-1px,1px)}50%{transform:translate(1px,-1px)}75%{transform:translate(-1px,-1px)}}
+  .monitor.chaos{animation:shake .25s infinite}
+
+  /* ====== CONTROLS ====== */
+  .controls{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:90;display:flex;gap:10px;opacity:.0;transition:.4s}
+  .stage:hover .controls{opacity:1}
+  .btn{
+    background:rgba(20,22,30,.9);border:1px solid #2a2e3b;color:#cfd3dc;
+    padding:9px 18px;border-radius:24px;font-size:12px;font-weight:600;cursor:pointer;
+    backdrop-filter:blur(8px);transition:.2s;
+  }
+  .btn:hover{background:#252935;color:#fff}
+  .btn.primary{background:linear-gradient(120deg,var(--gems),var(--gems2));border:none;color:#fff}
+
+  /* progress bar */
+  .progress{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gems),var(--gems2));width:0;z-index:91;transition:width .3s linear}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="progress" id="progress"></div>
+
+  <div class="monitor" id="monitor">
+    <!-- chrome -->
+    <div class="chrome">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <div class="tabs" id="tabs">
+        <div class="tab" data-tab="hubshot"><span class="fav" style="background:#ff7a59">H</span>HubShot CRM</div>
+        <div class="tab" data-tab="tasco"><span class="fav" style="background:#ff3d57">T</span>Tasco<span class="badge" style="display:none">3</span></div>
+        <div class="tab" data-tab="notado"><span class="fav" style="background:#000;border:1px solid #555">N</span>Notado Docs</div>
+        <div class="tab" data-tab="chatzy"><span class="fav" style="background:#4a154b">C</span>Chatzy<span class="badge" style="display:none">7</span></div>
+      </div>
+    </div>
+    <!-- url -->
+    <div class="urlbar">
+      <span style="color:#6b7280;font-size:14px">‹ ›</span>
+      <div class="urlpill" id="urlpill"><span class="lock"></span><span id="urltext">app.hubshot.com/contacts</span></div>
+    </div>
+
+    <!-- viewport -->
+    <div class="viewport" id="viewport">
+
+      <!-- HUBSHOT (CRM guiño HubSpot) -->
+      <div class="screen" data-screen="hubshot" style="--accent:#ff7a59">
+        <div class="appbar">
+          <div class="applogo" style="background:#ff7a59">H</div>
+          <div><div class="apptitle" style="color:#ff9b80">HubShot CRM</div><div class="appsub">Contacto · Cliente nuevo</div></div>
+          <div class="crumb">Contacts › Deals › Pipeline › Marketing › Service…</div>
+        </div>
+        <div class="cols">
+          <div class="panel"><h4>Pipeline de ventas</h4>
+            <div class="row"><span class="av" style="background:#ff7a59">A</span>Acme Corp<span class="pill" style="background:#ff7a5922;color:#ff7a59">Nuevo</span></div>
+            <div class="row"><span class="av" style="background:#f59e0b">B</span>Beta SAS<span class="pill" style="background:#f59e0b22;color:#f59e0b">Demo</span></div>
+            <div class="row"><span class="av" style="background:#10b981">C</span>Corp XYZ<span class="pill" style="background:#10b98122;color:#10b981">Ganado</span></div>
+            <div class="row"><div class="ph" style="width:60%"></div></div>
+            <div class="row"><div class="ph" style="width:75%"></div></div>
+          </div>
+          <div class="panel"><h4>Ficha del contacto</h4>
+            <div class="row"><div class="ph" style="width:80%"></div></div>
+            <div class="row"><div class="ph" style="width:55%"></div></div>
+            <div class="row"><div class="ph" style="width:70%"></div></div>
+            <div class="row"><div class="ph" style="width:40%"></div></div>
+            <div style="margin-top:14px;font-size:11px;color:#ff7a59;font-weight:600">⚠ El seguimiento se gestiona en otra herramienta</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASCO (tareas guiño Monday) -->
+      <div class="screen" data-screen="tasco" style="--accent:#ff3d57">
+        <div class="appbar">
+          <div class="applogo" style="background:#ff3d57">T</div>
+          <div><div class="apptitle" style="color:#ff6f86">Tasco</div><div class="appsub">Tablero · Operaciones Q2</div></div>
+          <div class="crumb">Main › Sprints › Bugs › Roadmap › +12 tableros</div>
+        </div>
+        <div class="cols">
+          <div class="panel"><h4>Por hacer</h4>
+            <div class="row"><span class="chk"></span>Llamar a Acme Corp<span class="pill" style="background:#ff3d5722;color:#ff3d57">Alta</span></div>
+            <div class="row"><span class="chk"></span>Enviar propuesta<span class="pill" style="background:#f59e0b22;color:#f59e0b">Media</span></div>
+            <div class="row"><span class="chk"></span><div class="ph" style="width:60%"></div></div>
+          </div>
+          <div class="panel"><h4>En curso</h4>
+            <div class="row"><span class="av" style="background:#3b82f6">M</span><div class="ph" style="width:70%"></div></div>
+            <div class="row"><span class="av" style="background:#8b5cf6">L</span><div class="ph" style="width:50%"></div></div>
+          </div>
+          <div class="panel"><h4>Bloqueado</h4>
+            <div class="row" style="border:1px solid #ff3d5744"><div class="ph" style="width:65%;background:#ff3d5733"></div></div>
+            <div style="margin-top:10px;font-size:11px;color:#ff3d57;font-weight:600">⚠ ¿Quién es este cliente? Está en otra app</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTADO (docs guiño Notion) -->
+      <div class="screen" data-screen="notado" style="--accent:#e6e8ee">
+        <div class="appbar">
+          <div class="applogo" style="background:#111;border:1px solid #555">N</div>
+          <div><div class="apptitle" style="color:#e6e8ee">Notado</div><div class="appsub">Wiki · Proceso de onboarding</div></div>
+          <div class="crumb">🔍 buscando… 1.482 páginas</div>
+        </div>
+        <div class="cols">
+          <div class="panel" style="flex:.6"><h4>Espacios</h4>
+            <div class="row">📁 Ventas</div>
+            <div class="row">📁 Procesos</div>
+            <div class="row">📁 RRHH</div>
+            <div class="row">📁 Clientes ▾</div>
+            <div class="row" style="padding-left:20px;opacity:.6">📄 Acme Corp?</div>
+            <div class="row" style="padding-left:20px;opacity:.6"><div class="ph" style="width:60%"></div></div>
+          </div>
+          <div class="panel"><h4>Documento</h4>
+            <div class="ph" style="width:70%;height:16px;margin-bottom:14px"></div>
+            <div class="ph" style="width:100%;margin-bottom:9px"></div>
+            <div class="ph" style="width:95%;margin-bottom:9px"></div>
+            <div class="ph" style="width:88%;margin-bottom:9px"></div>
+            <div class="ph" style="width:92%;margin-bottom:9px"></div>
+            <div class="ph" style="width:60%;margin-bottom:9px"></div>
+            <div style="margin-top:14px;font-size:11px;color:#9aa0b0;font-weight:600">⚠ Última edición hace 3 meses · ¿sigue vigente?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHATZY (chat guiño Slack) -->
+      <div class="screen" data-screen="chatzy" style="--accent:#a855f7">
+        <div class="appbar">
+          <div class="applogo" style="background:#4a154b">C</div>
+          <div><div class="apptitle" style="color:#c084fc">Chatzy</div><div class="appsub">#general · 47 sin leer</div></div>
+          <div class="crumb">#general #ventas #random #soporte #ops…</div>
+        </div>
+        <div class="cols">
+          <div class="panel" style="flex:.5"><h4>Canales</h4>
+            <div class="row"># general<span class="pill" style="background:#a855f722;color:#c084fc">12</span></div>
+            <div class="row"># ventas<span class="pill" style="background:#a855f722;color:#c084fc">8</span></div>
+            <div class="row"># soporte<span class="pill" style="background:#ff3d5722;color:#ff3d57">!</span></div>
+            <div class="row"># random</div>
+          </div>
+          <div class="panel"><h4>#ventas</h4>
+            <div class="row"><span class="av" style="background:#3b82f6">M</span><span>“¿alguien sabe el estado de Acme?”</span></div>
+            <div class="row"><span class="av" style="background:#ef4444">L</span><span>“está en el CRM… creo 🤔”</span></div>
+            <div class="row"><span class="av" style="background:#10b981">P</span><span>“o en Tasco? no encuentro”</span></div>
+            <div class="row"><span class="av" style="background:#f59e0b">J</span><span>“lo paso por mail mejor 😅”</span></div>
+            <div style="margin-top:10px;font-size:11px;color:#c084fc;font-weight:600">⚠ La información se perdió entre 4 apps</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- cursor -->
+      <div class="cursor" id="cursor">
+        <svg viewBox="0 0 24 24" fill="#fff" stroke="#000" stroke-width="1"><path d="M4 2 L4 18 L8.5 13.5 L11.5 20 L14 19 L11 12.5 L17 12.5 Z"/></svg>
+      </div>
+    </div>
+
+    <!-- notifications -->
+    <div class="notes" id="notes"></div>
+  </div>
+
+  <!-- flash -->
+  <div class="flash" id="flash"></div>
+
+  <!-- caption -->
+  <div class="caption" id="caption"><div class="big" id="capBig"></div><div class="small" id="capSmall"></div></div>
+
+  <!-- GEMS reveal -->
+  <div class="gems-reveal" id="gemsReveal">
+    <img class="gems-mark" src="public/gems-logo.png" alt="GEMS">
+    <div class="gems-logo">GEMS&nbsp;Hub</div>
+    <div class="gems-tag">El sistema operativo de tu equipo.</div>
+    <div class="gems-cat"><span class="crm">No es un CRM.</span> Es tu operación completa, en un solo lugar.</div>
+    <div class="gems-mods" id="gmods"></div>
+    <div class="gems-cta">Deja de saltar entre herramientas →</div>
+    <div class="gems-url">gemsinnovations.com/gems-hub</div>
+  </div>
+
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const tabs={hubshot:$('[data-tab="hubshot"]'),tasco:$('[data-tab="tasco"]'),notado:$('[data-tab="notado"]'),chatzy:$('[data-tab="chatzy"]')};
+const screens={hubshot:$('[data-screen="hubshot"]'),tasco:$('[data-screen="tasco"]'),notado:$('[data-screen="notado"]'),chatzy:$('[data-screen="chatzy"]')};
+const urls={hubshot:'app.hubshot.com/contacts/acme-corp',tasco:'tasco.com/boards/operaciones-q2',notado:'notado.so/wiki/clientes?q=acme',chatzy:'chatzy.com/client/general'};
+const accents={hubshot:'#ff7a59',tasco:'#ff3d57',notado:'#e6e8ee',chatzy:'#a855f7'};
+const cursor=$('#cursor'),caption=$('#caption'),capBig=$('#capBig'),capSmall=$('#capSmall');
+const notes=$('#notes'),monitor=$('#monitor'),flash=$('#flash'),gemsReveal=$('#gemsReveal'),progress=$('#progress');
+
+let timers=[];
+const wait=ms=>new Promise(r=>{const t=setTimeout(r,ms);timers.push(t)});
+const clearAll=()=>{timers.forEach(clearTimeout);timers=[]};
+
+function switchTo(key){
+  Object.values(tabs).forEach(t=>t.classList.remove('active','live'));
+  Object.values(screens).forEach(s=>s.classList.remove('show'));
+  tabs[key].classList.add('active','live');
+  screens[key].classList.add('show');
+  $('#urltext').textContent=urls[key];
+}
+function setCaption(big,small,red){
+  caption.classList.remove('show');
+  setTimeout(()=>{capBig.innerHTML=big;capSmall.innerHTML=small||'';caption.classList.add('show')},120);
+}
+function moveCursor(xPct,yPct){cursor.style.left=xPct+'%';cursor.style.top=yPct+'%';}
+
+let noteId=0;
+function pushNote(icon,color,title,text){
+  const el=document.createElement('div');el.className='note';
+  el.innerHTML=`<div class="nicon" style="background:${color}">${icon}</div><div><div class="ntxt"><b>${title}</b> ${text}</div><div class="nt">ahora mismo</div></div>`;
+  notes.appendChild(el);requestAnimationFrame(()=>el.classList.add('in'));
+  if(notes.children.length>5)notes.removeChild(notes.firstChild);
+}
+function showBadges(){
+  tabs.tasco.querySelector('.badge').style.display='grid';
+  tabs.chatzy.querySelector('.badge').style.display='grid';
+}
+function reset(){
+  clearAll();
+  gemsReveal.classList.remove('show');
+  monitor.classList.remove('chaos');
+  notes.innerHTML='';noteId=0;
+  caption.classList.remove('show');
+  tabs.tasco.querySelector('.badge').style.display='none';
+  tabs.chatzy.querySelector('.badge').style.display='none';
+  progress.style.width='0';
+  switchTo('hubshot');
+  moveCursor(50,50);
+}
+
+const TOTAL=52000;
+function setProgress(ms){progress.style.transition=`width ${ms}ms linear`;progress.style.width='100%';}
+
+async function play(){
+  reset();
+  await wait(200);
+  setProgress(TOTAL);
+
+  // INTRO
+  setCaption('Solo quieres <span class="hl">sacar adelante una entrega</span> con tu equipo.','Una tarea normal de cualquier día.');
+  switchTo('hubshot');moveCursor(28,45);
+  await wait(3800);
+
+  // HUBSHOT
+  setCaption('¿El cliente? Está en el <span style="color:#ff9b80">CRM</span>…','HubShot. 6 secciones. Pero las tareas no viven aquí.');
+  moveCursor(70,55);await wait(1400);moveCursor(40,40);
+  await wait(3200);
+
+  // → TASCO
+  switchTo('tasco');moveCursor(30,50);
+  setCaption('…pero las <span style="color:#ff6f86">tareas</span> viven en otra app.','Tasco. 12 tableros. ¿En cuál estaba?');
+  pushNote('C','#4a154b','Chatzy','¿alguien vio a Acme?');
+  await wait(1500);moveCursor(65,45);showBadges();
+  await wait(3000);
+
+  // → NOTADO
+  switchTo('notado');moveCursor(35,40);
+  setCaption('La <span style="color:#e6e8ee">documentación</span>… en una tercera.','Notado. 1.482 páginas. Buscando, buscando…');
+  pushNote('T','#ff3d57','Tasco','Tarea vencida hace 2 días');
+  await wait(1600);moveCursor(60,55);
+  await wait(2800);
+
+  // → CHATZY
+  switchTo('chatzy');moveCursor(45,50);
+  setCaption('Y el equipo te pregunta por <span style="color:#c084fc">chat</span>.','Chatzy. 47 sin leer. Nadie sabe dónde está la info.');
+  pushNote('H','#ff7a59','HubShot','Lead sin actividad · 4 días');
+  await wait(2800);
+
+  // CHAOS – rapid switching
+  setCaption('Cuatro pestañas. <span class="red">Cero respuestas.</span>','','red');
+  monitor.classList.add('chaos');
+  const seq=['hubshot','tasco','notado','chatzy','tasco','hubshot','chatzy','notado'];
+  for(let i=0;i<seq.length;i++){
+    switchTo(seq[i]);
+    moveCursor(20+Math.random()*60,30+Math.random()*40);
+    if(i%2===0)pushNote(['T','C','H'][i%3],['#ff3d57','#4a154b','#ff7a59'][i%3],['Tasco','Chatzy','HubShot'][i%3],'requiere tu atención');
+    await wait(360);
+  }
+  monitor.classList.remove('chaos');
+  setCaption('Pierdes <span class="red">2 horas al día</span> solo saltando entre herramientas.','Por persona. Cada día. Multiplícalo por tu equipo.','red');
+  await wait(3400);
+
+  setCaption('No todo se resuelve con un <span class="red">CRM</span>.','Muchas empresas pagan por software que no necesitan.','red');
+  await wait(3300);
+
+  setCaption('El problema no es la herramienta.','Es tener tu operación <span class="red">partida en pedazos</span>.','red');
+  await wait(3000);
+
+  // TRANSITION
+  flash.classList.add('fire');
+  await wait(280);
+  notes.innerHTML='';
+  caption.classList.remove('show');
+  setTimeout(()=>flash.classList.remove('fire'),700);
+  await wait(500);
+
+  // GEMS REVEAL
+  const mods=['CRM','Tareas','Wiki','Tickets','Contabilidad','Reportes','IA'];
+  const gmods=$('#gmods');gmods.innerHTML='';
+  mods.forEach((m,i)=>{const e=document.createElement('div');e.className='gmod';e.textContent=m;e.style.transitionDelay=(0.5+i*0.09)+'s';gmods.appendChild(e)});
+  gemsReveal.classList.add('show');
+  await wait(2600);
+  setCaption('','');
+  caption.classList.remove('show');
+  await wait(4000);
+}
+
+// autostart
+reset();
+window.addEventListener('load',()=>setTimeout(play,500));
+</script>
+</body>
+</html>

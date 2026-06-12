@@ -23,7 +23,7 @@
     </div>
 
     <!-- Toolbar & Filters -->
-    <div class="bg-white rounded-xl border border-slate-100 shadow-sm mb-3 p-3">
+    <div class="bg-white rounded-xl shadow-sm mb-3 p-3">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <!-- Search & Sort -->
         <div class="flex flex-col sm:flex-row items-center gap-3 flex-1 lg:justify-end">
@@ -33,7 +33,7 @@
               v-model="searchTerm"
               type="text"
               placeholder="Buscar por nombre, email o empresa..."
-              class="w-full bg-slate-50 border border-slate-100 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-700 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all"
+              class="w-full bg-slate-50 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-700 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all"
             />
           </div>
           
@@ -41,7 +41,7 @@
             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Ordenar por</span>
             <select 
               v-model="sortBy" 
-              class="bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-[11px] font-bold text-slate-700 outline-none cursor-pointer focus:bg-white focus:border-primary-500 transition-all"
+              class="bg-slate-50 rounded-xl px-4 py-2.5 text-[11px] font-bold text-slate-700 outline-none cursor-pointer focus:bg-white focus:border-primary-500 transition-all"
             >
               <option value="name">Nombre</option>
               <option value="company">Empresa</option>
@@ -54,7 +54,7 @@
 
     <!-- Main Content Area -->
     <div class="space-y-2 pb-10">
-      <div class="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-[400px] relative">
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-[400px] relative">
         <div v-if="loading" class="flex items-center justify-center absolute inset-0 z-10 bg-white/60 backdrop-blur-[2px]">
           <div class="flex flex-col items-center gap-3">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
@@ -151,7 +151,7 @@
             <div 
               v-for="client in paginatedClients" 
               :key="client._id"
-              class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
+              class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
             >
               <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-50">
                 <div class="flex items-center gap-3">
@@ -211,12 +211,12 @@
        <button 
          @click="currentPage--" 
          :disabled="currentPage === 1"
-         class="w-12 h-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
+         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
        >
          <i class="fas fa-chevron-left text-sm"></i>
        </button>
        
-       <div class="flex items-center gap-2 bg-white border border-slate-100 p-2 rounded-2xl shadow-sm shadow-slate-200/50">
+       <div class="flex items-center gap-2 bg-white p-2 rounded-2xl shadow-sm shadow-slate-200/50">
           <button 
             v-for="page in totalPages" 
             :key="page"
@@ -231,7 +231,7 @@
        <button 
          @click="currentPage++" 
          :disabled="currentPage === totalPages"
-         class="w-12 h-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
+         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
        >
          <i class="fas fa-chevron-right text-sm"></i>
        </button>
@@ -240,7 +240,7 @@
     <!-- Create/Edit Modal -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50" @click="showModal = false"></div>
-      <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-fade-in border border-slate-100">
+      <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-fade-in">
         <div class="flex items-center justify-between p-8 border-b border-slate-50">
           <div>
             <h3 class="text-xl font-black text-slate-900 leading-tight">
@@ -257,24 +257,24 @@
           <div class="space-y-6">
             <div class="space-y-2">
               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Nombre Completo</label>
-              <input v-model="form.name" type="text" required placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all" />
+              <input v-model="form.name" type="text" required placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all" />
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div class="space-y-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Correo Electrónico</label>
-                <input v-model="form.email" type="email" required placeholder="correo@ejemplo.com" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
+                <input v-model="form.email" type="email" required placeholder="correo@ejemplo.com" class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
               </div>
               
               <div class="space-y-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Teléfono</label>
-                <input v-model="form.phone" type="tel" required placeholder="+57 ..." class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
+                <input v-model="form.phone" type="tel" required placeholder="+57 ..." class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
               </div>
             </div>
             
             <div class="space-y-2">
               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Empresa / Organización</label>
-              <input v-model="form.company" type="text" required placeholder="Nombre de la empresa" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
+              <input v-model="form.company" type="text" required placeholder="Nombre de la empresa" class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
             </div>
           </div>
           
@@ -293,7 +293,7 @@
     <!-- Delete Confirmation Modal -->
     <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50" @click="showDeleteModal = false"></div>
-      <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden animate-fade-in border border-slate-100 p-8 text-center">
+      <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden animate-fade-in p-8 text-center">
         <div class="w-20 h-20 bg-red-50 text-red-500 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
           <TrashIcon class="w-10 h-10" />
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-2xl px-4 py-3.5">
+  <div class="bg-white dark:bg-[#1e293b] rounded-2xl px-4 py-3.5">
     <!-- Header patrón unificado -->
     <div class="flex items-center justify-between mb-1">
       <div class="flex items-center gap-2">

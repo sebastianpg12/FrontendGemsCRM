@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white dark:bg-[#1e293b] rounded-2xl border border-slate-100 dark:border-[#334155] shadow-sm overflow-hidden">
+  <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm overflow-hidden">
     <!-- Barra superior -->
     <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-slate-100 dark:border-[#334155]">
       <div class="flex items-center gap-2">
@@ -16,7 +16,7 @@
       </div>
 
       <!-- Conmutador de vista -->
-      <div class="flex items-center bg-slate-50 dark:bg-[#0f172a] rounded-lg p-0.5 border border-slate-100 dark:border-[#334155]">
+      <div class="flex items-center bg-slate-50 dark:bg-[#0f172a] rounded-lg p-0.5">
         <button
           v-for="v in views"
           :key="v.id"

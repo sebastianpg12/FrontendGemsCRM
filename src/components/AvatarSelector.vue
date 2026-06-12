@@ -30,7 +30,7 @@
         :class="[
           selectedAvatar === avatar.id 
             ? 'bg-primary-50 border-primary-300 ring-4 ring-primary-50' 
-            : 'bg-slate-50/50 border-transparent hover:bg-white hover:border-slate-200 hover:shadow-md'
+            : 'bg-slate-50/50 border-transparent hover:bg-white hover:shadow-md'
         ]"
       >
         <div class="relative mx-auto w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-sm group-hover:scale-110 transition-transform duration-300">

@@ -57,7 +57,7 @@
 
         <!-- Team Resumen Grid (Compact Executive View) -->
         <section class="space-y-8 pb-12">
-          <div class="flex items-center justify-between bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm">
+          <div class="flex items-center justify-between bg-white p-6 rounded-[2.5rem] shadow-sm">
             <div class="flex items-center gap-5">
               <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-100">
                 <i class="fas fa-users-cog text-xl"></i>
@@ -80,7 +80,7 @@
             <div
               v-for="item in usersWithTasks"
               :key="item.user._id"
-              class="group bg-white border border-slate-100 rounded-[2.5rem] p-2 flex flex-col shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500"
+              class="group bg-white rounded-[2.5rem] p-2 flex flex-col shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500"
             >
               <div class="flex flex-col lg:flex-row gap-4 p-4">
                 <!-- User Profile Section -->
@@ -206,7 +206,7 @@
             </div>
             
             <div class="flex gap-4">
-              <button @click="showEmailModal = false" class="flex-1 px-6 py-5 bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-50 border border-slate-100 rounded-[1.5rem] text-[11px] font-black uppercase tracking-widest transition-all">
+              <button @click="showEmailModal = false" class="flex-1 px-6 py-5 bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-[1.5rem] text-[11px] font-black uppercase tracking-widest transition-all">
                 Cancelar
               </button>
               <button 

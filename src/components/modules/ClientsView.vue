@@ -85,7 +85,7 @@
       <div
         v-for="client in filteredClients"
         :key="client._id"
-        class="bg-white rounded-2xl p-6 border border-slate-100 hover:border-primary-200 transition-all duration-300 hover:shadow-xl shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] group"
+        class="bg-white rounded-2xl p-6 transition-all duration-300 hover:shadow-xl shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] group"
       >
         <!-- Header del cliente -->
         <div class="flex items-start justify-between mb-4">

@@ -31,7 +31,7 @@
           class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black border transition-all duration-200 active:scale-95"
           :class="showActions
             ? 'bg-primary-600 text-white border-primary-600 shadow-lg shadow-primary-500/25'
-            : 'bg-white dark:bg-[#1e293b] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-[#334155] hover:border-primary-200 hover:text-primary-600 hover:bg-primary-50'"
+            : 'bg-white dark:bg-[#1e293b] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-[#334155] hover:text-primary-600 hover:bg-primary-50'"
         >
           <i class="fas fa-bolt text-[10px]"></i>
           <span class="hidden sm:inline">Acciones</span>
@@ -39,7 +39,7 @@
         </button>
 
         <button @click="refreshData" :disabled="isRefreshing"
-          class="w-9 h-9 flex items-center justify-center rounded-xl bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] text-slate-400 hover:text-primary-500 hover:border-primary-200 transition-all disabled:opacity-50 shadow-sm shrink-0">
+          class="w-9 h-9 flex items-center justify-center rounded-xl bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] text-slate-400 hover:text-primary-500 transition-all disabled:opacity-50 shadow-sm shrink-0">
           <i class="fas fa-sync-alt text-[11px]" :class="{ 'animate-spin': isRefreshing }"></i>
         </button>
 
@@ -59,7 +59,7 @@
           :key="qa.label"
           :to="qa.to"
           @click="showActions = false"
-          class="group flex flex-col items-center gap-2.5 bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] hover:border-primary-100 hover:shadow-xl hover:shadow-primary-500/8 rounded-2xl px-3 py-4 transition-all duration-200 action-item"
+          class="group flex flex-col items-center gap-2.5 bg-white dark:bg-[#1e293b] shadow-sm hover:shadow-md rounded-xl px-3 py-4 transition-all duration-200 action-item"
           :style="{ '--delay': `${i * 55}ms` }"
         >
           <div class="w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:-rotate-3" :class="qa.iconBg">
@@ -73,7 +73,7 @@
     <!-- ══ Stat cards — minimalista ═══════════════════════════════════ -->
     <div class="grid gap-1.5" :style="`grid-template-columns: repeat(${statCards.length}, minmax(0, 1fr))`">
       <div v-for="card in statCards" :key="card.label"
-        class="bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-xl py-2.5 px-3 flex flex-col items-center justify-center text-center group cursor-default hover:border-slate-200 transition-all duration-150">
+        class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-2.5 px-3 flex flex-col items-center justify-center text-center group cursor-default transition-all duration-150">
         <!-- Number -->
         <span class="text-[20px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
         <!-- Label -->
@@ -96,9 +96,9 @@
           </div>
 
           <!-- Agenda -->
-          <div class="bg-white border border-slate-100 rounded-2xl overflow-hidden flex flex-col h-full min-h-0">
+          <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl overflow-hidden flex flex-col h-full min-h-0">
             <!-- Card header — patrón unificado -->
-            <div class="flex items-center justify-between px-4 py-3 border-b border-slate-50 shrink-0">
+            <div class="flex items-center justify-between px-4 py-3 shrink-0">
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
                   <i class="fas fa-calendar-alt text-primary-500 text-[9px]"></i>
@@ -152,7 +152,7 @@
       <div class="flex flex-col gap-3 h-full min-h-0">
 
         <!-- Ritmo del día -->
-        <div class="bg-white border border-slate-100 rounded-2xl px-4 py-3.5 shrink-0">
+        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-4 py-3.5 shrink-0">
           <!-- Card header — patrón unificado -->
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
@@ -189,7 +189,7 @@
         </div>
 
         <!-- Pulso comercial -->
-        <div class="bg-white border border-slate-100 rounded-2xl px-4 py-3.5 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-4 py-3.5 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
           <div class="flex items-center gap-2 mb-3">
             <div class="w-6 h-6 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
               <i class="fas fa-chart-line text-amber-500 text-[10px]"></i>

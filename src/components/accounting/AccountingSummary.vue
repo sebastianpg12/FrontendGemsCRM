@@ -7,7 +7,7 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Ingresos vs Egresos -->
-          <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+          <div class="bg-slate-50 rounded-xl p-4">
             <h4 class="text-sm font-black text-slate-700 mb-3">Flujo de Efectivo</h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center">

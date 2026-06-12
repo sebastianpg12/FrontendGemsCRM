@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden relative transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
+  <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden relative transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
     <div v-if="!submitted" class="p-6 md:p-10 space-y-8 animate-fade-in">
 
       <!-- Premium Header Context -->
@@ -48,7 +48,7 @@
                 'p-4 rounded-2xl border-2 transition-all text-left',
                 formData.category === cat.id
                   ? 'border-primary-500 bg-primary-50/50 shadow-md'
-                  : 'border-slate-200 bg-slate-50/50 hover:border-slate-300',
+                  : 'border-slate-200 bg-slate-50/50',
               ]"
             >
               <i :class="['fas', cat.icon, 'text-base mb-2 block', formData.category === cat.id ? 'text-primary-600' : 'text-slate-400']"></i>
@@ -74,7 +74,7 @@
                 'w-full p-4 rounded-2xl border-2 transition-all text-left flex items-start gap-3',
                 formData.subcategory === sub.id
                   ? 'border-primary-500 bg-primary-50/30 shadow-sm'
-                  : 'border-slate-200 bg-slate-50/30 hover:border-slate-300',
+                  : 'border-slate-200 bg-slate-50/30',
               ]"
             >
               <div :class="[
@@ -243,7 +243,7 @@
             >
               <div
                 class="border-2 border-dashed rounded-2xl p-6 transition-all duration-300 flex flex-col items-center justify-center gap-3"
-                :class="dragOver ? 'border-primary-500 bg-primary-50/30' : 'border-slate-200 bg-slate-50/30 hover:border-slate-300 hover:bg-slate-50'"
+                :class="dragOver ? 'border-primary-500 bg-primary-50/30' : 'border-slate-200 bg-slate-50/30 hover:bg-slate-50'"
               >
                 <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
                   <i class="fas fa-cloud-upload-alt text-xl"></i>
@@ -328,7 +328,7 @@
 
        <p class="text-[10px] font-black text-emerald-600 uppercase tracking-[0.4em] mb-4">Misión cumplida</p>
        <h2 class="text-4xl font-black text-slate-800 tracking-tighter mb-4">Ticket Notificado</h2>
-       <p class="text-sm text-slate-500 font-bold mb-10 bg-slate-50 px-6 py-2 rounded-full border border-slate-100">
+       <p class="text-sm text-slate-500 font-bold mb-10 bg-slate-50 px-6 py-2 rounded-full">
          ID: <span class="text-primary-600 font-mono ml-1">#{{ ticketId }}</span>
        </p>
 
@@ -337,7 +337,7 @@
        </p>
 
        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-sm pb-8">
-         <button @click="resetForm" class="flex-1 px-8 py-4 bg-white text-slate-800 border-2 border-slate-100 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 hover:border-slate-200 transition-all">
+         <button @click="resetForm" class="flex-1 px-8 py-4 bg-white text-slate-800 border-2 border-slate-100 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all">
            Nuevo Reporte
          </button>
          <router-link v-if="authStore.isAuthenticated" to="/support" class="flex-1 px-8 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-slate-200">

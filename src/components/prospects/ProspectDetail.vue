@@ -157,7 +157,7 @@
 
     <!-- Modal Agendar Seguimiento (se crea como Actividad) -->
     <div v-if="scheduleOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm p-5 border border-slate-100 dark:border-[#334155]">
+      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm p-5">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Agendar seguimiento</h3>
           <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="scheduleOpen = false">

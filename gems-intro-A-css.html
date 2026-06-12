@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS — Intro A (oficina CSS)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--purple:#8b5cf6;--purple-light:#a78bfa;--indigo:#6366f1}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+  html,body{background:#04050f;height:100%;overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center}
+  .stage{position:relative;width:100vw;max-width:1280px;aspect-ratio:16/9;overflow:hidden;border-radius:16px;
+    background:radial-gradient(120% 90% at 50% 18%,#1a1640 0%,#0a0820 50%,#04050f 100%);box-shadow:0 50px 140px rgba(0,0,0,.7)}
+
+  /* ambient orbs */
+  .orb{position:absolute;border-radius:50%;filter:blur(90px);mix-blend-mode:screen;z-index:0;pointer-events:none}
+  .orb.a{width:480px;height:480px;background:#8b5cf6;top:-160px;left:-90px;opacity:.4}
+  .orb.b{width:400px;height:400px;background:#6366f1;bottom:-160px;right:-80px;opacity:.35}
+
+  /* the camera/scene that zooms */
+  .scene{position:absolute;inset:0;z-index:1;transform-origin:50% 40%;
+    transition:transform 3.3s cubic-bezier(.52,0,.18,1);will-change:transform}
+  .scene.zoom{transform:scale(4.2) translateY(3%)}
+
+  /* floor + back wall */
+  .floor{position:absolute;left:0;right:0;bottom:0;height:46%;
+    background:linear-gradient(180deg,#0c0a22 0%,#070615 100%);
+    box-shadow:inset 0 1px 0 rgba(139,92,246,.15)}
+  .floor::before{content:'';position:absolute;inset:0;
+    background-image:linear-gradient(90deg,rgba(139,92,246,.05) 1px,transparent 1px);
+    background-size:90px 100%;transform:perspective(400px) rotateX(60deg);transform-origin:bottom;opacity:.5}
+
+  /* workstation */
+  .desk{position:absolute;bottom:18%;display:flex;flex-direction:column;align-items:center}
+  /* person silhouette (back view) */
+  .person{position:relative;z-index:1}
+  .head{width:46px;height:46px;border-radius:50%;background:linear-gradient(180deg,#1a1830,#0d0c1c);
+    box-shadow:inset -6px -4px 10px rgba(0,0,0,.6),0 0 0 1px rgba(139,92,246,.1);margin:0 auto}
+  .torso{width:108px;height:60px;margin-top:-8px;border-radius:54px 54px 14px 14px;
+    background:linear-gradient(180deg,#171530,#0c0b1e);box-shadow:inset 0 6px 14px rgba(0,0,0,.5),0 0 0 1px rgba(139,92,246,.08)}
+  /* monitor in front of person */
+  .mon{position:relative;margin-top:-44px;z-index:2}
+  .screen{width:140px;height:90px;border-radius:8px;background:#0a0a14;border:3px solid #15131f;
+    box-shadow:0 0 26px var(--scol,rgba(139,92,246,.45)),inset 0 0 30px rgba(0,0,0,.6);overflow:hidden;position:relative}
+  .screenglow{position:absolute;inset:0;opacity:.85;background:
+    radial-gradient(60% 60% at 50% 40%,var(--scol,rgba(139,92,246,.7)),transparent 70%)}
+  .stand{width:14px;height:16px;background:#15131f;margin:0 auto;border-radius:0 0 3px 3px}
+  .base{width:54px;height:6px;background:#15131f;margin:0 auto;border-radius:4px}
+  /* desk surface */
+  .top{width:200px;height:14px;border-radius:6px;margin-top:4px;
+    background:linear-gradient(180deg,#1c1936,#100e22);box-shadow:0 14px 30px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
+
+  /* app tiles inside the focus screen (revealed near end) */
+  .tiles{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:9px;opacity:0;transition:opacity .6s .2s}
+  .tiles.show{opacity:1}
+  .tile{border-radius:5px;display:grid;place-items:center;font-size:11px;font-weight:900;color:#fff}
+
+  /* caption */
+  .cap{position:absolute;left:0;right:0;top:9%;z-index:5;text-align:center;opacity:0;transform:translateY(-10px);transition:.6s}
+  .cap.show{opacity:1;transform:translateY(0)}
+  .cap .t{font-size:clamp(16px,2.2vw,28px);font-weight:800;color:#fff;letter-spacing:-.01em}
+  .cap .s{font-size:clamp(12px,1.3vw,15px);color:#aeb4c4;margin-top:6px;font-weight:500}
+
+  .vig{position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:16px;box-shadow:inset 0 0 180px rgba(0,0,0,.7)}
+  .flash{position:absolute;inset:0;z-index:8;background:#fff;opacity:0;pointer-events:none}
+  .flash.fire{animation:fl 1s ease-out forwards}
+  @keyframes fl{0%{opacity:0}35%{opacity:1}100%{opacity:1}}
+  .progress{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--purple-light));width:0;z-index:20}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="orb a"></div><div class="orb b"></div>
+  <div class="progress" id="progress"></div>
+
+  <div class="scene" id="scene">
+    <div class="floor"></div>
+
+    <!-- left worker -->
+    <div class="desk" style="left:14%;transform:scale(.82);filter:brightness(.7)">
+      <div class="person"><div class="head"></div><div class="torso"></div></div>
+      <div class="mon"><div class="screen" style="--scol:rgba(255,122,89,.5)"><div class="screenglow"></div></div>
+        <div class="stand"></div><div class="base"></div></div>
+      <div class="top"></div>
+    </div>
+
+    <!-- right worker -->
+    <div class="desk" style="right:14%;transform:scale(.82);filter:brightness(.7)">
+      <div class="person"><div class="head"></div><div class="torso"></div></div>
+      <div class="mon"><div class="screen" style="--scol:rgba(37,99,235,.5)"><div class="screenglow"></div></div>
+        <div class="stand"></div><div class="base"></div></div>
+      <div class="top"></div>
+    </div>
+
+    <!-- center worker (focus) -->
+    <div class="desk" id="focus" style="left:50%;transform:translateX(-50%)">
+      <div class="person"><div class="head"></div><div class="torso"></div></div>
+      <div class="mon"><div class="screen" id="focusScreen" style="--scol:rgba(139,92,246,.7)">
+        <div class="screenglow"></div>
+        <div class="tiles" id="tiles">
+          <div class="tile" style="background:#ff7a59">H</div>
+          <div class="tile" style="background:#ff3d57">T</div>
+          <div class="tile" style="background:#1f2430;border:1px solid #555">N</div>
+          <div class="tile" style="background:#2563eb">S</div>
+        </div>
+      </div>
+        <div class="stand"></div><div class="base"></div></div>
+      <div class="top"></div>
+    </div>
+  </div>
+
+  <div class="cap" id="cap"><div class="t" id="capT"></div><div class="s" id="capS"></div></div>
+  <div class="vig"></div>
+  <div class="flash" id="flash"></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function cap(t,s){const c=$('#cap');c.classList.remove('show');setTimeout(()=>{$('#capT').textContent=t;$('#capS').textContent=s||'';c.classList.add('show')},100)}
+
+async function play(){
+  $('#progress').style.transition='width 7000ms linear';$('#progress').style.width='100%';
+  // establish
+  cap('9:00 a.m. Tu equipo ya está conectado.','Cada quien, frente a su pantalla.');
+  await wait(1500);
+  $('#cap').classList.remove('show');
+  // zoom in
+  await wait(300);
+  $('#scene').classList.add('zoom');
+  await wait(2200);
+  // reveal the chaos on screen
+  $('#tiles').classList.add('show');
+  cap('Pero detrás de cada pantalla…','el mismo caos de siempre.');
+  await wait(1900);
+  // flash to white -> cut to main demo
+  $('#cap').classList.remove('show');
+  await wait(300);
+  $('#flash').classList.add('fire');
+  await wait(1100);
+}
+window.addEventListener('load',()=>setTimeout(play,400));
+</script>
+</body>
+</html>

@@ -282,7 +282,7 @@ const getDayClasses = (day: any) => {
   if (isToday(day.date)) {
     classes.push('ring-1 ring-primary-400 ring-inset border-primary-100 bg-primary-50/10')
   } else if (day.isCurrentMonth) {
-    classes.push('hover:bg-slate-50/50 hover:border-slate-300')
+    classes.push('hover:bg-slate-50/50')
   }
   
   return classes.join(' ')

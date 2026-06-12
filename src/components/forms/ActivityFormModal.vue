@@ -165,7 +165,7 @@
                       class="px-1 py-2 rounded-xl text-[11px] font-black tracking-wider uppercase transition-all border shadow-sm flex items-center justify-center gap-1"
                       :class="form.estimatedTime === time.val 
                         ? 'bg-primary-500 text-white border-primary-600 ring-2 ring-primary-500/20 shadow-primary-500/20' 
-                        : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-700'"
+                        : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700'"
                     >
                       <i class="fas fa-clock opacity-70 hidden sm:inline-block"></i>
                       {{ time.label }}
@@ -186,7 +186,7 @@
                   </div>
 
                   <!-- Progreso -->
-                  <div class="mt-3 bg-white p-2 rounded-xl border border-slate-100 shadow-sm flex items-center gap-3">
+                  <div class="mt-3 bg-white p-2 rounded-xl shadow-sm flex items-center gap-3">
                     <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-right">{{ form.completionPercentage || 0 }}%</span>
                     <input 
                       type="range" 
@@ -255,7 +255,7 @@
           <div
             v-for="comment in localComments"
             :key="comment._id"
-            class="bg-white rounded-2xl p-3 shadow-sm border border-slate-100 group"
+            class="bg-white rounded-2xl p-3 shadow-sm group"
           >
             <div class="flex items-center gap-2 mb-1.5">
               <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[9px] font-black shrink-0">
@@ -320,7 +320,7 @@
                 v-for="(img, idx) in comment.images"
                 :key="idx"
                 :src="img.url"
-                class="w-16 h-16 object-cover rounded-xl cursor-pointer border border-slate-100 hover:opacity-80 transition-opacity"
+                class="w-16 h-16 object-cover rounded-xl cursor-pointer hover:opacity-80 transition-opacity"
                 @click="previewUrl = img.url"
               />
             </div>

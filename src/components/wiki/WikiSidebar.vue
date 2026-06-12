@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-64 shrink-0 h-full flex flex-col bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-[#334155] rounded-2xl overflow-hidden">
+  <aside class="w-64 shrink-0 h-full flex flex-col bg-white dark:bg-[#1e293b] rounded-2xl overflow-hidden">
     <!-- Header -->
     <div class="px-4 pt-4 pb-3 border-b border-slate-100 dark:border-[#334155]">
       <div class="flex items-center justify-between mb-3">

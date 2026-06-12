@@ -54,7 +54,7 @@
 
         <!-- History/List view (Issue Navigator) -->
         <div v-else class="animate-content-in h-full">
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden">
+          <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden">
             <!-- Table Header / Toolbar -->
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
               <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest">Cola de Incidencias</h2>
@@ -125,7 +125,7 @@
                <button 
                  @click="changePage(pagination.page - 1)"
                  :disabled="pagination.page === 1"
-                 class="w-9 h-9 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                 class="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                >
                  <i class="fas fa-chevron-left text-[10px]"></i>
                </button>
@@ -145,7 +145,7 @@
                <button 
                  @click="changePage(pagination.page + 1)"
                  :disabled="pagination.page === pagination.pages"
-                 class="w-9 h-9 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                 class="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                >
                  <i class="fas fa-chevron-right text-[10px]"></i>
                </button>
@@ -182,7 +182,7 @@
                 {{ selectedTicket.priority }}
               </span>
               <h1 class="text-2xl font-black text-slate-800 tracking-tight">{{ selectedTicket.subject }}</h1>
-              <p class="text-sm text-slate-600 leading-relaxed bg-slate-50/50 p-6 rounded-2xl border border-slate-100 italic">
+              <p class="text-sm text-slate-600 leading-relaxed bg-slate-50/50 p-6 rounded-2xl italic">
                 "{{ selectedTicket.description }}"
               </p>
             </section>

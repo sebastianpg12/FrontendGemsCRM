@@ -136,7 +136,7 @@
         <div 
           v-for="(file, index) in selectedFiles" 
           :key="index"
-          class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100"
+          class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"
         >
           <div class="flex items-center gap-3">
             <i :class="getFileIcon(file.name)" class="text-primary-400"></i>
@@ -161,7 +161,7 @@
         <div 
           v-for="(file, index) in existingFiles" 
           :key="`existing-${index}`"
-          class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100"
+          class="flex items-center justify-between p-3 bg-slate-50 rounded-xl"
         >
           <div class="flex items-center gap-3">
             <i :class="getFileIcon(file.nombre)" class="text-primary-400"></i>

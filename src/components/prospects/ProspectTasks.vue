@@ -35,7 +35,7 @@
         :key="task.id"
         :class="[
           'flex items-start gap-3 p-3 rounded-xl border transition-all group',
-          isOverdue(task.dueDate) ? 'bg-rose-50/40 border-rose-200/60' : 'bg-white border-slate-200 hover:border-slate-300',
+          isOverdue(task.dueDate) ? 'bg-rose-50/40 border-rose-200/60' : 'bg-white border-slate-200',
         ]"
       >
         <button
@@ -68,7 +68,7 @@
       <div
         v-for="task in doneTasks"
         :key="task.id"
-        class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100 group"
+        class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 group"
       >
         <button
           @click="$emit('toggle', task.id)"

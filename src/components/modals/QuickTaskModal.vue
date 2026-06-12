@@ -96,7 +96,7 @@
         <div class="flex items-center gap-4 mt-10 pt-6 border-t border-slate-100">
           <button
             @click="$emit('close')"
-            class="flex-1 px-6 py-4 bg-white text-slate-500 hover:text-slate-900 border border-slate-100 rounded-2xl transition-all font-black text-xs uppercase tracking-widest hover:bg-slate-50 active:scale-95"
+            class="flex-1 px-6 py-4 bg-white text-slate-500 hover:text-slate-900 rounded-2xl transition-all font-black text-xs uppercase tracking-widest hover:bg-slate-50 active:scale-95"
           >
             Cerrar
           </button>

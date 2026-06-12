@@ -52,7 +52,7 @@
               <button @click="deleteService(s._id)" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"><i class="fas fa-trash"></i></button>
             </div>
           </div>
-          <p v-if="s.notes" class="text-slate-600 text-sm p-3 bg-slate-50 rounded-lg border border-slate-100 mt-2">{{ s.notes }}</p>
+          <p v-if="s.notes" class="text-slate-600 text-sm p-3 bg-slate-50 rounded-lg mt-2">{{ s.notes }}</p>
         </div>
         <!-- edit mode -->
         <div v-else class="flex flex-col gap-3">

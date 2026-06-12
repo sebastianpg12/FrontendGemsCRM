@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS — Plan de Marketing Instagram</title>
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --gray-50: #f9f9f9;
+    --gray-100: #f2f2f2;
+    --gray-200: #e5e5e5;
+    --gray-400: #a0a0a0;
+    --gray-600: #666666;
+    --gray-800: #222222;
+    --purple: #5b45c8;
+    --purple-light: #ede9ff;
+    --teal: #0f6e56;
+    --teal-light: #e1f5ee;
+    --coral: #c04a22;
+    --coral-light: #faece7;
+    --amber: #92600a;
+    --amber-light: #faeeda;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Layout ── */
+  .app { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--black);
+    color: var(--white);
+    padding: 32px 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  .main { margin-left: 220px; padding: 40px 48px; max-width: 1100px; }
+
+  /* ── Sidebar ── */
+  .logo {
+    padding: 0 24px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+  }
+  .logo-name { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+  .logo-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .nav-section { padding: 0 16px; margin-bottom: 24px; }
+  .nav-section-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0 8px;
+    margin-bottom: 4px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    transition: all 0.15s;
+    text-decoration: none;
+    user-select: none;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+  .nav-item.active { background: rgba(255,255,255,0.1); color: var(--white); font-weight: 500; }
+  .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-purple { background: #8b7ee8; }
+  .dot-teal { background: #2dc99e; }
+  .dot-coral { background: #e8835a; }
+  .dot-amber { background: #f0b033; }
+  .dot-gray { background: rgba(255,255,255,0.3); }
+
+  /* ── Sections ── */
+  .section { display: none; }
+  .section.active { display: block; }
+  .page-title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .page-sub { font-size: 14px; color: var(--gray-600); margin-bottom: 36px; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-body { font-size: 13px; color: var(--gray-600); line-height: 1.7; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px; }
+
+  /* ── Account badges ── */
+  .account-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+  .badge-coral { background: var(--coral-light); color: var(--coral); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+
+  /* ── Bio boxes ── */
+  .bio-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; }
+  .bio-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .av-p { background: var(--purple-light); color: var(--purple); }
+  .av-t { background: var(--teal-light); color: var(--teal); }
+  .av-c { background: var(--coral-light); color: var(--coral); }
+  .bio-handle { font-size: 14px; font-weight: 600; color: var(--black); }
+  .bio-type { font-size: 11px; color: var(--gray-400); margin-top: 1px; }
+  .bio-body { padding: 16px 20px; }
+  .bio-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--black);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    white-space: pre-line;
+    margin-bottom: 10px;
+  }
+  .bio-meta { font-size: 11px; color: var(--gray-400); display: flex; gap: 12px; }
+  .bio-section-label { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; margin-top: 14px; }
+
+  /* ── Highlights ── */
+  .highlights-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .highlight-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 60px;
+  }
+  .highlight-circle {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    background: var(--gray-50);
+  }
+  .highlight-label { font-size: 10px; color: var(--gray-600); text-align: center; line-height: 1.3; }
+
+  /* ── Captions ── */
+  .caption-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .caption-header {
+    padding: 10px 16px;
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .caption-meta { display: flex; align-items: center; gap: 8px; }
+  .caption-num { font-size: 11px; font-weight: 700; color: var(--gray-400); }
+  .caption-type {
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+    background: var(--gray-100); color: var(--gray-600);
+  }
+  .copy-btn {
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+  .caption-body { padding: 14px 16px; font-size: 13px; line-height: 1.75; color: var(--black); white-space: pre-line; }
+  .caption-tags { padding: 0 16px 12px; font-size: 12px; color: var(--purple); }
+
+  /* ── Reels ── */
+  .reel-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .reel-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .reel-title { font-size: 14px; font-weight: 600; color: var(--black); }
+  .reel-duration { font-size: 11px; color: var(--gray-400); }
+  .reel-body { padding: 16px 20px; }
+  .reel-steps { display: flex; flex-direction: column; gap: 0; }
+  .reel-step {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .reel-step:last-child { border-bottom: none; }
+  .step-time {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gray-400);
+    width: 42px;
+    flex-shrink: 0;
+    padding-top: 2px;
+    text-transform: uppercase;
+  }
+  .step-content { flex: 1; }
+  .step-action { font-size: 12px; font-weight: 600; color: var(--black); }
+  .step-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; margin-top: 2px; }
+  .step-tip {
+    font-size: 11px;
+    color: var(--amber);
+    background: var(--amber-light);
+    border-radius: var(--radius-sm);
+    padding: 3px 8px;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  /* ── Calendar ── */
+  .week-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(7, 1fr);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .week-header {
+    background: var(--black);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 4px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .week-header:last-child { border-right: none; }
+  .week-row-label {
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-200);
+    border-right: 1px solid var(--gray-200);
+    font-size: 11px; font-weight: 600; color: var(--gray-600);
+    padding: 10px 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .week-cell {
+    background: var(--white);
+    border-top: 1px solid var(--gray-200);
+    border-right: 1px solid var(--gray-200);
+    padding: 8px 6px;
+    min-height: 56px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .week-cell:last-child { border-right: none; }
+  .week-cell.empty { background: var(--gray-50); }
+  .cell-account { font-weight: 700; font-size: 10px; margin-bottom: 2px; }
+  .cell-type { color: var(--gray-400); font-size: 10px; }
+
+  /* ── Covers guide ── */
+  .covers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .cover-card {
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-align: center;
+  }
+  .cover-preview {
+    height: 90px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .cover-info { padding: 10px 10px 12px; background: var(--white); }
+  .cover-name { font-size: 12px; font-weight: 600; color: var(--black); }
+  .cover-sub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+  .cover-colors { display: flex; gap: 4px; justify-content: center; margin-top: 8px; }
+  .color-dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.08); }
+
+  /* ── Hashtag sets ── */
+  .hashtag-block { background: var(--gray-50); border-radius: var(--radius-sm); padding: 12px 14px; margin-top: 8px; }
+  .hashtag-item { display: inline-block; font-size: 12px; color: var(--purple); margin: 2px 4px 2px 0; }
+
+  /* ── Rules table ── */
+  .rules-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .rules-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--gray-50);
+  }
+  .rules-table td { padding: 10px 12px; border-bottom: 1px solid var(--gray-100); font-size: 13px; color: var(--gray-800); vertical-align: top; }
+  .rules-table tr:last-child td { border-bottom: none; }
+
+  /* ── Pillar bars ── */
+  .pillar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .pillar-label { font-size: 12px; color: var(--gray-600); width: 120px; flex-shrink: 0; }
+  .pillar-bar-wrap { flex: 1; height: 5px; background: var(--gray-100); border-radius: 3px; }
+  .pillar-fill { height: 100%; border-radius: 3px; }
+  .pillar-pct { font-size: 11px; color: var(--gray-400); width: 30px; text-align: right; }
+
+  /* ── Util ── */
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin: 2px 2px 2px 0; }
+  .tag-p { background: var(--purple-light); color: var(--purple); }
+  .tag-t { background: var(--teal-light); color: var(--teal); }
+  .tag-c { background: var(--coral-light); color: var(--coral); }
+  .tag-g { background: var(--gray-100); color: var(--gray-600); }
+  .tag-a { background: var(--amber-light); color: var(--amber); }
+  .spacer { margin-bottom: 32px; }
+  .tip-box {
+    background: var(--amber-light);
+    border-left: 3px solid #e9a220;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+  .rule-box {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--gray-600);
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-name">GEMS</div>
+    <div class="logo-sub">Marketing Hub</div>
+  </div>
+  <nav>
+    <div class="nav-section">
+      <div class="nav-section-label">Plan</div>
+      <a class="nav-item active" onclick="show('overview')"><span class="nav-dot dot-gray"></span>Visión general</a>
+      <a class="nav-item" onclick="show('bios')"><span class="nav-dot dot-gray"></span>Perfiles & Bios</a>
+      <a class="nav-item" onclick="show('covers')"><span class="nav-dot dot-gray"></span>Portadas destacadas</a>
+      <a class="nav-item" onclick="show('calendar')"><span class="nav-dot dot-gray"></span>Calendario editorial</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">@gemsinnovations</div>
+      <a class="nav-item" onclick="show('captions-gi')"><span class="nav-dot dot-purple"></span>10 Captions</a>
+      <a class="nav-item" onclick="show('reels-gi')"><span class="nav-dot dot-purple"></span>Guiones Reels</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">@gemss.hub</div>
+      <a class="nav-item" onclick="show('captions-gh')"><span class="nav-dot dot-teal"></span>10 Captions</a>
+      <a class="nav-item" onclick="show('reels-gh')"><span class="nav-dot dot-teal"></span>Guiones Reels</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">@gems.lms</div>
+      <a class="nav-item" onclick="show('captions-gl')"><span class="nav-dot dot-coral"></span>10 Captions</a>
+      <a class="nav-item" onclick="show('reels-gl')"><span class="nav-dot dot-coral"></span>Guiones Reels</a>
+    </div>
+  </nav>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+<!-- ══════════════════════════════════════════ OVERVIEW ══ -->
+<div id="overview" class="section active">
+  <div class="page-title">Plan de Instagram</div>
+  <div class="page-sub">Estrategia completa para las tres cuentas del ecosistema GEMS — actualizado junio 2026.</div>
+
+  <div class="section-title">Las tres cuentas y su rol</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title"><span class="account-badge badge-purple">@gemsinnovations</span></div>
+      <div class="card-body">Cuartel general del ecosistema. Presenta la marca madre, cultura, logros y noticias. Puede repostear los productos con contexto de empresa.</div>
+      <div style="margin-top:12px;">
+        <div class="pillar-row"><span class="pillar-label">Educativo / insights</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:40%;background:#5b45c8;"></div></div><span class="pillar-pct">40%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Producto / ecosistema</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:25%;background:#5b45c8;"></div></div><span class="pillar-pct">25%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Prueba social</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:20%;background:#5b45c8;"></div></div><span class="pillar-pct">20%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Cultura / equipo</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:15%;background:#5b45c8;"></div></div><span class="pillar-pct">15%</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="account-badge badge-teal">@gemss.hub</span></div>
+      <div class="card-body">Cuenta de producto: CRM para equipos de servicio. Habla del dolor que resuelve, muestra features, casos y comparativas. 100% enfocada en el buyer.</div>
+      <div style="margin-top:12px;">
+        <div class="pillar-row"><span class="pillar-label">Feature / demo</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:35%;background:#0f6e56;"></div></div><span class="pillar-pct">35%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Pain → solución</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:30%;background:#0f6e56;"></div></div><span class="pillar-pct">30%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Prueba social</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:20%;background:#0f6e56;"></div></div><span class="pillar-pct">20%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Comparativa</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:15%;background:#0f6e56;"></div></div><span class="pillar-pct">15%</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="account-badge badge-coral">@gems.lms</span></div>
+      <div class="card-body">Cuenta de producto: LMS con IA para instituciones educativas. Habla de pedagogía moderna, IA aplicada y métricas de rendimiento docente.</div>
+      <div style="margin-top:12px;">
+        <div class="pillar-row"><span class="pillar-label">IA en educación</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:35%;background:#c04a22;"></div></div><span class="pillar-pct">35%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Feature / demo</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:30%;background:#c04a22;"></div></div><span class="pillar-pct">30%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Casos de uso</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:20%;background:#c04a22;"></div></div><span class="pillar-pct">20%</span></div>
+        <div class="pillar-row"><span class="pillar-label">Inspiración</span><div class="pillar-bar-wrap"><div class="pillar-fill" style="width:15%;background:#c04a22;"></div></div><span class="pillar-pct">15%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Reglas de oro — aplican a las tres cuentas</div>
+  <table class="rules-table">
+    <thead><tr><th>Regla</th><th>Qué hacer</th><th>Qué evitar</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tono</strong></td><td>Directo, concreto, una oración = una idea. CTA al final.</td><td>"Increíble", "revolucionario", "disruptivo". Adjetivos vacíos.</td></tr>
+      <tr><td><strong>Caption</strong></td><td>Hook en la primera línea (antes del "más"). Emojis solo como viñetas, máx. 3.</td><td>Párrafos largos sin espaciado. Hashtags en el caption.</td></tr>
+      <tr><td><strong>Hashtags</strong></td><td>5 máximo. En el primer comentario, no en el caption.</td><td>30 hashtags genéricos. #love #instagood. Hashtags en caption.</td></tr>
+      <tr><td><strong>Visual</strong></td><td>Mockups de pantalla reales > ilustraciones. Fondo limpio.</td><td>Stock photos con personas genéricas. Texto pequeño en imagen.</td></tr>
+      <tr><td><strong>Frecuencia</strong></td><td>3–4 posts/semana por cuenta. Consistencia > cantidad.</td><td>Publicar 7 días seguidos y desaparecer 2 semanas.</td></tr>
+      <tr><td><strong>Stories</strong></td><td>Diario o cada dos días. Polls, preguntas, countdowns.</td><td>Stories de puro texto sin diseño. Reposts sin contexto.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Hashtags por cuenta (van en el primer comentario)</div>
+  <div class="grid-3">
+    <div class="card">
+      <div style="font-size:12px;font-weight:600;color:var(--gray-400);margin-bottom:8px;">@gemsinnovations</div>
+      <div class="hashtag-block">
+        <span class="hashtag-item">#gemsinnovations</span>
+        <span class="hashtag-item">#softwarecolombia</span>
+        <span class="hashtag-item">#transformaciondigital</span>
+        <span class="hashtag-item">#techlatam</span>
+        <span class="hashtag-item">#startupscolombia</span>
+      </div>
+      <div class="rule-box" style="margin-top:10px;">Rotar el 3°–5° hashtag según el tema del post. #crm #lms #automatizacion etc.</div>
+    </div>
+    <div class="card">
+      <div style="font-size:12px;font-weight:600;color:var(--gray-400);margin-bottom:8px;">@gemss.hub</div>
+      <div class="hashtag-block">
+        <span class="hashtag-item">#gemshub</span>
+        <span class="hashtag-item">#crm</span>
+        <span class="hashtag-item">#gestiondeequipos</span>
+        <span class="hashtag-item">#productividad</span>
+        <span class="hashtag-item">#agencias</span>
+      </div>
+      <div class="rule-box" style="margin-top:10px;">Alternar: #servicioalcliente #ticketing #kanban #trabajoenequipo</div>
+    </div>
+    <div class="card">
+      <div style="font-size:12px;font-weight:600;color:var(--gray-400);margin-bottom:8px;">@gems.lms</div>
+      <div class="hashtag-block">
+        <span class="hashtag-item">#gemslms</span>
+        <span class="hashtag-item">#edtech</span>
+        <span class="hashtag-item">#educaciondigital</span>
+        <span class="hashtag-item">#inteligenciaartificial</span>
+        <span class="hashtag-item">#docentes</span>
+      </div>
+      <div class="rule-box" style="margin-top:10px;">Alternar: #elearning #aula #innovacioneducativa #plataformaeducativa</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ BIOS ══ -->
+<div id="bios" class="section">
+  <div class="page-title">Perfiles & Bios</div>
+  <div class="page-sub">Estructura recomendada para cada cuenta de Instagram.</div>
+
+  <div class="section-title">@gemsinnovations — Marca madre</div>
+  <div class="bio-card" style="margin-bottom:20px;">
+    <div class="bio-header">
+      <div class="avatar av-p">GI</div>
+      <div><div class="bio-handle">@gemsinnovations</div><div class="bio-type">Empresa de tecnología · Medellín, Colombia</div></div>
+    </div>
+    <div class="bio-body">
+      <div class="bio-section-label">Bio (150 caracteres)</div>
+      <div class="bio-text">Soluciones digitales propias para equipos que ejecutan.
+CRM · LMS · Finanzas · Dev
+🇨🇴 Equipo local. Soporte 24/7.
+↓ Conoce el ecosistema</div>
+      <div class="bio-meta"><span>~118 caracteres</span><span>· Incluye emoji bandera: diferenciador "hecho en Colombia"</span></div>
+      <div class="bio-section-label">Nombre de perfil</div>
+      <div style="font-size:13px;padding:8px 12px;background:var(--gray-50);border-radius:var(--radius-sm);border:1px solid var(--gray-200);">GEMS Innovations</div>
+      <div class="bio-section-label">Categoría</div>
+      <div style="font-size:13px;color:var(--gray-600);">Software Company</div>
+      <div class="bio-section-label">Link en bio</div>
+      <div style="font-size:13px;padding:8px 12px;background:var(--gray-50);border-radius:var(--radius-sm);border:1px solid var(--gray-200);">gemsinnovations.com — o Linktree con: Web · Hub · LMS · WhatsApp</div>
+      <div class="bio-section-label">Historias destacadas (orden)</div>
+      <div class="highlights-row" style="margin-top:8px;">
+        <div class="highlight-item"><div class="highlight-circle">🏢</div><div class="highlight-label">Nosotros</div></div>
+        <div class="highlight-item"><div class="highlight-circle">📦</div><div class="highlight-label">Productos</div></div>
+        <div class="highlight-item"><div class="highlight-circle">⭐</div><div class="highlight-label">Clientes</div></div>
+        <div class="highlight-item"><div class="highlight-circle">📰</div><div class="highlight-label">Blog</div></div>
+        <div class="highlight-item"><div class="highlight-circle">💬</div><div class="highlight-label">Contacto</div></div>
+        <div class="highlight-item"><div class="highlight-circle">👥</div><div class="highlight-label">Equipo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">@gemss.hub — CRM para equipos de servicio</div>
+  <div class="bio-card" style="margin-bottom:20px;">
+    <div class="bio-header">
+      <div class="avatar av-t">GH</div>
+      <div><div class="bio-handle">@gemss.hub</div><div class="bio-type">Software · CRM · SaaS</div></div>
+    </div>
+    <div class="bio-body">
+      <div class="bio-section-label">Bio (150 caracteres)</div>
+      <div class="bio-text">El OS de tu equipo de servicio.
+Tickets · Tareas · Clientes · Chat
+Sin los precios de HubSpot.
+↓ Empieza gratis hoy</div>
+      <div class="bio-meta"><span>~105 caracteres</span><span>· "OS de tu equipo" — posicionamiento claro y memorable</span></div>
+      <div class="bio-section-label">Nombre de perfil</div>
+      <div style="font-size:13px;padding:8px 12px;background:var(--gray-50);border-radius:var(--radius-sm);border:1px solid var(--gray-200);">GEMS Hub — CRM</div>
+      <div class="bio-section-label">Categoría</div>
+      <div style="font-size:13px;color:var(--gray-600);">Software Company</div>
+      <div class="bio-section-label">Link en bio</div>
+      <div style="font-size:13px;padding:8px 12px;background:var(--gray-50);border-radius:var(--radius-sm);border:1px solid var(--gray-200);">gemsinnovations.com/gems-hub.html</div>
+      <div class="bio-section-label">Historias destacadas (orden)</div>
+      <div class="highlights-row" style="margin-top:8px;">
+        <div class="highlight-item"><div class="highlight-circle">❓</div><div class="highlight-label">¿Qué es?</div></div>
+        <div class="highlight-item"><div class="highlight-circle">⚡</div><div class="highlight-label">Funciones</div></div>
+        <div class="highlight-item"><div class="highlight-circle">▶️</div><div class="highlight-label">Demo</div></div>
+        <div class="highlight-item"><div class="highlight-circle">💰</div><div class="highlight-label">Precios</div></div>
+        <div class="highlight-item"><div class="highlight-circle">⭐</div><div class="highlight-label">Casos</div></div>
+        <div class="highlight-item"><div class="highlight-circle">🎧</div><div class="highlight-label">Soporte</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">@gems.lms — Plataforma educativa con IA</div>
+  <div class="bio-card">
+    <div class="bio-header">
+      <div class="avatar av-c">GL</div>
+      <div><div class="bio-handle">@gems.lms</div><div class="bio-type">EdTech · LMS · IA educativa</div></div>
+    </div>
+    <div class="bio-body">
+      <div class="bio-section-label">Bio (150 caracteres)</div>
+      <div class="bio-text">Plataforma educativa con IA para instituciones que innovan.
+Rutas · Evaluaciones · WhatsApp
+Desde $300.000 COP/mes.
+↓ Agenda una demo</div>
+      <div class="bio-meta"><span>~128 caracteres</span><span>· Precio ancla genera calificación automática de leads</span></div>
+      <div class="bio-section-label">Nombre de perfil</div>
+      <div style="font-size:13px;padding:8px 12px;background:var(--gray-50);border-radius:var(--radius-sm);border:1px solid var(--gray-200);">GEMS LMS — Educación con IA</div>
+      <div class="bio-section-label">Categoría</div>
+      <div style="font-size:13px;color:var(--gray-600);">Educational Software</div>
+      <div class="bio-section-label">Link en bio</div>
+      <div style="font-size:13px;padding:8px 12px;background:var(--gray-50);border-radius:var(--radius-sm);border:1px solid var(--gray-200);">gemsinnovations.com/gems-lms.html</div>
+      <div class="bio-section-label">Historias destacadas (orden)</div>
+      <div class="highlights-row" style="margin-top:8px;">
+        <div class="highlight-item"><div class="highlight-circle">❓</div><div class="highlight-label">¿Qué es?</div></div>
+        <div class="highlight-item"><div class="highlight-circle">🤖</div><div class="highlight-label">IA</div></div>
+        <div class="highlight-item"><div class="highlight-circle">👩‍🏫</div><div class="highlight-label">Docentes</div></div>
+        <div class="highlight-item"><div class="highlight-circle">🎓</div><div class="highlight-label">Estudiantes</div></div>
+        <div class="highlight-item"><div class="highlight-circle">💰</div><div class="highlight-label">Planes</div></div>
+        <div class="highlight-item"><div class="highlight-circle">📅</div><div class="highlight-label">Demo</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ COVERS ══ -->
+<div id="covers" class="section">
+  <div class="page-title">Portadas de historias destacadas</div>
+  <div class="page-sub">Guía de diseño para crear las portadas en Canva, Figma o Adobe Express.</div>
+
+  <div class="tip-box">💡 Regla de oro: una portada = un ícono centrado + fondo sólido de la paleta + texto en 2 palabras máximo en la parte inferior. Sin gradientes, sin sombras.</div>
+
+  <div class="section-title">@gemsinnovations — Paleta: negro y blanco, acento #5b45c8</div>
+  <div class="covers-grid">
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#0a0a0a;">🏢</div>
+      <div class="cover-info">
+        <div class="cover-name">Nosotros</div>
+        <div class="cover-sub">ícono: edificio</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#0a0a0a;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+          <div class="color-dot" style="background:#5b45c8;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#5b45c8;">📦</div>
+      <div class="cover-info">
+        <div class="cover-name">Productos</div>
+        <div class="cover-sub">ícono: cuadrícula</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#5b45c8;"></div>
+          <div class="color-dot" style="background:#ede9ff;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#f2f2f2;">⭐</div>
+      <div class="cover-info">
+        <div class="cover-name">Clientes</div>
+        <div class="cover-sub">ícono: estrella</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#f2f2f2;"></div>
+          <div class="color-dot" style="background:#0a0a0a;"></div>
+          <div class="color-dot" style="background:#5b45c8;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#0a0a0a;">📰</div>
+      <div class="cover-info">
+        <div class="cover-name">Blog</div>
+        <div class="cover-sub">ícono: artículo</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#0a0a0a;"></div>
+          <div class="color-dot" style="background:#5b45c8;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">@gemss.hub — Paleta: blanco, acento #0f6e56 (teal oscuro)</div>
+  <div class="covers-grid">
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#0f6e56;">❓</div>
+      <div class="cover-info">
+        <div class="cover-name">¿Qué es?</div>
+        <div class="cover-sub">ícono: info</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#0f6e56;"></div>
+          <div class="color-dot" style="background:#e1f5ee;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#e1f5ee;">⚡</div>
+      <div class="cover-info">
+        <div class="cover-name">Funciones</div>
+        <div class="cover-sub">ícono: rayo</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#e1f5ee;"></div>
+          <div class="color-dot" style="background:#0f6e56;"></div>
+          <div class="color-dot" style="background:#085041;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#0a0a0a;">▶️</div>
+      <div class="cover-info">
+        <div class="cover-name">Demo</div>
+        <div class="cover-sub">ícono: play</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#0a0a0a;"></div>
+          <div class="color-dot" style="background:#0f6e56;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#0f6e56;">💰</div>
+      <div class="cover-info">
+        <div class="cover-name">Precios</div>
+        <div class="cover-sub">ícono: etiqueta</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#0f6e56;"></div>
+          <div class="color-dot" style="background:#e1f5ee;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">@gems.lms — Paleta: blanco, acento #c04a22 (coral/naranja)</div>
+  <div class="covers-grid">
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#c04a22;">❓</div>
+      <div class="cover-info">
+        <div class="cover-name">¿Qué es?</div>
+        <div class="cover-sub">ícono: info</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#c04a22;"></div>
+          <div class="color-dot" style="background:#faece7;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#faece7;">🤖</div>
+      <div class="cover-info">
+        <div class="cover-name">IA</div>
+        <div class="cover-sub">ícono: cerebro</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#faece7;"></div>
+          <div class="color-dot" style="background:#c04a22;"></div>
+          <div class="color-dot" style="background:#712b13;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#0a0a0a;">👩‍🏫</div>
+      <div class="cover-info">
+        <div class="cover-name">Docentes</div>
+        <div class="cover-sub">ícono: persona</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#0a0a0a;"></div>
+          <div class="color-dot" style="background:#c04a22;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-card">
+      <div class="cover-preview" style="background:#c04a22;">📅</div>
+      <div class="cover-info">
+        <div class="cover-name">Demo</div>
+        <div class="cover-sub">ícono: calendario</div>
+        <div class="cover-colors">
+          <div class="color-dot" style="background:#c04a22;"></div>
+          <div class="color-dot" style="background:#faece7;"></div>
+          <div class="color-dot" style="background:#ffffff;border:1px solid #e5e5e5;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Instrucciones para Canva</div>
+    <div class="card-body">
+      1. Crear plantilla de <strong>1080 × 1080 px</strong> para cada cuenta.<br>
+      2. Fondo sólido del color principal (sin gradiente).<br>
+      3. Ícono centrado verticalmente — tamaño recomendado 320–380 px.<br>
+      4. Texto en la parte inferior, fuente bold, máximo 2 palabras, tamaño 72–80 pt.<br>
+      5. Color de texto: blanco si el fondo es oscuro, color principal 800 si el fondo es claro.<br>
+      6. Sin marcos, sin sombras, sin elementos decorativos adicionales.<br>
+      7. Guardar como PNG sin fondo de marca de agua.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ CALENDAR ══ -->
+<div id="calendar" class="section">
+  <div class="page-title">Calendario editorial</div>
+  <div class="page-sub">Frecuencia y distribución de contenido para las tres cuentas. Semana tipo.</div>
+
+  <div class="section-title">Semana tipo — distribución por cuenta</div>
+  <div class="week-grid">
+    <div class="week-header">Cuenta</div>
+    <div class="week-header">Lun</div>
+    <div class="week-header">Mar</div>
+    <div class="week-header">Mié</div>
+    <div class="week-header">Jue</div>
+    <div class="week-header">Vie</div>
+    <div class="week-header">Sáb</div>
+    <div class="week-header">Dom</div>
+
+    <div class="week-row-label" style="font-size:10px;color:#5b45c8;">@gems innovations</div>
+    <div class="week-cell"><div class="cell-account" style="color:#5b45c8;">Post</div><div class="cell-type">Carrusel educativo</div></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#5b45c8;">Reel</div><div class="cell-type">Presentación producto</div></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#5b45c8;">Post</div><div class="cell-type">Prueba social / cliente</div></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell empty"></div>
+
+    <div class="week-row-label" style="font-size:10px;color:#0f6e56;">@gemss.hub</div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#0f6e56;">Post</div><div class="cell-type">Pain → fix</div></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#0f6e56;">Reel</div><div class="cell-type">Demo feature</div></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#0f6e56;">Post</div><div class="cell-type">Comparativa</div></div>
+    <div class="week-cell empty"></div>
+
+    <div class="week-row-label" style="font-size:10px;color:#c04a22;">@gems.lms</div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#c04a22;">Post</div><div class="cell-type">IA en educación</div></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#c04a22;">Reel</div><div class="cell-type">Caso de uso</div></div>
+    <div class="week-cell empty"></div>
+    <div class="week-cell"><div class="cell-account" style="color:#c04a22;">Post</div><div class="cell-type">Inspiración docente</div></div>
+  </div>
+
+  <div class="tip-box">📌 Stories: publicar mínimo 3×/semana en cada cuenta. No requieren diseño elaborado — encuestas, preguntas, contadores y capturas de pantalla funcionan bien.</div>
+
+  <div class="section-title">Mejor horario para publicar (Colombia / LATAM)</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Posts feed (carruseles e imágenes)</div>
+      <div class="card-body">
+        <strong>Martes–Jueves:</strong> 12:00–1:00 pm · 6:00–7:30 pm<br>
+        <strong>Viernes:</strong> 11:00 am–12:30 pm<br><br>
+        El horario del almuerzo y la salida laboral son los picos de mayor alcance orgánico para audiencia B2B en Colombia.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Reels</div>
+      <div class="card-body">
+        <strong>Lunes:</strong> 7:00–8:00 am (inicio de semana laboral)<br>
+        <strong>Miércoles:</strong> 12:00–1:00 pm<br><br>
+        Los Reels tienen distribución extendida — publicar unas horas antes del pico para que el algoritmo ya los esté sirviendo cuando la audiencia está activa.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ CAPTIONS GI ══ -->
+<div id="captions-gi" class="section">
+  <div class="page-title">10 Captions — @gemsinnovations</div>
+  <div class="page-sub">Listos para usar o adaptar. Los hashtags van en el primer comentario.</div>
+
+  <div id="cap-gi-1" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#01</span><span class="caption-type">Presentación de marca</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-1')">Copiar</button>
+    </div>
+    <div class="caption-body">Construimos tecnología que sí se usa.
+
+No herramientas que acaban en el cajón.
+
+En GEMS Innovations desarrollamos soluciones propias para equipos que necesitan ejecutar: CRM, LMS, automatización y apps a medida.
+
+100% equipo colombiano. Soporte 24/7. Sin contratos largos.
+
+Si tu operación necesita orden y tecnología, estamos aquí.</div>
+    <div class="caption-tags">#gemsinnovations #softwarecolombia #transformaciondigital #techlatam #startupscolombia</div>
+  </div>
+
+  <div id="cap-gi-2" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#02</span><span class="caption-type">Educativo — pain point</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-2')">Copiar</button>
+    </div>
+    <div class="caption-body">El problema no es que no tengas herramientas.
+
+Es que tienes demasiadas que no se hablan entre sí.
+
+WhatsApp para coordinar. Excel para registrar. Email para reportar. Y nadie sabe en tiempo real qué está pasando.
+
+Eso tiene solución. Y no cuesta lo que cuesta HubSpot.
+
+Conoce el ecosistema GEMS → link en bio.</div>
+    <div class="caption-tags">#transformaciondigital #gestionoperacional #softwarecolombia #crm #gemsinnovations</div>
+  </div>
+
+  <div id="cap-gi-3" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#03</span><span class="caption-type">Prueba social</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-3')">Copiar</button>
+    </div>
+    <div class="caption-body">"En menos de una hora ya teníamos el equipo funcionando."
+
+Eso nos dijo un cliente después de implementar GEMS Hub.
+
+No meses de onboarding. No consultores externos. No manuales de 200 páginas.
+
+Tecnología que se adapta a ti, no al revés.
+
+¿Cuánto tiempo llevas sin orden en tu operación?</div>
+    <div class="caption-tags">#testimonial #gestiondeequipos #softwarecolombia #crm #gemshub</div>
+  </div>
+
+  <div id="cap-gi-4" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#04</span><span class="caption-type">Ecosistema de productos</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-4')">Copiar</button>
+    </div>
+    <div class="caption-body">Tres problemas. Tres soluciones. Un solo equipo detrás.
+
+→ Tu equipo de servicio necesita orden: GEMS Hub
+→ Tu institución necesita enseñar mejor: GEMS LMS
+→ Tus finanzas necesitan claridad: Straynance
+
+Todo construido en Colombia. Todo con soporte directo. Todo sin contratos forzosos.
+
+Conoce cuál es tuyo → link en bio.</div>
+    <div class="caption-tags">#gemsinnovations #ecosistemadigital #softwarecolombia #crm #edtech</div>
+  </div>
+
+  <div id="cap-gi-5" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#05</span><span class="caption-type">Cultura / equipo</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-5')">Copiar</button>
+    </div>
+    <div class="caption-body">Detrás de cada línea de código hay una decisión de diseño.
+
+Y detrás de cada decisión, un equipo que entiende el problema antes de escribir la solución.
+
+Así trabajamos en GEMS: primero entendemos, luego construimos.
+
+Nunca al revés.</div>
+    <div class="caption-tags">#culturaempresarial #techlatam #desarrollodesoftware #gemsinnovations #startupscolombia</div>
+  </div>
+
+  <div id="cap-gi-6" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#06</span><span class="caption-type">Educativo — reflexión</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-6')">Copiar</button>
+    </div>
+    <div class="caption-body">La mayoría de empresas no tiene un problema de talento.
+
+Tiene un problema de visibilidad.
+
+No saben qué está pasando en su operación en tiempo real. No pueden tomar decisiones con datos. Reaccionan cuando ya es tarde.
+
+La tecnología no reemplaza al equipo. Le da superpoderes.</div>
+    <div class="caption-tags">#liderazgo #transformaciondigital #gestionempresarial #techlatam #gemsinnovations</div>
+  </div>
+
+  <div id="cap-gi-7" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#07</span><span class="caption-type">Diferenciador Colombia</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-7')">Copiar</button>
+    </div>
+    <div class="caption-body">Cuando tienes un problema con tu software a las 9 pm...
+
+¿A quién le escribes?
+
+Con GEMS, a nosotros. Directamente. Sin tickets que nadie lee.
+
+Soporte real, en tu zona horaria, en tu idioma, por WhatsApp.
+
+Eso es lo que significa ser un equipo local.</div>
+    <div class="caption-tags">#soportetecnico #softwarecolombia #servicioalcliente #gemsinnovations #techlatam</div>
+  </div>
+
+  <div id="cap-gi-8" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#08</span><span class="caption-type">Carrusel — estadística</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-8')">Copiar</button>
+    </div>
+    <div class="caption-body">El 74% de las PYMEs latinoamericanas gestiona su operación desde WhatsApp y Excel.
+
+No porque funcione.
+
+Porque nunca encontraron algo mejor que se ajuste a su tamaño y presupuesto.
+
+Eso cambia.
+
+Desliza →</div>
+    <div class="caption-tags">#pymes #transformaciondigital #gestionempresarial #softwarecolombia #gemsinnovations</div>
+  </div>
+
+  <div id="cap-gi-9" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#09</span><span class="caption-type">CTA directa</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-9')">Copiar</button>
+    </div>
+    <div class="caption-body">Si tu equipo todavía coordina tareas por WhatsApp, esto es para ti.
+
+GEMS Hub centraliza tickets, tareas, clientes y comunicación en un solo lugar.
+
+Sin caos. Sin información perdida. Sin herramientas que no se hablan.
+
+Prueba gratuita disponible → link en bio.</div>
+    <div class="caption-tags">#gemshub #gestiondeequipos #crm #softwarecolombia #productividad</div>
+  </div>
+
+  <div id="cap-gi-10" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#10</span><span class="caption-type">Hito / logro</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gi-10')">Copiar</button>
+    </div>
+    <div class="caption-body">Un año construyendo en silencio.
+
+CRM en producción. LMS lanzado. Straynance en camino.
+
+Todo hecho con un equipo pequeño, mucho café y la convicción de que la tecnología bien hecha transforma negocios.
+
+Gracias a cada cliente que confió desde el día uno.
+
+Apenas empezamos.</div>
+    <div class="caption-tags">#gemsinnovations #startupscolombia #techlatam #logros #softwarepropio</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ CAPTIONS GH ══ -->
+<div id="captions-gh" class="section">
+  <div class="page-title">10 Captions — @gemss.hub</div>
+  <div class="page-sub">Enfoque en el buyer: agencias, IT, equipos de servicio. Tono directo y sin rodeos.</div>
+
+  <div id="cap-gh-1" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#01</span><span class="caption-type">Pain → solución</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-1')">Copiar</button>
+    </div>
+    <div class="caption-body">Si tu equipo de soporte vive en WhatsApp, esto te va a doler un poco.
+
+Cada solicitud de cliente que llega por ahí se pierde o depende de la memoria de una sola persona.
+
+GEMS Hub centraliza todos los tickets en un solo lugar. Ninguna solicitud sin respuesta. Ningún cliente sin seguimiento.
+
+Sin los $1.200 USD/mes de Zendesk.</div>
+    <div class="caption-tags">#gemshub #ticketing #servicioalcliente #crm #gestiondeequipos</div>
+  </div>
+
+  <div id="cap-gh-2" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#02</span><span class="caption-type">Feature: Kanban</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-2')">Copiar</button>
+    </div>
+    <div class="caption-body">¿Tu equipo sabe exactamente qué tiene pendiente hoy?
+
+Con el tablero Kanban de GEMS Hub, cada tarea tiene dueño, fecha y estado visible para todos.
+
+No más "¿en qué quedamos?" en reuniones.
+No más tareas que se caen entre los hilos de WhatsApp.
+
+El tablero que tu equipo necesitaba → demo en el link.</div>
+    <div class="caption-tags">#kanban #gestiondetareas #productividad #gemshub #agencias</div>
+  </div>
+
+  <div id="cap-gh-3" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#03</span><span class="caption-type">Comparativa</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-3')">Copiar</button>
+    </div>
+    <div class="caption-body">HubSpot: $1.200/mes mínimo.
+Salesforce: $3.000/mes.
+GEMS Hub: desde gratis.
+
+Mismas funciones para equipos de servicio. Sin el precio enterprise que no necesitas si tu equipo es menor a 50 personas.
+
+Y con soporte directo en español, por WhatsApp, sin abrir un ticket.
+
+Pruébalo → link en bio.</div>
+    <div class="caption-tags">#crm #hubspot #alternativacrm #gemshub #softwarecolombia</div>
+  </div>
+
+  <div id="cap-gh-4" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#04</span><span class="caption-type">Feature: Chat interno</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-4')">Copiar</button>
+    </div>
+    <div class="caption-body">Tu equipo no debería coordinar trabajo por WhatsApp personal.
+
+No porque esté mal. Sino porque mezcla lo laboral con lo personal, se pierden los mensajes y no hay historial organizado.
+
+GEMS Hub tiene chat interno integrado, ligado directamente a clientes, tickets y tareas.
+
+Contexto donde lo necesitas, cuando lo necesitas.</div>
+    <div class="caption-tags">#chatinterno #colaboracion #gestiondeequipos #gemshub #productividad</div>
+  </div>
+
+  <div id="cap-gh-5" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#05</span><span class="caption-type">Onboarding rápido</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-5')">Copiar</button>
+    </div>
+    <div class="caption-body">¿Cuánto tardó en implementarse tu último software?
+
+La mayoría de equipos tarda 3–6 meses en adoptar un CRM nuevo.
+
+Con GEMS Hub: menos de una hora.
+
+Sin consultores externos. Sin capacitaciones de 40 horas. Sin migración de datos compleja.
+
+Entra, configura tu equipo, empieza a trabajar.</div>
+    <div class="caption-tags">#onboarding #crm #implementacion #gemshub #gestiondeequipos</div>
+  </div>
+
+  <div id="cap-gh-6" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#06</span><span class="caption-type">Para agencias</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-6')">Copiar</button>
+    </div>
+    <div class="caption-body">Si gestionas clientes de agencia desde un Excel compartido, hay algo mejor.
+
+GEMS Hub tiene perfiles de cliente con historial completo de interacciones, tareas, tickets y notas.
+
+Cuando un cliente escribe, cualquier persona del equipo puede retomar sin perder el hilo.
+
+Así se hace servicio al cliente sin caos.</div>
+    <div class="caption-tags">#agencias #clientemanagement #crm #gemshub #marketingagency</div>
+  </div>
+
+  <div id="cap-gh-7" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#07</span><span class="caption-type">Reportes y visibilidad</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-7')">Copiar</button>
+    </div>
+    <div class="caption-body">¿Sabes cuántos tickets resolvió tu equipo esta semana?
+
+¿Cuántos están vencidos? ¿Cuál es el tiempo promedio de respuesta?
+
+Si no tienes esa respuesta en menos de 30 segundos, no tienes visibilidad real de tu operación.
+
+GEMS Hub te la da. En tiempo real. Sin armar ningún reporte a mano.</div>
+    <div class="caption-tags">#reportes #kpis #gestionoperacional #gemshub #servicioalcliente</div>
+  </div>
+
+  <div id="cap-gh-8" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#08</span><span class="caption-type">Para IT / MSP</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-8')">Copiar</button>
+    </div>
+    <div class="caption-body">Las empresas de IT y MSPs tienen el mismo problema:
+
+Demasiados clientes, demasiados incidentes, muy poca visibilidad de lo que está pendiente.
+
+GEMS Hub tiene gestión de casos e incidentes integrada, con asignación por técnico, prioridad y SLA.
+
+Nada se cae. Todo queda registrado.
+
+¿Tu equipo lo necesita? → link en bio.</div>
+    <div class="caption-tags">#msp #it #helpdesk #ticketing #gemshub</div>
+  </div>
+
+  <div id="cap-gh-9" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#09</span><span class="caption-type">CTA: prueba gratis</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-9')">Copiar</button>
+    </div>
+    <div class="caption-body">Empezar gratis no significa funciones recortadas.
+
+Significa que puedes ver si GEMS Hub funciona para tu equipo antes de pagar un peso.
+
+Sin tarjeta de crédito. Sin llamada de ventas. Sin presión.
+
+Si en 30 días no organizó tu operación, no pagas nada.
+
+Entra → link en bio.</div>
+    <div class="caption-tags">#gemshub #freemium #crm #pruebagratuitacrm #gestiondeequipos</div>
+  </div>
+
+  <div id="cap-gh-10" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#10</span><span class="caption-type">Reflexión / lunes</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gh-10')">Copiar</button>
+    </div>
+    <div class="caption-body">Lunes 8 am. Tu equipo ya tiene 12 mensajes de clientes sin responder.
+
+¿Sabes cuántos van a quedar sin respuesta hoy?
+
+La mayoría de equipos no lo sabe hasta el viernes.
+
+GEMS Hub sí lo sabe desde el lunes. Y te avisa antes de que se convierta en un problema.
+
+Empieza la semana con visibilidad → link en bio.</div>
+    <div class="caption-tags">#lunes #gestiondeequipos #gemshub #productividad #crm</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ CAPTIONS GL ══ -->
+<div id="captions-gl" class="section">
+  <div class="page-title">10 Captions — @gems.lms</div>
+  <div class="page-sub">Audiencia: rectores, coordinadores, docentes, instituciones educativas. Tono: innovador pero accesible.</div>
+
+  <div id="cap-gl-1" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#01</span><span class="caption-type">Presentación</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-1')">Copiar</button>
+    </div>
+    <div class="caption-body">La educación digital no tiene que ser aburrida.
+
+GEMS LMS es la plataforma que reinventa cómo las instituciones enseñan: rutas de aprendizaje personalizadas, IA integrada, evaluaciones automáticas y comunicación por WhatsApp.
+
+Todo en un solo lugar. Sin necesitar un equipo técnico para operarlo.
+
+¿Tu institución está lista? → agenda una demo en el link.</div>
+    <div class="caption-tags">#gemslms #edtech #lms #educaciondigital #inteligenciaartificial</div>
+  </div>
+
+  <div id="cap-gl-2" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#02</span><span class="caption-type">IA en aula</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-2')">Copiar</button>
+    </div>
+    <div class="caption-body">Un docente no puede dar retroalimentación personalizada a 40 estudiantes al mismo tiempo.
+
+La IA sí.
+
+GEMS LMS tiene un asistente de IA que analiza el progreso de cada estudiante y ajusta el contenido a su ritmo, sin intervención manual del docente.
+
+El docente enseña. La IA amplifica.</div>
+    <div class="caption-tags">#IA #educacion #inteligenciaartificial #docentes #gemslms</div>
+  </div>
+
+  <div id="cap-gl-3" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#03</span><span class="caption-type">WhatsApp integrado</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-3')">Copiar</button>
+    </div>
+    <div class="caption-body">Tus estudiantes ya están en WhatsApp.
+
+¿Por qué pedirles que descarguen otra app que nunca van a abrir?
+
+GEMS LMS se integra con WhatsApp para enviar recordatorios de tareas, entregas y notificaciones de calificaciones.
+
+El aprendizaje donde el estudiante ya está.</div>
+    <div class="caption-tags">#whatsapp #educaciondigital #gemslms #elearning #edtech</div>
+  </div>
+
+  <div id="cap-gl-4" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#04</span><span class="caption-type">Para docentes</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-4')">Copiar</button>
+    </div>
+    <div class="caption-body">El docente promedio dedica 3 horas semanales a calificar lo que podría automatizarse.
+
+Evaluaciones, quizzes, tareas de selección múltiple → GEMS LMS las califica automáticamente y entrega retroalimentación al instante.
+
+Esas 3 horas las puedes invertir en lo que realmente importa: enseñar.</div>
+    <div class="caption-tags">#docentes #evaluaciones #automatizacion #gemslms #edtech</div>
+  </div>
+
+  <div id="cap-gl-5" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#05</span><span class="caption-type">Analytics institucional</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-5')">Copiar</button>
+    </div>
+    <div class="caption-body">¿Sabes qué estudiante está en riesgo de perder la materia?
+
+¿Qué tema nadie está aprendiendo bien?
+
+GEMS LMS da al coordinador académico un dashboard en tiempo real con métricas de rendimiento por curso, docente y estudiante.
+
+Decisiones con datos, no con intuición.</div>
+    <div class="caption-tags">#analitica #educacion #datos #gemslms #coordinadoresacademicos</div>
+  </div>
+
+  <div id="cap-gl-6" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#06</span><span class="caption-type">Reflexión educativa</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-6')">Copiar</button>
+    </div>
+    <div class="caption-body">La educación de calidad no debería depender de cuántos estudiantes puede atender un docente al mismo tiempo.
+
+Con tecnología bien aplicada, cada estudiante puede tener una experiencia personalizada, independiente del tamaño del grupo.
+
+Eso ya existe. Se llama GEMS LMS.</div>
+    <div class="caption-tags">#educacionpersonalizada #calidad #gemslms #innovacioneducativa #edtech</div>
+  </div>
+
+  <div id="cap-gl-7" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#07</span><span class="caption-type">Precios / ancla</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-7')">Copiar</button>
+    </div>
+    <div class="caption-body">Una plataforma educativa con IA, WhatsApp integrado, analytics en tiempo real y soporte 24/7.
+
+¿Cuánto crees que cuesta?
+
+Desde $300.000 COP al mes para hasta 100 estudiantes.
+
+Menos de lo que cuesta una licencia de Office por persona al año.
+
+Agenda una demo gratuita → link en bio.</div>
+    <div class="caption-tags">#precios #lms #gemslms #educaciondigital #edtech</div>
+  </div>
+
+  <div id="cap-gl-8" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#08</span><span class="caption-type">Rutas personalizadas</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-8')">Copiar</button>
+    </div>
+    <div class="caption-body">No todos los estudiantes aprenden igual.
+
+Algunos necesitan más tiempo. Otros avanzan más rápido. Algunos entienden mejor con video. Otros con texto.
+
+GEMS LMS adapta el contenido al ritmo y estilo de cada estudiante automáticamente.
+
+Sin que el docente tenga que crear 30 versiones diferentes del mismo módulo.</div>
+    <div class="caption-tags">#aprendizajepersonalizado #ia #gemslms #educacion #elearning</div>
+  </div>
+
+  <div id="cap-gl-9" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#09</span><span class="caption-type">Comparativa Moodle</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-9')">Copiar</button>
+    </div>
+    <div class="caption-body">Moodle es gratis. También es de 2002.
+
+Una interfaz que los estudiantes de 2025 abandonan en la primera semana.
+
+GEMS LMS fue diseñado para la generación que ya creció con TikTok e Instagram: visual, rápido, intuitivo y con IA integrada.
+
+La plataforma que tu institución merece → link en bio.</div>
+    <div class="caption-tags">#moodle #alternativa #lms #gemslms #educacionmoderna</div>
+  </div>
+
+  <div id="cap-gl-10" class="caption-card">
+    <div class="caption-header">
+      <div class="caption-meta"><span class="caption-num">#10</span><span class="caption-type">CTA demo</span></div>
+      <button class="copy-btn" onclick="copyCaption('cap-gl-10')">Copiar</button>
+    </div>
+    <div class="caption-body">30 minutos.
+
+Eso es lo que necesitas para ver si GEMS LMS es para tu institución.
+
+Una demo en vivo. Sin presión. Sin vendedores agresivos. Solo nosotros mostrándote cómo funciona y tú decidiendo.
+
+¿Agendamos esta semana? → link en bio.</div>
+    <div class="caption-tags">#demo #gemslms #lms #edtech #educaciondigital</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ REELS GI ══ -->
+<div id="reels-gi" class="section">
+  <div class="page-title">Guiones de Reels — @gemsinnovations</div>
+  <div class="page-sub">Formato 9:16, duración 30–60 segundos. Texto en pantalla + voz en off o subtítulos.</div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #1 — "¿Qué es GEMS Innovations?"</div>
+      <div class="reel-duration">⏱ 30 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–3s</div><div class="step-content"><div class="step-action">Hook visual</div><div class="step-desc">Pantalla negra. Texto: "¿Cuántas herramientas digitales paga tu empresa al mes?" Corte rápido.</div><div class="step-tip">💡 No mostrar cara en los primeros 2 segundos — el texto engancha más</div></div></div>
+        <div class="reel-step"><div class="step-time">3–10s</div><div class="step-content"><div class="step-action">Problema</div><div class="step-desc">Serie rápida de logos: HubSpot, Slack, Trello, Mailchimp, Notion. Texto superpuesto: "¿Y cuántas realmente usas?"</div></div></div>
+        <div class="reel-step"><div class="step-time">10–20s</div><div class="step-content"><div class="step-action">Solución</div><div class="step-desc">Pantalla del ecosistema GEMS. Voz en off: "En GEMS construimos software propio para lo que tu negocio realmente necesita. CRM, LMS, automatización. Equipo colombiano, soporte 24/7."</div></div></div>
+        <div class="reel-step"><div class="step-time">20–30s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">Logo GEMS en pantalla. Texto: "Conoce el ecosistema → link en bio." Música fade out.</div><div class="step-tip">💡 Terminar con pantalla limpia — no saturar de texto al final</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #2 — "Por qué un equipo colombiano"</div>
+      <div class="reel-duration">⏱ 45 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–4s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">Texto: "Son las 9 pm. Tu software cayó. ¿A quién le escribes?"</div></div></div>
+        <div class="reel-step"><div class="step-time">4–15s</div><div class="step-content"><div class="step-action">Contraste</div><div class="step-desc">Split: izquierda = "Proveedor gringo: abre un ticket, espera 48h, respuesta en inglés." Derecha = "GEMS: WhatsApp directo, respuesta en minutos, en español."</div><div class="step-tip">💡 El split screen funciona muy bien para comparativas — usa texto grande</div></div></div>
+        <div class="reel-step"><div class="step-time">15–35s</div><div class="step-content"><div class="step-action">Razones</div><div class="step-desc">3 tarjetas rápidas con cortes: "Tu zona horaria → ✓ / Tu idioma → ✓ / Tu WhatsApp → ✓". Música uptempo de fondo.</div></div></div>
+        <div class="reel-step"><div class="step-time">35–45s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"Tecnología colombiana que sí responde → gemsinnovations.com"</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #3 — "3 síntomas de que necesitas un CRM"</div>
+      <div class="reel-duration">⏱ 60 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–5s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">"Si haces alguna de estas 3 cosas, tu operación está en riesgo." Texto grande, corte rápido.</div></div></div>
+        <div class="reel-step"><div class="step-time">5–20s</div><div class="step-content"><div class="step-action">Síntoma 1</div><div class="step-desc">"1. Coordinas tareas por WhatsApp personal." Animación de mensaje de WhatsApp. Efecto de alarma visual.</div></div></div>
+        <div class="reel-step"><div class="step-time">20–35s</div><div class="step-content"><div class="step-action">Síntoma 2</div><div class="step-desc">"2. No sabes cuántos clientes tienes con solicitudes abiertas." Captura de Excel desordenado.</div></div></div>
+        <div class="reel-step"><div class="step-time">35–50s</div><div class="step-content"><div class="step-action">Síntoma 3</div><div class="step-desc">"3. Cuando alguien se va del equipo, se lleva la información consigo." Efecto de datos desapareciendo.</div><div class="step-tip">💡 Aquí el espectador ya se identificó — el CTA llegará en el momento justo</div></div></div>
+        <div class="reel-step"><div class="step-time">50–60s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"GEMS Hub resuelve los tres. Gratis para empezar → link en bio."</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ REELS GH ══ -->
+<div id="reels-gh" class="section">
+  <div class="page-title">Guiones de Reels — @gemss.hub</div>
+  <div class="page-sub">Enfoque en demos reales de producto. Mostrar la pantalla siempre que sea posible.</div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #1 — "Demo: crear un ticket en 15 segundos"</div>
+      <div class="reel-duration">⏱ 30 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–3s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">Texto: "Esto es lo que hace tu equipo en 15 segundos con GEMS Hub."</div></div></div>
+        <div class="reel-step"><div class="step-time">3–18s</div><div class="step-content"><div class="step-action">Screen recording</div><div class="step-desc">Grabación acelerada de la app: cliente escribe, se crea ticket, se asigna al agente, se responde. Sin cortes de cámara — solo la pantalla.</div><div class="step-tip">💡 Usar Loom o grabación nativa del celular — no hace falta edición elaborada</div></div></div>
+        <div class="reel-step"><div class="step-time">18–25s</div><div class="step-content"><div class="step-action">Resultado</div><div class="step-desc">Texto superpuesto: "Ningún cliente sin respuesta. Nunca." Música de resolución.</div></div></div>
+        <div class="reel-step"><div class="step-time">25–30s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"Pruébalo gratis → link en bio"</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #2 — "El problema del WhatsApp de trabajo"</div>
+      <div class="reel-duration">⏱ 45 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–5s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">Pantalla de WhatsApp con 47 mensajes sin leer. Texto: "Este es el estado de la operación de la mayoría de equipos."</div></div></div>
+        <div class="reel-step"><div class="step-time">5–20s</div><div class="step-content"><div class="step-action">El costo real</div><div class="step-desc">Serie de textos: "Solicitud perdida en el hilo → cliente enojado. Tarea coordinada por voice note → nadie sabe el estado. Info de cliente que se va con el empleado → pérdida total."</div></div></div>
+        <div class="reel-step"><div class="step-time">20–38s</div><div class="step-content"><div class="step-action">La solución</div><div class="step-desc">Transición a GEMS Hub: tablero limpio, tickets organizados, clientes con historial. Voz en off: "Existe una forma mejor. Y no requiere meses de implementación."</div><div class="step-tip">💡 Contraste visual WhatsApp caótico → Hub ordenado es el corazón del Reel</div></div></div>
+        <div class="reel-step"><div class="step-time">38–45s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"Deja de gestionar tu equipo desde WhatsApp → link en bio"</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #3 — "GEMS Hub vs HubSpot — lo que nadie te dice"</div>
+      <div class="reel-duration">⏱ 60 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–5s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">"¿HubSpot o GEMS Hub? La respuesta honesta."</div></div></div>
+        <div class="reel-step"><div class="step-time">5–20s</div><div class="step-content"><div class="step-action">Cuándo sí HubSpot</div><div class="step-desc">"HubSpot es excelente si: tienes más de 100 personas en ventas, presupuesto +$1.200/mes y un equipo dedicado a configurarlo." Texto sobrio, sin atacar la marca.</div></div></div>
+        <div class="reel-step"><div class="step-time">20–45s</div><div class="step-content"><div class="step-action">Cuándo GEMS Hub</div><div class="step-desc">"GEMS Hub es para ti si: tienes un equipo de 5–50 personas, necesitas arrancar esta semana, quieres soporte en español y no quieres pagar por funciones que no usas." Cada punto con checkmark animado.</div><div class="step-tip">💡 No demonizar a HubSpot — mostrar honestidad genera más confianza</div></div></div>
+        <div class="reel-step"><div class="step-time">45–60s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"Prueba GEMS Hub gratis esta semana. Sin tarjeta. Sin presión → link en bio."</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ REELS GL ══ -->
+<div id="reels-gl" class="section">
+  <div class="page-title">Guiones de Reels — @gems.lms</div>
+  <div class="page-sub">Audiencia: docentes y directivos educativos. Tono: innovador, esperanzador, sin tecnobabble.</div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #1 — "La IA que ayuda al docente, no lo reemplaza"</div>
+      <div class="reel-duration">⏱ 45 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–5s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">"¿La IA va a reemplazar a los docentes?" Texto en pantalla, pausa dramática.</div></div></div>
+        <div class="reel-step"><div class="step-time">5–15s</div><div class="step-content"><div class="step-action">Respuesta directa</div><div class="step-desc">"No. Pero el docente que usa IA sí reemplazará al que no la usa." Texto impactante, cut directo.</div><div class="step-tip">💡 Esta frase detiene el scroll — probado como hook en EdTech</div></div></div>
+        <div class="reel-step"><div class="step-time">15–35s</div><div class="step-content"><div class="step-action">Demostración</div><div class="step-desc">Grabación de GEMS LMS: asistente IA revisando una entrega, dando retroalimentación automática al estudiante. Docente ve el resumen en el dashboard. "Lo que tomaría 2 horas, en 30 segundos."</div></div></div>
+        <div class="reel-step"><div class="step-time">35–45s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"Conoce GEMS LMS → agenda una demo en el link."</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #2 — "¿Por qué tus estudiantes no abren Moodle?"</div>
+      <div class="reel-duration">⏱ 45 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–5s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">Meme de Moodle / interfaz anticuada en pantalla. Texto: "La razón por la que tus estudiantes no abren la plataforma."</div></div></div>
+        <div class="reel-step"><div class="step-time">5–20s</div><div class="step-content"><div class="step-action">El problema</div><div class="step-desc">"Diseñada en 2002. Interfaz confusa. Sin notificaciones inteligentes. Sin WhatsApp. Sin IA. Los estudiantes de 2025 la abandonan en la primera sesión."</div></div></div>
+        <div class="reel-step"><div class="step-time">20–38s</div><div class="step-content"><div class="step-action">La alternativa</div><div class="step-desc">Transición a GEMS LMS: diseño limpio, notificaciones por WhatsApp, progreso visual del estudiante. Música moderna de fondo.</div><div class="step-tip">💡 Mostrar la pantalla real de GEMS LMS — no ilustraciones</div></div></div>
+        <div class="reel-step"><div class="step-time">38–45s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"La plataforma que tus estudiantes sí abren → link en bio."</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reel-card">
+    <div class="reel-header">
+      <div class="reel-title">Reel #3 — "Una academia de 100 estudiantes, un solo dashboard"</div>
+      <div class="reel-duration">⏱ 60 seg</div>
+    </div>
+    <div class="reel-body">
+      <div class="reel-steps">
+        <div class="reel-step"><div class="step-time">0–5s</div><div class="step-content"><div class="step-action">Hook</div><div class="step-desc">"¿Cuánto tiempo tardas en saber qué estudiante está en riesgo de perder el curso?"</div></div></div>
+        <div class="reel-step"><div class="step-time">5–15s</div><div class="step-content"><div class="step-action">El dolor</div><div class="step-desc">"La mayoría de coordinadores lo descubre en el cierre de semestre. Cuando ya es demasiado tarde."</div></div></div>
+        <div class="reel-step"><div class="step-time">15–40s</div><div class="step-content"><div class="step-action">El dashboard</div><div class="step-desc">Screen recording del panel de analytics: estudiantes en riesgo marcados, progreso por curso, tasa de completitud. Voz en off: "Con GEMS LMS lo ves en tiempo real. Por curso, por docente, por estudiante."</div><div class="step-tip">💡 Mostrar datos reales (anonimizados) es mucho más poderoso que capturas de diseño</div></div></div>
+        <div class="reel-step"><div class="step-time">40–60s</div><div class="step-content"><div class="step-action">CTA</div><div class="step-desc">"Desde $300.000 COP/mes para 100 estudiantes. Agenda una demo esta semana → link en bio."</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function copyCaption(cardId) {
+  const card = document.getElementById(cardId);
+  const body = card.querySelector('.caption-body').innerText;
+  const tags = card.querySelector('.caption-tags').innerText;
+  const full = body + '\n\n— Comentario:\n' + tags;
+  navigator.clipboard.writeText(full).then(() => {
+    const btn = card.querySelector('.copy-btn');
+    const original = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.style.background = '#0a0a0a';
+    btn.style.color = '#fff';
+    btn.style.borderColor = '#0a0a0a';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>

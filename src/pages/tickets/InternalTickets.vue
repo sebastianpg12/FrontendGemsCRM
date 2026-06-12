@@ -34,7 +34,7 @@
 
         <button
           @click="showNewTicketModal = true"
-          class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-primary-600 hover:bg-primary-50 border border-slate-200 hover:border-primary-200 transition-all active:bg-primary-100"
+          class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-primary-600 hover:bg-primary-50 border border-slate-200 transition-all active:bg-primary-100"
           title="Nuevo Ticket"
         >
           <i class="fas fa-plus text-xs"></i>
@@ -61,7 +61,7 @@
         <!-- Filters Group -->
         <div class="flex items-center gap-2">
           <!-- Status -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent hover:border-slate-200 transition-all cursor-pointer group">
+          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent transition-all cursor-pointer group">
             <i class="fas fa-layer-group text-[10px] text-slate-400 group-hover:text-primary-500"></i>
             <select v-model="filterStatus" class="bg-transparent text-[11px] font-black text-slate-600 outline-none cursor-pointer">
               <option value="open">En Proceso</option>
@@ -71,7 +71,7 @@
           </div>
 
           <!-- Category -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent hover:border-slate-200 transition-all cursor-pointer group">
+          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent transition-all cursor-pointer group">
             <i class="fas fa-tag text-[10px] text-slate-400 group-hover:text-primary-500"></i>
             <select v-model="filterCategory" class="bg-transparent text-[11px] font-black text-slate-600 outline-none cursor-pointer">
               <option value="">Todas las categorías</option>
@@ -83,7 +83,7 @@
           </div>
 
           <!-- Priority -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent hover:border-slate-200 transition-all cursor-pointer group">
+          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent transition-all cursor-pointer group">
             <i class="fas fa-flag text-[10px] text-slate-400 group-hover:text-primary-500"></i>
             <select v-model="filterPriority" class="bg-transparent text-[11px] font-black text-slate-600 outline-none cursor-pointer">
               <option value="">Prioridades</option>
@@ -139,7 +139,7 @@
           <!-- Column Header -->
           <div class="flex-shrink-0 p-5 pb-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <div :class="col.textColor" class="w-8 h-8 rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-slate-100 dark:border-[#334155] flex items-center justify-center">
+              <div :class="col.textColor" class="w-8 h-8 rounded-xl bg-white dark:bg-[#1e293b] shadow-sm flex items-center justify-center">
                 <i :class="col.icon" class="text-xs"></i>
               </div>
               <div>
@@ -168,7 +168,7 @@
               v-for="ticket in getTicketsByStatus(col.id)" 
               :key="ticket._id"
               @click="openTicketDetail(ticket)"
-            class="bg-white dark:bg-[#1e293b] rounded-2xl p-4 border border-slate-100 dark:border-[#334155] shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-primary-300/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
+            class="bg-white dark:bg-[#1e293b] rounded-2xl p-4 shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-primary-300/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
             >
               <!-- Card Content -->
               <div class="flex items-center justify-between">
@@ -244,7 +244,7 @@
         <div class="flex-shrink-0 border-b border-slate-100 px-8 py-6 bg-slate-50/30 flex items-center justify-between">
            <div class="flex items-center gap-6">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center">
+                <div class="w-10 h-10 bg-white shadow-sm rounded-2xl flex items-center justify-center">
                   <i class="fas fa-inbox text-primary-500"></i>
                 </div>
                 <div>
@@ -384,8 +384,8 @@
           <div class="flex-1 overflow-y-auto flex flex-col p-6 space-y-8 custom-scrollbar">
             
             <!-- Description -->
-            <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100 relative">
-               <div class="absolute -top-3 left-4 bg-white border border-slate-100 px-3 py-1 rounded-full flex items-center gap-2">
+            <div class="bg-slate-50 rounded-2xl p-5 relative">
+               <div class="absolute -top-3 left-4 bg-white px-3 py-1 rounded-full flex items-center gap-2">
                  <i class="fas fa-info-circle text-[10px] text-primary-500"></i>
                  <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Descripción Inicial</span>
                </div>
@@ -744,7 +744,7 @@
               v-for="item in filteredLinkableItems" 
               :key="item._id"
               @click="linkResource(item._id)"
-              class="p-4 border border-slate-100 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-all cursor-pointer group flex items-center justify-between"
+              class="p-4 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-all cursor-pointer group flex items-center justify-between"
             >
               <div class="flex flex-col">
                 <span class="text-xs font-black text-slate-800 group-hover:text-primary-700 transition-colors">{{ item.titulo }}</span>

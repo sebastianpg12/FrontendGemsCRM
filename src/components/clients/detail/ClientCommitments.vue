@@ -49,7 +49,7 @@
             <div class="flex items-center gap-2 text-sm text-slate-500 font-medium">
               <i class="fas fa-calendar-alt text-slate-400"></i> {{ c.dueDate ? formatDate(c.dueDate).split(',')[0] : 'Sin fecha' }}
             </div>
-            <p v-if="c.description" class="text-slate-600 text-sm mt-3 p-3 bg-slate-50 rounded-lg border border-slate-100">{{ c.description }}</p>
+            <p v-if="c.description" class="text-slate-600 text-sm mt-3 p-3 bg-slate-50 rounded-lg">{{ c.description }}</p>
           </div>
           <div class="flex gap-2 sm:flex-col self-end sm:self-center">
             <button @click="startEdit(c)" class="px-3 py-1.5 text-xs font-bold bg-primary-50 text-primary-700 border border-primary-100 hover:bg-primary-100 rounded-lg transition-colors">Editar</button>
@@ -83,7 +83,7 @@
     <!-- Confirmación eliminar compromiso — sin blur -->
     <div v-if="commitToDelete" class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50" @click="commitToDelete = null"></div>
-      <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center border border-slate-100 animate-fade-in">
+      <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center animate-fade-in">
         <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <i class="fas fa-trash text-red-500 text-xl"></i>
         </div>

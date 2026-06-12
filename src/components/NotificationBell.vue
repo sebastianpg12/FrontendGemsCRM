@@ -4,7 +4,7 @@
     <button
       type="button"
       @click.stop="toggleDropdown"
-      class="relative w-12 h-12 flex items-center justify-center bg-white border border-slate-200/80 rounded-full shadow-[0_4px_18px_-4px_rgba(15,23,42,0.12)] hover:border-slate-300 hover:shadow-[0_6px_22px_-4px_rgba(15,23,42,0.18)] hover:-translate-y-0.5 transition-all duration-200 active:scale-95 group"
+      class="relative w-12 h-12 flex items-center justify-center bg-white border border-slate-200/80 rounded-full shadow-[0_4px_18px_-4px_rgba(15,23,42,0.12)] hover:shadow-[0_6px_22px_-4px_rgba(15,23,42,0.18)] hover:-translate-y-0.5 transition-all duration-200 active:scale-95 group"
       title="Notificaciones"
     >
       <!-- Icono -->
