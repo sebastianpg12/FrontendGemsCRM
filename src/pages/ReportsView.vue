@@ -7,9 +7,8 @@
         <div>
           <div class="flex items-center gap-2 mb-1">
             <i class="fas fa-gem text-primary-500 text-xs"></i>
-            <span class="text-[10px] font-black uppercase tracking-[0.25em] text-primary-600">Reportes &amp; KPIs</span>
+            <h1 class="text-[10px] font-black uppercase tracking-[0.25em] text-primary-600">Reportes &amp; KPIs — Centro de Análisis</h1>
           </div>
-          <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Centro de Análisis</h1>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
             <span v-if="data?.meta">Datos del {{ fmtDate(data.meta.from) }} al {{ fmtDate(data.meta.to) }}</span>
             <span v-else>Cargando…</span>
@@ -30,24 +29,40 @@
       <!-- ══ Filtros globales ══ -->
       <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 mb-5 flex flex-wrap items-center gap-2">
         <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-1">Filtros</span>
-        <select v-model="filters.period" @change="load" class="filter-input">
-          <option value="week">Última semana</option>
-          <option value="month">Último mes</option>
-          <option value="quarter">Último trimestre</option>
-          <option value="year">Último año</option>
-        </select>
-        <select v-model="filters.department" @change="load" class="filter-input">
-          <option value="">Todos los departamentos</option>
-          <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
-        </select>
-        <select v-model="filters.ownerId" @change="load" class="filter-input">
-          <option value="">Todos los responsables</option>
-          <option v-for="m in teamMembers" :key="m._id" :value="m._id">{{ m.name }}</option>
-        </select>
-        <select v-model="filters.clientId" @change="load" class="filter-input">
-          <option value="">Todos los clientes</option>
-          <option v-for="c in clients" :key="c._id" :value="c._id">{{ c.name }}</option>
-        </select>
+        <div class="filter-wrap">
+          <i class="fas fa-calendar-alt filter-icon"></i>
+          <select v-model="filters.period" @change="load" class="filter-input">
+            <option value="week">Última semana</option>
+            <option value="month">Último mes</option>
+            <option value="quarter">Último trimestre</option>
+            <option value="year">Último año</option>
+          </select>
+          <i class="fas fa-chevron-down filter-chevron"></i>
+        </div>
+        <div class="filter-wrap">
+          <i class="fas fa-building filter-icon"></i>
+          <select v-model="filters.department" @change="load" class="filter-input">
+            <option value="">Todos los depts.</option>
+            <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
+          </select>
+          <i class="fas fa-chevron-down filter-chevron"></i>
+        </div>
+        <div class="filter-wrap">
+          <i class="fas fa-user filter-icon"></i>
+          <select v-model="filters.ownerId" @change="load" class="filter-input">
+            <option value="">Todos los responsables</option>
+            <option v-for="m in teamMembers" :key="m._id" :value="m._id">{{ m.name }}</option>
+          </select>
+          <i class="fas fa-chevron-down filter-chevron"></i>
+        </div>
+        <div class="filter-wrap">
+          <i class="fas fa-briefcase filter-icon"></i>
+          <select v-model="filters.clientId" @change="load" class="filter-input">
+            <option value="">Todos los clientes</option>
+            <option v-for="c in clients" :key="c._id" :value="c._id">{{ c.name }}</option>
+          </select>
+          <i class="fas fa-chevron-down filter-chevron"></i>
+        </div>
         <button
           v-if="hasActiveFilters"
           @click="resetFilters"
@@ -435,23 +450,49 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.filter-input {
-  padding: 0.5rem 0.875rem;
-  border-radius: 0.5rem;
+.filter-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
   background: rgb(248 250 252);
   border: 1px solid rgb(226 232 240);
+  border-radius: 0.5rem;
+  padding: 0 0.5rem 0 0.625rem;
+  transition: border-color 0.15s;
+}
+.filter-wrap:hover { border-color: rgb(148 163 184); }
+.filter-wrap:focus-within { border-color: rgb(99 102 241); }
+
+.filter-icon {
+  font-size: 0.6rem;
+  color: rgb(148 163 184);
+  pointer-events: none;
+  margin-right: 5px;
+}
+.filter-chevron {
+  font-size: 0.55rem;
+  color: rgb(148 163 184);
+  pointer-events: none;
+  margin-left: 4px;
+}
+
+.filter-input {
+  padding: 0.5rem 0.25rem;
+  background: transparent;
+  border: none;
   color: rgb(30 41 59);
   font-size: 0.75rem;
   font-weight: 700;
   outline: none;
   cursor: pointer;
-  transition: border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
 }
-.filter-input:hover { border-color: rgb(148 163 184); }
-.filter-input:focus { border-color: rgb(99 102 241); }
-:global(.dark) .filter-input {
+:global(.dark) .filter-wrap {
   background: rgb(15 23 42);
   border-color: rgb(51 65 85);
+}
+:global(.dark) .filter-input {
   color: white;
 }
 </style>

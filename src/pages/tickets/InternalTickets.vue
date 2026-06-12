@@ -642,7 +642,7 @@
 
     <!-- Modal Nuevo Ticket (Para uso interno) -->
     <Teleport to="body">
-    <div v-if="showNewTicketModal" class="fixed -inset-1 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4" @click.self="showNewTicketModal = false">
+    <div v-if="showNewTicketModal" class="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-[100] p-4" @click.self="showNewTicketModal = false">
       <div class="bg-white rounded-2xl shadow-xl border border-slate-200 w-full max-w-md animate-fade-in overflow-hidden">
         <div class="bg-slate-50 p-5 border-b border-slate-100 flex items-center justify-between">
            <div class="flex items-center gap-6">
@@ -672,21 +672,29 @@
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Prioridad</label>
-              <select v-model="newTicketData.priority" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:outline-none">
-                <option value="low">Baja</option>
-                <option value="medium">Media</option>
-                <option value="high">Alta</option>
-                <option value="urgent">Urgente</option>
-              </select>
+              <div class="relative">
+                <i class="fas fa-flag absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
+                <select v-model="newTicketData.priority" class="w-full pl-8 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 appearance-none transition-all">
+                  <option value="low">Baja</option>
+                  <option value="medium">Media</option>
+                  <option value="high">Alta</option>
+                  <option value="urgent">Urgente</option>
+                </select>
+                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
+              </div>
             </div>
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Categoría</label>
-              <select v-model="newTicketData.category" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:outline-none">
-                <option value="technical">Técnica</option>
-                <option value="billing">Facturación</option>
-                <option value="sales">Ventas</option>
-                <option value="other">Otro</option>
-              </select>
+              <div class="relative">
+                <i class="fas fa-tag absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
+                <select v-model="newTicketData.category" class="w-full pl-8 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 appearance-none transition-all">
+                  <option value="technical">Técnica</option>
+                  <option value="billing">Facturación</option>
+                  <option value="sales">Ventas</option>
+                  <option value="other">Otro</option>
+                </select>
+                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
+              </div>
             </div>
           </div>
           <div>

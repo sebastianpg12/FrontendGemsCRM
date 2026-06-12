@@ -201,9 +201,7 @@
           </div>
 
           <!-- Footer Actions -->
-          <div class="flex items-center justify-end pt-6 border-t border-slate-100 mt-6">
-            
-            <div class="flex items-center gap-4">
+          <div class="flex items-center justify-end gap-4 pt-5 pb-4 px-1 border-t border-slate-100 mt-6">
               <button
                 type="button"
                 @click="$emit('close')"
@@ -220,7 +218,6 @@
                 <i v-else :class="isEditing ? 'fas fa-save' : 'fas fa-paper-plane'" class="group-hover:translate-x-1 transition-transform"></i>
                 {{ loading ? 'Sincronizando...' : (isEditing ? 'Guardar Cambios' : 'Lanzar Tarea') }}
               </button>
-            </div>
           </div>
         </form>
       </div>

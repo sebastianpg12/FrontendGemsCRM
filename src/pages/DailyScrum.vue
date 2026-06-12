@@ -175,7 +175,7 @@
 
     <!-- Modal de Envío de Reporte (Premium Redesign) -->
     <Teleport to="body">
-      <div v-if="showEmailModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 animate-in fade-in duration-500">
+      <div v-if="showEmailModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/50 p-4 animate-in fade-in duration-500">
         <div class="bg-white rounded-[3rem] p-10 w-full max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] border border-slate-200 relative overflow-hidden animate-in zoom-in-95 duration-500">
           <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-primary-700"></div>
           
