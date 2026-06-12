@@ -1,136 +1,112 @@
 <template>
-  <div class="min-h-screen bg-slate-50 dark:bg-[#0f1117] text-slate-800">
-    <!-- Sidebar -->
-    <div
-      class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white dark:bg-[#0b0d12] border-r border-slate-100 dark:border-white/[0.06] transition-all duration-200 ease-in-out"
-      :class="isSidebarCollapsed ? 'w-[60px]' : 'w-[220px]'"
+  <div class="min-h-screen flex" style="background:#f4f5f7">
+
+    <!-- ══════════════════ SIDEBAR ══════════════════ -->
+    <aside
+      class="fixed inset-y-0 left-0 z-50 flex flex-col transition-all duration-200"
+      :style="isSidebarCollapsed ? 'width:56px' : 'width:216px'"
+      style="background:#fff; border-right:1px solid #e8eaed;"
     >
-      <!-- Collapse Toggle -->
+      <!-- Toggle -->
       <button
         @click="isSidebarCollapsed = !isSidebarCollapsed"
-        class="absolute -right-3 top-6 w-6 h-6 bg-white dark:bg-[#161820] border border-slate-200 dark:border-white/10 rounded-full flex items-center justify-center z-[100] text-slate-400 hover:text-primary-500 transition-colors shadow-sm"
-        :class="isSidebarCollapsed ? 'rotate-180' : ''"
+        class="absolute z-[100] flex items-center justify-center rounded-full transition-colors"
+        style="width:20px;height:20px;background:#fff;border:1px solid #d1d5db;top:20px;right:-10px;color:#9ca3af;"
+        :style="isSidebarCollapsed ? 'transform:rotate(180deg)' : ''"
       >
-        <i class="fas fa-chevron-left" style="font-size:8px"></i>
+        <i class="fas fa-chevron-left" style="font-size:7px"></i>
       </button>
 
       <!-- Logo -->
-      <div class="flex items-center h-[56px] flex-shrink-0 overflow-hidden"
-           :class="isSidebarCollapsed ? 'justify-center px-0' : 'px-4'">
-        <img
-          :src="logoSrc"
-          alt="GEMS Hub"
-          class="h-8 w-auto object-contain transition-all"
-          @error="logoSrc = '/gems-logo.png'"
-        />
-        <span v-show="!isSidebarCollapsed" class="ml-2.5 text-[13px] font-black text-slate-800 dark:text-white tracking-tight whitespace-nowrap">GEMS Hub</span>
+      <div class="flex items-center flex-shrink-0 overflow-hidden" style="height:52px;padding:0 14px;border-bottom:1px solid #e8eaed;">
+        <img :src="logoSrc" alt="GEMS Hub" style="height:28px;width:auto;object-fit:contain;flex-shrink:0" @error="logoSrc='/gems-logo.png'" />
+        <span v-show="!isSidebarCollapsed" style="margin-left:10px;font-size:13px;font-weight:700;color:#111827;white-space:nowrap;letter-spacing:-0.01em">GEMS Hub</span>
       </div>
 
-      <!-- Divider -->
-      <div class="h-px bg-slate-100 dark:bg-white/[0.06] mx-3 flex-shrink-0"></div>
-
-      <!-- Navigation -->
-      <nav class="flex-1 py-3 px-2 flex flex-col gap-px overflow-y-auto">
+      <!-- Nav -->
+      <nav class="flex-1 overflow-y-auto" style="padding:8px 6px">
         <router-link
           v-for="item in navigation"
           :key="item.name"
           :to="item.path"
-          class="flex items-center h-9 rounded-md text-[13px] font-medium transition-colors outline-none group relative"
-          :class="[
-            $route.path === item.path
-              ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
-              : 'text-slate-500 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-white/[0.04] hover:text-slate-700 dark:hover:text-slate-300',
-            isSidebarCollapsed ? 'justify-center px-0' : 'px-2.5'
-          ]"
           :title="isSidebarCollapsed ? localeStore.t(item.id) : ''"
+          class="flex items-center outline-none group"
+          style="height:36px;border-radius:6px;margin-bottom:1px;text-decoration:none;transition:background 0.15s, color 0.15s;position:relative;"
+          :style="[
+            $route.path === item.path
+              ? 'background:#ede9fe;color:#6d28d9;'
+              : 'color:#6b7280;',
+            isSidebarCollapsed ? 'justify-content:center;padding:0' : 'padding:0 10px'
+          ]"
+          @mouseenter="e => { if($route.path !== item.path) (e.currentTarget as HTMLElement).style.background='#f9fafb'; (e.currentTarget as HTMLElement).style.color='#374151' }"
+          @mouseleave="e => { if($route.path !== item.path) { (e.currentTarget as HTMLElement).style.background=''; (e.currentTarget as HTMLElement).style.color='#6b7280' } }"
         >
-          <!-- Acento izquierdo activo -->
-          <span
-            v-if="$route.path === item.path"
-            class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-primary-500 rounded-r-sm"
-          ></span>
+          <!-- Acento activo -->
+          <span v-if="$route.path === item.path" style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:16px;background:#7c3aed;border-radius:0 2px 2px 0"></span>
 
-          <div class="flex-shrink-0 w-4 h-4 flex items-center justify-center">
-            <i v-if="item.icon === 'logo'" class="fas fa-th-large" style="font-size:14px"></i>
-            <component v-else :is="item.icon" class="w-4 h-4 stroke-[1.5]" />
-          </div>
-          <span v-show="!isSidebarCollapsed" class="ml-2.5 whitespace-nowrap overflow-hidden">
+          <span style="flex-shrink:0;width:16px;height:16px;display:flex;align-items:center;justify-content:center">
+            <i v-if="item.icon === 'logo'" class="fas fa-th-large" style="font-size:13px"></i>
+            <component v-else :is="item.icon" style="width:15px;height:15px;stroke-width:1.5" />
+          </span>
+          <span v-show="!isSidebarCollapsed" style="margin-left:9px;font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden">
             {{ localeStore.t(item.id) }}
           </span>
         </router-link>
       </nav>
 
-      <!-- Divider -->
-      <div class="h-px bg-slate-100 dark:bg-white/[0.06] mx-3 flex-shrink-0"></div>
-
-      <!-- User Section -->
-      <div class="p-2 flex-shrink-0">
-        <div
-          class="flex items-center h-10 rounded-md px-2 gap-2.5 cursor-default"
-          :class="isSidebarCollapsed ? 'justify-center px-0' : ''"
-        >
-          <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 dark:bg-white/[0.08] border border-slate-200 dark:border-white/10 flex-shrink-0">
-            <img v-if="user?.photo" :src="resolveImageUrl(user.photo)" alt="Foto" class="w-full h-full object-cover" @error="onAvatarError" />
-            <img v-else-if="user?.avatar && getAvatarById(user.avatar)" :src="getAvatarById(user.avatar)?.path" class="w-full h-full object-cover" />
-            <span v-else class="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase">{{ getUserInitials() }}</span>
+      <!-- User -->
+      <div style="border-top:1px solid #e8eaed;padding:10px 8px">
+        <div class="flex items-center" :style="isSidebarCollapsed ? 'justify-content:center' : 'gap:9px'">
+          <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#e5e7eb;border:1px solid #d1d5db;display:flex;align-items:center;justify-content:center">
+            <img v-if="user?.photo" :src="resolveImageUrl(user.photo)" style="width:100%;height:100%;object-fit:cover" @error="onAvatarError" />
+            <img v-else-if="user?.avatar && getAvatarById(user.avatar)" :src="getAvatarById(user.avatar)?.path" style="width:100%;height:100%;object-fit:cover" />
+            <span v-else style="font-size:9px;font-weight:700;color:#6b7280">{{ getUserInitials() }}</span>
           </div>
-          <div v-show="!isSidebarCollapsed" class="min-w-0 flex-1">
-            <p class="text-[12px] font-semibold text-slate-700 dark:text-slate-200 truncate leading-tight">{{ user?.name || 'Usuario' }}</p>
-            <p class="text-[10px] text-slate-400 dark:text-slate-500 truncate leading-tight">{{ getRoleDisplayName() }}</p>
+          <div v-show="!isSidebarCollapsed" style="min-width:0;flex:1">
+            <p style="font-size:12px;font-weight:600;color:#111827;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3">{{ user?.name || 'Usuario' }}</p>
+            <p style="font-size:10px;color:#9ca3af;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3">{{ getRoleDisplayName() }}</p>
           </div>
-          <div v-show="!isSidebarCollapsed" class="flex items-center gap-1 flex-shrink-0">
-            <router-link to="/profile" title="Perfil" class="w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-primary-500 hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors">
+          <div v-show="!isSidebarCollapsed" style="display:flex;gap:4px;flex-shrink:0">
+            <router-link to="/profile" title="Perfil" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#9ca3af;transition:background 0.15s,color 0.15s" class="hover:bg-slate-100 hover:text-primary-600">
               <i class="fas fa-cog" style="font-size:11px"></i>
             </router-link>
-            <button @click="$emit('logout')" title="Salir" class="w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors">
+            <button @click="$emit('logout')" title="Salir" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#9ca3af;transition:background 0.15s,color 0.15s;cursor:pointer;background:transparent;border:none" class="hover:bg-red-50 hover:text-rose-500">
               <i class="fas fa-sign-out-alt" style="font-size:11px"></i>
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </aside>
 
-    <!-- Main Content -->
-    <div
-      class="transition-all duration-200 ease-in-out"
-      :class="isSidebarCollapsed ? 'ml-[60px]' : 'ml-[220px]'"
-    >
+    <!-- ══════════════════ MAIN ══════════════════ -->
+    <div class="flex-1 flex flex-col transition-all duration-200" :style="isSidebarCollapsed ? 'margin-left:56px' : 'margin-left:216px'">
+
       <!-- Header -->
-      <header class="h-[56px] bg-white dark:bg-[#0b0d12] border-b border-slate-100 dark:border-white/[0.06] flex items-center px-6 justify-between sticky top-0 z-30">
-        <div class="flex items-center flex-1 min-w-0">
-          <!-- Menu Button (hamburger icon for mobile) -->
-          <button
-            class="flex-shrink-0 mr-2 sm:mr-4 p-2 rounded-lg text-slate-500 hover:bg-slate-100 focus:outline-none z-30 lg:hidden"
-            @click="$emit('toggleSidebar')"
-            aria-label="Abrir menú"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-slate-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      <header class="sticky top-0 z-30 flex items-center justify-between flex-shrink-0" style="height:52px;background:#fff;border-bottom:1px solid #e8eaed;padding:0 24px">
+        <div class="flex items-center gap-3 min-w-0">
+          <button class="lg:hidden" style="color:#6b7280" @click="$emit('toggleSidebar')">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:20px;height:20px">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
             </svg>
           </button>
-          
-          <!-- Título y descripción -->
-          <div class="flex flex-col justify-center min-w-0">
-            <h1 class="text-lg font-black text-slate-800 dark:text-slate-100 whitespace-nowrap truncate tracking-tight">{{ pageTitle }}</h1>
-            <p v-show="!isSidebarCollapsed" class="text-slate-400 dark:text-slate-600 text-[10px] font-bold uppercase tracking-wider truncate">{{ pageDescription }}</p>
+          <div>
+            <h1 style="font-size:14px;font-weight:600;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">{{ pageTitle }}</h1>
+            <p style="font-size:11px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">{{ pageDescription }}</p>
           </div>
         </div>
-        <!-- Notifications -->
-        <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0 mt-2 sm:mt-0">
+        <div style="display:flex;align-items:center;gap:8px">
           <OnlineUsersPopover />
-
-          <!-- Chat Unread Badge -->
-          <router-link to="/chat" class="relative p-2 text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.04]">
-            <ChatBubbleLeftRightIcon class="w-5 h-5" />
-            <span v-if="chatUnread > 0" class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
-              {{ chatUnread > 99 ? '99+' : chatUnread }}
+          <router-link to="/chat" style="position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:6px;color:#9ca3af;transition:background 0.15s" class="hover:bg-slate-50 hover:text-primary-600">
+            <ChatBubbleLeftRightIcon style="width:18px;height:18px;stroke-width:1.5" />
+            <span v-if="chatUnread > 0" style="position:absolute;top:2px;right:2px;width:14px;height:14px;background:#ef4444;color:#fff;font-size:8px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center">
+              {{ chatUnread > 9 ? '9+' : chatUnread }}
             </span>
           </router-link>
         </div>
       </header>
-      
-      <!-- Page Content -->
-      <main class="p-6 min-h-[calc(100vh-56px)] bg-slate-50 dark:bg-[#0f1117]">
+
+      <!-- Content -->
+      <main style="flex:1;padding:24px;background:#f4f5f7;min-height:calc(100vh - 52px)">
         <router-view />
       </main>
     </div>
