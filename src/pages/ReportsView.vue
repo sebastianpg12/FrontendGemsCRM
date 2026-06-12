@@ -28,47 +28,53 @@
 
       <!-- ══ Filtros globales ══ -->
       <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-4 py-3 mb-5 flex flex-wrap items-center gap-2">
-        <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-1">Filtros</span>
-        <div class="filter-wrap">
-          <i class="fas fa-calendar-alt filter-icon"></i>
-          <select v-model="filters.period" @change="load" class="filter-input">
+        <span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 shrink-0 hidden sm:inline">Filtros</span>
+        <div class="h-4 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
+
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.period !== 'month' }">
+          <i class="fas fa-calendar-alt"></i>
+          <select v-model="filters.period" @change="load">
             <option value="week">Última semana</option>
             <option value="month">Último mes</option>
             <option value="quarter">Último trimestre</option>
             <option value="year">Último año</option>
           </select>
-          <i class="fas fa-chevron-down filter-chevron"></i>
+          <i class="fas fa-chevron-down chip-chevron"></i>
         </div>
-        <div class="filter-wrap">
-          <i class="fas fa-building filter-icon"></i>
-          <select v-model="filters.department" @change="load" class="filter-input">
+
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.department }">
+          <i class="fas fa-building"></i>
+          <select v-model="filters.department" @change="load">
             <option value="">Todos los depts.</option>
             <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
           </select>
-          <i class="fas fa-chevron-down filter-chevron"></i>
+          <i class="fas fa-chevron-down chip-chevron"></i>
         </div>
-        <div class="filter-wrap">
-          <i class="fas fa-user filter-icon"></i>
-          <select v-model="filters.ownerId" @change="load" class="filter-input">
+
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.ownerId }">
+          <i class="fas fa-user"></i>
+          <select v-model="filters.ownerId" @change="load">
             <option value="">Todos los responsables</option>
             <option v-for="m in teamMembers" :key="m._id" :value="m._id">{{ m.name }}</option>
           </select>
-          <i class="fas fa-chevron-down filter-chevron"></i>
+          <i class="fas fa-chevron-down chip-chevron"></i>
         </div>
-        <div class="filter-wrap">
-          <i class="fas fa-briefcase filter-icon"></i>
-          <select v-model="filters.clientId" @change="load" class="filter-input">
+
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.clientId }">
+          <i class="fas fa-briefcase"></i>
+          <select v-model="filters.clientId" @change="load">
             <option value="">Todos los clientes</option>
             <option v-for="c in clients" :key="c._id" :value="c._id">{{ c.name }}</option>
           </select>
-          <i class="fas fa-chevron-down filter-chevron"></i>
+          <i class="fas fa-chevron-down chip-chevron"></i>
         </div>
+
         <button
           v-if="hasActiveFilters"
           @click="resetFilters"
-          class="ml-auto text-[10px] font-bold text-slate-500 hover:text-rose-600 underline-offset-4 hover:underline"
+          class="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors uppercase tracking-widest"
         >
-          Limpiar filtros
+          <i class="fas fa-times text-[9px]"></i> Limpiar
         </button>
       </div>
 
@@ -450,50 +456,47 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.filter-wrap {
+/* ── Filter chips ── */
+.filter-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0;
+  gap: 6px;
   background: rgb(248 250 252);
   border: 1px solid rgb(226 232 240);
-  border-radius: 0.5rem;
-  padding: 0 0.5rem 0 0.625rem;
-  transition: border-color 0.15s, background 0.15s;
+  border-radius: 999px;
+  padding: 0 12px 0 10px;
+  height: 32px;
+  transition: all 0.15s;
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: rgb(100 116 139);
 }
-.filter-wrap:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
-.filter-wrap:focus-within { border-color: rgb(99 102 241); }
+.filter-chip i:first-child { font-size: 0.6rem; }
+.filter-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
+.filter-chip:focus-within { border-color: rgb(99 102 241); background: rgb(238 242 255); color: rgb(79 70 229); }
+.filter-chip--active { border-color: rgb(139 92 246); background: rgb(245 243 255); color: rgb(109 40 217); }
 
-.filter-icon {
-  font-size: 0.6rem;
-  color: rgb(148 163 184);
-  pointer-events: none;
-  margin-right: 5px;
-}
-.filter-chevron {
-  font-size: 0.55rem;
-  color: rgb(148 163 184);
-  pointer-events: none;
-  margin-left: 4px;
-}
-
-.filter-input {
-  padding: 0.5rem 0.25rem;
+.filter-chip select {
   background: transparent;
   border: none;
-  color: rgb(30 41 59);
-  font-size: 0.75rem;
-  font-weight: 700;
   outline: none;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: inherit;
+  max-width: 160px;
 }
-:global(.dark) .filter-wrap {
+.chip-chevron { font-size: 0.5rem; opacity: 0.5; }
+
+:global(.dark) .filter-chip {
   background: rgb(30 41 59);
   border-color: rgb(51 65 85);
+  color: rgb(148 163 184);
 }
-:global(.dark) .filter-wrap:hover { background: rgb(37 50 71); }
-:global(.dark) .filter-input {
-  color: rgb(226 232 240);
-}
+:global(.dark) .filter-chip:hover { background: rgb(37 50 71); }
+:global(.dark) .filter-chip:focus-within { background: rgb(49 46 129 / 0.3); border-color: rgb(139 92 246); color: rgb(167 139 250); }
+:global(.dark) .filter-chip--active { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
+:global(.dark) .filter-chip select { color: inherit; }
 </style>

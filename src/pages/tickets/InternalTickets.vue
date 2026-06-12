@@ -1,129 +1,105 @@
 ﻿<template>
   <div class="flex flex-col h-full min-h-0 gap-4">
-    <!-- Header Controls (New Ticket & Refresh) -->
-    <div class="flex-shrink-0 flex items-center justify-end pr-24">
-      
-      <div class="flex items-center gap-5">
-        <!-- View Toggle -->
-        <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
-          <button 
+    <!-- Toolbar unificado: view toggle + search + filtros -->
+    <div class="flex-shrink-0 flex flex-col gap-2">
+
+      <!-- Fila 1: toggle de vista + acciones -->
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex bg-slate-100 dark:bg-[#1e293b] p-1 rounded-xl shadow-sm">
+          <button
             @click="viewMode = 'board'"
-            class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2"
-            :class="viewMode === 'board' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
+            :class="viewMode === 'board' ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'"
           >
-            <i class="fas fa-columns text-[10px]"></i> Tablero
+            <i class="fas fa-columns text-[10px]"></i>
+            <span class="hidden sm:inline">Tablero</span>
           </button>
-          <button 
+          <button
             @click="viewMode = 'inbox'"
-            class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2"
-            :class="viewMode === 'inbox' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
+            :class="viewMode === 'inbox' ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'"
           >
-            <i class="fas fa-list text-[10px]"></i> Mi Bandeja
+            <i class="fas fa-list text-[10px]"></i>
+            <span class="hidden sm:inline">Mi Bandeja</span>
           </button>
         </div>
 
-        <div class="h-8 w-px bg-slate-200 mx-1"></div>
-
-        <button 
-          @click="loadTickets"
-          :disabled="loading"
-          class="p-2 text-slate-400 hover:text-primary-600 transition-colors"
-        >
-          <i class="fas fa-sync-alt" :class="{ 'fa-spin': loading }"></i>
-        </button>
-
-        <button
-          @click="showNewTicketModal = true"
-          class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-primary-600 hover:bg-primary-50 border border-slate-200 transition-all active:bg-primary-100"
-          title="Nuevo Ticket"
-        >
-          <i class="fas fa-plus text-xs"></i>
-        </button>
+        <div class="flex items-center gap-2">
+          <button v-if="hasActiveFilters" @click="clearFilters"
+            class="px-3 py-1.5 rounded-xl text-[10px] font-black text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center gap-1.5 transition-all uppercase tracking-widest">
+            <i class="fas fa-times text-[9px]"></i>
+            <span class="hidden sm:inline">Limpiar</span>
+          </button>
+          <button @click="loadTickets" :disabled="loading"
+            class="w-8 h-8 flex items-center justify-center rounded-xl text-slate-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-all">
+            <i class="fas fa-sync-alt text-xs" :class="{ 'fa-spin': loading }"></i>
+          </button>
+          <button @click="showNewTicketModal = true"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-xs font-black transition-all shadow-sm shadow-primary-500/20 active:scale-95">
+            <i class="fas fa-plus text-[10px]"></i>
+            <span class="hidden sm:inline">Nuevo</span>
+          </button>
+        </div>
       </div>
-    </div>
 
-    <!-- Modern Filters Toolbar -->
-    <div class="flex-shrink-0 flex items-center justify-between bg-white/80 backdrop-blur-md px-4 py-3 rounded-xl shadow-sm/60 shadow-sm mb-6">
-      <div class="flex items-center gap-4 flex-1">
-        <!-- Search Group -->
-        <div class="relative w-80 group">
-          <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors text-xs"></i>
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="Buscar por #, asunto o cliente..."
-            class="w-full pl-10 pr-4 py-2.5 bg-slate-100/50 border border-transparent rounded-xl text-[11px] font-bold text-slate-700 placeholder-slate-400 focus:bg-white focus:border-primary-200 focus:ring-4 focus:ring-primary-500/5 transition-all outline-none"
-          />
+      <!-- Fila 2: search + filtros chips -->
+      <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2.5">
+        <!-- Search -->
+        <div class="relative min-w-0 flex-1 max-w-xs group">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors text-[10px]"></i>
+          <input v-model="searchQuery" type="text" placeholder="Buscar por #, asunto o cliente..."
+            class="w-full pl-8 pr-3 py-1.5 bg-slate-100/60 dark:bg-slate-800/50 border border-transparent rounded-lg text-[11px] font-bold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-primary-200 focus:ring-2 focus:ring-primary-500/10 transition-all outline-none" />
         </div>
 
-        <div class="h-8 w-px bg-slate-200/60 mx-1"></div>
+        <div class="h-5 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
 
-        <!-- Filters Group -->
-        <div class="flex items-center gap-2">
-          <!-- Status -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent transition-all cursor-pointer group">
-            <i class="fas fa-layer-group text-[10px] text-slate-400 group-hover:text-primary-500"></i>
-            <select v-model="filterStatus" class="bg-transparent text-[11px] font-black text-slate-600 outline-none cursor-pointer">
+        <!-- Chips de filtro -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterStatus }">
+            <i class="fas fa-layer-group"></i>
+            <select v-model="filterStatus" class="tk-select">
               <option value="open">En Proceso</option>
-              <option value="waiting">Pendiente Cliente</option>
+              <option value="waiting">Pendiente</option>
               <option value="resolved">Resueltos</option>
             </select>
+            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
-          <!-- Category -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent transition-all cursor-pointer group">
-            <i class="fas fa-tag text-[10px] text-slate-400 group-hover:text-primary-500"></i>
-            <select v-model="filterCategory" class="bg-transparent text-[11px] font-black text-slate-600 outline-none cursor-pointer">
-              <option value="">Todas las categorías</option>
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterCategory }">
+            <i class="fas fa-tag"></i>
+            <select v-model="filterCategory" class="tk-select">
+              <option value="">Categorías</option>
               <option value="technical">Technical</option>
               <option value="billing">Billing</option>
               <option value="sales">Sales</option>
               <option value="other">Other</option>
             </select>
+            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
-          <!-- Priority -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-slate-100/40 rounded-xl border border-transparent transition-all cursor-pointer group">
-            <i class="fas fa-flag text-[10px] text-slate-400 group-hover:text-primary-500"></i>
-            <select v-model="filterPriority" class="bg-transparent text-[11px] font-black text-slate-600 outline-none cursor-pointer">
-              <option value="">Prioridades</option>
-              <option value="urgent">P1 · Crítico (&lt;15min)</option>
-              <option value="high">P2 · Alto (&lt;1h)</option>
-              <option value="medium">P3 · Medio (&lt;4h)</option>
-              <option value="low">P4 · Bajo (&lt;24h)</option>
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterPriority }">
+            <i class="fas fa-flag"></i>
+            <select v-model="filterPriority" class="tk-select">
+              <option value="">Prioridad</option>
+              <option value="urgent">P1 · Crítico</option>
+              <option value="high">P2 · Alto</option>
+              <option value="medium">P3 · Medio</option>
+              <option value="low">P4 · Bajo</option>
             </select>
+            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
-          <div class="h-8 w-px bg-slate-200/60 mx-2"></div>
-
-          <!-- Responsible -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200/80 rounded-xl shadow-sm transition-all cursor-pointer group">
-            <i class="fas fa-user-shield text-[10px] text-primary-500"></i>
-            <select v-model="filterAssignedTo" class="bg-transparent text-[11px] font-black text-slate-700 outline-none cursor-pointer max-w-[160px]">
-              <option value="">Cualquier Agente</option>
-              <option v-for="member in supportAgents" :key="member._id" :value="member._id">
-                {{ member.name }}
-              </option>
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterAssignedTo }">
+            <i class="fas fa-user-shield"></i>
+            <select v-model="filterAssignedTo" class="tk-select">
+              <option value="">Cualquier agente</option>
+              <option v-for="member in supportAgents" :key="member._id" :value="member._id">{{ member.name }}</option>
             </select>
+            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
         </div>
       </div>
-      
-      <!-- Actions Group -->
-      <div class="flex items-center gap-3">
-        <button 
-          v-if="hasActiveFilters"
-          @click="clearFilters"
-          class="px-3 py-2 text-[10px] font-black text-rose-500 hover:bg-rose-50 rounded-xl uppercase tracking-widest flex items-center gap-2 transition-all"
-        >
-          <i class="fas fa-times-circle"></i>
-          Limpiar
-        </button>
-        
-        <button @click="loadTickets(1)" class="w-10 h-10 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-primary-600 rounded-xl flex items-center justify-center transition-all border border-slate-200/50 shadow-sm" title="Actualizar">
-          <i class="fas fa-sync-alt text-xs" :class="{ 'fa-spin': loading }"></i>
-        </button>
-      </div>
+
     </div>
 
     <!-- Main Content Area -->
@@ -1287,4 +1263,28 @@ onMounted(async () => {
 .animate-bounce-subtle {
   animation: bounce-subtle 3s ease-in-out infinite;
 }
+
+/* ── Ticket filter chips ── */
+.tk-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgb(248 250 252); border: 1px solid rgb(226 232 240);
+  border-radius: 999px; padding: 0 10px 0 9px; height: 30px;
+  cursor: pointer; transition: all 0.15s;
+  font-size: 0.68rem; color: rgb(100 116 139);
+}
+.tk-chip i:first-child { font-size: 0.58rem; }
+.tk-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
+.tk-chip:focus-within { border-color: rgb(99 102 241); background: rgb(238 242 255); color: rgb(79 70 229); }
+.tk-chip--on { border-color: rgb(139 92 246); background: rgb(245 243 255); color: rgb(109 40 217); }
+.tk-select {
+  background: transparent; border: none; outline: none;
+  appearance: none; -webkit-appearance: none;
+  font-size: 0.7rem; font-weight: 700; color: inherit; cursor: pointer; max-width: 130px;
+}
+.tk-caret { font-size: 0.48rem; opacity: 0.5; }
+
+:global(.dark) .tk-chip { background: rgb(30 41 59); border-color: rgb(51 65 85); color: rgb(148 163 184); }
+:global(.dark) .tk-chip:hover { background: rgb(37 50 71); }
+:global(.dark) .tk-chip--on { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
+:global(.dark) .tk-select { color: inherit; }
 </style>
