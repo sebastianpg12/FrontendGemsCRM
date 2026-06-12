@@ -31,7 +31,7 @@
     </div>
     
     <div v-if="client.commitments?.length" class="space-y-3">
-      <div v-for="c in client.commitments" :key="c._id" class="bg-white border border-slate-200 rounded-xl p-5 hover:border-primary-300 hover:shadow-md transition-all shadow-sm">
+      <div v-for="c in client.commitments" :key="c._id" class="bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md transition-all shadow-sm">
         <!-- view mode -->
         <div v-if="editingCommitmentId !== c._id" class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="flex-1">

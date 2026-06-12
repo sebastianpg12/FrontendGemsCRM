@@ -97,7 +97,7 @@
           <div class="h-8 w-px bg-slate-200/60 mx-2"></div>
 
           <!-- Responsible -->
-          <div class="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200/80 rounded-xl shadow-sm hover:border-primary-300 transition-all cursor-pointer group">
+          <div class="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200/80 rounded-xl shadow-sm transition-all cursor-pointer group">
             <i class="fas fa-user-shield text-[10px] text-primary-500"></i>
             <select v-model="filterAssignedTo" class="bg-transparent text-[11px] font-black text-slate-700 outline-none cursor-pointer max-w-[160px]">
               <option value="">Cualquier Agente</option>
@@ -168,7 +168,7 @@
               v-for="ticket in getTicketsByStatus(col.id)" 
               :key="ticket._id"
               @click="openTicketDetail(ticket)"
-            class="bg-white dark:bg-[#1e293b] rounded-xl p-4 shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-primary-300/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
+            class="bg-white dark:bg-[#1e293b] rounded-xl p-4 shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
             >
               <!-- Card Content -->
               <div class="flex items-center justify-between">
@@ -218,7 +218,7 @@
             <div v-if="hasMoreInColumn(col.id)" class="pt-2 pb-2">
               <button 
                 @click="increaseColumnLimit(col.id)"
-                class="w-full py-3 bg-white/40 hover:bg-white border border-dashed border-slate-200 rounded-2xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-primary-300 hover:text-primary-600 shadow-sm"
+                class="w-full py-3 bg-white/40 hover:bg-white border border-dashed border-slate-200 rounded-2xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:text-primary-600 shadow-sm"
               >
                 <i class="fas fa-plus-circle mr-2"></i>
                 Ver más tickets
@@ -744,7 +744,7 @@
               v-for="item in filteredLinkableItems" 
               :key="item._id"
               @click="linkResource(item._id)"
-              class="p-4 rounded-xl hover:border-primary-300 hover:bg-primary-50 transition-all cursor-pointer group flex items-center justify-between"
+              class="p-4 rounded-xl hover:bg-primary-50 transition-all cursor-pointer group flex items-center justify-between"
             >
               <div class="flex flex-col">
                 <span class="text-xs font-black text-slate-800 group-hover:text-primary-700 transition-colors">{{ item.titulo }}</span>

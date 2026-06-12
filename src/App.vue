@@ -16,7 +16,7 @@
         <!-- Toggle Button -->
         <button
           @click="isSidebarMini = !isSidebarMini"
-          class="hidden lg:flex absolute -right-[11px] top-5 w-[22px] h-[22px] bg-white dark:bg-[#1a1d27] text-slate-400 rounded-full items-center justify-center border border-slate-200 dark:border-white/10 z-[60] transition-colors hover:text-primary-500 hover:border-primary-300 dark:hover:border-primary-500/40"
+          class="hidden lg:flex absolute -right-[11px] top-5 w-[22px] h-[22px] bg-white dark:bg-[#1a1d27] text-slate-400 rounded-full items-center justify-center border border-slate-200 dark:border-white/10 z-[60] transition-colors hover:text-primary-500 dark:hover:border-primary-500/40"
           :class="isSidebarMini ? 'rotate-180' : ''"
         >
           <i class="fas fa-chevron-left" style="font-size:7px"></i>

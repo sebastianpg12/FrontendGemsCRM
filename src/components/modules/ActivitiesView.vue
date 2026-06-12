@@ -325,7 +325,7 @@
                   <div class="flex items-center gap-3">
                     <!-- Percentage Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[10px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white hover:border-primary-300 transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[10px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white transition-all">
                       <span class="text-primary-600">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
                       <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
@@ -360,7 +360,7 @@
                       <div class="relative">
                         <div 
                           @click.stop="startEditingTime(activity)" 
-                          class="flex items-center gap-1.5 text-[10px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-primary-300 transition-all shadow-sm"
+                          class="flex items-center gap-1.5 text-[10px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer transition-all shadow-sm"
                         >
                           <i class="far fa-clock text-[8px] text-slate-400"></i>
                           <span :class="isTimerActive(activity) ? 'text-red-500 font-black' : ''">{{ formatTime(activity.timeSpent) }}</span>
@@ -1174,7 +1174,7 @@
                       <div class="relative">
                         <div 
                           @click.stop="startEditingTime(activity)" 
-                          class="flex items-center gap-1 text-[9px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-primary-300 transition-all shadow-sm"
+                          class="flex items-center gap-1 text-[9px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer transition-all shadow-sm"
                         >
                           <i class="far fa-clock text-[8px] text-slate-400"></i>
                           <span :class="isTimerActive(activity) ? 'text-red-500' : ''" class="whitespace-nowrap">{{ formatTime(activity.timeSpent) }}</span>
@@ -1202,7 +1202,7 @@
                     
                     <!-- Progress % with Inline Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white hover:border-primary-300 transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white transition-all">
                         <span :class="activity.status === 'overdue' ? 'text-red-600' : 'text-primary-600'">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
 

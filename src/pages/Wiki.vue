@@ -155,7 +155,7 @@
             </div>
             <button
               v-else
-              class="w-full py-10 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#334155] text-slate-400 dark:text-slate-500 hover:border-primary-300 hover:text-primary-500 transition-colors text-[11px] font-bold"
+              class="w-full py-10 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#334155] text-slate-400 dark:text-slate-500 hover:text-primary-500 transition-colors text-[11px] font-bold"
               @click="startEditing"
             >
               <i class="fas fa-pen mr-2 text-[10px]"></i>Esta página está vacía — haz click para escribir

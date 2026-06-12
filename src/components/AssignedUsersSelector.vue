@@ -3,7 +3,7 @@
     <!-- Selected Users Chips -->
     <div v-if="selectedUsers.length > 0" class="flex flex-wrap gap-2 p-3 bg-slate-50 rounded-xl min-h-[46px] max-h-[120px] overflow-y-auto shrink-0 custom-scrollbar shadow-inner">
       <span v-for="user in selectedUsers" :key="user?._id"
-        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg shadow-sm group transition-all hover:border-primary-300"
+        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg shadow-sm group transition-all"
       >
         <div v-if="user?.photo || user?.avatar" class="w-5 h-5 rounded-full overflow-hidden flex-shrink-0">
            <img :src="user.photo || user.avatar" class="w-full h-full object-cover" />

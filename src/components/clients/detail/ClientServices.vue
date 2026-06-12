@@ -28,7 +28,7 @@
     </div>
     
     <div v-if="client.services?.length" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div v-for="s in client.services" :key="s._id" class="bg-white border border-slate-200 rounded-xl p-5 hover:border-primary-300 hover:shadow-md transition-all shadow-sm">
+      <div v-for="s in client.services" :key="s._id" class="bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md transition-all shadow-sm">
         <!-- view mode -->
         <div v-if="editingServiceId !== s._id" class="flex flex-col h-full justify-between gap-3">
           <div class="flex justify-between items-start">

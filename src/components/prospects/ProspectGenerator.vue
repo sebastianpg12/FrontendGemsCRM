@@ -116,7 +116,7 @@
                   'px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all flex items-center gap-1.5',
                   selectedModules.includes(mod.id)
                     ? 'bg-primary-50 text-primary-700 border-primary-400 ring-1 ring-primary-300 shadow-sm'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-primary-300 hover:text-primary-600'
+                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:text-primary-600'
                 ]"
               >
                 <span class="text-base leading-none">{{ mod.icon }}</span>{{ mod.label }}

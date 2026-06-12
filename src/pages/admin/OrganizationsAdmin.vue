@@ -58,12 +58,12 @@
             v-model="search"
             type="text"
             placeholder="Buscar por nombre o slug..."
-            class="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-slate-800 dark:text-white bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 placeholder:text-slate-400 outline-none focus:border-primary-400 transition"
+            class="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-slate-800 dark:text-white bg-white dark:bg-slate-900 placeholder:text-slate-400 outline-none focus:border-primary-400 transition"
           />
         </div>
         <select
           v-model="statusFilter"
-          class="px-4 py-3 rounded-xl text-sm text-slate-800 dark:text-white bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 outline-none focus:border-primary-400 transition"
+          class="px-4 py-3 rounded-xl text-sm text-slate-800 dark:text-white bg-white dark:bg-slate-900 outline-none focus:border-primary-400 transition"
         >
           <option value="">Todos los estados</option>
           <option value="active">Activos</option>
@@ -88,7 +88,7 @@
         <div
           v-for="org in filteredOrgs"
           :key="org._id"
-          class="org-card p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800"
+          class="org-card p-5 rounded-2xl bg-white dark:bg-slate-900"
         >
           <div class="flex items-start gap-3 mb-4">
             <div
@@ -203,7 +203,7 @@
 
     <!-- Create/Edit modal -->
     <div v-if="modal.open" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-black/70 backdrop-blur-sm">
-      <div class="rounded-2xl max-w-lg w-full p-7 max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
+      <div class="rounded-2xl max-w-lg w-full p-7 max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 shadow-2xl">
         <h3 class="text-slate-900 dark:text-white text-lg font-bold mb-1">{{ modal.mode === 'create' ? 'Nueva organización' : 'Editar organización' }}</h3>
         <p class="text-slate-500 dark:text-slate-400 text-xs mb-5">{{ modal.mode === 'create' ? 'Crea un nuevo tenant en la plataforma' : 'Actualiza los datos del tenant' }}</p>
 

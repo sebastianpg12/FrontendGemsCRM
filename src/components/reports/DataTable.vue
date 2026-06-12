@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+  <div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden">
     <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
       <div>
         <h3 class="text-sm font-black text-slate-900 dark:text-white">{{ title }}</h3>

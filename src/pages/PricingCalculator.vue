@@ -19,10 +19,10 @@
           </p>
         </div>
         <div class="flex items-center gap-2">
-          <button @click="exportJson" class="px-3 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-300 transition-colors">
+          <button @click="exportJson" class="px-3 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 transition-colors">
             <i class="fas fa-download mr-1.5 text-[10px]"></i>Exportar escenario
           </button>
-          <button @click="resetAll" class="px-3 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-rose-600 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 transition-colors">
+          <button @click="resetAll" class="px-3 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-rose-600 bg-white dark:bg-slate-900 transition-colors">
             <i class="fas fa-rotate-left mr-1.5 text-[10px]"></i>Reset defaults
           </button>
         </div>
@@ -30,7 +30,7 @@
 
       <!-- ══ RESULTADOS RESUMIDOS (sticky-feel top) ══ -->
       <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-6">
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-sack-dollar text-sm"></i>
             <span class="text-[10px] font-bold uppercase tracking-widest">Ingresos / mes</span>
@@ -39,7 +39,7 @@
           <p class="text-[10px] text-slate-400 mt-1">{{ totalTenants }} tenants pagos</p>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-server text-sm"></i>
             <span class="text-[10px] font-bold uppercase tracking-widest">Costos / mes</span>
@@ -48,7 +48,7 @@
           <p class="text-[10px] text-slate-400 mt-1">Fijos + variables</p>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-chart-line text-sm"></i>
             <span class="text-[10px] font-bold uppercase tracking-widest">Utilidad / mes</span>
@@ -61,7 +61,7 @@
           </p>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-balance-scale text-sm"></i>
             <span class="text-[10px] font-bold uppercase tracking-widest">Break-even</span>
@@ -70,7 +70,7 @@
           <p class="text-[10px] text-slate-400 mt-1">tenants {{ breakEvenPlan }} para cubrir fijos</p>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-arrow-trend-up text-sm"></i>
             <span class="text-[10px] font-bold uppercase tracking-widest">Anualizado</span>
@@ -83,7 +83,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
         <!-- ══ COL 1: COSTOS FIJOS PLATAFORMA ══ -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Costos fijos plataforma</h3>
@@ -115,7 +115,7 @@
         </div>
 
         <!-- ══ COL 2: COSTO VARIABLE POR TENANT ══ -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Costo variable por tenant</h3>
@@ -145,7 +145,7 @@
         </div>
 
         <!-- ══ COL 3: PLANES Y PRECIOS ══ -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Planes &amp; precios</h3>
@@ -155,7 +155,7 @@
           </div>
 
           <div class="space-y-3">
-            <div v-for="plan in plans" :key="plan.key" class="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+            <div v-for="plan in plans" :key="plan.key" class="rounded-lg p-3">
               <div class="flex items-center justify-between mb-2">
                 <div>
                   <p class="text-xs font-black text-slate-800 dark:text-white">{{ plan.label }}</p>
@@ -195,7 +195,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
 
         <!-- Tabla escenario actual -->
-        <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl overflow-hidden">
           <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800">
             <h3 class="text-sm font-black text-slate-900 dark:text-white">Desglose por plan</h3>
             <p class="text-[10px] text-slate-400 mt-0.5">P&amp;L por tipo de tenant</p>
@@ -237,7 +237,7 @@
         </div>
 
         <!-- Simulador "qué pasa si..." -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
           <h3 class="text-sm font-black text-slate-900 dark:text-white mb-1">Simulador "Qué pasaría si…"</h3>
           <p class="text-[10px] text-slate-400 mb-4">Compara contra escenario actual</p>
 

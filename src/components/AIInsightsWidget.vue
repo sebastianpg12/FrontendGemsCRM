@@ -1,8 +1,8 @@
 ﻿<template>
-  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col h-full">
+  <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl overflow-hidden flex flex-col h-full">
 
     <!-- Header -->
-    <div class="flex items-center justify-between gap-2 px-3 sm:px-4 py-3 border-b border-slate-100">
+    <div class="flex items-center justify-between gap-2 px-3 sm:px-4 py-3">
       <div class="flex items-center gap-2 sm:gap-3 min-w-0">
         <div class="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
           <i class="fas fa-brain text-primary-500 text-[11px]"></i>

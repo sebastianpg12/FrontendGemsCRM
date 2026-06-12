@@ -19,7 +19,7 @@
         <button
           @click="load"
           :disabled="loading"
-          class="self-start md:self-auto flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-300 transition-colors disabled:opacity-50"
+          class="self-start md:self-auto flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 transition-colors disabled:opacity-50"
         >
           <i :class="['fas fa-arrows-rotate text-[11px]', loading && 'fa-spin']"></i>
           Actualizar
@@ -27,7 +27,7 @@
       </div>
 
       <!-- ══ Filtros globales ══ -->
-      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 mb-5 flex flex-wrap items-center gap-2">
+      <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-4 py-3 mb-5 flex flex-wrap items-center gap-2">
         <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-1">Filtros</span>
         <div class="filter-wrap">
           <i class="fas fa-calendar-alt filter-icon"></i>
@@ -73,7 +73,7 @@
       </div>
 
       <!-- ══ Tabs ══ -->
-      <div class="flex gap-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-1 mb-5 w-fit overflow-x-auto max-w-full">
+      <div class="flex gap-1 bg-white dark:bg-[#1e293b] shadow-sm rounded-xl p-1 mb-5 w-fit overflow-x-auto max-w-full">
         <button
           v-for="t in tabs"
           :key="t.id"
@@ -89,7 +89,7 @@
       </div>
 
       <!-- ══ Loading ══ -->
-      <div v-if="loading && !data" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-16 text-center text-slate-400">
+      <div v-if="loading && !data" class="bg-white dark:bg-slate-900 rounded-xl p-16 text-center text-slate-400">
         <i class="fas fa-circle-notch fa-spin text-3xl mb-3"></i>
         <p class="text-xs font-bold">Generando reporte…</p>
       </div>
@@ -120,7 +120,7 @@
 
         <!-- Cards de adquisición y tendencia -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 lg:col-span-2">
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5 lg:col-span-2">
             <div class="flex items-center justify-between mb-3">
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Actividad por semana</h3>
               <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tendencia del período</span>
@@ -129,7 +129,7 @@
               <MiniBarChart :points="weeklyPoints" />
             </div>
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
             <div class="flex items-center justify-between mb-3">
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Adquisición</h3>
               <TrendBadge v-if="data.executive.clientsDelta !== null" :value="data.executive.clientsDelta" />
@@ -147,15 +147,15 @@
       <!-- ══ TAB: OPERACIONES ══ -->
       <div v-else-if="activeTab === 'operations' && data" class="space-y-5">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
             <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3">Actividades por estado</h3>
             <StatusBars :items="actStatusBars" />
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
             <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3">Tickets por estado</h3>
             <StatusBars :items="ticketStatusBars" />
           </div>
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
             <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3">Casos por estado</h3>
             <StatusBars :items="caseStatusBars" />
           </div>
@@ -458,9 +458,9 @@ onMounted(async () => {
   border: 1px solid rgb(226 232 240);
   border-radius: 0.5rem;
   padding: 0 0.5rem 0 0.625rem;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, background 0.15s;
 }
-.filter-wrap:hover { border-color: rgb(148 163 184); }
+.filter-wrap:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
 .filter-wrap:focus-within { border-color: rgb(99 102 241); }
 
 .filter-icon {
@@ -489,10 +489,11 @@ onMounted(async () => {
   -webkit-appearance: none;
 }
 :global(.dark) .filter-wrap {
-  background: rgb(15 23 42);
+  background: rgb(30 41 59);
   border-color: rgb(51 65 85);
 }
+:global(.dark) .filter-wrap:hover { background: rgb(37 50 71); }
 :global(.dark) .filter-input {
-  color: white;
+  color: rgb(226 232 240);
 }
 </style>

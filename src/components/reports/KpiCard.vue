@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 hover:border-primary-300 dark:hover:border-primary-700 transition-colors group cursor-default"
+    class="bg-white dark:bg-slate-900 rounded-xl p-5 transition-colors group cursor-default"
     :class="{ 'cursor-pointer': clickable }"
   >
     <div class="flex items-start justify-between mb-3">

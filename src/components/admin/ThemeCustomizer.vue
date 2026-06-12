@@ -55,7 +55,7 @@
                 class="relative border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all"
                 :class="dragging
                   ? 'border-primary-400 bg-primary-50 dark:bg-primary-500/10'
-                  : 'border-slate-200 dark:border-[#334155] hover:border-primary-300 hover:bg-slate-50 dark:hover:bg-[#273449]'"
+                  : 'border-slate-200 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#273449]'"
                 @click="fileInput?.click()"
                 @dragover.prevent="dragging = true"
                 @dragleave.prevent="dragging = false"
