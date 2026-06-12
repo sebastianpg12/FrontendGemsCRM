@@ -1,21 +1,24 @@
 <template>
-  <div class="min-h-screen bg-slate-50 text-slate-800">
+  <div class="min-h-screen bg-slate-50 dark:bg-[#04050f] text-slate-800">
     <!-- Sidebar -->
-    <div 
-      class="fixed inset-y-0 left-0 z-50 bg-white border-r border-slate-200 transition-all duration-300 ease-in-out group/sidebar"
+    <div
+      class="fixed inset-y-0 left-0 z-50 bg-white dark:bg-[#0a0b14] border-r border-slate-200 dark:border-[#1a1d2e] transition-all duration-300 ease-in-out flex flex-col"
       :class="isSidebarCollapsed ? 'w-20' : 'w-64'"
     >
+      <!-- Glow superior sutil (solo dark) -->
+      <div class="pointer-events-none absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-primary-600/10 to-transparent dark:from-primary-500/8 rounded-t-sm z-0"></div>
+
       <!-- Collapse Toggle Button -->
-      <button 
+      <button
         @click="isSidebarCollapsed = !isSidebarCollapsed"
-        class="absolute -right-4 top-8 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center shadow-xl z-[100] transition-all hover:bg-primary-700 active:scale-95 border-2 border-white"
+        class="absolute -right-3.5 top-7 w-7 h-7 bg-white dark:bg-[#131520] text-slate-400 dark:text-slate-500 rounded-full flex items-center justify-center z-[100] transition-all hover:text-primary-500 border border-slate-200 dark:border-[#252836] shadow-sm hover:border-primary-300 dark:hover:border-primary-500/40"
         :class="isSidebarCollapsed ? 'rotate-180' : ''"
       >
-        <i class="fas fa-chevron-left text-xs"></i>
+        <i class="fas fa-chevron-left text-[10px]"></i>
       </button>
 
       <!-- Logo -->
-      <div class="flex items-center justify-center h-20 transition-all duration-300 overflow-hidden">
+      <div class="relative z-10 flex items-center justify-center h-20 transition-all duration-300 overflow-hidden flex-shrink-0">
         <img
           :src="logoSrc"
           alt="GEMS Hub"
@@ -24,30 +27,35 @@
           @error="logoSrc = '/gems-logo.png'"
         />
       </div>
-      
+
       <!-- Navigation -->
-      <nav class="flex-1 px-3 py-6 space-y-2 flex flex-col justify-between h-[calc(100vh-160px)]">
-        <div class="space-y-1">
+      <nav class="relative z-10 flex-1 px-3 py-4 flex flex-col justify-between h-[calc(100vh-160px)] overflow-y-auto">
+        <div class="space-y-0.5">
           <router-link
             v-for="item in navigation"
             :key="item.name"
             :to="item.path"
-            class="flex items-center rounded-xl text-sm font-medium transition-all group outline-none h-12"
+            class="flex items-center rounded-xl text-sm font-medium transition-all group outline-none h-11 relative"
             :class="[
-              $route.path === item.path 
-                ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' 
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900',
-              isSidebarCollapsed ? 'justify-center px-0' : 'px-4'
+              $route.path === item.path
+                ? 'bg-primary-500/10 dark:bg-primary-500/[0.08] text-primary-600 dark:text-primary-400 border border-primary-500/20 dark:border-primary-500/20 shadow-sm'
+                : 'text-slate-500 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-slate-800 dark:hover:text-slate-300 border border-transparent',
+              isSidebarCollapsed ? 'justify-center px-0' : 'px-3.5'
             ]"
             :title="isSidebarCollapsed ? localeStore.t(item.id) : ''"
           >
-            <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-              <i v-if="item.icon === 'logo'" class="fas fa-th-large text-lg"></i>
-              <component v-else :is="item.icon" class="w-5 h-5 transition-transform group-hover:scale-110" />
+            <!-- Acento izquierdo en activo -->
+            <span
+              v-if="$route.path === item.path && !isSidebarCollapsed"
+              class="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary-500 rounded-r-full"
+            ></span>
+            <div class="flex-shrink-0 w-5 h-5 flex items-center justify-center">
+              <i v-if="item.icon === 'logo'" class="fas fa-th-large text-base"></i>
+              <component v-else :is="item.icon" class="w-[18px] h-[18px] transition-transform group-hover:scale-110" />
             </div>
-            <span 
-              v-show="!isSidebarCollapsed" 
-              class="ml-3 transition-opacity duration-300 whitespace-nowrap overflow-hidden font-bold"
+            <span
+              v-show="!isSidebarCollapsed"
+              class="ml-3 transition-opacity duration-300 whitespace-nowrap overflow-hidden font-bold text-[13px]"
             >
               {{ localeStore.t(item.id) }}
             </span>
@@ -55,81 +63,81 @@
         </div>
 
         <!-- Motivational Quote -->
-        <div v-if="!isSidebarCollapsed" class="px-6 py-8 mt-4 border-t border-slate-50">
+        <div v-if="!isSidebarCollapsed" class="px-4 py-6 mt-4 border-t border-slate-100 dark:border-[#1a1d2e]">
           <div class="relative">
-            <i class="fas fa-quote-left text-primary-200 text-xl absolute -top-4 -left-2 opacity-50"></i>
-            <p class="text-[10px] font-bold text-slate-400 italic leading-relaxed text-center relative z-10">
+            <i class="fas fa-quote-left text-primary-200 dark:text-primary-900 text-xl absolute -top-4 -left-2 opacity-50"></i>
+            <p class="text-[10px] font-bold text-slate-400 dark:text-slate-600 italic leading-relaxed text-center relative z-10">
               "El éxito es la suma de pequeños esfuerzos repetidos día tras día."
             </p>
-            <p class="text-[8px] font-black text-primary-400 uppercase tracking-widest text-center mt-2">
+            <p class="text-[8px] font-black text-primary-400 dark:text-primary-600 uppercase tracking-widest text-center mt-2">
               — Robert Collier
             </p>
           </div>
         </div>
 
         <!-- Logout / User Profile Section -->
-        <div class="border-t border-slate-100 pt-4 mt-auto">
-          <div 
+        <div class="border-t border-slate-100 dark:border-[#1a1d2e] pt-4 mt-auto">
+          <div
             class="flex items-center group transition-all"
             :class="isSidebarCollapsed ? 'justify-center' : 'px-1'"
           >
-            <div class="w-10 h-10 rounded-xl overflow-hidden shadow-sm flex items-center justify-center bg-slate-100 border border-slate-200 group-hover:border-primary-300 transition-all flex-shrink-0">
-              <img 
+            <div class="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center bg-slate-100 dark:bg-[#13152a] border border-slate-200 dark:border-[#252836] group-hover:border-primary-300 dark:group-hover:border-primary-500/40 transition-all flex-shrink-0 shadow-sm">
+              <img
                 v-if="user?.photo"
                 :src="resolveImageUrl(user.photo)"
-                alt="Foto" 
+                alt="Foto"
                 class="w-full h-full object-cover transition-transform group-hover:scale-110"
                 @error="onAvatarError"
               />
-              <img 
+              <img
                 v-else-if="user?.avatar && getAvatarById(user.avatar)"
                 :src="getAvatarById(user.avatar)?.path"
                 class="w-full h-full object-cover transition-transform group-hover:scale-110"
               />
-              <span v-else class="text-[10px] font-black text-slate-500 uppercase">{{ getUserInitials() }}</span>
+              <span v-else class="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">{{ getUserInitials() }}</span>
             </div>
-            <div 
+            <div
               v-show="!isSidebarCollapsed"
               class="ml-3 min-w-0 transition-opacity duration-300"
             >
-              <p class="text-xs font-black text-slate-800 truncate">{{ user?.name || 'Usuario' }}</p>
-              <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest truncate">{{ getRoleDisplayName() }}</p>
+              <p class="text-xs font-black text-slate-800 dark:text-slate-200 truncate">{{ user?.name || 'Usuario' }}</p>
+              <p class="text-[9px] font-black text-primary-500 dark:text-primary-500 uppercase tracking-widest truncate">{{ getRoleDisplayName() }}</p>
             </div>
           </div>
 
-          <div 
-            class="mt-4 flex gap-2"
+          <div
+            class="mt-3 flex gap-2"
             :class="isSidebarCollapsed ? 'flex-col items-center' : 'flex-row'"
           >
             <router-link
               to="/profile"
-              class="flex items-center justify-center bg-slate-50 hover:bg-primary-50 text-slate-500 hover:text-primary-600 rounded-xl transition-all border border-slate-100 hover:border-primary-200 group"
+              class="flex items-center justify-center bg-slate-50 dark:bg-white/[0.03] hover:bg-primary-50 dark:hover:bg-primary-500/[0.08] text-slate-500 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 rounded-xl transition-all border border-slate-100 dark:border-[#1e2130] hover:border-primary-200 dark:hover:border-primary-500/30 group"
               :class="isSidebarCollapsed ? 'w-10 h-10' : 'flex-1 h-10'"
               title="Ajustes"
             >
-              <i class="fas fa-cog text-sm group-hover:rotate-90 transition-all"></i>
+              <i class="fas fa-cog text-sm group-hover:rotate-90 transition-all duration-300"></i>
               <span v-show="!isSidebarCollapsed" class="ml-2 text-[10px] font-black uppercase tracking-widest">Perfil</span>
             </router-link>
-            
+
             <button
               @click="$emit('logout')"
-              class="w-10 h-10 flex items-center justify-center bg-slate-50 hover:bg-rose-50 text-slate-400 hover:text-rose-500 rounded-xl transition-all border border-slate-100 hover:border-rose-200"
+              class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-white/[0.03] hover:bg-rose-50 dark:hover:bg-rose-500/[0.08] text-slate-400 dark:text-slate-500 hover:text-rose-500 dark:hover:text-rose-400 rounded-xl transition-all border border-slate-100 dark:border-[#1e2130] hover:border-rose-200 dark:hover:border-rose-500/30"
               title="Salir"
             >
-              <i class="fas fa-sign-out-alt"></i>
+              <i class="fas fa-sign-out-alt text-sm"></i>
             </button>
           </div>
         </div>
       </nav>
     </div>
-    
+
     <!-- Main Content -->
-    <div 
+    <div
       class="transition-all duration-300 ease-in-out"
       :class="isSidebarCollapsed ? 'ml-20' : 'ml-64'"
     >
       <!-- Header -->
-      <header class="min-h-[64px] bg-white/80 backdrop-blur-md border-b border-slate-200 flex flex-wrap items-center px-4 sm:px-8 justify-between sticky top-0 z-30">
+      <header class="min-h-[64px] bg-white dark:bg-[#0a0b14] border-b border-slate-200 dark:border-[#1a1d2e] flex flex-wrap items-center px-4 sm:px-8 justify-between sticky top-0 z-30">
         <div class="flex items-center flex-1 min-w-0">
           <!-- Menu Button (hamburger icon for mobile) -->
           <button
@@ -144,8 +152,8 @@
           
           <!-- Título y descripción -->
           <div class="flex flex-col justify-center min-w-0">
-            <h1 class="text-lg font-black text-slate-800 whitespace-nowrap truncate tracking-tight">{{ pageTitle }}</h1>
-            <p v-show="!isSidebarCollapsed" class="text-slate-400 text-[10px] font-bold uppercase tracking-wider truncate">{{ pageDescription }}</p>
+            <h1 class="text-lg font-black text-slate-800 dark:text-slate-100 whitespace-nowrap truncate tracking-tight">{{ pageTitle }}</h1>
+            <p v-show="!isSidebarCollapsed" class="text-slate-400 dark:text-slate-600 text-[10px] font-bold uppercase tracking-wider truncate">{{ pageDescription }}</p>
           </div>
         </div>
         <!-- Notifications -->
@@ -153,9 +161,9 @@
           <OnlineUsersPopover />
 
           <!-- Chat Unread Badge -->
-          <router-link to="/chat" class="relative p-2 text-slate-400 hover:text-primary-600 transition-colors">
-            <ChatBubbleLeftRightIcon class="w-6 h-6" />
-            <span v-if="chatUnread > 0" class="absolute -top-1 -right-1 w-5 h-5 bg-rose-600 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white">
+          <router-link to="/chat" class="relative p-2 text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.04]">
+            <ChatBubbleLeftRightIcon class="w-5 h-5" />
+            <span v-if="chatUnread > 0" class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
               {{ chatUnread > 99 ? '99+' : chatUnread }}
             </span>
           </router-link>
@@ -163,7 +171,7 @@
       </header>
       
       <!-- Page Content -->
-      <main class="p-4 sm:p-8">
+      <main class="p-4 sm:p-8 min-h-[calc(100vh-64px)] bg-slate-50 dark:bg-[#04050f]">
         <router-view />
       </main>
     </div>
