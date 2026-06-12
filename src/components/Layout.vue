@@ -1,143 +1,102 @@
 <template>
-  <div class="min-h-screen bg-slate-50 dark:bg-[#04050f] text-slate-800">
+  <div class="min-h-screen bg-slate-50 dark:bg-[#0f1117] text-slate-800">
     <!-- Sidebar -->
     <div
-      class="fixed inset-y-0 left-0 z-50 bg-white dark:bg-[#0a0b14] border-r border-slate-200 dark:border-[#1a1d2e] transition-all duration-300 ease-in-out flex flex-col"
-      :class="isSidebarCollapsed ? 'w-20' : 'w-64'"
+      class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white dark:bg-[#0b0d12] border-r border-slate-100 dark:border-white/[0.06] transition-all duration-200 ease-in-out"
+      :class="isSidebarCollapsed ? 'w-[60px]' : 'w-[220px]'"
     >
-      <!-- Glow superior sutil (solo dark) -->
-      <div class="pointer-events-none absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-primary-600/10 to-transparent dark:from-primary-500/8 rounded-t-sm z-0"></div>
-
-      <!-- Collapse Toggle Button -->
+      <!-- Collapse Toggle -->
       <button
         @click="isSidebarCollapsed = !isSidebarCollapsed"
-        class="absolute -right-3.5 top-7 w-7 h-7 bg-white dark:bg-[#131520] text-slate-400 dark:text-slate-500 rounded-full flex items-center justify-center z-[100] transition-all hover:text-primary-500 border border-slate-200 dark:border-[#252836] shadow-sm hover:border-primary-300 dark:hover:border-primary-500/40"
+        class="absolute -right-3 top-6 w-6 h-6 bg-white dark:bg-[#161820] border border-slate-200 dark:border-white/10 rounded-full flex items-center justify-center z-[100] text-slate-400 hover:text-primary-500 transition-colors shadow-sm"
         :class="isSidebarCollapsed ? 'rotate-180' : ''"
       >
-        <i class="fas fa-chevron-left text-[10px]"></i>
+        <i class="fas fa-chevron-left" style="font-size:8px"></i>
       </button>
 
       <!-- Logo -->
-      <div class="relative z-10 flex items-center justify-center h-20 transition-all duration-300 overflow-hidden flex-shrink-0">
+      <div class="flex items-center h-[56px] flex-shrink-0 overflow-hidden"
+           :class="isSidebarCollapsed ? 'justify-center px-0' : 'px-4'">
         <img
           :src="logoSrc"
           alt="GEMS Hub"
-          class="h-24 w-auto transition-all object-contain"
-          :class="isSidebarCollapsed ? 'scale-75' : ''"
+          class="h-8 w-auto object-contain transition-all"
           @error="logoSrc = '/gems-logo.png'"
         />
+        <span v-show="!isSidebarCollapsed" class="ml-2.5 text-[13px] font-black text-slate-800 dark:text-white tracking-tight whitespace-nowrap">GEMS Hub</span>
       </div>
 
+      <!-- Divider -->
+      <div class="h-px bg-slate-100 dark:bg-white/[0.06] mx-3 flex-shrink-0"></div>
+
       <!-- Navigation -->
-      <nav class="relative z-10 flex-1 px-3 py-4 flex flex-col justify-between h-[calc(100vh-160px)] overflow-y-auto">
-        <div class="space-y-0.5">
-          <router-link
-            v-for="item in navigation"
-            :key="item.name"
-            :to="item.path"
-            class="flex items-center rounded-xl text-sm font-medium transition-all group outline-none h-11 relative"
-            :class="[
-              $route.path === item.path
-                ? 'bg-primary-500/10 dark:bg-primary-500/[0.08] text-primary-600 dark:text-primary-400 border border-primary-500/20 dark:border-primary-500/20 shadow-sm'
-                : 'text-slate-500 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-slate-800 dark:hover:text-slate-300 border border-transparent',
-              isSidebarCollapsed ? 'justify-center px-0' : 'px-3.5'
-            ]"
-            :title="isSidebarCollapsed ? localeStore.t(item.id) : ''"
-          >
-            <!-- Acento izquierdo en activo -->
-            <span
-              v-if="$route.path === item.path && !isSidebarCollapsed"
-              class="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary-500 rounded-r-full"
-            ></span>
-            <div class="flex-shrink-0 w-5 h-5 flex items-center justify-center">
-              <i v-if="item.icon === 'logo'" class="fas fa-th-large text-base"></i>
-              <component v-else :is="item.icon" class="w-[18px] h-[18px] transition-transform group-hover:scale-110" />
-            </div>
-            <span
-              v-show="!isSidebarCollapsed"
-              class="ml-3 transition-opacity duration-300 whitespace-nowrap overflow-hidden font-bold text-[13px]"
-            >
-              {{ localeStore.t(item.id) }}
-            </span>
-          </router-link>
-        </div>
+      <nav class="flex-1 py-3 px-2 flex flex-col gap-px overflow-y-auto">
+        <router-link
+          v-for="item in navigation"
+          :key="item.name"
+          :to="item.path"
+          class="flex items-center h-9 rounded-md text-[13px] font-medium transition-colors outline-none group relative"
+          :class="[
+            $route.path === item.path
+              ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
+              : 'text-slate-500 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-white/[0.04] hover:text-slate-700 dark:hover:text-slate-300',
+            isSidebarCollapsed ? 'justify-center px-0' : 'px-2.5'
+          ]"
+          :title="isSidebarCollapsed ? localeStore.t(item.id) : ''"
+        >
+          <!-- Acento izquierdo activo -->
+          <span
+            v-if="$route.path === item.path"
+            class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-primary-500 rounded-r-sm"
+          ></span>
 
-        <!-- Motivational Quote -->
-        <div v-if="!isSidebarCollapsed" class="px-4 py-6 mt-4 border-t border-slate-100 dark:border-[#1a1d2e]">
-          <div class="relative">
-            <i class="fas fa-quote-left text-primary-200 dark:text-primary-900 text-xl absolute -top-4 -left-2 opacity-50"></i>
-            <p class="text-[10px] font-bold text-slate-400 dark:text-slate-600 italic leading-relaxed text-center relative z-10">
-              "El éxito es la suma de pequeños esfuerzos repetidos día tras día."
-            </p>
-            <p class="text-[8px] font-black text-primary-400 dark:text-primary-600 uppercase tracking-widest text-center mt-2">
-              — Robert Collier
-            </p>
+          <div class="flex-shrink-0 w-4 h-4 flex items-center justify-center">
+            <i v-if="item.icon === 'logo'" class="fas fa-th-large" style="font-size:14px"></i>
+            <component v-else :is="item.icon" class="w-4 h-4 stroke-[1.5]" />
           </div>
-        </div>
+          <span v-show="!isSidebarCollapsed" class="ml-2.5 whitespace-nowrap overflow-hidden">
+            {{ localeStore.t(item.id) }}
+          </span>
+        </router-link>
+      </nav>
 
-        <!-- Logout / User Profile Section -->
-        <div class="border-t border-slate-100 dark:border-[#1a1d2e] pt-4 mt-auto">
-          <div
-            class="flex items-center group transition-all"
-            :class="isSidebarCollapsed ? 'justify-center' : 'px-1'"
-          >
-            <div class="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center bg-slate-100 dark:bg-[#13152a] border border-slate-200 dark:border-[#252836] group-hover:border-primary-300 dark:group-hover:border-primary-500/40 transition-all flex-shrink-0 shadow-sm">
-              <img
-                v-if="user?.photo"
-                :src="resolveImageUrl(user.photo)"
-                alt="Foto"
-                class="w-full h-full object-cover transition-transform group-hover:scale-110"
-                @error="onAvatarError"
-              />
-              <img
-                v-else-if="user?.avatar && getAvatarById(user.avatar)"
-                :src="getAvatarById(user.avatar)?.path"
-                class="w-full h-full object-cover transition-transform group-hover:scale-110"
-              />
-              <span v-else class="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">{{ getUserInitials() }}</span>
-            </div>
-            <div
-              v-show="!isSidebarCollapsed"
-              class="ml-3 min-w-0 transition-opacity duration-300"
-            >
-              <p class="text-xs font-black text-slate-800 dark:text-slate-200 truncate">{{ user?.name || 'Usuario' }}</p>
-              <p class="text-[9px] font-black text-primary-500 dark:text-primary-500 uppercase tracking-widest truncate">{{ getRoleDisplayName() }}</p>
-            </div>
+      <!-- Divider -->
+      <div class="h-px bg-slate-100 dark:bg-white/[0.06] mx-3 flex-shrink-0"></div>
+
+      <!-- User Section -->
+      <div class="p-2 flex-shrink-0">
+        <div
+          class="flex items-center h-10 rounded-md px-2 gap-2.5 cursor-default"
+          :class="isSidebarCollapsed ? 'justify-center px-0' : ''"
+        >
+          <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center bg-slate-100 dark:bg-white/[0.08] border border-slate-200 dark:border-white/10 flex-shrink-0">
+            <img v-if="user?.photo" :src="resolveImageUrl(user.photo)" alt="Foto" class="w-full h-full object-cover" @error="onAvatarError" />
+            <img v-else-if="user?.avatar && getAvatarById(user.avatar)" :src="getAvatarById(user.avatar)?.path" class="w-full h-full object-cover" />
+            <span v-else class="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase">{{ getUserInitials() }}</span>
           </div>
-
-          <div
-            class="mt-3 flex gap-2"
-            :class="isSidebarCollapsed ? 'flex-col items-center' : 'flex-row'"
-          >
-            <router-link
-              to="/profile"
-              class="flex items-center justify-center bg-slate-50 dark:bg-white/[0.03] hover:bg-primary-50 dark:hover:bg-primary-500/[0.08] text-slate-500 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 rounded-xl transition-all border border-slate-100 dark:border-[#1e2130] hover:border-primary-200 dark:hover:border-primary-500/30 group"
-              :class="isSidebarCollapsed ? 'w-10 h-10' : 'flex-1 h-10'"
-              title="Ajustes"
-            >
-              <i class="fas fa-cog text-sm group-hover:rotate-90 transition-all duration-300"></i>
-              <span v-show="!isSidebarCollapsed" class="ml-2 text-[10px] font-black uppercase tracking-widest">Perfil</span>
+          <div v-show="!isSidebarCollapsed" class="min-w-0 flex-1">
+            <p class="text-[12px] font-semibold text-slate-700 dark:text-slate-200 truncate leading-tight">{{ user?.name || 'Usuario' }}</p>
+            <p class="text-[10px] text-slate-400 dark:text-slate-500 truncate leading-tight">{{ getRoleDisplayName() }}</p>
+          </div>
+          <div v-show="!isSidebarCollapsed" class="flex items-center gap-1 flex-shrink-0">
+            <router-link to="/profile" title="Perfil" class="w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-primary-500 hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors">
+              <i class="fas fa-cog" style="font-size:11px"></i>
             </router-link>
-
-            <button
-              @click="$emit('logout')"
-              class="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-white/[0.03] hover:bg-rose-50 dark:hover:bg-rose-500/[0.08] text-slate-400 dark:text-slate-500 hover:text-rose-500 dark:hover:text-rose-400 rounded-xl transition-all border border-slate-100 dark:border-[#1e2130] hover:border-rose-200 dark:hover:border-rose-500/30"
-              title="Salir"
-            >
-              <i class="fas fa-sign-out-alt text-sm"></i>
+            <button @click="$emit('logout')" title="Salir" class="w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors">
+              <i class="fas fa-sign-out-alt" style="font-size:11px"></i>
             </button>
           </div>
         </div>
-      </nav>
+      </div>
     </div>
 
     <!-- Main Content -->
     <div
-      class="transition-all duration-300 ease-in-out"
-      :class="isSidebarCollapsed ? 'ml-20' : 'ml-64'"
+      class="transition-all duration-200 ease-in-out"
+      :class="isSidebarCollapsed ? 'ml-[60px]' : 'ml-[220px]'"
     >
       <!-- Header -->
-      <header class="min-h-[64px] bg-white dark:bg-[#0a0b14] border-b border-slate-200 dark:border-[#1a1d2e] flex flex-wrap items-center px-4 sm:px-8 justify-between sticky top-0 z-30">
+      <header class="h-[56px] bg-white dark:bg-[#0b0d12] border-b border-slate-100 dark:border-white/[0.06] flex items-center px-6 justify-between sticky top-0 z-30">
         <div class="flex items-center flex-1 min-w-0">
           <!-- Menu Button (hamburger icon for mobile) -->
           <button
@@ -171,7 +130,7 @@
       </header>
       
       <!-- Page Content -->
-      <main class="p-4 sm:p-8 min-h-[calc(100vh-64px)] bg-slate-50 dark:bg-[#04050f]">
+      <main class="p-6 min-h-[calc(100vh-56px)] bg-slate-50 dark:bg-[#0f1117]">
         <router-view />
       </main>
     </div>
