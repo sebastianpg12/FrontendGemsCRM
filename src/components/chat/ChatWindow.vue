@@ -121,7 +121,7 @@
 
       <!-- Typing indicators -->
       <div v-if="typingUsers.length > 0" class="flex justify-start">
-        <div class="bg-gray-700 rounded-2xl px-4 py-2 max-w-[70%]">
+        <div class="bg-gray-700 rounded-xl px-4 py-2 max-w-[70%]">
           <div class="flex items-center gap-2">
             <div class="flex gap-1">
               <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>

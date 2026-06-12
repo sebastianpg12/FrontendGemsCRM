@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+  <div class="bg-white rounded-xl p-4 shadow-sm">
     <!-- Header del calendario -->
     <div class="flex items-center justify-between mb-4">
       <div class="flex items-center gap-4">

@@ -24,7 +24,7 @@
 
     <!-- Sub-navigation Tabs (Only for Logged-In Clients) -->
     <div v-if="authStore.isAuthenticated" class="bg-white border-b border-slate-100 flex-shrink-0 px-8 py-3 flex items-center justify-center">
-       <nav class="flex items-center gap-1 bg-slate-100 p-1.5 rounded-2xl border border-slate-200/50">
+       <nav class="flex items-center gap-1 bg-slate-100 p-1.5 rounded-xl shadow-sm/50">
          <button 
            @click="activeTab = 'create'"
            :class="activeTab === 'create' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400 hover:text-slate-600'"
@@ -54,7 +54,7 @@
 
         <!-- History/List view (Issue Navigator) -->
         <div v-else class="animate-content-in h-full">
-          <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden">
+          <div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden">
             <!-- Table Header / Toolbar -->
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
               <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest">Cola de Incidencias</h2>

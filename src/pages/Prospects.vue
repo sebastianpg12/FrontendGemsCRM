@@ -106,7 +106,7 @@
           <div
             v-else
             key="loading"
-            class="bg-white rounded-2xl border border-slate-200 h-full flex items-center justify-center"
+            class="bg-white rounded-xl shadow-sm h-full flex items-center justify-center"
           >
             <div class="text-center">
               <i class="fas fa-circle-notch fa-spin text-3xl text-primary-400 mb-3 block"></i>

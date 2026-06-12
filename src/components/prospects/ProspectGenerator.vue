@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-y-auto h-full">
+  <div class="bg-white rounded-xl shadow-sm shadow-sm overflow-y-auto h-full">
     <!-- Header -->
     <div class="px-6 py-5 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white">
       <div class="flex items-start justify-between gap-4">

@@ -43,7 +43,7 @@
     </div>
 
     <!-- Modern Filters Toolbar -->
-    <div class="flex-shrink-0 flex items-center justify-between bg-white/80 backdrop-blur-md px-4 py-3 rounded-2xl border border-slate-200/60 shadow-sm mb-6">
+    <div class="flex-shrink-0 flex items-center justify-between bg-white/80 backdrop-blur-md px-4 py-3 rounded-xl shadow-sm/60 shadow-sm mb-6">
       <div class="flex items-center gap-4 flex-1">
         <!-- Search Group -->
         <div class="relative w-80 group">
@@ -134,7 +134,7 @@
         <div 
           v-for="col in columns" 
           :key="col.id" 
-          class="flex flex-col flex-1 min-w-[350px] bg-slate-50/50 dark:bg-[#161f2e] rounded-[2rem] border border-slate-200/60 dark:border-[#334155] shadow-inner"
+          class="flex flex-col flex-1 min-w-[350px] bg-slate-50/50 dark:bg-[#161f2e] rounded-[2rem] dark:border-[#334155] shadow-inner"
         >
           <!-- Column Header -->
           <div class="flex-shrink-0 p-5 pb-3 flex items-center justify-between">
@@ -168,7 +168,7 @@
               v-for="ticket in getTicketsByStatus(col.id)" 
               :key="ticket._id"
               @click="openTicketDetail(ticket)"
-            class="bg-white dark:bg-[#1e293b] rounded-2xl p-4 shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-primary-300/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
+            class="bg-white dark:bg-[#1e293b] rounded-xl p-4 shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-primary-300/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative flex flex-col gap-3"
             >
               <!-- Card Content -->
               <div class="flex items-center justify-between">
@@ -384,7 +384,7 @@
           <div class="flex-1 overflow-y-auto flex flex-col p-6 space-y-8 custom-scrollbar">
             
             <!-- Description -->
-            <div class="bg-slate-50 rounded-2xl p-5 relative">
+            <div class="bg-slate-50 rounded-xl p-5 relative">
                <div class="absolute -top-3 left-4 bg-white px-3 py-1 rounded-full flex items-center gap-2">
                  <i class="fas fa-info-circle text-[10px] text-primary-500"></i>
                  <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Descripción Inicial</span>
@@ -469,7 +469,7 @@
             </div>
 
             <!-- Linked Resources -->
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
               <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                 <h3 class="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
                   <i class="fas fa-link text-primary-500"></i> Recursos Vinculados
@@ -643,7 +643,7 @@
     <!-- Modal Nuevo Ticket (Para uso interno) -->
     <Teleport to="body">
     <div v-if="showNewTicketModal" class="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-[100] p-4" @click.self="showNewTicketModal = false">
-      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 w-full max-w-md animate-fade-in overflow-hidden">
+      <div class="bg-white rounded-xl shadow-xl border border-slate-200 w-full max-w-md animate-fade-in overflow-hidden">
         <div class="bg-slate-50 p-5 border-b border-slate-100 flex items-center justify-between">
            <div class="flex items-center gap-6">
              <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-xl flex items-center justify-center border border-primary-200">
@@ -719,7 +719,7 @@
 
     <!-- Link Resource Modal -->
     <div v-if="showLinkModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4" @click.self="showLinkModal = null">
-      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-zoom-in">
+      <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden animate-zoom-in">
         <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
           <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
             <i :class="showLinkModal === 'case' ? 'fas fa-briefcase text-indigo-500' : 'fas fa-book-open text-emerald-500'"></i>

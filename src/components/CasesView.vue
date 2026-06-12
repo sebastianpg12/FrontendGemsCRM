@@ -17,7 +17,7 @@
       </div>
 
       <!-- Filtros -->
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-3 space-y-3">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl p-3 space-y-3">
         <!-- Chips de estado -->
         <div class="flex flex-wrap items-center gap-1.5">
           <button
@@ -84,7 +84,7 @@
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="filteredCases.length === 0" class="bg-white dark:bg-[#1e293b] rounded-2xl py-16 flex flex-col items-center text-center px-6">
+      <div v-else-if="filteredCases.length === 0" class="bg-white dark:bg-[#1e293b] rounded-xl py-16 flex flex-col items-center text-center px-6">
         <div class="w-16 h-16 bg-primary-50 dark:bg-primary-500/10 rounded-2xl flex items-center justify-center mb-4">
           <i class="fas fa-folder-open text-xl text-primary-500"></i>
         </div>
@@ -103,7 +103,7 @@
       </div>
 
       <!-- Lista tipo Linear -->
-      <div v-else class="bg-white dark:bg-[#1e293b] rounded-2xl overflow-hidden divide-y divide-slate-100 dark:divide-[#334155]">
+      <div v-else class="bg-white dark:bg-[#1e293b] rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-[#334155]">
         <button
           v-for="c in filteredCases"
           :key="c._id"
@@ -201,7 +201,7 @@
         <!-- Columna principal -->
         <div class="lg:col-span-2 space-y-4">
           <!-- Cabecera del caso -->
-          <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-5">
+          <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-start gap-3">
               <span class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5" :class="priorityConfig[selectedCase.prioridad]?.soft">
                 <i :class="typeConfig[selectedCase.tipo]?.icon" class="text-[13px]"></i>
@@ -222,7 +222,7 @@
           </div>
 
           <!-- Documentación -->
-          <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-5">
+          <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-center justify-between mb-3">
               <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Documentación</p>
               <button v-if="!editingDocs && selectedCase.wikiContent" class="btn-ghost" @click="startEditDocs">
@@ -251,7 +251,7 @@
           </div>
 
           <!-- Timeline de actividad -->
-          <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-5">
+          <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">
               Actividad
               <span class="ml-1 px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-[#334155] text-slate-500 dark:text-slate-400">{{ timeline.length }}</span>
@@ -308,7 +308,7 @@
         <!-- Panel lateral -->
         <div class="space-y-4">
           <!-- Detalles -->
-          <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-5 space-y-3.5">
+          <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5 space-y-3.5">
             <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Detalles</p>
 
             <div class="detail-row">
@@ -365,7 +365,7 @@
           </div>
 
           <!-- Adjuntos -->
-          <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-5">
+          <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-center justify-between mb-3">
               <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                 Adjuntos
@@ -400,7 +400,7 @@
           </div>
 
           <!-- Tickets vinculados -->
-          <div class="bg-white dark:bg-[#1e293b] rounded-2xl p-5">
+          <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-center justify-between mb-3">
               <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Tickets</p>
               <button class="btn-ghost" @click="openLinkTicketModal">
@@ -432,7 +432,7 @@
 
     <!-- ════════ MODAL CREAR / EDITAR ════════ -->
     <div v-if="showFormModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
         <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449] rounded-t-2xl">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">
             {{ form._id ? 'Editar caso' : 'Nuevo caso' }}
@@ -524,7 +524,7 @@
 
     <!-- ════════ MODAL VINCULAR TICKET ════════ -->
     <div v-if="showLinkModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col">
         <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449] rounded-t-2xl">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Vincular ticket</h3>
           <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showLinkModal = false">
@@ -565,7 +565,7 @@
 
     <!-- ════════ MODAL CONFIRMACIÓN (sin blur) ════════ -->
     <div v-if="confirmDialog" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm p-6">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm p-6">
         <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center mb-4">
           <i class="fas fa-trash text-[16px]"></i>
         </div>

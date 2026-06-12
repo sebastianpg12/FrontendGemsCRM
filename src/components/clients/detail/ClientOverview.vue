@@ -37,7 +37,7 @@
         </div>
       </div>
       
-      <div class="bg-slate-50 border border-slate-200 p-5 rounded-xl space-y-4 shadow-sm">
+      <div class="bg-slate-50 rounded-xl p-5 space-y-4 shadow-sm">
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-envelope mr-1 text-slate-400"></i> Correo Electrónico</label>
           <input v-model="draft.email" :readonly="!editOverview" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>

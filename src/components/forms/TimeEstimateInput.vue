@@ -68,7 +68,7 @@
     </div>
     
     <!-- Vista previa del tiempo seleccionado -->
-    <div v-if="modelValue" class="bg-primary-50/50 rounded-2xl p-4 border border-primary-100 animate-fade-in shadow-sm">
+    <div v-if="modelValue" class="bg-primary-50/50 rounded-xl p-4 border border-primary-100 animate-fade-in shadow-sm">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center border border-primary-100 shadow-sm">

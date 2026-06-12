@@ -210,7 +210,7 @@
         </div>
 
         <!-- Nota de foco GEMS -->
-        <div class="rounded-2xl px-4 py-3.5 text-white relative overflow-hidden shrink-0"
+        <div class="rounded-xl px-4 py-3.5 text-white relative overflow-hidden shrink-0"
           style="background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 60%, #1e1b4b 100%);">
           <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-0 right-0 w-32 h-32 opacity-25" style="background: radial-gradient(circle, var(--brand-accent) 0%, transparent 70%); transform: translate(20%,-20%)"></div>

@@ -120,7 +120,7 @@
 
     <!-- Create Board Modal -->
     <div v-if="showCreateModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[9999]" @click.self="showCreateModal = false">
-      <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
+      <div class="bg-white rounded-xl shadow-xl w-full max-w-md">
         <div class="px-6 py-4 border-b border-slate-100">
           <h2 class="text-base font-black text-slate-800">Crear Nuevo Tablero</h2>
         </div>

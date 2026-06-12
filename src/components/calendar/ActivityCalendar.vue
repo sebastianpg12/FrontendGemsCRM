@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm overflow-hidden">
+  <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm overflow-hidden">
     <!-- Barra superior -->
     <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-slate-100 dark:border-[#334155]">
       <div class="flex items-center gap-2">

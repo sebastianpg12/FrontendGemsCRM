@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="flex flex-col h-full bg-white rounded-2xl border border-slate-200 overflow-hidden">
+  <div class="flex flex-col h-full bg-white rounded-xl shadow-sm overflow-hidden">
     <!-- Header con búsqueda -->
     <div class="px-4 py-4 border-b border-slate-100">
       <div class="flex items-center justify-between mb-3">

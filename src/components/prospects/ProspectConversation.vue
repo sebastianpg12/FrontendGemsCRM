@@ -21,7 +21,7 @@
 
         <div
           :class="[
-            'max-w-[85%] rounded-2xl px-4 py-3 shadow-sm',
+            'max-w-[85%] rounded-xl px-4 py-3 shadow-sm',
             msg.role === 'user'
               ? 'bg-primary-600 text-white rounded-br-md'
               : 'bg-white text-slate-800 rounded-bl-md',
@@ -61,7 +61,7 @@
         <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center flex-shrink-0">
           <i class="fas fa-wand-magic-sparkles text-[11px]"></i>
         </div>
-        <div class="bg-white rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
+        <div class="bg-white rounded-xl rounded-bl-md px-4 py-3 shadow-sm">
           <div class="flex gap-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-bounce" style="animation-delay: 0ms"></span>
             <span class="w-1.5 h-1.5 rounded-full bg-primary-400 animate-bounce" style="animation-delay: 150ms"></span>

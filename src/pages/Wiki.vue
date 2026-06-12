@@ -55,7 +55,7 @@
     </div>
 
     <!-- Panel de contenido -->
-    <section class="flex-1 min-w-0 h-full flex flex-col bg-white dark:bg-[#1e293b] rounded-2xl overflow-hidden">
+    <section class="flex-1 min-w-0 h-full flex flex-col bg-white dark:bg-[#1e293b] rounded-xl overflow-hidden">
       <!-- Barra superior -->
       <header class="shrink-0 h-12 px-3 sm:px-4 flex items-center gap-2 border-b border-slate-100 dark:border-[#334155]">
         <button
@@ -183,7 +183,7 @@
 
     <!-- Modal de confirmación (sin blur) -->
     <div v-if="confirmDialog" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm p-6">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm p-6">
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
           :class="confirmDialog.danger ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500' : 'bg-amber-50 dark:bg-amber-500/10 text-amber-500'">
           <i class="fas text-[16px]" :class="confirmDialog.danger ? 'fa-trash' : 'fa-box-archive'"></i>

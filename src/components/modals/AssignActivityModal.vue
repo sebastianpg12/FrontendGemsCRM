@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-[100] animate-in fade-in duration-300" @click="closeOnOutsideClick">
-    <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-200 w-full max-w-md max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300" @click.stop>
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300" @click.stop>
       <!-- Header -->
       <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
         <div class="flex items-center gap-4">
@@ -22,7 +22,7 @@
 
       <div class="p-8">
         <!-- Información de la actividad -->
-        <div class="mb-8 p-5 bg-slate-50 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="mb-8 p-5 bg-slate-50 rounded-xl shadow-sm">
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0 w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-slate-200 shadow-sm">
               <i class="fas fa-tasks text-primary-500"></i>
@@ -85,8 +85,8 @@
         </div>
 
         <!-- Preview del miembro seleccionado -->
-        <div v-if="selectedMember" class="mt-6 p-5 bg-white rounded-3xl shadow-xl shadow-slate-200/50 flex items-center gap-4 animate-in fade-in zoom-in-95 duration-300">
-          <div class="w-14 h-14 bg-slate-50 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm">
+        <div v-if="selectedMember" class="mt-6 p-5 bg-white rounded-xl shadow-lg shadow-slate-200/50 flex items-center gap-4 animate-in fade-in zoom-in-95 duration-300">
+          <div class="w-14 h-14 bg-slate-50 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
             <img v-if="selectedMember.photo || selectedMember.avatar" :src="selectedMember.photo || selectedMember.avatar" class="w-full h-full object-cover">
             <div v-else class="w-full h-full flex items-center justify-center text-primary-500 text-xl font-black">
               {{ selectedMember.name.charAt(0) }}

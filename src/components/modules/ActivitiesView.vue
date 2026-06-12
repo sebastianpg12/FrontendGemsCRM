@@ -3,7 +3,7 @@
     <!-- Header con controles -->
     <div class="flex flex-wrap items-center justify-between gap-3 mb-1">
       <!-- View Toggle — pills premium -->
-      <div class="flex items-center bg-slate-100 dark:bg-[#1e293b] rounded-xl p-1 border border-slate-200 dark:border-[#334155] gap-0.5">
+      <div class="flex items-center bg-slate-100 dark:bg-[#1e293b] rounded-xl p-1 gap-0.5">
         <button
           v-for="v in viewOptions" :key="v.id"
           @click="currentView = v.id"
@@ -292,7 +292,7 @@
     </div>
 
     <!-- Vista de Lista -->
-    <div v-else-if="currentView === 'tasks'" class="bg-white rounded-2xl border border-slate-200 shadow-sm mt-6 flex flex-col min-h-0 overflow-visible">
+    <div v-else-if="currentView === 'tasks'" class="bg-white rounded-xl shadow-sm shadow-sm mt-6 flex flex-col min-h-0 overflow-visible">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
@@ -466,7 +466,7 @@
         class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="selectedTask = null"
       >
-        <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] shadow-xl border border-slate-200 flex flex-col overflow-hidden animate-fade-in"
+        <div class="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] shadow-xl border border-slate-200 flex flex-col overflow-hidden animate-fade-in"
         >
         <!-- Header -->
         <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
@@ -778,7 +778,7 @@
         class="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-[10000]"
         @click.self="showCreateBranchModal = false"
       >
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 max-w-md w-full mx-4 animate-fade-in">
+        <div class="bg-white rounded-xl shadow-sm shadow-xl p-6 max-w-md w-full mx-4 animate-fade-in">
         <h3 class="text-xl font-black text-slate-800 mb-5">
           <i class="fab fa-github mr-2"></i>
           Crear rama
@@ -912,7 +912,7 @@
       class="grid grid-cols-1 gap-2 sm:gap-3 md:grid-cols-2 lg:grid-cols-4"
     >
       <!-- Columna Pendiente -->
-      <div class="bg-gradient-to-b from-slate-50/50 to-white border border-slate-200/60 rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
+      <div class="bg-gradient-to-b from-slate-50/50 to-white rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center border border-amber-200 shadow-sm">
             <i class="far fa-clock text-amber-500 text-sm"></i>
@@ -1091,7 +1091,7 @@
       </div>
 
     <!-- Columna En Proceso -->
-    <div class="bg-gradient-to-b from-slate-50/50 to-white border border-slate-200/60 rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
+    <div class="bg-gradient-to-b from-slate-50/50 to-white rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center border border-primary-200">
             <i class="fas fa-play text-primary-500 text-sm"></i>
@@ -1620,7 +1620,7 @@
         
         <!-- Modal -->
         <div class="flex min-h-full items-center justify-center p-4">
-          <div class="relative bg-white dark:bg-[#1e293b] rounded-2xl shadow-xl border border-slate-200 dark:border-[#334155] w-full max-w-md transform transition-all animate-fade-in">
+          <div class="relative bg-white dark:bg-[#1e293b] rounded-xl shadow-xl border border-slate-200 dark:border-[#334155] w-full max-w-md transform transition-all animate-fade-in">
             <!-- Header del modal -->
             <div class="flex items-center justify-between p-6 border-b border-slate-100 dark:border-[#334155] bg-slate-50 dark:bg-[#0f172a] rounded-t-2xl">
               <div class="flex items-center gap-3">
@@ -1781,7 +1781,7 @@
         class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="closeTaskModal"
       >
-        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col pt-0 animate-fade-in relative mt-4 sm:mt-0">
+        <div class="bg-white rounded-xl w-full max-w-2xl shadow-xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col pt-0 animate-fade-in relative mt-4 sm:mt-0">
           <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50 relative z-10 shrink-0">
             <h2 class="text-xl font-black text-slate-800">
               <i class="fas fa-tasks mr-2 text-primary-500"></i>
@@ -2020,7 +2020,7 @@
         class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="showCreateBoardModal = false"
       >
-        <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl border border-slate-200 animate-fade-in relative mt-4 sm:mt-0">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-xl border border-slate-200 animate-fade-in relative mt-4 sm:mt-0">
           <h2 class="text-xl font-black text-slate-800 mb-6">
             <i class="fas fa-layer-group mr-2 text-primary-500"></i>
             Crear Nuevo Tablero
@@ -2132,7 +2132,7 @@
         class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="showSprintsModal = false"
       >
-        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col pt-0 animate-fade-in relative mt-4 sm:mt-0">
+        <div class="bg-white rounded-xl w-full max-w-2xl shadow-xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col pt-0 animate-fade-in relative mt-4 sm:mt-0">
           <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50 relative z-10 shrink-0">
             <h2 class="text-xl font-black text-slate-800">
               <i class="fas fa-running mr-2 text-primary-500"></i>
@@ -2431,7 +2431,7 @@
         class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4"
         @click.self="cancelCascadeDelete"
       >
-        <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl border border-slate-200 animate-fade-in relative mt-4 sm:mt-0">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md shadow-xl border border-slate-200 animate-fade-in relative mt-4 sm:mt-0">
           <!-- Header con icono -->
           <div class="flex flex-col items-center text-center mb-6">
             <div class="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-4 border border-red-100 shadow-sm">
@@ -2533,7 +2533,7 @@
     <Teleport to="body">
       <!-- Vincular Caso -->
       <div v-if="showCaseLinkingModal" class="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-900/60 p-4">
-        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl border border-slate-200 animate-scale-up">
+        <div class="bg-white rounded-xl w-full max-w-md shadow-2xl border border-slate-200 animate-scale-up">
           <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 rounded-t-2xl">
             <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider">Vincular Caso Técnico</h3>
             <button @click="showCaseLinkingModal = false" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
@@ -2572,7 +2572,7 @@
 
       <!-- Vincular Wiki -->
       <div v-if="showWikiLinkingModal" class="fixed inset-0 z-[10000] flex items-center justify-center bg-slate-900/60 p-4">
-        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl border border-slate-200 animate-scale-up">
+        <div class="bg-white rounded-xl w-full max-w-md shadow-2xl border border-slate-200 animate-scale-up">
           <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 rounded-t-2xl">
             <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider">Vincular Documentación</h3>
             <button @click="showWikiLinkingModal = false" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>

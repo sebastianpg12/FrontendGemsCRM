@@ -163,7 +163,7 @@
         <div v-else-if="auditLogs.length === 0" class="text-center py-20 text-slate-400 text-sm">
           <p>No hay registros de auditoría.</p>
         </div>
-        <div v-else class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div v-else class="bg-white dark:bg-slate-900 rounded-xl shadow-sm dark:border-slate-800 overflow-hidden">
           <table class="w-full text-left text-sm">
             <thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
               <tr>

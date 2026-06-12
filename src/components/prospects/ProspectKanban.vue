@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="h-full overflow-x-auto custom-scrollbar bg-white rounded-2xl border border-slate-200 p-4">
+  <div class="h-full overflow-x-auto custom-scrollbar bg-white rounded-xl shadow-sm p-4">
     <div class="flex gap-3 h-full min-w-max">
       <div
         v-for="status in PROSPECT_STATUSES"

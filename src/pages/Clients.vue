@@ -54,7 +54,7 @@
 
     <!-- Main Content Area -->
     <div class="space-y-2 pb-10">
-      <div class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-[400px] relative">
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col min-h-[400px] relative">
         <div v-if="loading" class="flex items-center justify-center absolute inset-0 z-10 bg-white/60 backdrop-blur-[2px]">
           <div class="flex flex-col items-center gap-3">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
@@ -151,7 +151,7 @@
             <div 
               v-for="client in paginatedClients" 
               :key="client._id"
-              class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
+              class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
             >
               <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-50">
                 <div class="flex items-center gap-3">
@@ -211,7 +211,7 @@
        <button 
          @click="currentPage--" 
          :disabled="currentPage === 1"
-         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
+         class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
        >
          <i class="fas fa-chevron-left text-sm"></i>
        </button>
@@ -231,7 +231,7 @@
        <button 
          @click="currentPage++" 
          :disabled="currentPage === totalPages"
-         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
+         class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm shadow-slate-200/50"
        >
          <i class="fas fa-chevron-right text-sm"></i>
        </button>
@@ -257,24 +257,24 @@
           <div class="space-y-6">
             <div class="space-y-2">
               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Nombre Completo</label>
-              <input v-model="form.name" type="text" required placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all" />
+              <input v-model="form.name" type="text" required placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all" />
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div class="space-y-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Correo Electrónico</label>
-                <input v-model="form.email" type="email" required placeholder="correo@ejemplo.com" class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
+                <input v-model="form.email" type="email" required placeholder="correo@ejemplo.com" class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
               </div>
               
               <div class="space-y-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Teléfono</label>
-                <input v-model="form.phone" type="tel" required placeholder="+57 ..." class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
+                <input v-model="form.phone" type="tel" required placeholder="+57 ..." class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
               </div>
             </div>
             
             <div class="space-y-2">
               <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Empresa / Organización</label>
-              <input v-model="form.company" type="text" required placeholder="Nombre de la empresa" class="w-full bg-slate-50 rounded-2xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
+              <input v-model="form.company" type="text" required placeholder="Nombre de la empresa" class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
             </div>
           </div>
           

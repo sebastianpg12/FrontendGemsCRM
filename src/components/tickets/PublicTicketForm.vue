@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden relative transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
+  <div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden relative transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
     <div v-if="!submitted" class="p-6 md:p-10 space-y-8 animate-fade-in">
 
       <!-- Premium Header Context -->

@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="p-5 space-y-4">
     <!-- Propuesta generada -->
-    <div v-if="proposal" class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+    <div v-if="proposal" class="bg-white border border-slate-200 rounded-xl overflow-hidden">
       <button
         class="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors"
         @click="proposalExpanded = !proposalExpanded"
@@ -20,7 +20,7 @@
     </div>
 
     <!-- TL;DR Card -->
-    <div class="bg-gradient-to-br from-primary-50 to-primary-100 border border-primary-100 rounded-2xl p-4">
+    <div class="bg-gradient-to-br from-primary-50 to-primary-100 border border-primary-100 rounded-xl p-4">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2">
           <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center shadow-sm">
@@ -44,7 +44,7 @@
     </div>
 
     <!-- Next Best Action Card -->
-    <div class="bg-gradient-to-br from-emerald-50 to-cyan-50 border border-emerald-100 rounded-2xl p-4">
+    <div class="bg-gradient-to-br from-emerald-50 to-cyan-50 border border-emerald-100 rounded-xl p-4">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2">
           <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 text-white flex items-center justify-center shadow-sm">

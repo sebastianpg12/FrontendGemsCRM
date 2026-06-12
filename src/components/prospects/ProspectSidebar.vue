@@ -1,5 +1,5 @@
 ﻿<template>
-  <aside class="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col h-full">
+  <aside class="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col h-full">
     <!-- Score + Temperatura -->
     <div class="px-5 py-4 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white">
       <div class="flex items-center justify-between mb-2">

@@ -31,7 +31,7 @@
     </div>
 
     <!-- Contenedor Principal (Tabs y Contenido) -->
-    <div v-else class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <div v-else class="bg-white rounded-xl shadow-sm shadow-sm overflow-hidden">
       <!-- Tabs -->
       <div class="flex gap-2 p-3 border-b border-slate-100 bg-slate-50 overflow-x-auto scroll-smooth">
         <button v-for="t in tabs" :key="t.key" @click="activeTab = t.key"

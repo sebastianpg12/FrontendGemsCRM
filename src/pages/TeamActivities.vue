@@ -229,7 +229,7 @@
 
       <!-- Estado vacío -->
       <div v-if="!loading && teamMembersWithActivities.length === 0" class="text-center py-12">
-        <div class="bg-white rounded-2xl p-10 border border-slate-200 shadow-sm max-w-md mx-auto">
+        <div class="bg-white rounded-xl p-10 border border-slate-200 shadow-sm max-w-md mx-auto">
           <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
             <i class="fas fa-users text-2xl text-slate-300"></i>
           </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-3 animate-fade-in animation-delay-2000 relative overflow-hidden group">
+  <div class="bg-white rounded-xl shadow-sm p-3 animate-fade-in animation-delay-2000 relative overflow-hidden group">
     <div class="absolute -top-10 -right-10 w-24 h-24 bg-amber-100 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
     
     <div class="flex flex-col relative z-10">

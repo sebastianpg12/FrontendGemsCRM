@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Header -->
-    <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm transition-all duration-300">
+    <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm transition-all duration-300">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <!-- Profile Avatar -->
         <div class="relative group cursor-pointer" @click="togglePhotoUploader" title="Cambiar foto de perfil">
@@ -62,7 +62,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Personal Information (Left Column) -->
       <div class="lg:col-span-2 space-y-6">
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm h-full">
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm h-full">
           <div class="flex items-center justify-between mb-8">
             <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 flex items-center">
               <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center mr-4">
@@ -242,7 +242,7 @@
 
       <!-- Security / Password (Right Column) -->
       <div class="space-y-6">
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-8 flex items-center">
             <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-shield-alt text-amber-500"></i>
@@ -320,7 +320,7 @@
         </div>
 
         <!-- 2FA Section -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-mobile-screen-button text-indigo-500"></i>
@@ -343,7 +343,7 @@
           </div>
 
           <div v-if="setup2FAData && !profileData.isTwoFactorEnabled" class="space-y-6">
-            <div class="bg-slate-50 dark:bg-[#0f172a] rounded-2xl p-4 text-center">
+            <div class="bg-slate-50 dark:bg-[#0f172a] rounded-xl p-4 text-center">
               <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-4">1. Escanea este código QR</p>
               <img :src="setup2FAData.qrCode" alt="2FA QR Code" class="mx-auto rounded-xl shadow-sm bg-white p-2 mb-4" />
               <p class="text-[10px] text-slate-500 font-bold break-all">O ingresa esta clave manual:<br/><span class="font-mono text-indigo-500">{{ setup2FAData.secret }}</span></p>
@@ -429,7 +429,7 @@
         </div>
 
         <!-- Preferencias -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-sliders text-primary-500"></i>
@@ -494,7 +494,7 @@
         </div>
 
         <!-- Mi actividad -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-slate-200/60 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <div class="w-10 h-10 bg-slate-50 dark:bg-[#0f172a] rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-clock-rotate-left text-slate-500"></i>
@@ -526,7 +526,7 @@
 
     <!-- Modal de foto de perfil (sin blur) -->
     <div v-if="showPhotoUploader" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50" @click.self="showPhotoUploader = false">
-      <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto">
         <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Foto de perfil</h3>
           <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showPhotoUploader = false">

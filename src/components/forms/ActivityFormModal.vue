@@ -1,7 +1,7 @@
 11  |q1|<template>
   <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-[100] animate-in fade-in duration-300" @click="closeOnOutsideClick">
     <div
-      class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-200/60 w-full max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300"
+      class="bg-white rounded-xl shadow-xl w-full max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300"
       :class="isEditingTask ? 'max-w-6xl' : 'max-w-3xl'"
       @click.stop
     >
@@ -118,7 +118,7 @@
                 </div>
                 <div class="space-y-2">
                   <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo Responsable</label>
-                  <div class="bg-slate-50/50 border border-slate-200 rounded-2xl p-3 shadow-inner h-[320px] flex flex-col overflow-hidden">
+                  <div class="bg-slate-50/50 border border-slate-200 rounded-xl p-3 shadow-inner h-[320px] flex flex-col overflow-hidden">
                     <AssignedUsersSelector
                       v-model="form.assignedTo"
                       :teamMembers="teamMembers"
@@ -255,7 +255,7 @@
           <div
             v-for="comment in localComments"
             :key="comment._id"
-            class="bg-white rounded-2xl p-3 shadow-sm group"
+            class="bg-white rounded-xl p-3 shadow-sm group"
           >
             <div class="flex items-center gap-2 mb-1.5">
               <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[9px] font-black shrink-0">

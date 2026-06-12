@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300" @click.self="$emit('close')">
-    <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-200 w-full max-w-md max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
       <!-- Header -->
       <div class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50">
         <div class="flex items-center gap-4">
@@ -51,7 +51,7 @@
           </div>
 
           <!-- Información automática -->
-          <div class="bg-indigo-50/50 rounded-2xl p-5 border border-indigo-100 shadow-inner">
+          <div class="bg-indigo-50/50 rounded-xl p-5 border border-indigo-100 shadow-inner">
             <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-4 flex items-center gap-2">
               <i class="fas fa-magic text-indigo-400"></i>
               Pre-configuración inteligente
