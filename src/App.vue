@@ -7,49 +7,80 @@
   <div v-else class="min-h-screen bg-slate-50 dark:bg-[#0f172a]">
       <!-- Navigation Sidebar -->
       <div
-        class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white dark:bg-[#1e293b] border-r border-slate-100 dark:border-[#334155] transition-all duration-300 ease-in-out lg:translate-x-0"
+        class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white dark:bg-[#0f1117] border-r border-slate-100 dark:border-white/[0.07] transition-all duration-200 ease-in-out lg:translate-x-0"
         :class="[
           !sidebarOpen && !isDesktop ? '-translate-x-full' : 'translate-x-0',
-          isSidebarMini ? 'w-20' : 'w-64'
+          isSidebarMini ? 'w-[56px]' : 'w-[210px]'
         ]"
       >
-        <!-- Top accent gradient line -->
-        <div class="h-[3px] bg-gradient-to-r from-primary-500 via-secondary-400 to-primary-400 shrink-0"></div>
-
         <!-- Toggle Button -->
         <button
           @click="isSidebarMini = !isSidebarMini"
-          class="hidden lg:flex absolute -right-3 top-6 w-6 h-6 bg-white dark:bg-[#1e293b] text-slate-400 rounded-md items-center justify-center shadow-sm border border-slate-100 dark:border-[#334155] z-[60] transition-all hover:text-primary-600 hover:border-primary-200 active:scale-95"
+          class="hidden lg:flex absolute -right-[11px] top-5 w-[22px] h-[22px] bg-white dark:bg-[#1a1d27] text-slate-400 rounded-full items-center justify-center border border-slate-200 dark:border-white/10 z-[60] transition-colors hover:text-primary-500 hover:border-primary-300 dark:hover:border-primary-500/40"
           :class="isSidebarMini ? 'rotate-180' : ''"
         >
-          <i class="fas fa-chevron-left text-[9px]"></i>
+          <i class="fas fa-chevron-left" style="font-size:7px"></i>
         </button>
 
         <!-- Logo + Brand -->
         <div
-          class="flex flex-col items-center justify-center border-b border-slate-50 dark:border-[#334155] shrink-0 overflow-hidden transition-all duration-300"
-          :class="isSidebarMini ? 'py-4 h-16' : 'py-5 h-[88px]'"
+          class="flex items-center shrink-0 overflow-hidden border-b border-slate-100 dark:border-white/[0.07]"
+          :class="isSidebarMini ? 'justify-center h-[52px]' : 'h-[52px] px-4 gap-2.5'"
         >
           <img
             :src="themeStore.config.logo || '/gems-logo.png'"
             alt="GEMS Hub"
-            class="object-contain transition-all duration-300"
-            :class="isSidebarMini ? 'h-8 w-8' : 'h-12 w-auto'"
+            class="object-contain flex-shrink-0 transition-all duration-200"
+            :class="isSidebarMini ? 'h-7 w-7' : 'h-7 w-auto'"
           />
           <span
             v-if="!isSidebarMini"
-            class="mt-1.5 text-[9px] font-black uppercase tracking-[0.25em] text-primary-500 transition-opacity duration-200"
+            class="text-[13px] font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap tracking-tight"
           >
             {{ themeStore.config.brandName }}
           </span>
         </div>
 
-        <!-- User Info -->
+        <!-- Navigation -->
+        <nav class="flex-1 px-2 py-2 overflow-y-auto custom-scrollbar space-y-px">
+          <router-link
+            v-for="module in availableModules"
+            :key="module.id"
+            :to="module.path"
+            :class="[
+              'flex items-center h-9 rounded-md transition-colors duration-150 group relative outline-none',
+              isModuleActive(module.path)
+                ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
+                : 'text-slate-500 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-white/[0.05] hover:text-slate-800 dark:hover:text-slate-200',
+              isSidebarMini ? 'justify-center px-0' : 'px-3'
+            ]"
+            @mouseenter="isSidebarMini && showNavTooltip($event, localeStore.t(module.id))"
+            @mouseleave="hideNavTooltip"
+          >
+            <!-- Active left accent -->
+            <span
+              v-if="isModuleActive(module.path)"
+              class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-primary-500 rounded-r-sm"
+            ></span>
+            <i :class="[
+              module.icon,
+              'shrink-0',
+              !isSidebarMini ? 'mr-2.5' : '',
+              isModuleActive(module.path) ? 'text-primary-500 dark:text-primary-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+            ]" style="font-size:13px"></i>
+            <span
+              v-if="!isSidebarMini"
+              class="text-[12.5px] font-medium truncate whitespace-nowrap"
+            >{{ localeStore.t(module.id) }}</span>
+          </router-link>
+        </nav>
+
+        <!-- User + Logout -->
         <div
-          class="border-b border-slate-50 dark:border-[#334155] shrink-0 transition-all duration-300"
-          :class="isSidebarMini ? 'flex justify-center py-3 px-2' : 'px-4 py-3'"
+          class="border-t border-slate-100 dark:border-white/[0.07] shrink-0"
+          :class="isSidebarMini ? 'flex flex-col items-center gap-2 py-3' : 'px-3 py-3'"
         >
-          <div class="flex items-center gap-2.5 min-w-0">
+          <div v-if="!isSidebarMini" class="flex items-center gap-2 mb-2">
             <UserAvatar
               :name="authStore.user?.name || 'Usuario'"
               :avatar="authStore.user?.avatar"
@@ -57,68 +88,32 @@
               size="sm"
               :clickable="true"
               @click="router.push('/profile')"
-              class="border border-slate-100 dark:border-[#334155] shadow-sm flex-shrink-0"
+              class="border border-slate-100 dark:border-white/10 flex-shrink-0"
             />
-            <div v-if="!isSidebarMini" class="min-w-0 transition-opacity duration-200">
-              <p class="text-[11px] font-black text-slate-800 dark:text-slate-200 truncate leading-tight">{{ authStore.user?.name }}</p>
-              <p class="text-[9px] font-black uppercase tracking-[0.18em] text-primary-400 truncate mt-0.5">{{ getRoleDisplayName(authStore.user?.role) }}</p>
+            <div class="min-w-0 flex-1">
+              <p class="text-[12px] font-semibold text-slate-800 dark:text-slate-200 truncate leading-tight">{{ authStore.user?.name }}</p>
+              <p class="text-[10px] text-slate-400 dark:text-slate-500 truncate">{{ getRoleDisplayName(authStore.user?.role) }}</p>
             </div>
           </div>
-        </div>
-
-        <!-- Navigation -->
-        <nav class="flex-1 px-3 pt-4 pb-2 overflow-y-auto custom-scrollbar space-y-0.5">
-          <router-link
-            v-for="module in availableModules"
-            :key="module.id"
-            :to="module.path"
-            :class="[
-              'flex items-center py-2.5 rounded-xl transition-all duration-150 group relative',
-              isModuleActive(module.path)
-                ? 'bg-primary-50 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 ring-1 ring-primary-100 dark:ring-primary-500/30'
-                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#334155] hover:text-slate-800 dark:hover:text-slate-200',
-              isSidebarMini ? 'justify-center px-0' : 'px-3.5'
-            ]"
-            @mouseenter="isSidebarMini && showNavTooltip($event, localeStore.t(module.id))"
-            @mouseleave="hideNavTooltip"
-          >
-            <!-- Active left bar -->
-            <span
-              v-if="isModuleActive(module.path) && !isSidebarMini"
-              class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary-500 rounded-r-full"
-            ></span>
-            <i :class="[
-              module.icon,
-              'text-[13px] shrink-0 transition-all duration-150 group-hover:scale-110',
-              !isSidebarMini ? 'mr-3' : '',
-              isModuleActive(module.path) ? 'text-primary-500 dark:text-primary-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
-            ]"></i>
-            <span
-              v-if="!isSidebarMini"
-              class="text-[13px] font-black truncate whitespace-nowrap"
-            >{{ localeStore.t(module.id) }}</span>
-            <!-- Active dot for mini mode -->
-            <span
-              v-if="isSidebarMini && isModuleActive(module.path)"
-              class="absolute right-1.5 top-1.5 w-1.5 h-1.5 bg-primary-500 rounded-full"
-            ></span>
-          </router-link>
-        </nav>
-
-        <!-- Logout -->
-        <div
-          class="border-t border-slate-50 dark:border-[#334155] shrink-0 transition-all duration-300"
-          :class="isSidebarMini ? 'flex justify-center p-3' : 'px-4 py-3'"
-        >
+          <UserAvatar
+            v-else
+            :name="authStore.user?.name || 'Usuario'"
+            :avatar="authStore.user?.avatar"
+            :photo="authStore.user?.photo"
+            size="sm"
+            :clickable="true"
+            @click="router.push('/profile')"
+            class="border border-slate-100 dark:border-white/10"
+          />
           <button
             @click="handleLogout"
             :class="[
-              'flex items-center gap-2.5 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all duration-150 group',
-              isSidebarMini ? 'w-10 h-10 justify-center' : 'w-full px-3 py-2.5'
+              'flex items-center gap-2 rounded-md text-slate-400 dark:text-slate-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors',
+              isSidebarMini ? 'w-8 h-8 justify-center' : 'w-full px-2 py-1.5'
             ]"
           >
-            <i class="fas fa-power-off text-[12px] shrink-0 transition-transform group-hover:scale-110"></i>
-            <span v-if="!isSidebarMini" class="text-[10px] font-black uppercase tracking-[0.18em]">{{ localeStore.t('nav.logout') }}</span>
+            <i class="fas fa-power-off" style="font-size:11px;flex-shrink:0"></i>
+            <span v-if="!isSidebarMini" class="text-[12px] font-medium">Salir</span>
           </button>
         </div>
       </div>
@@ -137,8 +132,8 @@
 
       <!-- Main Content -->
       <div 
-        class="flex flex-col h-screen transition-all duration-300 ease-in-out"
-        :class="isSidebarMini ? 'lg:ml-20' : 'lg:ml-64'"
+        class="flex flex-col h-screen transition-all duration-200 ease-in-out"
+        :class="isSidebarMini ? 'lg:ml-[56px]' : 'lg:ml-[210px]'"
       >
         <!-- Main Content Area -->
         <main class="p-4 pb-24 lg:pb-8 flex-1 min-h-0 overflow-y-auto custom-scrollbar dark:bg-[#0f172a]">
@@ -226,7 +221,7 @@ const localeStore = useLocaleStore()
 
 // Reactive data
 const sidebarOpen = ref(true)
-const isSidebarMini = ref(true)
+const isSidebarMini = ref(false)
 const showUserMenu = ref(false)
 const isDesktop = ref(true)
 
