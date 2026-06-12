@@ -1270,7 +1270,7 @@
       </div>
 
     <!-- Columna Completada -->
-    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
+    <div class="bg-gradient-to-b from-emerald-50/40 to-white dark:from-emerald-900/10 dark:to-[#0f172a] rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center border border-emerald-200">
             <i class="fas fa-check text-emerald-500 text-sm"></i>
@@ -1408,7 +1408,7 @@
       </div>
 
     <!-- Columna Vencida -->
-    <div class="bg-red-50 border border-red-200 rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
+    <div class="bg-gradient-to-b from-red-50/50 to-white dark:from-red-900/10 dark:to-[#0f172a] rounded-xl p-3 sm:p-4 w-full snap-start flex flex-col h-full shadow-sm">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center border border-red-200">
             <i class="fas fa-exclamation-triangle text-red-600 text-sm"></i>
