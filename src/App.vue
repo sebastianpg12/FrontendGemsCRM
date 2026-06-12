@@ -24,7 +24,7 @@
 
         <!-- Logo + Brand -->
         <div
-          class="flex items-center shrink-0 overflow-hidden border-b border-slate-100 dark:border-white/[0.07]"
+          class="flex items-center shrink-0 overflow-hidden"
           :class="isSidebarMini ? 'justify-center h-[52px]' : 'h-[52px] px-4 gap-2.5'"
         >
           <img
@@ -77,7 +77,7 @@
 
         <!-- User + Logout -->
         <div
-          class="border-t border-slate-100 dark:border-white/[0.07] shrink-0"
+          class="shrink-0"
           :class="isSidebarMini ? 'flex flex-col items-center gap-2 py-3' : 'px-3 py-3'"
         >
           <div v-if="!isSidebarMini" class="flex items-center gap-2 mb-2">
