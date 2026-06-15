@@ -1,16 +1,16 @@
 ﻿<template>
   <div class="flex flex-col h-full min-h-0 relative">
-    <div class="flex-1 min-h-0 overflow-y-auto space-y-12 p-1 custom-scrollbar">
+    <div class="flex-1 min-h-0 overflow-y-auto space-y-6 sm:space-y-12 p-1 custom-scrollbar">
 
       <!-- Main Content Container -->
-      <div class="space-y-16 mt-6">
+      <div class="space-y-8 sm:space-y-16 mt-3 sm:mt-6">
         
         <!-- Live Tracking Bar (Premium Glassmorphism) -->
         <div v-if="activeSessions.length > 0" class="relative group animate-in slide-in-from-top-4 duration-700">
-          <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-primary-700 rounded-[2.5rem] blur opacity-10 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
-          <div class="relative bg-white/60 backdrop-blur-xl border border-white shadow-2xl shadow-indigo-100/20 rounded-[2rem] p-6 flex items-center justify-between">
-            <div class="flex items-center gap-6">
-              <div class="flex items-center gap-3 px-5 py-2.5 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200 ring-4 ring-indigo-50">
+          <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-primary-700 rounded-xl blur opacity-10 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
+          <div class="relative bg-white/60 backdrop-blur-xl border border-white shadow-2xl shadow-indigo-100/20 rounded-xl p-4 sm:p-6 flex items-center justify-between">
+            <div class="flex items-center gap-3 sm:gap-6">
+              <div class="flex items-center gap-2 sm:gap-3 px-3 py-1.5 sm:px-5 sm:py-2.5 bg-indigo-600 rounded-xl shadow-lg shadow-indigo-200 ring-4 ring-indigo-50 shrink-0">
                 <span class="relative flex h-2.5 w-2.5">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
@@ -24,7 +24,7 @@
                   :key="session.userId + idx"
                   class="relative group/avatar"
                 >
-                  <div class="w-12 h-12 rounded-2xl bg-slate-900 border-2 border-white shadow-xl flex items-center justify-center text-xs font-black text-white overflow-hidden transition-transform group-hover/avatar:-translate-y-1">
+                  <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-slate-900 border-2 border-white shadow-xl flex items-center justify-center text-xs font-black text-white overflow-hidden transition-transform group-hover/avatar:-translate-y-1">
                     <img v-if="session.userPhoto || session.userAvatar" :src="session.userPhoto || session.userAvatar" class="w-full h-full object-cover" />
                     <span v-else>{{ session.userName?.charAt(0) || '?' }}</span>
                   </div>
@@ -56,38 +56,38 @@
         </div>
 
         <!-- Team Resumen Grid (Compact Executive View) -->
-        <section class="space-y-8 pb-12">
-          <div class="flex items-center justify-between bg-white p-6 rounded-[2.5rem] shadow-sm">
-            <div class="flex items-center gap-5">
-              <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-100">
-                <i class="fas fa-users-cog text-xl"></i>
+        <section class="space-y-4 sm:space-y-8 pb-6 sm:pb-12">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white p-4 sm:p-6 rounded-xl shadow-sm gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-500 shrink-0">
+                <i class="fas fa-users-cog text-base sm:text-xl"></i>
               </div>
-              <div class="space-y-0.5">
-                <h2 class="text-2xl font-black text-slate-800 tracking-tight">Evolución del Equipo</h2>
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
+              <div class="space-y-0.5 min-w-0">
+                <h2 class="text-base sm:text-2xl font-black text-slate-800 tracking-tight">Evolución del Equipo</h2>
+                <p class="hidden sm:flex text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] items-center gap-2">
                   Monitoreo de eficiencia operativa
                 </p>
               </div>
             </div>
-            
-            <button @click="openEmailModal" class="flex items-center gap-3 px-5 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl transition-all shadow-lg shadow-indigo-100 font-black text-[10px] uppercase tracking-widest group">
-              <i class="fas fa-paper-plane group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-              Enviar Reporte
+
+            <button @click="openEmailModal" class="flex items-center gap-2 h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all shadow-lg shadow-indigo-100 font-black text-[10px] uppercase tracking-widest group shrink-0 self-start sm:self-auto">
+              <i class="fas fa-paper-plane group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              <span class="hidden sm:inline">Enviar Reporte</span>
             </button>
           </div>
 
-          <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
             <div
               v-for="item in usersWithTasks"
               :key="item.user._id"
-              class="group bg-white rounded-[2.5rem] p-2 flex flex-col shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500"
+              class="group bg-white rounded-xl p-2 flex flex-col shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500"
             >
               <div class="flex flex-col lg:flex-row gap-4 p-4">
                 <!-- User Profile Section -->
                 <div class="lg:w-[240px] flex lg:flex-col justify-between lg:justify-start gap-4">
                   <div class="flex items-center lg:items-start gap-4">
                     <div class="relative shrink-0">
-                      <div class="w-14 h-14 rounded-2xl bg-slate-900 border-4 border-white shadow-xl flex items-center justify-center text-white font-black text-lg overflow-hidden">
+                      <div class="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-slate-900 border-2 border-white shadow-xl flex items-center justify-center text-white font-black text-base sm:text-lg overflow-hidden">
                         <img v-if="item.user.photo || item.user.avatar" :src="item.user.photo || item.user.avatar" class="w-full h-full object-cover" />
                         <span v-else>{{ item.user.name.charAt(0) }}</span>
                       </div>
@@ -152,7 +152,7 @@
               </div>
 
               <!-- Footer Stats Row -->
-              <div class="flex items-center justify-between px-6 py-3 bg-slate-50/50 border-t border-slate-100 rounded-b-[2.5rem]">
+              <div class="flex items-center justify-between px-4 py-3 bg-slate-50/50 border-t border-slate-100 rounded-b-xl">
                 <div class="flex items-center gap-6">
                   <div class="flex flex-col">
                     <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Actividad</span>
@@ -176,47 +176,47 @@
     <!-- Modal de Envío de Reporte (Premium Redesign) -->
     <Teleport to="body">
       <div v-if="showEmailModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/50 p-4 animate-in fade-in duration-500">
-        <div class="bg-white rounded-[3rem] p-10 w-full max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] border border-slate-200 relative overflow-hidden animate-in zoom-in-95 duration-500">
+        <div class="bg-white rounded-xl p-6 sm:p-10 w-full max-w-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] border border-slate-200 relative overflow-hidden animate-in zoom-in-95 duration-500">
           <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-primary-700"></div>
-          
-          <div class="text-center space-y-6 mb-10">
-            <div class="w-20 h-20 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto border border-indigo-100 shadow-xl shadow-indigo-100/50">
-              <i class="fas fa-paper-plane text-indigo-600 text-3xl"></i>
+
+          <div class="text-center space-y-4 mb-6 sm:mb-10">
+            <div class="w-16 h-16 bg-indigo-50 rounded-xl flex items-center justify-center mx-auto border border-indigo-100 shadow-xl shadow-indigo-100/50">
+              <i class="fas fa-paper-plane text-indigo-600 text-2xl"></i>
             </div>
             <div class="space-y-2">
-              <h3 class="text-2xl font-black text-slate-800 tracking-tight">Despachar Reporte</h3>
+              <h3 class="text-lg sm:text-2xl font-black text-slate-800 tracking-tight">Despachar Reporte</h3>
               <p class="text-xs font-medium text-slate-500 leading-relaxed max-w-[280px] mx-auto">
                 Se enviará un sumario ejecutivo con el progreso, eficiencia y métricas clave de todo el equipo asignado.
               </p>
             </div>
           </div>
           
-          <div class="space-y-8">
+          <div class="space-y-5">
             <div class="group">
-              <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 ml-2 group-focus-within:text-indigo-600 transition-colors">Destinatario Principal</label>
+              <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1 group-focus-within:text-indigo-600 transition-colors">Destinatario Principal</label>
               <div class="relative">
-                <i class="fas fa-envelope absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-400 transition-colors"></i>
-                <input 
-                  v-model="reportEmail" 
-                  type="email" 
+                <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-400 transition-colors"></i>
+                <input
+                  v-model="reportEmail"
+                  type="email"
                   placeholder="admin@gemsinnovations.com"
-                  class="w-full pl-14 pr-8 py-5 bg-slate-50 border border-slate-200 rounded-3xl text-slate-800 text-sm font-bold focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 outline-none transition-all placeholder:text-slate-300 shadow-inner"
+                  class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-bold focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 outline-none transition-all placeholder:text-slate-300"
                 />
               </div>
             </div>
-            
-            <div class="flex gap-4">
-              <button @click="showEmailModal = false" class="flex-1 px-6 py-5 bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-[1.5rem] text-[11px] font-black uppercase tracking-widest transition-all">
+
+            <div class="flex gap-3">
+              <button @click="showEmailModal = false" class="flex-1 h-9 px-4 bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all border border-slate-200">
                 Cancelar
               </button>
-              <button 
-                @click="confirmSendReport" 
+              <button
+                @click="confirmSendReport"
                 :disabled="sendingEmail || !reportEmail"
-                class="flex-[1.5] px-6 py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-[1.5rem] text-[11px] font-black uppercase tracking-widest transition-all shadow-2xl shadow-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 active:scale-95"
+                class="flex-[1.5] h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[11px] font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-95"
               >
-                <div v-if="sendingEmail" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                <div v-if="sendingEmail" class="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                 <i v-else class="fas fa-paper-plane text-xs"></i>
-                {{ sendingEmail ? 'Procesando...' : 'Confirmar Envío' }}
+                {{ sendingEmail ? 'Procesando...' : 'Confirmar' }}
               </button>
             </div>
           </div>

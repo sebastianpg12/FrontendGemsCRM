@@ -71,9 +71,10 @@
     </Transition>
 
     <!-- ══ Stat cards — minimalista ═══════════════════════════════════ -->
-    <div class="grid gap-1.5" :style="`grid-template-columns: repeat(${statCards.length}, minmax(0, 1fr))`">
+    <div class="overflow-x-auto -mx-0 pb-0.5">
+    <div class="grid gap-1.5 min-w-0" :style="`grid-template-columns: repeat(${statCards.length}, minmax(72px, 1fr))`">
       <div v-for="card in statCards" :key="card.label"
-        class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-2.5 px-3 flex flex-col items-center justify-center text-center group cursor-default transition-all duration-150">
+        class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-2.5 px-2 sm:px-3 flex flex-col items-center justify-center text-center group cursor-default transition-all duration-150 min-w-0">
         <!-- Number -->
         <span class="text-[20px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
         <!-- Label -->
@@ -81,6 +82,7 @@
         <!-- Tag -->
         <span class="text-[9px] font-bold text-slate-400 mt-0.5">{{ card.tag }}</span>
       </div>
+    </div>
     </div>
 
     <!-- ══ Main grid ═════════════════════════════════════════════════════ -->

@@ -1,7 +1,7 @@
 ﻿<template>
-  <div class="min-h-screen bg-[#F8FAFC] dark:bg-[#0f172a] p-8 pb-24 font-['Inter',sans-serif]">
+  <div class="min-h-screen bg-[#F8FAFC] dark:bg-[#0f172a] p-4 sm:p-8 pb-16 sm:pb-24 font-['Inter',sans-serif]">
     <!-- Top Controls & Departments (Minimalist) -->
-    <div class="flex flex-col gap-6 mb-8">
+    <div class="flex flex-col gap-3 sm:gap-6 mb-4 sm:mb-8">
       <!-- Departments Mini-Overview -->
       <div class="flex flex-wrap items-center gap-3">
         <div

@@ -3,51 +3,52 @@
     <div class="flex-1 min-h-0 overflow-y-auto">
       
       <!-- Header -->
-      <div class="mb-6 space-y-4">
+      <div class="mb-4 space-y-3">
         <!-- Top Row: View Mode & Export Button -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div class="flex items-center gap-4">
-            <h1 class="text-xl font-black text-slate-800 mr-2">Actividades del Equipo</h1>
-            <div class="flex bg-slate-100 rounded-lg p-1 border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3 flex-wrap">
+            <h1 class="text-lg sm:text-xl font-black text-slate-800">Actividades del Equipo</h1>
+            <div class="flex bg-slate-100 rounded-xl p-1 shadow-sm">
               <button
                 @click="viewMode = 'cards'"
                 :class="[
-                  'px-4 py-1.5 rounded-md text-sm font-bold transition-all',
+                  'px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5',
                   viewMode === 'cards' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
                 ]"
               >
-                <i class="fas fa-th-large mr-2"></i>Tarjetas
+                <i class="fas fa-th-large text-[10px]"></i><span class="hidden sm:inline">Tarjetas</span>
               </button>
               <button
                 @click="viewMode = 'table'"
                 :class="[
-                  'px-4 py-1.5 rounded-md text-sm font-bold transition-all',
+                  'px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5',
                   viewMode === 'table' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
                 ]"
               >
-                <i class="fas fa-table mr-2"></i>Tabla
+                <i class="fas fa-table text-[10px]"></i><span class="hidden sm:inline">Tabla</span>
               </button>
             </div>
           </div>
 
-          <button 
+          <button
             @click="copySummary"
-            class="flex items-center justify-center gap-3 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all font-black text-sm shadow-lg shadow-emerald-200/50 group"
+            class="flex items-center justify-center gap-2 h-9 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all font-black text-xs shadow-lg shadow-emerald-200/50 group self-start sm:self-auto"
           >
-            <i class="fas fa-file-export group-hover:translate-x-1 transition-transform"></i>
-            COPIAR RESUMEN
+            <i class="fas fa-file-export group-hover:translate-x-0.5 transition-transform"></i>
+            <span class="hidden sm:inline">COPIAR RESUMEN</span>
+            <span class="sm:hidden">COPIAR</span>
           </button>
         </div>
 
         <!-- Bottom Row: Filters -->
-        <div class="flex flex-wrap items-center gap-3 bg-slate-50/50 p-3 rounded-xl">
+        <div class="flex flex-wrap items-center gap-2 bg-slate-50/50 p-3 rounded-xl">
           <div class="flex items-center gap-2">
             <i class="fas fa-filter text-slate-400 text-xs ml-1"></i>
             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Filtros:</span>
           </div>
 
           <!-- Filtro de Cliente -->
-          <div class="min-w-[200px]">
+          <div class="w-full sm:min-w-[200px] sm:w-auto">
             <CustomSelect
               v-model="selectedClient"
               searchable
@@ -59,7 +60,7 @@
           </div>
 
           <!-- Filtros de fecha -->
-          <div class="flex items-center gap-2 bg-white rounded-lg p-1 border border-slate-200 shadow-sm">
+          <div class="flex items-center gap-2 bg-white rounded-xl p-1 shadow-sm overflow-x-auto">
             <div class="flex items-center gap-1.5 px-2">
               <span class="text-[10px] font-black text-slate-400 uppercase">Desde</span>
               <input type="date" v-model="startDate" class="text-xs border-none focus:ring-0 p-0 text-slate-600 font-bold bg-transparent" />
