@@ -58,7 +58,7 @@
         </div>
         <h1 class="text-white text-2xl font-black tracking-tight leading-none mb-1"
           :style="`background: linear-gradient(135deg, var(--brand-accent), rgba(${accentRgb},0.65)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`">
-          {{ brandName }}
+          GEMS HUB PORTAL
         </h1>
         <p class="text-white/30 text-[9px] font-black uppercase tracking-[0.45em]">Galactic Intelligence Suite</p>
       </div>
@@ -177,6 +177,12 @@
             </p>
           </div>
 
+          <!-- Encrypted connection indicator -->
+          <div class="flex items-center justify-center gap-1.5 py-1">
+            <i class="fas fa-lock text-emerald-400/60 text-[10px]"></i>
+            <span class="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400/60">Conexión Encriptada y Segura</span>
+          </div>
+
           <!-- Submit button -->
           <button
             type="submit"
@@ -189,6 +195,12 @@
               Acceder al Sistema
             </template>
           </button>
+
+          <!-- Register link -->
+          <div class="text-center pt-1">
+            <span class="text-[11px] text-white/25">¿No tienes cuenta? </span>
+            <button type="button" class="text-[11px] font-bold text-primary-400/80 hover:text-primary-300 transition-colors">Regístrate</button>
+          </div>
 
         </form>
 
@@ -502,12 +514,13 @@ onMounted(async () => {
 /* ── Glass inputs ── */
 .login-input {
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(var(--brand-accent-rgb), 0.18);
+  box-shadow: 0 0 14px -4px rgba(var(--brand-accent-rgb), 0.12), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 .login-input:focus {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(var(--brand-accent-rgb), 0.5);
-  box-shadow: 0 0 0 3px rgba(var(--brand-accent-rgb), 0.12), 0 0 20px -4px rgba(var(--brand-accent-rgb), 0.2);
+  box-shadow: 0 0 0 3px rgba(var(--brand-accent-rgb), 0.12), 0 0 24px -4px rgba(var(--brand-accent-rgb), 0.3);
 }
 
 /* ── Primary button ── */
