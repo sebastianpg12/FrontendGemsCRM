@@ -129,7 +129,7 @@
       <!-- Step 4: Done -->
       <div v-else-if="step === 'done'" class="flex-1 flex items-center justify-center p-12">
         <div class="text-center max-w-sm">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 mx-auto mb-3 flex items-center justify-center">
+          <div class="w-14 h-14 rounded-xl bg-emerald-100 text-emerald-600 mx-auto mb-3 flex items-center justify-center">
             <i class="fas fa-check text-xl"></i>
           </div>
           <p class="text-sm font-black text-slate-800 mb-1">{{ importedCount }} prospectos importados</p>

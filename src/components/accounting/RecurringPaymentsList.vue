@@ -32,7 +32,7 @@
       <div
         v-for="payment in payments"
         :key="payment._id"
-        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-500/20 hover:border-primary-400"
+        class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-500/20 hover:border-primary-400"
       >
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <!-- Payment Info -->

@@ -72,7 +72,7 @@
       </div>
 
       <div v-else-if="!filtered.length" class="p-8 text-center">
-        <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mx-auto mb-3">
+        <div class="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center mx-auto mb-3">
           <i class="fas fa-inbox text-slate-300 text-xl"></i>
         </div>
         <p class="text-xs font-bold text-slate-500 mb-1">

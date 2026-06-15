@@ -16,7 +16,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 border border-primary-500/20">
+    <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 mb-6 border border-primary-500/20">
       <div class="flex flex-col sm:flex-row gap-4">
         <div class="flex-1">
           <input
@@ -59,7 +59,7 @@
       <div
         v-for="transaction in filteredTransactions"
         :key="transaction._id"
-        class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-500/20 hover:border-primary-400"
+        class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-500/20 hover:border-primary-400"
       >
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <!-- Transaction Info -->

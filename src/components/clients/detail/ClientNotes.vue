@@ -52,7 +52,7 @@
     <div v-if="noteToDelete" class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50" @click="noteToDelete = null"></div>
       <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 text-center animate-fade-in">
-        <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <div class="w-14 h-14 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-4">
           <i class="fas fa-trash text-red-500 text-xl"></i>
         </div>
         <h4 class="text-base font-black text-slate-900 mb-1">¿Eliminar nota?</h4>
