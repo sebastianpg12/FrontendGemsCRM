@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="h-[100dvh] max-h-[100dvh] bg-transparent text-white">
     <div class="h-[100dvh] p-4 sm:p-6">
-      <div class="grid grid-cols-1 lg:grid-cols-[320px,1fr] h-full rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-[320px,1fr] h-full rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm overflow-hidden">
       <!-- Sidebar (desktop) -->
   <aside class="hidden lg:flex flex-col border-r border-white/10 bg-white/5 backdrop-blur-sm">
         <div class="px-4 py-3 border-b border-white/10">

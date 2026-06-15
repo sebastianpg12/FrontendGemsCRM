@@ -11,16 +11,17 @@
           <p class="text-slate-500 font-medium text-sm mt-0.5">{{ client?.company || 'Sin Empresa' }}</p>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <router-link to="/clients" class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-sm">
-          <i class="fas fa-arrow-left mr-2"></i> Volver
+      <div class="flex flex-wrap items-center gap-2">
+        <router-link to="/clients" class="h-9 px-4 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-1.5">
+          <i class="fas fa-arrow-left text-[10px]"></i> Volver
         </router-link>
-        <button @click="editOverview = !editOverview" class="px-5 py-2.5 text-sm font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors shadow-sm">
-          <i :class="editOverview ? 'fas fa-times' : 'fas fa-edit'" class="mr-2"></i>
-          {{ editOverview ? 'Cancelar Edición' : 'Editar Cliente' }}
+        <button @click="editOverview = !editOverview" class="h-9 px-4 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-xl hover:bg-amber-100 transition-colors shadow-sm flex items-center gap-1.5">
+          <i :class="editOverview ? 'fas fa-times' : 'fas fa-edit'" class="text-[10px]"></i>
+          <span class="hidden sm:inline">{{ editOverview ? 'Cancelar' : 'Editar Cliente' }}</span>
+          <span class="sm:hidden">{{ editOverview ? 'Cancelar' : 'Editar' }}</span>
         </button>
-        <button v-if="editOverview" @click="handleSave" class="px-5 py-2.5 text-sm font-bold text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 transition-colors shadow-sm">
-          <i class="fas fa-save mr-2"></i> Guardar Cambios
+        <button v-if="editOverview" @click="handleSave" class="h-9 px-4 text-xs font-bold text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 transition-colors shadow-sm flex items-center gap-1.5">
+          <i class="fas fa-save text-[10px]"></i> Guardar
         </button>
       </div>
     </div>
@@ -46,7 +47,7 @@
       </div>
 
       <!-- Contenido de las Tabs -->
-      <div class="p-6 md:p-8">
+      <div class="p-4 md:p-6">
         <ClientOverview v-if="activeTab === 'overview'" :editOverview="editOverview" />
         <ClientServices v-else-if="activeTab === 'services'" />
         <ClientCommitments v-else-if="activeTab === 'commitments'" />

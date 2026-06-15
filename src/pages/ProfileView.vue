@@ -1,16 +1,16 @@
 <template>
   <div class="space-y-6">
     <!-- Header -->
-    <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm transition-all duration-300">
-      <div class="flex flex-col md:flex-row items-center gap-8">
+    <div class="bg-white dark:bg-[#1e293b] rounded-xl p-4 sm:p-8 dark:border-[#334155] shadow-sm transition-all duration-300">
+      <div class="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
         <!-- Profile Avatar -->
-        <div class="relative group cursor-pointer" @click="togglePhotoUploader" title="Cambiar foto de perfil">
+        <div class="relative group cursor-pointer shrink-0" @click="togglePhotoUploader" title="Cambiar foto de perfil">
           <UserAvatar
             :name="profileData?.name || 'U'"
             :photo="profileData?.photo || undefined"
             :avatar="profileData?.avatar || undefined"
             size="2xl"
-            class="w-44 h-44 !rounded-full border-4 border-white dark:border-[#1e293b] shadow-xl ring-4 ring-primary-100/50 dark:ring-primary-500/20"
+            class="w-28 h-28 sm:w-44 sm:h-44 !rounded-full border-4 border-white dark:border-[#1e293b] shadow-xl ring-4 ring-primary-100/50 dark:ring-primary-500/20"
           />
           <!-- Overlay de cámara -->
           <div class="absolute inset-0 rounded-full bg-slate-900/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -22,7 +22,7 @@
         <!-- Basic Info -->
         <div class="text-center md:text-left flex-1">
           <div class="flex flex-col md:flex-row md:items-center gap-2 mb-2">
-            <h1 class="text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{{ profileData?.name || 'Cargando...' }}</h1>
+            <h1 class="text-xl sm:text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{{ profileData?.name || 'Cargando...' }}</h1>
             <span class="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-black uppercase tracking-widest border border-primary-100/50">
               {{ getRoleDisplayName(profileData?.role || '') }}
             </span>
@@ -30,11 +30,11 @@
           <p class="text-slate-500 font-medium mb-4">{{ profileData?.email || '' }}</p>
           
           <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-            <span class="inline-flex items-center px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-2xl text-xs font-bold border border-emerald-100">
+            <span class="inline-flex items-center px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-bold border border-emerald-100">
               <i class="fas fa-check-circle mr-2"></i>
               Activo
             </span>
-            <span class="inline-flex items-center px-4 py-1.5 bg-slate-50 text-slate-600 rounded-2xl text-xs font-bold">
+            <span class="inline-flex items-center px-4 py-1.5 bg-slate-50 text-slate-600 rounded-xl text-xs font-bold">
               <i class="fas fa-calendar-alt mr-2"></i>
               Miembro desde {{ formatDate(profileData?.createdAt || '') }}
             </span>
@@ -46,7 +46,7 @@
           <button
             @click="toggleEditMode"
             :class="[
-              'px-8 py-3.5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-300 shadow-sm',
+              'h-9 px-5 rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 shadow-sm',
               isEditing 
                 ? 'bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-100' 
                 : 'bg-primary-500 text-white hover:bg-primary-600 shadow-primary-200 shadow-lg hover:-translate-y-0.5'
@@ -62,8 +62,8 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Personal Information (Left Column) -->
       <div class="lg:col-span-2 space-y-6">
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm h-full">
-          <div class="flex items-center justify-between mb-8">
+        <div class="bg-white dark:bg-[#1e293b] rounded-xl p-4 sm:p-8 dark:border-[#334155] shadow-sm h-full">
+          <div class="flex items-center justify-between mb-4 sm:mb-8">
             <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 flex items-center">
               <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center mr-4">
                 <i class="fas fa-id-card text-primary-500"></i>
@@ -83,11 +83,11 @@
                 <input
                   v-model="editForm.name"
                   type="text"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="Tu nombre completo"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.name || 'No especificado' }}</p>
               </div>
             </div>
@@ -102,11 +102,11 @@
                 <input
                   v-model="editForm.email"
                   type="email"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="tu@email.com"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.email || 'No especificado' }}</p>
               </div>
             </div>
@@ -121,11 +121,11 @@
                 <input
                   v-model="editForm.phone"
                   type="tel"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="+57 300 000 0000"
                 />
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.phone || 'No especificado' }}</p>
               </div>
             </div>
@@ -144,14 +144,14 @@
                     @keydown.escape="profileAddingDept = false; profileNewDept = ''"
                     autofocus
                     placeholder="Nombre del departamento..."
-                    class="flex-1 pl-4 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-primary-200 dark:border-primary-500/40 rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 transition-all outline-none"
+                    class="flex-1 pl-4 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-primary-200 dark:border-primary-500/40 rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 transition-all outline-none"
                   />
                   <button type="button" @click="confirmProfileDept" :disabled="!profileNewDept.trim()"
-                    class="px-4 bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white rounded-2xl text-xs font-black transition-all">
+                    class="px-4 bg-primary-500 hover:bg-primary-600 disabled:opacity-40 text-white rounded-xl text-xs font-black transition-all">
                     <i class="fas fa-check"></i>
                   </button>
                   <button type="button" @click="profileAddingDept = false; profileNewDept = ''"
-                    class="px-4 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 text-slate-500 rounded-2xl text-xs font-black transition-all">
+                    class="px-4 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 text-slate-500 rounded-xl text-xs font-black transition-all">
                     <i class="fas fa-xmark"></i>
                   </button>
                 </div>
@@ -160,7 +160,7 @@
                   <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors z-10 pointer-events-none"></i>
                   <select
                     v-model="editForm.department"
-                    class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none appearance-none"
+                    class="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none appearance-none"
                   >
                     <option value="">Sin departamento</option>
                     <option v-for="dept in allProfileDepartments" :key="dept" :value="dept">{{ dept }}</option>
@@ -173,7 +173,7 @@
                   </button>
                 </div>
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ profileData?.department || 'No especificado' }}</p>
               </div>
             </div>
@@ -187,12 +187,12 @@
                 <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors z-10 pointer-events-none"></i>
                 <select
                   v-model="editForm.timezone"
-                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none appearance-none"
+                  class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none appearance-none"
                 >
                   <option v-for="tz in TIMEZONES" :key="tz.value" :value="tz.value">{{ tz.label }}</option>
                 </select>
               </div>
-              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-2xl">
+              <div v-else class="px-5 py-4 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
                 <p class="text-slate-700 dark:text-slate-200 font-bold">{{ timezoneLabel }}</p>
               </div>
             </div>
@@ -231,7 +231,7 @@
             <button
               @click="updateProfile"
               :disabled="loading"
-              class="px-8 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-primary-200 disabled:opacity-50"
+              class="px-8 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-primary-200 disabled:opacity-50"
             >
               <i class="fas fa-save mr-2"></i>
               {{ loading ? 'Guardando...' : 'Guardar Cambios' }}
@@ -242,7 +242,7 @@
 
       <!-- Security / Password (Right Column) -->
       <div class="space-y-6">
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-8 flex items-center">
             <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-shield-alt text-amber-500"></i>
@@ -259,7 +259,7 @@
                 <input
                   v-model="passwordForm.currentPassword"
                   :type="showPwd.current ? 'text' : 'password'"
-                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="••••••••"
                   required
                 />
@@ -277,7 +277,7 @@
                 <input
                   v-model="passwordForm.newPassword"
                   :type="showPwd.new ? 'text' : 'password'"
-                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="••••••••"
                   required
                 />
@@ -295,7 +295,7 @@
                 <input
                   v-model="passwordForm.confirmPassword"
                   :type="showPwd.confirm ? 'text' : 'password'"
-                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-4 pr-12 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-slate-200 font-bold focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition-all outline-none"
                   placeholder="••••••••"
                   required
                 />
@@ -311,7 +311,7 @@
             <button
               type="submit"
               :disabled="loading || !passwordForm.currentPassword || !passwordForm.newPassword || passwordForm.newPassword !== passwordForm.confirmPassword"
-              class="w-full mt-4 px-6 py-4 bg-slate-800 hover:bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
+              class="w-full mt-4 px-6 py-4 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
             >
               <i class="fas fa-key mr-2"></i>
               {{ loading ? 'Actualizando...' : 'Actualizar Contraseña' }}
@@ -320,7 +320,7 @@
         </div>
 
         <!-- 2FA Section -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-mobile-screen-button text-indigo-500"></i>
@@ -335,7 +335,7 @@
             <button
               @click="init2FASetup"
               :disabled="loading"
-              class="w-full px-6 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
+              class="w-full px-6 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
             >
               <i class="fas fa-shield-halved mr-2"></i>
               Configurar 2FA
@@ -358,21 +358,21 @@
                 type="text"
                 maxlength="6"
                 placeholder="000000"
-                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-center text-2xl font-mono tracking-[0.5em] text-slate-700 dark:text-slate-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 transition-all outline-none"
+                class="w-full px-4 py-3.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-center text-2xl font-mono tracking-[0.5em] text-slate-700 dark:text-slate-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400 transition-all outline-none"
               />
             </div>
             
             <div class="flex gap-3">
               <button
                 @click="setup2FAData = null; twoFactorCode = ''"
-                class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-black text-xs uppercase tracking-widest transition-all"
+                class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-black text-xs uppercase tracking-widest transition-all"
               >
                 Cancelar
               </button>
               <button
                 @click="confirm2FA"
                 :disabled="loading || twoFactorCode.length !== 6"
-                class="flex-1 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
+                class="flex-1 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
               >
                 Activar
               </button>
@@ -380,7 +380,7 @@
           </div>
 
           <div v-if="profileData.isTwoFactorEnabled" class="space-y-4">
-            <div class="flex items-center gap-3 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+            <div class="flex items-center gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
               <i class="fas fa-shield-check text-emerald-500 text-xl"></i>
               <div>
                 <p class="text-sm font-bold text-emerald-800">2FA Activado</p>
@@ -391,7 +391,7 @@
             <div v-if="!showDisable2FAForm" class="pt-2">
                <button
                  @click="showDisable2FAForm = true"
-                 class="w-full px-6 py-3.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all"
+                 class="w-full px-6 py-3.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all"
                >
                  Desactivar 2FA
                </button>
@@ -406,20 +406,20 @@
                   v-model="disable2FAPassword"
                   type="password"
                   placeholder="••••••••"
-                  class="w-full px-4 py-3.5 bg-rose-50/30 border border-rose-200 rounded-2xl text-slate-700 focus:ring-4 focus:ring-rose-100 transition-all outline-none"
+                  class="w-full px-4 py-3.5 bg-rose-50/30 border border-rose-200 rounded-xl text-slate-700 focus:ring-4 focus:ring-rose-100 transition-all outline-none"
                 />
               </div>
               <div class="flex gap-3">
                 <button
                   @click="showDisable2FAForm = false; disable2FAPassword = ''"
-                  class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all"
+                  class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all"
                 >
                   Cancelar
                 </button>
                 <button
                   @click="disable2FA"
                   :disabled="loading || !disable2FAPassword"
-                  class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all disabled:opacity-50"
+                  class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all disabled:opacity-50"
                 >
                   Confirmar Desactivación
                 </button>
@@ -429,7 +429,7 @@
         </div>
 
         <!-- Preferencias -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-sliders text-primary-500"></i>
@@ -485,7 +485,7 @@
             <button
               @click="savePreferences"
               :disabled="savingPrefs"
-              class="w-full mt-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-primary-200 disabled:opacity-50"
+              class="w-full mt-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-primary-200 disabled:opacity-50"
             >
               <i class="fas mr-2" :class="savingPrefs ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
               {{ savingPrefs ? 'Guardando...' : 'Guardar preferencias' }}
@@ -494,7 +494,7 @@
         </div>
 
         <!-- Mi actividad -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-3xl p-8 dark:border-[#334155] shadow-sm">
+        <div class="bg-white dark:bg-[#1e293b] rounded-xl p-8 dark:border-[#334155] shadow-sm">
           <h2 class="text-xl font-black text-slate-800 dark:text-slate-100 mb-6 flex items-center">
             <div class="w-10 h-10 bg-slate-50 dark:bg-[#0f172a] rounded-xl flex items-center justify-center mr-4">
               <i class="fas fa-clock-rotate-left text-slate-500"></i>
@@ -505,7 +505,7 @@
             <div
               v-for="(entry, idx) in profileData.loginHistory"
               :key="idx"
-              class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#0f172a]"
+              class="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-[#0f172a]"
             >
               <div class="w-8 h-8 rounded-lg bg-white dark:bg-[#1e293b] flex items-center justify-center text-slate-400 shrink-0">
                 <i class="fas fa-right-to-bracket text-[11px]"></i>

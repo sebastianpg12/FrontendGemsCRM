@@ -56,8 +56,8 @@
       </div>
 
       <!-- Filters Panel -->
-      <div v-if="showFilters" class="mt-4 p-4 bg-gray-50 rounded-lg">
-        <div class="grid grid-cols-4 gap-4">
+      <div v-if="showFilters" class="mt-4 p-4 bg-slate-50 rounded-xl">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
             <select v-model="filters.type" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
