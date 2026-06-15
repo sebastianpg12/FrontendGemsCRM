@@ -13,6 +13,9 @@
     <!-- ── Subtle grid overlay ── -->
     <div class="absolute inset-0 pointer-events-none" :style="`background-image: linear-gradient(rgba(${accentRgb},0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(${accentRgb},0.03) 1px, transparent 1px); background-size: 48px 48px;`"></div>
 
+    <!-- ── Scanlines cyberpunk ── -->
+    <div class="absolute inset-0 pointer-events-none scanlines"></div>
+
     <!-- ── Star field ── -->
     <div
       v-for="star in stars"
@@ -52,16 +55,24 @@
       <!-- Logo + brand header (above card) -->
       <div class="flex flex-col items-center mb-8">
         <div class="relative mb-4">
+          <!-- Pulse rings -->
+          <div class="pulse-ring" style="width:88px;height:88px;"></div>
+          <div class="pulse-ring" style="width:88px;height:88px;animation-delay:1.3s;"></div>
           <div class="absolute inset-0 blur-2xl opacity-60 scale-110"
             :style="`background: radial-gradient(circle, rgba(${accentRgb},0.9) 0%, transparent 70%);`"></div>
           <img :src="themeLogo" :alt="brandName" class="relative h-16 w-auto drop-shadow-2xl" />
         </div>
-        <h1 class="text-white text-2xl font-black tracking-tight leading-none mb-1"
+        <h1 class="neon-title text-white text-2xl font-black tracking-tight leading-none mb-1"
           :style="`background: linear-gradient(135deg, var(--brand-accent), rgba(${accentRgb},0.65)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`">
           GEMS HUB PORTAL
         </h1>
         <p class="text-white/30 text-[9px] font-black uppercase tracking-[0.45em]">Galactic Intelligence Suite</p>
       </div>
+
+      <!-- Glass card wrapper con borde giratorio -->
+      <div class="card-glow-wrapper">
+        <div class="border-spin" aria-hidden="true"></div>
+        <div class="border-blur" aria-hidden="true"></div>
 
       <!-- Glass card -->
       <div class="login-card rounded-[2rem] p-8 sm:p-10 relative overflow-hidden">
@@ -249,6 +260,7 @@
           <i class="fas fa-gem text-primary-500/30 text-[7px]"></i>
         </div>
       </div>
+      </div><!-- /card-glow-wrapper -->
     </div>
 
     <!-- ── Modal: Forgot Password ── -->
@@ -498,39 +510,149 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+/* ── Scanlines cyberpunk ── */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.08) 3px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+}
+
+/* ── Card glow wrapper: borde giratorio ── */
+.card-glow-wrapper {
+  position: relative;
+  border-radius: 2.25rem;
+  padding: 1.5px;
+}
+
+.border-spin,
+.border-blur {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 55deg,
+    rgba(var(--brand-accent-rgb), 0.25) 75deg,
+    rgba(var(--brand-accent-rgb), 1)    90deg,
+    rgba(var(--brand-accent-rgb), 0.25) 105deg,
+    transparent 130deg,
+    transparent 230deg,
+    rgba(var(--brand-accent-rgb), 0.6)  270deg,
+    transparent 315deg,
+    transparent 360deg
+  );
+  animation: borderSpin 4s linear infinite;
+  z-index: 0;
+}
+
+.border-blur {
+  inset: -5px;
+  filter: blur(14px);
+  opacity: 0.75;
+}
+
+@keyframes borderSpin {
+  to { transform: rotate(360deg); }
+}
+
 /* ── Glass card ── */
 .login-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  position: relative;
+  z-index: 1;
+  background: rgba(4, 6, 13, 0.93);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   box-shadow:
-    0 0 0 1px rgba(var(--brand-accent-rgb), 0.06),
-    0 32px 64px -16px rgba(0, 0, 0, 0.6),
-    0 0 80px -20px rgba(var(--brand-accent-rgb), 0.15),
+    0 32px 64px -16px rgba(0, 0, 0, 0.8),
+    0 0 60px -20px rgba(var(--brand-accent-rgb), 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* ── Neon title pulse ── */
+.neon-title {
+  animation: neonPulse 3s ease-in-out infinite alternate;
+}
+@keyframes neonPulse {
+  from { filter: drop-shadow(0 0 6px  rgba(var(--brand-accent-rgb), 0.5)); }
+  to   { filter: drop-shadow(0 0 20px rgba(var(--brand-accent-rgb), 1))
+                 drop-shadow(0 0 40px rgba(var(--brand-accent-rgb), 0.4)); }
+}
+
+/* ── Pulse rings (logo) ── */
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--brand-accent-rgb), 0.45);
+  animation: pulseRingOut 2.6s ease-out infinite;
+  transform-origin: center;
+}
+@keyframes pulseRingOut {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(3);   opacity: 0; }
 }
 
 /* ── Glass inputs ── */
 .login-input {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(var(--brand-accent-rgb), 0.18);
-  box-shadow: 0 0 14px -4px rgba(var(--brand-accent-rgb), 0.12), inset 0 1px 0 rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(var(--brand-accent-rgb), 0.25);
+  box-shadow:
+    0 0 18px -5px rgba(var(--brand-accent-rgb), 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.25s ease;
 }
 .login-input:focus {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(var(--brand-accent-rgb), 0.5);
-  box-shadow: 0 0 0 3px rgba(var(--brand-accent-rgb), 0.12), 0 0 24px -4px rgba(var(--brand-accent-rgb), 0.3);
+  border-color: rgba(var(--brand-accent-rgb), 0.65);
+  box-shadow:
+    0 0 0 3px rgba(var(--brand-accent-rgb), 0.13),
+    0 0 32px -4px rgba(var(--brand-accent-rgb), 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* ── Primary button ── */
 .login-btn {
+  position: relative;
+  overflow: hidden;
   background: var(--brand-accent);
-  box-shadow: 0 8px 24px -6px rgba(var(--brand-accent-rgb), 0.55), 0 0 0 1px rgba(var(--brand-accent-rgb), 0.3);
+  box-shadow:
+    0 0 22px rgba(var(--brand-accent-rgb), 0.5),
+    0 8px 24px -6px rgba(var(--brand-accent-rgb), 0.6),
+    0 0 0 1px rgba(var(--brand-accent-rgb), 0.35);
+}
+/* Sweep shine */
+.login-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 55%;
+  height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  animation: btnSweep 3.5s ease-in-out infinite;
+}
+@keyframes btnSweep {
+  0%, 55% { left: -100%; }
+  100%     { left: 210%; }
 }
 .login-btn:not(:disabled):hover {
-  filter: brightness(1.1);
-  box-shadow: 0 12px 32px -6px rgba(var(--brand-accent-rgb), 0.65), 0 0 0 1px rgba(var(--brand-accent-rgb), 0.4);
+  filter: brightness(1.12);
+  box-shadow:
+    0 0 36px rgba(var(--brand-accent-rgb), 0.75),
+    0 12px 32px -6px rgba(var(--brand-accent-rgb), 0.7),
+    0 0 0 1px rgba(var(--brand-accent-rgb), 0.5);
   transform: translateY(-1px);
 }
 .login-btn:not(:disabled):active {
@@ -542,43 +664,35 @@ onMounted(async () => {
   0%, 100% { opacity: var(--tw-opacity, 0.4); transform: scale(1); }
   50% { opacity: 0.1; transform: scale(0.6); }
 }
-.animate-twinkle {
-  animation: twinkle linear infinite;
-}
+.animate-twinkle { animation: twinkle linear infinite; }
 
 @keyframes floatGem {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-14px) rotate(6deg); }
-  66% { transform: translateY(8px) rotate(-4deg); }
+  33%       { transform: translateY(-14px) rotate(6deg); }
+  66%       { transform: translateY(8px) rotate(-4deg); }
 }
-.animate-float {
-  animation: floatGem ease-in-out infinite;
-}
+.animate-float { animation: floatGem ease-in-out infinite; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in {
-  animation: fadeIn 0.55s cubic-bezier(0.22, 0.68, 0, 1.2) forwards;
-}
+.animate-fade-in { animation: fadeIn 0.55s cubic-bezier(0.22, 0.68, 0, 1.2) forwards; }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-5px); }
-  40% { transform: translateX(5px); }
-  60% { transform: translateX(-3px); }
-  80% { transform: translateX(3px); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-3px); }
+  80%       { transform: translateX(3px); }
 }
-.animate-shake {
-  animation: shake 0.4s ease-out;
-}
+.animate-shake { animation: shake 0.4s ease-out; }
 
 /* ── Error transition ── */
-.err-fade-enter-active { animation: errIn 0.3s cubic-bezier(0.22,0.68,0,1.2); }
+.err-fade-enter-active { animation: errIn 0.3s cubic-bezier(0.22, 0.68, 0, 1.2); }
 .err-fade-leave-active { animation: errIn 0.2s reverse; }
 @keyframes errIn {
   from { opacity: 0; transform: translateY(-6px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 </style>
