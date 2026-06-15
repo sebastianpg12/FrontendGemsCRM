@@ -1,21 +1,21 @@
 11  |q1|<template>
-  <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-[100] animate-in fade-in duration-300" @click="closeOnOutsideClick">
+  <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-2 sm:p-4 z-[100] animate-in fade-in duration-300" @click="closeOnOutsideClick">
     <div
       class="bg-white rounded-xl shadow-xl w-full max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300"
       :class="isEditingTask ? 'max-w-6xl' : 'max-w-3xl'"
       @click.stop
     >
       <!-- Header -->
-      <div class="flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-slate-50/30">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 bg-primary-50 rounded-[1rem] flex items-center justify-center border border-primary-100 shadow-sm transition-transform hover:rotate-3">
-            <i :class="isEditing ? 'fas fa-pen-nib text-primary-500' : 'fas fa-rocket text-primary-500'" class="text-xl"></i>
+      <div class="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-100 bg-slate-50/30">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 sm:w-12 sm:h-12 bg-primary-50 rounded-xl flex items-center justify-center border border-primary-100 shadow-sm transition-transform hover:rotate-3 shrink-0">
+            <i :class="isEditing ? 'fas fa-pen-nib text-primary-500' : 'fas fa-rocket text-primary-500'" class="text-base sm:text-xl"></i>
           </div>
           <div>
-            <h2 class="text-2xl font-black text-slate-800 tracking-tight">
+            <h2 class="text-base sm:text-2xl font-black text-slate-800 tracking-tight leading-tight">
               {{ isEditing ? 'Refinar Tarea' : 'Lanzar Nueva Tarea' }}
             </h2>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
+            <p class="hidden sm:flex text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1 items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
               GEMS Hub · Gestión de Productividad
             </p>
@@ -24,15 +24,15 @@
         <button
           type="button"
           @click="$emit('close')"
-          class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-all border border-transparent hover:border-rose-100"
+          class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all border border-transparent hover:border-rose-100 shrink-0"
         >
-          <i class="fas fa-times text-xl"></i>
+          <i class="fas fa-times text-base"></i>
         </button>
       </div>
 
       <div class="flex flex-1 overflow-hidden">
       <!-- ── Formulario ── -->
-      <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
         <form @submit.prevent="handleSubmit" class="flex flex-col h-full">
           <div class="space-y-6 flex-1">
             
@@ -118,7 +118,7 @@
                 </div>
                 <div class="space-y-2">
                   <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo Responsable</label>
-                  <div class="bg-slate-50/50 border border-slate-200 rounded-xl p-3 shadow-inner h-[320px] flex flex-col overflow-hidden">
+                  <div class="bg-slate-50/50 border border-slate-200 rounded-xl p-3 shadow-inner h-[180px] sm:h-[320px] flex flex-col overflow-hidden">
                     <AssignedUsersSelector
                       v-model="form.assignedTo"
                       :teamMembers="teamMembers"
@@ -201,20 +201,20 @@
           </div>
 
           <!-- Footer Actions -->
-          <div class="flex items-center justify-end gap-4 pt-5 pb-4 px-1 border-t border-slate-100 mt-6">
+          <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-4 pt-4 pb-3 px-1 border-t border-slate-100 mt-6">
               <button
                 type="button"
                 @click="$emit('close')"
-                class="px-8 py-4 bg-white text-slate-500 hover:text-slate-800 border border-slate-200 rounded-2xl transition-all font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 active:scale-95 shadow-sm"
+                class="h-9 px-5 bg-white text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl transition-all font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 active:scale-95 shadow-sm"
               >
                 Descartar
               </button>
               <button
                 type="submit"
                 :disabled="loading"
-                class="px-12 py-5 bg-primary-500 text-white rounded-[1.5rem] hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-black text-xs uppercase tracking-[0.15em] shadow-xl shadow-primary-200 flex items-center justify-center gap-4 active:scale-95 group"
+                class="h-9 px-6 bg-primary-500 text-white rounded-xl hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-black text-xs uppercase tracking-[0.15em] shadow-lg shadow-primary-200 flex items-center justify-center gap-3 active:scale-95 group"
               >
-                <div v-if="loading" class="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                <div v-if="loading" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                 <i v-else :class="isEditing ? 'fas fa-save' : 'fas fa-paper-plane'" class="group-hover:translate-x-1 transition-transform"></i>
                 {{ loading ? 'Sincronizando...' : (isEditing ? 'Guardar Cambios' : 'Lanzar Tarea') }}
               </button>
@@ -226,7 +226,7 @@
       <!-- ── Columna de Comentarios (solo al editar una tarea) ── -->
       <div
         v-if="isEditingTask"
-        class="w-80 shrink-0 border-l border-slate-100 flex flex-col bg-slate-50/40"
+        class="hidden sm:flex w-80 shrink-0 border-l border-slate-100 flex-col bg-slate-50/40"
       >
         <!-- Header comentarios -->
         <div class="px-5 py-4 border-b border-slate-100 flex items-center gap-2 shrink-0">
