@@ -56,8 +56,8 @@
       <div class="flex flex-col items-center mb-8">
         <div class="relative mb-4">
           <!-- Pulse rings -->
-          <div class="pulse-ring" style="width:88px;height:88px;"></div>
-          <div class="pulse-ring" style="width:88px;height:88px;animation-delay:1.3s;"></div>
+          <div class="pulse-ring" style="width:60px;height:60px;"></div>
+          <div class="pulse-ring" style="width:60px;height:60px;animation-delay:1.3s;"></div>
           <div class="absolute inset-0 blur-2xl opacity-60 scale-110"
             :style="`background: radial-gradient(circle, rgba(${accentRgb},0.9) 0%, transparent 70%);`"></div>
           <img :src="themeLogo" :alt="brandName" class="relative h-16 w-auto drop-shadow-2xl" />
@@ -595,8 +595,8 @@ onMounted(async () => {
   transform-origin: center;
 }
 @keyframes pulseRingOut {
-  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.9; }
-  100% { transform: translate(-50%, -50%) scale(3);   opacity: 0; }
+  0%   { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
 }
 
 /* ── Glass inputs ── */
