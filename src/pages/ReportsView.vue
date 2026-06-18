@@ -81,7 +81,7 @@
           <i class="fas fa-briefcase"></i>
           <span class="chip-label">{{ clientLabel }}</span>
           <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'client' }"></i>
-          <div v-if="openReportChip === 'client'" class="chip-dropdown" @click.stop>
+          <div v-if="openReportChip === 'client'" class="chip-dropdown chip-dropdown--end" @click.stop>
             <div class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': !filters.clientId }" @click="setReportFilter('client', '')">
               <span>Todos</span><i v-if="!filters.clientId" class="fas fa-check text-[10px] text-primary-500"></i>
             </div>
@@ -523,6 +523,7 @@ onUnmounted(() => { document.removeEventListener('click', closeReportChips) })
   border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 4px; overflow: hidden; max-height: 240px; overflow-y: auto;
 }
+.chip-dropdown--end { left: auto; right: 0; }
 .chip-dropdown-item {
   display: flex; align-items: center; justify-content: space-between;
   padding: 6px 10px; border-radius: 0.5rem;

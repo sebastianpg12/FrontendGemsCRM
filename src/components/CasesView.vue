@@ -81,7 +81,7 @@
             <i class="fas fa-layer-group"></i>
             <span class="cv-label">{{ tipoLabel }}</span>
             <i class="fas fa-chevron-down cv-caret" :class="{ 'rotate-180': openCasesChip === 'tipo' }"></i>
-            <div v-if="openCasesChip === 'tipo'" class="cv-dropdown" @click.stop>
+            <div v-if="openCasesChip === 'tipo'" class="cv-dropdown cv-dropdown--end" @click.stop>
               <div v-for="opt in tipoOptions" :key="opt.value"
                 class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterTipo === opt.value }"
                 @click="setCasesFilter('tipo', opt.value)">
@@ -1236,6 +1236,7 @@ onBeforeUnmount(() => {
   max-height: 240px;
   overflow-y: auto;
 }
+.cv-dropdown--end { left: auto; right: 0; }
 .cv-dropdown-item {
   display: flex;
   align-items: center;

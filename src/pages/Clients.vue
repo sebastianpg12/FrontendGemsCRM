@@ -485,7 +485,7 @@ onUnmounted(() => document.removeEventListener('click', closeCLChip))
 .cl-caret { font-size: 8px; transition: transform 0.2s; }
 .cl-label { font-size: 11px; font-weight: 700; }
 .cl-dropdown {
-  position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+  position: absolute; top: calc(100% + 6px); left: auto; right: 0; z-index: 50;
   min-width: 140px; background: #fff; border: 1px solid #e2e8f0;
   border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.10);
   padding: 4px;

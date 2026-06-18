@@ -102,7 +102,7 @@
             <i class="fas fa-user-shield"></i>
             <span class="tk-label">{{ filterAssignedToLabel }}</span>
             <i class="fas fa-chevron-down tk-caret" :class="{ 'rotate-180': openChip === 'agent' }"></i>
-            <div v-if="openChip === 'agent'" class="tk-dropdown" @click.stop>
+            <div v-if="openChip === 'agent'" class="tk-dropdown tk-dropdown--end" @click.stop>
               <div class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': !filterAssignedTo }"
                 @click="setChipFilter('agent', '')">
                 <span>Cualquier agente</span>
@@ -1345,6 +1345,7 @@ onUnmounted(() => { document.removeEventListener('click', closeChips) })
   border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 4px; overflow: hidden;
 }
+.tk-dropdown--end { left: auto; right: 0; }
 .tk-dropdown-item {
   display: flex; align-items: center; justify-content: space-between;
   padding: 6px 10px; border-radius: 0.5rem;

@@ -162,17 +162,17 @@
                   class="peer appearance-none w-4 h-4 rounded-md cursor-pointer transition-all"
                   :style="rememberMe
                     ? `background: var(--brand-accent); border: 1.5px solid var(--brand-accent);`
-                    : `border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);`"
+                    : `border: 1.5px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.06);`"
                 />
                 <i class="fas fa-check absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[7px] text-white pointer-events-none transition-opacity"
                    :class="rememberMe ? 'opacity-100' : 'opacity-0'"></i>
               </div>
-              <span class="text-[11px] font-semibold text-white/35 group-hover:text-white/55 transition-colors">Recordarme</span>
+              <span class="text-[11px] font-semibold text-white/70 group-hover:text-white/95 transition-colors">Recordarme</span>
             </label>
             <button
               type="button"
               @click="showForgotPassword = true"
-              class="text-[11px] font-semibold text-primary-400/70 hover:text-primary-300 transition-colors"
+              class="text-[11px] font-semibold text-primary-300 hover:text-white underline underline-offset-2 decoration-primary-400/40 hover:decoration-white/40 transition-all"
             >
               ¿Olvidaste tu contraseña?
             </button>
