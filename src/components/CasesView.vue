@@ -7,9 +7,6 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Casos</h1>
-          <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">
-            Seguimientos, incidencias y documentos operativos
-          </p>
         </div>
         <button class="btn-primary self-start sm:self-auto" @click="openCreateModal()">
           <i class="fas fa-plus text-[10px]"></i>Nuevo caso

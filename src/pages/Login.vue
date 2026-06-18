@@ -597,6 +597,14 @@ onMounted(async () => {
     0 0 32px -4px rgba(var(--brand-accent-rgb), 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
+.login-input:-webkit-autofill,
+.login-input:-webkit-autofill:hover,
+.login-input:-webkit-autofill:focus,
+.login-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 60px #0f1624 inset !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+}
 
 /* ── Primary button ── */
 .login-btn {
