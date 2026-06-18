@@ -31,42 +31,66 @@
         <span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 shrink-0 hidden sm:inline">Filtros</span>
         <div class="h-4 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
 
-        <div class="filter-chip" :class="{ 'filter-chip--active': filters.period !== 'month' }">
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.period !== 'month' }" @click.stop="toggleReportChip('period')">
           <i class="fas fa-calendar-alt"></i>
-          <select v-model="filters.period" @change="load">
-            <option value="week">Última semana</option>
-            <option value="month">Último mes</option>
-            <option value="quarter">Último trimestre</option>
-            <option value="year">Último año</option>
-          </select>
-          <i class="fas fa-chevron-down chip-chevron"></i>
+          <span class="chip-label">{{ periodLabel }}</span>
+          <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'period' }"></i>
+          <div v-if="openReportChip === 'period'" class="chip-dropdown" @click.stop>
+            <div v-for="opt in periodOptions" :key="opt.value"
+              class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.period === opt.value }"
+              @click="setReportFilter('period', opt.value)">
+              <span>{{ opt.label }}</span>
+              <i v-if="filters.period === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+          </div>
         </div>
 
-        <div class="filter-chip" :class="{ 'filter-chip--active': filters.department }">
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.department }" @click.stop="toggleReportChip('dept')">
           <i class="fas fa-building"></i>
-          <select v-model="filters.department" @change="load">
-            <option value="">Todos los depts.</option>
-            <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
-          </select>
-          <i class="fas fa-chevron-down chip-chevron"></i>
+          <span class="chip-label">{{ deptLabel }}</span>
+          <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'dept' }"></i>
+          <div v-if="openReportChip === 'dept'" class="chip-dropdown" @click.stop>
+            <div class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': !filters.department }" @click="setReportFilter('dept', '')">
+              <span>Todos</span><i v-if="!filters.department" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+            <div v-for="d in departments" :key="d"
+              class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.department === d }"
+              @click="setReportFilter('dept', d)">
+              <span>{{ d }}</span><i v-if="filters.department === d" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+          </div>
         </div>
 
-        <div class="filter-chip" :class="{ 'filter-chip--active': filters.ownerId }">
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.ownerId }" @click.stop="toggleReportChip('owner')">
           <i class="fas fa-user"></i>
-          <select v-model="filters.ownerId" @change="load">
-            <option value="">Todos los responsables</option>
-            <option v-for="m in teamMembers" :key="m._id" :value="m._id">{{ m.name }}</option>
-          </select>
-          <i class="fas fa-chevron-down chip-chevron"></i>
+          <span class="chip-label">{{ ownerLabel }}</span>
+          <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'owner' }"></i>
+          <div v-if="openReportChip === 'owner'" class="chip-dropdown" @click.stop>
+            <div class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': !filters.ownerId }" @click="setReportFilter('owner', '')">
+              <span>Todos</span><i v-if="!filters.ownerId" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+            <div v-for="m in teamMembers" :key="m._id"
+              class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.ownerId === m._id }"
+              @click="setReportFilter('owner', m._id)">
+              <span>{{ m.name }}</span><i v-if="filters.ownerId === m._id" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+          </div>
         </div>
 
-        <div class="filter-chip" :class="{ 'filter-chip--active': filters.clientId }">
+        <div class="filter-chip" :class="{ 'filter-chip--active': filters.clientId }" @click.stop="toggleReportChip('client')">
           <i class="fas fa-briefcase"></i>
-          <select v-model="filters.clientId" @change="load">
-            <option value="">Todos los clientes</option>
-            <option v-for="c in clients" :key="c._id" :value="c._id">{{ c.name }}</option>
-          </select>
-          <i class="fas fa-chevron-down chip-chevron"></i>
+          <span class="chip-label">{{ clientLabel }}</span>
+          <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'client' }"></i>
+          <div v-if="openReportChip === 'client'" class="chip-dropdown" @click.stop>
+            <div class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': !filters.clientId }" @click="setReportFilter('client', '')">
+              <span>Todos</span><i v-if="!filters.clientId" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+            <div v-for="c in clients" :key="c._id"
+              class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.clientId === c._id }"
+              @click="setReportFilter('client', c._id)">
+              <span>{{ c.name }}</span><i v-if="filters.clientId === c._id" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+          </div>
         </div>
 
         <button
@@ -283,7 +307,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import KpiCard from '@/components/reports/KpiCard.vue'
 import TrendBadge from '@/components/reports/TrendBadge.vue'
 import MiniBarChart from '@/components/reports/MiniBarChart.vue'
@@ -352,6 +376,27 @@ function resetFilters() {
 const hasActiveFilters = computed(() =>
   filters.period !== 'month' || !!filters.department || !!filters.ownerId || !!filters.clientId
 )
+
+// ── Chip dropdowns ────────────────────────────────────────────────────
+const openReportChip = ref<string | null>(null)
+const toggleReportChip = (name: string) => { openReportChip.value = openReportChip.value === name ? null : name }
+const closeReportChips = () => { openReportChip.value = null }
+const setReportFilter = (chip: string, value: string) => {
+  if (chip === 'period')  filters.period     = value as any
+  if (chip === 'dept')    filters.department = value
+  if (chip === 'owner')   filters.ownerId    = value
+  if (chip === 'client')  filters.clientId   = value
+  openReportChip.value = null
+  load()
+}
+const periodOptions = [
+  { value: 'week', label: 'Última semana' }, { value: 'month', label: 'Último mes' },
+  { value: 'quarter', label: 'Último trimestre' }, { value: 'year', label: 'Último año' }
+]
+const periodLabel  = computed(() => periodOptions.find(o => o.value === filters.period)?.label || 'Último mes')
+const deptLabel    = computed(() => filters.department || 'Todos los depts.')
+const ownerLabel   = computed(() => teamMembers.value.find((m: any) => m._id === filters.ownerId)?.name || 'Todos los responsables')
+const clientLabel  = computed(() => clients.value.find((c: any) => c._id === filters.clientId)?.name || 'Todos los clientes')
 
 // ── Derivados para charts ──
 const statusPalette: Record<string, { bar: string; dot: string }> = {
@@ -450,55 +495,50 @@ function ticketStatusClass(s: string) {
 }
 
 onMounted(async () => {
+  document.addEventListener('click', closeReportChips)
   await loadDimensions()
   await load()
 })
+onUnmounted(() => { document.removeEventListener('click', closeReportChips) })
 </script>
 
 <style scoped>
 /* ── Filter chips ── */
 .filter-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgb(248 250 252);
-  border: 1px solid rgb(226 232 240);
-  border-radius: 999px;
-  padding: 0 12px 0 10px;
-  height: 32px;
-  transition: all 0.15s;
-  cursor: pointer;
-  font-size: 0.7rem;
-  color: rgb(100 116 139);
-  color-scheme: light;
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  background: rgb(248 250 252); border: 1px solid rgb(226 232 240);
+  border-radius: 999px; padding: 0 12px 0 10px; height: 32px;
+  transition: all 0.15s; cursor: pointer;
+  font-size: 0.7rem; color: rgb(100 116 139);
 }
 .filter-chip i:first-child { font-size: 0.6rem; }
 .filter-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
-.filter-chip:focus-within { border-color: rgb(99 102 241); background: rgb(238 242 255); color: rgb(79 70 229); }
 .filter-chip--active { border-color: rgb(139 92 246); background: rgb(245 243 255); color: rgb(109 40 217); }
-
-.filter-chip select {
-  background: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: inherit;
-  max-width: 160px;
+.chip-label { font-size: 0.72rem; font-weight: 700; color: inherit; white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+.chip-chevron { font-size: 0.5rem; opacity: 0.5; transition: transform 0.2s; }
+.chip-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 180px; z-index: 100;
+  background: #fff; border: 1px solid rgb(226 232 240);
+  border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 4px; overflow: hidden; max-height: 240px; overflow-y: auto;
 }
-.chip-chevron { font-size: 0.5rem; opacity: 0.5; }
-
-:global(.dark) .filter-chip {
-  background: rgb(30 41 59);
-  border-color: rgb(51 65 85);
-  color: rgb(148 163 184);
-  color-scheme: dark;
+.chip-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; border-radius: 0.5rem;
+  font-size: 0.72rem; font-weight: 600; color: rgb(51 65 85);
+  cursor: pointer; transition: background 0.12s; user-select: none;
 }
-:global(.dark) .filter-chip:hover { background: rgb(37 50 71); }
-:global(.dark) .filter-chip:focus-within { background: rgb(49 46 129 / 0.25); border-color: rgb(139 92 246); color: rgb(167 139 250); }
-:global(.dark) .filter-chip--active { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
-:global(.dark) .filter-chip select { color: inherit; background: transparent; }
+.chip-dropdown-item:hover { background: rgb(248 250 252); }
+.chip-dropdown-item--active { background: rgb(238 242 255); color: rgb(79 70 229); }
+</style>
+
+<style>
+.dark .filter-chip { background: rgb(30 41 59); border-color: rgb(51 65 85); color: rgb(148 163 184); }
+.dark .filter-chip:hover { background: rgb(37 50 71); }
+.dark .filter-chip--active { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
+.dark .chip-dropdown { background: rgb(22 34 52); border-color: rgb(51 65 85); box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+.dark .chip-dropdown-item { color: rgb(148 163 184); }
+.dark .chip-dropdown-item:hover { background: rgb(37 50 71); color: rgb(203 213 225); }
+.dark .chip-dropdown-item--active { background: rgb(49 46 129 / 0.3); color: rgb(167 139 250); }
 </style>
