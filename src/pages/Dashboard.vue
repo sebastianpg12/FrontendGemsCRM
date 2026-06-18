@@ -75,12 +75,14 @@
     <div class="grid gap-1.5 min-w-0" :style="`grid-template-columns: repeat(${statCards.length}, minmax(72px, 1fr))`">
       <div v-for="card in statCards" :key="card.label"
         class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-2.5 px-2 sm:px-3 flex flex-col items-center justify-center text-center group cursor-default transition-all duration-150 min-w-0">
+        <!-- Icon -->
+        <div class="w-7 h-7 rounded-lg flex items-center justify-center mb-1" :class="card.iconBg">
+          <i :class="['fas', card.icon, card.iconColor, 'text-[11px]']"></i>
+        </div>
         <!-- Number -->
         <span class="text-[20px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
         <!-- Label -->
         <span class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-500 mt-1 truncate w-full text-center">{{ card.label }}</span>
-        <!-- Tag -->
-        <span class="text-[9px] font-bold text-slate-400 mt-0.5">{{ card.tag }}</span>
       </div>
     </div>
     </div>

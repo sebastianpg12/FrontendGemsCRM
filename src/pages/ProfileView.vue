@@ -311,9 +311,9 @@
             <button
               type="submit"
               :disabled="loading || !passwordForm.currentPassword || !passwordForm.newPassword || passwordForm.newPassword !== passwordForm.confirmPassword"
-              class="w-full mt-4 px-6 py-4 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
+              class="w-full mt-4 px-6 py-3.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-md shadow-primary-500/20 disabled:opacity-50"
             >
-              <i class="fas fa-key mr-2"></i>
+              <i class="fas fa-key mr-2 text-[11px]"></i>
               {{ loading ? 'Actualizando...' : 'Actualizar Contraseña' }}
             </button>
           </form>

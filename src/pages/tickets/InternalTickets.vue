@@ -110,7 +110,7 @@
         <div 
           v-for="col in columns" 
           :key="col.id" 
-          class="flex flex-col flex-1 min-w-[350px] bg-slate-50/50 dark:bg-[#161f2e] rounded-[2rem] dark:border-[#334155] shadow-inner"
+          class="flex flex-col flex-1 min-w-[350px] bg-slate-50 dark:bg-[#161f2e] rounded-xl border border-slate-200/60 dark:border-[#334155] shadow-sm"
         >
           <!-- Column Header -->
           <div class="flex-shrink-0 p-5 pb-3 flex items-center justify-between">
@@ -194,7 +194,7 @@
             <div v-if="hasMoreInColumn(col.id)" class="pt-2 pb-2">
               <button 
                 @click="increaseColumnLimit(col.id)"
-                class="w-full py-3 bg-white/40 hover:bg-white border border-dashed border-slate-200 rounded-2xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:text-primary-600 shadow-sm"
+                class="w-full py-3 bg-white/40 hover:bg-white border border-dashed border-slate-200 rounded-xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:text-primary-600 shadow-sm"
               >
                 <i class="fas fa-plus-circle mr-2"></i>
                 Ver más tickets
@@ -213,7 +213,7 @@
       </div>
 
       <!-- INBOX VIEW -->
-      <div v-else class="h-full bg-white rounded-[2.5rem] border border-slate-200 shadow-xl flex flex-col overflow-hidden animate-fade-in relative">
+      <div v-else class="h-full bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden animate-fade-in relative">
         <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary-500 to-indigo-500 opacity-80"></div>
         
         <!-- Inbox Toolbar -->
