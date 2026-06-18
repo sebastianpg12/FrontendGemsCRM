@@ -154,18 +154,17 @@
 
           <!-- Options row -->
           <div class="flex items-center justify-between px-0.5 pt-0.5">
-            <label class="flex items-center cursor-pointer group select-none gap-2">
-              <div class="relative flex-shrink-0 w-4 h-4">
-                <input
-                  type="checkbox"
-                  v-model="rememberMe"
-                  class="peer appearance-none w-4 h-4 rounded-md cursor-pointer transition-all"
-                  :style="rememberMe
-                    ? `background: var(--brand-accent); border: 1.5px solid var(--brand-accent);`
-                    : `border: 1.5px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.06);`"
-                />
-                <i class="fas fa-check absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[7px] text-white pointer-events-none transition-opacity"
-                   :class="rememberMe ? 'opacity-100' : 'opacity-0'"></i>
+            <label class="flex items-center cursor-pointer group select-none gap-2.5" @click="rememberMe = !rememberMe">
+              <div
+                class="relative w-8 h-[18px] rounded-full transition-all duration-300 flex-shrink-0"
+                :style="rememberMe
+                  ? `background: var(--brand-accent); box-shadow: 0 0 10px rgba(var(--brand-accent-rgb),0.5);`
+                  : `background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);`"
+              >
+                <span
+                  class="absolute top-[2px] w-[14px] h-[14px] rounded-full bg-white shadow transition-all duration-300"
+                  :style="rememberMe ? 'left: calc(100% - 16px);' : 'left: 2px;'"
+                ></span>
               </div>
               <span class="text-[11px] font-semibold text-white/70 group-hover:text-white/95 transition-colors">Recordarme</span>
             </label>
