@@ -69,10 +69,8 @@
         <p class="text-white/30 text-[9px] font-black uppercase tracking-[0.45em]">Galactic Intelligence Suite</p>
       </div>
 
-      <!-- Glass card wrapper con borde giratorio -->
+      <!-- Glass card wrapper -->
       <div class="card-glow-wrapper">
-        <div class="border-spin" aria-hidden="true"></div>
-        <div class="border-blur" aria-hidden="true"></div>
 
       <!-- Glass card -->
       <div class="login-card rounded-[2rem] p-8 sm:p-10 relative overflow-hidden">
@@ -524,47 +522,12 @@ onMounted(async () => {
   );
 }
 
-/* ── Card glow wrapper: borde giratorio ── */
+/* ── Card glow wrapper ── */
 .card-glow-wrapper {
   position: relative;
-  border-radius: 2.25rem;
-  padding: 1.5px;
 }
 
-.border-spin,
-.border-blur {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 55deg,
-    rgba(var(--brand-accent-rgb), 0.25) 75deg,
-    rgba(var(--brand-accent-rgb), 1)    90deg,
-    rgba(var(--brand-accent-rgb), 0.25) 105deg,
-    transparent 130deg,
-    transparent 230deg,
-    rgba(var(--brand-accent-rgb), 0.6)  270deg,
-    transparent 315deg,
-    transparent 360deg
-  );
-  animation: borderSpin 4s linear infinite;
-  z-index: 0;
-}
-
-.border-blur {
-  inset: -3px;
-  filter: blur(10px);
-  opacity: 0.65;
-  contain: layout;
-}
-
-@keyframes borderSpin {
-  to { transform: rotate(360deg); }
-}
-
-/* ── Glass card ── */
+/* ── Glass card con pulsación ── */
 .login-card {
   position: relative;
   z-index: 1;
@@ -572,10 +535,25 @@ onMounted(async () => {
   border: 1px solid rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  box-shadow:
-    0 32px 64px -16px rgba(0, 0, 0, 0.8),
-    0 0 60px -20px rgba(var(--brand-accent-rgb), 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  animation: cardPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes cardPulse {
+  0%, 100% {
+    box-shadow:
+      0 32px 64px -16px rgba(0, 0, 0, 0.8),
+      0 0 20px -6px rgba(var(--brand-accent-rgb), 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.07);
+  }
+  50% {
+    box-shadow:
+      0 32px 64px -16px rgba(0, 0, 0, 0.75),
+      0 0 55px -4px rgba(var(--brand-accent-rgb), 0.40),
+      0 0 90px -8px rgba(var(--brand-accent-rgb), 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    border-color: rgba(var(--brand-accent-rgb), 0.30);
+  }
 }
 
 /* ── Neon title pulse ── */
