@@ -1292,14 +1292,22 @@ onMounted(async () => {
 :global(.dark) .tk-chip:focus-within { background: rgb(49 46 129 / 0.25); border-color: rgb(139 92 246); color: rgb(167 139 250); }
 :global(.dark) .tk-chip--on { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
 
-/* En dark mode el SO de Windows ignora background:transparent en <select> nativo;
-   se fuerza un color sólido que iguala el chip base. */
-:global(.dark) .tk-select {
-  background: rgb(30 41 59);
-  color: inherit;
+</style>
+
+<!-- Bloque NO-scoped: fuerza el background del <select> nativo en dark mode.
+     El scoped background:transparent tiene especificidad [0,2,0] igual que :global,
+     pero la variante no-scoped con !important gana siempre. -->
+<style>
+.dark .tk-chip .tk-select {
+  background: rgb(30 41 59) !important;
+  color: rgb(148 163 184) !important;
 }
-:global(.dark) .tk-chip--on .tk-select {
-  background: rgb(44 26 89);
+.dark .tk-chip--on .tk-select {
+  background: rgb(44 26 89) !important;
+  color: rgb(167 139 250) !important;
 }
-:global(.dark) .tk-select option { background: rgb(30 41 59); color: rgb(226 232 240); }
+.dark .tk-select option {
+  background: rgb(30 41 59) !important;
+  color: rgb(226 232 240) !important;
+}
 </style>
