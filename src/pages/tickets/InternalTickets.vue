@@ -1281,6 +1281,7 @@ onMounted(async () => {
   background: transparent; border: none; outline: none;
   appearance: none; -webkit-appearance: none;
   font-size: 0.7rem; font-weight: 700; color: inherit; cursor: pointer; max-width: 130px;
+  color-scheme: light;
 }
 .tk-caret { font-size: 0.48rem; opacity: 0.5; }
 
