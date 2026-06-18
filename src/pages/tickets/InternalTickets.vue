@@ -55,61 +55,68 @@
 
         <!-- Chips de filtro -->
         <div class="flex items-center gap-1.5 flex-wrap">
-          <div class="tk-chip" :class="{ 'tk-chip--on': filterStatus }">
+
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterStatus }" @click.stop="toggleChip('status')">
             <i class="fas fa-layer-group"></i>
-            <div class="tk-select-wrap">
-              <span class="tk-label">{{ filterStatusLabel }}</span>
-              <select v-model="filterStatus" class="tk-select" aria-label="Estado">
-                <option value="">Estado</option>
-                <option value="open">En Proceso</option>
-                <option value="waiting">Pendiente</option>
-                <option value="resolved">Resueltos</option>
-              </select>
+            <span class="tk-label">{{ filterStatusLabel }}</span>
+            <i class="fas fa-chevron-down tk-caret" :class="{ 'rotate-180': openChip === 'status' }"></i>
+            <div v-if="openChip === 'status'" class="tk-dropdown" @click.stop>
+              <div v-for="opt in statusOptions" :key="opt.value"
+                class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterStatus === opt.value }"
+                @click="setChipFilter('status', opt.value)">
+                <span>{{ opt.label }}</span>
+                <i v-if="filterStatus === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
             </div>
-            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
-          <div class="tk-chip" :class="{ 'tk-chip--on': filterCategory }">
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterCategory }" @click.stop="toggleChip('category')">
             <i class="fas fa-tag"></i>
-            <div class="tk-select-wrap">
-              <span class="tk-label">{{ filterCategoryLabel }}</span>
-              <select v-model="filterCategory" class="tk-select" aria-label="Categoría">
-                <option value="">Categorías</option>
-                <option value="technical">Technical</option>
-                <option value="billing">Billing</option>
-                <option value="sales">Sales</option>
-                <option value="other">Other</option>
-              </select>
+            <span class="tk-label">{{ filterCategoryLabel }}</span>
+            <i class="fas fa-chevron-down tk-caret" :class="{ 'rotate-180': openChip === 'category' }"></i>
+            <div v-if="openChip === 'category'" class="tk-dropdown" @click.stop>
+              <div v-for="opt in categoryOptions" :key="opt.value"
+                class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterCategory === opt.value }"
+                @click="setChipFilter('category', opt.value)">
+                <span>{{ opt.label }}</span>
+                <i v-if="filterCategory === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
             </div>
-            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
-          <div class="tk-chip" :class="{ 'tk-chip--on': filterPriority }">
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterPriority }" @click.stop="toggleChip('priority')">
             <i class="fas fa-flag"></i>
-            <div class="tk-select-wrap">
-              <span class="tk-label">{{ filterPriorityLabel }}</span>
-              <select v-model="filterPriority" class="tk-select" aria-label="Prioridad">
-                <option value="">Prioridad</option>
-                <option value="urgent">P1 · Crítico</option>
-                <option value="high">P2 · Alto</option>
-                <option value="medium">P3 · Medio</option>
-                <option value="low">P4 · Bajo</option>
-              </select>
+            <span class="tk-label">{{ filterPriorityLabel }}</span>
+            <i class="fas fa-chevron-down tk-caret" :class="{ 'rotate-180': openChip === 'priority' }"></i>
+            <div v-if="openChip === 'priority'" class="tk-dropdown" @click.stop>
+              <div v-for="opt in priorityOptions" :key="opt.value"
+                class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterPriority === opt.value }"
+                @click="setChipFilter('priority', opt.value)">
+                <span>{{ opt.label }}</span>
+                <i v-if="filterPriority === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
             </div>
-            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
-          <div class="tk-chip" :class="{ 'tk-chip--on': filterAssignedTo }">
+          <div class="tk-chip" :class="{ 'tk-chip--on': filterAssignedTo }" @click.stop="toggleChip('agent')">
             <i class="fas fa-user-shield"></i>
-            <div class="tk-select-wrap">
-              <span class="tk-label">{{ filterAssignedToLabel }}</span>
-              <select v-model="filterAssignedTo" class="tk-select" aria-label="Agente">
-                <option value="">Cualquier agente</option>
-                <option v-for="member in supportAgents" :key="member._id" :value="member._id">{{ member.name }}</option>
-              </select>
+            <span class="tk-label">{{ filterAssignedToLabel }}</span>
+            <i class="fas fa-chevron-down tk-caret" :class="{ 'rotate-180': openChip === 'agent' }"></i>
+            <div v-if="openChip === 'agent'" class="tk-dropdown" @click.stop>
+              <div class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': !filterAssignedTo }"
+                @click="setChipFilter('agent', '')">
+                <span>Cualquier agente</span>
+                <i v-if="!filterAssignedTo" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
+              <div v-for="member in supportAgents" :key="member._id"
+                class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterAssignedTo === member._id }"
+                @click="setChipFilter('agent', member._id)">
+                <span>{{ member.name }}</span>
+                <i v-if="filterAssignedTo === member._id" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
             </div>
-            <i class="fas fa-chevron-down tk-caret"></i>
           </div>
+
         </div>
       </div>
 
@@ -754,7 +761,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, reactive } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, reactive } from 'vue'
 import { ticketService } from '../../services/ticketService'
 import { teamService } from '../../services/teamService'
 import { casesService } from '../../services/casesService'
@@ -769,6 +776,22 @@ import { formatDistanceToNow, format } from 'date-fns'
 import { es } from 'date-fns/locale'
 const authStore = useAuthStore()
 const { showSuccess, showError, showWarning, confirmDelete } = useNotifications()
+
+// ── Chip dropdown state ──────────────────────────────────────────────
+const openChip = ref<string | null>(null)
+const statusOptions   = [{ value: '', label: 'Todos' }, { value: 'open', label: 'En Proceso' }, { value: 'waiting', label: 'Pendiente' }, { value: 'resolved', label: 'Resueltos' }]
+const categoryOptions = [{ value: '', label: 'Todas' }, { value: 'technical', label: 'Technical' }, { value: 'billing', label: 'Billing' }, { value: 'sales', label: 'Sales' }, { value: 'other', label: 'Other' }]
+const priorityOptions = [{ value: '', label: 'Todas' }, { value: 'urgent', label: 'P1 · Crítico' }, { value: 'high', label: 'P2 · Alto' }, { value: 'medium', label: 'P3 · Medio' }, { value: 'low', label: 'P4 · Bajo' }]
+
+const toggleChip = (name: string) => { openChip.value = openChip.value === name ? null : name }
+const setChipFilter = (chip: string, value: string) => {
+  if (chip === 'status')   filterStatus.value   = value
+  if (chip === 'category') filterCategory.value = value
+  if (chip === 'priority') filterPriority.value = value
+  if (chip === 'agent')    filterAssignedTo.value = value
+  openChip.value = null
+}
+const closeChips = () => { openChip.value = null }
 
 // State
 const viewMode = ref<'board' | 'inbox'>('board')
@@ -1221,6 +1244,7 @@ const loadTeamMembers = async () => {
 }
 
 onMounted(async () => {
+  document.addEventListener('click', closeChips)
   await loadTeamMembers()
   // Set default filter if current user is support
   const isSupport = ['support', 'supervisor'].includes(authStore.user?.role || '')
@@ -1234,6 +1258,8 @@ onMounted(async () => {
     loadTickets()
   }
 })
+
+onUnmounted(() => { document.removeEventListener('click', closeChips) })
 </script>
 
 <style scoped>
@@ -1299,32 +1325,34 @@ onMounted(async () => {
   display: inline-flex; align-items: center; gap: 5px;
   background: rgb(248 250 252); border: 1px solid rgb(226 232 240);
   border-radius: 999px; padding: 0 10px 0 9px; height: 30px;
-  cursor: pointer; transition: all 0.15s;
+  cursor: pointer; transition: all 0.15s; position: relative;
   font-size: 0.68rem; color: rgb(100 116 139);
-  color-scheme: light;
 }
 .tk-chip i:first-child { font-size: 0.58rem; }
 .tk-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
 .tk-chip:focus-within { border-color: rgb(99 102 241); background: rgb(238 242 255); color: rgb(79 70 229); }
 .tk-chip--on { border-color: rgb(139 92 246); background: rgb(245 243 255); color: rgb(109 40 217); }
-.tk-select-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
 .tk-label {
   font-size: 0.7rem; font-weight: 700; color: inherit;
-  white-space: nowrap; pointer-events: none; max-width: 110px;
+  white-space: nowrap; max-width: 110px;
   overflow: hidden; text-overflow: ellipsis;
 }
-.tk-select {
-  position: absolute; inset: 0;
-  opacity: 0; cursor: pointer;
-  width: 100%; height: 100%;
-  border: none; background: transparent;
-  appearance: none; -webkit-appearance: none;
+.tk-caret { font-size: 0.48rem; opacity: 0.5; transition: transform 0.2s; }
+.tk-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 160px; z-index: 100;
+  background: #fff; border: 1px solid rgb(226 232 240);
+  border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 4px; overflow: hidden;
 }
-.tk-caret { font-size: 0.48rem; opacity: 0.5; }
+.tk-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; border-radius: 0.5rem;
+  font-size: 0.72rem; font-weight: 600; color: rgb(51 65 85);
+  cursor: pointer; transition: background 0.12s; user-select: none;
+}
+.tk-dropdown-item:hover { background: rgb(248 250 252); }
+.tk-dropdown-item--active { background: rgb(238 242 255); color: rgb(79 70 229); }
 
 :global(.dark) .tk-chip {
   background: rgb(30 41 59); border-color: rgb(51 65 85);
@@ -1336,20 +1364,13 @@ onMounted(async () => {
 
 </style>
 
-<!-- Bloque NO-scoped: fuerza el background del <select> nativo en dark mode.
-     El scoped background:transparent tiene especificidad [0,2,0] igual que :global,
-     pero la variante no-scoped con !important gana siempre. -->
 <style>
-.dark .tk-chip .tk-select {
-  background: rgb(30 41 59) !important;
-  color: rgb(148 163 184) !important;
+.dark .tk-dropdown {
+  background: rgb(22 34 52);
+  border-color: rgb(51 65 85);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.35);
 }
-.dark .tk-chip--on .tk-select {
-  background: rgb(44 26 89) !important;
-  color: rgb(167 139 250) !important;
-}
-.dark .tk-select option {
-  background: rgb(30 41 59) !important;
-  color: rgb(226 232 240) !important;
-}
+.dark .tk-dropdown-item { color: rgb(148 163 184); }
+.dark .tk-dropdown-item:hover { background: rgb(37 50 71); color: rgb(203 213 225); }
+.dark .tk-dropdown-item--active { background: rgb(49 46 129 / 0.3); color: rgb(167 139 250); }
 </style>
