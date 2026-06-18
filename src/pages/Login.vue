@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-start sm:items-center justify-center font-['Inter',sans-serif] overflow-y-auto relative py-8 sm:py-12" style="background: #04060d;">
+  <div class="min-h-screen flex items-start sm:items-center justify-center font-['Inter',sans-serif] overflow-y-auto overflow-x-hidden relative py-8 sm:py-12" style="background: #04060d;">
 
     <!-- ── Background: Nebula layers (accent-reactive) ── -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -554,9 +554,10 @@ onMounted(async () => {
 }
 
 .border-blur {
-  inset: -5px;
-  filter: blur(14px);
-  opacity: 0.75;
+  inset: -3px;
+  filter: blur(10px);
+  opacity: 0.65;
+  contain: layout;
 }
 
 @keyframes borderSpin {
