@@ -56,46 +56,48 @@
       </div>
 
       <!-- Filters Panel -->
-      <div v-if="showFilters" class="mt-4 p-4 bg-slate-50 rounded-xl">
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
-            <select v-model="filters.type" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
-              <option value="">Todos</option>
-              <option value="task">Task</option>
-              <option value="bug">Bug</option>
-              <option value="feature">Feature</option>
-              <option value="user-story">User Story</option>
-              <option value="epic">Epic</option>
-            </select>
+      <div v-if="showFilters" class="mt-4 p-4 bg-slate-50 dark:bg-[#1e293b] rounded-xl flex flex-wrap gap-3">
+        <div class="kb-chip" :class="{ 'kb-chip--on': filters.type }" @click.stop="openKBChip = openKBChip === 'type' ? null : 'type'">
+          <i class="fas fa-tag"></i>
+          <span class="kb-label">{{ filters.type ? filters.type.charAt(0).toUpperCase() + filters.type.slice(1).replace('-', ' ') : 'Tipo' }}</span>
+          <i class="fas fa-chevron-down kb-caret" :class="{ 'rotate-180': openKBChip === 'type' }"></i>
+          <div v-if="openKBChip === 'type'" class="kb-dropdown" @click.stop>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === '' }" @click="filters.type = ''; openKBChip = null"><span>Todos</span><i v-if="filters.type === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'task' }" @click="filters.type = 'task'; openKBChip = null"><span>Task</span><i v-if="filters.type === 'task'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'bug' }" @click="filters.type = 'bug'; openKBChip = null"><span>Bug</span><i v-if="filters.type === 'bug'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'feature' }" @click="filters.type = 'feature'; openKBChip = null"><span>Feature</span><i v-if="filters.type === 'feature'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'user-story' }" @click="filters.type = 'user-story'; openKBChip = null"><span>User Story</span><i v-if="filters.type === 'user-story'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'epic' }" @click="filters.type = 'epic'; openKBChip = null"><span>Epic</span><i v-if="filters.type === 'epic'" class="fas fa-check text-[10px] text-primary-500"></i></div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Prioridad</label>
-            <select v-model="filters.priority" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
-              <option value="">Todas</option>
-              <option value="low">Baja</option>
-              <option value="medium">Media</option>
-              <option value="high">Alta</option>
-              <option value="critical">Crítica</option>
-            </select>
+        </div>
+        <div class="kb-chip" :class="{ 'kb-chip--on': filters.priority }" @click.stop="openKBChip = openKBChip === 'priority' ? null : 'priority'">
+          <i class="fas fa-exclamation-circle"></i>
+          <span class="kb-label">{{ filters.priority === 'low' ? 'Baja' : filters.priority === 'medium' ? 'Media' : filters.priority === 'high' ? 'Alta' : filters.priority === 'critical' ? 'Crítica' : 'Prioridad' }}</span>
+          <i class="fas fa-chevron-down kb-caret" :class="{ 'rotate-180': openKBChip === 'priority' }"></i>
+          <div v-if="openKBChip === 'priority'" class="kb-dropdown" @click.stop>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === '' }" @click="filters.priority = ''; openKBChip = null"><span>Todas</span><i v-if="filters.priority === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'low' }" @click="filters.priority = 'low'; openKBChip = null"><span>Baja</span><i v-if="filters.priority === 'low'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'medium' }" @click="filters.priority = 'medium'; openKBChip = null"><span>Media</span><i v-if="filters.priority === 'medium'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'high' }" @click="filters.priority = 'high'; openKBChip = null"><span>Alta</span><i v-if="filters.priority === 'high'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'critical' }" @click="filters.priority = 'critical'; openKBChip = null"><span>Crítica</span><i v-if="filters.priority === 'critical'" class="fas fa-check text-[10px] text-primary-500"></i></div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-            <select v-model="filters.status" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
-              <option value="">Todos</option>
-              <option value="active">Activo</option>
-              <option value="blocked">Bloqueado</option>
-              <option value="completed">Completado</option>
-            </select>
+        </div>
+        <div class="kb-chip" :class="{ 'kb-chip--on': filters.status }" @click.stop="openKBChip = openKBChip === 'status' ? null : 'status'">
+          <i class="fas fa-circle-half-stroke"></i>
+          <span class="kb-label">{{ filters.status === 'active' ? 'Activo' : filters.status === 'blocked' ? 'Bloqueado' : filters.status === 'completed' ? 'Completado' : 'Estado' }}</span>
+          <i class="fas fa-chevron-down kb-caret" :class="{ 'rotate-180': openKBChip === 'status' }"></i>
+          <div v-if="openKBChip === 'status'" class="kb-dropdown" @click.stop>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === '' }" @click="filters.status = ''; openKBChip = null"><span>Todos</span><i v-if="filters.status === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'active' }" @click="filters.status = 'active'; openKBChip = null"><span>Activo</span><i v-if="filters.status === 'active'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'blocked' }" @click="filters.status = 'blocked'; openKBChip = null"><span>Bloqueado</span><i v-if="filters.status === 'blocked'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'completed' }" @click="filters.status = 'completed'; openKBChip = null"><span>Completado</span><i v-if="filters.status === 'completed'" class="fas fa-check text-[10px] text-primary-500"></i></div>
           </div>
-          <div class="flex items-end">
-            <button
-              @click="clearFilters"
-              class="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-            >
-              Limpiar Filtros
-            </button>
-          </div>
+        </div>
+        <div class="flex items-center">
+          <button @click="clearFilters" class="kb-chip">
+            <i class="fas fa-times"></i>
+            <span class="kb-label">Limpiar</span>
+          </button>
         </div>
       </div>
     </div>
@@ -134,7 +136,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBoardsStore } from '@/stores/boards'
 import { useTasksStore } from '@/stores/tasks'
@@ -147,6 +149,8 @@ const boardsStore = useBoardsStore()
 const tasksStore = useTasksStore()
 
 const showFilters = ref(false)
+const openKBChip = ref<string | null>(null)
+const closeKBChip = () => { openKBChip.value = null }
 const selectedSprintId = ref<string | null>(null)
 const filters = ref({
   type: '',
@@ -252,10 +256,12 @@ function closeTaskDetail() {
 }
 
 onMounted(async () => {
+  document.addEventListener('click', closeKBChip)
   const boardId = route.params.id as string
   await boardsStore.fetchBoardById(boardId)
   await loadTasks()
 })
+onUnmounted(() => document.removeEventListener('click', closeKBChip))
 
 // Watch filters
 watch(filters, () => {
@@ -267,4 +273,39 @@ watch(filters, () => {
 .kanban-board {
   max-height: calc(100vh - 64px);
 }
+</style>
+
+<style>
+.kb-chip {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 10px; border-radius: 8px;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  font-size: 11px; font-weight: 700; color: #475569;
+  cursor: pointer; user-select: none; white-space: nowrap; transition: all 0.15s;
+}
+.kb-chip:hover { background: #f1f5f9; }
+.kb-chip--on { background: #ede9fe; border-color: #c4b5fd; color: #6d28d9; }
+.kb-chip i:first-child { font-size: 9px; }
+.kb-caret { font-size: 8px; transition: transform 0.2s; }
+.kb-label { font-size: 11px; font-weight: 700; }
+.kb-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+  min-width: 160px; background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 4px; max-height: 240px; overflow-y: auto;
+}
+.kb-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: #475569; cursor: pointer; transition: background 0.12s;
+}
+.kb-dropdown-item:hover { background: #f1f5f9; }
+.kb-dropdown-item--active { color: #4f46e5; font-weight: 700; }
+.dark .kb-chip { background: #1e293b; border-color: #334155; color: #94a3b8; }
+.dark .kb-chip:hover { background: #273449; }
+.dark .kb-chip--on { background: #3b1f6e33; border-color: #7c3aed55; color: #a78bfa; }
+.dark .kb-dropdown { background: #1e293b; border-color: #334155; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.dark .kb-dropdown-item { color: #94a3b8; }
+.dark .kb-dropdown-item:hover { background: #273449; color: #e2e8f0; }
+.dark .kb-dropdown-item--active { color: #818cf8; }
 </style>

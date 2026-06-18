@@ -39,14 +39,16 @@
           
           <div class="flex items-center gap-2 w-full sm:w-auto">
             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Ordenar por</span>
-            <select 
-              v-model="sortBy" 
-              class="bg-slate-50 rounded-xl px-4 py-2.5 text-[11px] font-bold text-slate-700 outline-none cursor-pointer focus:bg-white focus:border-primary-500 transition-all"
-            >
-              <option value="name">Nombre</option>
-              <option value="company">Empresa</option>
-              <option value="createdAt">Recientes</option>
-            </select>
+            <div class="cl-chip" @click.stop="openCLChip = openCLChip === 'sort' ? null : 'sort'">
+              <i class="fas fa-sort"></i>
+              <span class="cl-label">{{ sortBy === 'name' ? 'Nombre' : sortBy === 'company' ? 'Empresa' : 'Recientes' }}</span>
+              <i class="fas fa-chevron-down cl-caret" :class="{ 'rotate-180': openCLChip === 'sort' }"></i>
+              <div v-if="openCLChip === 'sort'" class="cl-dropdown" @click.stop>
+                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'name' }" @click="sortBy = 'name'; openCLChip = null"><span>Nombre</span><i v-if="sortBy === 'name'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'company' }" @click="sortBy = 'company'; openCLChip = null"><span>Empresa</span><i v-if="sortBy === 'company'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'createdAt' }" @click="sortBy = 'createdAt'; openCLChip = null"><span>Recientes</span><i v-if="sortBy === 'createdAt'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -316,7 +318,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useClientStore } from '../stores/clientStore'
 import type { Client, ClientForm } from '../types'
 import {
@@ -333,6 +335,8 @@ const showModal = ref(false)
 const showDeleteModal = ref(false)
 const searchTerm = ref('')
 const sortBy = ref('name')
+const openCLChip = ref<string | null>(null)
+const closeCLChip = () => { openCLChip.value = null }
 const editingClient = ref<Client | null>(null)
 const clientToDelete = ref<Client | null>(null)
 
@@ -463,5 +467,40 @@ const fetchClients = async () => {
 
 onMounted(() => {
   fetchClients()
+  document.addEventListener('click', closeCLChip)
 })
+onUnmounted(() => document.removeEventListener('click', closeCLChip))
 </script>
+
+<style>
+.cl-chip {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 10px; border-radius: 8px;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  font-size: 11px; font-weight: 700; color: #475569;
+  cursor: pointer; user-select: none; white-space: nowrap; transition: all 0.15s;
+}
+.cl-chip:hover { background: #f1f5f9; }
+.cl-chip i:first-child { font-size: 9px; }
+.cl-caret { font-size: 8px; transition: transform 0.2s; }
+.cl-label { font-size: 11px; font-weight: 700; }
+.cl-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+  min-width: 140px; background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 4px;
+}
+.cl-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: #475569; cursor: pointer; transition: background 0.12s;
+}
+.cl-dropdown-item:hover { background: #f1f5f9; }
+.cl-dropdown-item--active { color: #4f46e5; font-weight: 700; }
+.dark .cl-chip { background: #1e293b; border-color: #334155; color: #94a3b8; }
+.dark .cl-chip:hover { background: #273449; }
+.dark .cl-dropdown { background: #1e293b; border-color: #334155; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.dark .cl-dropdown-item { color: #94a3b8; }
+.dark .cl-dropdown-item:hover { background: #273449; color: #e2e8f0; }
+.dark .cl-dropdown-item--active { color: #818cf8; }
+</style>

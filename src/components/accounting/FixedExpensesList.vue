@@ -26,14 +26,22 @@
             class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
-        <select
-          v-model="statusFilter"
-          class="px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-        >
-          <option value="" class="bg-gray-700">Todos los estados</option>
-          <option value="true" class="bg-gray-700">Activos</option>
-          <option value="false" class="bg-gray-700">Inactivos</option>
-        </select>
+        <div class="fe-chip" :class="{ 'fe-chip--on': statusFilter }" @click.stop="openFEChip = openFEChip === 'status' ? null : 'status'">
+          <i class="fas fa-toggle-on"></i>
+          <span class="fe-label">{{ statusFilter === 'true' ? 'Activos' : statusFilter === 'false' ? 'Inactivos' : 'Todos los estados' }}</span>
+          <i class="fas fa-chevron-down fe-caret" :class="{ 'rotate-180': openFEChip === 'status' }"></i>
+          <div v-if="openFEChip === 'status'" class="fe-dropdown" @click.stop>
+            <div class="fe-dropdown-item" :class="{ 'fe-dropdown-item--active': statusFilter === '' }" @click="statusFilter = ''; openFEChip = null">
+              <span>Todos los estados</span><i v-if="statusFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+            <div class="fe-dropdown-item" :class="{ 'fe-dropdown-item--active': statusFilter === 'true' }" @click="statusFilter = 'true'; openFEChip = null">
+              <span>Activos</span><i v-if="statusFilter === 'true'" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+            <div class="fe-dropdown-item" :class="{ 'fe-dropdown-item--active': statusFilter === 'false' }" @click="statusFilter = 'false'; openFEChip = null">
+              <span>Inactivos</span><i v-if="statusFilter === 'false'" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -143,7 +151,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import type { FixedExpense } from '../../services/accountingService'
 
 interface Props {
@@ -153,6 +161,11 @@ interface Props {
 
 const searchTerm = ref('')
 const statusFilter = ref('')
+const openFEChip = ref<string | null>(null)
+
+const closeFEChip = () => { openFEChip.value = null }
+onMounted(() => document.addEventListener('click', closeFEChip))
+onUnmounted(() => document.removeEventListener('click', closeFEChip))
 
 const filteredExpenses = computed(() => {
   return props.expenses.filter(expense => {
@@ -194,3 +207,31 @@ const emit = defineEmits<{
   toggleStatus: [expense: FixedExpense]
 }>()
 </script>
+
+<style>
+.fe-chip {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 10px; border-radius: 8px;
+  background: #1e293b; border: 1px solid #334155;
+  font-size: 11px; font-weight: 700; color: #94a3b8;
+  cursor: pointer; user-select: none; white-space: nowrap; transition: all 0.15s;
+}
+.fe-chip:hover { background: #273449; }
+.fe-chip--on { background: #3b1f6e33; border-color: #7c3aed55; color: #a78bfa; }
+.fe-chip i:first-child { font-size: 9px; }
+.fe-caret { font-size: 8px; transition: transform 0.2s; }
+.fe-label { font-size: 11px; font-weight: 700; }
+.fe-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+  min-width: 160px; background: #1e293b; border: 1px solid #334155;
+  border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  padding: 4px; max-height: 240px; overflow-y: auto;
+}
+.fe-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: #94a3b8; cursor: pointer; transition: background 0.12s;
+}
+.fe-dropdown-item:hover { background: #273449; color: #e2e8f0; }
+.fe-dropdown-item--active { color: #818cf8; font-weight: 700; }
+</style>

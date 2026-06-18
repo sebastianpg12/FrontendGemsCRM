@@ -108,42 +108,50 @@
       </div>
 
       <!-- Filtros Panel -->
-      <div v-if="showFilters" class="mt-8 pt-8 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 animate-in slide-in-from-top-4 duration-300">
-        <div class="space-y-2">
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Tipo de Tarea</label>
-          <select v-model="filters.type" @change="loadTasks" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">
-            <option value="">Todos los tipos</option>
-            <option value="task">Task</option>
-            <option value="bug">Bug</option>
-            <option value="feature">Feature</option>
-            <option value="user-story">User Story</option>
-            <option value="epic">Epic</option>
-          </select>
+      <div v-if="showFilters" class="mt-8 pt-8 border-t border-slate-100 flex flex-wrap gap-3 animate-in slide-in-from-top-4 duration-300">
+        <div class="tb-chip" :class="{ 'tb-chip--on': filters.type }" @click.stop="openTBChip = openTBChip === 'type' ? null : 'type'">
+          <i class="fas fa-tag"></i>
+          <span class="tb-label">{{ filters.type ? filters.type.charAt(0).toUpperCase() + filters.type.slice(1).replace('-', ' ') : 'Tipo de Tarea' }}</span>
+          <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'type' }"></i>
+          <div v-if="openTBChip === 'type'" class="tb-dropdown" @click.stop>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === '' }" @click="filters.type = ''; loadTasks(); openTBChip = null"><span>Todos los tipos</span><i v-if="filters.type === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'task' }" @click="filters.type = 'task'; loadTasks(); openTBChip = null"><span>Task</span><i v-if="filters.type === 'task'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'bug' }" @click="filters.type = 'bug'; loadTasks(); openTBChip = null"><span>Bug</span><i v-if="filters.type === 'bug'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'feature' }" @click="filters.type = 'feature'; loadTasks(); openTBChip = null"><span>Feature</span><i v-if="filters.type === 'feature'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'user-story' }" @click="filters.type = 'user-story'; loadTasks(); openTBChip = null"><span>User Story</span><i v-if="filters.type === 'user-story'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'epic' }" @click="filters.type = 'epic'; loadTasks(); openTBChip = null"><span>Epic</span><i v-if="filters.type === 'epic'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+          </div>
         </div>
-        <div class="space-y-2">
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Prioridad</label>
-          <select v-model="filters.priority" @change="loadTasks" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">
-            <option value="">Cualquier prioridad</option>
-            <option value="low">Baja</option>
-            <option value="medium">Media</option>
-            <option value="high">Alta</option>
-            <option value="critical">Crítica</option>
-          </select>
+        <div class="tb-chip" :class="{ 'tb-chip--on': filters.priority }" @click.stop="openTBChip = openTBChip === 'priority' ? null : 'priority'">
+          <i class="fas fa-exclamation-circle"></i>
+          <span class="tb-label">{{ filters.priority === 'low' ? 'Baja' : filters.priority === 'medium' ? 'Media' : filters.priority === 'high' ? 'Alta' : filters.priority === 'critical' ? 'Crítica' : 'Prioridad' }}</span>
+          <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'priority' }"></i>
+          <div v-if="openTBChip === 'priority'" class="tb-dropdown" @click.stop>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === '' }" @click="filters.priority = ''; loadTasks(); openTBChip = null"><span>Cualquier prioridad</span><i v-if="filters.priority === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'low' }" @click="filters.priority = 'low'; loadTasks(); openTBChip = null"><span>Baja</span><i v-if="filters.priority === 'low'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'medium' }" @click="filters.priority = 'medium'; loadTasks(); openTBChip = null"><span>Media</span><i v-if="filters.priority === 'medium'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'high' }" @click="filters.priority = 'high'; loadTasks(); openTBChip = null"><span>Alta</span><i v-if="filters.priority === 'high'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'critical' }" @click="filters.priority = 'critical'; loadTasks(); openTBChip = null"><span>Crítica</span><i v-if="filters.priority === 'critical'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+          </div>
         </div>
-        <div class="space-y-2">
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo / Depto</label>
-          <select v-model="filters.department" @change="loadTasks" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">
-            <option value="">Todos los equipos</option>
-            <option v-for="dept in departments" :key="dept" :value="dept">{{ dept }}</option>
-          </select>
+        <div class="tb-chip" :class="{ 'tb-chip--on': filters.department }" @click.stop="openTBChip = openTBChip === 'dept' ? null : 'dept'">
+          <i class="fas fa-users"></i>
+          <span class="tb-label">{{ filters.department || 'Equipo / Depto' }}</span>
+          <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'dept' }"></i>
+          <div v-if="openTBChip === 'dept'" class="tb-dropdown" @click.stop>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.department === '' }" @click="filters.department = ''; loadTasks(); openTBChip = null"><span>Todos los equipos</span><i v-if="filters.department === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div v-for="dept in departments" :key="dept" class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.department === dept }" @click="filters.department = dept; loadTasks(); openTBChip = null"><span>{{ dept }}</span><i v-if="filters.department === dept" class="fas fa-check text-[10px] text-primary-500"></i></div>
+          </div>
         </div>
-        <div class="space-y-2">
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Responsable</label>
-          <select v-model="filters.assignedTo" @change="loadTasks" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">
-            <option value="">Cualquier persona</option>
-            <option :value="authStore.user?._id">Mis Tareas (Yo)</option>
-            <option v-for="member in teamMembers" :key="member._id" :value="member._id">{{ member.name }}</option>
-          </select>
+        <div class="tb-chip" :class="{ 'tb-chip--on': filters.assignedTo }" @click.stop="openTBChip = openTBChip === 'assignee' ? null : 'assignee'">
+          <i class="fas fa-user"></i>
+          <span class="tb-label">{{ filters.assignedTo === authStore.user?._id ? 'Mis Tareas (Yo)' : filters.assignedTo ? (teamMembers.find(m => m._id === filters.assignedTo)?.name ?? 'Responsable') : 'Responsable' }}</span>
+          <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'assignee' }"></i>
+          <div v-if="openTBChip === 'assignee'" class="tb-dropdown" @click.stop>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === '' }" @click="filters.assignedTo = ''; loadTasks(); openTBChip = null"><span>Cualquier persona</span><i v-if="filters.assignedTo === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === authStore.user?._id }" @click="filters.assignedTo = authStore.user?._id ?? ''; loadTasks(); openTBChip = null"><span>Mis Tareas (Yo)</span><i v-if="filters.assignedTo === authStore.user?._id" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div v-for="member in teamMembers" :key="member._id" class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === member._id }" @click="filters.assignedTo = member._id; loadTasks(); openTBChip = null"><span>{{ member.name }}</span><i v-if="filters.assignedTo === member._id" class="fas fa-check text-[10px] text-primary-500"></i></div>
+          </div>
         </div>
         <div class="flex items-end gap-2">
           <button
@@ -369,7 +377,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useBoardsStore } from '@/stores/boards'
 import { useTasksStore, type Task } from '@/stores/tasks'
 import { useAuthStore } from '@/stores/auth'
@@ -388,6 +396,8 @@ const currentView = ref<'kanban' | 'list'>('kanban')
 const selectedBoardId = ref<string>('')
 const selectedSprintId = ref<string | null>(null)
 const showFilters = ref(false)
+const openTBChip = ref<string | null>(null)
+const closeTBChip = () => { openTBChip.value = null }
 const showGitHubPanel = ref(false)
 const showTaskModal = ref(false)
 const selectedTask = ref<Task | null>(null)
@@ -593,7 +603,10 @@ async function onTaskSaved() {
   await loadTasks()
 }
 
+onUnmounted(() => document.removeEventListener('click', closeTBChip))
+
 onMounted(async () => {
+  document.addEventListener('click', closeTBChip)
   try {
     // Cargar filtros guardados
     const saved = localStorage.getItem('gems_crm_filters')
@@ -657,4 +670,39 @@ onMounted(async () => {
 .slide-in-from-top-4 {
   animation-name: slide-in-from-top-4;
 }
+</style>
+
+<style>
+.tb-chip {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 10px; border-radius: 8px;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  font-size: 11px; font-weight: 700; color: #475569;
+  cursor: pointer; user-select: none; white-space: nowrap; transition: all 0.15s;
+}
+.tb-chip:hover { background: #f1f5f9; }
+.tb-chip--on { background: #ede9fe; border-color: #c4b5fd; color: #6d28d9; }
+.tb-chip i:first-child { font-size: 9px; }
+.tb-caret { font-size: 8px; transition: transform 0.2s; }
+.tb-label { font-size: 11px; font-weight: 700; }
+.tb-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+  min-width: 160px; background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 4px; max-height: 240px; overflow-y: auto;
+}
+.tb-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: #475569; cursor: pointer; transition: background 0.12s;
+}
+.tb-dropdown-item:hover { background: #f1f5f9; }
+.tb-dropdown-item--active { color: #4f46e5; font-weight: 700; }
+.dark .tb-chip { background: #1e293b; border-color: #334155; color: #94a3b8; }
+.dark .tb-chip:hover { background: #273449; }
+.dark .tb-chip--on { background: #3b1f6e33; border-color: #7c3aed55; color: #a78bfa; }
+.dark .tb-dropdown { background: #1e293b; border-color: #334155; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.dark .tb-dropdown-item { color: #94a3b8; }
+.dark .tb-dropdown-item:hover { background: #273449; color: #e2e8f0; }
+.dark .tb-dropdown-item--active { color: #818cf8; }
 </style>

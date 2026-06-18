@@ -46,34 +46,49 @@
               class="w-full h-9 pl-8 pr-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
             />
           </div>
-          <div class="relative">
-            <i class="fas fa-exclamation-circle absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-            <select v-model="filterPrioridad" class="select-filter appearance-none" style="padding-left:1.75rem;padding-right:1.75rem;">
-              <option value="">Prioridad: todas</option>
-              <option value="critica">Crítica</option>
-              <option value="alta">Alta</option>
-              <option value="media">Media</option>
-              <option value="baja">Baja</option>
-            </select>
-            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[8px] pointer-events-none"></i>
+          <div class="cv-chip" :class="{ 'cv-chip--on': filterPrioridad }" @click.stop="toggleCasesChip('prioridad')">
+            <i class="fas fa-exclamation-circle"></i>
+            <span class="cv-label">{{ prioridadLabel }}</span>
+            <i class="fas fa-chevron-down cv-caret" :class="{ 'rotate-180': openCasesChip === 'prioridad' }"></i>
+            <div v-if="openCasesChip === 'prioridad'" class="cv-dropdown" @click.stop>
+              <div v-for="opt in prioridadOptions" :key="opt.value"
+                class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterPrioridad === opt.value }"
+                @click="setCasesFilter('prioridad', opt.value)">
+                <span>{{ opt.label }}</span>
+                <i v-if="filterPrioridad === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
+            </div>
           </div>
-          <div class="relative">
-            <i class="fas fa-user absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-            <select v-model="filterResponsable" class="select-filter appearance-none" style="padding-left:1.75rem;padding-right:1.75rem;">
-              <option value="">Responsable: todos</option>
-              <option v-for="m in team" :key="m._id" :value="m._id">{{ m.name }}</option>
-            </select>
-            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[8px] pointer-events-none"></i>
+          <div class="cv-chip" :class="{ 'cv-chip--on': filterResponsable }" @click.stop="toggleCasesChip('responsable')">
+            <i class="fas fa-user"></i>
+            <span class="cv-label">{{ responsableLabel }}</span>
+            <i class="fas fa-chevron-down cv-caret" :class="{ 'rotate-180': openCasesChip === 'responsable' }"></i>
+            <div v-if="openCasesChip === 'responsable'" class="cv-dropdown" @click.stop>
+              <div class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterResponsable === '' }"
+                @click="setCasesFilter('responsable', '')">
+                <span>Todos</span>
+                <i v-if="filterResponsable === ''" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
+              <div v-for="m in team" :key="m._id"
+                class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterResponsable === m._id }"
+                @click="setCasesFilter('responsable', m._id)">
+                <span>{{ m.name }}</span>
+                <i v-if="filterResponsable === m._id" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
+            </div>
           </div>
-          <div class="relative">
-            <i class="fas fa-layer-group absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-            <select v-model="filterTipo" class="select-filter appearance-none" style="padding-left:1.75rem;padding-right:1.75rem;">
-              <option value="">Tipo: todos</option>
-              <option value="seguimiento">Seguimiento</option>
-              <option value="incidencia">Incidencia</option>
-              <option value="documento">Documento</option>
-            </select>
-            <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[8px] pointer-events-none"></i>
+          <div class="cv-chip" :class="{ 'cv-chip--on': filterTipo }" @click.stop="toggleCasesChip('tipo')">
+            <i class="fas fa-layer-group"></i>
+            <span class="cv-label">{{ tipoLabel }}</span>
+            <i class="fas fa-chevron-down cv-caret" :class="{ 'rotate-180': openCasesChip === 'tipo' }"></i>
+            <div v-if="openCasesChip === 'tipo'" class="cv-dropdown" @click.stop>
+              <div v-for="opt in tipoOptions" :key="opt.value"
+                class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterTipo === opt.value }"
+                @click="setCasesFilter('tipo', opt.value)">
+                <span>{{ opt.label }}</span>
+                <i v-if="filterTipo === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -664,6 +679,39 @@ const filterPrioridad = ref('')
 const filterResponsable = ref('')
 const filterTipo = ref('')
 
+const openCasesChip = ref<string | null>(null)
+
+const prioridadOptions = [
+  { value: '', label: 'Prioridad: todas' },
+  { value: 'critica', label: 'Crítica' },
+  { value: 'alta', label: 'Alta' },
+  { value: 'media', label: 'Media' },
+  { value: 'baja', label: 'Baja' },
+]
+const tipoOptions = [
+  { value: '', label: 'Tipo: todos' },
+  { value: 'seguimiento', label: 'Seguimiento' },
+  { value: 'incidencia', label: 'Incidencia' },
+  { value: 'documento', label: 'Documento' },
+]
+
+const prioridadLabel = computed(() => prioridadOptions.find(o => o.value === filterPrioridad.value)?.label ?? 'Prioridad: todas')
+const responsableLabel = computed(() => {
+  if (!filterResponsable.value) return 'Responsable: todos'
+  return team.value.find(m => m._id === filterResponsable.value)?.name ?? 'Responsable: todos'
+})
+const tipoLabel = computed(() => tipoOptions.find(o => o.value === filterTipo.value)?.label ?? 'Tipo: todos')
+
+function toggleCasesChip(chip: string) {
+  openCasesChip.value = openCasesChip.value === chip ? null : chip
+}
+function setCasesFilter(chip: string, value: string) {
+  if (chip === 'prioridad') filterPrioridad.value = value
+  else if (chip === 'responsable') filterResponsable.value = value
+  else if (chip === 'tipo') filterTipo.value = value
+  openCasesChip.value = null
+}
+
 const editingDocs = ref(false)
 const docsDraft = ref('')
 const savingDocs = ref(false)
@@ -1051,6 +1099,7 @@ const onClickOutside = (e: MouseEvent) => {
   if (statusMenuOpen.value && !(e.target as HTMLElement).closest('.relative')) {
     statusMenuOpen.value = false
   }
+  openCasesChip.value = null
 }
 
 onMounted(async () => {
@@ -1146,26 +1195,62 @@ onBeforeUnmount(() => {
   color: #f1f5f9;
 }
 
-.select-filter {
+.cv-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   height: 36px;
-  padding: 0 12px;
+  padding: 0 10px;
   border-radius: 8px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   font-size: 11px;
   font-weight: 700;
   color: #475569;
-  outline: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
   transition: all 0.15s ease;
 }
-.select-filter:focus {
-  border-color: var(--brand-accent, #4f46e5);
+.cv-chip:hover { background: #f1f5f9; }
+.cv-chip--on {
+  background: #ede9fe;
+  border-color: #c4b5fd;
+  color: #6d28d9;
 }
-.dark .select-filter {
-  background: #0f172a;
-  border-color: #334155;
-  color: #cbd5e1;
+.cv-chip i:first-child { font-size: 9px; }
+.cv-caret { font-size: 8px; transition: transform 0.2s ease; }
+.cv-label { font-size: 11px; font-weight: 700; }
+.cv-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 50;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 4px;
+  max-height: 240px;
+  overflow-y: auto;
 }
+.cv-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.cv-dropdown-item:hover { background: #f1f5f9; }
+.cv-dropdown-item--active { color: #4f46e5; font-weight: 700; }
 
 .form-label {
   display: block;
@@ -1223,4 +1308,26 @@ onBeforeUnmount(() => {
 .dark .detail-label {
   color: #64748b;
 }
+</style>
+
+<style>
+.dark .cv-chip {
+  background: #1e293b;
+  border-color: #334155;
+  color: #94a3b8;
+}
+.dark .cv-chip:hover { background: #273449; }
+.dark .cv-chip--on {
+  background: #3b1f6e33;
+  border-color: #7c3aed55;
+  color: #a78bfa;
+}
+.dark .cv-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.dark .cv-dropdown-item { color: #94a3b8; }
+.dark .cv-dropdown-item:hover { background: #273449; color: #e2e8f0; }
+.dark .cv-dropdown-item--active { color: #818cf8; }
 </style>

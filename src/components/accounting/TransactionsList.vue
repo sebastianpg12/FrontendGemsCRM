@@ -26,14 +26,22 @@
             class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
           >
         </div>
-        <select
-          v-model="typeFilter"
-          class="px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-        >
-          <option value="" class="bg-gray-700">Todos los tipos</option>
-          <option value="ingreso" class="bg-gray-700">Ingresos</option>
-          <option value="egreso" class="bg-gray-700">Egresos</option>
-        </select>
+        <div class="acc-chip" :class="{ 'acc-chip--on': typeFilter }" @click.stop="openAccChip = openAccChip === 'type' ? null : 'type'">
+          <i class="fas fa-exchange-alt"></i>
+          <span class="acc-label">{{ typeFilter === 'ingreso' ? 'Ingresos' : typeFilter === 'egreso' ? 'Egresos' : 'Todos los tipos' }}</span>
+          <i class="fas fa-chevron-down acc-caret" :class="{ 'rotate-180': openAccChip === 'type' }"></i>
+          <div v-if="openAccChip === 'type'" class="acc-dropdown" @click.stop>
+            <div class="acc-dropdown-item" :class="{ 'acc-dropdown-item--active': typeFilter === '' }" @click="typeFilter = ''; openAccChip = null">
+              <span>Todos los tipos</span><i v-if="typeFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+            <div class="acc-dropdown-item" :class="{ 'acc-dropdown-item--active': typeFilter === 'ingreso' }" @click="typeFilter = 'ingreso'; openAccChip = null">
+              <span>Ingresos</span><i v-if="typeFilter === 'ingreso'" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+            <div class="acc-dropdown-item" :class="{ 'acc-dropdown-item--active': typeFilter === 'egreso' }" @click="typeFilter = 'egreso'; openAccChip = null">
+              <span>Egresos</span><i v-if="typeFilter === 'egreso'" class="fas fa-check text-[10px] text-primary-500"></i>
+            </div>
+          </div>
+        </div>
         <input
           v-model="dateFilter"
           type="month"
@@ -129,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import type { Transaction } from '../../services/accountingService'
 
 interface Props {
@@ -140,6 +148,11 @@ interface Props {
 const searchTerm = ref('')
 const typeFilter = ref('')
 const dateFilter = ref('')
+const openAccChip = ref<string | null>(null)
+
+const closeAccChip = () => { openAccChip.value = null }
+onMounted(() => document.addEventListener('click', closeAccChip))
+onUnmounted(() => document.removeEventListener('click', closeAccChip))
 
 const filteredTransactions = computed(() => {
   return props.transactions.filter(transaction => {
@@ -169,3 +182,31 @@ const formatDate = (dateString: string): string => {
 
 const props = defineProps<Props>()
 </script>
+
+<style>
+.acc-chip {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 10px; border-radius: 8px;
+  background: #1e293b; border: 1px solid #334155;
+  font-size: 11px; font-weight: 700; color: #94a3b8;
+  cursor: pointer; user-select: none; white-space: nowrap; transition: all 0.15s;
+}
+.acc-chip:hover { background: #273449; }
+.acc-chip--on { background: #3b1f6e33; border-color: #7c3aed55; color: #a78bfa; }
+.acc-chip i:first-child { font-size: 9px; }
+.acc-caret { font-size: 8px; transition: transform 0.2s; }
+.acc-label { font-size: 11px; font-weight: 700; }
+.acc-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+  min-width: 160px; background: #1e293b; border: 1px solid #334155;
+  border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  padding: 4px; max-height: 240px; overflow-y: auto;
+}
+.acc-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: #94a3b8; cursor: pointer; transition: background 0.12s;
+}
+.acc-dropdown-item:hover { background: #273449; color: #e2e8f0; }
+.acc-dropdown-item--active { color: #818cf8; font-weight: 700; }
+</style>

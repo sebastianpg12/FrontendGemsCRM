@@ -46,26 +46,30 @@
     <!-- Filters and Search -->
     <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
       <div class="flex items-center space-x-3">
-        <select
-          v-model="statusFilter"
-          class="bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2"
-        >
-          <option value="">Todos los estados</option>
-          <option value="completed">Completadas</option>
-          <option value="pending">Pendientes</option>
-          <option value="in-progress">En Progreso</option>
-        </select>
-        
-        <select
-          v-model="typeFilter"
-          class="bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-2"
-        >
-          <option value="">Todos los tipos</option>
-          <option value="call">Llamada</option>
-          <option value="meeting">Reunión</option>
-          <option value="email">Email</option>
-          <option value="task">Tarea</option>
-        </select>
+        <div class="am-chip" :class="{ 'am-chip--on': statusFilter }" @click.stop="openAMChip = openAMChip === 'status' ? null : 'status'">
+          <i class="fas fa-circle-half-stroke"></i>
+          <span class="am-label">{{ statusFilter === 'completed' ? 'Completadas' : statusFilter === 'pending' ? 'Pendientes' : statusFilter === 'in-progress' ? 'En Progreso' : 'Todos los estados' }}</span>
+          <i class="fas fa-chevron-down am-caret" :class="{ 'rotate-180': openAMChip === 'status' }"></i>
+          <div v-if="openAMChip === 'status'" class="am-dropdown" @click.stop>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === '' }" @click="statusFilter = ''; openAMChip = null"><span>Todos los estados</span><i v-if="statusFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'completed' }" @click="statusFilter = 'completed'; openAMChip = null"><span>Completadas</span><i v-if="statusFilter === 'completed'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'pending' }" @click="statusFilter = 'pending'; openAMChip = null"><span>Pendientes</span><i v-if="statusFilter === 'pending'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'in-progress' }" @click="statusFilter = 'in-progress'; openAMChip = null"><span>En Progreso</span><i v-if="statusFilter === 'in-progress'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+          </div>
+        </div>
+
+        <div class="am-chip" :class="{ 'am-chip--on': typeFilter }" @click.stop="openAMChip = openAMChip === 'type' ? null : 'type'">
+          <i class="fas fa-tag"></i>
+          <span class="am-label">{{ typeFilter === 'call' ? 'Llamada' : typeFilter === 'meeting' ? 'Reunión' : typeFilter === 'email' ? 'Email' : typeFilter === 'task' ? 'Tarea' : 'Todos los tipos' }}</span>
+          <i class="fas fa-chevron-down am-caret" :class="{ 'rotate-180': openAMChip === 'type' }"></i>
+          <div v-if="openAMChip === 'type'" class="am-dropdown" @click.stop>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === '' }" @click="typeFilter = ''; openAMChip = null"><span>Todos los tipos</span><i v-if="typeFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'call' }" @click="typeFilter = 'call'; openAMChip = null"><span>Llamada</span><i v-if="typeFilter === 'call'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'meeting' }" @click="typeFilter = 'meeting'; openAMChip = null"><span>Reunión</span><i v-if="typeFilter === 'meeting'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'email' }" @click="typeFilter = 'email'; openAMChip = null"><span>Email</span><i v-if="typeFilter === 'email'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'task' }" @click="typeFilter = 'task'; openAMChip = null"><span>Tarea</span><i v-if="typeFilter === 'task'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+          </div>
+        </div>
       </div>
 
       <button
@@ -198,7 +202,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useNotifications } from '@/composables/useNotifications'
 
 const { confirmDelete } = useNotifications()
@@ -215,6 +219,10 @@ defineEmits(['create', 'edit'])
 const loading = ref(false)
 const statusFilter = ref('')
 const typeFilter = ref('')
+const openAMChip = ref<string | null>(null)
+
+const closeAMChip = () => { openAMChip.value = null }
+onUnmounted(() => document.removeEventListener('click', closeAMChip))
 
 // Mock data - En producción esto vendría de un store/API
 const activities = ref([
@@ -334,8 +342,35 @@ const deleteActivity = async (activity: any) => {
   }
 }
 
-// Load data on mount
 onMounted(() => {
-  // In production, this would load from API/store
+  document.addEventListener('click', closeAMChip)
 })
 </script>
+
+<style>
+.am-chip {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 10px; border-radius: 8px;
+  background: #1e293b; border: 1px solid #334155;
+  font-size: 11px; font-weight: 700; color: #94a3b8;
+  cursor: pointer; user-select: none; white-space: nowrap; transition: all 0.15s;
+}
+.am-chip:hover { background: #273449; }
+.am-chip--on { background: #3b1f6e33; border-color: #7c3aed55; color: #a78bfa; }
+.am-chip i:first-child { font-size: 9px; }
+.am-caret { font-size: 8px; transition: transform 0.2s; }
+.am-label { font-size: 11px; font-weight: 700; }
+.am-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+  min-width: 160px; background: #1e293b; border: 1px solid #334155;
+  border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  padding: 4px; max-height: 240px; overflow-y: auto;
+}
+.am-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: #94a3b8; cursor: pointer; transition: background 0.12s;
+}
+.am-dropdown-item:hover { background: #273449; color: #e2e8f0; }
+.am-dropdown-item--active { color: #818cf8; font-weight: 700; }
+</style>
