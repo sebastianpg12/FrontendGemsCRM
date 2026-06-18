@@ -1281,18 +1281,25 @@ onMounted(async () => {
   background: transparent; border: none; outline: none;
   appearance: none; -webkit-appearance: none;
   font-size: 0.7rem; font-weight: 700; color: inherit; cursor: pointer; max-width: 130px;
-  color-scheme: light;
 }
 .tk-caret { font-size: 0.48rem; opacity: 0.5; }
 
 :global(.dark) .tk-chip {
   background: rgb(30 41 59); border-color: rgb(51 65 85);
   color: rgb(148 163 184);
-  /* color-scheme se deja en light para que el select nativo quede transparente */
 }
 :global(.dark) .tk-chip:hover { background: rgb(37 50 71); }
 :global(.dark) .tk-chip:focus-within { background: rgb(49 46 129 / 0.25); border-color: rgb(139 92 246); color: rgb(167 139 250); }
 :global(.dark) .tk-chip--on { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
-:global(.dark) .tk-select { color: inherit; background: transparent; }
+
+/* En dark mode el SO de Windows ignora background:transparent en <select> nativo;
+   se fuerza un color sólido que iguala el chip base. */
+:global(.dark) .tk-select {
+  background: rgb(30 41 59);
+  color: inherit;
+}
+:global(.dark) .tk-chip--on .tk-select {
+  background: rgb(44 26 89);
+}
 :global(.dark) .tk-select option { background: rgb(30 41 59); color: rgb(226 232 240); }
 </style>
