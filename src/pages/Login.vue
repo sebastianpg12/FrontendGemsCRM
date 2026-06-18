@@ -263,7 +263,7 @@
 
     <!-- ── Modal: Forgot Password ── -->
     <div v-if="showForgotPassword" class="fixed inset-0 z-50">
-      <div class="absolute inset-0" style="background: rgba(0,0,0,0.35); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);"></div>
+      <div class="absolute inset-0" style="background: rgba(0,0,0,0.22);"></div>
       <div class="relative z-10 h-full flex items-center justify-center p-4">
       <div class="login-card rounded-[2rem] max-w-md w-full mx-0 p-8 animate-fade-in">
         <div class="flex items-center justify-between mb-6">
