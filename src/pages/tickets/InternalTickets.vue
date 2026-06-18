@@ -57,44 +57,57 @@
         <div class="flex items-center gap-1.5 flex-wrap">
           <div class="tk-chip" :class="{ 'tk-chip--on': filterStatus }">
             <i class="fas fa-layer-group"></i>
-            <select v-model="filterStatus" class="tk-select">
-              <option value="open">En Proceso</option>
-              <option value="waiting">Pendiente</option>
-              <option value="resolved">Resueltos</option>
-            </select>
+            <div class="tk-select-wrap">
+              <span class="tk-label">{{ filterStatusLabel }}</span>
+              <select v-model="filterStatus" class="tk-select" aria-label="Estado">
+                <option value="">Estado</option>
+                <option value="open">En Proceso</option>
+                <option value="waiting">Pendiente</option>
+                <option value="resolved">Resueltos</option>
+              </select>
+            </div>
             <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
           <div class="tk-chip" :class="{ 'tk-chip--on': filterCategory }">
             <i class="fas fa-tag"></i>
-            <select v-model="filterCategory" class="tk-select">
-              <option value="">Categorías</option>
-              <option value="technical">Technical</option>
-              <option value="billing">Billing</option>
-              <option value="sales">Sales</option>
-              <option value="other">Other</option>
-            </select>
+            <div class="tk-select-wrap">
+              <span class="tk-label">{{ filterCategoryLabel }}</span>
+              <select v-model="filterCategory" class="tk-select" aria-label="Categoría">
+                <option value="">Categorías</option>
+                <option value="technical">Technical</option>
+                <option value="billing">Billing</option>
+                <option value="sales">Sales</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
             <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
           <div class="tk-chip" :class="{ 'tk-chip--on': filterPriority }">
             <i class="fas fa-flag"></i>
-            <select v-model="filterPriority" class="tk-select">
-              <option value="">Prioridad</option>
-              <option value="urgent">P1 · Crítico</option>
-              <option value="high">P2 · Alto</option>
-              <option value="medium">P3 · Medio</option>
-              <option value="low">P4 · Bajo</option>
-            </select>
+            <div class="tk-select-wrap">
+              <span class="tk-label">{{ filterPriorityLabel }}</span>
+              <select v-model="filterPriority" class="tk-select" aria-label="Prioridad">
+                <option value="">Prioridad</option>
+                <option value="urgent">P1 · Crítico</option>
+                <option value="high">P2 · Alto</option>
+                <option value="medium">P3 · Medio</option>
+                <option value="low">P4 · Bajo</option>
+              </select>
+            </div>
             <i class="fas fa-chevron-down tk-caret"></i>
           </div>
 
           <div class="tk-chip" :class="{ 'tk-chip--on': filterAssignedTo }">
             <i class="fas fa-user-shield"></i>
-            <select v-model="filterAssignedTo" class="tk-select">
-              <option value="">Cualquier agente</option>
-              <option v-for="member in supportAgents" :key="member._id" :value="member._id">{{ member.name }}</option>
-            </select>
+            <div class="tk-select-wrap">
+              <span class="tk-label">{{ filterAssignedToLabel }}</span>
+              <select v-model="filterAssignedTo" class="tk-select" aria-label="Agente">
+                <option value="">Cualquier agente</option>
+                <option v-for="member in supportAgents" :key="member._id" :value="member._id">{{ member.name }}</option>
+              </select>
+            </div>
             <i class="fas fa-chevron-down tk-caret"></i>
           </div>
         </div>
@@ -845,10 +858,27 @@ const filteredTickets = computed(() => {
 })
 
 const supportAgents = computed(() => {
-  return teamMembers.value.filter(member => 
-    member.role !== 'client' && 
+  return teamMembers.value.filter(member =>
+    member.role !== 'client' &&
     ['admin', 'supervisor', 'support'].includes(member.role)
   )
+})
+
+const filterStatusLabel = computed(() => {
+  const map: Record<string, string> = { open: 'En Proceso', waiting: 'Pendiente', resolved: 'Resueltos' }
+  return filterStatus.value ? map[filterStatus.value] : 'Estado'
+})
+const filterCategoryLabel = computed(() => {
+  const map: Record<string, string> = { technical: 'Technical', billing: 'Billing', sales: 'Sales', other: 'Other' }
+  return filterCategory.value ? map[filterCategory.value] : 'Categorías'
+})
+const filterPriorityLabel = computed(() => {
+  const map: Record<string, string> = { urgent: 'P1 · Crítico', high: 'P2 · Alto', medium: 'P3 · Medio', low: 'P4 · Bajo' }
+  return filterPriority.value ? map[filterPriority.value] : 'Prioridad'
+})
+const filterAssignedToLabel = computed(() => {
+  if (!filterAssignedTo.value) return 'Cualquier agente'
+  return supportAgents.value.find((m: any) => m._id === filterAssignedTo.value)?.name || 'Cualquier agente'
 })
 
 const inboxTickets = computed(() => {
@@ -1277,10 +1307,22 @@ onMounted(async () => {
 .tk-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
 .tk-chip:focus-within { border-color: rgb(99 102 241); background: rgb(238 242 255); color: rgb(79 70 229); }
 .tk-chip--on { border-color: rgb(139 92 246); background: rgb(245 243 255); color: rgb(109 40 217); }
+.tk-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.tk-label {
+  font-size: 0.7rem; font-weight: 700; color: inherit;
+  white-space: nowrap; pointer-events: none; max-width: 110px;
+  overflow: hidden; text-overflow: ellipsis;
+}
 .tk-select {
-  background: transparent; border: none; outline: none;
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+  width: 100%; height: 100%;
+  border: none; background: transparent;
   appearance: none; -webkit-appearance: none;
-  font-size: 0.7rem; font-weight: 700; color: inherit; cursor: pointer; max-width: 130px;
 }
 .tk-caret { font-size: 0.48rem; opacity: 0.5; }
 
