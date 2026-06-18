@@ -1286,10 +1286,12 @@ onMounted(async () => {
 
 :global(.dark) .tk-chip {
   background: rgb(30 41 59); border-color: rgb(51 65 85);
-  color: rgb(148 163 184); color-scheme: dark;
+  color: rgb(148 163 184);
+  /* color-scheme se deja en light para que el select nativo quede transparente */
 }
 :global(.dark) .tk-chip:hover { background: rgb(37 50 71); }
 :global(.dark) .tk-chip:focus-within { background: rgb(49 46 129 / 0.25); border-color: rgb(139 92 246); color: rgb(167 139 250); }
 :global(.dark) .tk-chip--on { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
 :global(.dark) .tk-select { color: inherit; background: transparent; }
+:global(.dark) .tk-select option { background: rgb(30 41 59); color: rgb(226 232 240); }
 </style>
