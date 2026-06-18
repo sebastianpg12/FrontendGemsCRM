@@ -169,7 +169,7 @@
               <!-- Card Content -->
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                  <span class="text-[9px] font-black font-mono text-primary-600 bg-primary-50 px-2 py-0.5 rounded-lg border border-primary-100 shadow-sm">
+                  <span class="text-[9px] font-black font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-lg border border-primary-100 dark:border-primary-700/40 shadow-sm">
                     #{{ ticket.ticketNumber }}
                   </span>
                 </div>
