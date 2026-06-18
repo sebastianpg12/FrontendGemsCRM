@@ -5,9 +5,9 @@
       type="button"
       @click="toggle"
       :class="[
-        'w-full bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all shadow-sm flex items-center justify-between group',
+        'w-full bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-800 dark:text-slate-200 focus:bg-white dark:focus:bg-[#273449] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all shadow-sm flex items-center justify-between group',
         size === 'sm' ? 'px-3 py-1.5 text-xs' : 'px-4 py-2.5 text-sm',
-        { 'ring-4 ring-primary-500/10 border-primary-500 bg-white': isOpen }
+        { 'ring-4 ring-primary-500/10 border-primary-500 bg-white dark:bg-[#273449]': isOpen }
       ]"
     >
       <div class="flex items-center gap-2 truncate">
@@ -36,7 +36,7 @@
         class="dropdown-panel"
       >
         <!-- Search input -->
-        <div v-if="searchable" class="p-2 border-b border-slate-100">
+        <div v-if="searchable" class="p-2 border-b border-slate-100 dark:border-[#334155]">
           <div class="relative">
             <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
             <input
@@ -44,7 +44,7 @@
               v-model="searchQuery"
               type="text"
               placeholder="Buscar..."
-              class="w-full pl-7 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
+              class="w-full pl-7 pr-3 py-1.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
               @click.stop
             />
           </div>
@@ -65,12 +65,12 @@
               'rounded-xl cursor-pointer transition-colors flex items-center justify-between group/item',
               size === 'sm' ? 'px-2 py-1.5' : 'px-3 py-2.5',
               option.value === modelValue
-                ? 'bg-primary-50 text-primary-700'
-                : 'hover:bg-slate-50 text-slate-700'
+                ? 'bg-primary-50 dark:bg-primary-500/20 text-primary-600 dark:text-primary-300 font-bold'
+                : 'hover:bg-slate-50 dark:hover:bg-[#273449] text-slate-700 dark:text-slate-300'
             ]"
           >
             <div class="flex items-center gap-2 truncate">
-              <i v-if="option.icon" :class="[option.icon, option.value === modelValue ? 'text-primary-500' : 'text-slate-400 group-hover/item:text-slate-600', 'text-xs']"></i>
+              <i v-if="option.icon" :class="[option.icon, option.value === modelValue ? 'text-primary-500 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500 group-hover/item:text-slate-600', 'text-xs']"></i>
               <span :class="[
                 option.specialClass || 'font-medium',
                 size === 'sm' ? 'text-xs' : 'text-sm'

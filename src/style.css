@@ -377,6 +377,10 @@ body {
   .dropdown-panel {
     @apply absolute z-50 w-full mt-1.5 bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden;
   }
+  .dark .dropdown-panel {
+    @apply bg-[#1e293b] border-[#334155];
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  }
 
   /* ── Form labels ────────────────────────────────────────────────── */
   .label-base {

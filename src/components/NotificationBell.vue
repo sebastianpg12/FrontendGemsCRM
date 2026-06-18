@@ -4,25 +4,23 @@
     <button
       type="button"
       @click.stop="toggleDropdown"
-      class="relative w-12 h-12 flex items-center justify-center bg-white border border-slate-200/80 rounded-full shadow-[0_4px_18px_-4px_rgba(15,23,42,0.12)] hover:shadow-[0_6px_22px_-4px_rgba(15,23,42,0.18)] hover:-translate-y-0.5 transition-all duration-200 active:scale-95 group"
+      class="relative w-12 h-12 flex items-center justify-center rounded-full hover:-translate-y-0.5 transition-all duration-200 active:scale-95"
+      style="background: var(--brand-accent); box-shadow: 0 4px 18px -4px rgba(var(--brand-accent-rgb), 0.55), 0 0 0 3px rgba(var(--brand-accent-rgb), 0.15);"
       title="Notificaciones"
     >
       <!-- Icono -->
-      <i
-        class="fas fa-bell text-[15px] transition-colors duration-200"
-        :class="unreadCount > 0 ? 'text-slate-700' : 'text-slate-400 group-hover:text-slate-600'"
-      ></i>
+      <i class="fas fa-bell text-[15px] text-white"></i>
 
-      <!-- Badge no leídas (sobrio y refinado) -->
+      <!-- Badge no leídas -->
       <span
         v-if="unreadCount > 0"
-        class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-rose-500/95 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-[1.5px] border-white shadow-[0_2px_6px_-1px_rgba(244,63,94,0.35)] tabular-nums leading-none"
+        class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-[2px] border-white shadow-lg tabular-nums leading-none"
       >{{ unreadCount > 99 ? '99+' : unreadCount }}</span>
 
-      <!-- Punto verde discreto cuando NO hay no leídas (estado "estás al día") -->
+      <!-- Punto verde cuando sin no leídas -->
       <span
         v-else
-        class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 border-[1.5px] border-white rounded-full shadow-sm"
+        class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 border-[2px] border-white rounded-full shadow-sm"
       ></span>
     </button>
 

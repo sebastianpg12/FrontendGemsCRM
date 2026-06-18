@@ -9,6 +9,10 @@
           </div>
           <h1 class="text-2xl font-black text-slate-900 dark:text-white">Panel de Control</h1>
           <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Gestión de tenants y auditoría</p>
+          <div v-if="authStore.organization" class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-300 text-[11px] font-bold">
+            <i class="fas fa-building text-[9px]"></i>
+            Dentro de: <span class="font-black ml-0.5">{{ authStore.organization.name }}</span>
+          </div>
         </div>
         <button
           v-if="activeTab === 'orgs'"

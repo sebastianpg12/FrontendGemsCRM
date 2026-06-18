@@ -110,7 +110,7 @@
              <i class="fas fa-circle-dot text-[9px]"></i>
              <span class="tm-label">{{ selectedStatusLabel }}</span>
              <i class="fas fa-chevron-down tm-caret" :class="{ 'rotate-180': openTeamChip === 'status' }"></i>
-             <div v-if="openTeamChip === 'status'" class="tm-dropdown" @click.stop>
+             <div v-if="openTeamChip === 'status'" class="tm-dropdown tm-dropdown--end" @click.stop>
                <div v-for="opt in statusOptions" :key="opt.value"
                  class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedStatus === opt.value }"
                  @click="setTeamFilter('status', opt.value)">
@@ -726,6 +726,7 @@ onUnmounted(() => { document.removeEventListener('click', closeTeamChips) })
   border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 4px; overflow: hidden;
 }
+.tm-dropdown--end { left: auto; right: 0; }
 .tm-dropdown-item {
   display: flex; align-items: center; justify-content: space-between;
   padding: 6px 10px; border-radius: 0.5rem;

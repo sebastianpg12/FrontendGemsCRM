@@ -249,21 +249,13 @@
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
               Desde
             </label>
-            <input 
-              v-model="startDate" 
-              type="date" 
-              class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-primary-500 outline-none transition-all"
-            />
+            <DatePicker v-model="startDate" placeholder="dd/mm/aaaa" />
           </div>
           <div class="flex-1">
             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
               Hasta
             </label>
-            <input 
-              v-model="endDate" 
-              type="date" 
-              class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-primary-500 outline-none transition-all"
-            />
+            <DatePicker v-model="endDate" placeholder="dd/mm/aaaa" />
           </div>
         </div>
       </div>
@@ -2632,6 +2624,7 @@ import VoiceDictateButton from '@/components/ui/VoiceDictateButton.vue'
 import ActivityFormModal from '../forms/ActivityFormModal.vue'
 import AssignActivityModal from '../modals/AssignActivityModal.vue'
 import CustomSelect from '../ui/CustomSelect.vue'
+import DatePicker from '../ui/DatePicker.vue'
 import ActivityCalendar from '../calendar/ActivityCalendar.vue'
 import QuickTaskModal from '../modals/QuickTaskModal.vue'
 import AvatarInline from '../AvatarInline.vue'
