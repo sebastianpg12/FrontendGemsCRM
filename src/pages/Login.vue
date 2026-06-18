@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center font-['Inter',sans-serif] overflow-hidden relative" style="background: #04060d;">
+  <div class="min-h-screen flex items-start sm:items-center justify-center font-['Inter',sans-serif] overflow-y-auto relative py-8 sm:py-12" style="background: #04060d;">
 
     <!-- ── Background: Nebula layers (accent-reactive) ── -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -53,7 +53,7 @@
     <div class="relative z-10 w-full max-w-[420px] mx-4 animate-fade-in">
 
       <!-- Logo + brand header (above card) -->
-      <div class="flex flex-col items-center mb-8">
+      <div class="flex flex-col items-center mb-5 sm:mb-8">
         <div class="relative mb-4">
           <!-- Pulse rings -->
           <div class="pulse-ring" style="width:60px;height:60px;"></div>
@@ -147,7 +147,7 @@
             <button
               type="button"
               @click="showPassword = !showPassword"
-              class="absolute right-4 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors p-1"
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-white/45 hover:text-white/80 transition-colors p-1"
               tabindex="-1"
             >
               <i :class="showPassword ? 'far fa-eye-slash' : 'far fa-eye'" class="text-sm"></i>
@@ -157,7 +157,7 @@
           <!-- Options row -->
           <div class="flex items-center justify-between px-0.5 pt-0.5">
             <label class="flex items-center cursor-pointer group select-none gap-2">
-              <div class="relative flex-shrink-0">
+              <div class="relative flex-shrink-0 w-4 h-4">
                 <input
                   type="checkbox"
                   v-model="rememberMe"
@@ -166,7 +166,7 @@
                     ? `background: var(--brand-accent); border: 1.5px solid var(--brand-accent);`
                     : `border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);`"
                 />
-                <i class="fas fa-check absolute inset-0 flex items-center justify-center text-[7px] text-white pointer-events-none transition-opacity"
+                <i class="fas fa-check absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[7px] text-white pointer-events-none transition-opacity"
                    :class="rememberMe ? 'opacity-100' : 'opacity-0'"></i>
               </div>
               <span class="text-[11px] font-semibold text-white/35 group-hover:text-white/55 transition-colors">Recordarme</span>
@@ -264,8 +264,10 @@
     </div>
 
     <!-- ── Modal: Forgot Password ── -->
-    <div v-if="showForgotPassword" class="fixed inset-0 z-50 flex items-center justify-center" style="background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);">
-      <div class="login-card rounded-[2rem] max-w-md w-full mx-4 p-8 animate-fade-in">
+    <div v-if="showForgotPassword" class="fixed inset-0 z-50">
+      <div class="absolute inset-0" style="background: rgba(0,0,0,0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);"></div>
+      <div class="relative z-10 h-full flex items-center justify-center p-4">
+      <div class="login-card rounded-[2rem] max-w-md w-full mx-0 p-8 animate-fade-in">
         <div class="flex items-center justify-between mb-6">
           <div>
             <h3 class="text-white/90 text-lg font-bold mb-0.5">Restablecer Contraseña</h3>
@@ -310,6 +312,7 @@
             </button>
           </div>
         </form>
+      </div>
       </div>
     </div>
 

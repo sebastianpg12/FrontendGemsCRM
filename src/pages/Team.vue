@@ -257,7 +257,7 @@
                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Rol Operativo</label>
                       <div class="relative">
                         <i class="fas fa-shield-halved absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none"></i>
-                        <select v-model="formData.role" required class="w-full p-4 pl-10 pr-10 bg-slate-50 rounded-xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none">
+                        <select v-model="formData.role" required class="w-full p-4 pl-10 pr-10 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none">
                           <option value="" disabled>Selecciona un rol</option>
                           <option v-for="role in allAvailableRoles" :key="role._id || role.name" :value="role.name">
                             {{ getRoleDisplayName(role.name) }}
@@ -301,7 +301,7 @@
                          <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none z-10"></i>
                          <select
                            v-model="formData.department"
-                           class="w-full p-4 pl-10 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-200 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none pr-10"
+                           class="w-full p-4 pl-10 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none pr-10"
                          >
                            <option value="">Sin departamento</option>
                            <option v-for="dept in allDepartments" :key="dept" :value="dept">{{ dept }}</option>
@@ -345,7 +345,7 @@
                 </div>
              </div>
 
-             <div class="flex gap-4 pt-10">
+             <div class="flex gap-4 pt-10 pb-2">
                 <button type="button" @click="closeModal" class="flex-1 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest hover:bg-slate-50 rounded-xl transition-all">Cancelar</button>
                 <button type="submit" :disabled="isSubmitting" class="flex-[2] py-4 bg-primary-600 text-[11px] font-black text-white uppercase tracking-widest rounded-2xl shadow-lg shadow-primary-500/20 hover:bg-primary-700 transition-all">
                    {{ isSubmitting ? 'Guardando...' : (showCreateModal ? 'Crear Colaborador' : 'Actualizar Información') }}

@@ -9,37 +9,37 @@
       
       <div class="flex items-center gap-4 pr-20">
         <!-- Botón de vista -->
-        <div class="flex bg-gray-800 rounded-lg p-1">
+        <div class="flex bg-slate-100 dark:bg-[#1e293b] rounded-xl p-1">
           <button
             @click="viewMode = 'grid'"
             :class="[
-              'px-3 py-1.5 text-xs font-bold rounded-md transition-all',
-              viewMode === 'grid' 
-                ? 'bg-white text-primary-600 shadow-sm border border-slate-200' 
-                : 'text-slate-500 hover:text-slate-700'
+              'px-3 py-1.5 text-xs font-bold rounded-lg transition-all',
+              viewMode === 'grid'
+                ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             ]"
           >
-            <i class="fas fa-th mr-2"></i>
+            <i class="fas fa-th mr-1.5"></i>
             Grid
           </button>
           <button
             @click="viewMode = 'list'"
             :class="[
-              'px-3 py-2 text-sm font-medium rounded-md transition-colors',
-              viewMode === 'list' 
-                ? 'bg-primary-600 text-white' 
-                : 'text-gray-400 hover:text-white'
+              'px-3 py-1.5 text-xs font-bold rounded-lg transition-all',
+              viewMode === 'list'
+                ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             ]"
           >
-            <i class="fas fa-list mr-2"></i>
+            <i class="fas fa-list mr-1.5"></i>
             Lista
           </button>
         </div>
 
         <!-- Filtros -->
-        <select 
-          v-model="statusFilter" 
-          class="bg-gray-800 border border-gray-700 text-white rounded-lg px-3 py-2 text-sm"
+        <select
+          v-model="statusFilter"
+          class="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-xl px-3 py-2 text-sm font-bold outline-none focus:ring-2 focus:ring-primary-500/20"
         >
           <option value="">Todos los estados</option>
           <option value="active">Activo</option>
@@ -225,10 +225,10 @@
 
     <!-- Estado vacío -->
     <div v-else-if="!loading && filteredClients.length === 0" class="text-center py-12">
-      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-primary-500/20">
-        <i class="fas fa-users text-6xl text-gray-600 mb-4"></i>
-        <h3 class="text-xl font-bold text-white mb-2">No hay clientes</h3>
-        <p class="text-gray-400 mb-6">
+      <div class="bg-slate-50 dark:bg-[#1e293b] rounded-xl p-8 border border-dashed border-slate-200 dark:border-slate-700">
+        <i class="fas fa-users text-6xl text-slate-300 dark:text-slate-600 mb-4"></i>
+        <h3 class="text-xl font-bold text-slate-700 dark:text-slate-200 mb-2">No hay clientes</h3>
+        <p class="text-slate-400 mb-6">
           {{ searchTerm ? 'No se encontraron clientes que coincidan con tu búsqueda' : 'Comienza agregando tu primer cliente' }}
         </p>
         <button

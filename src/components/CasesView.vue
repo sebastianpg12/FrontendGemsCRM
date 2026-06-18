@@ -48,7 +48,7 @@
           </div>
           <div class="relative">
             <i class="fas fa-exclamation-circle absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-            <select v-model="filterPrioridad" class="select-filter pl-7 pr-7 appearance-none">
+            <select v-model="filterPrioridad" class="select-filter appearance-none" style="padding-left:1.75rem;padding-right:1.75rem;">
               <option value="">Prioridad: todas</option>
               <option value="critica">Crítica</option>
               <option value="alta">Alta</option>
@@ -59,7 +59,7 @@
           </div>
           <div class="relative">
             <i class="fas fa-user absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-            <select v-model="filterResponsable" class="select-filter pl-7 pr-7 appearance-none">
+            <select v-model="filterResponsable" class="select-filter appearance-none" style="padding-left:1.75rem;padding-right:1.75rem;">
               <option value="">Responsable: todos</option>
               <option v-for="m in team" :key="m._id" :value="m._id">{{ m.name }}</option>
             </select>
@@ -67,7 +67,7 @@
           </div>
           <div class="relative">
             <i class="fas fa-layer-group absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-            <select v-model="filterTipo" class="select-filter pl-7 pr-7 appearance-none">
+            <select v-model="filterTipo" class="select-filter appearance-none" style="padding-left:1.75rem;padding-right:1.75rem;">
               <option value="">Tipo: todos</option>
               <option value="seguimiento">Seguimiento</option>
               <option value="incidencia">Incidencia</option>
@@ -432,8 +432,8 @@
 
     <!-- ════════ MODAL CREAR / EDITAR ════════ -->
     <div v-if="showFormModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
-        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449] rounded-t-2xl">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449]">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">
             {{ form._id ? 'Editar caso' : 'Nuevo caso' }}
           </h3>
@@ -458,7 +458,7 @@
               <label class="form-label">Tipo</label>
               <div class="relative">
                 <i class="fas fa-layer-group absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.tipo" class="form-input pl-8 pr-8 appearance-none">
+                <select v-model="form.tipo" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
                   <option value="seguimiento">Seguimiento</option>
                   <option value="incidencia">Incidencia</option>
                   <option value="documento">Documento</option>
@@ -470,7 +470,7 @@
               <label class="form-label">Prioridad</label>
               <div class="relative">
                 <i class="fas fa-exclamation-circle absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.prioridad" class="form-input pl-8 pr-8 appearance-none">
+                <select v-model="form.prioridad" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
                   <option value="baja">Baja</option>
                   <option value="media">Media</option>
                   <option value="alta">Alta</option>
@@ -483,7 +483,7 @@
               <label class="form-label">Cliente</label>
               <div class="relative">
                 <i class="fas fa-briefcase absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.cliente_id" class="form-input pl-8 pr-8 appearance-none">
+                <select v-model="form.cliente_id" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
                   <option value="">Interno (sin cliente)</option>
                   <option v-for="c in clients" :key="c._id" :value="c._id">{{ c.name }}</option>
                 </select>
@@ -494,7 +494,7 @@
               <label class="form-label">Responsable</label>
               <div class="relative">
                 <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.asignado_a" class="form-input pl-8 pr-8 appearance-none">
+                <select v-model="form.asignado_a" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
                   <option value="">Sin asignar</option>
                   <option v-for="m in team" :key="m._id" :value="m._id">{{ m.name }}</option>
                 </select>
@@ -524,8 +524,8 @@
 
     <!-- ════════ MODAL VINCULAR TICKET ════════ -->
     <div v-if="showLinkModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col">
-        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449] rounded-t-2xl">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449]">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Vincular ticket</h3>
           <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showLinkModal = false">
             <i class="fas fa-times text-[12px]"></i>

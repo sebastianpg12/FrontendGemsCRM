@@ -22,7 +22,7 @@
           <option value="trial">Prueba</option>
         </select>
       </div>
-      <button @click="handleCreate" class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-primary-600 text-white font-bold hover:bg-primary-700 shadow-sm transition-colors">
+      <button @click="handleCreate" :disabled="!serviceName.trim()" class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-primary-600 text-white font-bold hover:bg-primary-700 shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
         <i class="fas fa-plus mr-1"></i> Agregar
       </button>
     </div>

@@ -25,7 +25,7 @@
           <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
         </div>
       </div>
-      <button @click="handleCreate" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-700 shadow-sm transition-colors flex items-center justify-center gap-1.5">
+      <button @click="handleCreate" :disabled="!commitTitle.trim()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-700 shadow-sm transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed">
         <i class="fas fa-plus text-xs"></i> Agregar
       </button>
     </div>
