@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-start sm:items-center justify-center font-['Inter',sans-serif] overflow-y-auto overflow-x-hidden relative py-8 sm:py-12" style="background: #04060d;">
+  <div class="min-h-screen flex items-start sm:items-center justify-center font-['Inter',sans-serif] overflow-y-auto overflow-x-hidden relative py-3 sm:py-6" style="background: #04060d;">
 
     <!-- ── Background: Nebula layers (accent-reactive) ── -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -50,10 +50,10 @@
     </div>
 
     <!-- ── Main card ── -->
-    <div class="relative z-10 w-full max-w-[420px] mx-4 animate-fade-in">
+    <div class="relative z-10 w-full max-w-[480px] mx-4 animate-fade-in">
 
       <!-- Logo + brand header (above card) -->
-      <div class="flex flex-col items-center mb-5 sm:mb-8">
+      <div class="flex flex-col items-center mb-3 sm:mb-5">
         <div class="relative mb-4">
           <!-- Pulse rings -->
           <div class="pulse-ring" style="width:60px;height:60px;"></div>
@@ -73,7 +73,7 @@
       <div class="card-glow-wrapper">
 
       <!-- Glass card -->
-      <div class="login-card rounded-[2rem] p-8 sm:p-10 relative overflow-hidden">
+      <div class="login-card rounded-[2rem] p-6 sm:p-8 relative overflow-hidden">
 
         <!-- Card inner glow top -->
         <div class="absolute -top-24 -right-16 w-48 h-48 rounded-full pointer-events-none"
@@ -82,7 +82,7 @@
           :style="`background: radial-gradient(circle, rgba(${accentRgb},0.08) 0%, transparent 70%);`"></div>
 
         <!-- Card header -->
-        <div class="mb-7 relative z-10">
+        <div class="mb-5 relative z-10">
           <h2 class="text-white/90 text-lg font-bold mb-0.5">
             {{ requires2FA ? 'Verificación de Seguridad' : 'Bienvenido de vuelta' }}
           </h2>
@@ -112,7 +112,7 @@
         </Transition>
 
         <!-- Form -->
-        <form v-if="!requires2FA" @submit.prevent="handleLogin" class="space-y-3.5 relative z-10">
+        <form v-if="!requires2FA" @submit.prevent="handleLogin" class="space-y-2.5 relative z-10">
 
           <!-- Email -->
           <div class="relative group">
@@ -252,7 +252,7 @@
         </form>
 
         <!-- Card footer -->
-        <div class="mt-7 pt-5 flex items-center justify-center gap-2 relative z-10" style="border-top: 1px solid rgba(255,255,255,0.06);">
+        <div class="mt-5 pt-4 flex items-center justify-center gap-2 relative z-10" style="border-top: 1px solid rgba(255,255,255,0.06);">
           <i class="fas fa-gem text-primary-500/30 text-[7px]"></i>
           <p class="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">GEMS Hub · © {{ currentYear }}</p>
           <i class="fas fa-gem text-primary-500/30 text-[7px]"></i>
@@ -535,24 +535,23 @@ onMounted(async () => {
   border: 1px solid rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  animation: cardPulse 3.5s ease-in-out infinite;
+  animation: cardPulse 4s ease-in-out infinite;
 }
 
 @keyframes cardPulse {
   0%, 100% {
     box-shadow:
-      0 32px 64px -16px rgba(0, 0, 0, 0.8),
-      0 0 20px -6px rgba(var(--brand-accent-rgb), 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      0 28px 56px -14px rgba(0, 0, 0, 0.82),
+      0 0 18px -6px rgba(var(--brand-accent-rgb), 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.07);
   }
   50% {
     box-shadow:
-      0 32px 64px -16px rgba(0, 0, 0, 0.75),
-      0 0 55px -4px rgba(var(--brand-accent-rgb), 0.40),
-      0 0 90px -8px rgba(var(--brand-accent-rgb), 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.10);
-    border-color: rgba(var(--brand-accent-rgb), 0.30);
+      0 28px 56px -14px rgba(0, 0, 0, 0.72),
+      0 0 64px -6px rgba(var(--brand-accent-rgb), 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.11);
+    border-color: rgba(var(--brand-accent-rgb), 0.26);
   }
 }
 
