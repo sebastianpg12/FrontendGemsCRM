@@ -73,23 +73,52 @@
          </div>
          
          <div class="flex items-center gap-2 w-full md:w-auto">
-            <select v-model="selectedDepartment" class="px-4 py-2 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-300 border-none rounded-xl text-[9px] font-black uppercase tracking-widest text-slate-500 outline-none focus:ring-4 focus:ring-primary-500/5 transition-all cursor-pointer">
-               <option value="">Departamentos</option>
-               <option v-for="dept in allDepartments" :key="dept" :value="dept">{{ dept }}</option>
-            </select>
 
-            <select v-model="selectedRole" class="px-4 py-2 bg-slate-50 border-none rounded-xl text-[9px] font-black uppercase tracking-widest text-slate-500 outline-none focus:ring-4 focus:ring-primary-500/5 transition-all cursor-pointer">
-               <option value="">Roles</option>
-               <option v-for="role in allAvailableRoles" :key="role._id || role.name" :value="role.name">
-                  {{ getRoleDisplayName(role.name) }}
-               </option>
-            </select>
+           <div class="tm-chip" :class="{ 'tm-chip--on': selectedDepartment }" @click.stop="toggleTeamChip('dept')">
+             <i class="fas fa-building text-[9px]"></i>
+             <span class="tm-label">{{ selectedDeptLabel }}</span>
+             <i class="fas fa-chevron-down tm-caret" :class="{ 'rotate-180': openTeamChip === 'dept' }"></i>
+             <div v-if="openTeamChip === 'dept'" class="tm-dropdown" @click.stop>
+               <div class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': !selectedDepartment }" @click="setTeamFilter('dept', '')">
+                 <span>Todos</span><i v-if="!selectedDepartment" class="fas fa-check text-[10px] text-primary-500"></i>
+               </div>
+               <div v-for="dept in allDepartments" :key="dept"
+                 class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedDepartment === dept }"
+                 @click="setTeamFilter('dept', dept)">
+                 <span>{{ dept }}</span><i v-if="selectedDepartment === dept" class="fas fa-check text-[10px] text-primary-500"></i>
+               </div>
+             </div>
+           </div>
 
-            <select v-model="selectedStatus" class="px-4 py-2 bg-slate-50 border-none rounded-xl text-[9px] font-black uppercase tracking-widest text-slate-500 outline-none focus:ring-4 focus:ring-primary-500/5 transition-all cursor-pointer">
-               <option value="">Estado</option>
-               <option value="true">Activos</option>
-               <option value="false">Inactivos</option>
-            </select>
+           <div class="tm-chip" :class="{ 'tm-chip--on': selectedRole }" @click.stop="toggleTeamChip('role')">
+             <i class="fas fa-user-tag text-[9px]"></i>
+             <span class="tm-label">{{ selectedRoleLabel }}</span>
+             <i class="fas fa-chevron-down tm-caret" :class="{ 'rotate-180': openTeamChip === 'role' }"></i>
+             <div v-if="openTeamChip === 'role'" class="tm-dropdown" @click.stop>
+               <div class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': !selectedRole }" @click="setTeamFilter('role', '')">
+                 <span>Todos</span><i v-if="!selectedRole" class="fas fa-check text-[10px] text-primary-500"></i>
+               </div>
+               <div v-for="role in allAvailableRoles" :key="role.name"
+                 class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedRole === role.name }"
+                 @click="setTeamFilter('role', role.name)">
+                 <span>{{ getRoleDisplayName(role.name) }}</span><i v-if="selectedRole === role.name" class="fas fa-check text-[10px] text-primary-500"></i>
+               </div>
+             </div>
+           </div>
+
+           <div class="tm-chip" :class="{ 'tm-chip--on': selectedStatus }" @click.stop="toggleTeamChip('status')">
+             <i class="fas fa-circle-dot text-[9px]"></i>
+             <span class="tm-label">{{ selectedStatusLabel }}</span>
+             <i class="fas fa-chevron-down tm-caret" :class="{ 'rotate-180': openTeamChip === 'status' }"></i>
+             <div v-if="openTeamChip === 'status'" class="tm-dropdown" @click.stop>
+               <div v-for="opt in statusOptions" :key="opt.value"
+                 class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedStatus === opt.value }"
+                 @click="setTeamFilter('status', opt.value)">
+                 <span>{{ opt.label }}</span><i v-if="selectedStatus === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+               </div>
+             </div>
+           </div>
+
          </div>
       </div>
     </div>
@@ -358,7 +387,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, reactive } from 'vue'
+import { ref, computed, onMounted, onUnmounted, reactive } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useTeamStore } from '../stores'
 import { useNotifications } from '../composables/useNotifications'
@@ -440,6 +469,21 @@ const searchQuery = ref('')
 const selectedRole = ref('')
 const selectedStatus = ref('')
 const selectedDepartment = ref('')
+
+// ── Chip dropdowns ────────────────────────────────────────────────────
+const openTeamChip = ref<string | null>(null)
+const toggleTeamChip = (name: string) => { openTeamChip.value = openTeamChip.value === name ? null : name }
+const closeTeamChips = () => { openTeamChip.value = null }
+const setTeamFilter = (chip: string, value: string) => {
+  if (chip === 'dept')   selectedDepartment.value = value
+  if (chip === 'role')   selectedRole.value = value
+  if (chip === 'status') selectedStatus.value = value
+  openTeamChip.value = null
+}
+const statusOptions = [{ value: '', label: 'Estado' }, { value: 'true', label: 'Activos' }, { value: 'false', label: 'Inactivos' }]
+const selectedDeptLabel = computed(() => selectedDepartment.value || 'Departamentos')
+const selectedRoleLabel = computed(() => selectedRole.value ? getRoleDisplayName(selectedRole.value) : 'Roles')
+const selectedStatusLabel = computed(() => statusOptions.find(o => o.value === selectedStatus.value)?.label || 'Estado')
 const showCreateModal = ref(false)
 const showEditModal = ref(false)
 const isSubmitting = ref(false)
@@ -641,11 +685,13 @@ const changePage = (page: number) => {
 }
 
 onMounted(async () => {
+  document.addEventListener('click', closeTeamChips)
   if (authStore.canViewTeam) {
     const res = await teamStore.fetchTeam(pagination.page, pagination.limit)
     if (res) Object.assign(pagination, res)
   }
 })
+onUnmounted(() => { document.removeEventListener('click', closeTeamChips) })
 </script>
 
 <style scoped>
@@ -660,4 +706,42 @@ onMounted(async () => {
   to { opacity: 1; transform: scale(1); }
 }
 .animate-scale-up { animation: scale-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ── Team filter chips ── */
+.tm-chip {
+  position: relative; display: inline-flex; align-items: center; gap: 5px;
+  background: rgb(248 250 252); border: 1px solid rgb(226 232 240);
+  border-radius: 999px; padding: 0 10px 0 9px; height: 30px;
+  cursor: pointer; transition: all 0.15s;
+  font-size: 0.68rem; color: rgb(100 116 139);
+}
+.tm-chip:hover { border-color: rgb(148 163 184); background: rgb(241 245 249); }
+.tm-chip--on { border-color: rgb(139 92 246); background: rgb(245 243 255); color: rgb(109 40 217); }
+.tm-label { font-size: 0.7rem; font-weight: 700; color: inherit; white-space: nowrap; }
+.tm-caret { font-size: 0.48rem; opacity: 0.5; transition: transform 0.2s; }
+.tm-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 160px; z-index: 100;
+  background: #fff; border: 1px solid rgb(226 232 240);
+  border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 4px; overflow: hidden;
+}
+.tm-dropdown-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; border-radius: 0.5rem;
+  font-size: 0.72rem; font-weight: 600; color: rgb(51 65 85);
+  cursor: pointer; transition: background 0.12s; user-select: none;
+}
+.tm-dropdown-item:hover { background: rgb(248 250 252); }
+.tm-dropdown-item--active { background: rgb(238 242 255); color: rgb(79 70 229); }
+</style>
+
+<style>
+.dark .tm-chip { background: rgb(30 41 59); border-color: rgb(51 65 85); color: rgb(148 163 184); }
+.dark .tm-chip:hover { background: rgb(37 50 71); }
+.dark .tm-chip--on { background: rgb(76 29 149 / 0.2); border-color: rgb(139 92 246); color: rgb(167 139 250); }
+.dark .tm-dropdown { background: rgb(22 34 52); border-color: rgb(51 65 85); box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+.dark .tm-dropdown-item { color: rgb(148 163 184); }
+.dark .tm-dropdown-item:hover { background: rgb(37 50 71); color: rgb(203 213 225); }
+.dark .tm-dropdown-item--active { background: rgb(49 46 129 / 0.3); color: rgb(167 139 250); }
 </style>
