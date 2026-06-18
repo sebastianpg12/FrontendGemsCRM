@@ -208,7 +208,7 @@
           <!-- Register link -->
           <div class="text-center pt-1">
             <span class="text-[11px] text-white/25">¿No tienes cuenta? </span>
-            <button type="button" class="text-[11px] font-bold text-primary-400/80 hover:text-primary-300 transition-colors">Regístrate</button>
+            <button type="button" @click="router.push('/register')" class="text-[11px] font-bold text-primary-400/80 hover:text-primary-300 transition-colors">Regístrate</button>
           </div>
 
         </form>
