@@ -4,7 +4,7 @@
     <button
       v-if="pageHelp"
       @click="open = true"
-      class="fixed z-[180] w-9 h-9 rounded-full bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] shadow-md flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-400 transition-all duration-150 hover:scale-110 bottom-[130px] right-[68px] lg:bottom-10 lg:right-[84px]"
+      class="fixed z-[180] w-9 h-9 rounded-full bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] shadow-md flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-400 transition-all duration-150 hover:scale-110 bottom-28 right-[68px] lg:bottom-6 lg:right-[84px]"
       title="Ayuda de esta página"
     >
       <span class="text-[13px] font-black leading-none">?</span>
