@@ -181,8 +181,9 @@
       </div>
     </section>
 
-    <!-- Modal de confirmación (sin blur) -->
-    <div v-if="confirmDialog" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
+    <!-- Modal de confirmación -->
+    <Teleport to="body">
+    <div v-if="confirmDialog" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50" @click.self="confirmDialog = null">
       <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm p-6">
         <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
           :class="confirmDialog.danger ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500' : 'bg-amber-50 dark:bg-amber-500/10 text-amber-500'">
@@ -202,6 +203,7 @@
         </div>
       </div>
     </div>
+    </Teleport>
   </div>
 </template>
 

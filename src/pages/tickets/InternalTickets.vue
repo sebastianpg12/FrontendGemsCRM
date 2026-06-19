@@ -715,7 +715,8 @@
     </Teleport>
 
     <!-- Link Resource Modal -->
-    <div v-if="showLinkModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4" @click.self="showLinkModal = null">
+    <Teleport to="body">
+    <div v-if="showLinkModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[200] flex items-center justify-center p-4" @click.self="showLinkModal = null">
       <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden animate-zoom-in">
         <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
           <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
@@ -758,6 +759,7 @@
         </div>
       </div>
     </div>
+    </Teleport>
   </div>
 </template>
 

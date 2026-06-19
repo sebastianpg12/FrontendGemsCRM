@@ -240,7 +240,8 @@
     </div>
     
     <!-- Create/Edit Modal -->
-    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <Teleport to="body">
+    <div v-if="showModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50" @click="showModal = false"></div>
       <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-fade-in">
         <div class="flex items-center justify-between p-8 border-b border-slate-50">
@@ -291,9 +292,11 @@
         </form>
       </div>
     </div>
-    
+    </Teleport>
+
     <!-- Delete Confirmation Modal -->
-    <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <Teleport to="body">
+    <div v-if="showDeleteModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/50" @click="showDeleteModal = false"></div>
       <div class="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden animate-fade-in p-8 text-center">
         <div class="w-20 h-20 bg-red-50 text-red-500 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
@@ -314,6 +317,7 @@
         </div>
       </div>
     </div>
+    </Teleport>
   </div>
 </template>
 

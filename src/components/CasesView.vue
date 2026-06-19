@@ -517,7 +517,8 @@
     </Teleport>
 
     <!-- ════════ MODAL VINCULAR TICKET ════════ -->
-    <div v-if="showLinkModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
+    <Teleport to="body">
+    <div v-if="showLinkModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50" @click.self="showLinkModal = false">
       <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden">
         <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449]">
           <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Vincular ticket</h3>
@@ -556,6 +557,7 @@
         </div>
       </div>
     </div>
+    </Teleport>
 
     <!-- ════════ MODAL CONFIRMACIÓN ════════ -->
     <Teleport to="body">

@@ -24,7 +24,8 @@
     </div>
 
     <!-- Create/Edit Modal -->
-    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+    <Teleport to="body">
+    <div v-if="showModal" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/50 p-4" @click.self="closeModal">
       <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto animate-scale-up">
         <!-- Modal header -->
         <div class="flex items-center justify-between px-5 py-4 border-b border-slate-50">
@@ -51,6 +52,7 @@
         </div>
       </div>
     </div>
+    </Teleport>
   </div>
 </template>
 
