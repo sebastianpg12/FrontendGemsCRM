@@ -118,10 +118,10 @@
         </div>
       </div>
 
-      <!-- Mobile menu button -->
-      <div class="lg:hidden fixed top-3 left-4 z-50">
+      <!-- Mobile menu button — se oculta cuando el sidebar está abierto -->
+      <div v-if="!sidebarOpen" class="lg:hidden fixed top-3 left-4 z-50">
         <button
-          @click="sidebarOpen = !sidebarOpen"
+          @click="sidebarOpen = true"
           class="p-2 rounded-xl bg-white dark:bg-[#1e293b] shadow-md text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#334155]"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,6 +185,9 @@
   <!-- Notification Bell flotante (inferior derecha) -->
   <NotificationBell />
 
+  <!-- Ayuda contextual por página -->
+  <PageHelp />
+
   <!-- Modal global "Refinar Tarea" — se abre al clickear notificaciones, etc. -->
   <ActivityFormModal
     v-if="activityModalStore.isOpen"
@@ -206,6 +209,7 @@ import { useChatStore } from './stores/chatStore'
 import UserAvatar from './components/ui/UserAvatar.vue'
 import NewMessageToast from './components/NewMessageToast.vue'
 import NotificationBell from './components/NotificationBell.vue'
+import PageHelp from './components/ui/PageHelp.vue'
 import ActivityFormModal from './components/forms/ActivityFormModal.vue'
 import { useActivityModalStore } from './stores/activityModal'
 import { useThemeStore } from './stores/theme'
