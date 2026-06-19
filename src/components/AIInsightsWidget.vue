@@ -2,85 +2,71 @@
   <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl overflow-hidden flex flex-col h-full">
 
     <!-- Header -->
-    <div class="flex items-center justify-between gap-2 px-3 sm:px-4 py-3">
-      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-        <div class="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
-          <i class="fas fa-brain text-primary-500 text-[11px]"></i>
-        </div>
-        <div class="min-w-0">
-          <p class="text-[9px] font-black text-primary-500 uppercase tracking-widest leading-none mb-0.5">IA Personalizada</p>
-          <h3 class="text-[11px] font-black text-slate-900 leading-none truncate">Insights para {{ userName }}</h3>
-        </div>
+    <div class="flex items-center justify-between gap-2 px-3 py-2 shrink-0">
+      <div class="flex items-center gap-1.5 min-w-0">
+        <i class="fas fa-brain text-primary-500 text-[9px]"></i>
+        <span class="text-[8px] font-black text-primary-500 uppercase tracking-widest">IA · {{ userName }}</span>
       </div>
-      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <div class="flex items-center gap-1 shrink-0">
         <button
           @click="expanded = !expanded"
-          class="px-2.5 sm:px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-semibold text-slate-600 transition-colors whitespace-nowrap"
-        >
-          {{ expanded ? 'Ver menos' : 'Ver más' }}
-        </button>
+          class="px-2 py-1 rounded-lg text-[9px] font-bold text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors"
+        >{{ expanded ? 'Menos' : 'Más' }}</button>
         <button
           @click="generateInsights(false)"
           :disabled="loading"
-          class="w-7 h-7 flex items-center justify-center bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-slate-400 hover:text-primary-500 transition-colors disabled:opacity-40"
-          title="Actualizar"
+          class="w-6 h-6 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-40"
         >
-          <i :class="loading ? 'fas fa-spinner fa-spin' : 'fas fa-sync-alt'" class="text-[10px]"></i>
+          <i :class="loading ? 'fas fa-spinner fa-spin' : 'fas fa-sync-alt'" class="text-[9px]"></i>
         </button>
       </div>
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="flex-1 flex items-center justify-center gap-3 py-10">
-      <i class="fas fa-brain text-primary-400 text-lg animate-pulse"></i>
-      <p class="text-slate-400 text-xs font-medium">Analizando tu situación...</p>
+    <div v-if="loading" class="flex-1 flex items-center justify-center gap-2 py-6">
+      <i class="fas fa-brain text-primary-400 text-sm animate-pulse"></i>
+      <p class="text-slate-400 text-[10px]">Analizando...</p>
     </div>
 
-    <!-- Content: 3 columnas con dividers (verticales en md+, horizontales en mobile) -->
-    <div v-else-if="insights" class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+    <!-- Content -->
+    <div v-else-if="insights" class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-700 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
 
-      <!-- LECTURA (amarillo) -->
-      <div class="px-3 py-2.5">
-        <div class="flex items-center gap-1 mb-1.5">
-          <i class="fas fa-lightbulb text-amber-500 text-[9px]"></i>
-          <h4 class="text-[8px] font-black text-amber-500 uppercase tracking-widest">Lectura</h4>
+      <!-- LECTURA -->
+      <div class="px-3 py-2">
+        <div class="flex items-center gap-1 mb-1">
+          <i class="fas fa-lightbulb text-amber-500 text-[8px]"></i>
+          <span class="text-[7px] font-black text-amber-500 uppercase tracking-widest">Lectura</span>
         </div>
-        <p class="text-[10px] text-slate-500 leading-relaxed" :class="!expanded && 'line-clamp-6'">
+        <p class="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed" :class="!expanded && 'line-clamp-5'">
           {{ insights.lectura }}
         </p>
       </div>
 
-      <!-- ACCIONES (verde) -->
-      <div class="px-3 py-2.5">
-        <div class="flex items-center gap-1 mb-1.5">
-          <i class="fas fa-bullseye text-emerald-500 text-[9px]"></i>
-          <h4 class="text-[8px] font-black text-emerald-500 uppercase tracking-widest">Acciones</h4>
+      <!-- ACCIONES -->
+      <div class="px-3 py-2">
+        <div class="flex items-center gap-1 mb-1">
+          <i class="fas fa-bullseye text-emerald-500 text-[8px]"></i>
+          <span class="text-[7px] font-black text-emerald-500 uppercase tracking-widest">Acciones</span>
         </div>
-        <ul class="space-y-1.5">
-          <li
-            v-for="(accion, i) in (expanded ? insights.acciones : insights.acciones.slice(0, 3))"
-            :key="i"
-            class="flex items-start gap-1.5 text-[10px] text-slate-500 leading-snug"
-          >
-            <span class="w-1 h-1 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+        <ul class="space-y-1">
+          <li v-for="(accion, i) in (expanded ? insights.acciones : insights.acciones.slice(0, 3))" :key="i"
+            class="flex items-start gap-1.5 text-[9px] text-slate-500 dark:text-slate-400 leading-snug">
+            <span class="w-1 h-1 rounded-full bg-emerald-400 mt-1 shrink-0"></span>
             <span :class="!expanded && 'line-clamp-2'">{{ accion }}</span>
           </li>
         </ul>
       </div>
 
-      <!-- RIESGOS (azul) -->
-      <div class="px-3 py-2.5">
-        <div class="flex items-center gap-1 mb-1.5">
-          <i class="fas fa-chart-line text-primary-500 text-[9px]"></i>
-          <h4 class="text-[8px] font-black text-primary-500 uppercase tracking-widest">Riesgos</h4>
+      <!-- RIESGOS -->
+      <div class="px-3 py-2">
+        <div class="flex items-center gap-1 mb-1">
+          <i class="fas fa-chart-line text-primary-500 text-[8px]"></i>
+          <span class="text-[7px] font-black text-primary-500 uppercase tracking-widest">Riesgos</span>
         </div>
-        <ul class="space-y-1.5">
-          <li
-            v-for="(riesgo, i) in (expanded ? insights.riesgos : insights.riesgos.slice(0, 3))"
-            :key="i"
-            class="flex items-start gap-1.5 text-[10px] text-slate-500 leading-snug"
-          >
-            <span class="w-1 h-1 rounded-full bg-primary-400 mt-1.5 shrink-0"></span>
+        <ul class="space-y-1">
+          <li v-for="(riesgo, i) in (expanded ? insights.riesgos : insights.riesgos.slice(0, 3))" :key="i"
+            class="flex items-start gap-1.5 text-[9px] text-slate-500 dark:text-slate-400 leading-snug">
+            <span class="w-1 h-1 rounded-full bg-primary-400 mt-1 shrink-0"></span>
             <span :class="!expanded && 'line-clamp-2'">{{ riesgo }}</span>
           </li>
         </ul>
@@ -88,21 +74,21 @@
     </div>
 
     <!-- Error -->
-    <div v-else-if="error" class="flex-1 flex flex-col items-center justify-center gap-3 py-8 px-6">
-      <i class="fas fa-exclamation-triangle text-red-400 text-2xl"></i>
-      <p class="text-red-500 text-xs font-medium text-center">{{ error }}</p>
+    <div v-else-if="error" class="flex-1 flex flex-col items-center justify-center gap-2 py-6 px-4">
+      <i class="fas fa-exclamation-triangle text-red-400"></i>
+      <p class="text-red-500 text-[10px] text-center">{{ error }}</p>
       <button @click="generateInsights(false)"
-        class="px-4 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 transition-colors">
-        <i class="fas fa-sync-alt mr-1.5 text-slate-400"></i>Reintentar
+        class="px-3 py-1 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-[10px] font-bold text-slate-600 dark:text-slate-300 transition-colors">
+        Reintentar
       </button>
     </div>
 
     <!-- Empty -->
-    <div v-else class="flex-1 flex flex-col items-center justify-center gap-2 py-8 px-6">
-      <i class="fas fa-brain text-2xl text-slate-200"></i>
-      <p class="text-slate-400 text-xs font-medium">Sin análisis disponible</p>
+    <div v-else class="flex-1 flex flex-col items-center justify-center gap-2 py-6 px-4">
+      <i class="fas fa-brain text-slate-200 dark:text-slate-600"></i>
+      <p class="text-slate-400 text-[10px]">Sin análisis disponible</p>
       <button @click="generateInsights(false)"
-        class="px-4 py-1.5 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-lg text-xs font-bold text-primary-600 transition-colors">
+        class="px-3 py-1 bg-primary-50 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/30 rounded-lg text-[10px] font-bold text-primary-600 dark:text-primary-400 transition-colors">
         Generar análisis
       </button>
     </div>

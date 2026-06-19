@@ -193,41 +193,29 @@
         </div>
 
         <!-- Pulso comercial -->
-        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-4 py-3.5 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
-          <div class="flex items-center gap-2 mb-3">
-            <div class="w-6 h-6 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-              <i class="fas fa-chart-line text-amber-500 text-[10px]"></i>
-            </div>
-            <div>
-              <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400 leading-none mb-0.5">Pulso comercial</div>
-              <div class="text-[13px] font-black text-slate-900 leading-tight">Dónde atacar</div>
-            </div>
+        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2.5 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+          <div class="flex items-center gap-1.5 mb-2">
+            <i class="fas fa-chart-line text-amber-500 text-[9px]"></i>
+            <span class="text-[8px] font-black uppercase tracking-[0.18em] text-slate-400">Pulso comercial</span>
           </div>
-          <div class="flex flex-col gap-2.5">
-            <div v-for="(item, i) in pulsoItems" :key="i" class="flex items-start gap-2.5">
-              <div class="w-6 h-6 rounded-lg bg-slate-50 flex items-center justify-center shrink-0 mt-0.5">
-                <i :class="['fas', item.icon, item.color, 'text-[10px]']"></i>
-              </div>
-              <span class="text-[11px] text-slate-600 leading-snug font-medium">{{ item.text }}</span>
+          <div class="flex flex-col gap-1.5">
+            <div v-for="(item, i) in pulsoItems" :key="i" class="flex items-start gap-2">
+              <i :class="['fas', item.icon, item.color, 'text-[9px] mt-0.5 shrink-0']"></i>
+              <span class="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">{{ item.text }}</span>
             </div>
           </div>
         </div>
 
         <!-- Nota de foco GEMS -->
-        <div class="rounded-xl px-4 py-3.5 text-white relative overflow-hidden shrink-0"
+        <div class="rounded-xl px-3 py-2.5 text-white relative overflow-hidden shrink-0"
           style="background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 60%, #1e1b4b 100%);">
-          <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-0 right-0 w-32 h-32 opacity-25" style="background: radial-gradient(circle, var(--brand-accent) 0%, transparent 70%); transform: translate(20%,-20%)"></div>
-            <div class="absolute bottom-0 left-0 w-20 h-20 opacity-15" style="background: radial-gradient(circle, #6366f1 0%, transparent 70%); transform: translate(-25%,25%)"></div>
-          </div>
+          <div class="absolute top-0 right-0 w-24 h-24 opacity-20 pointer-events-none" style="background: radial-gradient(circle, var(--brand-accent) 0%, transparent 70%); transform: translate(20%,-20%)"></div>
           <div class="relative">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center">
-                <i class="fas fa-gem text-primary-300 text-[9px]"></i>
-              </div>
-              <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-300">GEMS · Nota de foco</span>
+            <div class="flex items-center gap-1.5 mb-1.5">
+              <i class="fas fa-gem text-primary-300 text-[8px]"></i>
+              <span class="text-[8px] font-black uppercase tracking-[0.2em] text-primary-300">GEMS · Nota de foco</span>
             </div>
-            <p class="text-[12px] font-medium leading-relaxed text-white/80">{{ focusNote }}</p>
+            <p class="text-[10px] font-medium leading-relaxed text-white/75">{{ focusNote }}</p>
           </div>
         </div>
 
