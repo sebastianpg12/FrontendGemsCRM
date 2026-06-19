@@ -1034,7 +1034,7 @@
                   <div class="flex -space-x-1.5" @click.stop>
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
-                        <img v-if="getUserInfo(user).photo" :src="getUserInfo(user).photo" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
+                        <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
                         <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
@@ -1214,7 +1214,7 @@
                   <div class="flex -space-x-1.5" @click.stop>
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
-                        <img v-if="getUserInfo(user).photo" :src="getUserInfo(user).photo" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
+                        <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
                         <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
@@ -1362,7 +1362,7 @@
                   <div class="flex -space-x-1.5" @click.stop>
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
-                        <img v-if="getUserInfo(user).photo" :src="getUserInfo(user).photo" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
+                        <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
                         <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
@@ -1527,7 +1527,7 @@
                   <div class="flex -space-x-1.5" @click.stop>
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
-                        <img v-if="getUserInfo(user).photo" :src="getUserInfo(user).photo" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
+                        <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
                         <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
@@ -2628,6 +2628,7 @@ import DatePicker from '../ui/DatePicker.vue'
 import ActivityCalendar from '../calendar/ActivityCalendar.vue'
 import QuickTaskModal from '../modals/QuickTaskModal.vue'
 import AvatarInline from '../AvatarInline.vue'
+import { getFullPhotoUrl } from '../../utils/photoUtils'
 // import TaskNotifier from '../notifications/TaskNotifier.vue' // REMOVED
 
 // Props

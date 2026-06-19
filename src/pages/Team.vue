@@ -321,19 +321,7 @@
                     <i class="fas fa-xmark text-[10px]"></i>
                   </button>
                 </div>
-                <div v-else class="relative">
-                  <select v-model="formData.department"
-                    class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg pl-3 pr-14 text-[12px] font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all appearance-none">
-                    <option value="">Sin departamento</option>
-                    <option v-for="dept in allDepartments" :key="dept" :value="dept">{{ dept }}</option>
-                  </select>
-                  <i class="fas fa-chevron-down absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-                  <button type="button" @click="isAddingCustomDept = true"
-                    class="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded bg-primary-100 text-primary-500 hover:bg-primary-200 flex items-center justify-center transition-all"
-                    title="Nuevo departamento">
-                    <i class="fas fa-plus text-[8px]"></i>
-                  </button>
-                </div>
+                <CustomSelect v-else v-model="formData.department" :options="deptSelectOptions" placeholder="Sin departamento" size="sm" @change="onDeptChange" />
               </div>
               <div>
                 <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol en Departamento</label>
@@ -485,6 +473,19 @@ const allAvailableRoles = [
 ]
 
 const roleSelectOptions = allAvailableRoles.map(r => ({ value: r.name, label: r.name }))
+
+const deptSelectOptions = computed(() => [
+  { value: '', label: 'Sin departamento' },
+  ...allDepartments.value.map((d: string) => ({ value: d, label: d })),
+  { value: '__add__', label: '+ Agregar departamento...' }
+])
+
+const onDeptChange = (val: string | number | null) => {
+  if (val === '__add__') {
+    formData.department = ''
+    isAddingCustomDept.value = true
+  }
+}
 
 const editingMember = ref<TeamMember | null>(null)
 const pagination = reactive({
