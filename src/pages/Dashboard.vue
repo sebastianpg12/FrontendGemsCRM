@@ -180,12 +180,12 @@
                 <div class="text-[12px] font-black text-slate-900 leading-tight">Foco operativo</div>
               </div>
             </div>
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-md shadow-primary-500/20">
+            <div class="w-9 h-9 rounded-xl bg-primary-600 flex items-center justify-center">
               <span class="text-[11px] font-black text-white leading-none">{{ focusProgress }}%</span>
             </div>
           </div>
-          <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3">
-            <div class="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-700"
+          <div class="h-1 bg-slate-100 rounded-full overflow-hidden mb-3">
+            <div class="h-full bg-primary-500 rounded-full transition-all duration-700"
               :style="{ width: focusProgress + '%' }"></div>
           </div>
           <div class="grid grid-cols-3 gap-1.5">
@@ -219,16 +219,9 @@
         </div>
 
         <!-- Nota de foco GEMS -->
-        <div class="rounded-xl px-3 py-2.5 text-white relative overflow-hidden shrink-0"
-          style="background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 60%, #1e1b4b 100%);">
-          <div class="absolute top-0 right-0 w-24 h-24 opacity-20 pointer-events-none" style="background: radial-gradient(circle, var(--brand-accent) 0%, transparent 70%); transform: translate(20%,-20%)"></div>
-          <div class="relative">
-            <div class="flex items-center gap-1.5 mb-1.5">
-              <i class="fas fa-gem text-primary-300 text-[8px]"></i>
-              <span class="text-[8px] font-black uppercase tracking-[0.2em] text-primary-300">GEMS · Nota de foco</span>
-            </div>
-            <p class="text-[10px] font-medium leading-relaxed text-white/75">{{ focusNote }}</p>
-          </div>
+        <div class="flex items-start gap-2 px-3 py-2 bg-primary-50 dark:bg-primary-500/10 rounded-xl shrink-0">
+          <i class="fas fa-gem text-primary-400 text-[9px] mt-0.5 shrink-0"></i>
+          <p class="text-[10px] font-medium leading-relaxed text-slate-500 dark:text-slate-400">{{ focusNote }}</p>
         </div>
 
       </div>
