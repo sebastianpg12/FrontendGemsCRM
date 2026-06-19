@@ -24,7 +24,7 @@
       </div>
 
       <!-- Controles -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 relative z-[50]">
         <!-- Toggle acciones rápidas -->
         <button
           @click="showActions = !showActions"
@@ -48,27 +48,40 @@
           <i class="fas fa-plus text-[10px]"></i>
           <span class="hidden sm:inline">Nueva actividad</span>
         </router-link>
+
+        <!-- Acciones rápidas — dropdown flotante -->
+        <Transition
+          enter-active-class="transition ease-out duration-150"
+          enter-from-class="opacity-0 translate-y-1 scale-95"
+          enter-to-class="opacity-100 translate-y-0 scale-100"
+          leave-active-class="transition ease-in duration-100"
+          leave-from-class="opacity-100 translate-y-0 scale-100"
+          leave-to-class="opacity-0 translate-y-1 scale-95"
+        >
+          <div v-if="showActions"
+            class="absolute top-full right-0 mt-1.5 bg-white dark:bg-[#1e293b] rounded-xl shadow-xl border border-slate-100 dark:border-[#334155] p-2.5 w-[280px] sm:w-[340px] origin-top-right">
+            <p class="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-1 mb-2">Acciones rápidas</p>
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-1.5">
+              <router-link
+                v-for="qa in quickActions"
+                :key="qa.label"
+                :to="qa.to"
+                @click="showActions = false"
+                class="group flex flex-col items-center gap-1.5 rounded-xl px-1.5 py-2.5 transition-all duration-150 hover:bg-slate-50 dark:hover:bg-[#0f172a]"
+              >
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-150 group-hover:scale-110" :class="qa.iconBg">
+                  <i :class="['fas', qa.icon, qa.iconColor, 'text-[13px]']"></i>
+                </div>
+                <span class="text-[9px] font-black text-slate-600 dark:text-slate-300 group-hover:text-primary-600 text-center leading-tight">{{ qa.label }}</span>
+              </router-link>
+            </div>
+          </div>
+        </Transition>
       </div>
     </div>
 
-    <!-- ══ Acciones rápidas (colapsables, animadas) ══════════════════════ -->
-    <Transition name="actions-panel">
-      <div v-if="showActions" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-        <router-link
-          v-for="(qa, i) in quickActions"
-          :key="qa.label"
-          :to="qa.to"
-          @click="showActions = false"
-          class="group flex flex-col items-center gap-2.5 bg-white dark:bg-[#1e293b] shadow-sm hover:shadow-md rounded-xl px-3 py-4 transition-all duration-200 action-item"
-          :style="{ '--delay': `${i * 55}ms` }"
-        >
-          <div class="w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:-rotate-3" :class="qa.iconBg">
-            <i :class="['fas', qa.icon, qa.iconColor, 'text-[15px]']"></i>
-          </div>
-          <span class="text-[11px] font-black text-slate-700 group-hover:text-primary-600 text-center leading-tight">{{ qa.label }}</span>
-        </router-link>
-      </div>
-    </Transition>
+    <!-- Backdrop para cerrar dropdown -->
+    <div v-if="showActions" class="fixed inset-0 z-[49]" @click="showActions = false"></div>
 
     <!-- ══ Stat cards — minimalista ═══════════════════════════════════ -->
     <div class="overflow-x-auto -mx-0 pb-0.5">
