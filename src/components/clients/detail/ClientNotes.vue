@@ -1,50 +1,50 @@
 <template>
   <div class="space-y-6">
-    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-      <h3 class="text-lg font-black text-slate-800">Notas Adicionales</h3>
+    <div class="border-b border-slate-100 dark:border-[#334155] pb-3">
+      <h3 class="text-[13px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wide">Notas</h3>
     </div>
-    <div class="flex gap-3 items-start">
-      <div class="flex-1">
-        <textarea
-          v-model="newNote"
-          placeholder="Escribe una nueva nota o actualización (Ctrl + Enter para guardar)"
-          rows="3"
-          @keydown.ctrl.enter="handleAddNote"
-          class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm resize-y"
-        ></textarea>
-      </div>
-      <button
-        @click="handleAddNote"
-        :disabled="saving || !newNote.trim()"
-        class="px-5 py-3 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm transition-colors flex flex-col items-center gap-1 min-w-[72px]"
-      >
-        <i v-if="saving" class="fas fa-circle-notch fa-spin text-lg"></i>
-        <i v-else class="fas fa-save text-lg"></i>
-        <span class="text-xs">{{ saving ? 'Guardando' : 'Guardar' }}</span>
+
+    <div class="flex gap-2 items-start">
+      <textarea v-model="newNote"
+        placeholder="Escribe una nota... (Ctrl + Enter para guardar)"
+        rows="2"
+        @keydown.ctrl.enter="handleAddNote"
+        class="flex-1 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl px-3.5 py-2.5 text-slate-700 dark:text-slate-200 text-[12px] font-medium focus:ring-2 focus:ring-primary-400 focus:outline-none transition-all resize-none"
+      ></textarea>
+      <button @click="handleAddNote" :disabled="saving || !newNote.trim()"
+        class="h-8 px-4 rounded-lg bg-primary-600 text-white text-[12px] font-black hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm transition-colors flex items-center gap-1.5 shrink-0 self-start mt-0.5">
+        <i v-if="saving" class="fas fa-circle-notch fa-spin text-[9px]"></i>
+        <i v-else class="fas fa-save text-[9px]"></i>
+        {{ saving ? 'Guardando' : 'Guardar' }}
       </button>
     </div>
 
-    <div class="space-y-4">
-      <div v-for="n in sortedNotes" :key="n._id" class="bg-white border text-sm rounded-xl p-5 shadow-sm transition-all" :class="n.pinned ? 'border-amber-300 bg-amber-50/30' : 'border-slate-200'">
-        <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-          <span class="text-slate-500 text-xs font-bold flex items-center">
-            <i class="fas fa-clock mr-1.5 opacity-70"></i> {{ formatDate(n.createdAt) }}
+    <div class="space-y-2">
+      <div v-for="n in sortedNotes" :key="n._id"
+        class="bg-white dark:bg-[#1e293b] border rounded-xl px-3.5 py-3 shadow-sm transition-all"
+        :class="n.pinned ? 'border-amber-300 dark:border-amber-500/40 bg-amber-50/30 dark:bg-amber-500/5' : 'border-slate-200 dark:border-[#334155]'">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] text-slate-400 font-medium flex items-center gap-1">
+            <i class="fas fa-clock text-[8px]"></i> {{ formatDate(n.createdAt) }}
           </span>
-          <div class="flex gap-2">
-            <button @click="togglePinNote(n)" :class="n.pinned ? 'text-amber-500 bg-amber-50 border border-amber-200' : 'text-slate-400 bg-slate-50 border border-slate-200 hover:text-amber-500'" class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors">
-              <i class="fas fa-thumbtack" :class="{ 'rotate-45': !n.pinned }"></i>
+          <div class="flex gap-1">
+            <button @click="togglePinNote(n)"
+              class="h-6 w-6 rounded-lg flex items-center justify-center transition-colors"
+              :class="n.pinned ? 'text-amber-500 bg-amber-50 dark:bg-amber-500/10' : 'text-slate-400 hover:text-amber-500 hover:bg-slate-50 dark:hover:bg-slate-700'">
+              <i class="fas fa-thumbtack text-[9px]" :class="{ 'rotate-45': !n.pinned }"></i>
             </button>
-            <button @click="requestDeleteNote(n._id)" class="w-8 h-8 rounded-lg flex items-center justify-center text-red-400 bg-red-50 border border-red-100 hover:text-red-600 transition-colors">
-              <i class="fas fa-trash"></i>
+            <button @click="requestDeleteNote(n._id)"
+              class="h-6 w-6 rounded-lg flex items-center justify-center text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 transition-colors">
+              <i class="fas fa-trash text-[9px]"></i>
             </button>
           </div>
         </div>
-        <p class="text-slate-700 font-medium leading-relaxed whitespace-pre-wrap">{{ n.content }}</p>
+        <p class="text-[12px] text-slate-700 dark:text-slate-300 font-medium leading-relaxed whitespace-pre-wrap">{{ n.content }}</p>
       </div>
 
-      <div v-if="!sortedNotes.length" class="text-center py-10 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
-        <i class="fas fa-sticky-note text-3xl text-slate-300 mb-3"></i>
-        <p class="text-slate-500 font-medium">Aún no hay notas para este cliente.</p>
+      <div v-if="!sortedNotes.length" class="text-center py-8 bg-slate-50 dark:bg-[#0f172a] border border-dashed border-slate-200 dark:border-[#334155] rounded-xl">
+        <i class="fas fa-sticky-note text-2xl text-slate-300 dark:text-slate-600 mb-2"></i>
+        <p class="text-slate-400 text-[12px] font-medium">Aún no hay notas para este cliente.</p>
       </div>
     </div>
 

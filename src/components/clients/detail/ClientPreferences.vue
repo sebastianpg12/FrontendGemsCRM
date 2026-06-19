@@ -1,33 +1,43 @@
 <template>
-  <div class="space-y-6">
-    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-      <h3 class="text-lg font-black text-slate-800">Preferencias del Cliente</h3>
+  <div class="space-y-4">
+    <div class="border-b border-slate-100 dark:border-[#334155] pb-3">
+      <h3 class="text-[13px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wide">Preferencias del cliente</h3>
     </div>
-    <div class="flex flex-wrap gap-3 items-center bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm">
-      <div class="flex-1 min-w-[150px]">
-        <input v-model="newPrefKey" placeholder="Clave (ej. Tono de comunicación)" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm" />
+
+    <div class="bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl p-3 flex flex-wrap gap-2 items-end">
+      <div class="flex-1 min-w-[140px]">
+        <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Clave</label>
+        <input v-model="newPrefKey" placeholder="Ej: Tono de comunicación"
+          class="w-full h-8 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
       </div>
-      <div class="flex-1 min-w-[200px]">
-        <input v-model="newPrefValue" placeholder="Valor (ej. Formal pero cercano)" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm" />
+      <div class="flex-1 min-w-[180px]">
+        <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Valor</label>
+        <input v-model="newPrefValue" placeholder="Ej: Formal pero cercano"
+          class="w-full h-8 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
       </div>
-      <button @click="handleAddPreference" :disabled="!newPrefKey.trim()" class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-primary-600 text-white font-bold hover:bg-primary-700 shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-        <i class="fas fa-plus mr-1"></i> Agregar
+      <button @click="handleAddPreference" :disabled="!newPrefKey.trim()"
+        class="h-8 px-4 rounded-lg bg-primary-600 text-white text-[12px] font-black hover:bg-primary-700 transition-colors shadow-sm flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shrink-0 self-end">
+        <i class="fas fa-plus text-[9px]"></i> Agregar
       </button>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div v-for="p in (client.preferences || [])" :key="p._id || p.key" class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between shadow-sm transition-colors">
-        <div>
-          <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1">{{ p.key }}</p>
-          <p class="text-slate-800 font-medium">{{ p.value }}</p>
+
+    <div v-if="(client.preferences || []).length" class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div v-for="p in (client.preferences || [])" :key="p._id || p.key"
+        class="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-2 shadow-sm">
+        <div class="min-w-0">
+          <p class="text-[9px] uppercase tracking-widest font-black text-slate-400 mb-0.5">{{ p.key }}</p>
+          <p class="text-[12px] text-slate-700 dark:text-slate-200 font-semibold truncate">{{ p.value }}</p>
         </div>
-        <button @click="removePreference(p)" class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-          <i class="fas fa-times"></i>
+        <button @click="removePreference(p)"
+          class="h-6 w-6 rounded-lg flex items-center justify-center text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 transition-colors shrink-0">
+          <i class="fas fa-times text-[9px]"></i>
         </button>
       </div>
     </div>
-    <div v-if="!(client.preferences || []).length" class="text-center py-10 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
-      <i class="fas fa-heart text-3xl text-slate-300 mb-3"></i>
-      <p class="text-slate-500 font-medium">No se han registrado preferencias.</p>
+
+    <div v-else class="text-center py-8 bg-slate-50 dark:bg-[#0f172a] border border-dashed border-slate-200 dark:border-[#334155] rounded-xl">
+      <i class="fas fa-heart text-2xl text-slate-300 dark:text-slate-600 mb-2"></i>
+      <p class="text-slate-400 text-[12px] font-medium">No se han registrado preferencias.</p>
     </div>
   </div>
 </template>
@@ -47,9 +57,6 @@ const handleAddPreference = async () => {
   const value = newPrefValue.value.trim()
   if (!key) return
   const success = await addPreference(key, value)
-  if (success) {
-    newPrefKey.value = ''
-    newPrefValue.value = ''
-  }
+  if (success) { newPrefKey.value = ''; newPrefValue.value = '' }
 }
 </script>
