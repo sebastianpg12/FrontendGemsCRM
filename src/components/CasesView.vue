@@ -4,10 +4,7 @@
     <!-- ════════ VISTA LISTA ════════ -->
     <template v-if="!selectedCase">
       <!-- Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h1 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Casos</h1>
-        </div>
+      <div class="flex items-center justify-between gap-3">
         <button class="btn-primary self-start sm:self-auto" @click="openCreateModal()">
           <i class="fas fa-plus text-[10px]"></i>Nuevo caso
         </button>
