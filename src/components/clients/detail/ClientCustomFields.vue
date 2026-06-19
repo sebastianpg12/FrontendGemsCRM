@@ -1,7 +1,9 @@
 <template>
   <div class="space-y-4">
-    <div class="border-b border-slate-100 dark:border-[#334155] pb-3">
-      <h3 class="text-[13px] font-black text-slate-700 dark:text-slate-200 uppercase tracking-wide">Campos personalizados</h3>
+    <div class="flex items-center gap-2 border-b border-slate-100 dark:border-[#334155] pb-3">
+      <i class="fas fa-sliders-h text-[10px] text-primary-400"></i>
+      <span class="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Campos personalizados</span>
+      <span v-if="(client.customFields || []).length" class="px-1.5 py-0.5 rounded-md bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-300 text-[9px] font-black">{{ client.customFields.length }}</span>
     </div>
 
     <div class="bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl p-3 flex flex-wrap gap-2 items-end">
@@ -10,7 +12,7 @@
         <input v-model="newFieldKey" placeholder="Nombre del campo"
           class="w-full h-8 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
       </div>
-      <div class="flex-1 min-w-[180px]">
+      <div class="flex-1 min-w-[160px]">
         <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Valor</label>
         <input v-model="newFieldValue" placeholder="Valor"
           class="w-full h-8 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
@@ -21,23 +23,23 @@
       </button>
     </div>
 
-    <div v-if="(client.customFields || []).length" class="grid grid-cols-1 md:grid-cols-2 gap-2">
+    <div v-if="(client.customFields || []).length" class="divide-y divide-slate-100 dark:divide-[#334155] rounded-xl border border-slate-100 dark:border-[#334155] overflow-hidden">
       <div v-for="f in (client.customFields || [])" :key="f._id || f.key"
-        class="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-2 shadow-sm">
-        <div class="min-w-0">
-          <p class="text-[9px] uppercase tracking-widest font-black text-slate-400 mb-0.5">{{ f.key }}</p>
-          <p class="text-[12px] text-slate-700 dark:text-slate-200 font-semibold truncate">{{ f.value }}</p>
+        class="bg-white dark:bg-[#1e293b] px-4 py-2.5 flex items-center justify-between gap-3 hover:bg-slate-50/50 dark:hover:bg-[#273449] transition-colors">
+        <div class="flex items-baseline gap-3 min-w-0">
+          <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest shrink-0">{{ f.key }}</span>
+          <span class="text-[12px] text-slate-700 dark:text-slate-200 font-semibold truncate">{{ f.value }}</span>
         </div>
         <button @click="removeCustomField(f)"
-          class="h-6 w-6 rounded-lg flex items-center justify-center text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 transition-colors shrink-0">
-          <i class="fas fa-times text-[9px]"></i>
+          class="h-5 w-5 rounded-md flex items-center justify-center text-slate-300 dark:text-slate-600 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors shrink-0">
+          <i class="fas fa-times text-[8px]"></i>
         </button>
       </div>
     </div>
 
-    <div v-else class="text-center py-8 bg-slate-50 dark:bg-[#0f172a] border border-dashed border-slate-200 dark:border-[#334155] rounded-xl">
-      <i class="fas fa-sliders-h text-2xl text-slate-300 dark:text-slate-600 mb-2"></i>
-      <p class="text-slate-400 text-[12px] font-medium">Añade campos personalizados a la medida.</p>
+    <div v-else class="text-center py-10 border border-dashed border-slate-200 dark:border-[#334155] rounded-xl">
+      <i class="fas fa-sliders-h text-2xl text-slate-200 dark:text-slate-700 mb-2"></i>
+      <p class="text-slate-400 text-[11px]">Sin campos personalizados.</p>
     </div>
   </div>
 </template>

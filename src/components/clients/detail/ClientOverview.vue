@@ -1,54 +1,58 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
     <!-- Columna izquierda -->
-    <div class="lg:col-span-2 space-y-4">
+    <div class="lg:col-span-2 space-y-3">
+      <!-- Acerca de -->
       <div>
         <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Acerca de</label>
-        <textarea v-model="draft.profile.about" :readonly="!editOverview" rows="5"
-          class="w-full bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl px-4 py-3 text-slate-700 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"
-          :class="!editOverview ? 'cursor-default' : ''"
+        <textarea v-model="draft.profile.about" :readonly="!editOverview" rows="4"
+          class="w-full bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-xl px-3.5 py-2.5 text-slate-700 dark:text-slate-200 text-[12px] leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"
+          :class="!editOverview ? 'cursor-default opacity-80' : ''"
           placeholder="Descripción del cliente..."
         ></textarea>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <!-- Campos del perfil -->
+      <div class="grid grid-cols-2 gap-2">
         <div v-for="f in overviewFields" :key="f.key">
-          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">{{ f.label }}</label>
+          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ f.label }}</label>
           <input v-model="draft.profile[f.key]" :readonly="!editOverview" :placeholder="f.placeholder"
-            class="w-full bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl px-3.5 py-2.5 text-slate-700 dark:text-slate-200 text-[13px] font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all"
-            :class="!editOverview ? 'cursor-default' : ''" />
+            class="w-full h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-lg px-3 text-slate-700 dark:text-slate-200 text-[12px] font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all"
+            :class="!editOverview ? 'cursor-default opacity-80' : ''" />
         </div>
       </div>
     </div>
 
-    <!-- Columna derecha — labels alineados con los del left -->
-    <div class="space-y-4">
+    <!-- Columna derecha -->
+    <div class="space-y-3">
       <!-- Etiquetas -->
       <div>
         <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Etiquetas</label>
-        <div class="bg-primary-50 dark:bg-primary-500/10 border border-primary-100 dark:border-primary-500/20 rounded-xl px-3 py-2.5 flex flex-wrap gap-1.5 min-h-[42px]">
+        <div class="bg-slate-50 dark:bg-[#0f172a] border border-slate-100 dark:border-[#334155] rounded-xl px-3 py-2.5 flex flex-wrap gap-1.5 min-h-[38px]">
           <span v-for="(tag, i) in draft.tags" :key="i"
-            class="px-2.5 py-0.5 rounded-lg bg-white dark:bg-[#1e293b] text-primary-700 dark:text-primary-300 text-[10px] font-black uppercase tracking-wider border border-primary-200 dark:border-primary-500/30 flex items-center gap-1.5">
+            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 text-[10px] font-black">
             {{ tag }}
             <button v-if="editOverview" @click="draft.tags = draft.tags.filter((_: any, idx: number) => idx !== i)"
-              class="text-primary-400 hover:text-rose-500 transition-colors leading-none">
-              <i class="fas fa-times text-[8px]"></i>
+              class="text-primary-400 hover:text-rose-500 transition-colors">
+              <i class="fas fa-times text-[7px]"></i>
             </button>
           </span>
           <input v-if="editOverview" v-model="newTag" @keyup.enter="handleAddTag"
             placeholder="+ etiqueta"
-            class="bg-transparent text-[11px] text-primary-700 dark:text-primary-300 placeholder:text-primary-400 focus:outline-none flex-1 min-w-[80px]"/>
+            class="bg-transparent text-[11px] text-slate-500 placeholder:text-slate-400 focus:outline-none flex-1 min-w-[70px]"/>
+          <span v-if="!draft.tags?.length && !editOverview" class="text-[11px] text-slate-400">Sin etiquetas</span>
         </div>
       </div>
 
-      <!-- Info de contacto -->
-      <div class="bg-slate-50 dark:bg-[#0f172a] rounded-xl p-3.5 space-y-3">
-        <div v-for="cf in contactFields" :key="cf.key">
-          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-1">
-            <i :class="['fas', cf.icon, 'text-[9px]']"></i>{{ cf.label }}
-          </label>
-          <input v-model="(draft as any)[cf.key]" :readonly="!editOverview" :placeholder="cf.placeholder"
-            class="w-full bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 py-2 text-slate-700 dark:text-slate-200 text-[12px] font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all"
-            :class="!editOverview ? 'cursor-default' : ''" />
+      <!-- Contacto — lista limpia -->
+      <div>
+        <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Contacto</label>
+        <div class="divide-y divide-slate-100 dark:divide-[#334155] border border-slate-100 dark:border-[#334155] rounded-xl overflow-hidden">
+          <div v-for="cf in contactFields" :key="cf.key" class="bg-white dark:bg-[#1e293b] px-3 py-2 flex items-center gap-2.5">
+            <i :class="['fas', cf.icon, 'text-[9px] text-slate-400 w-3 shrink-0']"></i>
+            <input v-model="(draft as any)[cf.key]" :readonly="!editOverview" :placeholder="cf.placeholder"
+              class="flex-1 bg-transparent text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none min-w-0"
+              :class="!editOverview ? 'cursor-default' : ''" />
+          </div>
         </div>
       </div>
     </div>
