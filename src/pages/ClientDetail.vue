@@ -1,53 +1,56 @@
 <template>
-  <div class="space-y-6">
-    <!-- Encabezado del Cliente -->
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
-      <div class="flex items-center gap-4">
-        <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 text-2xl font-black border border-primary-200">
+  <div class="space-y-4">
+    <!-- Header -->
+    <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white text-lg font-black shrink-0"
+          style="background: linear-gradient(135deg, var(--brand-accent) 0%, color-mix(in srgb, var(--brand-accent) 70%, #6366f1) 100%);">
           {{ (client?.name || 'C').charAt(0).toUpperCase() }}
         </div>
         <div>
-          <h1 class="text-2xl font-black text-slate-800">{{ client?.name }}</h1>
-          <p class="text-slate-500 font-medium text-sm mt-0.5">{{ client?.company || 'Sin Empresa' }}</p>
+          <h1 class="text-[18px] font-black text-slate-800 dark:text-slate-100 leading-tight">{{ client?.name || '...' }}</h1>
+          <p class="text-[11px] text-slate-400 font-medium mt-0.5">{{ client?.company || 'Sin empresa' }}<span v-if="client?.email"> · {{ client.email }}</span></p>
         </div>
       </div>
-      <div class="flex flex-wrap items-center gap-2">
-        <router-link to="/clients" class="h-9 px-4 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-1.5">
-          <i class="fas fa-arrow-left text-[10px]"></i> Volver
+      <div class="flex items-center gap-2 shrink-0">
+        <router-link to="/clients" class="h-8 px-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg hover:bg-slate-100 transition-colors flex items-center gap-1.5">
+          <i class="fas fa-arrow-left text-[9px]"></i> Volver
         </router-link>
-        <button @click="editOverview = !editOverview" class="h-9 px-4 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-xl hover:bg-amber-100 transition-colors shadow-sm flex items-center gap-1.5">
-          <i :class="editOverview ? 'fas fa-times' : 'fas fa-edit'" class="text-[10px]"></i>
-          <span class="hidden sm:inline">{{ editOverview ? 'Cancelar' : 'Editar Cliente' }}</span>
-          <span class="sm:hidden">{{ editOverview ? 'Cancelar' : 'Editar' }}</span>
+        <button @click="editOverview = !editOverview"
+          class="h-8 px-3 text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1.5"
+          :class="editOverview
+            ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500 border border-rose-200 dark:border-rose-500/30'
+            : 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/30 hover:bg-amber-100'">
+          <i :class="editOverview ? 'fas fa-times' : 'fas fa-edit'" class="text-[9px]"></i>
+          {{ editOverview ? 'Cancelar' : 'Editar' }}
         </button>
-        <button v-if="editOverview" @click="handleSave" class="h-9 px-4 text-xs font-bold text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 transition-colors shadow-sm flex items-center gap-1.5">
-          <i class="fas fa-save text-[10px]"></i> Guardar
+        <button v-if="editOverview" @click="handleSave"
+          class="h-8 px-3 text-[11px] font-bold text-white bg-emerald-500 hover:bg-emerald-600 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
+          <i class="fas fa-save text-[9px]"></i> Guardar
         </button>
       </div>
     </div>
 
-    <!-- Spinner de Carga -->
+    <!-- Spinner -->
     <div v-if="isLoading" class="flex justify-center items-center py-20">
-      <i class="fas fa-spinner fa-spin text-4xl text-primary-500"></i>
+      <i class="fas fa-spinner fa-spin text-3xl text-primary-400"></i>
     </div>
 
-    <!-- Contenedor Principal (Tabs y Contenido) -->
-    <div v-else class="bg-white rounded-xl shadow-sm shadow-sm overflow-hidden">
+    <!-- Contenedor principal -->
+    <div v-else class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm">
       <!-- Tabs -->
-      <div class="flex gap-2 p-3 border-b border-slate-100 bg-slate-50 overflow-x-auto scroll-smooth">
+      <div class="flex gap-1 px-3 pt-3 border-b border-slate-100 dark:border-[#334155] overflow-x-auto">
         <button v-for="t in tabs" :key="t.key" @click="activeTab = t.key"
-          :class="[
-            'px-4 py-2.5 rounded-lg whitespace-nowrap text-sm font-bold transition-colors flex items-center min-w-max',
-            activeTab === t.key 
-              ? 'bg-primary-600 text-white shadow-sm' 
-              : 'text-slate-600 hover:bg-white hover:text-slate-900 border border-transparent'
-          ]">
-          <i :class="[t.icon, 'mr-2', activeTab === t.key ? 'opacity-100' : 'opacity-70']"></i>{{ t.label }}
+          class="px-4 py-2 rounded-t-lg whitespace-nowrap text-[11px] font-bold transition-all flex items-center gap-1.5 min-w-max border-b-2 -mb-px"
+          :class="activeTab === t.key
+            ? 'text-primary-600 dark:text-primary-400 border-primary-500 bg-primary-50/50 dark:bg-primary-500/10'
+            : 'text-slate-500 dark:text-slate-400 border-transparent hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/20'">
+          <i :class="[t.icon, 'text-[9px]']"></i>{{ t.label }}
         </button>
       </div>
 
-      <!-- Contenido de las Tabs -->
-      <div class="p-4 md:p-6">
+      <!-- Contenido -->
+      <div class="p-5">
         <ClientOverview v-if="activeTab === 'overview'" :editOverview="editOverview" />
         <ClientServices v-else-if="activeTab === 'services'" />
         <ClientCommitments v-else-if="activeTab === 'commitments'" />

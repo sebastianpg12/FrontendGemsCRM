@@ -1,54 +1,54 @@
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-    <div class="lg:col-span-2 space-y-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <!-- Columna izquierda -->
+    <div class="lg:col-span-2 space-y-4">
       <div>
-        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Acerca de</label>
-        <textarea v-model="draft.profile.about" :readonly="!editOverview"
-          class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all min-h-[140px] resize-y"
-          :class="!editOverview ? 'opacity-80' : 'shadow-sm'"
+        <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Acerca de</label>
+        <textarea v-model="draft.profile.about" :readonly="!editOverview" rows="5"
+          class="w-full bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl px-4 py-3 text-slate-700 dark:text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"
+          :class="!editOverview ? 'cursor-default' : ''"
+          placeholder="Descripción del cliente..."
         ></textarea>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Dirección</label>
-          <input v-model="draft.profile.address" :readonly="!editOverview" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-slate-800 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Sitio web</label>
-          <input v-model="draft.profile.website" :readonly="!editOverview" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-slate-800 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Industria</label>
-          <input v-model="draft.profile.industry" :readonly="!editOverview" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-slate-800 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Tamaño de la Empresa</label>
-          <input v-model="draft.profile.size" :readonly="!editOverview" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-slate-800 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div v-for="f in overviewFields" :key="f.key">
+          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">{{ f.label }}</label>
+          <input v-model="draft.profile[f.key]" :readonly="!editOverview" :placeholder="f.placeholder"
+            class="w-full bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl px-3.5 py-2.5 text-slate-700 dark:text-slate-200 text-[13px] font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all"
+            :class="!editOverview ? 'cursor-default' : ''" />
         </div>
       </div>
     </div>
-    
-    <div class="space-y-6">
-      <div class="bg-primary-50 p-5 rounded-xl border border-primary-100 shadow-sm">
-        <label class="block text-xs font-bold text-primary-800 uppercase tracking-wider mb-3">Etiquetas</label>
-        <div class="flex flex-wrap gap-2">
-          <span v-for="(tag, i) in draft.tags" :key="i" class="px-2.5 py-1 rounded-md bg-white text-primary-700 text-[11px] font-bold uppercase tracking-wider border border-primary-200 shadow-sm">{{ tag }}</span>
-          <input v-if="editOverview" v-model="newTag" @keyup.enter="handleAddTag" placeholder="+ Agregar etiqueta (Enter)" class="bg-white border border-primary-200 rounded-md px-3 py-1.5 text-xs text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 flex-1 min-w-[120px]"/>
+
+    <!-- Columna derecha — labels alineados con los del left -->
+    <div class="space-y-4">
+      <!-- Etiquetas -->
+      <div>
+        <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Etiquetas</label>
+        <div class="bg-primary-50 dark:bg-primary-500/10 border border-primary-100 dark:border-primary-500/20 rounded-xl px-3 py-2.5 flex flex-wrap gap-1.5 min-h-[42px]">
+          <span v-for="(tag, i) in draft.tags" :key="i"
+            class="px-2.5 py-0.5 rounded-lg bg-white dark:bg-[#1e293b] text-primary-700 dark:text-primary-300 text-[10px] font-black uppercase tracking-wider border border-primary-200 dark:border-primary-500/30 flex items-center gap-1.5">
+            {{ tag }}
+            <button v-if="editOverview" @click="draft.tags = draft.tags.filter((_: any, idx: number) => idx !== i)"
+              class="text-primary-400 hover:text-rose-500 transition-colors leading-none">
+              <i class="fas fa-times text-[8px]"></i>
+            </button>
+          </span>
+          <input v-if="editOverview" v-model="newTag" @keyup.enter="handleAddTag"
+            placeholder="+ etiqueta"
+            class="bg-transparent text-[11px] text-primary-700 dark:text-primary-300 placeholder:text-primary-400 focus:outline-none flex-1 min-w-[80px]"/>
         </div>
       </div>
-      
-      <div class="bg-slate-50 rounded-xl p-5 space-y-4 shadow-sm">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-envelope mr-1 text-slate-400"></i> Correo Electrónico</label>
-          <input v-model="draft.email" :readonly="!editOverview" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-phone mr-1 text-slate-400"></i> Teléfono</label>
-          <input v-model="draft.phone" :readonly="!editOverview" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-building mr-1 text-slate-400"></i> Nombre Comercial</label>
-          <input v-model="draft.company" :readonly="!editOverview" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium" :class="!editOverview ? 'opacity-80' : 'shadow-sm'"/>
+
+      <!-- Info de contacto -->
+      <div class="bg-slate-50 dark:bg-[#0f172a] rounded-xl p-3.5 space-y-3">
+        <div v-for="cf in contactFields" :key="cf.key">
+          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-1">
+            <i :class="['fas', cf.icon, 'text-[9px]']"></i>{{ cf.label }}
+          </label>
+          <input v-model="(draft as any)[cf.key]" :readonly="!editOverview" :placeholder="cf.placeholder"
+            class="w-full bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 py-2 text-slate-700 dark:text-slate-200 text-[12px] font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all"
+            :class="!editOverview ? 'cursor-default' : ''" />
         </div>
       </div>
     </div>
@@ -58,15 +58,25 @@
 <script setup lang="ts">
 import { ref, inject } from 'vue'
 
-// Props to sync edit state
-defineProps<{
-  editOverview: boolean
-}>()
+defineProps<{ editOverview: boolean }>()
 
 const ctx = inject('clientContext') as any
 const draft = ctx.draft
 
 const newTag = ref('')
+
+const overviewFields = [
+  { key: 'address',  label: 'Dirección',         placeholder: 'Calle 123...' },
+  { key: 'website',  label: 'Sitio web',          placeholder: 'https://...' },
+  { key: 'industry', label: 'Industria',          placeholder: 'Alimentos, TI...' },
+  { key: 'size',     label: 'Tamaño de empresa',  placeholder: 'Pequeña, Mediana...' },
+]
+
+const contactFields = [
+  { key: 'email',   label: 'Correo electrónico', icon: 'fa-envelope', placeholder: 'correo@empresa.com' },
+  { key: 'phone',   label: 'Teléfono',           icon: 'fa-phone',    placeholder: '+57 300...' },
+  { key: 'company', label: 'Nombre comercial',   icon: 'fa-building', placeholder: 'Empresa S.A.' },
+]
 
 const handleAddTag = () => {
   const v = newTag.value.trim()

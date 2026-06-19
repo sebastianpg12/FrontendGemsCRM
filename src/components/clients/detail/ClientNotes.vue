@@ -48,21 +48,22 @@
       </div>
     </div>
 
-    <!-- Confirmación borrar nota — sin blur -->
-    <div v-if="noteToDelete" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-slate-900/50" @click="noteToDelete = null"></div>
-      <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 text-center animate-fade-in">
-        <div class="w-14 h-14 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-trash text-red-500 text-xl"></i>
-        </div>
-        <h4 class="text-base font-black text-slate-900 mb-1">¿Eliminar nota?</h4>
-        <p class="text-sm text-slate-400 font-medium mb-5">Esta acción no se puede deshacer.</p>
-        <div class="flex gap-3">
-          <button @click="noteToDelete = null" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-colors">Cancelar</button>
-          <button @click="confirmDeleteNote" class="flex-1 px-4 py-2.5 rounded-xl bg-red-500 text-white font-bold text-sm hover:bg-red-600 transition-colors">Eliminar</button>
+    <!-- Confirmación borrar nota — Teleport para cubrir todo el viewport -->
+    <Teleport to="body">
+      <div v-if="noteToDelete" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50" @click.self="noteToDelete = null">
+        <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm p-6 text-center">
+          <div class="w-12 h-12 bg-red-50 dark:bg-red-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-trash text-red-500"></i>
+          </div>
+          <h4 class="text-[15px] font-black text-slate-900 dark:text-slate-100 mb-1">¿Eliminar nota?</h4>
+          <p class="text-[12px] text-slate-400 mb-5">Esta acción no se puede deshacer.</p>
+          <div class="flex gap-3">
+            <button @click="noteToDelete = null" class="flex-1 h-9 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[12px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors">Cancelar</button>
+            <button @click="confirmDeleteNote" class="flex-1 h-9 rounded-xl bg-red-500 text-white text-[12px] font-bold hover:bg-red-600 transition-colors">Eliminar</button>
+          </div>
         </div>
       </div>
-    </div>
+    </Teleport>
   </div>
 </template>
 
