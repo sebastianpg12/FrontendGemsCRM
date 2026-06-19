@@ -168,38 +168,32 @@
       <div class="flex flex-col gap-3 h-full min-h-0">
 
         <!-- Ritmo del día -->
-        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-4 py-3.5 shrink-0">
-          <!-- Card header — patrón unificado -->
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
-                <i class="fas fa-fire text-primary-500 text-[9px]"></i>
-              </div>
-              <div>
-                <div class="text-[8px] font-black uppercase tracking-[0.18em] text-slate-400 leading-none">Ritmo del día</div>
-                <div class="text-[12px] font-black text-slate-900 dark:text-slate-100 leading-tight">Foco operativo</div>
-              </div>
-            </div>
-            <div class="w-9 h-9 rounded-xl bg-primary-600 flex items-center justify-center">
-              <span class="text-[11px] font-black text-white leading-none">{{ focusProgress }}%</span>
-            </div>
+        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2 shrink-0 flex items-center gap-3">
+          <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
+            <i class="fas fa-fire text-primary-500 text-[9px]"></i>
           </div>
-          <div class="h-1 bg-slate-100 dark:bg-[#334155] rounded-full overflow-hidden mb-3">
-            <div class="h-full bg-primary-500 rounded-full transition-all duration-700"
-              :style="{ width: focusProgress + '%' }"></div>
+          <div class="shrink-0">
+            <div class="text-[8px] font-black uppercase tracking-[0.15em] text-slate-400 leading-none">Ritmo</div>
+            <div class="text-[11px] font-black text-slate-800 dark:text-slate-100 leading-tight">Foco operativo</div>
           </div>
-          <div class="grid grid-cols-3 gap-1.5">
-            <div class="bg-red-50 dark:bg-red-500/10 rounded-xl py-2.5 text-center">
-              <div class="text-[20px] font-black text-red-500 leading-none">{{ overdueCount }}</div>
-              <div class="text-[8px] text-red-400 font-black uppercase tracking-wide mt-0.5">Vencidas</div>
+          <div class="flex-1 flex items-center gap-1.5 min-w-0">
+            <div class="flex-1 h-1 bg-slate-100 dark:bg-[#334155] rounded-full overflow-hidden">
+              <div class="h-full bg-primary-500 rounded-full transition-all duration-700" :style="{ width: focusProgress + '%' }"></div>
             </div>
-            <div class="bg-amber-50 dark:bg-amber-500/10 rounded-xl py-2.5 text-center">
-              <div class="text-[20px] font-black text-amber-500 leading-none">{{ todayCount }}</div>
-              <div class="text-[8px] text-amber-400 font-black uppercase tracking-wide mt-0.5">Hoy</div>
+            <span class="text-[9px] font-black text-primary-500 shrink-0">{{ focusProgress }}%</span>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <div class="flex flex-col items-center px-2 py-1 bg-red-50 dark:bg-red-500/10 rounded-lg">
+              <span class="text-[13px] font-black text-red-500 leading-none">{{ overdueCount }}</span>
+              <span class="text-[7px] font-black uppercase text-red-400 tracking-wide leading-none mt-0.5">Venc.</span>
             </div>
-            <div class="bg-primary-50 dark:bg-primary-500/10 rounded-xl py-2.5 text-center">
-              <div class="text-[20px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</div>
-              <div class="text-[8px] text-primary-400 font-black uppercase tracking-wide mt-0.5">Alta Prio.</div>
+            <div class="flex flex-col items-center px-2 py-1 bg-amber-50 dark:bg-amber-500/10 rounded-lg">
+              <span class="text-[13px] font-black text-amber-500 leading-none">{{ todayCount }}</span>
+              <span class="text-[7px] font-black uppercase text-amber-400 tracking-wide leading-none mt-0.5">Hoy</span>
+            </div>
+            <div class="flex flex-col items-center px-2 py-1 bg-primary-50 dark:bg-primary-500/10 rounded-lg">
+              <span class="text-[13px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</span>
+              <span class="text-[7px] font-black uppercase text-primary-400 tracking-wide leading-none mt-0.5">Alta</span>
             </div>
           </div>
         </div>
