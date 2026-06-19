@@ -244,145 +244,131 @@
        </button>
     </div>
 
-    <!-- Create/Edit Modal (Premium) -->
-    <div v-if="showCreateModal || showEditModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6 animate-fade-in">
-       <div class="absolute inset-0 bg-slate-900/60" @click="closeModal"></div>
-       <div class="relative bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[3rem] shadow-2xl p-10 space-y-10 animate-scale-up">
-          <!-- Modal Decoration -->
-          <div class="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 rounded-bl-[5rem] -mr-10 -mt-10"></div>
-          
-          <div class="relative">
-            <h3 class="text-2xl font-black text-slate-900 tracking-tight">{{ showCreateModal ? 'Nuevo Miembro del Equipo' : 'Editar Información' }}</h3>
-            <p class="text-sm text-slate-400 font-medium">Define los accesos y perfil del colaborador.</p>
+    <!-- Create/Edit Modal -->
+    <Teleport to="body">
+    <div v-if="showCreateModal || showEditModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50 animate-fade-in" @click.self="closeModal">
+      <div class="bg-white w-full max-w-xl rounded-xl shadow-2xl animate-scale-up">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-50">
+          <div>
+            <div class="flex items-center gap-2 mb-0.5">
+              <i class="fas fa-gem text-primary-400 text-[8px]"></i>
+              <span class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-400">GEMS Hub</span>
+            </div>
+            <h3 class="text-[15px] font-black text-slate-900 leading-tight">
+              {{ showCreateModal ? 'Nuevo Miembro' : 'Editar Miembro' }}
+            </h3>
           </div>
-          
-          <form @submit.prevent="submitForm" class="space-y-6">
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Inputs Section -->
-                <div class="space-y-6">
-                   <div class="space-y-2">
-                      <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Nombre Completo</label>
-                      <input v-model="formData.name" required class="w-full p-4 bg-slate-50 rounded-xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
-                   </div>
-                   <div class="space-y-2">
-                      <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Correo Electrónico</label>
-                      <input v-model="formData.email" type="email" required class="w-full p-4 bg-slate-50 rounded-xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
-                   </div>
-                   <div v-if="showCreateModal || (showEditModal && authStore.user?.role === 'admin')" class="space-y-2">
-                      <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">
-                        {{ showCreateModal ? 'Contraseña Temporal' : 'Cambiar Contraseña (Opcional)' }}
-                      </label>
-                      <div class="relative">
-                        <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" :required="showCreateModal" class="w-full p-4 pr-12 bg-slate-50 rounded-xl text-sm focus:ring-4 focus:ring-primary-500/5 outline-none transition-all">
-                        <button type="button" @click="showPassword = !showPassword" class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors rounded-lg">
-                          <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-[13px]"></i>
-                        </button>
-                      </div>
-                   </div>
+          <button @click="closeModal" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-all">
+            <i class="fas fa-times text-[12px]"></i>
+          </button>
+        </div>
+
+        <!-- Form -->
+        <form @submit.prevent="submitForm" class="p-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <!-- Columna izquierda -->
+            <div class="space-y-3">
+              <div>
+                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Nombre Completo *</label>
+                <input v-model="formData.name" required placeholder="Ej: Juan Pérez"
+                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+              </div>
+              <div>
+                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Correo Electrónico *</label>
+                <input v-model="formData.email" type="email" required placeholder="correo@empresa.com"
+                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+              </div>
+              <div v-if="showCreateModal || (showEditModal && authStore.user?.role === 'admin')">
+                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                  {{ showCreateModal ? 'Contraseña Temporal *' : 'Nueva Contraseña (opcional)' }}
+                </label>
+                <div class="relative">
+                  <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" :required="showCreateModal" placeholder="••••••••"
+                    class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 pr-9 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+                  <button type="button" @click="showPassword = !showPassword"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
+                    <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-[11px]"></i>
+                  </button>
                 </div>
+              </div>
+              <div>
+                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Teléfono</label>
+                <input v-model="formData.phone" placeholder="+57 300..."
+                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+              </div>
+            </div>
 
-                <div class="space-y-6">
-                   <div class="space-y-2">
-                      <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Rol Operativo</label>
-                      <div class="relative">
-                        <i class="fas fa-shield-halved absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none"></i>
-                        <select v-model="formData.role" required class="w-full p-4 pl-10 pr-10 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none">
-                          <option value="" disabled>Selecciona un rol</option>
-                          <option v-for="role in allAvailableRoles" :key="role._id || role.name" :value="role.name">
-                            {{ getRoleDisplayName(role.name) }}
-                          </option>
-                        </select>
-                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                      </div>
-                   </div>
-                   <div class="space-y-2">
-                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Departamento</label>
-
-                       <!-- Si está añadiendo uno nuevo -->
-                       <div v-if="isAddingCustomDept" class="flex gap-2">
-                         <input
-                           v-model="newDeptName"
-                           @keydown.enter.prevent="confirmAddDept"
-                           @keydown.escape="isAddingCustomDept = false; newDeptName = ''"
-                           autofocus
-                           placeholder="Nombre del departamento..."
-                           class="flex-1 p-4 bg-slate-50 dark:bg-[#0f172a] border border-primary-200 dark:border-primary-500/40 rounded-2xl text-sm outline-none focus:ring-4 focus:ring-primary-500/10 transition-all"
-                         />
-                         <button
-                           type="button"
-                           @click="confirmAddDept"
-                           :disabled="!newDeptName.trim()"
-                           class="px-4 bg-primary-600 hover:bg-primary-700 disabled:opacity-40 text-white rounded-2xl text-xs font-black transition-all"
-                         >
-                           <i class="fas fa-check"></i>
-                         </button>
-                         <button
-                           type="button"
-                           @click="isAddingCustomDept = false; newDeptName = ''"
-                           class="px-4 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 text-slate-500 rounded-2xl text-xs font-black transition-all"
-                         >
-                           <i class="fas fa-xmark"></i>
-                         </button>
-                       </div>
-
-                       <!-- Select normal con opción de agregar -->
-                       <div v-else class="relative">
-                         <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] pointer-events-none z-10"></i>
-                         <select
-                           v-model="formData.department"
-                           class="w-full p-4 pl-10 bg-slate-50 dark:bg-[#0f172a] dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5 appearance-none pr-10"
-                         >
-                           <option value="">Sin departamento</option>
-                           <option v-for="dept in allDepartments" :key="dept" :value="dept">{{ dept }}</option>
-                         </select>
-                         <button
-                           type="button"
-                           @click="isAddingCustomDept = true"
-                           class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg bg-primary-100 dark:bg-primary-500/20 text-primary-500 hover:bg-primary-200 dark:hover:bg-primary-500/30 transition-all flex items-center justify-center text-[9px]"
-                           title="Crear departamento personalizado"
-                         >
-                           <i class="fas fa-plus"></i>
-                         </button>
-                       </div>
-                    </div>
-                    <!-- Rol dentro del departamento -->
-                    <div class="space-y-2">
-                       <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Rol en Departamento</label>
-                       <div class="grid grid-cols-2 gap-3">
-                         <button
-                           type="button"
-                           @click="formData.departmentRole = 'member'"
-                           :class="formData.departmentRole !== 'leader' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-200'"
-                           class="p-3 rounded-2xl border text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2"
-                         >
-                           <i class="fas fa-user"></i> Miembro
-                         </button>
-                         <button
-                           type="button"
-                           @click="formData.departmentRole = 'leader'"
-                           :class="formData.departmentRole === 'leader' ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-slate-50 text-slate-500 border-slate-200'"
-                           class="p-3 rounded-2xl border text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2"
-                         >
-                           <i class="fas fa-crown"></i> Líder
-                         </button>
-                       </div>
-                    </div>
-                   <div class="space-y-2">
-                      <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Teléfono Corporativo</label>
-                      <input v-model="formData.phone" class="w-full p-4 bg-slate-50 rounded-xl text-sm outline-none focus:ring-4 focus:ring-primary-500/5">
-                   </div>
+            <!-- Columna derecha -->
+            <div class="space-y-3">
+              <div>
+                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol Operativo *</label>
+                <CustomSelect v-model="formData.role" :options="roleSelectOptions" placeholder="Selecciona un rol" size="sm" />
+              </div>
+              <div>
+                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Departamento</label>
+                <div v-if="isAddingCustomDept" class="flex gap-1.5">
+                  <input v-model="newDeptName" @keydown.enter.prevent="confirmAddDept" @keydown.escape="isAddingCustomDept = false; newDeptName = ''" autofocus placeholder="Nombre del departamento..."
+                    class="flex-1 h-8 bg-slate-50 border border-primary-200 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 transition-all" />
+                  <button type="button" @click="confirmAddDept" :disabled="!newDeptName.trim()"
+                    class="w-8 h-8 bg-primary-600 disabled:opacity-40 text-white rounded-lg flex items-center justify-center">
+                    <i class="fas fa-check text-[10px]"></i>
+                  </button>
+                  <button type="button" @click="isAddingCustomDept = false; newDeptName = ''"
+                    class="w-8 h-8 bg-slate-100 text-slate-500 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-xmark text-[10px]"></i>
+                  </button>
                 </div>
-             </div>
+                <div v-else class="relative">
+                  <select v-model="formData.department"
+                    class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg pl-3 pr-14 text-[12px] font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all appearance-none">
+                    <option value="">Sin departamento</option>
+                    <option v-for="dept in allDepartments" :key="dept" :value="dept">{{ dept }}</option>
+                  </select>
+                  <i class="fas fa-chevron-down absolute right-8 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
+                  <button type="button" @click="isAddingCustomDept = true"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded bg-primary-100 text-primary-500 hover:bg-primary-200 flex items-center justify-center transition-all"
+                    title="Nuevo departamento">
+                    <i class="fas fa-plus text-[8px]"></i>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol en Departamento</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <button type="button" @click="formData.departmentRole = 'member'"
+                    :class="formData.departmentRole !== 'leader' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-100'"
+                    class="h-8 rounded-lg border text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5">
+                    <i class="fas fa-user text-[8px]"></i> Miembro
+                  </button>
+                  <button type="button" @click="formData.departmentRole = 'leader'"
+                    :class="formData.departmentRole === 'leader' ? 'bg-amber-500 text-white border-amber-500' : 'bg-slate-50 text-slate-500 border-slate-100'"
+                    class="h-8 rounded-lg border text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5">
+                    <i class="fas fa-crown text-[8px]"></i> Líder
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-             <div class="flex gap-4 pt-10 pb-2">
-                <button type="button" @click="closeModal" class="flex-1 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest hover:bg-slate-50 rounded-xl transition-all">Cancelar</button>
-                <button type="submit" :disabled="isSubmitting" class="flex-[2] py-4 bg-primary-600 text-[11px] font-black text-white uppercase tracking-widest rounded-2xl shadow-lg shadow-primary-500/20 hover:bg-primary-700 transition-all">
-                   {{ isSubmitting ? 'Guardando...' : (showCreateModal ? 'Crear Colaborador' : 'Actualizar Información') }}
-                </button>
-             </div>
-          </form>
-       </div>
+          <!-- Actions -->
+          <div class="flex gap-2 mt-5 pt-4 border-t border-slate-50">
+            <button type="button" @click="closeModal"
+              class="flex-1 h-8 rounded-lg border border-slate-200 text-[11px] font-bold text-slate-600 hover:bg-slate-50 transition-all">
+              Cancelar
+            </button>
+            <button type="submit" :disabled="isSubmitting"
+              class="flex-[2] h-8 rounded-lg bg-primary-600 text-white text-[11px] font-bold hover:bg-primary-700 disabled:opacity-40 transition-all flex items-center justify-center gap-1.5">
+              <i v-if="isSubmitting" class="fas fa-circle-notch fa-spin text-[10px]"></i>
+              {{ isSubmitting ? 'Guardando...' : (showCreateModal ? 'Crear Colaborador' : 'Actualizar') }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+    </Teleport>
   </div>
 </template>
 
@@ -393,6 +379,7 @@ import { useTeamStore } from '../stores'
 import { useNotifications } from '../composables/useNotifications'
 import PermissionGuard from '../components/PermissionGuard.vue'
 import UserAvatar from '../components/ui/UserAvatar.vue'
+import CustomSelect from '../components/ui/CustomSelect.vue'
 import type { TeamMember } from '../types'
 
 const authStore = useAuthStore()
@@ -496,6 +483,8 @@ const allAvailableRoles = [
   { name: 'Consultor' },
   { name: 'Cliente' },
 ]
+
+const roleSelectOptions = allAvailableRoles.map(r => ({ value: r.name, label: r.name }))
 
 const editingMember = ref<TeamMember | null>(null)
 const pagination = reactive({
