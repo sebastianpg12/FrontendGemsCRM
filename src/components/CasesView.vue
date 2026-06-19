@@ -557,25 +557,25 @@
       </div>
     </div>
 
-    <!-- ════════ MODAL CONFIRMACIÓN (sin blur) ════════ -->
-    <div v-if="confirmDialog" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/50">
-      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm p-6">
-        <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center mb-4">
-          <i class="fas fa-trash text-[16px]"></i>
+    <!-- ════════ MODAL CONFIRMACIÓN ════════ -->
+    <Teleport to="body">
+    <div v-if="confirmDialog" class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-slate-900/50" @click.self="confirmDialog = null">
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm p-6 text-center">
+        <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center mx-auto mb-3">
+          <i class="fas fa-trash text-sm"></i>
         </div>
-        <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">{{ confirmDialog.title }}</h3>
-        <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 leading-relaxed mb-6">{{ confirmDialog.message }}</p>
-        <div class="flex justify-end gap-2">
-          <button class="btn-secondary" @click="confirmDialog = null">Cancelar</button>
-          <button
-            class="inline-flex items-center gap-2 h-9 px-4 text-[11px] font-bold rounded-lg text-white bg-rose-600 hover:bg-rose-700 transition-colors"
-            @click="confirmDialog.onConfirm(); confirmDialog = null"
-          >
+        <h3 class="text-[14px] font-black text-slate-800 dark:text-slate-100 mb-1">{{ confirmDialog.title }}</h3>
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed mb-5">{{ confirmDialog.message }}</p>
+        <div class="flex gap-2">
+          <button class="flex-1 h-8 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[11px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors" @click="confirmDialog = null">Cancelar</button>
+          <button class="flex-1 h-8 rounded-xl text-white bg-rose-500 hover:bg-rose-600 text-[11px] font-bold transition-colors"
+            @click="confirmDialog.onConfirm(); confirmDialog = null">
             Eliminar
           </button>
         </div>
       </div>
     </div>
+    </Teleport>
   </div>
 </template>
 
