@@ -83,19 +83,18 @@
     <!-- Backdrop para cerrar dropdown -->
     <div v-if="showActions" class="fixed inset-0 z-[49]" @click="showActions = false"></div>
 
-    <!-- ══ Stat cards — minimalista ═══════════════════════════════════ -->
-    <div class="overflow-x-auto -mx-0 pb-0.5">
-    <div class="grid gap-1.5 min-w-0" :style="`grid-template-columns: repeat(${statCards.length}, minmax(72px, 1fr))`">
+    <!-- ══ Stat cards ════════════════════════════════════════════════ -->
+    <div class="overflow-x-auto pb-0.5">
+    <div class="grid gap-1 min-w-0" :style="`grid-template-columns: repeat(${statCards.length}, minmax(60px, 1fr))`">
       <div v-for="card in statCards" :key="card.label"
-        class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-2.5 px-2 sm:px-3 flex flex-col items-center justify-center text-center group cursor-default transition-all duration-150 min-w-0">
-        <!-- Icon -->
-        <div class="w-7 h-7 rounded-lg flex items-center justify-center mb-1" :class="card.iconBg">
-          <i :class="['fas', card.icon, card.iconColor, 'text-[11px]']"></i>
+        class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-2 px-2 flex items-center gap-2 min-w-0 cursor-default transition-all duration-150">
+        <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0" :class="card.iconBg">
+          <i :class="['fas', card.icon, card.iconColor, 'text-[10px]']"></i>
         </div>
-        <!-- Number -->
-        <span class="text-[20px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
-        <!-- Label -->
-        <span class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-500 mt-1 truncate w-full text-center">{{ card.label }}</span>
+        <div class="min-w-0">
+          <span class="block text-[15px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
+          <span class="block text-[8px] font-black uppercase tracking-[0.15em] text-slate-400 truncate leading-tight mt-0.5">{{ card.label }}</span>
+        </div>
       </div>
     </div>
     </div>
