@@ -100,11 +100,11 @@
     </div>
 
     <!-- ══ Main grid ═════════════════════════════════════════════════════ -->
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-3 xl:h-[420px]">
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-2 xl:h-[300px]">
 
       <!-- ── Left: AI Insights + Agenda en dos columnas ──────────────── -->
       <div class="xl:col-span-2 h-full min-h-0">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 h-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
 
           <!-- AI Insights -->
           <div class="h-full min-h-0 overflow-hidden">
@@ -114,7 +114,7 @@
           <!-- Agenda -->
           <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl overflow-hidden flex flex-col h-full min-h-0">
             <!-- Card header — patrón unificado -->
-            <div class="flex items-center justify-between px-4 py-3 shrink-0">
+            <div class="flex items-center justify-between px-3 py-2 shrink-0">
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
                   <i class="fas fa-calendar-alt text-primary-500 text-[9px]"></i>
@@ -165,7 +165,7 @@
       </div>
 
       <!-- ── Right column ─────────────────────────────────────────────── -->
-      <div class="flex flex-col gap-3 h-full min-h-0">
+      <div class="flex flex-col gap-2 h-full min-h-0">
 
         <!-- Ritmo del día -->
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2 shrink-0 flex items-center gap-3">
@@ -213,7 +213,7 @@
         </div>
 
         <!-- Nota de foco GEMS -->
-        <div class="flex items-start gap-2 px-3 py-2 bg-primary-50 dark:bg-primary-500/10 rounded-xl shrink-0">
+        <div class="flex items-start gap-2 px-3 py-1.5 bg-primary-50 dark:bg-primary-500/10 rounded-xl shrink-0">
           <i class="fas fa-gem text-primary-400 text-[9px] mt-0.5 shrink-0"></i>
           <p class="text-[10px] font-medium leading-relaxed text-slate-500 dark:text-slate-400">{{ focusNote }}</p>
         </div>
