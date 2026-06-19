@@ -443,96 +443,78 @@
     </template>
 
     <!-- ════════ MODAL CREAR / EDITAR ════════ -->
-    <div v-if="showFormModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
+    <Teleport to="body">
+    <div v-if="showFormModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50" @click.self="showFormModal = false">
       <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden">
-        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449]">
-          <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">
-            {{ form._id ? 'Editar caso' : 'Nuevo caso' }}
-          </h3>
-          <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showFormModal = false">
-            <i class="fas fa-times text-[12px]"></i>
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-[#334155] shrink-0">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(var(--brand-accent-rgb),0.1)">
+              <i class="fas fa-folder-open text-[11px]" style="color: var(--brand-accent)"></i>
+            </div>
+            <h3 class="text-[14px] font-black text-slate-800 dark:text-slate-100">
+              {{ form._id ? 'Editar caso' : 'Nuevo caso' }}
+            </h3>
+          </div>
+          <button class="h-7 w-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-[#334155] transition-colors" @click="showFormModal = false">
+            <i class="fas fa-times text-[11px]"></i>
           </button>
         </div>
 
-        <div class="p-5 space-y-4 overflow-y-auto">
+        <!-- Body -->
+        <div class="p-5 space-y-3 overflow-y-auto custom-scrollbar">
           <div>
-            <label class="form-label">Título *</label>
-            <input v-model="form.titulo" type="text" placeholder="Ej: Migración de servidor a Oracle Cloud" class="form-input" />
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Título *</label>
+            <input v-model="form.titulo" type="text" placeholder="Ej: Migración de servidor a Oracle Cloud"
+              class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
           </div>
 
           <div>
-            <label class="form-label">Descripción *</label>
-            <textarea v-model="form.descripcion" rows="3" placeholder="Contexto y objetivo del caso..." class="form-input resize-none"></textarea>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Descripción *</label>
+            <textarea v-model="form.descripcion" rows="3" placeholder="Contexto y objetivo del caso..."
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"></textarea>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="grid grid-cols-2 gap-2.5">
             <div>
-              <label class="form-label">Tipo</label>
-              <div class="relative">
-                <i class="fas fa-layer-group absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.tipo" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
-                  <option value="seguimiento">Seguimiento</option>
-                  <option value="incidencia">Incidencia</option>
-                  <option value="documento">Documento</option>
-                </select>
-                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-              </div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Tipo</label>
+              <CustomSelect v-model="form.tipo" :options="caseTypeOpts" size="sm" />
             </div>
             <div>
-              <label class="form-label">Prioridad</label>
-              <div class="relative">
-                <i class="fas fa-exclamation-circle absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.prioridad" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
-                  <option value="baja">Baja</option>
-                  <option value="media">Media</option>
-                  <option value="alta">Alta</option>
-                  <option value="critica">Crítica</option>
-                </select>
-                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-              </div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Prioridad</label>
+              <CustomSelect v-model="form.prioridad" :options="casePriorityOpts" size="sm" />
             </div>
             <div>
-              <label class="form-label">Cliente</label>
-              <div class="relative">
-                <i class="fas fa-briefcase absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.cliente_id" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
-                  <option value="">Interno (sin cliente)</option>
-                  <option v-for="c in clients" :key="c._id" :value="c._id">{{ c.name }}</option>
-                </select>
-                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-              </div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Cliente</label>
+              <CustomSelect v-model="form.cliente_id" :options="clientOpts" size="sm" :searchable="true" />
             </div>
             <div>
-              <label class="form-label">Responsable</label>
-              <div class="relative">
-                <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="form.asignado_a" class="form-input appearance-none" style="padding-left:2rem;padding-right:2rem;">
-                  <option value="">Sin asignar</option>
-                  <option v-for="m in team" :key="m._id" :value="m._id">{{ m.name }}</option>
-                </select>
-                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-              </div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Responsable</label>
+              <CustomSelect v-model="form.asignado_a" :options="teamOpts" size="sm" />
             </div>
             <div>
-              <label class="form-label">Fecha límite</label>
-              <input v-model="form.fecha_limite" type="date" class="form-input" />
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Fecha límite</label>
+              <DatePicker v-model="form.fecha_limite" placeholder="Sin fecha" />
             </div>
             <div>
-              <label class="form-label">Categoría</label>
-              <input v-model="form.categoria" type="text" placeholder="Backend, Legal, Soporte..." class="form-input" />
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Categoría</label>
+              <input v-model="form.categoria" type="text" placeholder="Backend, Legal, Soporte..."
+                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
             </div>
           </div>
         </div>
 
-        <div class="px-5 py-4 border-t border-slate-100 dark:border-[#334155] flex justify-end gap-2 shrink-0">
-          <button class="btn-secondary" @click="showFormModal = false">Cancelar</button>
-          <button class="btn-primary" :disabled="savingForm" @click="submitForm">
-            <i class="fas text-[10px]" :class="savingForm ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
+        <!-- Footer -->
+        <div class="px-5 py-3.5 border-t border-slate-100 dark:border-[#334155] flex justify-end gap-2 shrink-0">
+          <button class="h-8 px-4 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[11px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors" @click="showFormModal = false">Cancelar</button>
+          <button class="h-8 px-4 rounded-xl bg-primary-600 text-white text-[11px] font-black hover:bg-primary-700 transition-colors shadow-sm flex items-center gap-1.5 disabled:opacity-60" :disabled="savingForm" @click="submitForm">
+            <i class="fas text-[9px]" :class="savingForm ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
             {{ form._id ? 'Guardar cambios' : 'Crear caso' }}
           </button>
         </div>
       </div>
     </div>
+    </Teleport>
 
     <!-- ════════ MODAL VINCULAR TICKET ════════ -->
     <div v-if="showLinkModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
@@ -598,7 +580,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { casesService, type Case } from '../services/casesService'
 import { clientService, type ClientData } from '../services/clientService'
@@ -612,6 +594,8 @@ import { formatDistanceToNow } from 'date-fns'
 import { es } from 'date-fns/locale'
 import WikiEditor from './wiki/WikiEditor.vue'
 import WikiContent from './wiki/WikiContent.vue'
+import CustomSelect from './ui/CustomSelect.vue'
+import DatePicker from './ui/DatePicker.vue'
 
 type CaseStatus = Case['estado']
 
@@ -665,6 +649,26 @@ const typeConfig: Record<string, { label: string; icon: string }> = {
 const cases = ref<Case[]>([])
 const clients = ref<ClientData[]>([])
 const team = ref<TeamMember[]>([])
+
+const caseTypeOpts = [
+  { value: 'seguimiento', label: 'Seguimiento',  icon: 'fas fa-stream text-primary-400' },
+  { value: 'incidencia',  label: 'Incidencia',   icon: 'fas fa-exclamation-triangle text-amber-400' },
+  { value: 'documento',   label: 'Documento',    icon: 'fas fa-file-alt text-slate-400' },
+]
+const casePriorityOpts = [
+  { value: 'baja',    label: 'Baja',    icon: 'fas fa-flag text-slate-400' },
+  { value: 'media',   label: 'Media',   icon: 'fas fa-flag text-amber-400' },
+  { value: 'alta',    label: 'Alta',    icon: 'fas fa-flag text-orange-500' },
+  { value: 'critica', label: 'Crítica', icon: 'fas fa-flag text-red-500' },
+]
+const clientOpts = computed(() => [
+  { value: '', label: 'Interno (sin cliente)', icon: 'fas fa-building text-slate-400' },
+  ...clients.value.map(c => ({ value: c._id, label: c.name, icon: 'fas fa-briefcase text-primary-400' }))
+])
+const teamOpts = computed(() => [
+  { value: '', label: 'Sin asignar', icon: 'fas fa-user-slash text-slate-400' },
+  ...team.value.map(m => ({ value: m._id, label: m.name, icon: 'fas fa-user text-primary-400' }))
+])
 const loading = ref(true)
 
 const selectedCase = ref<Case | null>(null)
