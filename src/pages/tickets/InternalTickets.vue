@@ -636,77 +636,78 @@
       </div>
     </div>
 
-    <!-- Modal Nuevo Ticket (Para uso interno) -->
+    <!-- Modal Nuevo Ticket -->
     <Teleport to="body">
     <div v-if="showNewTicketModal" class="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-[100] p-4" @click.self="showNewTicketModal = false">
-      <div class="bg-white rounded-xl shadow-xl border border-slate-200 w-full max-w-md animate-fade-in overflow-hidden">
-        <div class="bg-slate-50 p-5 border-b border-slate-100 flex items-center justify-between">
-           <div class="flex items-center gap-6">
-             <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-xl flex items-center justify-center border border-primary-200">
-               <i class="fas fa-ticket-alt"></i>
-             </div>
-             <div>
-               <h3 class="text-base font-black text-slate-800">Crear Manualmente</h3>
-               <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Nuevo ticket de soporte</p>
-             </div>
-           </div>
-           <button @click="showNewTicketModal = false" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="p-6 space-y-4">
-          <div>
-            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Nombre del Cliente</label>
-            <input v-model="newTicketData.name" type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all">
-          </div>
-          <div>
-            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Email del Cliente</label>
-            <input v-model="newTicketData.email" type="email" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all">
-          </div>
-          <div>
-            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Asunto</label>
-            <input v-model="newTicketData.subject" type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all">
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Prioridad</label>
-              <div class="relative">
-                <i class="fas fa-flag absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="newTicketData.priority" class="w-full pl-8 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 appearance-none transition-all">
-                  <option value="low">Baja</option>
-                  <option value="medium">Media</option>
-                  <option value="high">Alta</option>
-                  <option value="urgent">Urgente</option>
-                </select>
-                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-              </div>
+      <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-[#334155]">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-primary-600 dark:text-primary-300" style="background: rgba(var(--brand-accent-rgb),0.1)">
+              <i class="fas fa-ticket-alt text-[12px]"></i>
             </div>
             <div>
-              <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Categoría</label>
-              <div class="relative">
-                <i class="fas fa-tag absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
-                <select v-model="newTicketData.category" class="w-full pl-8 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 appearance-none transition-all">
-                  <option value="technical">Técnica</option>
-                  <option value="billing">Facturación</option>
-                  <option value="sales">Ventas</option>
-                  <option value="other">Otro</option>
-                </select>
-                <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-              </div>
+              <h3 class="text-[14px] font-black text-slate-800 dark:text-slate-100 leading-tight">Nuevo ticket</h3>
+              <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Soporte interno</p>
             </div>
           </div>
+          <button @click="showNewTicketModal = false" class="h-7 w-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-[#334155] transition-colors">
+            <i class="fas fa-times text-[11px]"></i>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="p-5 space-y-3">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Cliente</label>
+              <input v-model="newTicketData.name" type="text" placeholder="Nombre"
+                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
+            </div>
+            <div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Email</label>
+              <input v-model="newTicketData.email" type="email" placeholder="correo@ejemplo.com"
+                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
+            </div>
+          </div>
+
           <div>
-            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Descripción</label>
-            <textarea v-model="newTicketData.description" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 resize-none"></textarea>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Asunto</label>
+            <input v-model="newTicketData.subject" type="text" placeholder="Describe brevemente el problema..."
+              class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Prioridad</label>
+              <CustomSelect v-model="newTicketData.priority" :options="newTicketPriorityOpts" size="sm" />
+            </div>
+            <div>
+              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Categoría</label>
+              <CustomSelect v-model="newTicketData.category" :options="newTicketCategoryOpts" size="sm" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Descripción</label>
+            <textarea v-model="newTicketData.description" rows="3"
+              placeholder="Detalla el problema o solicitud..."
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"></textarea>
           </div>
         </div>
-        <div class="p-6 bg-slate-50 border-t border-slate-100 flex gap-3">
-          <button @click="showNewTicketModal = false" class="flex-1 px-4 py-3 bg-white text-slate-600 border border-slate-200 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-colors">Cancelar</button>
-          <button 
-            @click="createNewTicket"
-            :disabled="creating"
-            class="flex-1 px-4 py-3 bg-primary-600 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary-700 transition-all shadow-md flex items-center justify-center gap-2"
-          >
-            {{ creating ? 'Creando...' : 'Crear Ticket' }}
-            <i class="fas fa-check"></i>
+
+        <!-- Footer -->
+        <div class="px-5 py-3.5 border-t border-slate-100 dark:border-[#334155] flex gap-2.5">
+          <button @click="showNewTicketModal = false"
+            class="flex-1 h-9 border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors">
+            Cancelar
+          </button>
+          <button @click="createNewTicket" :disabled="creating"
+            class="flex-1 h-9 bg-primary-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-60">
+            <i v-if="creating" class="fas fa-circle-notch fa-spin text-[10px]"></i>
+            <i v-else class="fas fa-plus text-[10px]"></i>
+            {{ creating ? 'Creando...' : 'Crear ticket' }}
           </button>
         </div>
       </div>
@@ -782,6 +783,19 @@ const openChip = ref<string | null>(null)
 const statusOptions   = [{ value: '', label: 'Todos' }, { value: 'open', label: 'En Proceso' }, { value: 'waiting', label: 'Pendiente' }, { value: 'resolved', label: 'Resueltos' }]
 const categoryOptions = [{ value: '', label: 'Todas' }, { value: 'technical', label: 'Technical' }, { value: 'billing', label: 'Billing' }, { value: 'sales', label: 'Sales' }, { value: 'other', label: 'Other' }]
 const priorityOptions = [{ value: '', label: 'Todas' }, { value: 'urgent', label: 'P1 · Crítico' }, { value: 'high', label: 'P2 · Alto' }, { value: 'medium', label: 'P3 · Medio' }, { value: 'low', label: 'P4 · Bajo' }]
+
+const newTicketPriorityOpts = [
+  { value: 'low',    label: 'Baja',    icon: 'fas fa-flag text-slate-400' },
+  { value: 'medium', label: 'Media',   icon: 'fas fa-flag text-amber-400' },
+  { value: 'high',   label: 'Alta',    icon: 'fas fa-flag text-orange-500' },
+  { value: 'urgent', label: 'Urgente', icon: 'fas fa-flag text-red-500' },
+]
+const newTicketCategoryOpts = [
+  { value: 'technical', label: 'Técnica',      icon: 'fas fa-wrench text-primary-400' },
+  { value: 'billing',   label: 'Facturación',  icon: 'fas fa-receipt text-emerald-400' },
+  { value: 'sales',     label: 'Ventas',       icon: 'fas fa-chart-line text-amber-400' },
+  { value: 'other',     label: 'Otro',         icon: 'fas fa-ellipsis-h text-slate-400' },
+]
 
 const toggleChip = (name: string) => { openChip.value = openChip.value === name ? null : name }
 const setChipFilter = (chip: string, value: string) => {
@@ -1216,6 +1230,7 @@ const formatDate = (dateStr?: string) => {
 }
 
 import { API_CONFIG } from '@/config/api'
+import CustomSelect from '@/components/ui/CustomSelect.vue'
 
 const isImgUrl = (url: string) => /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url.toLowerCase())
 
