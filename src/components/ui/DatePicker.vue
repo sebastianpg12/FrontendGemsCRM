@@ -15,7 +15,7 @@
     </button>
 
     <Transition name="dp-drop">
-      <div v-if="open" class="dp-panel" @click.stop>
+      <div v-if="open" class="dp-panel" :style="panelStyle" @click.stop>
         <!-- Header: month navigation -->
         <div class="dp-header">
           <button type="button" class="dp-nav" @click="prevMonth">
@@ -152,6 +152,14 @@ function clear() {
   emit('update:modelValue', '')
   open.value = false
 }
+
+const panelStyle = computed(() => {
+  if (!root.value) return { left: '0' }
+  const rect = root.value.getBoundingClientRect()
+  const spaceRight = window.innerWidth - rect.left
+  if (spaceRight < 270) return { right: '0', left: 'auto' }
+  return { left: '0' }
+})
 
 function onClickOutside(e: MouseEvent) {
   if (root.value && !root.value.contains(e.target as Node)) open.value = false

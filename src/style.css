@@ -310,6 +310,19 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 .dark .gems-title span { -webkit-text-fill-color: #a78bfa; }
 
+/* ── Contraste dinámico con color de marca personalizado ────────── */
+/* Texto sobre fondos primary (bg-primary-500/600) → usa --brand-on */
+[class*="bg-primary-5"] .text-on-brand,
+[class*="bg-primary-6"] .text-on-brand,
+[class*="bg-primary-7"] .text-on-brand { color: var(--brand-on) !important; }
+
+/* En dark mode, texto de acento usa versión clara para que contraste sobre fondos oscuros */
+.dark [class*="text-primary-"] { color: var(--brand-accent-dm) !important; }
+
+/* Excepción: sobre fondos primary el texto debe usar --brand-on, no --brand-accent-dm */
+.dark [class*="bg-primary-"] [class*="text-primary-"],
+.dark [class*="bg-primary-"] .text-white { color: var(--brand-on) !important; }
+
 /* ── Scrollbar en dark ──────────────────────────────────────────── */
 .dark ::-webkit-scrollbar-thumb { background: rgba(51,65,85,0.6); }
 .dark .custom-scrollbar { scrollbar-color: rgba(51,65,85,0.6) transparent; }

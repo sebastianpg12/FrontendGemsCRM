@@ -165,6 +165,12 @@ export const useThemeStore = defineStore('theme', () => {
     // Raw comma-separated RGB for rgba() usage: rgba(var(--brand-accent-rgb), 0.5)
     const parts = (palette['500'] ?? '139 92 246').split(' ')
     root.style.setProperty('--brand-accent-rgb', parts.join(', '))
+    // --brand-on: texto sobre fondos primary (blanco si el acento es oscuro, oscuro si es claro)
+    const onColor = contrastRatio(safeAccent, '#ffffff') >= 4.5 ? '#ffffff' : '#111827'
+    root.style.setProperty('--brand-on', onColor)
+    // --brand-accent-dm: versión clara para texto en dark mode (p-300 = siempre lightness ~77%)
+    const dm400 = palette['300'] ?? '196 181 253'
+    root.style.setProperty('--brand-accent-dm', `rgb(${dm400.replace(/ /g, ',')})`)
     root.classList.toggle('dark', config.value.darkMode)
   }
 
