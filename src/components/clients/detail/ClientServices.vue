@@ -16,16 +16,9 @@
         <input v-model="servicePlan" placeholder="Plan Premium"
           class="w-full h-8 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
       </div>
-      <div class="w-full sm:w-32 relative">
+      <div class="w-full sm:w-32">
         <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Estado</label>
-        <select v-model="serviceStatus"
-          class="w-full h-8 appearance-none bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg pl-3 pr-7 text-[12px] text-slate-700 dark:text-slate-200 font-bold focus:outline-none focus:ring-2 focus:ring-primary-400 [color-scheme:light] dark:[color-scheme:dark] cursor-pointer">
-          <option value="active">Activo</option>
-          <option value="paused">Pausado</option>
-          <option value="trial">Prueba</option>
-          <option value="cancelled">Cancelado</option>
-        </select>
-        <i class="fas fa-chevron-down absolute right-2.5 bottom-2.5 text-slate-400 text-[8px] pointer-events-none"></i>
+        <CustomSelect v-model="serviceStatus" :options="svcStatusOptions" size="sm" />
       </div>
       <button @click="handleCreate" :disabled="!serviceName.trim()"
         class="h-8 px-4 rounded-lg bg-primary-600 text-white text-[12px] font-black hover:bg-primary-700 transition-colors shadow-sm flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shrink-0 self-end">
@@ -64,15 +57,8 @@
           <div class="flex gap-2 flex-wrap">
             <input v-model="editServicePlan" placeholder="Plan"
               class="flex-1 min-w-[120px] h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400" />
-            <div class="relative w-32">
-              <select v-model="editServiceStatus"
-                class="w-full h-8 appearance-none bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg pl-3 pr-7 text-[12px] text-slate-700 dark:text-slate-200 font-bold focus:outline-none focus:ring-2 focus:ring-primary-400 [color-scheme:light] dark:[color-scheme:dark]">
-                <option value="active">Activo</option>
-                <option value="paused">Pausado</option>
-                <option value="trial">Prueba</option>
-                <option value="cancelled">Cancelado</option>
-              </select>
-              <i class="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[8px] pointer-events-none"></i>
+            <div class="w-32">
+              <CustomSelect v-model="editServiceStatus" :options="svcStatusOptions" size="sm" />
             </div>
           </div>
           <input v-model="editServiceNotes" placeholder="Notas..."
@@ -94,6 +80,7 @@
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
+import CustomSelect from '@/components/ui/CustomSelect.vue'
 
 const ctx = inject('clientContext') as any
 const client = ctx.client
@@ -107,6 +94,13 @@ const editingServiceId = ref<string | null>(null)
 const editServicePlan = ref('')
 const editServiceNotes = ref('')
 const editServiceStatus = ref<'active'|'paused'|'cancelled'|'trial'>('active')
+
+const svcStatusOptions = [
+  { value: 'active',    label: 'Activo' },
+  { value: 'paused',    label: 'Pausado' },
+  { value: 'trial',     label: 'Prueba' },
+  { value: 'cancelled', label: 'Cancelado' },
+]
 
 const svcStatusLabel = (s: string) => ({ active: 'Activo', paused: 'Pausado', trial: 'Prueba', cancelled: 'Cancelado' }[s] || s)
 const svcStatusClass = (s: string) => ({

@@ -19,16 +19,7 @@
         </div>
         <div class="w-full sm:w-44">
           <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Estado</label>
-          <div class="relative">
-            <select v-model="commitStatus"
-              class="w-full appearance-none bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl pl-3.5 pr-8 py-2.5 text-slate-700 dark:text-slate-200 text-[13px] font-bold focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all cursor-pointer [color-scheme:light] dark:[color-scheme:dark]">
-              <option value="pending">Pendiente</option>
-              <option value="in_progress">En progreso</option>
-              <option value="completed">Completado</option>
-              <option value="cancelled">Cancelado</option>
-            </select>
-            <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
-          </div>
+          <CustomSelect v-model="commitStatus" :options="commitStatusOptions" size="sm" />
         </div>
       </div>
       <button @click="handleCreate" :disabled="!commitTitle.trim()"
@@ -68,15 +59,8 @@
           <div class="flex flex-wrap gap-3">
             <input v-model="editCommitDueDate" type="date"
               class="flex-1 min-w-[160px] bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl px-3.5 py-2 text-slate-700 dark:text-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-primary-400 [color-scheme:light] dark:[color-scheme:dark] cursor-pointer" />
-            <div class="relative flex-1 min-w-[140px]">
-              <select v-model="editCommitStatus"
-                class="w-full appearance-none bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl pl-3.5 pr-8 py-2 text-slate-700 dark:text-slate-200 text-[13px] font-bold focus:outline-none focus:ring-2 focus:ring-primary-400 [color-scheme:light] dark:[color-scheme:dark]">
-                <option value="pending">Pendiente</option>
-                <option value="in_progress">En progreso</option>
-                <option value="completed">Completado</option>
-                <option value="cancelled">Cancelado</option>
-              </select>
-              <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[9px] pointer-events-none"></i>
+            <div class="flex-1 min-w-[140px]">
+              <CustomSelect v-model="editCommitStatus" :options="commitStatusOptions" size="sm" />
             </div>
           </div>
           <input v-model="editCommitDescription" placeholder="Descripción..."
@@ -115,6 +99,7 @@
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
+import CustomSelect from '@/components/ui/CustomSelect.vue'
 
 const ctx = inject('clientContext') as any
 const client = ctx.client
@@ -129,6 +114,13 @@ const editingCommitmentId = ref<string | null>(null)
 const editCommitDescription = ref('')
 const editCommitDueDate = ref('')
 const editCommitStatus = ref<'pending'|'in_progress'|'completed'|'cancelled'>('pending')
+
+const commitStatusOptions = [
+  { value: 'pending',     label: 'Pendiente' },
+  { value: 'in_progress', label: 'En progreso' },
+  { value: 'completed',   label: 'Completado' },
+  { value: 'cancelled',   label: 'Cancelado' },
+]
 
 const statusLabel = (s: string) => ({ pending: 'Pendiente', in_progress: 'En progreso', completed: 'Completado', cancelled: 'Cancelado' }[s] || s)
 
