@@ -172,12 +172,12 @@
           <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
             <i class="fas fa-fire text-primary-500 text-[9px]"></i>
           </div>
-          <div class="shrink-0">
+          <div class="hidden sm:block shrink-0">
             <div class="text-[8px] font-black uppercase tracking-[0.15em] text-slate-400 leading-none">Ritmo</div>
             <div class="text-[11px] font-black text-slate-800 dark:text-slate-100 leading-tight">Foco operativo</div>
           </div>
           <div class="flex-1 flex items-center gap-1.5 min-w-0">
-            <div class="flex-1 h-1 bg-slate-100 dark:bg-[#334155] rounded-full overflow-hidden">
+            <div class="flex-1 h-1 bg-slate-200 dark:bg-slate-600 rounded-full overflow-hidden">
               <div class="h-full bg-primary-500 rounded-full transition-all duration-700" :style="{ width: focusProgress + '%' }"></div>
             </div>
             <span class="text-[9px] font-black text-primary-500 shrink-0">{{ focusProgress }}%</span>
