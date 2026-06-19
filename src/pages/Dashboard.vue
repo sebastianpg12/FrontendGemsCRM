@@ -11,7 +11,7 @@
           <i class="fas fa-gem text-primary-400 text-[9px] animate-pulse-slow"></i>
           <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
           <span class="w-1 h-1 rounded-full bg-primary-200 inline-block"></span>
-          <span class="px-2 py-0.5 bg-primary-50 text-primary-600 text-[9px] font-black rounded-full uppercase tracking-widest">{{ userRoleLabel }}</span>
+          <span class="px-2 py-0.5 bg-primary-50 dark:bg-primary-500/20 text-primary-600 dark:text-primary-400 text-[9px] font-black rounded-full uppercase tracking-widest">{{ userRoleLabel }}</span>
         </div>
         <h1 class="text-[26px] sm:text-[30px] font-black tracking-tight leading-tight gems-title">
           Hola, {{ firstName }}<span class="text-primary-500">.</span>
@@ -116,12 +116,12 @@
             <!-- Card header — patrón unificado -->
             <div class="flex items-center justify-between px-4 py-3 shrink-0">
               <div class="flex items-center gap-2">
-                <div class="w-6 h-6 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
                   <i class="fas fa-calendar-alt text-primary-500 text-[9px]"></i>
                 </div>
                 <div>
                   <div class="text-[8px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Agenda operativa</div>
-                  <div class="text-[12px] font-black text-slate-900 leading-tight">Actividades próximas</div>
+                  <div class="text-[12px] font-black text-slate-900 dark:text-slate-100 leading-tight">Actividades próximas</div>
                 </div>
               </div>
               <router-link to="/activities"
@@ -132,8 +132,8 @@
 
             <!-- Empty -->
             <div v-if="agendaActivities.length === 0" class="flex-1 flex flex-col items-center justify-center gap-2 py-8">
-              <div class="w-9 h-9 rounded-2xl bg-slate-50 flex items-center justify-center">
-                <i class="fas fa-calendar-check text-slate-300 text-[12px]"></i>
+              <div class="w-9 h-9 rounded-2xl bg-slate-100 dark:bg-[#334155] flex items-center justify-center">
+                <i class="fas fa-calendar-check text-slate-300 dark:text-slate-500 text-[12px]"></i>
               </div>
               <p class="text-[10px] text-slate-400 font-black uppercase tracking-wide">Sin actividades</p>
             </div>
@@ -141,13 +141,13 @@
             <!-- List -->
             <div v-else class="flex-1 overflow-y-auto custom-scrollbar">
               <div v-for="(act, idx) in agendaActivities" :key="act._id"
-                class="flex items-center gap-2.5 px-4 py-2 hover:bg-primary-50/30 transition-colors border-l-[3px]"
+                class="flex items-center gap-2.5 px-4 py-2 hover:bg-primary-50/30 dark:hover:bg-primary-500/10 transition-colors border-l-[3px]"
                 :class="[
                   { 'border-t border-slate-50': idx > 0 },
                   act.priority === 'urgent' ? 'border-l-red-400' : act.priority === 'high' ? 'border-l-amber-400' : 'border-l-slate-100'
                 ]">
                 <div class="flex-1 min-w-0">
-                  <p class="text-[11px] font-black text-slate-800 truncate">{{ act.title }}</p>
+                  <p class="text-[11px] font-black text-slate-800 dark:text-slate-200 truncate">{{ act.title }}</p>
                   <p class="text-[10px] text-slate-400 truncate">{{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}</p>
                 </div>
                 <span :class="['shrink-0 px-2 py-0.5 rounded-full text-[9px] font-black', agendaStatusClass(act)]">
@@ -172,32 +172,32 @@
           <!-- Card header — patrón unificado -->
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+              <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
                 <i class="fas fa-fire text-primary-500 text-[9px]"></i>
               </div>
               <div>
                 <div class="text-[8px] font-black uppercase tracking-[0.18em] text-slate-400 leading-none">Ritmo del día</div>
-                <div class="text-[12px] font-black text-slate-900 leading-tight">Foco operativo</div>
+                <div class="text-[12px] font-black text-slate-900 dark:text-slate-100 leading-tight">Foco operativo</div>
               </div>
             </div>
             <div class="w-9 h-9 rounded-xl bg-primary-600 flex items-center justify-center">
               <span class="text-[11px] font-black text-white leading-none">{{ focusProgress }}%</span>
             </div>
           </div>
-          <div class="h-1 bg-slate-100 rounded-full overflow-hidden mb-3">
+          <div class="h-1 bg-slate-100 dark:bg-[#334155] rounded-full overflow-hidden mb-3">
             <div class="h-full bg-primary-500 rounded-full transition-all duration-700"
               :style="{ width: focusProgress + '%' }"></div>
           </div>
           <div class="grid grid-cols-3 gap-1.5">
-            <div class="bg-red-50 rounded-xl py-2.5 text-center">
+            <div class="bg-red-50 dark:bg-red-500/10 rounded-xl py-2.5 text-center">
               <div class="text-[20px] font-black text-red-500 leading-none">{{ overdueCount }}</div>
               <div class="text-[8px] text-red-400 font-black uppercase tracking-wide mt-0.5">Vencidas</div>
             </div>
-            <div class="bg-amber-50 rounded-xl py-2.5 text-center">
+            <div class="bg-amber-50 dark:bg-amber-500/10 rounded-xl py-2.5 text-center">
               <div class="text-[20px] font-black text-amber-500 leading-none">{{ todayCount }}</div>
               <div class="text-[8px] text-amber-400 font-black uppercase tracking-wide mt-0.5">Hoy</div>
             </div>
-            <div class="bg-primary-50 rounded-xl py-2.5 text-center">
+            <div class="bg-primary-50 dark:bg-primary-500/10 rounded-xl py-2.5 text-center">
               <div class="text-[20px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</div>
               <div class="text-[8px] text-primary-400 font-black uppercase tracking-wide mt-0.5">Alta Prio.</div>
             </div>
@@ -359,9 +359,9 @@ const agendaStatusLabel = (a: any) => {
 }
 const agendaStatusClass = (a: any) => {
   const d = new Date(a.dueDate || a.date); d.setHours(0, 0, 0, 0)
-  if (d < todayMidnight) return 'bg-red-50 text-red-600'
-  if (a.status === 'in-progress') return 'bg-primary-50 text-primary-600'
-  return 'bg-amber-50 text-amber-600'
+  if (d < todayMidnight) return 'bg-red-50 dark:bg-red-500/10 text-red-600'
+  if (a.status === 'in-progress') return 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
+  return 'bg-amber-50 dark:bg-amber-500/10 text-amber-600'
 }
 
 const formatDateShort = (d?: string) => {
