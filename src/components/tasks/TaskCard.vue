@@ -57,8 +57,9 @@
     <div class="flex items-center justify-between">
       <!-- Assignee -->
       <div v-if="task.assignedTo" class="flex items-center space-x-2">
-        <div class="w-6 h-6 rounded-full bg-primary-500 text-white flex items-center justify-center text-xs font-medium">
-          {{ getInitials(task.assignedTo.name) }}
+        <div class="w-6 h-6 rounded-full overflow-hidden bg-primary-500 flex items-center justify-center flex-shrink-0">
+          <img v-if="task.assignedTo.photo" :src="task.assignedTo.photo.replace(/\\/g, '/')" :alt="task.assignedTo.name" class="w-full h-full object-cover" @error="(e: Event) => (e.target as HTMLImageElement).style.display='none'" />
+          <span v-else class="text-white text-xs font-medium">{{ getInitials(task.assignedTo.name) }}</span>
         </div>
         <span class="text-xs text-gray-600 truncate max-w-[100px]">
           {{ task.assignedTo.name }}

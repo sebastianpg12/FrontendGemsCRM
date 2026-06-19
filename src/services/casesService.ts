@@ -260,7 +260,9 @@ class CasesService {
     })
     
     if (!response.ok) {
-      throw new Error('Error al subir los archivos')
+      let msg = 'Error al subir los archivos'
+      try { const d = await response.json(); msg = d.message || d.error || msg } catch {}
+      throw new Error(msg)
     }
     return await response.json()
   }

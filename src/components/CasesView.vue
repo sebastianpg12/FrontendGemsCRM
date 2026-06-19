@@ -290,6 +290,7 @@
             </div>
 
             <!-- Eventos -->
+            <div class="max-h-[360px] overflow-y-auto custom-scrollbar pr-1">
             <div v-if="timeline.length" class="space-y-4 relative pl-3.5 before:absolute before:left-0 before:top-1 before:bottom-1 before:w-px before:bg-slate-100 dark:before:bg-[#334155]">
               <div v-for="(ev, idx) in timeline" :key="idx" class="relative">
                 <span class="absolute -left-[18px] top-1 w-2 h-2 rounded-full border-2 border-white dark:border-[#1e293b]" :class="ev.dotClass"></span>
@@ -314,6 +315,7 @@
               </div>
             </div>
             <p v-else class="text-[11px] font-medium text-slate-400 text-center py-4">Sin actividad todavía — escribe el primer comentario.</p>
+            </div>
           </div>
         </div>
 

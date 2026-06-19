@@ -18,6 +18,7 @@ export interface Task {
     _id: string
     name: string
     email: string
+    photo?: string
   }
   reporter: {
     _id: string
