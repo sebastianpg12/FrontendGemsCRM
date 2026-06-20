@@ -182,11 +182,11 @@
   <!-- Global toast for nuevos mensajes (Hidden by user request) -->
   <!-- <NewMessageToast /> -->
 
-  <!-- Notification Bell flotante (inferior derecha) -->
-  <NotificationBell />
-
-  <!-- Ayuda contextual por página -->
-  <PageHelp />
+  <!-- Notification Bell y ayuda — ocultos para rol cliente -->
+  <template v-if="authStore.user?.role !== 'client'">
+    <NotificationBell />
+    <PageHelp />
+  </template>
 
   <!-- Modal global "Refinar Tarea" — se abre al clickear notificaciones, etc. -->
   <ActivityFormModal

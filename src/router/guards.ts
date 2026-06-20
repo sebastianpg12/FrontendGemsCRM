@@ -24,6 +24,12 @@ export const authGuard = async (
     return
   }
   
+  // Rol cliente: solo puede acceder a /support
+  if (user.role === 'client' && to.path !== '/support') {
+    next('/support')
+    return
+  }
+
   // Define route permissions
   const routePermissions: Record<string, (role: string, department?: string) => boolean> = {
     '/reports': (role) => ['admin', 'supervisor'].includes(role),
@@ -31,10 +37,9 @@ export const authGuard = async (
     '/team': (role) => ['admin', 'supervisor', 'collaborator', 'support', 'viewer'].includes(role),
     '/cases': (role) => ['admin', 'supervisor', 'collaborator', 'support'].includes(role),
   }
-  
+
   const permission = routePermissions[to.path]
   if (permission && !permission(user.role, user.department)) {
-    // Redirect to dashboard if user doesn't have permission
     next('/')
     return
   }
