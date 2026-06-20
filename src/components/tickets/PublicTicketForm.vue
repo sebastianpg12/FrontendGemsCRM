@@ -339,7 +339,7 @@
          <button @click="resetForm" class="flex-1 px-8 py-4 bg-white dark:bg-[#334155] text-slate-800 dark:text-slate-100 border-2 border-slate-100 dark:border-[#334155] rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-[#334155]/80 transition-all">
            Nuevo Reporte
          </button>
-         <router-link v-if="authStore.isAuthenticated" to="/support" class="flex-1 px-8 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-slate-200">
+         <router-link v-if="authStore.isAuthenticated" to="/support" class="flex-1 px-8 py-4 bg-slate-900 dark:bg-[#334155] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-black dark:hover:bg-[#334155]/80 transition-all">
            Ver Mis Tickets
          </router-link>
        </div>
@@ -401,7 +401,7 @@ const technicalSubcategories = [
   },
   {
     id: 'inconcert' as const,
-    label: 'InConcert / Bot no funciona',
+    label: 'Automatización / Bot no funciona',
     hint: 'Un bot de WhatsApp o agente automatizado dejó de responder o responde mal',
     icon: 'fa-robot',
     tags: ['inconcert', 'bot', 'whatsapp', 'agente', 'automatizacion'],
@@ -416,10 +416,10 @@ const technicalSubcategories = [
 ]
 
 const priorities = [
-  { id: 'low', label: 'P4 · Baja', activeClass: 'bg-primary-500 text-white shadow-lg shadow-primary-200' },
-  { id: 'medium', label: 'P3 · Media', activeClass: 'bg-amber-400 text-white shadow-lg shadow-amber-200' },
-  { id: 'high', label: 'P2 · Alta', activeClass: 'bg-orange-500 text-white shadow-lg shadow-orange-200' },
-  { id: 'urgent', label: 'P1 · Crítica', activeClass: 'bg-rose-500 text-white shadow-lg shadow-rose-200' },
+  { id: 'low', label: 'P4 · Baja', activeClass: 'bg-primary-500 text-white' },
+  { id: 'medium', label: 'P3 · Media', activeClass: 'bg-amber-400 text-white' },
+  { id: 'high', label: 'P2 · Alta', activeClass: 'bg-orange-500 text-white' },
+  { id: 'urgent', label: 'P1 · Crítica', activeClass: 'bg-rose-500 text-white' },
 ]
 
 // Deflection state

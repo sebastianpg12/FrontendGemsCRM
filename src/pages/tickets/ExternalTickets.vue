@@ -20,7 +20,7 @@
     </header>
 
     <!-- Left Identity Rail (authenticated only) -->
-    <aside v-if="authStore.isAuthenticated" class="w-52 flex-shrink-0 flex flex-col border-r border-slate-100 dark:border-[#334155] bg-white dark:bg-[#1e293b] px-4 py-6 gap-6">
+    <aside v-if="authStore.isAuthenticated" class="w-52 flex-shrink-0 flex flex-col bg-white/60 dark:bg-[#1e293b]/60 px-4 py-6 gap-6">
 
       <!-- Brand mark -->
       <div class="flex items-center gap-2.5 px-2">
