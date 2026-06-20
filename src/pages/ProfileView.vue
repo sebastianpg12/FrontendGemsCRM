@@ -154,7 +154,7 @@
         </div>
 
         <!-- ── CONTRASEÑA ── -->
-        <div v-else-if="activeTab === 'seguridad'" class="max-w-sm space-y-4">
+        <div v-else-if="activeTab === 'seguridad'" class="max-w-sm mx-auto space-y-4">
           <form @submit.prevent="updatePassword" class="space-y-4">
             <div v-for="pwField in pwFields" :key="pwField.key">
               <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">{{ pwField.label }}</label>
@@ -184,7 +184,7 @@
         </div>
 
         <!-- ── 2FA ── -->
-        <div v-else-if="activeTab === '2fa'" class="max-w-sm">
+        <div v-else-if="activeTab === '2fa'" class="max-w-sm mx-auto">
           <!-- Not enabled, no setup -->
           <div v-if="!profileData.isTwoFactorEnabled && !setup2FAData" class="space-y-4">
             <div class="flex items-center gap-3 p-3.5 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
@@ -247,7 +247,7 @@
         </div>
 
         <!-- ── PREFERENCIAS ── -->
-        <div v-else-if="activeTab === 'preferencias'" class="max-w-sm space-y-1">
+        <div v-else-if="activeTab === 'preferencias'" class="max-w-sm mx-auto space-y-1">
           <div class="flex items-center justify-between py-3 border-b border-slate-100 dark:border-[#334155]">
             <div>
               <p class="text-[12px] font-black text-slate-700 dark:text-slate-200">Modo oscuro</p>

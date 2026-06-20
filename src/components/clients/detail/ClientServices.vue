@@ -34,7 +34,8 @@
     <!-- Lista -->
     <div v-if="client.services?.length" class="grid grid-cols-1 lg:grid-cols-2 gap-2">
       <div v-for="s in client.services" :key="s._id"
-        class="bg-white dark:bg-[#1e293b] rounded-xl border border-slate-100 dark:border-[#334155] shadow-sm hover:shadow-md transition-all overflow-hidden">
+        class="bg-white dark:bg-[#1e293b] rounded-xl border border-slate-100 dark:border-[#334155] shadow-sm hover:shadow-md transition-all"
+        :class="editingServiceId === s._id ? 'overflow-visible' : 'overflow-hidden'">
 
         <!-- Vista -->
         <div v-if="editingServiceId !== s._id" class="flex items-stretch">
