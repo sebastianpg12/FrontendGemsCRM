@@ -1,153 +1,169 @@
 <template>
-  <!-- Main Container: Improved contrast and scrolling -->
-  <div class="min-h-full bg-[#F1F5F9] dark:bg-[#0f172a] flex flex-col font-['Inter',sans-serif]">
+  <div class="h-full flex overflow-hidden bg-[#f8fafc] dark:bg-[#0f172a]">
 
-    
-    <!-- Unified Header: Only visible for Public/Guest view (Authenticated view uses Layout.vue header) -->
-    <header v-if="!authStore.isAuthenticated" class="bg-white border-b border-slate-100 flex-shrink-0">
-      <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between pr-24">
-         <div class="flex items-center gap-3">
-           <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-xl shadow-slate-200">
-             <i class="fas fa-headset text-sm"></i>
-           </div>
-           <div>
-             <h1 class="text-lg font-black text-slate-800 tracking-tight">GEMS Hub</h1>
-             <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Centro de Soporte</p>
-           </div>
-         </div>
-         
-         <router-link to="/login" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 transition-all">
-           Iniciar Sesión
-         </router-link>
+    <!-- Public header (unauthenticated only) -->
+    <header v-if="!authStore.isAuthenticated" class="absolute inset-x-0 top-0 z-10 bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-sm border-b border-slate-100 dark:border-[#334155]">
+      <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center">
+            <i class="fas fa-gem text-white text-[10px]"></i>
+          </div>
+          <div>
+            <p class="text-xs font-black text-slate-800 dark:text-slate-100 tracking-tight leading-none">GEMS Hub</p>
+            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
+          </div>
+        </div>
+        <router-link to="/login" class="px-4 py-2 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 dark:hover:bg-[#334155]/80 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300 transition-all">
+          Iniciar sesión
+        </router-link>
       </div>
     </header>
 
-    <!-- Sub-navigation Tabs (Only for Logged-In Clients) -->
-    <div v-if="authStore.isAuthenticated" class="bg-white dark:bg-[#1e293b] border-b border-slate-100 dark:border-[#334155] flex-shrink-0 px-8 py-3 flex items-center justify-center">
-       <nav class="flex items-center gap-1 bg-slate-100 dark:bg-[#0f172a] p-1.5 rounded-xl">
-         <button
-           @click="activeTab = 'create'"
-           :class="activeTab === 'create' ? 'bg-white dark:bg-[#1e293b] text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'"
-           class="px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all"
-         >
-           Nueva Solicitud
-         </button>
-         <button
-           @click="activeTab = 'history'"
-           :class="activeTab === 'history' ? 'bg-white dark:bg-[#1e293b] text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'"
-           class="px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all"
-         >
-           Mi Historial
-         </button>
-       </nav>
-    </div>
+    <!-- Left Identity Rail (authenticated only) -->
+    <aside v-if="authStore.isAuthenticated" class="w-56 flex-shrink-0 flex flex-col border-r border-slate-100 dark:border-[#334155] bg-white dark:bg-[#1e293b]">
 
-    <!-- Scrollable Content Area -->
-    <main class="flex-1 p-6 md:p-8 lg:p-12">
-
-      <div class="max-w-5xl mx-auto">
-        
-        <!-- Create view -->
-        <div v-if="activeTab === 'create' || !authStore.isAuthenticated" class="animate-content-in">
-          <PublicTicketForm />
+      <!-- Brand mark -->
+      <div class="px-6 pt-8 pb-6 border-b border-slate-50 dark:border-[#334155]">
+        <div class="flex items-center gap-2.5 mb-1">
+          <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-gem text-white text-[10px]"></i>
+          </div>
+          <div>
+            <p class="text-xs font-black text-slate-800 dark:text-slate-100 leading-none tracking-tight">GEMS Hub</p>
+            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
+          </div>
         </div>
+      </div>
 
-        <!-- History/List view (Issue Navigator) -->
-        <div v-else class="animate-content-in h-full">
-          <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm overflow-hidden">
-            <!-- Table Header / Toolbar -->
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between bg-slate-50/30 dark:bg-[#0f172a]/40">
-              <h2 class="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">Mis Tickets</h2>
-              <div class="flex items-center gap-4">
-                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{{ tickets.length }} Solicitudes</span>
-                <button @click="loadData" class="text-slate-400 hover:text-primary-500 transition-colors">
-                  <i class="fas fa-sync-alt text-xs" :class="{ 'fa-spin': loading }"></i>
-                </button>
-              </div>
-            </div>
+      <!-- Vertical nav -->
+      <nav class="flex flex-col gap-0.5 p-3 flex-1">
+        <button
+          @click="activeTab = 'create'"
+          :class="activeTab === 'create'
+            ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 border-l-2 border-primary-500 pl-3.5'
+            : 'text-slate-500 dark:text-slate-400 border-l-2 border-transparent pl-3.5 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
+          class="flex items-center gap-3 pr-4 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-r-xl text-left"
+        >
+          <i class="fas fa-plus w-3 text-center text-[10px]"></i>
+          Nueva Solicitud
+        </button>
+        <button
+          @click="activeTab = 'history'"
+          :class="activeTab === 'history'
+            ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 border-l-2 border-primary-500 pl-3.5'
+            : 'text-slate-500 dark:text-slate-400 border-l-2 border-transparent pl-3.5 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
+          class="flex items-center gap-3 pr-4 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-r-xl text-left"
+        >
+          <i class="fas fa-list w-3 text-center text-[10px]"></i>
+          Mi Historial
+        </button>
+      </nav>
 
-            <!-- Modern Ticket Table -->
-            <div class="overflow-x-auto">
-              <table class="w-full text-left">
-                <thead>
-                  <tr class="bg-slate-50/50 dark:bg-[#0f172a]/30">
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">ID</th>
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Resumen</th>
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Prioridad</th>
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Última Act.</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 dark:divide-[#334155]">
-                  <tr v-for="ticket in tickets" :key="ticket._id"
-                    @click="openTicket(ticket)"
-                    class="hover:bg-slate-50 dark:hover:bg-[#334155]/30 cursor-pointer transition-colors group"
-                  >
-                    <td class="px-6 py-5">
-                      <div class="flex flex-col">
-                        <span class="text-[10px] font-black text-primary-600 dark:text-primary-400 uppercase tracking-tighter">{{ ticket.ticketNumber }}</span>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase">{{ ticket.category }}</span>
-                      </div>
-                    </td>
-                    <td class="px-6 py-5">
-                      <p class="text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ ticket.subject }}</p>
-                      <p class="text-[10px] text-slate-400 truncate max-w-xs">{{ ticket.description }}</p>
-                    </td>
-                    <td class="px-6 py-5">
-                      <span :class="getPriorityClass(ticket.priority)" class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border">
-                        {{ ticket.priority }}
-                      </span>
-                    </td>
-                    <td class="px-6 py-5">
-                      <div class="flex items-center gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full" :class="getStatusColor(ticket.status)"></div>
-                        <span class="text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest">{{ ticket.status }}</span>
-                      </div>
-                    </td>
-                    <td class="px-6 py-5">
-                      <span class="text-[10px] font-bold text-slate-400">{{ formatDate(ticket.updatedAt) }}</span>
-                    </td>
-                  </tr>
-                  <tr v-if="tickets.length === 0 && !loading">
-                    <td colspan="5" class="px-6 py-20 text-center">
-                      <div class="flex flex-col items-center gap-3 opacity-40">
-                        <i class="fas fa-inbox text-4xl text-slate-400 dark:text-slate-600"></i>
-                        <p class="text-xs font-black uppercase tracking-widest text-slate-400">Aún no tienes tickets</p>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+      <!-- Quick stats -->
+      <div class="p-5 border-t border-slate-50 dark:border-[#334155]">
+        <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Resumen</p>
+        <div class="space-y-3">
+          <div>
+            <p class="text-[9px] text-slate-400 font-medium mb-0.5">Solicitudes totales</p>
+            <p class="text-xl font-black text-slate-800 dark:text-slate-100 tabular-nums leading-none">{{ tickets.length }}</p>
+          </div>
+          <div>
+            <p class="text-[9px] text-slate-400 font-medium mb-0.5">Abiertas</p>
+            <p class="text-xl font-black text-emerald-500 tabular-nums leading-none">{{ tickets.filter(t => t.status === 'open').length }}</p>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-            <!-- Pagination -->
-            <div v-if="pagination.pages > 1" class="px-6 py-4 border-t border-slate-100 dark:border-[#334155] flex items-center justify-center gap-2">
-               <button
-                 @click="changePage(pagination.page - 1)"
-                 :disabled="pagination.page === 1"
-                 class="w-9 h-9 bg-white dark:bg-[#334155] rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-               >
-                 <i class="fas fa-chevron-left text-[10px]"></i>
-               </button>
-               <div class="flex items-center gap-1.5">
-                  <button
-                    v-for="p in pagination.pages"
-                    :key="p"
-                    @click="changePage(p)"
-                    :class="p === pagination.page ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-[#334155]'"
-                    class="w-8 h-8 rounded-lg text-[10px] font-black transition-all"
-                  >
-                    {{ p }}
-                  </button>
-               </div>
-               <button
-                 @click="changePage(pagination.page + 1)"
-                 :disabled="pagination.page === pagination.pages"
-                 class="w-9 h-9 bg-white dark:bg-[#334155] rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-               >
-                 <i class="fas fa-chevron-right text-[10px]"></i>
-               </button>
+    <!-- Main Content -->
+    <main class="flex-1 overflow-hidden flex flex-col" :class="{ 'pt-[57px]': !authStore.isAuthenticated }">
+
+      <!-- Create tab -->
+      <div v-if="activeTab === 'create' || !authStore.isAuthenticated" class="flex-1 overflow-y-auto p-5 animate-content-in">
+        <PublicTicketForm />
+      </div>
+
+      <!-- History tab -->
+      <div v-else class="flex-1 overflow-hidden flex flex-col p-5 animate-content-in">
+        <div class="flex-1 overflow-hidden flex flex-col bg-white dark:bg-[#1e293b] rounded-xl shadow-sm">
+
+          <!-- Toolbar -->
+          <div class="px-5 py-3.5 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between flex-shrink-0">
+            <p class="text-[10px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">Mis Tickets</p>
+            <div class="flex items-center gap-3">
+              <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest tabular-nums">{{ tickets.length }} solicitudes</span>
+              <button @click="loadData" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-primary-500 transition-colors">
+                <i class="fas fa-rotate text-[10px]" :class="{ 'fa-spin': loading }"></i>
+              </button>
             </div>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-auto flex-1">
+            <table class="w-full text-left min-w-[600px]">
+              <thead class="sticky top-0 z-10">
+                <tr class="bg-slate-50 dark:bg-[#0f172a]/60">
+                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">ID</th>
+                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Asunto</th>
+                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Prioridad</th>
+                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
+                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Actualizado</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-50 dark:divide-[#334155]">
+                <tr v-for="ticket in tickets" :key="ticket._id"
+                  @click="openTicket(ticket)"
+                  class="hover:bg-slate-50 dark:hover:bg-[#334155]/20 cursor-pointer transition-colors group"
+                >
+                  <td class="px-5 py-3.5">
+                    <span class="text-[10px] font-black text-primary-600 dark:text-primary-400 font-mono tracking-tight">{{ ticket.ticketNumber }}</span>
+                  </td>
+                  <td class="px-5 py-3.5 max-w-xs">
+                    <p class="text-[12px] font-bold text-slate-800 dark:text-slate-100 truncate group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ ticket.subject }}</p>
+                    <p class="text-[9px] text-slate-400 truncate">{{ ticket.category }}</p>
+                  </td>
+                  <td class="px-5 py-3.5">
+                    <span :class="getPriorityClass(ticket.priority)" class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border">
+                      {{ ticket.priority }}
+                    </span>
+                  </td>
+                  <td class="px-5 py-3.5">
+                    <div class="flex items-center gap-1.5">
+                      <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="getStatusColor(ticket.status)"></div>
+                      <span class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">{{ ticket.status }}</span>
+                    </div>
+                  </td>
+                  <td class="px-5 py-3.5">
+                    <span class="text-[9px] font-bold text-slate-400 tabular-nums">{{ formatDate(ticket.updatedAt) }}</span>
+                  </td>
+                </tr>
+                <tr v-if="tickets.length === 0 && !loading">
+                  <td colspan="5" class="px-5 py-16 text-center">
+                    <div class="flex flex-col items-center gap-2 opacity-30">
+                      <i class="fas fa-inbox text-3xl text-slate-400 dark:text-slate-600"></i>
+                      <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sin solicitudes</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div v-if="pagination.pages > 1" class="px-5 py-3 border-t border-slate-100 dark:border-[#334155] flex items-center justify-center gap-1.5 flex-shrink-0">
+            <button @click="changePage(pagination.page - 1)" :disabled="pagination.page === 1"
+              class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-primary-600 hover:bg-slate-50 dark:hover:bg-[#334155]/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+              <i class="fas fa-chevron-left text-[9px]"></i>
+            </button>
+            <button v-for="p in pagination.pages" :key="p" @click="changePage(p)"
+              :class="p === pagination.page ? 'bg-primary-600 text-white' : 'text-slate-400 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
+              class="w-7 h-7 rounded-lg text-[9px] font-black transition-all">
+              {{ p }}
+            </button>
+            <button @click="changePage(pagination.page + 1)" :disabled="pagination.page === pagination.pages"
+              class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-primary-600 hover:bg-slate-50 dark:hover:bg-[#334155]/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+              <i class="fas fa-chevron-right text-[9px]"></i>
+            </button>
           </div>
         </div>
       </div>

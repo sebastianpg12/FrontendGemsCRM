@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm overflow-hidden relative transition-all duration-500">
-    <div v-if="!submitted" class="p-6 md:p-10 space-y-8 animate-fade-in">
+    <div v-if="!submitted" class="p-5 space-y-4 animate-fade-in">
 
       <!-- Premium Header Context -->
       <div v-if="!authStore.isAuthenticated" class="text-center space-y-2 mb-10">
@@ -9,50 +9,50 @@
       </div>
 
       <!-- Form -->
-      <form @submit.prevent="handleSubmit" class="space-y-8">
+      <form @submit.prevent="handleSubmit" class="space-y-4">
         <!-- User Info Row -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
-          <div class="space-y-3">
-            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Tu Nombre</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
+          <div class="space-y-1.5">
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Tu Nombre</label>
             <input
               v-model="formData.name"
               required
               type="text"
               placeholder="Ej. Sebastian Pulgarin"
-              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-sm font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
+              class="w-full px-4 py-2.5 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-xl text-sm font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
             />
           </div>
 
-          <div class="space-y-3">
-            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Email de Contacto</label>
+          <div class="space-y-1.5">
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Email de Contacto</label>
             <input
               v-model="formData.email"
               required
               type="email"
               placeholder="tu@empresa.com"
-              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-sm font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
+              class="w-full px-4 py-2.5 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-xl text-sm font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
             />
           </div>
         </div>
 
         <!-- Category -->
-        <div class="space-y-3">
-          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">¿Qué tipo de ayuda necesitas?</label>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div class="space-y-1.5">
+          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">¿Qué tipo de ayuda necesitas?</label>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-1.5">
             <button
               v-for="cat in categories"
               :key="cat.id"
               type="button"
               @click="selectCategory(cat.id)"
               :class="[
-                'p-4 rounded-2xl border-2 transition-all text-left',
+                'p-3 rounded-xl border-2 transition-all text-left',
                 formData.category === cat.id
-                  ? 'border-primary-500 bg-primary-50/50 dark:bg-primary-500/10 shadow-md'
+                  ? 'border-primary-500 bg-primary-50/50 dark:bg-primary-500/10 shadow-sm'
                   : 'border-slate-200 dark:border-[#334155] bg-slate-50/50 dark:bg-[#0f172a]/40 hover:bg-slate-50 dark:hover:bg-[#0f172a]/70',
               ]"
             >
-              <i :class="['fas', cat.icon, 'text-base mb-2 block', formData.category === cat.id ? 'text-primary-600 dark:text-primary-400' : 'text-slate-400']"></i>
-              <p :class="['text-[11px] font-black uppercase tracking-wider', formData.category === cat.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-400']">
+              <i :class="['fas', cat.icon, 'text-sm mb-1 block', formData.category === cat.id ? 'text-primary-600 dark:text-primary-400' : 'text-slate-400']"></i>
+              <p :class="['text-[10px] font-black uppercase tracking-wide', formData.category === cat.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-400']">
                 {{ cat.label }}
               </p>
             </button>
@@ -60,34 +60,33 @@
         </div>
 
         <!-- Soporte Técnico: Sub-categoría dinámica -->
-        <div v-if="formData.category === 'technical'" class="space-y-3 animate-fade-in">
-          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
-            Especifica el tipo de incidencia <span class="text-rose-500">*</span>
+        <div v-if="formData.category === 'technical'" class="space-y-1.5 animate-fade-in">
+          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+            Tipo de incidencia <span class="text-rose-500">*</span>
           </label>
-          <div class="space-y-2">
+          <div class="grid grid-cols-1 gap-1">
             <button
               v-for="sub in technicalSubcategories"
               :key="sub.id"
               type="button"
               @click="selectSubcategory(sub.id)"
               :class="[
-                'w-full p-4 rounded-2xl border-2 transition-all text-left flex items-start gap-3',
+                'w-full p-2.5 rounded-xl border-2 transition-all text-left flex items-center gap-3',
                 formData.subcategory === sub.id
-                  ? 'border-primary-500 bg-primary-50/30 dark:bg-primary-500/10 shadow-sm'
+                  ? 'border-primary-500 bg-primary-50/30 dark:bg-primary-500/10'
                   : 'border-slate-200 dark:border-[#334155] bg-slate-50/30 dark:bg-[#0f172a]/40 hover:bg-slate-50 dark:hover:bg-[#0f172a]/70',
               ]"
             >
               <div :class="[
-                'w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0',
+                'w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0',
                 formData.subcategory === sub.id ? 'bg-primary-500 text-white' : 'bg-white dark:bg-[#334155] text-slate-400 border border-slate-200 dark:border-[#334155]',
               ]">
-                <i :class="['fas', sub.icon, 'text-xs']"></i>
+                <i :class="['fas', sub.icon, 'text-[10px]']"></i>
               </div>
               <div class="flex-1 min-w-0">
-                <p :class="['text-[12px] font-black mb-0.5', formData.subcategory === sub.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-700 dark:text-slate-300']">
+                <p :class="['text-[11px] font-black', formData.subcategory === sub.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-700 dark:text-slate-300']">
                   {{ sub.label }}
                 </p>
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{{ sub.hint }}</p>
               </div>
             </button>
           </div>
@@ -189,23 +188,23 @@
         </div>
 
         <!-- Subject + Priority + Description (only when can submit) -->
-        <div v-if="canShowFullForm" class="space-y-8 animate-fade-in">
+        <div v-if="canShowFullForm" class="space-y-4 animate-fade-in">
           <!-- Subject -->
-          <div class="space-y-3">
-            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Asunto de la Incidencia</label>
+          <div class="space-y-1.5">
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Asunto</label>
             <input
               v-model="formData.subject"
               required
               type="text"
               placeholder="¿En qué podemos ayudarte hoy?"
-              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-base font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
+              class="w-full px-4 py-2.5 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-xl text-sm font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
             />
           </div>
 
           <!-- Priority -->
-          <div class="space-y-3">
-            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Prioridad</label>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 p-1.5 bg-slate-100/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl">
+          <div class="space-y-1.5">
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Prioridad</label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-1.5 p-1 bg-slate-100/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-xl">
               <button
                 type="button"
                 v-for="p in priorities"
@@ -220,20 +219,20 @@
           </div>
 
           <!-- Description -->
-          <div class="space-y-3">
-            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Descripción</label>
+          <div class="space-y-1.5">
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Descripción</label>
             <textarea
               v-model="formData.description"
               required
-              rows="5"
+              rows="3"
               placeholder="Cuéntanos qué pasa, qué intentaste y cuándo empezó..."
-              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-sm font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all resize-none"
+              class="w-full px-4 py-2.5 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-xl text-sm font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all resize-none"
             ></textarea>
           </div>
 
           <!-- Attachments -->
-          <div class="space-y-3">
-            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Evidencias (Imágenes/Docs)</label>
+          <div class="space-y-1.5">
+            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Evidencias (opcional)</label>
             <div
               @click="($refs.fileInput as HTMLInputElement)?.click()"
               @dragover.prevent="dragOver = true"
@@ -242,15 +241,15 @@
               class="relative group cursor-pointer"
             >
               <div
-                class="border-2 border-dashed rounded-2xl p-6 transition-all duration-300 flex flex-col items-center justify-center gap-3"
+                class="border-2 border-dashed rounded-xl p-4 transition-all duration-300 flex items-center justify-center gap-3"
                 :class="dragOver ? 'border-primary-500 bg-primary-50/30 dark:bg-primary-500/10' : 'border-slate-200 dark:border-[#334155] bg-slate-50/30 dark:bg-[#0f172a]/40 hover:bg-slate-50 dark:hover:bg-[#0f172a]/60'"
               >
-                <div class="w-12 h-12 rounded-full bg-white dark:bg-[#334155] shadow-sm flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
-                  <i class="fas fa-cloud-upload-alt text-xl"></i>
+                <div class="w-8 h-8 rounded-lg bg-white dark:bg-[#334155] flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors flex-shrink-0">
+                  <i class="fas fa-paperclip text-sm"></i>
                 </div>
-                <div class="text-center">
-                  <p class="text-xs font-bold text-slate-700 dark:text-slate-300">Haz clic o arrastra archivos aquí</p>
-                  <p class="text-[10px] text-slate-400 font-medium mt-1 uppercase tracking-wider">JPG, PNG, PDF (Máx. 5)</p>
+                <div>
+                  <p class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Adjuntar archivos</p>
+                  <p class="text-[9px] text-slate-400 uppercase tracking-wider">JPG · PNG · PDF (máx. 5)</p>
                 </div>
               </div>
               <input type="file" ref="fileInput" multiple class="hidden" @change="handleFileChange" />
@@ -278,15 +277,15 @@
         </div>
 
         <!-- Submit -->
-        <div class="pt-4">
+        <div class="pt-1">
           <button
             type="submit"
             :disabled="loading || !canSubmit"
             :class="[
-              'w-full py-5 font-black text-xs uppercase tracking-[0.3em] rounded-2xl transition-all flex items-center justify-center gap-4',
+              'w-full py-3 font-black text-[10px] uppercase tracking-[0.3em] rounded-xl transition-all flex items-center justify-center gap-3',
               canSubmit
-                ? 'bg-slate-900 hover:bg-black text-white shadow-xl shadow-slate-200 hover:shadow-slate-300 hover:-translate-y-1 active:translate-y-0'
-                : 'bg-slate-200 text-slate-400 cursor-not-allowed',
+                ? 'bg-slate-900 dark:bg-primary-600 hover:bg-black dark:hover:bg-primary-700 text-white active:scale-[0.99]'
+                : 'bg-slate-100 dark:bg-[#334155] text-slate-400 cursor-not-allowed',
             ]"
           >
             <template v-if="loading">
@@ -312,16 +311,16 @@
             </template>
           </button>
 
-          <p class="text-[10px] text-center text-slate-300 font-bold uppercase tracking-[0.2em] mt-6 leading-relaxed">
-            GEMS Hub Support &middot; Centro de Soluciones Digitales
+          <p class="text-[9px] text-center text-slate-300 dark:text-slate-600 font-bold uppercase tracking-[0.2em] mt-3">
+            GEMS Hub · Soporte
           </p>
         </div>
       </form>
     </div>
 
     <!-- Success State -->
-    <div v-else class="p-16 text-center animate-fade-in flex flex-col items-center">
-       <div class="w-20 h-20 bg-emerald-500 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl shadow-emerald-200 mb-8 overflow-hidden relative group">
+    <div v-else class="p-10 text-center animate-fade-in flex flex-col items-center">
+       <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-lg mb-5 overflow-hidden relative group">
          <div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
          <i class="fas fa-check text-2xl"></i>
        </div>
