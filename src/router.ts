@@ -289,6 +289,12 @@ router.beforeEach(async (to, _from, next) => {
     return
   }
 
+  // Clientes solo pueden acceder a /support
+  if (authStore.user?.role === 'client' && to.path !== '/support') {
+    next('/support')
+    return
+  }
+
   // Rutas de super-admin
   if (to.meta.requiresSuperAdmin && !authStore.isSuperAdmin) {
     next('/')
