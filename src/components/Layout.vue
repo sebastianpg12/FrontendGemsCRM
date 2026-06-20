@@ -106,7 +106,7 @@
       </header>
 
       <!-- Content -->
-      <main style="flex:1;padding:24px;background:#f4f5f7;min-height:calc(100vh - 52px)">
+      <main :style="route.path.startsWith('/support') ? 'flex:1;background:#f4f5f7;overflow:hidden;height:calc(100vh - 52px)' : 'flex:1;padding:24px;background:#f4f5f7;min-height:calc(100vh - 52px)'">
         <router-view />
       </main>
     </div>

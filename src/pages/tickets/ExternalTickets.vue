@@ -76,7 +76,9 @@
 
       <!-- Create tab -->
       <div v-if="activeTab === 'create' || !authStore.isAuthenticated" class="flex-1 overflow-y-auto p-5 animate-content-in">
-        <PublicTicketForm />
+        <div class="max-w-2xl mx-auto">
+          <PublicTicketForm />
+        </div>
       </div>
 
       <!-- History tab -->
