@@ -1,6 +1,6 @@
 <template>
   <!-- Main Container: Improved contrast and scrolling -->
-  <div class="min-h-full bg-[#F1F5F9] flex flex-col font-['Inter',sans-serif]">
+  <div class="min-h-full bg-[#F1F5F9] dark:bg-[#0f172a] flex flex-col font-['Inter',sans-serif]">
 
     
     <!-- Unified Header: Only visible for Public/Guest view (Authenticated view uses Layout.vue header) -->
@@ -23,18 +23,18 @@
     </header>
 
     <!-- Sub-navigation Tabs (Only for Logged-In Clients) -->
-    <div v-if="authStore.isAuthenticated" class="bg-white border-b border-slate-100 flex-shrink-0 px-8 py-3 flex items-center justify-center">
-       <nav class="flex items-center gap-1 bg-slate-100 p-1.5 rounded-xl shadow-sm/50">
-         <button 
+    <div v-if="authStore.isAuthenticated" class="bg-white dark:bg-[#1e293b] border-b border-slate-100 dark:border-[#334155] flex-shrink-0 px-8 py-3 flex items-center justify-center">
+       <nav class="flex items-center gap-1 bg-slate-100 dark:bg-[#0f172a] p-1.5 rounded-xl">
+         <button
            @click="activeTab = 'create'"
-           :class="activeTab === 'create' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400 hover:text-slate-600'"
+           :class="activeTab === 'create' ? 'bg-white dark:bg-[#1e293b] text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'"
            class="px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all"
          >
            Nueva Solicitud
          </button>
-         <button 
+         <button
            @click="activeTab = 'history'"
-           :class="activeTab === 'history' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400 hover:text-slate-600'"
+           :class="activeTab === 'history' ? 'bg-white dark:bg-[#1e293b] text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'"
            class="px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all"
          >
            Mi Historial
@@ -54,10 +54,10 @@
 
         <!-- History/List view (Issue Navigator) -->
         <div v-else class="animate-content-in h-full">
-          <div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden">
+          <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm overflow-hidden">
             <!-- Table Header / Toolbar -->
-            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
-              <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest">Cola de Incidencias</h2>
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between bg-slate-50/30 dark:bg-[#0f172a]/40">
+              <h2 class="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">Mis Tickets</h2>
               <div class="flex items-center gap-4">
                 <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{{ tickets.length }} Solicitudes</span>
                 <button @click="loadData" class="text-slate-400 hover:text-primary-500 transition-colors">
@@ -70,27 +70,27 @@
             <div class="overflow-x-auto">
               <table class="w-full text-left">
                 <thead>
-                  <tr class="bg-slate-50/50">
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Módulo / ID</th>
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Resumen del Problema</th>
+                  <tr class="bg-slate-50/50 dark:bg-[#0f172a]/30">
+                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">ID</th>
+                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Resumen</th>
                     <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Prioridad</th>
                     <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
-                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Última Actividad</th>
+                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Última Act.</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50">
-                  <tr v-for="ticket in tickets" :key="ticket._id" 
+                <tbody class="divide-y divide-slate-100 dark:divide-[#334155]">
+                  <tr v-for="ticket in tickets" :key="ticket._id"
                     @click="openTicket(ticket)"
-                    class="hover:bg-slate-50/80 cursor-pointer transition-colors group"
+                    class="hover:bg-slate-50 dark:hover:bg-[#334155]/30 cursor-pointer transition-colors group"
                   >
                     <td class="px-6 py-5">
                       <div class="flex flex-col">
-                        <span class="text-[10px] font-black text-primary-600 uppercase tracking-tighter">{{ ticket.ticketNumber }}</span>
+                        <span class="text-[10px] font-black text-primary-600 dark:text-primary-400 uppercase tracking-tighter">{{ ticket.ticketNumber }}</span>
                         <span class="text-[9px] text-slate-400 font-bold uppercase">{{ ticket.category }}</span>
                       </div>
                     </td>
                     <td class="px-6 py-5">
-                      <p class="text-sm font-bold text-slate-800 group-hover:text-primary-600 transition-colors">{{ ticket.subject }}</p>
+                      <p class="text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ ticket.subject }}</p>
                       <p class="text-[10px] text-slate-400 truncate max-w-xs">{{ ticket.description }}</p>
                     </td>
                     <td class="px-6 py-5">
@@ -101,7 +101,7 @@
                     <td class="px-6 py-5">
                       <div class="flex items-center gap-2">
                         <div class="w-1.5 h-1.5 rounded-full" :class="getStatusColor(ticket.status)"></div>
-                        <span class="text-[10px] font-black text-slate-700 uppercase tracking-widest">{{ ticket.status }}</span>
+                        <span class="text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest">{{ ticket.status }}</span>
                       </div>
                     </td>
                     <td class="px-6 py-5">
@@ -110,9 +110,9 @@
                   </tr>
                   <tr v-if="tickets.length === 0 && !loading">
                     <td colspan="5" class="px-6 py-20 text-center">
-                      <div class="flex flex-col items-center gap-3 opacity-30">
-                        <i class="fas fa-inbox text-4xl"></i>
-                        <p class="text-xs font-black uppercase tracking-widest text-slate-400">No se encontraron incidencias</p>
+                      <div class="flex flex-col items-center gap-3 opacity-40">
+                        <i class="fas fa-inbox text-4xl text-slate-400 dark:text-slate-600"></i>
+                        <p class="text-xs font-black uppercase tracking-widest text-slate-400">Aún no tienes tickets</p>
                       </div>
                     </td>
                   </tr>
@@ -120,32 +120,30 @@
               </table>
             </div>
 
-            <!-- Pagination (External) -->
-            <div v-if="pagination.pages > 1" class="px-6 py-4 bg-slate-50/20 border-t border-slate-50 flex items-center justify-center gap-2">
-               <button 
+            <!-- Pagination -->
+            <div v-if="pagination.pages > 1" class="px-6 py-4 border-t border-slate-100 dark:border-[#334155] flex items-center justify-center gap-2">
+               <button
                  @click="changePage(pagination.page - 1)"
                  :disabled="pagination.page === 1"
-                 class="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                 class="w-9 h-9 bg-white dark:bg-[#334155] rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                >
                  <i class="fas fa-chevron-left text-[10px]"></i>
                </button>
-               
                <div class="flex items-center gap-1.5">
-                  <button 
-                    v-for="p in pagination.pages" 
+                  <button
+                    v-for="p in pagination.pages"
                     :key="p"
                     @click="changePage(p)"
-                    :class="p === pagination.page ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'"
+                    :class="p === pagination.page ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-[#334155]'"
                     class="w-8 h-8 rounded-lg text-[10px] font-black transition-all"
                   >
                     {{ p }}
                   </button>
                </div>
-
-               <button 
+               <button
                  @click="changePage(pagination.page + 1)"
                  :disabled="pagination.page === pagination.pages"
-                 class="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                 class="w-9 h-9 bg-white dark:bg-[#334155] rounded-xl flex items-center justify-center text-slate-400 hover:text-primary-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                >
                  <i class="fas fa-chevron-right text-[10px]"></i>
                </button>
@@ -155,22 +153,22 @@
       </div>
     </main>
 
-    <!-- Slide-over Detail Panel (Premium) -->
+    <!-- Slide-over Detail Panel -->
     <div v-if="selectedTicket" class="fixed inset-0 z-[60] flex justify-end animate-fade-in">
        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" @click="selectedTicket = null"></div>
-       <div class="relative w-full max-w-2xl bg-white h-full shadow-2xl animate-slide-left flex flex-col">
+       <div class="relative w-full max-w-2xl bg-white dark:bg-[#1e293b] h-full shadow-2xl animate-slide-left flex flex-col">
          <!-- Detail Header -->
-         <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between shrink-0">
+         <div class="px-8 py-6 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0">
            <div class="flex items-center gap-4">
-             <div class="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400">
+             <div class="w-10 h-10 bg-slate-50 dark:bg-[#334155] rounded-xl flex items-center justify-center text-slate-400">
                 <i class="fas fa-ticket-alt"></i>
              </div>
              <div>
-               <h3 class="text-lg font-black text-slate-800 tracking-tight">{{ selectedTicket.ticketNumber }}</h3>
+               <h3 class="text-lg font-black text-slate-800 dark:text-slate-100 tracking-tight">{{ selectedTicket.ticketNumber }}</h3>
                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Detalle de Solicitud</p>
              </div>
            </div>
-           <button @click="selectedTicket = null" class="w-10 h-10 hover:bg-slate-100 rounded-full transition-colors flex items-center justify-center text-slate-400">
+           <button @click="selectedTicket = null" class="w-10 h-10 hover:bg-slate-100 dark:hover:bg-[#334155] rounded-full transition-colors flex items-center justify-center text-slate-400">
               <i class="fas fa-times"></i>
            </button>
          </div>
@@ -181,24 +179,24 @@
               <span :class="getPriorityClass(selectedTicket.priority)" class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border">
                 {{ selectedTicket.priority }}
               </span>
-              <h1 class="text-2xl font-black text-slate-800 tracking-tight">{{ selectedTicket.subject }}</h1>
-              <p class="text-sm text-slate-600 leading-relaxed bg-slate-50/50 p-6 rounded-2xl italic">
+              <h1 class="text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{{ selectedTicket.subject }}</h1>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-[#0f172a]/60 p-6 rounded-2xl italic">
                 "{{ selectedTicket.description }}"
               </p>
             </section>
 
             <!-- Metadata Info -->
-            <div class="grid grid-cols-2 gap-8 py-6 border-t border-slate-100">
+            <div class="grid grid-cols-2 gap-8 py-6 border-t border-slate-100 dark:border-[#334155]">
                <div>
                  <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Asignado a</p>
                  <div v-if="selectedTicket.assignedTo" class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-slate-100 overflow-hidden">
+                    <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#334155] overflow-hidden">
                        <img v-if="selectedTicket.assignedTo.avatar" src="" class="w-full h-full object-cover">
                        <div v-else class="w-full h-full flex items-center justify-center text-slate-400 text-[10px] font-black">
                          {{ selectedTicket.assignedTo.name.charAt(0) }}
                        </div>
                     </div>
-                    <span class="text-sm font-bold text-slate-700">{{ selectedTicket.assignedTo.name }}</span>
+                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200">{{ selectedTicket.assignedTo.name }}</span>
                  </div>
                  <span v-else class="text-xs text-slate-400 italic font-medium">Buscando el mejor experto...</span>
                </div>
@@ -206,7 +204,7 @@
                  <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Estado</p>
                  <div class="flex items-center gap-2">
                     <div class="w-2 h-2 rounded-full" :class="getStatusColor(selectedTicket.status)"></div>
-                    <span class="text-sm font-black text-slate-800 uppercase tracking-widest">{{ selectedTicket.status }}</span>
+                    <span class="text-sm font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">{{ selectedTicket.status }}</span>
                  </div>
                </div>
             </div>
@@ -215,14 +213,14 @@
             <div v-if="selectedTicket.attachments?.length > 0" class="space-y-4">
                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Evidencias Adjuntas</p>
                <div class="grid grid-cols-3 gap-3">
-                  <div v-for="(att, i) in selectedTicket.attachments" :key="i" 
+                  <div v-for="(att, i) in selectedTicket.attachments" :key="i"
                     @click="viewAttachment(att)"
-                    class="group relative aspect-square bg-slate-100 rounded-xl overflow-hidden cursor-pointer border border-slate-200"
+                    class="group relative aspect-square bg-slate-100 dark:bg-[#334155] rounded-xl overflow-hidden cursor-pointer border border-slate-200 dark:border-[#334155]"
                   >
                     <img v-if="isImgUrl(att)" :src="resolveImageUrl(att)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     <div v-else class="w-full h-full flex flex-col items-center justify-center gap-2">
                        <i class="fas fa-file-alt text-slate-400 text-xl"></i>
-                       <span class="text-[8px] font-black text-slate-400 uppercase">Ver DocumentO</span>
+                       <span class="text-[8px] font-black text-slate-400 uppercase">Ver Documento</span>
                     </div>
                     <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                        <i class="fas fa-eye text-white"></i>
@@ -232,30 +230,27 @@
             </div>
 
             <!-- Activity & Comments Section -->
-            <div class="pt-8 border-t border-slate-100">
+            <div class="pt-8 border-t border-slate-100 dark:border-[#334155]">
                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Actividad y Comentarios</p>
-               
                <div v-if="selectedTicket.comments?.length > 0" class="space-y-6">
-                 <div v-for="comment in selectedTicket.comments" :key="comment._id" 
+                 <div v-for="comment in selectedTicket.comments" :key="comment._id"
                    class="animate-slide-in"
                    v-show="!comment.isInternal"
                  >
                    <div class="flex gap-4">
-                     <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-400">
+                     <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-[#334155] flex items-center justify-center text-[10px] font-black text-slate-400">
                        {{ comment.author?.name?.charAt(0) || '?' }}
                      </div>
                      <div class="flex-1 space-y-1">
                        <div class="flex items-center justify-between">
-                         <span class="text-[11px] font-black text-slate-800">{{ comment.author?.name || 'Soporte Técnico' }}</span>
+                         <span class="text-[11px] font-black text-slate-800 dark:text-slate-100">{{ comment.author?.name || 'Soporte Técnico' }}</span>
                          <span class="text-[9px] font-bold text-slate-400 uppercase">{{ formatDate(comment.createdAt) }}</span>
                        </div>
-                        <p class="text-sm text-slate-600 leading-relaxed">{{ comment.text }}</p>
-                        
-                        <!-- Comment Attachments -->
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{ comment.text }}</p>
                         <div v-if="comment.attachments?.length" class="flex flex-wrap gap-2 mt-2">
                           <div v-for="(att, i) in comment.attachments" :key="i"
                             @click="viewAttachment(att)"
-                            class="w-16 h-16 bg-slate-50 border border-slate-200 rounded-lg overflow-hidden cursor-pointer hover:border-primary-400 transition-all"
+                            class="w-16 h-16 bg-slate-50 dark:bg-[#334155] border border-slate-200 dark:border-[#334155] rounded-lg overflow-hidden cursor-pointer hover:border-primary-400 transition-all"
                           >
                             <img v-if="isImgUrl(att)" :src="resolveImageUrl(att)" class="w-full h-full object-cover">
                             <div v-else class="w-full h-full flex items-center justify-center">
@@ -267,7 +262,6 @@
                     </div>
                   </div>
                </div>
-
                <div v-else class="text-center py-10 opacity-40">
                   <p class="text-xs font-bold text-slate-400">Aún no hay mensajes. Te notificaremos cuando haya novedades.</p>
                </div>
@@ -275,13 +269,13 @@
          </div>
 
          <!-- Response Input -->
-         <div class="p-6 bg-slate-50 border-t border-slate-100 shrink-0">
+         <div class="p-6 bg-slate-50 dark:bg-[#0f172a]/60 border-t border-slate-100 dark:border-[#334155] shrink-0">
             <div class="relative">
-               <input 
+               <input
                 v-model="commentText"
                 @keyup.enter="sendComment"
-                placeholder="Añadir una respuesta rápida..." 
-                class="w-full pl-5 pr-12 py-4 bg-white border border-slate-200 rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 transition-all shadow-sm"
+                placeholder="Añadir una respuesta rápida..."
+                class="w-full pl-5 pr-12 py-4 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-2xl text-sm font-medium focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
                />
                 <div class="flex items-center justify-between pt-2">
                   <div class="flex items-center gap-2 pl-2">
@@ -296,14 +290,13 @@
                       {{ commentFiles.length }} archivos seleccionados
                     </div>
                   </div>
-
-                  <button 
+                  <button
                     @click="sendComment"
                     :disabled="sendingComment || (!commentText.trim() && !commentFiles.length)"
-                    class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:opacity-30 text-white font-black rounded-xl text-xs flex items-center gap-3 shadow-md transition-all active:scale-95 shadow-primary-200"
+                    class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:opacity-30 text-white font-black rounded-xl text-xs flex items-center gap-3 shadow-md transition-all active:scale-95"
                   >
                      <span v-if="sendingComment">Enviando...</span>
-                     <span v-else>Enviar Respuesta</span>
+                     <span v-else>Enviar</span>
                      <i v-if="sendingComment" class="fas fa-spinner fa-spin text-[10px]"></i>
                      <i v-else class="fas fa-paper-plane text-[10px]"></i>
                   </button>
@@ -408,11 +401,9 @@ const changePage = (page: number) => {
 }
 
 onMounted(() => {
+    activeTab.value = 'create'
     if (authStore.isAuthenticated) {
         loadData()
-        activeTab.value = 'history'
-    } else {
-        activeTab.value = 'create'
     }
 })
 

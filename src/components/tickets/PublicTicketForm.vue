@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden relative transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
+  <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm overflow-hidden relative transition-all duration-500">
     <div v-if="!submitted" class="p-6 md:p-10 space-y-8 animate-fade-in">
 
       <!-- Premium Header Context -->
@@ -19,7 +19,7 @@
               required
               type="text"
               placeholder="Ej. Sebastian Pulgarin"
-              class="w-full px-5 py-4 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 transition-all"
+              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-sm font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
             />
           </div>
 
@@ -30,7 +30,7 @@
               required
               type="email"
               placeholder="tu@empresa.com"
-              class="w-full px-5 py-4 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 transition-all"
+              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-sm font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
             />
           </div>
         </div>
@@ -47,12 +47,12 @@
               :class="[
                 'p-4 rounded-2xl border-2 transition-all text-left',
                 formData.category === cat.id
-                  ? 'border-primary-500 bg-primary-50/50 shadow-md'
-                  : 'border-slate-200 bg-slate-50/50',
+                  ? 'border-primary-500 bg-primary-50/50 dark:bg-primary-500/10 shadow-md'
+                  : 'border-slate-200 dark:border-[#334155] bg-slate-50/50 dark:bg-[#0f172a]/40 hover:bg-slate-50 dark:hover:bg-[#0f172a]/70',
               ]"
             >
-              <i :class="['fas', cat.icon, 'text-base mb-2 block', formData.category === cat.id ? 'text-primary-600' : 'text-slate-400']"></i>
-              <p :class="['text-[11px] font-black uppercase tracking-wider', formData.category === cat.id ? 'text-slate-900' : 'text-slate-600']">
+              <i :class="['fas', cat.icon, 'text-base mb-2 block', formData.category === cat.id ? 'text-primary-600 dark:text-primary-400' : 'text-slate-400']"></i>
+              <p :class="['text-[11px] font-black uppercase tracking-wider', formData.category === cat.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-600 dark:text-slate-400']">
                 {{ cat.label }}
               </p>
             </button>
@@ -73,21 +73,21 @@
               :class="[
                 'w-full p-4 rounded-2xl border-2 transition-all text-left flex items-start gap-3',
                 formData.subcategory === sub.id
-                  ? 'border-primary-500 bg-primary-50/30 shadow-sm'
-                  : 'border-slate-200 bg-slate-50/30',
+                  ? 'border-primary-500 bg-primary-50/30 dark:bg-primary-500/10 shadow-sm'
+                  : 'border-slate-200 dark:border-[#334155] bg-slate-50/30 dark:bg-[#0f172a]/40 hover:bg-slate-50 dark:hover:bg-[#0f172a]/70',
               ]"
             >
               <div :class="[
                 'w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0',
-                formData.subcategory === sub.id ? 'bg-primary-500 text-white' : 'bg-white text-slate-400 border border-slate-200',
+                formData.subcategory === sub.id ? 'bg-primary-500 text-white' : 'bg-white dark:bg-[#334155] text-slate-400 border border-slate-200 dark:border-[#334155]',
               ]">
                 <i :class="['fas', sub.icon, 'text-xs']"></i>
               </div>
               <div class="flex-1 min-w-0">
-                <p :class="['text-[12px] font-black mb-0.5', formData.subcategory === sub.id ? 'text-slate-900' : 'text-slate-700']">
+                <p :class="['text-[12px] font-black mb-0.5', formData.subcategory === sub.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-700 dark:text-slate-300']">
                   {{ sub.label }}
                 </p>
-                <p class="text-[10px] text-slate-500 font-medium leading-relaxed">{{ sub.hint }}</p>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{{ sub.hint }}</p>
               </div>
             </button>
           </div>
@@ -127,19 +127,19 @@
                   :key="s._id || idx"
                   type="button"
                   @click="toggleSuggestion(idx)"
-                  class="w-full bg-white rounded-xl border border-amber-200 overflow-hidden text-left transition-all hover:shadow-sm"
+                  class="w-full bg-white dark:bg-[#1e293b] rounded-xl border border-amber-200 dark:border-amber-900/40 overflow-hidden text-left transition-all hover:shadow-sm"
                 >
                   <div class="px-4 py-3 flex items-center gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-black text-[11px] flex-shrink-0">
+                    <span class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 flex items-center justify-center font-black text-[11px] flex-shrink-0">
                       {{ idx + 1 }}
                     </span>
                     <div class="flex-1 min-w-0">
-                      <p class="text-[12px] font-black text-slate-800 truncate">{{ s.titulo }}</p>
-                      <p v-if="s.descripcion" class="text-[10px] text-slate-500 font-medium truncate">{{ s.descripcion }}</p>
+                      <p class="text-[12px] font-black text-slate-800 dark:text-slate-100 truncate">{{ s.titulo }}</p>
+                      <p v-if="s.descripcion" class="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">{{ s.descripcion }}</p>
                     </div>
                     <i :class="['fas text-slate-400 transition-transform text-xs', expandedSuggestion === idx ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
                   </div>
-                  <div v-if="expandedSuggestion === idx" class="px-4 pb-4 pt-1 border-t border-amber-100">
+                  <div v-if="expandedSuggestion === idx" class="px-4 pb-4 pt-1 border-t border-amber-100 dark:border-amber-900/30">
                     <WikiContent :content="s.contenido" />
                   </div>
                 </button>
@@ -198,21 +198,21 @@
               required
               type="text"
               placeholder="¿En qué podemos ayudarte hoy?"
-              class="w-full px-5 py-4 bg-slate-50/50 border border-slate-200 rounded-2xl text-base font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 transition-all placeholder:text-slate-300"
+              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-base font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
             />
           </div>
 
           <!-- Priority -->
           <div class="space-y-3">
             <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Prioridad</label>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 p-1.5 bg-slate-100/50 border border-slate-200 rounded-2xl shadow-inner">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 p-1.5 bg-slate-100/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl">
               <button
                 type="button"
                 v-for="p in priorities"
                 :key="p.id"
                 @click="formData.priority = p.id"
                 class="py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-300"
-                :class="formData.priority === p.id ? p.activeClass : 'text-slate-400 hover:text-slate-600'"
+                :class="formData.priority === p.id ? p.activeClass : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'"
               >
                 {{ p.label }}
               </button>
@@ -227,7 +227,7 @@
               required
               rows="5"
               placeholder="Cuéntanos qué pasa, qué intentaste y cuándo empezó..."
-              class="w-full px-5 py-4 bg-slate-50/50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder:text-slate-300 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500 transition-all shadow-sm resize-none"
+              class="w-full px-5 py-4 bg-slate-50/50 dark:bg-[#0f172a]/60 border border-slate-200 dark:border-[#334155] rounded-2xl text-sm font-medium text-slate-800 dark:text-slate-100 placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all resize-none"
             ></textarea>
           </div>
 
@@ -243,26 +243,26 @@
             >
               <div
                 class="border-2 border-dashed rounded-2xl p-6 transition-all duration-300 flex flex-col items-center justify-center gap-3"
-                :class="dragOver ? 'border-primary-500 bg-primary-50/30' : 'border-slate-200 bg-slate-50/30 hover:bg-slate-50'"
+                :class="dragOver ? 'border-primary-500 bg-primary-50/30 dark:bg-primary-500/10' : 'border-slate-200 dark:border-[#334155] bg-slate-50/30 dark:bg-[#0f172a]/40 hover:bg-slate-50 dark:hover:bg-[#0f172a]/60'"
               >
-                <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-white dark:bg-[#334155] shadow-sm flex items-center justify-center text-slate-400 group-hover:text-primary-500 transition-colors">
                   <i class="fas fa-cloud-upload-alt text-xl"></i>
                 </div>
                 <div class="text-center">
-                  <p class="text-xs font-bold text-slate-700">Haz clic o arrastra archivos aquí</p>
+                  <p class="text-xs font-bold text-slate-700 dark:text-slate-300">Haz clic o arrastra archivos aquí</p>
                   <p class="text-[10px] text-slate-400 font-medium mt-1 uppercase tracking-wider">JPG, PNG, PDF (Máx. 5)</p>
                 </div>
               </div>
               <input type="file" ref="fileInput" multiple class="hidden" @change="handleFileChange" />
 
               <div v-if="selectedFiles.length > 0" class="mt-4 flex flex-wrap gap-2">
-                <div v-for="(file, index) in selectedFiles" :key="index" class="relative group/file bg-white border border-slate-200 p-2 rounded-xl flex items-center gap-3 animate-slide-in">
-                  <div class="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-primary-500 overflow-hidden">
+                <div v-for="(file, index) in selectedFiles" :key="index" class="relative group/file bg-white dark:bg-[#334155] border border-slate-200 dark:border-[#334155] p-2 rounded-xl flex items-center gap-3 animate-slide-in">
+                  <div class="w-10 h-10 bg-slate-50 dark:bg-[#0f172a] rounded-lg flex items-center justify-center text-primary-500 overflow-hidden">
                     <img v-if="isImage(file)" :src="getFilePreview(file)" class="w-full h-full object-cover" />
                     <i v-else class="fas fa-file-alt"></i>
                   </div>
                   <div class="pr-6">
-                    <p class="text-[10px] font-black text-slate-700 truncate max-w-[120px]">{{ file.name }}</p>
+                    <p class="text-[10px] font-black text-slate-700 dark:text-slate-200 truncate max-w-[120px]">{{ file.name }}</p>
                     <p class="text-[9px] text-slate-400 uppercase font-black">{{ formatSize(file.size) }}</p>
                   </div>
                   <button
@@ -328,16 +328,16 @@
 
        <p class="text-[10px] font-black text-emerald-600 uppercase tracking-[0.4em] mb-4">Misión cumplida</p>
        <h2 class="text-4xl font-black text-slate-800 tracking-tighter mb-4">Ticket Notificado</h2>
-       <p class="text-sm text-slate-500 font-bold mb-10 bg-slate-50 px-6 py-2 rounded-full">
-         ID: <span class="text-primary-600 font-mono ml-1">#{{ ticketId }}</span>
+       <p class="text-sm text-slate-500 dark:text-slate-400 font-bold mb-10 bg-slate-50 dark:bg-[#334155] px-6 py-2 rounded-full">
+         ID: <span class="text-primary-600 dark:text-primary-400 font-mono ml-1">#{{ ticketId }}</span>
        </p>
 
-       <p class="text-base text-slate-500 font-medium max-w-sm mx-auto leading-relaxed mb-8">
+       <p class="text-base text-slate-500 dark:text-slate-400 font-medium max-w-sm mx-auto leading-relaxed mb-8">
          Hemos asignado a <strong class="text-slate-800">{{ assignedAgentName }}</strong> para atender tu solicitud. Recibirás actualizaciones en tiempo real vía email.
        </p>
 
        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-sm pb-8">
-         <button @click="resetForm" class="flex-1 px-8 py-4 bg-white text-slate-800 border-2 border-slate-100 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition-all">
+         <button @click="resetForm" class="flex-1 px-8 py-4 bg-white dark:bg-[#334155] text-slate-800 dark:text-slate-100 border-2 border-slate-100 dark:border-[#334155] rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-[#334155]/80 transition-all">
            Nuevo Reporte
          </button>
          <router-link v-if="authStore.isAuthenticated" to="/support" class="flex-1 px-8 py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-slate-200">
