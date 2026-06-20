@@ -20,29 +20,27 @@
     </header>
 
     <!-- Left Identity Rail (authenticated only) -->
-    <aside v-if="authStore.isAuthenticated" class="w-56 flex-shrink-0 flex flex-col border-r border-slate-100 dark:border-[#334155] bg-white dark:bg-[#1e293b]">
+    <aside v-if="authStore.isAuthenticated" class="w-52 flex-shrink-0 flex flex-col border-r border-slate-100 dark:border-[#334155] bg-white dark:bg-[#1e293b] px-4 py-6 gap-6">
 
       <!-- Brand mark -->
-      <div class="px-6 pt-8 pb-6 border-b border-slate-50 dark:border-[#334155]">
-        <div class="flex items-center gap-2.5 mb-1">
-          <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-            <i class="fas fa-gem text-white text-[10px]"></i>
-          </div>
-          <div>
-            <p class="text-xs font-black text-slate-800 dark:text-slate-100 leading-none tracking-tight">GEMS Hub</p>
-            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
-          </div>
+      <div class="flex items-center gap-2.5 px-2">
+        <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-gem text-white text-[10px]"></i>
+        </div>
+        <div>
+          <p class="text-xs font-black text-slate-800 dark:text-slate-100 leading-none tracking-tight">GEMS Hub</p>
+          <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
         </div>
       </div>
 
       <!-- Vertical nav -->
-      <nav class="flex flex-col gap-0.5 p-3 flex-1">
+      <nav class="flex flex-col gap-1">
         <button
           @click="activeTab = 'create'"
           :class="activeTab === 'create'
-            ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 border-l-2 border-primary-500 pl-3.5'
-            : 'text-slate-500 dark:text-slate-400 border-l-2 border-transparent pl-3.5 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
-          class="flex items-center gap-3 pr-4 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-r-xl text-left"
+            ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
+          class="flex items-center gap-3 px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-xl text-left w-full"
         >
           <i class="fas fa-plus w-3 text-center text-[10px]"></i>
           Nueva Solicitud
@@ -50,9 +48,9 @@
         <button
           @click="activeTab = 'history'"
           :class="activeTab === 'history'
-            ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 border-l-2 border-primary-500 pl-3.5'
-            : 'text-slate-500 dark:text-slate-400 border-l-2 border-transparent pl-3.5 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
-          class="flex items-center gap-3 pr-4 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-r-xl text-left"
+            ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
+          class="flex items-center gap-3 px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-xl text-left w-full"
         >
           <i class="fas fa-list w-3 text-center text-[10px]"></i>
           Mi Historial
@@ -60,17 +58,15 @@
       </nav>
 
       <!-- Quick stats -->
-      <div class="p-5 border-t border-slate-50 dark:border-[#334155]">
-        <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Resumen</p>
-        <div class="space-y-3">
-          <div>
-            <p class="text-[9px] text-slate-400 font-medium mb-0.5">Solicitudes totales</p>
-            <p class="text-xl font-black text-slate-800 dark:text-slate-100 tabular-nums leading-none">{{ tickets.length }}</p>
-          </div>
-          <div>
-            <p class="text-[9px] text-slate-400 font-medium mb-0.5">Abiertas</p>
-            <p class="text-xl font-black text-emerald-500 tabular-nums leading-none">{{ tickets.filter(t => t.status === 'open').length }}</p>
-          </div>
+      <div class="mt-auto px-2 space-y-3">
+        <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Resumen</p>
+        <div>
+          <p class="text-[9px] text-slate-400 font-medium mb-0.5">Solicitudes totales</p>
+          <p class="text-xl font-black text-slate-800 dark:text-slate-100 tabular-nums leading-none">{{ tickets.length }}</p>
+        </div>
+        <div>
+          <p class="text-[9px] text-slate-400 font-medium mb-0.5">Abiertas</p>
+          <p class="text-xl font-black text-emerald-500 tabular-nums leading-none">{{ tickets.filter(t => t.status === 'open').length }}</p>
         </div>
       </div>
     </aside>
