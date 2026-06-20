@@ -209,10 +209,14 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         user.value = response.user || null
+        // Membership role overrides User document role (org-specific)
+        if (user.value && response.membership?.role) {
+          user.value = { ...user.value, role: response.membership.role as User['role'] }
+        }
         token.value = response.token || null
         if (response.token) localStorage.setItem('token', response.token)
         if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
-        if (response.user) localStorage.setItem('user', JSON.stringify(response.user))
+        if (user.value) localStorage.setItem('user', JSON.stringify(user.value))
         memberships.value = response.memberships || []
         persistMembershipsCount(memberships.value.length)
         requiresOrgSelection.value = !!response.requiresOrgSelection
@@ -245,10 +249,13 @@ export const useAuthStore = defineStore('auth', () => {
 
       if (response.success) {
         user.value = response.user || null
+        if (user.value && response.membership?.role) {
+          user.value = { ...user.value, role: response.membership.role as User['role'] }
+        }
         token.value = response.token || null
         if (response.token) localStorage.setItem('token', response.token)
         if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
-        if (response.user) localStorage.setItem('user', JSON.stringify(response.user))
+        if (user.value) localStorage.setItem('user', JSON.stringify(user.value))
         memberships.value = response.memberships || []
         persistMembershipsCount(memberships.value.length)
         requiresOrgSelection.value = !!response.requiresOrgSelection
@@ -331,6 +338,14 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const response = await authService.selectOrganization(organizationId)
       if (response.success && response.token && response.organization) {
+        // Merge user + membership role from org selection
+        if (response.user) {
+          user.value = response.user
+          if (response.membership?.role) {
+            user.value = { ...user.value, role: response.membership.role as User['role'] }
+          }
+          localStorage.setItem('user', JSON.stringify(user.value))
+        }
         token.value = response.token || null
         organization.value = response.organization || null
         requiresOrgSelection.value = false
