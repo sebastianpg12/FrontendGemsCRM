@@ -464,15 +464,15 @@ const showEditModal = ref(false)
 const isSubmitting = ref(false)
 const showPassword = ref(false)
 const allAvailableRoles = [
-  { name: 'Administrador' },
-  { name: 'Supervisor' },
-  { name: 'Colaborador' },
-  { name: 'Soporte' },
-  { name: 'Consultor' },
-  { name: 'Cliente' },
+  { value: 'admin',        label: 'Administrador' },
+  { value: 'supervisor',   label: 'Supervisor' },
+  { value: 'collaborator', label: 'Colaborador' },
+  { value: 'support',      label: 'Soporte' },
+  { value: 'viewer',       label: 'Consultor' },
+  { value: 'client',       label: 'Cliente' },
 ]
 
-const roleSelectOptions = allAvailableRoles.map(r => ({ value: r.name, label: r.name }))
+const roleSelectOptions = allAvailableRoles.map(r => ({ value: r.value, label: r.label }))
 
 const deptSelectOptions = computed(() => [
   { value: '', label: 'Sin departamento' },

@@ -74,15 +74,15 @@ import { useNotifications } from '../composables/useNotifications'
 import CustomSelect from './ui/CustomSelect.vue'
 
 const SYSTEM_ROLES = [
-  { name: 'Administrador' },
-  { name: 'Supervisor' },
-  { name: 'Colaborador' },
-  { name: 'Soporte' },
-  { name: 'Consultor' },
-  { name: 'Cliente' },
+  { value: 'admin',        label: 'Administrador' },
+  { value: 'supervisor',   label: 'Supervisor' },
+  { value: 'collaborator', label: 'Colaborador' },
+  { value: 'support',      label: 'Soporte' },
+  { value: 'viewer',       label: 'Consultor' },
+  { value: 'client',       label: 'Cliente' },
 ]
 
-const roleOptions = SYSTEM_ROLES.map(r => ({ value: r.name, label: r.name }))
+const roleOptions = SYSTEM_ROLES.map(r => ({ value: r.value, label: r.label }))
 const departmentOptions = [
   { value: 'TI', label: 'TI' },
   { value: 'MARKETING', label: 'Marketing' },

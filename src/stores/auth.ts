@@ -55,6 +55,17 @@ export interface LoginCredentials {
   password: string
 }
 
+const ROLE_NORMALIZE: Record<string, User['role']> = {
+  'administrador': 'admin',   'admin': 'admin',
+  'supervisor': 'supervisor',
+  'colaborador': 'collaborator', 'collaborator': 'collaborator',
+  'soporte': 'support',       'support': 'support',
+  'consultor': 'viewer',      'viewer': 'viewer',
+  'cliente': 'client',        'client': 'client',
+}
+const normalizeRole = (role: string): User['role'] =>
+  ROLE_NORMALIZE[role.toLowerCase()] ?? (role as User['role'])
+
 export const useAuthStore = defineStore('auth', () => {
   // State
   const user = ref<User | null>(null)
@@ -209,9 +220,9 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         user.value = response.user || null
-        // Membership role overrides User document role (org-specific)
-        if (user.value && response.membership?.role) {
-          user.value = { ...user.value, role: response.membership.role as User['role'] }
+        if (user.value) {
+          const effectiveRole = response.membership?.role || user.value.role
+          user.value = { ...user.value, role: normalizeRole(effectiveRole) }
         }
         token.value = response.token || null
         if (response.token) localStorage.setItem('token', response.token)
@@ -249,8 +260,9 @@ export const useAuthStore = defineStore('auth', () => {
 
       if (response.success) {
         user.value = response.user || null
-        if (user.value && response.membership?.role) {
-          user.value = { ...user.value, role: response.membership.role as User['role'] }
+        if (user.value) {
+          const effectiveRole = response.membership?.role || user.value.role
+          user.value = { ...user.value, role: normalizeRole(effectiveRole) }
         }
         token.value = response.token || null
         if (response.token) localStorage.setItem('token', response.token)
@@ -341,9 +353,8 @@ export const useAuthStore = defineStore('auth', () => {
         // Merge user + membership role from org selection
         if (response.user) {
           user.value = response.user
-          if (response.membership?.role) {
-            user.value = { ...user.value, role: response.membership.role as User['role'] }
-          }
+          const effectiveRole = response.membership?.role || user.value.role
+          user.value = { ...user.value, role: normalizeRole(effectiveRole) }
           localStorage.setItem('user', JSON.stringify(user.value))
         }
         token.value = response.token || null
@@ -393,7 +404,8 @@ export const useAuthStore = defineStore('auth', () => {
 
     try {
       token.value = storedToken
-      user.value = JSON.parse(storedUser)
+      const parsedUser = JSON.parse(storedUser)
+      user.value = parsedUser ? { ...parsedUser, role: normalizeRole(parsedUser.role || '') } : null
 
       // Verify token is still valid
       const response = await authService.verifyToken()
@@ -440,7 +452,6 @@ export const useAuthStore = defineStore('auth', () => {
   
   const getAvailableModules = computed(() => {
     if (!user.value) return []
-    
     // Si es CLIENTE, solo ve "Soporte" (levantar tickets)
     if (user.value.role === 'client') {
       return [
