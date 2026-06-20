@@ -20,19 +20,10 @@
     </header>
 
     <!-- Left Identity Rail (authenticated only) -->
-    <aside v-if="authStore.isAuthenticated" class="w-52 flex-shrink-0 flex flex-col relative overflow-hidden px-4 py-6 gap-6">
-
-      <!-- Ambient translucent background -->
-      <div class="absolute inset-0 bg-white/75 dark:bg-[#1e293b]/75 backdrop-blur-md"></div>
-      <!-- Orb superior izquierdo -->
-      <div class="absolute -top-10 -left-10 w-36 h-36 rounded-full bg-primary-500/10 dark:bg-primary-400/8 blur-2xl animate-orb-a pointer-events-none"></div>
-      <!-- Orb inferior derecho -->
-      <div class="absolute -bottom-8 -right-8 w-28 h-28 rounded-full bg-primary-600/8 dark:bg-primary-500/6 blur-2xl animate-orb-b pointer-events-none"></div>
-      <!-- Grid sutil -->
-      <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]" style="background-image:linear-gradient(rgba(124,58,237,1) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,1) 1px,transparent 1px);background-size:24px 24px;"></div>
+    <aside v-if="authStore.isAuthenticated" class="w-52 flex-shrink-0 flex flex-col bg-white/60 dark:bg-[#1e293b]/60 px-4 py-6 gap-6">
 
       <!-- Brand mark -->
-      <div class="relative z-10 flex items-center gap-2.5 px-2">
+      <div class="flex items-center gap-2.5 px-2">
         <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
           <i class="fas fa-gem text-white text-[10px]"></i>
         </div>
@@ -43,7 +34,7 @@
       </div>
 
       <!-- Vertical nav -->
-      <nav class="relative z-10 flex flex-col gap-1">
+      <nav class="flex flex-col gap-1">
         <button
           @click="activeTab = 'create'"
           :class="activeTab === 'create'
@@ -67,7 +58,7 @@
       </nav>
 
       <!-- Quick stats -->
-      <div class="relative z-10 mt-auto px-2 space-y-3">
+      <div class="mt-auto px-2 space-y-3">
         <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Resumen</p>
         <div>
           <p class="text-[9px] text-slate-400 font-medium mb-0.5">Solicitudes totales</p>
@@ -474,17 +465,6 @@ const viewAttachment = (url: string) => {
 </script>
 
 <style scoped>
-@keyframes orb-a {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
-  50%       { transform: translate(6px, -10px) scale(1.12); opacity: 1; }
-}
-@keyframes orb-b {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  50%       { transform: translate(-5px, 8px) scale(1.08); opacity: 0.9; }
-}
-.animate-orb-a { animation: orb-a 9s ease-in-out infinite; }
-.animate-orb-b { animation: orb-b 12s ease-in-out infinite; }
-
 @keyframes slide-left {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
