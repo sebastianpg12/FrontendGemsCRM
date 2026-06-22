@@ -133,7 +133,7 @@
           <div class="relative group">
             <div class="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300"
                  :class="credentials.password ? 'text-primary-400' : 'text-white/25 group-focus-within:text-primary-400'">
-              <i class="far fa-lock text-sm"></i>
+              <i class="fas fa-key text-sm"></i>
             </div>
             <input
               v-model="credentials.password"
