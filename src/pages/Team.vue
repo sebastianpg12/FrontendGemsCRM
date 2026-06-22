@@ -609,10 +609,8 @@ const submitForm = async () => {
     } else if (editingMember.value) {
       const { password, ...updateData } = formData
 
-      const canChangePassword = authStore.isSuperAdmin || authStore.user?.role === 'admin'
-
       // Validar contraseña antes de guardar nada
-      if (password && canChangePassword && password.length < 6) {
+      if (password && password.length < 6) {
         showError('Validación', 'La contraseña debe tener al menos 6 caracteres')
         isSubmitting.value = false
         return
@@ -620,7 +618,7 @@ const submitForm = async () => {
 
       await teamStore.updateMember(editingMember.value._id!, updateData)
 
-      if (password && canChangePassword) {
+      if (password) {
         await teamStore.updateMemberPassword(editingMember.value._id!, password)
         showSuccess('Contraseña', 'La contraseña ha sido actualizada correctamente')
       }
