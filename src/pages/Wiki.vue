@@ -327,7 +327,215 @@ const exportText = () => {
 
 const exportPrint = () => {
   showExportMenu.value = false
-  window.print()
+  if (!currentPage.value) return
+
+  const page = currentPage.value
+  const date = formatDate(page.updatedAt)
+  const author = page.autor?.name || 'Usuario'
+  const url = `${window.location.origin}/wiki/${currentId.value}`
+
+  const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>${page.titulo} — GEMS Hub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #111827;
+      background: #fff;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Cover header ── */
+    .doc-header {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4c1d95 100%);
+      color: #fff;
+      padding: 40px 56px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .doc-header::after {
+      content: '';
+      position: absolute;
+      right: -60px; top: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139,92,246,0.35) 0%, transparent 70%);
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .brand-logo {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .brand-name {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .doc-title {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .doc-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+    }
+    .doc-meta span { display: flex; align-items: center; gap: 5px; }
+    .dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+
+    /* ── Content area ── */
+    .doc-body {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 48px 56px 60px;
+    }
+
+    /* ── Typography ── */
+    .doc-body h1 { font-size: 26px; font-weight: 900; margin: 32px 0 12px; color: #111827; letter-spacing:-0.02em; }
+    .doc-body h2 { font-size: 20px; font-weight: 800; margin: 28px 0 10px; color: #1e293b; }
+    .doc-body h3 { font-size: 16px; font-weight: 700; margin: 22px 0 8px; color: #374151; }
+    .doc-body p  { font-size: 14px; line-height: 1.75; color: #374151; margin-bottom: 14px; }
+    .doc-body ul, .doc-body ol { padding-left: 22px; margin-bottom: 14px; }
+    .doc-body li { font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 4px; }
+    .doc-body strong { font-weight: 700; color: #111827; }
+    .doc-body em { font-style: italic; color: #4b5563; }
+    .doc-body code {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 12.5px;
+      background: #f1f5f9;
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: #7c3aed;
+    }
+    .doc-body pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-size: 12.5px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+    .doc-body pre code { background: none; color: inherit; padding: 0; }
+    .doc-body blockquote {
+      border-left: 3px solid #7c3aed;
+      padding-left: 16px;
+      margin: 16px 0;
+      color: #6b7280;
+      font-style: italic;
+    }
+    .doc-body hr {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 28px 0;
+    }
+    .doc-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .doc-body th {
+      background: #f8fafc;
+      font-weight: 700;
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+      color: #374151;
+    }
+    .doc-body td {
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      color: #4b5563;
+    }
+    .doc-body img { max-width: 100%; border-radius: 8px; margin: 12px 0; }
+
+    /* ── Divider after header ── */
+    .content-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #7c3aed, #a855f7, transparent);
+    }
+
+    /* ── Footer ── */
+    .doc-footer {
+      border-top: 1px solid #e5e7eb;
+      padding: 18px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+    .doc-footer .gems-mark {
+      display: flex; align-items: center; gap: 6px;
+      font-weight: 700; color: #7c3aed; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    @media print {
+      @page { margin: 0; size: A4; }
+      .doc-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="doc-header">
+    <div class="brand-row">
+      <div class="brand-logo">💎</div>
+      <span class="brand-name">GEMS Hub · Wiki</span>
+    </div>
+    <div class="doc-title">${page.titulo}</div>
+    <div class="doc-meta">
+      <span>✍ ${author}</span>
+      <div class="dot"></div>
+      <span>📅 ${date}</span>
+      <div class="dot"></div>
+      <span>👁 ${page.vistas || 0} vistas</span>
+    </div>
+  </div>
+  <div class="content-divider"></div>
+
+  <div class="doc-body">
+    ${page.contenido || '<p><em>Esta página no tiene contenido.</em></p>'}
+  </div>
+
+  <div class="doc-footer">
+    <div class="gems-mark">⬥ GEMS Hub</div>
+    <span>${url}</span>
+    <span>Exportado el ${new Date().toLocaleDateString('es-CO', { day:'numeric', month:'long', year:'numeric' })}</span>
+  </div>
+
+  <script>window.onload = () => { window.print(); }<\/script>
+</body>
+</html>`
+
+  const win = window.open('', '_blank', 'width=900,height=700')
+  if (!win) return
+  win.document.write(html)
+  win.document.close()
 }
 
 const onClickOutsideExport = (e: MouseEvent) => {
