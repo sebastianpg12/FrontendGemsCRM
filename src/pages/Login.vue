@@ -155,18 +155,36 @@
           <!-- Options row -->
           <div class="flex items-center justify-between px-0.5 pt-0.5">
             <label class="flex items-center cursor-pointer group select-none gap-2.5" @click="rememberMe = !rememberMe">
+              <!-- Track -->
               <div
-                class="relative w-8 h-[18px] rounded-full transition-all duration-300 flex-shrink-0"
+                class="relative w-10 h-[22px] rounded-full transition-all duration-300 flex-shrink-0 overflow-hidden"
                 :style="rememberMe
-                  ? `background: var(--brand-accent); box-shadow: 0 0 10px rgba(var(--brand-accent-rgb),0.5);`
-                  : `background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);`"
+                  ? `background: linear-gradient(135deg, var(--brand-accent), color-mix(in srgb, var(--brand-accent) 70%, #a855f7)); box-shadow: 0 0 14px rgba(var(--brand-accent-rgb),0.55), inset 0 1px 0 rgba(255,255,255,0.15);`
+                  : `background: rgba(255,255,255,0.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.13);`"
               >
+                <!-- Shine interior cuando está activo -->
                 <span
-                  class="absolute top-1/2 -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white shadow transition-all duration-300"
-                  :style="rememberMe ? 'left: calc(100% - 16px);' : 'left: 2px;'"
+                  v-if="rememberMe"
+                  class="absolute inset-0 rounded-full"
+                  style="background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 60%)"
                 ></span>
+                <!-- Knob -->
+                <span
+                  class="absolute top-1/2 -translate-y-1/2 w-[16px] h-[16px] rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] flex items-center justify-center"
+                  :style="rememberMe
+                    ? 'left: calc(100% - 19px); background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.35);'
+                    : 'left: 3px; background: rgba(255,255,255,0.45); box-shadow: none;'"
+                >
+                  <!-- Check mini cuando activo -->
+                  <svg v-if="rememberMe" viewBox="0 0 10 8" fill="none" style="width:8px;height:8px">
+                    <path d="M1 4l2.5 2.5L9 1" stroke="var(--brand-accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </div>
-              <span class="text-[11px] font-semibold text-white/70 group-hover:text-white/95 transition-colors">Recordarme</span>
+              <span class="text-[11px] font-semibold transition-colors"
+                :class="rememberMe ? 'text-white/90' : 'text-white/55 group-hover:text-white/80'">
+                Recordarme
+              </span>
             </label>
             <button
               type="button"
