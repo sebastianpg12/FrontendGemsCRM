@@ -162,7 +162,7 @@
                   : `background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);`"
               >
                 <span
-                  class="absolute top-[2px] w-[14px] h-[14px] rounded-full bg-white shadow transition-all duration-300"
+                  class="absolute top-1/2 -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white shadow transition-all duration-300"
                   :style="rememberMe ? 'left: calc(100% - 16px);' : 'left: 2px;'"
                 ></span>
               </div>
