@@ -66,7 +66,7 @@
           :style="`background: linear-gradient(135deg, var(--brand-accent), rgba(${accentRgb},0.65)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`">
           GEMS HUB PORTAL
         </h1>
-        <p class="text-white/30 text-[9px] font-black uppercase tracking-[0.45em]">Galactic Intelligence Suite</p>
+        <p class="text-white/30 text-[9px] font-black uppercase tracking-[0.45em]">Tu plataforma de gestión empresarial</p>
       </div>
 
       <!-- Glass card wrapper -->
