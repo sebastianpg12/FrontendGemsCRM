@@ -299,12 +299,6 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (err) {
       console.error('Error during logout:', err)
     } finally {
-      user.value = null
-      token.value = null
-      organization.value = null
-      memberships.value = []
-      membershipsCount.value = 0
-      requiresOrgSelection.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('refreshToken')
       localStorage.removeItem('user')

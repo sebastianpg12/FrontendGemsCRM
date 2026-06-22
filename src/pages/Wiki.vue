@@ -349,6 +349,9 @@ const exportPrint = () => {
       padding: 0;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* ── Cover header ── */
@@ -411,6 +414,8 @@ const exportPrint = () => {
       max-width: 700px;
       margin: 0 auto;
       padding: 48px 56px 60px;
+      flex: 1;
+      width: 100%;
     }
 
     /* ── Typography ── */
