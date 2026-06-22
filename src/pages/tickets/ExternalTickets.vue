@@ -24,9 +24,7 @@
 
       <!-- Brand mark -->
       <div class="flex items-center gap-2.5 px-2">
-        <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-          <i class="fas fa-gem text-white text-[10px]"></i>
-        </div>
+        <img src="/gems-logo.png" alt="GEMS Hub" class="w-7 h-7 rounded-lg object-cover flex-shrink-0" />
         <div>
           <p class="text-xs font-black text-slate-800 dark:text-slate-100 leading-none tracking-tight">GEMS Hub</p>
           <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
