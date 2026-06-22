@@ -92,10 +92,10 @@
           </div>
         </div>
 
-        <!-- Deflexión: Pasos sugeridos de la Wiki -->
+        <!-- Deflexión: desactivada hasta tener documentación en Wiki -->
         <transition name="expand">
           <div
-            v-if="showDeflection"
+            v-if="false"
             class="rounded-2xl border-2 border-amber-200 bg-gradient-to-br from-amber-50/80 to-orange-50/30 overflow-hidden animate-fade-in"
           >
             <div class="px-5 py-4 border-b border-amber-200/50 bg-white/40 flex items-center gap-3">
