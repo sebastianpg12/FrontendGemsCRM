@@ -299,7 +299,7 @@ const quickActions = computed(() => {
   const all = [
     { label: 'Nuevo cliente', to: '/clients', icon: 'fa-user-plus', iconBg: 'bg-primary-50 group-hover:bg-primary-100', iconColor: 'text-primary-500', hover: 'hover:border-primary-200', can: authStore.canCreateClients },
     { label: 'Nueva actividad', to: '/activities', icon: 'fa-plus-circle', iconBg: 'bg-green-50 group-hover:bg-green-100', iconColor: 'text-green-500', hover: 'hover:border-green-200', can: authStore.canCreateActivities },
-    { label: 'Revisar tickets', to: '/tickets', icon: 'fa-ticket-alt', iconBg: 'bg-slate-100 group-hover:bg-slate-200', iconColor: 'text-slate-600', hover: 'hover:border-slate-300', can: authStore.canViewCases },
+    { label: 'Revisar tickets', to: '/tickets', icon: 'fa-ticket-alt', iconBg: 'bg-blue-50 group-hover:bg-blue-100', iconColor: 'text-blue-500', hover: 'hover:border-blue-200', can: authStore.canViewCases },
     { label: 'Nuevo caso', to: '/cases', icon: 'fa-exclamation-circle', iconBg: 'bg-orange-50 group-hover:bg-orange-100', iconColor: 'text-orange-500', hover: 'hover:border-orange-200', can: authStore.canCreateCases },
     { label: 'Gestionar equipo', to: '/team', icon: 'fa-users-cog', iconBg: 'bg-purple-50 group-hover:bg-purple-100', iconColor: 'text-purple-500', hover: 'hover:border-primary-200', can: authStore.canCreateTeam },
   ]
