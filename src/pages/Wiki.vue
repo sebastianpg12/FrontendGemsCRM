@@ -74,6 +74,46 @@
           <span class="hidden sm:flex items-center gap-1.5 text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mr-1" title="Vistas">
             <i class="fas fa-eye text-[12px]"></i>{{ currentPage.vistas || 0 }}
           </span>
+
+          <!-- Compartir -->
+          <button
+            class="w-9 h-9 flex items-center justify-center rounded-lg transition-colors"
+            :class="shareCopied
+              ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10'
+              : 'text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10'"
+            :title="shareCopied ? '¡Link copiado!' : 'Compartir página'"
+            @click="sharePage"
+          >
+            <i class="fas text-[14px]" :class="shareCopied ? 'fa-check' : 'fa-link'"></i>
+          </button>
+
+          <!-- Exportar -->
+          <div class="relative" ref="exportMenuRef">
+            <button
+              class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors"
+              title="Exportar página"
+              @click="showExportMenu = !showExportMenu"
+            >
+              <i class="fas fa-download text-[14px]"></i>
+            </button>
+            <div v-if="showExportMenu"
+              class="absolute right-0 top-full mt-1 bg-white dark:bg-[#1e293b] rounded-xl shadow-xl border border-slate-100 dark:border-[#334155] py-1.5 w-44 z-50"
+            >
+              <button class="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
+                @click="exportMarkdown">
+                <i class="fas fa-file-code text-[12px] text-slate-400 w-4"></i>Markdown (.md)
+              </button>
+              <button class="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
+                @click="exportText">
+                <i class="fas fa-file-alt text-[12px] text-slate-400 w-4"></i>Texto plano (.txt)
+              </button>
+              <button class="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
+                @click="exportPrint">
+                <i class="fas fa-print text-[12px] text-slate-400 w-4"></i>Imprimir / PDF
+              </button>
+            </div>
+          </div>
+
           <button class="btn-secondary" @click="startEditing">
             <i class="fas fa-pen text-[12px]"></i><span class="hidden sm:inline">Editar</span>
           </button>
@@ -219,6 +259,8 @@ import WikiBreadcrumb from '@/components/wiki/WikiBreadcrumb.vue'
 const route = useRoute()
 const router = useRouter()
 
+onBeforeUnmount(() => document.removeEventListener('click', onClickOutsideExport))
+
 const tree = ref<WikiTreeNode[]>([])
 const archivedPages = ref<WikiTreeNode[]>([])
 const currentPage = ref<WikiArticle | null>(null)
@@ -242,6 +284,57 @@ const confirmDialog = ref<{
   danger: boolean
   onConfirm: () => void
 } | null>(null)
+
+const shareCopied = ref(false)
+const showExportMenu = ref(false)
+const exportMenuRef = ref<HTMLElement | null>(null)
+
+const sharePage = async () => {
+  const url = `${window.location.origin}/wiki/${currentId.value}`
+  await navigator.clipboard.writeText(url)
+  shareCopied.value = true
+  setTimeout(() => { shareCopied.value = false }, 2000)
+}
+
+const htmlToText = (html: string) => {
+  const div = document.createElement('div')
+  div.innerHTML = html
+  return div.innerText || div.textContent || ''
+}
+
+const exportMarkdown = () => {
+  if (!currentPage.value) return
+  const title = `# ${currentPage.value.titulo}\n\n`
+  const body = htmlToText(currentPage.value.contenido || '')
+  const blob = new Blob([title + body], { type: 'text/markdown' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `${currentPage.value.titulo.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.md`
+  a.click()
+  showExportMenu.value = false
+}
+
+const exportText = () => {
+  if (!currentPage.value) return
+  const body = htmlToText(currentPage.value.contenido || '')
+  const blob = new Blob([currentPage.value.titulo + '\n\n' + body], { type: 'text/plain' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `${currentPage.value.titulo.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.txt`
+  a.click()
+  showExportMenu.value = false
+}
+
+const exportPrint = () => {
+  showExportMenu.value = false
+  window.print()
+}
+
+const onClickOutsideExport = (e: MouseEvent) => {
+  if (exportMenuRef.value && !exportMenuRef.value.contains(e.target as Node)) {
+    showExportMenu.value = false
+  }
+}
 
 const currentId = computed(() => (route.params.pageId as string) || null)
 
@@ -590,6 +683,7 @@ const deletePermanent = async (id: string) => {
 
 onMounted(async () => {
   window.addEventListener('keydown', onKeydown)
+  document.addEventListener('click', onClickOutsideExport)
   await loadTree()
   if (currentId.value) {
     loadPage(currentId.value)
