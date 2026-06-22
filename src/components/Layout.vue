@@ -190,7 +190,7 @@ const navigation = computed(() => {
 })
 
 const pageTitle = computed(() => {
-  const current = navigation.find(item => item.path === route.path)
+  const current = navigation.value.find(item => item.path === route.path)
   if (current) return localeStore.t(current.id)
   const sub: Record<string, string> = {
     '/profile': localeStore.t('profile.title'),
