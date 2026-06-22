@@ -608,15 +608,19 @@ const submitForm = async () => {
       await teamStore.createMember(formData)
     } else if (editingMember.value) {
       const { password, ...updateData } = formData
+
+      const canChangePassword = authStore.isSuperAdmin || authStore.user?.role === 'admin'
+
+      // Validar contraseña antes de guardar nada
+      if (password && canChangePassword && password.length < 6) {
+        showError('Validación', 'La contraseña debe tener al menos 6 caracteres')
+        isSubmitting.value = false
+        return
+      }
+
       await teamStore.updateMember(editingMember.value._id!, updateData)
-      
-      // Si se proporcionó una contraseña y el usuario es admin, actualizarla
-      if (password && authStore.user?.role === 'admin') {
-        if (password.length < 12) {
-          showError('Validación', 'La contraseña debe tener al menos 12 caracteres')
-          isSubmitting.value = false
-          return
-        }
+
+      if (password && canChangePassword) {
         await teamStore.updateMemberPassword(editingMember.value._id!, password)
         showSuccess('Contraseña', 'La contraseña ha sido actualizada correctamente')
       }
