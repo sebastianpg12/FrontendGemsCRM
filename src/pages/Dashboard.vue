@@ -78,7 +78,95 @@
     <!-- Backdrop para cerrar dropdown -->
     <div v-if="showActions" class="fixed inset-0 z-[49]" @click="showActions = false"></div>
 
-    <!-- ══ Stat cards ════════════════════════════════════════════════ -->
+    <!-- ══ Vista COLABORADOR ═══════════════════════════════════════════ -->
+    <template v-if="isCollaborator">
+
+      <!-- Stat chips rápidos -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-3 px-3 flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
+            <i class="fas fa-exclamation text-red-500 text-[10px]"></i>
+          </div>
+          <div>
+            <span class="block text-[18px] font-black leading-none text-red-500">{{ overdueCount }}</span>
+            <span class="block text-[9px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Vencidas</span>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-3 px-3 flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center shrink-0">
+            <i class="fas fa-calendar-day text-amber-500 text-[10px]"></i>
+          </div>
+          <div>
+            <span class="block text-[18px] font-black leading-none text-amber-500">{{ todayCount }}</span>
+            <span class="block text-[9px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Para hoy</span>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-3 px-3 flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-primary-50 dark:bg-primary-500/10 flex items-center justify-center shrink-0">
+            <i class="fas fa-flag text-primary-500 text-[10px]"></i>
+          </div>
+          <div>
+            <span class="block text-[18px] font-black leading-none text-primary-500">{{ highPriorityCount }}</span>
+            <span class="block text-[9px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Alta prioridad</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de actividades -->
+      <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-[#334155]">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center">
+              <i class="fas fa-tasks text-primary-500 text-[9px]"></i>
+            </div>
+            <div>
+              <div class="text-[8px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Mi trabajo</div>
+              <div class="text-[12px] font-black text-slate-900 dark:text-slate-100 leading-tight">Actividades pendientes</div>
+            </div>
+          </div>
+          <router-link to="/activities"
+            class="flex items-center gap-1 text-[9px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors">
+            Ver todas <i class="fas fa-arrow-right text-[8px]"></i>
+          </router-link>
+        </div>
+
+        <div v-if="agendaActivities.length === 0" class="flex flex-col items-center justify-center gap-2 py-12">
+          <div class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-[#334155] flex items-center justify-center">
+            <i class="fas fa-check-circle text-slate-300 dark:text-slate-500 text-[14px]"></i>
+          </div>
+          <p class="text-[11px] text-slate-400 font-black uppercase tracking-wide">Sin actividades pendientes</p>
+          <router-link v-if="authStore.canCreateActivities" to="/activities"
+            class="mt-1 px-3 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black hover:bg-primary-700 transition-colors">
+            Crear actividad
+          </router-link>
+        </div>
+
+        <div v-else>
+          <div v-for="(act, idx) in agendaActivities" :key="act._id"
+            class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-[#0f172a] transition-colors border-l-[3px]"
+            :class="[
+              idx > 0 ? 'border-t border-slate-50 dark:border-[#334155]' : '',
+              act.priority === 'urgent' ? 'border-l-red-400' : act.priority === 'high' ? 'border-l-amber-400' : 'border-l-slate-200'
+            ]">
+            <div class="flex-1 min-w-0">
+              <p class="text-[12px] font-black text-slate-800 dark:text-slate-200 truncate">{{ act.title }}</p>
+              <p class="text-[10px] text-slate-400 mt-0.5 truncate">
+                <i class="fas fa-clock text-[8px] mr-1"></i>{{ formatDateShort(act.dueDate || act.date) }}
+              </p>
+            </div>
+            <span :class="['shrink-0 px-2 py-1 rounded-lg text-[9px] font-black', agendaStatusClass(act)]">
+              {{ agendaStatusLabel(act) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </template>
+
+    <!-- ══ Vista ADMIN / resto de roles ════════════════════════════════ -->
+    <template v-else>
+
+    <!-- Stat cards -->
     <div class="overflow-x-auto pb-0.5">
     <div class="grid gap-1 min-w-0" :style="`grid-template-columns: repeat(${statCards.length}, minmax(60px, 1fr))`">
       <div v-for="card in statCards" :key="card.label"
@@ -94,21 +182,17 @@
     </div>
     </div>
 
-    <!-- ══ Main grid ═════════════════════════════════════════════════════ -->
+    <!-- Main grid -->
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-2 xl:h-[300px]">
 
-      <!-- ── Left: AI Insights + Agenda en dos columnas ──────────────── -->
+      <!-- Left: AI Insights + Agenda -->
       <div class="xl:col-span-2 h-full min-h-0">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
-
-          <!-- AI Insights -->
           <div class="h-full min-h-0 overflow-hidden">
             <AIInsightsWidget class="h-full" />
           </div>
 
-          <!-- Agenda -->
           <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl overflow-hidden flex flex-col h-full min-h-0">
-            <!-- Card header — patrón unificado -->
             <div class="flex items-center justify-between px-3 py-2 shrink-0">
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
@@ -124,16 +208,12 @@
                 Ver todas <i class="fas fa-arrow-right text-[8px]"></i>
               </router-link>
             </div>
-
-            <!-- Empty -->
             <div v-if="agendaActivities.length === 0" class="flex-1 flex flex-col items-center justify-center gap-2 py-8">
               <div class="w-9 h-9 rounded-2xl bg-slate-100 dark:bg-[#334155] flex items-center justify-center">
                 <i class="fas fa-calendar-check text-slate-300 dark:text-slate-500 text-[12px]"></i>
               </div>
               <p class="text-[10px] text-slate-400 font-black uppercase tracking-wide">Sin actividades</p>
             </div>
-
-            <!-- List -->
             <div v-else class="flex-1 overflow-y-auto custom-scrollbar">
               <div v-for="(act, idx) in agendaActivities" :key="act._id"
                 class="flex items-center gap-2.5 px-4 py-2 hover:bg-primary-50/30 dark:hover:bg-primary-500/10 transition-colors border-l-[3px]"
@@ -155,14 +235,11 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- ── Right column ─────────────────────────────────────────────── -->
+      <!-- Right column -->
       <div class="flex flex-col gap-2 h-full min-h-0">
-
-        <!-- Ritmo del día -->
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2 shrink-0 flex items-center gap-3">
           <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
             <i class="fas fa-fire text-primary-500 text-[9px]"></i>
@@ -193,7 +270,6 @@
           </div>
         </div>
 
-        <!-- Pulso comercial -->
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2.5 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
           <div class="flex items-center gap-1.5 mb-2">
             <i class="fas fa-chart-line text-amber-500 text-[9px]"></i>
@@ -207,17 +283,17 @@
           </div>
         </div>
 
-        <!-- Nota de foco GEMS -->
         <div class="flex items-start gap-2 px-3 py-1.5 bg-primary-50 dark:bg-primary-500/10 rounded-xl shrink-0">
           <i class="fas fa-gem text-primary-400 text-[9px] mt-0.5 shrink-0"></i>
           <p class="text-[10px] font-medium leading-relaxed text-slate-500 dark:text-slate-400">{{ focusNote }}</p>
         </div>
-
       </div>
     </div>
 
-    <!-- ══ Tendencia semanal ═══════════════════════════════════════════ -->
+    <!-- Tendencia semanal -->
     <WeeklyTrendCard v-if="authStore.canViewActivities" class="relative z-10" />
+
+    </template>
   </div>
 </template>
 
@@ -244,10 +320,13 @@ const todayLabel = computed(() => {
     .replace(/^\w/, c => c.toUpperCase())
 })
 
+const isCollaborator = computed(() => authStore.user?.role === 'collaborator')
+
 const userRoleLabel = computed(() => ({
   admin: 'Administrador', manager: 'Manager', employee: 'Empleado',
   support: 'Soporte', development: 'Desarrollador', fullstack: 'Fullstack',
-  viewer: 'Viewer', client: 'Cliente',
+  viewer: 'Viewer', client: 'Cliente', collaborator: 'Colaborador',
+  supervisor: 'Supervisor',
 }[authStore.user?.role || ''] || authStore.user?.role || 'Usuario'))
 
 const todayMidnight = new Date()
