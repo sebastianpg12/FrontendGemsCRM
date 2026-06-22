@@ -7,23 +7,23 @@
         <div>
           <div class="flex items-center gap-2 mb-1">
             <i class="fas fa-crown text-amber-500 text-xs"></i>
-            <span class="text-[10px] font-black uppercase tracking-[0.25em] text-primary-600">Super-admin · Interno</span>
+            <span class="text-[12px] font-black uppercase tracking-[0.25em] text-primary-600">Super-admin · Interno</span>
           </div>
           <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Calculadora de costos y precios</h1>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
             Análisis de rentabilidad por escenario: costos plataforma, planes vendidos, margen, break-even.
           </p>
-          <p class="text-[10px] text-amber-600 dark:text-amber-400 font-bold mt-1.5">
+          <p class="text-[12px] text-amber-600 dark:text-amber-400 font-bold mt-1.5">
             <i class="fas fa-circle-info mr-1"></i>
             Backend desplegado en <strong>Oracle Cloud</strong> — Always Free tier cubre casi todo (Ampere A1 24GB / 4 OCPU + 10TB egress).
           </p>
         </div>
         <div class="flex items-center gap-2">
           <button @click="exportJson" class="px-3 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 transition-colors">
-            <i class="fas fa-download mr-1.5 text-[10px]"></i>Exportar escenario
+            <i class="fas fa-download mr-1.5 text-[12px]"></i>Exportar escenario
           </button>
           <button @click="resetAll" class="px-3 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-rose-600 bg-white dark:bg-slate-900 transition-colors">
-            <i class="fas fa-rotate-left mr-1.5 text-[10px]"></i>Reset defaults
+            <i class="fas fa-rotate-left mr-1.5 text-[12px]"></i>Reset defaults
           </button>
         </div>
       </div>
@@ -33,30 +33,30 @@
         <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-sack-dollar text-sm"></i>
-            <span class="text-[10px] font-bold uppercase tracking-widest">Ingresos / mes</span>
+            <span class="text-[12px] font-bold uppercase tracking-widest">Ingresos / mes</span>
           </div>
           <p class="text-2xl font-black text-emerald-600 tabular-nums">${{ revenue.toLocaleString('en-US', { maximumFractionDigits: 0 }) }}</p>
-          <p class="text-[10px] text-slate-400 mt-1">{{ totalTenants }} tenants pagos</p>
+          <p class="text-[12px] text-slate-400 mt-1">{{ totalTenants }} tenants pagos</p>
         </div>
 
         <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-server text-sm"></i>
-            <span class="text-[10px] font-bold uppercase tracking-widest">Costos / mes</span>
+            <span class="text-[12px] font-bold uppercase tracking-widest">Costos / mes</span>
           </div>
           <p class="text-2xl font-black text-rose-600 tabular-nums">${{ totalCost.toLocaleString('en-US', { maximumFractionDigits: 0 }) }}</p>
-          <p class="text-[10px] text-slate-400 mt-1">Fijos + variables</p>
+          <p class="text-[12px] text-slate-400 mt-1">Fijos + variables</p>
         </div>
 
         <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-chart-line text-sm"></i>
-            <span class="text-[10px] font-bold uppercase tracking-widest">Utilidad / mes</span>
+            <span class="text-[12px] font-bold uppercase tracking-widest">Utilidad / mes</span>
           </div>
           <p class="text-2xl font-black tabular-nums" :class="profit >= 0 ? 'text-slate-900 dark:text-white' : 'text-rose-600'">
             ${{ profit.toLocaleString('en-US', { maximumFractionDigits: 0 }) }}
           </p>
-          <p class="text-[10px] mt-1" :class="margin >= 30 ? 'text-emerald-600' : margin >= 0 ? 'text-amber-600' : 'text-rose-600'">
+          <p class="text-[12px] mt-1" :class="margin >= 30 ? 'text-emerald-600' : margin >= 0 ? 'text-amber-600' : 'text-rose-600'">
             Margen {{ margin.toFixed(1) }}%
           </p>
         </div>
@@ -64,19 +64,19 @@
         <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-balance-scale text-sm"></i>
-            <span class="text-[10px] font-bold uppercase tracking-widest">Break-even</span>
+            <span class="text-[12px] font-bold uppercase tracking-widest">Break-even</span>
           </div>
           <p class="text-2xl font-black text-slate-900 dark:text-white tabular-nums">{{ breakEvenTenants }}</p>
-          <p class="text-[10px] text-slate-400 mt-1">tenants {{ breakEvenPlan }} para cubrir fijos</p>
+          <p class="text-[12px] text-slate-400 mt-1">tenants {{ breakEvenPlan }} para cubrir fijos</p>
         </div>
 
         <div class="bg-white dark:bg-slate-900 rounded-xl p-4">
           <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-2">
             <i class="fas fa-arrow-trend-up text-sm"></i>
-            <span class="text-[10px] font-bold uppercase tracking-widest">Anualizado</span>
+            <span class="text-[12px] font-bold uppercase tracking-widest">Anualizado</span>
           </div>
           <p class="text-2xl font-black text-primary-600 tabular-nums">${{ (profit * 12).toLocaleString('en-US', { maximumFractionDigits: 0 }) }}</p>
-          <p class="text-[10px] text-slate-400 mt-1">Utilidad × 12</p>
+          <p class="text-[12px] text-slate-400 mt-1">Utilidad × 12</p>
         </div>
       </div>
 
@@ -87,18 +87,18 @@
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Costos fijos plataforma</h3>
-              <p class="text-[10px] text-slate-400 mt-0.5">Lo que pagamos sin importar # de tenants</p>
+              <p class="text-[12px] text-slate-400 mt-0.5">Lo que pagamos sin importar # de tenants</p>
             </div>
             <span class="text-sm font-black text-rose-600 tabular-nums">${{ totalFixed.toFixed(0) }}/mes</span>
           </div>
 
           <div class="space-y-3">
             <div v-for="(item, key) in fixedCosts" :key="key" class="flex items-center gap-2">
-              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-1 truncate">
-                <i :class="['fas', item.icon, 'text-slate-400 mr-1.5 text-[10px]']"></i>
+              <label class="text-[13px] font-bold text-slate-600 dark:text-slate-300 flex-1 truncate">
+                <i :class="['fas', item.icon, 'text-slate-400 mr-1.5 text-[12px]']"></i>
                 {{ item.label }}
               </label>
-              <span class="text-[10px] text-slate-400">$</span>
+              <span class="text-[12px] text-slate-400">$</span>
               <input
                 type="number" v-model.number="item.value" min="0" step="1"
                 class="input-money"
@@ -108,7 +108,7 @@
           </div>
 
           <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <button @click="addFixedCost" class="w-full text-[10px] font-bold text-primary-600 hover:text-primary-700 py-1.5 transition-colors">
+            <button @click="addFixedCost" class="w-full text-[12px] font-bold text-primary-600 hover:text-primary-700 py-1.5 transition-colors">
               <i class="fas fa-plus mr-1"></i> Agregar otro costo fijo
             </button>
           </div>
@@ -119,18 +119,18 @@
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Costo variable por tenant</h3>
-              <p class="text-[10px] text-slate-400 mt-0.5">Lo que añade cada cliente nuevo</p>
+              <p class="text-[12px] text-slate-400 mt-0.5">Lo que añade cada cliente nuevo</p>
             </div>
             <span class="text-sm font-black text-amber-600 tabular-nums">${{ variablePerTenant.toFixed(2) }}/tenant</span>
           </div>
 
           <div class="space-y-3">
             <div v-for="(item, key) in variableCosts" :key="key" class="flex items-center gap-2">
-              <label class="text-[11px] font-bold text-slate-600 dark:text-slate-300 flex-1 truncate" :title="item.hint">
-                <i :class="['fas', item.icon, 'text-slate-400 mr-1.5 text-[10px]']"></i>
+              <label class="text-[13px] font-bold text-slate-600 dark:text-slate-300 flex-1 truncate" :title="item.hint">
+                <i :class="['fas', item.icon, 'text-slate-400 mr-1.5 text-[12px]']"></i>
                 {{ item.label }}
               </label>
-              <span class="text-[10px] text-slate-400">$</span>
+              <span class="text-[12px] text-slate-400">$</span>
               <input
                 type="number" v-model.number="item.value" min="0" step="0.01"
                 class="input-money"
@@ -138,7 +138,7 @@
             </div>
           </div>
 
-          <div class="mt-4 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed">
+          <div class="mt-4 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed">
             <i class="fas fa-info-circle mr-1"></i>
             Total variable: <strong class="text-slate-700 dark:text-slate-200">${{ (variablePerTenant * totalTenants).toFixed(0) }}/mes</strong> ({{ totalTenants }} tenants).
           </div>
@@ -149,7 +149,7 @@
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Planes &amp; precios</h3>
-              <p class="text-[10px] text-slate-400 mt-0.5">Lo que cobramos a cada tipo de cliente</p>
+              <p class="text-[12px] text-slate-400 mt-0.5">Lo que cobramos a cada tipo de cliente</p>
             </div>
             <span class="text-sm font-black text-emerald-600 tabular-nums">${{ revenue.toFixed(0) }}/mes</span>
           </div>
@@ -159,27 +159,27 @@
               <div class="flex items-center justify-between mb-2">
                 <div>
                   <p class="text-xs font-black text-slate-800 dark:text-white">{{ plan.label }}</p>
-                  <p class="text-[10px] text-slate-400">{{ plan.description }}</p>
+                  <p class="text-[12px] text-slate-400">{{ plan.description }}</p>
                 </div>
                 <div class="text-right">
                   <p class="text-lg font-black text-primary-600 tabular-nums">${{ plan.price }}</p>
-                  <p class="text-[9px] text-slate-400">/ mes</p>
+                  <p class="text-[11px] text-slate-400">/ mes</p>
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <label class="text-[10px] font-bold text-slate-500 flex-1">Tenants en este plan</label>
+                <label class="text-[12px] font-bold text-slate-500 flex-1">Tenants en este plan</label>
                 <input
                   type="number" v-model.number="plan.tenants" min="0" max="9999" step="1"
                   class="input-count"
                 />
               </div>
-              <div class="mt-2 flex items-center justify-between text-[10px]">
+              <div class="mt-2 flex items-center justify-between text-[12px]">
                 <span class="text-slate-400">Aporta</span>
                 <span class="font-black text-slate-700 dark:text-slate-200 tabular-nums">
                   ${{ (plan.price * plan.tenants).toLocaleString('en-US', { maximumFractionDigits: 0 }) }}/mes
                 </span>
               </div>
-              <div class="flex items-center justify-between text-[10px]">
+              <div class="flex items-center justify-between text-[12px]">
                 <span class="text-slate-400">Precio sugerido (config)</span>
                 <input
                   type="number" v-model.number="plan.price" min="0" step="1"
@@ -198,10 +198,10 @@
         <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl overflow-hidden">
           <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800">
             <h3 class="text-sm font-black text-slate-900 dark:text-white">Desglose por plan</h3>
-            <p class="text-[10px] text-slate-400 mt-0.5">P&amp;L por tipo de tenant</p>
+            <p class="text-[12px] text-slate-400 mt-0.5">P&amp;L por tipo de tenant</p>
           </div>
           <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-[10px] uppercase tracking-wider">
+            <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-[12px] uppercase tracking-wider">
               <tr>
                 <th class="px-5 py-2.5 font-bold">Plan</th>
                 <th class="px-5 py-2.5 font-bold text-right">Tenants</th>
@@ -239,13 +239,13 @@
         <!-- Simulador "qué pasa si..." -->
         <div class="bg-white dark:bg-slate-900 rounded-xl p-5">
           <h3 class="text-sm font-black text-slate-900 dark:text-white mb-1">Simulador "Qué pasaría si…"</h3>
-          <p class="text-[10px] text-slate-400 mb-4">Compara contra escenario actual</p>
+          <p class="text-[12px] text-slate-400 mb-4">Compara contra escenario actual</p>
 
           <div class="space-y-3">
             <div v-for="plan in plans" :key="plan.key">
               <div class="flex items-center justify-between mb-1">
-                <span class="text-[11px] font-bold text-slate-600 dark:text-slate-300">{{ plan.label }}</span>
-                <span class="text-[11px] tabular-nums text-slate-500">
+                <span class="text-[13px] font-bold text-slate-600 dark:text-slate-300">{{ plan.label }}</span>
+                <span class="text-[13px] tabular-nums text-slate-500">
                   {{ plan.tenants }} → <strong class="text-primary-600">{{ sim[plan.key] }}</strong>
                 </span>
               </div>
@@ -254,15 +254,15 @@
           </div>
 
           <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
-            <div class="flex justify-between text-[11px]">
+            <div class="flex justify-between text-[13px]">
               <span class="text-slate-500">Ingresos simulados</span>
               <span class="font-bold tabular-nums text-emerald-600">${{ simRevenue.toFixed(0) }}</span>
             </div>
-            <div class="flex justify-between text-[11px]">
+            <div class="flex justify-between text-[13px]">
               <span class="text-slate-500">Utilidad simulada</span>
               <span class="font-bold tabular-nums" :class="simProfit >= 0 ? 'text-slate-800 dark:text-white' : 'text-rose-600'">${{ simProfit.toFixed(0) }}</span>
             </div>
-            <div class="flex justify-between text-[11px]">
+            <div class="flex justify-between text-[13px]">
               <span class="text-slate-500">Δ vs actual</span>
               <span class="font-black tabular-nums" :class="(simProfit - profit) >= 0 ? 'text-emerald-600' : 'text-rose-600'">
                 {{ (simProfit - profit) >= 0 ? '+' : '' }}${{ (simProfit - profit).toFixed(0) }}

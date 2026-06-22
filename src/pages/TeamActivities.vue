@@ -16,7 +16,7 @@
                   viewMode === 'cards' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
                 ]"
               >
-                <i class="fas fa-th-large text-[10px]"></i><span class="hidden sm:inline">Tarjetas</span>
+                <i class="fas fa-th-large text-[12px]"></i><span class="hidden sm:inline">Tarjetas</span>
               </button>
               <button
                 @click="viewMode = 'table'"
@@ -25,7 +25,7 @@
                   viewMode === 'table' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
                 ]"
               >
-                <i class="fas fa-table text-[10px]"></i><span class="hidden sm:inline">Tabla</span>
+                <i class="fas fa-table text-[12px]"></i><span class="hidden sm:inline">Tabla</span>
               </button>
             </div>
           </div>
@@ -44,7 +44,7 @@
         <div class="flex flex-wrap items-center gap-2 bg-slate-50/50 p-3 rounded-xl">
           <div class="flex items-center gap-2">
             <i class="fas fa-filter text-slate-400 text-xs ml-1"></i>
-            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Filtros:</span>
+            <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Filtros:</span>
           </div>
 
           <!-- Filtro de Cliente -->
@@ -62,12 +62,12 @@
           <!-- Filtros de fecha -->
           <div class="flex items-center gap-2 bg-white rounded-xl p-1 shadow-sm overflow-x-auto">
             <div class="flex items-center gap-1.5 px-2">
-              <span class="text-[10px] font-black text-slate-400 uppercase">Desde</span>
+              <span class="text-[12px] font-black text-slate-400 uppercase">Desde</span>
               <input type="date" v-model="startDate" class="text-xs border-none focus:ring-0 p-0 text-slate-600 font-bold bg-transparent" />
             </div>
             <div class="w-px h-4 bg-slate-200"></div>
             <div class="flex items-center gap-1.5 px-2">
-              <span class="text-[10px] font-black text-slate-400 uppercase">Hasta</span>
+              <span class="text-[12px] font-black text-slate-400 uppercase">Hasta</span>
               <input type="date" v-model="endDate" class="text-xs border-none focus:ring-0 p-0 text-slate-600 font-bold bg-transparent" />
             </div>
             <button 
@@ -110,21 +110,21 @@
           <div class="grid grid-cols-3 gap-2 mb-4">
             <div class="bg-slate-50 rounded-lg p-2 text-center">
               <div class="text-lg font-black text-slate-800">{{ member.activities.length }}</div>
-              <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wide">Total</div>
+              <div class="text-[12px] font-bold text-slate-500 uppercase tracking-wide">Total</div>
             </div>
             <div class="bg-amber-50 rounded-lg p-2 text-center border border-amber-100">
               <div class="text-lg font-black text-amber-600">{{ getPendingCount(member.activities) }}</div>
-              <div class="text-[10px] font-bold text-amber-500 uppercase tracking-wide">Pend.</div>
+              <div class="text-[12px] font-bold text-amber-500 uppercase tracking-wide">Pend.</div>
             </div>
             <div class="bg-emerald-50 rounded-lg p-2 text-center border border-emerald-100">
               <div class="text-lg font-black text-emerald-600">{{ getCompletedCount(member.activities) }}</div>
-              <div class="text-[10px] font-bold text-emerald-500 uppercase tracking-wide">Comp.</div>
+              <div class="text-[12px] font-bold text-emerald-500 uppercase tracking-wide">Comp.</div>
             </div>
           </div>
 
           <!-- Lista de actividades recientes -->
           <div class="space-y-2 mb-4">
-            <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-wider mb-2">Actividades Recientes</h4>
+            <h4 class="text-[12px] font-black text-slate-500 uppercase tracking-wider mb-2">Actividades Recientes</h4>
             <div v-if="member.activities.length === 0" class="text-center py-4">
               <i class="fas fa-inbox text-2xl text-slate-300 mb-2"></i>
               <p class="text-slate-400 text-xs font-medium">Sin actividades asignadas</p>
@@ -138,13 +138,13 @@
               <div class="flex items-start justify-between gap-2">
                 <div class="flex-1 min-w-0">
                   <h5 class="text-slate-800 text-xs font-bold break-words leading-snug">{{ activity.title }}</h5>
-                  <p class="text-slate-500 text-[10px] line-clamp-1 mt-0.5">{{ activity.description }}</p>
+                  <p class="text-slate-500 text-[12px] line-clamp-1 mt-0.5">{{ activity.description }}</p>
                 </div>
-                <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-bold flex-shrink-0" :class="getStatusClass(activity.status)">
+                <span class="ml-1 px-2 py-0.5 rounded-full text-[12px] font-bold flex-shrink-0" :class="getStatusClass(activity.status)">
                   {{ getStatusLabel(activity.status) }}
                 </span>
               </div>
-              <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400 font-medium">
+              <div class="flex items-center justify-between mt-2 text-[12px] text-slate-400 font-medium">
                 <div class="flex items-center gap-1">
                   <i class="fas fa-calendar"></i>
                   <span>{{ formatDate(activity.date) }}</span>
@@ -174,12 +174,12 @@
           <table class="w-full">
             <thead class="bg-slate-50">
               <tr>
-                <th class="px-6 py-3 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">Actividad</th>
-                <th class="px-6 py-3 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">Asignado a</th>
-                <th class="px-6 py-3 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">Estado</th>
-                <th class="px-6 py-3 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">Prioridad</th>
-                <th class="px-6 py-3 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">Fecha</th>
-                <th class="px-6 py-3 text-left text-[10px] font-black text-slate-500 uppercase tracking-wider">Acciones</th>
+                <th class="px-6 py-3 text-left text-[12px] font-black text-slate-500 uppercase tracking-wider">Actividad</th>
+                <th class="px-6 py-3 text-left text-[12px] font-black text-slate-500 uppercase tracking-wider">Asignado a</th>
+                <th class="px-6 py-3 text-left text-[12px] font-black text-slate-500 uppercase tracking-wider">Estado</th>
+                <th class="px-6 py-3 text-left text-[12px] font-black text-slate-500 uppercase tracking-wider">Prioridad</th>
+                <th class="px-6 py-3 text-left text-[12px] font-black text-slate-500 uppercase tracking-wider">Fecha</th>
+                <th class="px-6 py-3 text-left text-[12px] font-black text-slate-500 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">

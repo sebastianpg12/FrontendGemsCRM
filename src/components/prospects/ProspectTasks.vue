@@ -13,12 +13,12 @@
         <input
           v-model="newDueDate"
           type="datetime-local"
-          class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-[10px] font-bold text-slate-700 outline-none focus:border-primary-500"
+          class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-[12px] font-bold text-slate-700 outline-none focus:border-primary-500"
         />
         <button
           @click="addTask"
           :disabled="!newTitle.trim()"
-          class="px-3 py-1.5 bg-slate-900 text-white text-[10px] font-black rounded-lg hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          class="px-3 py-1.5 bg-slate-900 text-white text-[12px] font-black rounded-lg hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
           Crear
         </button>
@@ -27,7 +27,7 @@
 
     <!-- Pending -->
     <div v-if="pendingTasks.length" class="space-y-1.5">
-      <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">
+      <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">
         Pendientes ({{ pendingTasks.length }})
       </p>
       <div
@@ -45,8 +45,8 @@
         </button>
         <div class="flex-1 min-w-0">
           <p class="text-xs font-bold text-slate-800">{{ task.title }}</p>
-          <p v-if="task.dueDate" :class="['text-[10px] font-bold mt-0.5', isOverdue(task.dueDate) ? 'text-rose-600' : 'text-slate-500']">
-            <i class="far fa-clock text-[9px] mr-1"></i>
+          <p v-if="task.dueDate" :class="['text-[12px] font-bold mt-0.5', isOverdue(task.dueDate) ? 'text-rose-600' : 'text-slate-500']">
+            <i class="far fa-clock text-[11px] mr-1"></i>
             {{ formatDue(task.dueDate) }}
           </p>
         </div>
@@ -55,14 +55,14 @@
           class="text-rose-400 hover:text-rose-600 opacity-0 group-hover:opacity-100 transition-opacity"
           title="Eliminar"
         >
-          <i class="fas fa-trash text-[10px]"></i>
+          <i class="fas fa-trash text-[12px]"></i>
         </button>
       </div>
     </div>
 
     <!-- Done -->
     <div v-if="doneTasks.length" class="space-y-1.5">
-      <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">
+      <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">
         Completadas ({{ doneTasks.length }})
       </p>
       <div
@@ -74,7 +74,7 @@
           @click="$emit('toggle', task.id)"
           class="w-5 h-5 rounded-md bg-emerald-500 text-white flex-shrink-0 flex items-center justify-center"
         >
-          <i class="fas fa-check text-[9px]"></i>
+          <i class="fas fa-check text-[11px]"></i>
         </button>
         <div class="flex-1 min-w-0">
           <p class="text-xs font-bold text-slate-500 line-through truncate">{{ task.title }}</p>
@@ -84,7 +84,7 @@
           class="text-slate-300 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity"
           title="Eliminar"
         >
-          <i class="fas fa-trash text-[10px]"></i>
+          <i class="fas fa-trash text-[12px]"></i>
         </button>
       </div>
     </div>
@@ -92,7 +92,7 @@
     <div v-if="!tasks.length" class="text-center py-8">
       <i class="fas fa-list-check text-3xl text-slate-200 mb-2 block"></i>
       <p class="text-xs font-bold text-slate-400">Sin tareas aún</p>
-      <p class="text-[10px] text-slate-400 mt-1">Crea recordatorios para no perder el seguimiento</p>
+      <p class="text-[12px] text-slate-400 mt-1">Crea recordatorios para no perder el seguimiento</p>
     </div>
   </div>
 </template>

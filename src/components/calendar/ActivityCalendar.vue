@@ -4,13 +4,13 @@
     <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-slate-100 dark:border-[#334155]">
       <div class="flex items-center gap-2">
         <button class="nav-btn" title="Anterior" @click="navigate(-1)">
-          <i class="fas fa-chevron-left text-[10px]"></i>
+          <i class="fas fa-chevron-left text-[12px]"></i>
         </button>
         <button class="nav-btn" title="Siguiente" @click="navigate(1)">
-          <i class="fas fa-chevron-right text-[10px]"></i>
+          <i class="fas fa-chevron-right text-[12px]"></i>
         </button>
         <button class="today-btn" @click="goToday">Hoy</button>
-        <h2 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight ml-1 capitalize">
+        <h2 class="text-[17px] font-black text-slate-800 dark:text-slate-100 tracking-tight ml-1 capitalize">
           {{ periodLabel }}
         </h2>
       </div>
@@ -20,7 +20,7 @@
         <button
           v-for="v in views"
           :key="v.id"
-          class="px-3 h-7 rounded-md text-[11px] font-bold transition-all"
+          class="px-3 h-7 rounded-md text-[13px] font-bold transition-all"
           :class="view === v.id
             ? 'bg-white dark:bg-[#1e293b] text-primary-600 dark:text-primary-300 shadow-sm'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
@@ -34,7 +34,7 @@
     <!-- ═══════════ MES ═══════════ -->
     <div v-if="view === 'month'" class="p-3">
       <div class="grid grid-cols-7 gap-1 mb-1">
-        <div v-for="d in weekDays" :key="d" class="py-1.5 text-center text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+        <div v-for="d in weekDays" :key="d" class="py-1.5 text-center text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
           {{ d }}
         </div>
       </div>
@@ -52,7 +52,7 @@
         >
           <div class="flex items-center justify-between mb-1">
             <span
-              class="text-[11px]"
+              class="text-[13px]"
               :class="[
                 day.inMonth ? 'text-slate-700 dark:text-slate-200 font-black' : 'text-slate-300 dark:text-slate-600 font-bold',
                 isToday(day.date) ? 'w-5 h-5 flex items-center justify-center bg-primary-600 text-white rounded-full' : ''
@@ -63,14 +63,14 @@
               title="Nueva actividad"
               @click.stop="emitQuickTask(day.date)"
             >
-              <i class="fas fa-plus text-[8px]"></i>
+              <i class="fas fa-plus text-[10px]"></i>
             </button>
           </div>
           <div class="space-y-0.5 flex-1">
             <button
               v-for="a in activitiesForDay(day.date).slice(0, 3)"
               :key="a._id"
-              class="w-full text-left px-1.5 py-0.5 rounded text-[9px] font-bold truncate border-l-2 transition-colors"
+              class="w-full text-left px-1.5 py-0.5 rounded text-[11px] font-bold truncate border-l-2 transition-colors"
               :class="chipClass(a)"
               :title="a.title"
               @click.stop="emitView(a)"
@@ -79,7 +79,7 @@
             </button>
             <button
               v-if="activitiesForDay(day.date).length > 3"
-              class="text-[9px] font-black text-primary-600 dark:text-primary-300 pl-1.5 hover:underline"
+              class="text-[11px] font-black text-primary-600 dark:text-primary-300 pl-1.5 hover:underline"
               @click.stop="openDay(day.date)"
             >
               +{{ activitiesForDay(day.date).length - 3 }} más
@@ -100,10 +100,10 @@
           class="py-2 text-center border-r border-slate-100 dark:border-[#334155] last:border-r-0"
           :class="isToday(day) ? 'bg-primary-50/60 dark:bg-primary-500/5' : ''"
         >
-          <p class="text-[9px] font-black uppercase tracking-widest" :class="isToday(day) ? 'text-primary-600 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500'">
+          <p class="text-[11px] font-black uppercase tracking-widest" :class="isToday(day) ? 'text-primary-600 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500'">
             {{ weekDays[day.getDay()] }}
           </p>
-          <p class="text-[15px] font-black mt-0.5" :class="isToday(day) ? 'text-primary-600 dark:text-primary-300' : 'text-slate-700 dark:text-slate-200'">
+          <p class="text-[17px] font-black mt-0.5" :class="isToday(day) ? 'text-primary-600 dark:text-primary-300' : 'text-slate-700 dark:text-slate-200'">
             {{ day.getDate() }}
           </p>
         </div>
@@ -112,7 +112,7 @@
       <!-- Fila todo-el-día -->
       <div v-if="weekHasAllDay" class="grid border-b border-slate-100 dark:border-[#334155]" :style="gridCols">
         <div class="flex items-center justify-end pr-2 py-1.5 border-r border-slate-100 dark:border-[#334155]">
-          <span class="text-[8px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-widest">Todo el día</span>
+          <span class="text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-widest">Todo el día</span>
         </div>
         <div
           v-for="day in weekRange"
@@ -123,7 +123,7 @@
           <button
             v-for="a in allDayFor(day)"
             :key="a._id"
-            class="w-full text-left px-1.5 py-0.5 rounded text-[9px] font-bold truncate border-l-2 transition-colors"
+            class="w-full text-left px-1.5 py-0.5 rounded text-[11px] font-bold truncate border-l-2 transition-colors"
             :class="chipClass(a)"
             :title="a.title"
             @click="emitView(a)"
@@ -137,7 +137,7 @@
           <!-- Columna de horas -->
           <div class="border-r border-slate-100 dark:border-[#334155]">
             <div v-for="h in hours" :key="h" class="h-12 relative">
-              <span class="absolute -top-1.5 right-2 text-[8px] font-black text-slate-300 dark:text-slate-600">{{ hourLabel(h) }}</span>
+              <span class="absolute -top-1.5 right-2 text-[10px] font-black text-slate-300 dark:text-slate-600">{{ hourLabel(h) }}</span>
             </div>
           </div>
           <!-- Columnas de días -->
@@ -157,14 +157,14 @@
             <button
               v-for="ev in timedFor(day)"
               :key="ev.a._id"
-              class="absolute left-1 right-1 rounded-md px-1.5 py-1 text-[9px] font-bold border-l-2 overflow-hidden text-left shadow-sm transition-transform hover:scale-[1.02] hover:z-10"
+              class="absolute left-1 right-1 rounded-md px-1.5 py-1 text-[11px] font-bold border-l-2 overflow-hidden text-left shadow-sm transition-transform hover:scale-[1.02] hover:z-10"
               :class="chipClass(ev.a)"
               :style="{ top: ev.top + 'px', height: ev.height + 'px' }"
               :title="ev.a.title"
               @click.stop="emitView(ev.a)"
             >
               <span class="block truncate">{{ ev.a.title }}</span>
-              <span class="block text-[8px] opacity-70">{{ hourLabel(eventHour(ev.a)) }}</span>
+              <span class="block text-[10px] opacity-70">{{ hourLabel(eventHour(ev.a)) }}</span>
             </button>
           </div>
         </div>
@@ -174,11 +174,11 @@
     <!-- ═══════════ DÍA ═══════════ -->
     <div v-else class="flex flex-col max-h-[640px]">
       <div v-if="dayAllDay.length" class="px-4 py-2 border-b border-slate-100 dark:border-[#334155] flex flex-wrap gap-1.5 items-center">
-        <span class="text-[8px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-widest mr-1">Todo el día</span>
+        <span class="text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-widest mr-1">Todo el día</span>
         <button
           v-for="a in dayAllDay"
           :key="a._id"
-          class="px-2 py-0.5 rounded-md text-[9px] font-bold border-l-2 transition-colors"
+          class="px-2 py-0.5 rounded-md text-[11px] font-bold border-l-2 transition-colors"
           :class="chipClass(a)"
           @click="emitView(a)"
         >{{ a.title }}</button>
@@ -192,18 +192,18 @@
             @click="emitQuickTask(atHour(currentDate, h))"
           >
             <div class="w-16 shrink-0 py-2 pr-3 text-right border-r border-slate-100 dark:border-[#334155]">
-              <span class="text-[9px] font-black text-slate-300 dark:text-slate-600">{{ hourLabel(h) }}</span>
+              <span class="text-[11px] font-black text-slate-300 dark:text-slate-600">{{ hourLabel(h) }}</span>
             </div>
             <div class="flex-1 min-h-[52px] py-1 px-2 space-y-1">
               <button
                 v-for="a in dayTimedForHour(h)"
                 :key="a._id"
-                class="w-full text-left px-2.5 py-1.5 rounded-lg text-[11px] font-bold border-l-2 transition-colors"
+                class="w-full text-left px-2.5 py-1.5 rounded-lg text-[13px] font-bold border-l-2 transition-colors"
                 :class="chipClass(a)"
                 @click.stop="emitView(a)"
               >
                 <span class="block truncate">{{ a.title }}</span>
-                <span class="block text-[9px] font-medium opacity-70">{{ assigneeName(a) }}</span>
+                <span class="block text-[11px] font-medium opacity-70">{{ assigneeName(a) }}</span>
               </button>
             </div>
           </div>
@@ -215,7 +215,7 @@
     <div class="flex flex-wrap gap-x-4 gap-y-1.5 px-4 py-2.5 border-t border-slate-100 dark:border-[#334155]">
       <span v-for="s in legend" :key="s.label" class="flex items-center gap-1.5">
         <span class="w-2.5 h-2.5 rounded" :class="s.dot"></span>
-        <span class="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">{{ s.label }}</span>
+        <span class="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">{{ s.label }}</span>
       </span>
     </div>
   </div>

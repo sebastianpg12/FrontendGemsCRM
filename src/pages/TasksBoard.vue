@@ -24,7 +24,7 @@
               <i class="fas fa-th-large"></i>
             </div>
             <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none">
-              <i class="fas fa-chevron-down text-[10px]"></i>
+              <i class="fas fa-chevron-down text-[12px]"></i>
             </div>
           </div>
 
@@ -35,7 +35,7 @@
               :class="currentView === 'kanban' 
                 ? 'bg-white text-primary-600 shadow-sm' 
                 : 'text-slate-400 hover:text-slate-600'"
-              class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
+              class="px-4 py-2 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
             >
               <i class="fas fa-columns"></i>
               Kanban
@@ -45,7 +45,7 @@
               :class="currentView === 'list' 
                 ? 'bg-white text-primary-600 shadow-sm' 
                 : 'text-slate-400 hover:text-slate-600'"
-              class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
+              class="px-4 py-2 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
             >
               <i class="fas fa-list"></i>
               Lista
@@ -57,12 +57,12 @@
           <!-- Filtros -->
           <button
             @click="showFilters = !showFilters"
-            class="px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 hover:bg-slate-50 transition-all font-black text-[10px] uppercase tracking-widest flex items-center gap-3 shadow-sm"
+            class="px-5 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 hover:bg-slate-50 transition-all font-black text-[12px] uppercase tracking-widest flex items-center gap-3 shadow-sm"
             :class="{'border-primary-400 ring-4 ring-primary-500/10': showFilters}"
           >
             <i class="fas fa-filter text-primary-500"></i>
             Filtros
-            <span v-if="activeFiltersCount > 0" class="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-[8px]">{{ activeFiltersCount }}</span>
+            <span v-if="activeFiltersCount > 0" class="w-5 h-5 bg-primary-500 text-white rounded-full flex items-center justify-center text-[10px]">{{ activeFiltersCount }}</span>
           </button>
 
           <!-- Sprint Selector (only Scrum) -->
@@ -89,7 +89,7 @@
           <!-- Nueva Tarea -->
           <button
             @click="openTaskModal()"
-            class="px-6 py-3.5 bg-primary-500 text-white rounded-[1.25rem] hover:bg-primary-600 transition-all shadow-xl shadow-primary-100 font-black text-[10px] uppercase tracking-widest flex items-center gap-3 active:scale-95"
+            class="px-6 py-3.5 bg-primary-500 text-white rounded-[1.25rem] hover:bg-primary-600 transition-all shadow-xl shadow-primary-100 font-black text-[12px] uppercase tracking-widest flex items-center gap-3 active:scale-95"
           >
             <i class="fas fa-plus"></i>
             Nueva Tarea
@@ -114,12 +114,12 @@
           <span class="tb-label">{{ filters.type ? filters.type.charAt(0).toUpperCase() + filters.type.slice(1).replace('-', ' ') : 'Tipo de Tarea' }}</span>
           <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'type' }"></i>
           <div v-if="openTBChip === 'type'" class="tb-dropdown" @click.stop>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === '' }" @click="filters.type = ''; loadTasks(); openTBChip = null"><span>Todos los tipos</span><i v-if="filters.type === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'task' }" @click="filters.type = 'task'; loadTasks(); openTBChip = null"><span>Task</span><i v-if="filters.type === 'task'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'bug' }" @click="filters.type = 'bug'; loadTasks(); openTBChip = null"><span>Bug</span><i v-if="filters.type === 'bug'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'feature' }" @click="filters.type = 'feature'; loadTasks(); openTBChip = null"><span>Feature</span><i v-if="filters.type === 'feature'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'user-story' }" @click="filters.type = 'user-story'; loadTasks(); openTBChip = null"><span>User Story</span><i v-if="filters.type === 'user-story'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'epic' }" @click="filters.type = 'epic'; loadTasks(); openTBChip = null"><span>Epic</span><i v-if="filters.type === 'epic'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === '' }" @click="filters.type = ''; loadTasks(); openTBChip = null"><span>Todos los tipos</span><i v-if="filters.type === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'task' }" @click="filters.type = 'task'; loadTasks(); openTBChip = null"><span>Task</span><i v-if="filters.type === 'task'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'bug' }" @click="filters.type = 'bug'; loadTasks(); openTBChip = null"><span>Bug</span><i v-if="filters.type === 'bug'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'feature' }" @click="filters.type = 'feature'; loadTasks(); openTBChip = null"><span>Feature</span><i v-if="filters.type === 'feature'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'user-story' }" @click="filters.type = 'user-story'; loadTasks(); openTBChip = null"><span>User Story</span><i v-if="filters.type === 'user-story'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.type === 'epic' }" @click="filters.type = 'epic'; loadTasks(); openTBChip = null"><span>Epic</span><i v-if="filters.type === 'epic'" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
         <div class="tb-chip" :class="{ 'tb-chip--on': filters.priority }" @click.stop="openTBChip = openTBChip === 'priority' ? null : 'priority'">
@@ -127,11 +127,11 @@
           <span class="tb-label">{{ filters.priority === 'low' ? 'Baja' : filters.priority === 'medium' ? 'Media' : filters.priority === 'high' ? 'Alta' : filters.priority === 'critical' ? 'Crítica' : 'Prioridad' }}</span>
           <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'priority' }"></i>
           <div v-if="openTBChip === 'priority'" class="tb-dropdown" @click.stop>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === '' }" @click="filters.priority = ''; loadTasks(); openTBChip = null"><span>Cualquier prioridad</span><i v-if="filters.priority === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'low' }" @click="filters.priority = 'low'; loadTasks(); openTBChip = null"><span>Baja</span><i v-if="filters.priority === 'low'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'medium' }" @click="filters.priority = 'medium'; loadTasks(); openTBChip = null"><span>Media</span><i v-if="filters.priority === 'medium'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'high' }" @click="filters.priority = 'high'; loadTasks(); openTBChip = null"><span>Alta</span><i v-if="filters.priority === 'high'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'critical' }" @click="filters.priority = 'critical'; loadTasks(); openTBChip = null"><span>Crítica</span><i v-if="filters.priority === 'critical'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === '' }" @click="filters.priority = ''; loadTasks(); openTBChip = null"><span>Cualquier prioridad</span><i v-if="filters.priority === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'low' }" @click="filters.priority = 'low'; loadTasks(); openTBChip = null"><span>Baja</span><i v-if="filters.priority === 'low'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'medium' }" @click="filters.priority = 'medium'; loadTasks(); openTBChip = null"><span>Media</span><i v-if="filters.priority === 'medium'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'high' }" @click="filters.priority = 'high'; loadTasks(); openTBChip = null"><span>Alta</span><i v-if="filters.priority === 'high'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.priority === 'critical' }" @click="filters.priority = 'critical'; loadTasks(); openTBChip = null"><span>Crítica</span><i v-if="filters.priority === 'critical'" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
         <div class="tb-chip" :class="{ 'tb-chip--on': filters.department }" @click.stop="openTBChip = openTBChip === 'dept' ? null : 'dept'">
@@ -139,8 +139,8 @@
           <span class="tb-label">{{ filters.department || 'Equipo / Depto' }}</span>
           <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'dept' }"></i>
           <div v-if="openTBChip === 'dept'" class="tb-dropdown" @click.stop>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.department === '' }" @click="filters.department = ''; loadTasks(); openTBChip = null"><span>Todos los equipos</span><i v-if="filters.department === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div v-for="dept in departments" :key="dept" class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.department === dept }" @click="filters.department = dept; loadTasks(); openTBChip = null"><span>{{ dept }}</span><i v-if="filters.department === dept" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.department === '' }" @click="filters.department = ''; loadTasks(); openTBChip = null"><span>Todos los equipos</span><i v-if="filters.department === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div v-for="dept in departments" :key="dept" class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.department === dept }" @click="filters.department = dept; loadTasks(); openTBChip = null"><span>{{ dept }}</span><i v-if="filters.department === dept" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
         <div class="tb-chip" :class="{ 'tb-chip--on': filters.assignedTo }" @click.stop="openTBChip = openTBChip === 'assignee' ? null : 'assignee'">
@@ -148,21 +148,21 @@
           <span class="tb-label">{{ filters.assignedTo === authStore.user?._id ? 'Mis Tareas (Yo)' : filters.assignedTo ? (teamMembers.find(m => m._id === filters.assignedTo)?.name ?? 'Responsable') : 'Responsable' }}</span>
           <i class="fas fa-chevron-down tb-caret" :class="{ 'rotate-180': openTBChip === 'assignee' }"></i>
           <div v-if="openTBChip === 'assignee'" class="tb-dropdown" @click.stop>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === '' }" @click="filters.assignedTo = ''; loadTasks(); openTBChip = null"><span>Cualquier persona</span><i v-if="filters.assignedTo === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === authStore.user?._id }" @click="filters.assignedTo = authStore.user?._id ?? ''; loadTasks(); openTBChip = null"><span>Mis Tareas (Yo)</span><i v-if="filters.assignedTo === authStore.user?._id" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div v-for="member in teamMembers" :key="member._id" class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === member._id }" @click="filters.assignedTo = member._id; loadTasks(); openTBChip = null"><span>{{ member.name }}</span><i v-if="filters.assignedTo === member._id" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === '' }" @click="filters.assignedTo = ''; loadTasks(); openTBChip = null"><span>Cualquier persona</span><i v-if="filters.assignedTo === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === authStore.user?._id }" @click="filters.assignedTo = authStore.user?._id ?? ''; loadTasks(); openTBChip = null"><span>Mis Tareas (Yo)</span><i v-if="filters.assignedTo === authStore.user?._id" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div v-for="member in teamMembers" :key="member._id" class="tb-dropdown-item" :class="{ 'tb-dropdown-item--active': filters.assignedTo === member._id }" @click="filters.assignedTo = member._id; loadTasks(); openTBChip = null"><span>{{ member.name }}</span><i v-if="filters.assignedTo === member._id" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
         <div class="flex items-end gap-2">
           <button
             @click="clearFilters"
-            class="flex-1 px-4 py-3 bg-slate-100 text-slate-500 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 transition-all"
+            class="flex-1 px-4 py-3 bg-slate-100 text-slate-500 rounded-xl text-[12px] font-black uppercase tracking-widest hover:bg-slate-200 transition-all"
           >
             Reset
           </button>
           <button
             @click="saveCurrentFilters"
-            class="px-4 py-3 bg-primary-50 text-primary-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary-100 transition-all"
+            class="px-4 py-3 bg-primary-50 text-primary-600 rounded-xl text-[12px] font-black uppercase tracking-widest hover:bg-primary-100 transition-all"
             title="Guardar filtros por defecto"
           >
             <i class="fas fa-save"></i>
@@ -174,7 +174,7 @@
     <!-- Loading -->
     <div v-if="loading" class="flex flex-col items-center justify-center py-24 gap-4">
       <div class="w-16 h-16 border-4 border-primary-100 border-t-primary-500 rounded-full animate-spin"></div>
-      <p class="text-[10px] font-black text-primary-500 uppercase tracking-[0.2em]">Sincronizando GEMS Hub...</p>
+      <p class="text-[12px] font-black text-primary-500 uppercase tracking-[0.2em]">Sincronizando GEMS Hub...</p>
     </div>
 
     <!-- Kanban View -->
@@ -190,7 +190,7 @@
             <div class="flex items-center gap-3">
               <div class="w-2.5 h-2.5 rounded-full" :class="getColumnColor(column.id)"></div>
               <h3 class="text-slate-800 font-black text-xs uppercase tracking-widest">{{ column.name }}</h3>
-              <span class="bg-white border border-slate-200 text-slate-500 px-2.5 py-1 rounded-lg text-[10px] font-black">
+              <span class="bg-white border border-slate-200 text-slate-500 px-2.5 py-1 rounded-lg text-[12px] font-black">
                 {{ getColumnTasks(column.id).length }}
               </span>
             </div>
@@ -226,7 +226,7 @@
                     <h4 class="text-slate-700 text-sm font-bold flex-1 leading-snug group-hover:text-primary-600 transition-colors">{{ task.title }}</h4>
                   </div>
                   <span 
-                    class="px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-wider flex-shrink-0 border"
+                    class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex-shrink-0 border"
                     :class="getPriorityClass(task.priority)"
                   >
                     {{ getPriorityLabel(task.priority) }}
@@ -237,24 +237,24 @@
                 <div class="flex items-center justify-between mt-4 pt-4 border-t border-slate-50">
                   <div class="flex -space-x-2">
                     <div v-if="task.assignedTo" class="group/avatar relative">
-                      <div class="w-8 h-8 rounded-full border-2 border-white bg-primary-100 text-primary-700 flex items-center justify-center text-[10px] font-black shadow-sm overflow-hidden">
+                      <div class="w-8 h-8 rounded-full border-2 border-white bg-primary-100 text-primary-700 flex items-center justify-center text-[12px] font-black shadow-sm overflow-hidden">
                         <img v-if="task.assignedTo.photo" :src="task.assignedTo.photo" class="w-full h-full object-cover" />
                         <span v-else>{{ getInitials(task.assignedTo.name) }}</span>
                       </div>
                     </div>
-                    <div v-else class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 text-slate-400 flex items-center justify-center text-[10px] shadow-sm">
-                      <i class="fas fa-user-plus text-[8px]"></i>
+                    <div v-else class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 text-slate-400 flex items-center justify-center text-[12px] shadow-sm">
+                      <i class="fas fa-user-plus text-[10px]"></i>
                     </div>
                   </div>
 
                   <div class="flex items-center gap-3 text-slate-400">
                     <div v-if="task.comments?.length" class="flex items-center gap-1.5">
-                      <i class="far fa-comment text-[10px]"></i>
-                      <span class="text-[10px] font-bold">{{ task.comments.length }}</span>
+                      <i class="far fa-comment text-[12px]"></i>
+                      <span class="text-[12px] font-bold">{{ task.comments.length }}</span>
                     </div>
                     <div class="flex items-center gap-1.5" :class="{'text-emerald-500 font-bold': task.activeSessions?.length}">
-                      <i class="far fa-clock text-[10px]"></i>
-                      <span class="text-[10px] font-black tracking-tighter">{{ Number(task.actualHours || 0).toFixed(1) }}h</span>
+                      <i class="far fa-clock text-[12px]"></i>
+                      <span class="text-[12px] font-black tracking-tighter">{{ Number(task.actualHours || 0).toFixed(1) }}h</span>
                     </div>
                   </div>
                 </div>
@@ -267,7 +267,7 @@
 
               <!-- Quick Edit Overlay Icon -->
               <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div class="w-6 h-6 bg-primary-50 text-primary-600 rounded-lg flex items-center justify-center text-[8px] shadow-sm">
+                <div class="w-6 h-6 bg-primary-50 text-primary-600 rounded-lg flex items-center justify-center text-[10px] shadow-sm">
                   <i class="fas fa-pen"></i>
                 </div>
               </div>
@@ -288,12 +288,12 @@
         <table class="w-full">
           <thead class="bg-slate-50">
             <tr>
-              <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Tarea</th>
-              <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Tipo</th>
-              <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Estado</th>
-              <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Prioridad</th>
-              <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Responsable</th>
-              <th class="px-6 py-4 text-right text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Tiempo</th>
+              <th class="px-6 py-4 text-left text-[12px] font-black text-slate-400 uppercase tracking-[0.2em]">Tarea</th>
+              <th class="px-6 py-4 text-left text-[12px] font-black text-slate-400 uppercase tracking-[0.2em]">Tipo</th>
+              <th class="px-6 py-4 text-left text-[12px] font-black text-slate-400 uppercase tracking-[0.2em]">Estado</th>
+              <th class="px-6 py-4 text-left text-[12px] font-black text-slate-400 uppercase tracking-[0.2em]">Prioridad</th>
+              <th class="px-6 py-4 text-left text-[12px] font-black text-slate-400 uppercase tracking-[0.2em]">Responsable</th>
+              <th class="px-6 py-4 text-right text-[12px] font-black text-slate-400 uppercase tracking-[0.2em]">Tiempo</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
@@ -310,21 +310,21 @@
                 </div>
               </td>
               <td class="px-6 py-4">
-                <span class="text-[10px] font-black uppercase text-slate-400">{{ getTaskTypeLabel(task.type) }}</span>
+                <span class="text-[12px] font-black uppercase text-slate-400">{{ getTaskTypeLabel(task.type) }}</span>
               </td>
               <td class="px-6 py-4">
-                <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider" :class="getBoardStatusClass(task.boardStatus)">
+                <span class="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider" :class="getBoardStatusClass(task.boardStatus)">
                   {{ getBoardStatusLabel(task.boardStatus) }}
                 </span>
               </td>
               <td class="px-6 py-4">
-                <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider border" :class="getPriorityClass(task.priority)">
+                <span class="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider border" :class="getPriorityClass(task.priority)">
                   {{ getPriorityLabel(task.priority) }}
                 </span>
               </td>
               <td class="px-6 py-4">
                 <div v-if="task.assignedTo" class="flex items-center gap-2">
-                  <div class="w-7 h-7 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-[10px] font-black border border-white shadow-sm">
+                  <div class="w-7 h-7 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-[12px] font-black border border-white shadow-sm">
                     {{ getInitials(task.assignedTo.name) }}
                   </div>
                   <span class="text-slate-600 text-xs font-bold">{{ task.assignedTo.name }}</span>
@@ -332,8 +332,8 @@
                 <span v-else class="text-slate-300 text-xs italic">Sin asignar</span>
               </td>
               <td class="px-6 py-4 text-right">
-                <div class="text-slate-700 font-black text-xs">{{ Number(task.actualHours || 0).toFixed(1) }}<span class="text-[10px] text-slate-400 ml-0.5">h</span></div>
-                <div class="text-[9px] text-slate-400 uppercase tracking-tighter">Est: {{ task.estimatedHours || 0 }}h</div>
+                <div class="text-slate-700 font-black text-xs">{{ Number(task.actualHours || 0).toFixed(1) }}<span class="text-[12px] text-slate-400 ml-0.5">h</span></div>
+                <div class="text-[11px] text-slate-400 uppercase tracking-tighter">Est: {{ task.estimatedHours || 0 }}h</div>
               </td>
             </tr>
           </tbody>
@@ -366,7 +366,7 @@
     />
 
     <!-- Debug Overlay -->
-    <div v-if="showTaskModal" class="fixed bottom-4 right-4 bg-slate-900/90 backdrop-blur-md text-white p-4 rounded-2xl z-[9999] text-[10px] font-black border border-white/20 shadow-2xl">
+    <div v-if="showTaskModal" class="fixed bottom-4 right-4 bg-slate-900/90 backdrop-blur-md text-white p-4 rounded-2xl z-[9999] text-[12px] font-black border border-white/20 shadow-2xl">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
         ESTADO: MODAL ABIERTO

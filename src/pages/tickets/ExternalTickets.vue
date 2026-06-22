@@ -6,14 +6,14 @@
       <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
           <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center">
-            <i class="fas fa-gem text-white text-[10px]"></i>
+            <i class="fas fa-gem text-white text-[12px]"></i>
           </div>
           <div>
             <p class="text-xs font-black text-slate-800 dark:text-slate-100 tracking-tight leading-none">GEMS Hub</p>
-            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
+            <p class="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
           </div>
         </div>
-        <router-link to="/login" class="px-4 py-2 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 dark:hover:bg-[#334155]/80 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300 transition-all">
+        <router-link to="/login" class="px-4 py-2 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 dark:hover:bg-[#334155]/80 rounded-xl text-[12px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300 transition-all">
           Iniciar sesión
         </router-link>
       </div>
@@ -27,7 +27,7 @@
         <img src="/gems-logo.png" alt="GEMS Hub" class="w-7 h-7 rounded-lg object-cover flex-shrink-0" />
         <div>
           <p class="text-xs font-black text-slate-800 dark:text-slate-100 leading-none tracking-tight">GEMS Hub</p>
-          <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
+          <p class="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
         </div>
       </div>
 
@@ -38,9 +38,9 @@
           :class="activeTab === 'create'
             ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
-          class="flex items-center gap-3 px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-xl text-left w-full"
+          class="flex items-center gap-3 px-3 py-2.5 text-[12px] font-black uppercase tracking-[0.15em] transition-all rounded-xl text-left w-full"
         >
-          <i class="fas fa-plus w-3 text-center text-[10px]"></i>
+          <i class="fas fa-plus w-3 text-center text-[12px]"></i>
           Nueva Solicitud
         </button>
         <button
@@ -48,22 +48,22 @@
           :class="activeTab === 'history'
             ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
-          class="flex items-center gap-3 px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all rounded-xl text-left w-full"
+          class="flex items-center gap-3 px-3 py-2.5 text-[12px] font-black uppercase tracking-[0.15em] transition-all rounded-xl text-left w-full"
         >
-          <i class="fas fa-list w-3 text-center text-[10px]"></i>
+          <i class="fas fa-list w-3 text-center text-[12px]"></i>
           Mi Historial
         </button>
       </nav>
 
       <!-- Quick stats -->
       <div class="mt-auto px-2 space-y-3">
-        <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Resumen</p>
+        <p class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Resumen</p>
         <div>
-          <p class="text-[9px] text-slate-400 font-medium mb-0.5">Solicitudes totales</p>
+          <p class="text-[11px] text-slate-400 font-medium mb-0.5">Solicitudes totales</p>
           <p class="text-xl font-black text-slate-800 dark:text-slate-100 tabular-nums leading-none">{{ tickets.length }}</p>
         </div>
         <div>
-          <p class="text-[9px] text-slate-400 font-medium mb-0.5">Abiertas</p>
+          <p class="text-[11px] text-slate-400 font-medium mb-0.5">Abiertas</p>
           <p class="text-xl font-black text-emerald-500 tabular-nums leading-none">{{ tickets.filter(t => t.status === 'open').length }}</p>
         </div>
       </div>
@@ -85,11 +85,11 @@
 
           <!-- Toolbar -->
           <div class="px-5 py-3.5 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between flex-shrink-0">
-            <p class="text-[10px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">Mis Tickets</p>
+            <p class="text-[12px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">Mis Tickets</p>
             <div class="flex items-center gap-3">
-              <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest tabular-nums">{{ tickets.length }} solicitudes</span>
+              <span class="text-[11px] text-slate-400 font-bold uppercase tracking-widest tabular-nums">{{ tickets.length }} solicitudes</span>
               <button @click="loadData" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-primary-500 transition-colors">
-                <i class="fas fa-rotate text-[10px]" :class="{ 'fa-spin': loading }"></i>
+                <i class="fas fa-rotate text-[12px]" :class="{ 'fa-spin': loading }"></i>
               </button>
             </div>
           </div>
@@ -99,11 +99,11 @@
             <table class="w-full text-left min-w-[600px]">
               <thead class="sticky top-0 z-10">
                 <tr class="bg-slate-50 dark:bg-[#0f172a]/60">
-                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">ID</th>
-                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Asunto</th>
-                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Prioridad</th>
-                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
-                  <th class="px-5 py-3 text-[9px] font-black text-slate-400 uppercase tracking-widest">Actualizado</th>
+                  <th class="px-5 py-3 text-[11px] font-black text-slate-400 uppercase tracking-widest">ID</th>
+                  <th class="px-5 py-3 text-[11px] font-black text-slate-400 uppercase tracking-widest">Asunto</th>
+                  <th class="px-5 py-3 text-[11px] font-black text-slate-400 uppercase tracking-widest">Prioridad</th>
+                  <th class="px-5 py-3 text-[11px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
+                  <th class="px-5 py-3 text-[11px] font-black text-slate-400 uppercase tracking-widest">Actualizado</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-50 dark:divide-[#334155]">
@@ -112,32 +112,32 @@
                   class="hover:bg-slate-50 dark:hover:bg-[#334155]/20 cursor-pointer transition-colors group"
                 >
                   <td class="px-5 py-3.5">
-                    <span class="text-[10px] font-black text-primary-600 dark:text-primary-400 font-mono tracking-tight">{{ ticket.ticketNumber }}</span>
+                    <span class="text-[12px] font-black text-primary-600 dark:text-primary-400 font-mono tracking-tight">{{ ticket.ticketNumber }}</span>
                   </td>
                   <td class="px-5 py-3.5 max-w-xs">
-                    <p class="text-[12px] font-bold text-slate-800 dark:text-slate-100 truncate group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ ticket.subject }}</p>
-                    <p class="text-[9px] text-slate-400 truncate">{{ ticket.category }}</p>
+                    <p class="text-[14px] font-bold text-slate-800 dark:text-slate-100 truncate group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ ticket.subject }}</p>
+                    <p class="text-[11px] text-slate-400 truncate">{{ ticket.category }}</p>
                   </td>
                   <td class="px-5 py-3.5">
-                    <span :class="getPriorityClass(ticket.priority)" class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border">
+                    <span :class="getPriorityClass(ticket.priority)" class="px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border">
                       {{ ticket.priority }}
                     </span>
                   </td>
                   <td class="px-5 py-3.5">
                     <div class="flex items-center gap-1.5">
                       <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="getStatusColor(ticket.status)"></div>
-                      <span class="text-[9px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">{{ ticket.status }}</span>
+                      <span class="text-[11px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">{{ ticket.status }}</span>
                     </div>
                   </td>
                   <td class="px-5 py-3.5">
-                    <span class="text-[9px] font-bold text-slate-400 tabular-nums">{{ formatDate(ticket.updatedAt) }}</span>
+                    <span class="text-[11px] font-bold text-slate-400 tabular-nums">{{ formatDate(ticket.updatedAt) }}</span>
                   </td>
                 </tr>
                 <tr v-if="tickets.length === 0 && !loading">
                   <td colspan="5" class="px-5 py-16 text-center">
                     <div class="flex flex-col items-center gap-2 opacity-30">
                       <i class="fas fa-inbox text-3xl text-slate-400 dark:text-slate-600"></i>
-                      <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Sin solicitudes</p>
+                      <p class="text-[12px] font-black uppercase tracking-widest text-slate-400">Sin solicitudes</p>
                     </div>
                   </td>
                 </tr>
@@ -149,16 +149,16 @@
           <div v-if="pagination.pages > 1" class="px-5 py-3 border-t border-slate-100 dark:border-[#334155] flex items-center justify-center gap-1.5 flex-shrink-0">
             <button @click="changePage(pagination.page - 1)" :disabled="pagination.page === 1"
               class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-primary-600 hover:bg-slate-50 dark:hover:bg-[#334155]/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
-              <i class="fas fa-chevron-left text-[9px]"></i>
+              <i class="fas fa-chevron-left text-[11px]"></i>
             </button>
             <button v-for="p in pagination.pages" :key="p" @click="changePage(p)"
               :class="p === pagination.page ? 'bg-primary-600 text-white' : 'text-slate-400 hover:bg-slate-50 dark:hover:bg-[#334155]/30'"
-              class="w-7 h-7 rounded-lg text-[9px] font-black transition-all">
+              class="w-7 h-7 rounded-lg text-[11px] font-black transition-all">
               {{ p }}
             </button>
             <button @click="changePage(pagination.page + 1)" :disabled="pagination.page === pagination.pages"
               class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-primary-600 hover:bg-slate-50 dark:hover:bg-[#334155]/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
-              <i class="fas fa-chevron-right text-[9px]"></i>
+              <i class="fas fa-chevron-right text-[11px]"></i>
             </button>
           </div>
         </div>
@@ -177,7 +177,7 @@
              </div>
              <div>
                <h3 class="text-lg font-black text-slate-800 dark:text-slate-100 tracking-tight">{{ selectedTicket.ticketNumber }}</h3>
-               <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Detalle de Solicitud</p>
+               <p class="text-[12px] text-slate-400 font-bold uppercase tracking-widest">Detalle de Solicitud</p>
              </div>
            </div>
            <button @click="selectedTicket = null" class="w-10 h-10 hover:bg-slate-100 dark:hover:bg-[#334155] rounded-full transition-colors flex items-center justify-center text-slate-400">
@@ -188,7 +188,7 @@
          <!-- Detail Content -->
          <div class="flex-1 overflow-y-auto p-8 space-y-8">
             <section class="space-y-4">
-              <span :class="getPriorityClass(selectedTicket.priority)" class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border">
+              <span :class="getPriorityClass(selectedTicket.priority)" class="px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-widest border">
                 {{ selectedTicket.priority }}
               </span>
               <h1 class="text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{{ selectedTicket.subject }}</h1>
@@ -200,11 +200,11 @@
             <!-- Metadata Info -->
             <div class="grid grid-cols-2 gap-8 py-6 border-t border-slate-100 dark:border-[#334155]">
                <div>
-                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Asignado a</p>
+                 <p class="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-2">Asignado a</p>
                  <div v-if="selectedTicket.assignedTo" class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#334155] overflow-hidden">
                        <img v-if="selectedTicket.assignedTo.avatar" src="" class="w-full h-full object-cover">
-                       <div v-else class="w-full h-full flex items-center justify-center text-slate-400 text-[10px] font-black">
+                       <div v-else class="w-full h-full flex items-center justify-center text-slate-400 text-[12px] font-black">
                          {{ selectedTicket.assignedTo.name.charAt(0) }}
                        </div>
                     </div>
@@ -213,7 +213,7 @@
                  <span v-else class="text-xs text-slate-400 italic font-medium">Buscando el mejor experto...</span>
                </div>
                <div>
-                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Estado</p>
+                 <p class="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-2">Estado</p>
                  <div class="flex items-center gap-2">
                     <div class="w-2 h-2 rounded-full" :class="getStatusColor(selectedTicket.status)"></div>
                     <span class="text-sm font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">{{ selectedTicket.status }}</span>
@@ -223,7 +223,7 @@
 
             <!-- Attachments Section -->
             <div v-if="selectedTicket.attachments?.length > 0" class="space-y-4">
-               <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Evidencias Adjuntas</p>
+               <p class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Evidencias Adjuntas</p>
                <div class="grid grid-cols-3 gap-3">
                   <div v-for="(att, i) in selectedTicket.attachments" :key="i"
                     @click="viewAttachment(att)"
@@ -232,7 +232,7 @@
                     <img v-if="isImgUrl(att)" :src="resolveImageUrl(att)" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     <div v-else class="w-full h-full flex flex-col items-center justify-center gap-2">
                        <i class="fas fa-file-alt text-slate-400 text-xl"></i>
-                       <span class="text-[8px] font-black text-slate-400 uppercase">Ver Documento</span>
+                       <span class="text-[10px] font-black text-slate-400 uppercase">Ver Documento</span>
                     </div>
                     <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                        <i class="fas fa-eye text-white"></i>
@@ -243,20 +243,20 @@
 
             <!-- Activity & Comments Section -->
             <div class="pt-8 border-t border-slate-100 dark:border-[#334155]">
-               <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Actividad y Comentarios</p>
+               <p class="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-6">Actividad y Comentarios</p>
                <div v-if="selectedTicket.comments?.length > 0" class="space-y-6">
                  <div v-for="comment in selectedTicket.comments" :key="comment._id"
                    class="animate-slide-in"
                    v-show="!comment.isInternal"
                  >
                    <div class="flex gap-4">
-                     <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-[#334155] flex items-center justify-center text-[10px] font-black text-slate-400">
+                     <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-[#334155] flex items-center justify-center text-[12px] font-black text-slate-400">
                        {{ comment.author?.name?.charAt(0) || '?' }}
                      </div>
                      <div class="flex-1 space-y-1">
                        <div class="flex items-center justify-between">
-                         <span class="text-[11px] font-black text-slate-800 dark:text-slate-100">{{ comment.author?.name || 'Soporte Técnico' }}</span>
-                         <span class="text-[9px] font-bold text-slate-400 uppercase">{{ formatDate(comment.createdAt) }}</span>
+                         <span class="text-[13px] font-black text-slate-800 dark:text-slate-100">{{ comment.author?.name || 'Soporte Técnico' }}</span>
+                         <span class="text-[11px] font-bold text-slate-400 uppercase">{{ formatDate(comment.createdAt) }}</span>
                        </div>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{ comment.text }}</p>
                         <div v-if="comment.attachments?.length" class="flex flex-wrap gap-2 mt-2">
@@ -294,11 +294,11 @@
                     <label class="p-2 text-slate-400 hover:text-primary-600 cursor-pointer transition-colors relative">
                       <i class="fas fa-paperclip text-sm"></i>
                       <input type="file" multiple @change="handleCommentFiles" class="hidden">
-                      <span v-if="commentFiles.length" class="absolute -top-1 -right-1 w-4 h-4 bg-primary-600 text-[8px] text-white rounded-full flex items-center justify-center font-black animate-bounce">
+                      <span v-if="commentFiles.length" class="absolute -top-1 -right-1 w-4 h-4 bg-primary-600 text-[10px] text-white rounded-full flex items-center justify-center font-black animate-bounce">
                         {{ commentFiles.length }}
                       </span>
                     </label>
-                    <div v-if="commentFiles.length" class="text-[9px] font-black text-primary-600 uppercase tracking-tighter">
+                    <div v-if="commentFiles.length" class="text-[11px] font-black text-primary-600 uppercase tracking-tighter">
                       {{ commentFiles.length }} archivos seleccionados
                     </div>
                   </div>
@@ -309,8 +309,8 @@
                   >
                      <span v-if="sendingComment">Enviando...</span>
                      <span v-else>Enviar</span>
-                     <i v-if="sendingComment" class="fas fa-spinner fa-spin text-[10px]"></i>
-                     <i v-else class="fas fa-paper-plane text-[10px]"></i>
+                     <i v-if="sendingComment" class="fas fa-spinner fa-spin text-[12px]"></i>
+                     <i v-else class="fas fa-paper-plane text-[12px]"></i>
                   </button>
                 </div>
               </div>
@@ -420,7 +420,7 @@ onMounted(() => {
 })
 
 const getPriorityClass = (priority: string) => {
-    const base = 'px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border'
+    const base = 'px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border'
     const colors = {
         'low': 'bg-emerald-50 text-emerald-600 border-emerald-100',
         'medium': 'bg-amber-50 text-amber-600 border-amber-100',

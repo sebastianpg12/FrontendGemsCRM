@@ -8,7 +8,7 @@
             <i class="fas fa-wand-magic-sparkles text-xs"></i>
           </div>
           <h1 class="text-xl font-black text-slate-900">Prospectos IA</h1>
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-black uppercase tracking-wider">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 text-[12px] font-black uppercase tracking-wider">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             IA Activa
           </span>
@@ -19,28 +19,28 @@
         <!-- Stats Bar -->
         <div class="hidden lg:flex items-center gap-2">
           <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-slate-100 text-slate-700 border-slate-200" title="Total de prospectos">
-            <i class="fas fa-users text-[10px] opacity-70"></i>
-            <span class="text-[10px] font-black uppercase tracking-wider">Total</span>
-            <span class="text-[12px] font-black ml-1">{{ prospects.length }}</span>
+            <i class="fas fa-users text-[12px] opacity-70"></i>
+            <span class="text-[12px] font-black uppercase tracking-wider">Total</span>
+            <span class="text-[14px] font-black ml-1">{{ prospects.length }}</span>
           </div>
           <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-amber-50 text-amber-700 border-amber-200" title="Activos: nuevo/calificado/propuesta/seguimiento">
-            <i class="fas fa-fire text-[10px] opacity-70"></i>
-            <span class="text-[10px] font-black uppercase tracking-wider">Activos</span>
-            <span class="text-[12px] font-black ml-1">{{ activosCount }}</span>
+            <i class="fas fa-fire text-[12px] opacity-70"></i>
+            <span class="text-[12px] font-black uppercase tracking-wider">Activos</span>
+            <span class="text-[14px] font-black ml-1">{{ activosCount }}</span>
           </div>
           <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-emerald-50 text-emerald-700 border-emerald-200" title="Cerrados como ganados">
-            <i class="fas fa-trophy text-[10px] opacity-70"></i>
-            <span class="text-[10px] font-black uppercase tracking-wider">Ganados</span>
-            <span class="text-[12px] font-black ml-1">{{ ganadosCount }}</span>
+            <i class="fas fa-trophy text-[12px] opacity-70"></i>
+            <span class="text-[12px] font-black uppercase tracking-wider">Ganados</span>
+            <span class="text-[14px] font-black ml-1">{{ ganadosCount }}</span>
           </div>
           <div
             v-if="forecastWeighted > 0"
             class="flex items-center gap-2 px-3 py-1.5 rounded-xl border bg-gradient-to-br from-primary-50 to-primary-100 text-primary-700 border-primary-200"
             :title="`Pipeline bruto: $${formatMoney(pipelineGross)} · Forecast ponderado por probabilidad`"
           >
-            <i class="fas fa-chart-line text-[10px] opacity-70"></i>
-            <span class="text-[10px] font-black uppercase tracking-wider">Forecast</span>
-            <span class="text-[12px] font-black ml-1">${{ formatMoney(forecastWeighted) }}</span>
+            <i class="fas fa-chart-line text-[12px] opacity-70"></i>
+            <span class="text-[12px] font-black uppercase tracking-wider">Forecast</span>
+            <span class="text-[14px] font-black ml-1">${{ formatMoney(forecastWeighted) }}</span>
           </div>
         </div>
 
@@ -49,29 +49,29 @@
           <button
             @click="viewMode = 'list'"
             :class="[
-              'px-3 py-1.5 rounded-lg text-[10px] font-black transition-all flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-lg text-[12px] font-black transition-all flex items-center gap-1.5',
               viewMode === 'list' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700',
             ]"
           >
-            <i class="fas fa-list text-[10px]"></i>Lista
+            <i class="fas fa-list text-[12px]"></i>Lista
           </button>
           <button
             @click="viewMode = 'kanban'"
             :class="[
-              'px-3 py-1.5 rounded-lg text-[10px] font-black transition-all flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-lg text-[12px] font-black transition-all flex items-center gap-1.5',
               viewMode === 'kanban' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700',
             ]"
           >
-            <i class="fas fa-columns text-[10px]"></i>Pipeline
+            <i class="fas fa-columns text-[12px]"></i>Pipeline
           </button>
         </div>
 
         <!-- Import button -->
         <button
           @click="showImport = true"
-          class="px-3 py-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-[10px] font-black rounded-xl transition-all flex items-center gap-1.5"
+          class="px-3 py-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-[12px] font-black rounded-xl transition-all flex items-center gap-1.5"
         >
-          <i class="fas fa-file-import text-[10px]"></i>
+          <i class="fas fa-file-import text-[12px]"></i>
           Importar
         </button>
       </div>

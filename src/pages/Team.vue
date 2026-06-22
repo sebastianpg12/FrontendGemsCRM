@@ -16,7 +16,7 @@
             <i :class="getDeptIcon(dept)"></i>
           </div>
           <div class="flex flex-col">
-            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{{ dept }}</span>
+            <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{{ dept }}</span>
             <div class="flex items-center gap-2">
               <span class="text-xs font-bold text-slate-700 dark:text-slate-200 leading-none">
                 {{ teamStore.members.filter(m => m.department === dept).length }}
@@ -25,7 +25,7 @@
                 <div
                   v-for="leader in teamStore.members.filter(m => m.department === dept && m.departmentRole === 'leader').slice(0, 3)"
                   :key="leader._id"
-                  class="w-4 h-4 rounded-full bg-amber-400 border-2 border-white dark:border-[#1e293b] flex items-center justify-center text-[6px] font-black text-white shadow-sm"
+                  class="w-4 h-4 rounded-full bg-amber-400 border-2 border-white dark:border-[#1e293b] flex items-center justify-center text-[8px] font-black text-white shadow-sm"
                   :title="leader.name"
                 >
                   {{ leader.name?.charAt(0) }}
@@ -37,7 +37,7 @@
           <button
             v-if="customDepartments.includes(dept)"
             @click.stop="removeCustomDepartment(dept)"
-            class="ml-1 opacity-0 group-hover:opacity-100 text-slate-300 hover:text-rose-400 transition-all text-[9px]"
+            class="ml-1 opacity-0 group-hover:opacity-100 text-slate-300 hover:text-rose-400 transition-all text-[11px]"
             title="Eliminar departamento"
           >
             <i class="fas fa-xmark"></i>
@@ -48,7 +48,7 @@
         <div class="md:ml-auto flex items-center gap-2">
            <div class="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-[#1e293b] rounded-xl shadow-sm">
              <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-             <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">{{ activeMembers }} Activos</span>
+             <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">{{ activeMembers }} Activos</span>
            </div>
            <PermissionGuard :permissions="['create-team']" :fallback="false">
             <button 
@@ -64,57 +64,57 @@
       <!-- Filters & Search (Ultra-Compact) -->
       <div class="bg-white dark:bg-[#1e293b] rounded-xl p-2 shadow-sm flex flex-col md:flex-row items-center gap-3">
          <div class="flex-1 relative group w-full">
-            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] group-focus-within:text-primary-500 transition-colors"></i>
+            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[12px] group-focus-within:text-primary-500 transition-colors"></i>
             <input 
               v-model="searchQuery" 
               placeholder="Buscar colaborador..."
-              class="w-full pl-9 pr-4 py-2 bg-slate-50 border-none rounded-xl text-[11px] font-medium focus:ring-4 focus:ring-primary-500/5 transition-all outline-none"
+              class="w-full pl-9 pr-4 py-2 bg-slate-50 border-none rounded-xl text-[13px] font-medium focus:ring-4 focus:ring-primary-500/5 transition-all outline-none"
             >
          </div>
          
          <div class="flex items-center gap-2 w-full md:w-auto">
 
            <div class="tm-chip" :class="{ 'tm-chip--on': selectedDepartment }" @click.stop="toggleTeamChip('dept')">
-             <i class="fas fa-building text-[9px]"></i>
+             <i class="fas fa-building text-[11px]"></i>
              <span class="tm-label">{{ selectedDeptLabel }}</span>
              <i class="fas fa-chevron-down tm-caret" :class="{ 'rotate-180': openTeamChip === 'dept' }"></i>
              <div v-if="openTeamChip === 'dept'" class="tm-dropdown" @click.stop>
                <div class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': !selectedDepartment }" @click="setTeamFilter('dept', '')">
-                 <span>Todos</span><i v-if="!selectedDepartment" class="fas fa-check text-[10px] text-primary-500"></i>
+                 <span>Todos</span><i v-if="!selectedDepartment" class="fas fa-check text-[12px] text-primary-500"></i>
                </div>
                <div v-for="dept in allDepartments" :key="dept"
                  class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedDepartment === dept }"
                  @click="setTeamFilter('dept', dept)">
-                 <span>{{ dept }}</span><i v-if="selectedDepartment === dept" class="fas fa-check text-[10px] text-primary-500"></i>
+                 <span>{{ dept }}</span><i v-if="selectedDepartment === dept" class="fas fa-check text-[12px] text-primary-500"></i>
                </div>
              </div>
            </div>
 
            <div class="tm-chip" :class="{ 'tm-chip--on': selectedRole }" @click.stop="toggleTeamChip('role')">
-             <i class="fas fa-user-tag text-[9px]"></i>
+             <i class="fas fa-user-tag text-[11px]"></i>
              <span class="tm-label">{{ selectedRoleLabel }}</span>
              <i class="fas fa-chevron-down tm-caret" :class="{ 'rotate-180': openTeamChip === 'role' }"></i>
              <div v-if="openTeamChip === 'role'" class="tm-dropdown" @click.stop>
                <div class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': !selectedRole }" @click="setTeamFilter('role', '')">
-                 <span>Todos</span><i v-if="!selectedRole" class="fas fa-check text-[10px] text-primary-500"></i>
+                 <span>Todos</span><i v-if="!selectedRole" class="fas fa-check text-[12px] text-primary-500"></i>
                </div>
                <div v-for="role in allAvailableRoles" :key="role.value"
                  class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedRole === role.value }"
                  @click="setTeamFilter('role', role.value)">
-                 <span>{{ role.label }}</span><i v-if="selectedRole === role.value" class="fas fa-check text-[10px] text-primary-500"></i>
+                 <span>{{ role.label }}</span><i v-if="selectedRole === role.value" class="fas fa-check text-[12px] text-primary-500"></i>
                </div>
              </div>
            </div>
 
            <div class="tm-chip" :class="{ 'tm-chip--on': selectedStatus }" @click.stop="toggleTeamChip('status')">
-             <i class="fas fa-circle-dot text-[9px]"></i>
+             <i class="fas fa-circle-dot text-[11px]"></i>
              <span class="tm-label">{{ selectedStatusLabel }}</span>
              <i class="fas fa-chevron-down tm-caret" :class="{ 'rotate-180': openTeamChip === 'status' }"></i>
              <div v-if="openTeamChip === 'status'" class="tm-dropdown tm-dropdown--end" @click.stop>
                <div v-for="opt in statusOptions" :key="opt.value"
                  class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedStatus === opt.value }"
                  @click="setTeamFilter('status', opt.value)">
-                 <span>{{ opt.label }}</span><i v-if="selectedStatus === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+                 <span>{{ opt.label }}</span><i v-if="selectedStatus === opt.value" class="fas fa-check text-[12px] text-primary-500"></i>
                </div>
              </div>
            </div>
@@ -126,7 +126,7 @@
     <!-- Team List View (Compact & Efficient) -->
     <div class="space-y-2 pb-20">
       <!-- Header de Tabla Compacta (solo desktop) -->
-      <div class="hidden md:flex px-8 py-3 items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-[#334155] mb-2">
+      <div class="hidden md:flex px-8 py-3 items-center gap-6 text-[12px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-[#334155] mb-2">
         <div class="min-w-[280px]">Colaborador</div>
         <div class="w-24 text-center">Rol</div>
         <div class="flex-1">Departamento</div>
@@ -149,15 +149,15 @@
            </div>
            <div class="min-w-0 flex-1">
               <h3 class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">{{ member.name }}</h3>
-              <p class="text-[10px] font-medium text-slate-400 truncate">{{ member.email }}</p>
+              <p class="text-[12px] font-medium text-slate-400 truncate">{{ member.email }}</p>
            </div>
            <!-- Acciones visibles solo en mobile -->
            <div class="flex md:hidden items-center gap-1 shrink-0">
              <button @click="editMember(member)" title="Editar" class="w-8 h-8 bg-slate-50 hover:bg-primary-100 text-slate-400 hover:text-primary-600 rounded-lg flex items-center justify-center transition-all">
-               <i class="fas fa-edit text-[10px]"></i>
+               <i class="fas fa-edit text-[12px]"></i>
              </button>
              <button @click="toggleMemberStatus(member)" :title="member.isActive ? 'Deshabilitar' : 'Habilitar'" :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'" class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center transition-all">
-               <i :class="member.isActive ? 'fas fa-user-slash' : 'fas fa-user-check'" class="text-[10px]"></i>
+               <i :class="member.isActive ? 'fas fa-user-slash' : 'fas fa-user-check'" class="text-[12px]"></i>
              </button>
            </div>
         </div>
@@ -165,17 +165,17 @@
         <!-- Center: Role & Department -->
         <div class="flex items-center gap-4 md:gap-8 flex-1 mt-2 md:mt-0 pl-14 md:pl-0">
            <div class="md:w-24">
-              <span :class="getRoleBadgeClass(member.role)" class="px-2 py-0.5 rounded-lg text-[7px] font-black uppercase tracking-widest inline-block md:block text-center">
+              <span :class="getRoleBadgeClass(member.role)" class="px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest inline-block md:block text-center">
                 {{ getRoleDisplayName(member.role) }}
               </span>
            </div>
 
            <div class="flex-1">
-              <p class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase truncate">{{ member.department || 'General' }}</p>
+              <p class="text-[12px] font-bold text-slate-600 dark:text-slate-400 uppercase truncate">{{ member.department || 'General' }}</p>
            </div>
 
            <div class="hidden xl:block w-32">
-              <p class="text-[10px] font-bold text-slate-500">{{ formatDate(member.lastLogin) }}</p>
+              <p class="text-[12px] font-bold text-slate-500">{{ formatDate(member.lastLogin) }}</p>
            </div>
         </div>
 
@@ -186,7 +186,7 @@
              title="Editar"
              class="w-8 h-8 bg-slate-50 hover:bg-primary-100 text-slate-400 hover:text-primary-600 rounded-lg flex items-center justify-center transition-all"
            >
-             <i class="fas fa-edit text-[10px]"></i>
+             <i class="fas fa-edit text-[12px]"></i>
            </button>
            <button
              @click="toggleMemberStatus(member)"
@@ -194,7 +194,7 @@
              :class="member.isActive ? 'hover:bg-rose-100 text-slate-400 hover:text-rose-600' : 'hover:bg-emerald-100 text-slate-400 hover:text-emerald-600'"
              class="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center transition-all"
            >
-             <i :class="member.isActive ? 'fas fa-user-slash' : 'fas fa-user-check'" class="text-[10px]"></i>
+             <i :class="member.isActive ? 'fas fa-user-slash' : 'fas fa-user-check'" class="text-[12px]"></i>
            </button>
            <button
              v-if="authStore.user?.role === 'admin'"
@@ -202,7 +202,7 @@
              title="Eliminar"
              class="w-8 h-8 bg-slate-50 hover:bg-red-600 text-slate-400 hover:text-white rounded-lg flex items-center justify-center transition-all"
            >
-             <i class="fas fa-trash-alt text-[10px]"></i>
+             <i class="fas fa-trash-alt text-[12px]"></i>
            </button>
         </div>
       </div>
@@ -253,15 +253,15 @@
         <div class="flex items-center justify-between px-5 py-4 border-b border-slate-50">
           <div>
             <div class="flex items-center gap-2 mb-0.5">
-              <i class="fas fa-gem text-primary-400 text-[8px]"></i>
-              <span class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-400">GEMS Hub</span>
+              <i class="fas fa-gem text-primary-400 text-[10px]"></i>
+              <span class="text-[11px] font-black uppercase tracking-[0.2em] text-primary-400">GEMS Hub</span>
             </div>
-            <h3 class="text-[15px] font-black text-slate-900 leading-tight">
+            <h3 class="text-[17px] font-black text-slate-900 leading-tight">
               {{ showCreateModal ? 'Nuevo Miembro' : 'Editar Miembro' }}
             </h3>
           </div>
           <button @click="closeModal" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-all">
-            <i class="fas fa-times text-[12px]"></i>
+            <i class="fas fa-times text-[14px]"></i>
           </button>
         </div>
 
@@ -272,69 +272,69 @@
             <!-- Columna izquierda -->
             <div class="space-y-3">
               <div>
-                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Nombre Completo *</label>
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Nombre Completo *</label>
                 <input v-model="formData.name" required placeholder="Ej: Juan Pérez"
-                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[14px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
               </div>
               <div>
-                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Correo Electrónico *</label>
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Correo Electrónico *</label>
                 <input v-model="formData.email" type="email" required placeholder="correo@empresa.com"
-                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[14px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
               </div>
               <div v-if="showCreateModal || (showEditModal && authStore.user?.role === 'admin')">
-                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
                   {{ showCreateModal ? 'Contraseña Temporal *' : 'Nueva Contraseña (opcional)' }}
                 </label>
                 <div class="relative">
                   <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" :required="showCreateModal" placeholder="••••••••"
-                    class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 pr-9 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+                    class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 pr-9 text-[14px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
                   <button type="button" @click="showPassword = !showPassword"
                     class="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors">
-                    <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-[11px]"></i>
+                    <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="text-[13px]"></i>
                   </button>
                 </div>
               </div>
               <div>
-                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Teléfono</label>
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Teléfono</label>
                 <input v-model="formData.phone" placeholder="+57 300..."
-                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+                  class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[14px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
               </div>
             </div>
 
             <!-- Columna derecha -->
             <div class="space-y-3">
               <div>
-                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol Operativo *</label>
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol Operativo *</label>
                 <CustomSelect v-model="formData.role" :options="roleSelectOptions" placeholder="Selecciona un rol" size="sm" />
               </div>
               <div>
-                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Departamento</label>
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Departamento</label>
                 <div v-if="isAddingCustomDept" class="flex gap-1.5">
                   <input v-model="newDeptName" @keydown.enter.prevent="confirmAddDept" @keydown.escape="isAddingCustomDept = false; newDeptName = ''" autofocus placeholder="Nombre del departamento..."
-                    class="flex-1 h-8 bg-slate-50 border border-primary-200 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 transition-all" />
+                    class="flex-1 h-8 bg-slate-50 border border-primary-200 rounded-lg px-3 text-[14px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 transition-all" />
                   <button type="button" @click="confirmAddDept" :disabled="!newDeptName.trim()"
                     class="w-8 h-8 bg-primary-600 disabled:opacity-40 text-white rounded-lg flex items-center justify-center">
-                    <i class="fas fa-check text-[10px]"></i>
+                    <i class="fas fa-check text-[12px]"></i>
                   </button>
                   <button type="button" @click="isAddingCustomDept = false; newDeptName = ''"
                     class="w-8 h-8 bg-slate-100 text-slate-500 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-xmark text-[10px]"></i>
+                    <i class="fas fa-xmark text-[12px]"></i>
                   </button>
                 </div>
                 <CustomSelect v-else v-model="formData.department" :options="deptSelectOptions" placeholder="Sin departamento" size="sm" @change="onDeptChange" />
               </div>
               <div>
-                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol en Departamento</label>
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol en Departamento</label>
                 <div class="grid grid-cols-2 gap-2">
                   <button type="button" @click="formData.departmentRole = 'member'"
                     :class="formData.departmentRole !== 'leader' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-100'"
-                    class="h-8 rounded-lg border text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5">
-                    <i class="fas fa-user text-[8px]"></i> Miembro
+                    class="h-8 rounded-lg border text-[12px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5">
+                    <i class="fas fa-user text-[10px]"></i> Miembro
                   </button>
                   <button type="button" @click="formData.departmentRole = 'leader'"
                     :class="formData.departmentRole === 'leader' ? 'bg-amber-500 text-white border-amber-500' : 'bg-slate-50 text-slate-500 border-slate-100'"
-                    class="h-8 rounded-lg border text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5">
-                    <i class="fas fa-crown text-[8px]"></i> Líder
+                    class="h-8 rounded-lg border text-[12px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5">
+                    <i class="fas fa-crown text-[10px]"></i> Líder
                   </button>
                 </div>
               </div>
@@ -344,12 +344,12 @@
           <!-- Actions -->
           <div class="flex gap-2 mt-5 pt-4 border-t border-slate-50">
             <button type="button" @click="closeModal"
-              class="flex-1 h-8 rounded-lg border border-slate-200 text-[11px] font-bold text-slate-600 hover:bg-slate-50 transition-all">
+              class="flex-1 h-8 rounded-lg border border-slate-200 text-[13px] font-bold text-slate-600 hover:bg-slate-50 transition-all">
               Cancelar
             </button>
             <button type="submit" :disabled="isSubmitting"
-              class="flex-[2] h-8 rounded-lg bg-primary-600 text-white text-[11px] font-bold hover:bg-primary-700 disabled:opacity-40 transition-all flex items-center justify-center gap-1.5">
-              <i v-if="isSubmitting" class="fas fa-circle-notch fa-spin text-[10px]"></i>
+              class="flex-[2] h-8 rounded-lg bg-primary-600 text-white text-[13px] font-bold hover:bg-primary-700 disabled:opacity-40 transition-all flex items-center justify-center gap-1.5">
+              <i v-if="isSubmitting" class="fas fa-circle-notch fa-spin text-[12px]"></i>
               {{ isSubmitting ? 'Guardando...' : (showCreateModal ? 'Crear Colaborador' : 'Actualizar') }}
             </button>
           </div>

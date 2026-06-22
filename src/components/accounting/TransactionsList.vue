@@ -32,13 +32,13 @@
           <i class="fas fa-chevron-down acc-caret" :class="{ 'rotate-180': openAccChip === 'type' }"></i>
           <div v-if="openAccChip === 'type'" class="acc-dropdown" @click.stop>
             <div class="acc-dropdown-item" :class="{ 'acc-dropdown-item--active': typeFilter === '' }" @click="typeFilter = ''; openAccChip = null">
-              <span>Todos los tipos</span><i v-if="typeFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Todos los tipos</span><i v-if="typeFilter === ''" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
             <div class="acc-dropdown-item" :class="{ 'acc-dropdown-item--active': typeFilter === 'ingreso' }" @click="typeFilter = 'ingreso'; openAccChip = null">
-              <span>Ingresos</span><i v-if="typeFilter === 'ingreso'" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Ingresos</span><i v-if="typeFilter === 'ingreso'" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
             <div class="acc-dropdown-item" :class="{ 'acc-dropdown-item--active': typeFilter === 'egreso' }" @click="typeFilter = 'egreso'; openAccChip = null">
-              <span>Egresos</span><i v-if="typeFilter === 'egreso'" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Egresos</span><i v-if="typeFilter === 'egreso'" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
           </div>
         </div>

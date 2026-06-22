@@ -289,8 +289,8 @@ router.beforeEach(async (to, _from, next) => {
     return
   }
 
-  // Clientes solo pueden acceder a /support
-  if (authStore.user?.role === 'client' && to.path !== '/support') {
+  // Clientes solo pueden acceder a /support y /profile
+  if (authStore.user?.role === 'client' && to.path !== '/support' && to.path !== '/profile') {
     next('/support')
     return
   }

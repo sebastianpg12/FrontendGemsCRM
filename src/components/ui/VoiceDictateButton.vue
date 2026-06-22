@@ -62,17 +62,17 @@ const onClick = () => {
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case 'xs': return 'px-2 py-0.5 text-[9px]'
+    case 'xs': return 'px-2 py-0.5 text-[11px]'
     case 'md': return 'px-3 py-2 text-xs'
-    default:   return 'px-2.5 py-1 text-[10px]' // sm
+    default:   return 'px-2.5 py-1 text-[12px]' // sm
   }
 })
 
 const iconSize = computed(() => {
   switch (props.size) {
-    case 'xs': return 'text-[9px]'
+    case 'xs': return 'text-[11px]'
     case 'md': return 'text-xs'
-    default:   return 'text-[10px]'
+    default:   return 'text-[12px]'
   }
 })
 

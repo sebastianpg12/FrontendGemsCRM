@@ -66,7 +66,7 @@
           :style="`background: linear-gradient(135deg, var(--brand-accent), rgba(${accentRgb},0.65)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`">
           GEMS HUB
         </h1>
-        <p class="text-white/30 text-[9px] font-black uppercase tracking-[0.45em]">Tu plataforma de gestión empresarial</p>
+        <p class="text-white/30 text-[11px] font-black uppercase tracking-[0.45em]">Tu plataforma de gestión empresarial</p>
       </div>
 
       <!-- Glass card wrapper -->
@@ -86,7 +86,7 @@
           <h2 class="text-white/90 text-lg font-bold mb-0.5">
             {{ requires2FA ? 'Verificación de Seguridad' : 'Bienvenido de vuelta' }}
           </h2>
-          <p class="text-white/35 text-[11px] font-medium">
+          <p class="text-white/35 text-[13px] font-medium">
             {{ requires2FA ? 'Ingresa el código de 6 dígitos de tu app autenticadora' : 'Ingresa tus credenciales para continuar' }}
           </p>
         </div>
@@ -103,9 +103,9 @@
                 <i v-else class="fas fa-circle-exclamation text-rose-400"></i>
               </span>
               <div>
-                <p class="text-[12px] font-bold text-rose-300 leading-snug">{{ error }}</p>
-                <p v-if="error?.includes('verificar')" class="text-[11px] text-rose-400/70 mt-1">Revisa tu bandeja de entrada y sigue el enlace de activación.</p>
-                <p v-if="error?.includes('inactivo')" class="text-[11px] text-rose-400/70 mt-1">Contacta al administrador de tu organización.</p>
+                <p class="text-[14px] font-bold text-rose-300 leading-snug">{{ error }}</p>
+                <p v-if="error?.includes('verificar')" class="text-[13px] text-rose-400/70 mt-1">Revisa tu bandeja de entrada y sigue el enlace de activación.</p>
+                <p v-if="error?.includes('inactivo')" class="text-[13px] text-rose-400/70 mt-1">Contacta al administrador de tu organización.</p>
               </div>
             </div>
           </div>
@@ -181,7 +181,7 @@
                   </svg>
                 </span>
               </div>
-              <span class="text-[11px] font-semibold transition-colors"
+              <span class="text-[13px] font-semibold transition-colors"
                 :class="rememberMe ? 'text-white/90' : 'text-white/55 group-hover:text-white/80'">
                 Recordarme
               </span>
@@ -189,7 +189,7 @@
             <button
               type="button"
               @click="showForgotPassword = true"
-              class="text-[11px] font-semibold text-primary-300 hover:text-white underline underline-offset-2 decoration-primary-400/40 hover:decoration-white/40 transition-all"
+              class="text-[13px] font-semibold text-primary-300 hover:text-white underline underline-offset-2 decoration-primary-400/40 hover:decoration-white/40 transition-all"
             >
               ¿Olvidaste tu contraseña?
             </button>
@@ -198,22 +198,22 @@
           <!-- Lockout warning -->
           <div v-if="loginLocked" class="flex items-center gap-2.5 rounded-xl px-4 py-3" style="background: rgba(239,68,68,0.10); border: 1px solid rgba(239,68,68,0.18);">
             <i class="fas fa-lock text-rose-400 text-sm flex-shrink-0"></i>
-            <p class="text-[11px] font-bold text-rose-300">
+            <p class="text-[13px] font-bold text-rose-300">
               Demasiados intentos. Espera {{ Math.floor(lockoutSecondsLeft / 60) }}:{{ String(lockoutSecondsLeft % 60).padStart(2, '0') }} min
             </p>
           </div>
 
           <!-- Encrypted connection indicator -->
           <div class="flex items-center justify-center gap-1.5 py-1">
-            <i class="fas fa-lock text-emerald-400/60 text-[10px]"></i>
-            <span class="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400/60">Conexión Encriptada y Segura</span>
+            <i class="fas fa-lock text-emerald-400/60 text-[12px]"></i>
+            <span class="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-400/60">Conexión Encriptada y Segura</span>
           </div>
 
           <!-- Submit button -->
           <button
             type="submit"
             :disabled="isLoading || loginLocked"
-            class="login-btn w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none mt-1 text-[11px] uppercase tracking-widest"
+            class="login-btn w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none mt-1 text-[13px] uppercase tracking-widest"
           >
             <i v-if="isLoading" class="fas fa-circle-notch fa-spin text-sm"></i>
             <template v-else>
@@ -224,8 +224,8 @@
 
           <!-- Register link -->
           <div class="text-center pt-1">
-            <span class="text-[11px] text-white/25">¿No tienes cuenta? </span>
-            <button type="button" @click="router.push('/register')" class="text-[11px] font-bold text-primary-400/80 hover:text-primary-300 transition-colors">Regístrate</button>
+            <span class="text-[13px] text-white/25">¿No tienes cuenta? </span>
+            <button type="button" @click="router.push('/register')" class="text-[13px] font-bold text-primary-400/80 hover:text-primary-300 transition-colors">Regístrate</button>
           </div>
 
         </form>
@@ -252,7 +252,7 @@
           <button
             type="submit"
             :disabled="isLoading || twoFactorCode.length !== 6"
-            class="login-btn w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none mt-2 text-[11px] uppercase tracking-widest"
+            class="login-btn w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none mt-2 text-[13px] uppercase tracking-widest"
           >
             <i v-if="isLoading" class="fas fa-circle-notch fa-spin text-sm"></i>
             <template v-else>
@@ -262,7 +262,7 @@
           </button>
           
           <div class="text-center mt-4">
-             <button type="button" @click="cancel2FA" class="text-[10px] text-white/40 hover:text-white transition-colors uppercase tracking-wider font-bold">
+             <button type="button" @click="cancel2FA" class="text-[12px] text-white/40 hover:text-white transition-colors uppercase tracking-wider font-bold">
                Cancelar
              </button>
           </div>
@@ -270,9 +270,9 @@
 
         <!-- Card footer -->
         <div class="mt-5 pt-4 flex items-center justify-center gap-2 relative z-10" style="border-top: 1px solid rgba(255,255,255,0.06);">
-          <i class="fas fa-gem text-primary-500/30 text-[7px]"></i>
-          <p class="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">GEMS Hub · © {{ currentYear }}</p>
-          <i class="fas fa-gem text-primary-500/30 text-[7px]"></i>
+          <i class="fas fa-gem text-primary-500/30 text-[9px]"></i>
+          <p class="text-[11px] font-black text-white/20 uppercase tracking-[0.3em]">GEMS Hub · © {{ currentYear }}</p>
+          <i class="fas fa-gem text-primary-500/30 text-[9px]"></i>
         </div>
       </div>
       </div><!-- /card-glow-wrapper -->

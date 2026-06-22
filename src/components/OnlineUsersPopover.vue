@@ -35,7 +35,7 @@
             </div>
             <div class="min-w-0">
               <div class="text-sm text-white truncate">{{ u.name }}</div>
-              <div class="text-[11px] text-gray-400 truncate">{{ u.position || u.role || u.email }}</div>
+              <div class="text-[13px] text-gray-400 truncate">{{ u.position || u.role || u.email }}</div>
             </div>
           </li>
         </ul>

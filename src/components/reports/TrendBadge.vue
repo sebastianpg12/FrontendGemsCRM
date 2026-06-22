@@ -1,9 +1,9 @@
 <template>
   <span
-    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-black tabular-nums"
+    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[12px] font-black tabular-nums"
     :class="badgeClass"
   >
-    <i :class="['fas', iconClass, 'text-[8px]']"></i>
+    <i :class="['fas', iconClass, 'text-[10px]']"></i>
     {{ displayValue }}
   </span>
 </template>

@@ -18,11 +18,11 @@
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1.5 mb-0.5">
               <ChatBubbleLeftRightIcon class="w-3.5 h-3.5 text-purple-300" />
-              <p class="text-[13px] text-white font-medium truncate" :title="displayRoomName">{{ displayRoomName }}</p>
-              <span class="ml-auto text-[10px] text-gray-400 whitespace-nowrap">{{ timeShort }}</span>
+              <p class="text-[14px] text-white font-medium truncate" :title="displayRoomName">{{ displayRoomName }}</p>
+              <span class="ml-auto text-[12px] text-gray-400 whitespace-nowrap">{{ timeShort }}</span>
             </div>
-            <p class="text-[12px] text-purple-200 truncate">de {{ msg.sender?.name }}</p>
-            <div class="mt-0.5 flex items-center gap-1.5 text-[12px] text-gray-200 min-w-0">
+            <p class="text-[14px] text-purple-200 truncate">de {{ msg.sender?.name }}</p>
+            <div class="mt-0.5 flex items-center gap-1.5 text-[14px] text-gray-200 min-w-0">
               <PhotoIcon v-if="previewKind==='image'" class="w-4 h-4 text-gray-300 flex-shrink-0" />
               <PaperClipIcon v-else-if="previewKind==='file'" class="w-4 h-4 text-gray-300 flex-shrink-0" />
               <span class="line-clamp-1 truncate">{{ previewText }}</span>

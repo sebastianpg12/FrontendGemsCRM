@@ -42,7 +42,7 @@
       <button
         @click="statusFilter = 'all'"
         :class="[
-          'flex-shrink-0 px-2.5 py-1 rounded-lg text-[10px] font-black border transition-all',
+          'flex-shrink-0 px-2.5 py-1 rounded-lg text-[12px] font-black border transition-all',
           statusFilter === 'all'
             ? 'bg-slate-900 text-white border-slate-900'
             : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50',
@@ -55,7 +55,7 @@
         :key="status.value"
         @click="statusFilter = status.value"
         :class="[
-          'flex-shrink-0 px-2.5 py-1 rounded-lg text-[10px] font-black border transition-all whitespace-nowrap',
+          'flex-shrink-0 px-2.5 py-1 rounded-lg text-[12px] font-black border transition-all whitespace-nowrap',
           statusFilter === status.value
             ? status.color + ' shadow-sm'
             : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50',
@@ -78,7 +78,7 @@
         <p class="text-xs font-bold text-slate-500 mb-1">
           {{ search || statusFilter !== 'all' ? 'Sin resultados' : 'No hay prospectos aún' }}
         </p>
-        <p class="text-[10px] text-slate-400">
+        <p class="text-[12px] text-slate-400">
           {{ search || statusFilter !== 'all' ? 'Prueba ajustando los filtros' : 'Crea uno con el botón +' }}
         </p>
       </div>
@@ -116,7 +116,7 @@
                     v-if="scoreOf(prospect) > 0"
                     :title="`Lead score: ${scoreOf(prospect)}/100`"
                     :class="[
-                      'text-[9px] font-black px-1.5 py-0.5 rounded-md',
+                      'text-[11px] font-black px-1.5 py-0.5 rounded-md',
                       scoreOf(prospect) >= 70 ? 'bg-rose-100 text-rose-600' :
                       scoreOf(prospect) >= 40 ? 'bg-amber-100 text-amber-600' :
                       'bg-slate-100 text-slate-500'
@@ -127,21 +127,21 @@
                   <ProspectStatusBadge :status="prospect.status" mini />
                 </div>
               </div>
-              <p v-if="prospect.company" class="text-[10px] font-bold text-slate-500 truncate mb-1">
-                <i class="fas fa-building text-[9px] mr-1 opacity-60"></i>
+              <p v-if="prospect.company" class="text-[12px] font-bold text-slate-500 truncate mb-1">
+                <i class="fas fa-building text-[11px] mr-1 opacity-60"></i>
                 {{ prospect.company }}
               </p>
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-400 font-medium flex items-center gap-1">
-                    <i class="fas fa-comment text-[9px]"></i>
+                  <span class="text-[12px] text-slate-400 font-medium flex items-center gap-1">
+                    <i class="fas fa-comment text-[11px]"></i>
                     {{ prospect.messages?.length || 0 }}
                   </span>
-                  <span v-if="prospect.estimatedValue" class="text-[10px] text-emerald-600 font-black flex items-center gap-0.5">
+                  <span v-if="prospect.estimatedValue" class="text-[12px] text-emerald-600 font-black flex items-center gap-0.5">
                     ${{ formatMoneyShort(prospect.estimatedValue) }}
                   </span>
                 </div>
-                <span v-if="prospect.lastUpdated" class="text-[10px] text-slate-400 font-medium">
+                <span v-if="prospect.lastUpdated" class="text-[12px] text-slate-400 font-medium">
                   {{ formatRelative(prospect.lastUpdated) }}
                 </span>
               </div>

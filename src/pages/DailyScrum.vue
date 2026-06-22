@@ -15,7 +15,7 @@
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
                 </span>
-                <span class="text-[11px] font-black text-white uppercase tracking-[0.2em]">Rastreo en Vivo</span>
+                <span class="text-[13px] font-black text-white uppercase tracking-[0.2em]">Rastreo en Vivo</span>
               </div>
               
               <div class="flex -space-x-3">
@@ -31,7 +31,7 @@
                   <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white shadow-sm"></div>
                   
                   <!-- Tooltip -->
-                  <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all whitespace-nowrap z-10 shadow-xl">
+                  <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 bg-slate-900 text-white text-[12px] font-bold rounded-lg opacity-0 invisible group-hover/avatar:opacity-100 group-hover/avatar:visible transition-all whitespace-nowrap z-10 shadow-xl">
                     {{ session.userName }} - {{ session.taskTitle }}
                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
                   </div>
@@ -42,13 +42,13 @@
               
               <div class="hidden lg:flex flex-col">
                 <span class="text-slate-800 font-black text-sm">{{ activeSessions.length }} Sesiones Activas</span>
-                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Sincronización en tiempo real</span>
+                <span class="text-slate-400 text-[12px] font-bold uppercase tracking-widest">Sincronización en tiempo real</span>
               </div>
             </div>
             
             <div class="hidden xl:flex items-center gap-8 pr-6">
               <div v-for="(session, idx) in activeSessions.slice(0, 2)" :key="'msg-'+idx" class="flex flex-col items-end animate-fade-in">
-                <span class="text-indigo-600 font-black text-[10px] uppercase tracking-tighter">{{ session.userName }}</span>
+                <span class="text-indigo-600 font-black text-[12px] uppercase tracking-tighter">{{ session.userName }}</span>
                 <span class="text-slate-500 text-xs font-medium italic truncate max-w-[200px]">"{{ session.taskTitle }}"</span>
               </div>
             </div>
@@ -64,13 +64,13 @@
               </div>
               <div class="space-y-0.5 min-w-0">
                 <h2 class="text-base sm:text-2xl font-black text-slate-800 tracking-tight">Evolución del Equipo</h2>
-                <p class="hidden sm:flex text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] items-center gap-2">
+                <p class="hidden sm:flex text-[12px] font-black text-slate-400 uppercase tracking-[0.2em] items-center gap-2">
                   Monitoreo de eficiencia operativa
                 </p>
               </div>
             </div>
 
-            <button @click="openEmailModal" class="flex items-center gap-2 h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all shadow-lg shadow-indigo-100 font-black text-[10px] uppercase tracking-widest group shrink-0 self-start sm:self-auto">
+            <button @click="openEmailModal" class="flex items-center gap-2 h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all shadow-lg shadow-indigo-100 font-black text-[12px] uppercase tracking-widest group shrink-0 self-start sm:self-auto">
               <i class="fas fa-paper-plane group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
               <span class="hidden sm:inline">Enviar Reporte</span>
             </button>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="space-y-0.5 min-w-0">
                       <h3 class="text-slate-800 font-black text-sm tracking-tight truncate">{{ item.user.name }}</h3>
-                      <span class="px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded-md text-[8px] font-black uppercase tracking-widest block w-fit">
+                      <span class="px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded-md text-[10px] font-black uppercase tracking-widest block w-fit">
                         {{ item.user.role || 'Consultor' }}
                       </span>
                     </div>
@@ -103,7 +103,7 @@
                   
                   <div class="flex flex-col gap-2 mt-auto">
                     <div class="flex justify-between items-end">
-                      <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Rendimiento</span>
+                      <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Rendimiento</span>
                       <span class="text-xs font-black text-indigo-600">{{ calculateUserPerformance(item.tasks) }}%</span>
                     </div>
                     <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
@@ -121,13 +121,13 @@
                 <!-- Activities Timeline Section -->
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center justify-between mb-3 px-2">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Actividades del Día ({{ item.tasks.length }})</span>
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Carga: {{ formatSecondsToTime(calculateTotalTime(item.tasks)) }}</span>
+                    <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Actividades del Día ({{ item.tasks.length }})</span>
+                    <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Carga: {{ formatSecondsToTime(calculateTotalTime(item.tasks)) }}</span>
                   </div>
                   
                   <div class="space-y-2 h-[130px] overflow-y-auto pr-2 custom-scrollbar-mini">
                     <div v-if="item.tasks.length === 0" class="flex flex-col items-center justify-center h-full text-slate-300">
-                      <p class="text-[9px] font-black uppercase tracking-widest italic opacity-50">Sin actividad registrada</p>
+                      <p class="text-[11px] font-black uppercase tracking-widest italic opacity-50">Sin actividad registrada</p>
                     </div>
                     
                     <div 
@@ -137,14 +137,14 @@
                     >
                       <div class="w-1.5 h-1.5 rounded-full shrink-0" :class="task.activeSessions?.some((s: any) => (s.userId?._id || s.userId) === item.user._id) ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'"></div>
                       <div class="flex-1 min-w-0">
-                        <h5 class="text-slate-700 text-[11px] font-bold truncate tracking-tight">{{ task.title }}</h5>
-                        <div class="flex items-center gap-3 text-[9px] font-bold text-slate-400">
-                           <span class="flex items-center gap-1"><i class="fas fa-clock text-[8px]"></i> {{ formatSecondsToTime(task.timeSpent || 0) }}</span>
+                        <h5 class="text-slate-700 text-[13px] font-bold truncate tracking-tight">{{ task.title }}</h5>
+                        <div class="flex items-center gap-3 text-[11px] font-bold text-slate-400">
+                           <span class="flex items-center gap-1"><i class="fas fa-clock text-[10px]"></i> {{ formatSecondsToTime(task.timeSpent || 0) }}</span>
                            <span v-if="task.completionPercentage" class="text-indigo-400">{{ task.completionPercentage }}% completo</span>
                         </div>
                       </div>
-                      <div class="shrink-0 text-[10px] font-black text-slate-400 group-hover/task:text-indigo-500 transition-colors">
-                        <i class="fas fa-chevron-right text-[8px]"></i>
+                      <div class="shrink-0 text-[12px] font-black text-slate-400 group-hover/task:text-indigo-500 transition-colors">
+                        <i class="fas fa-chevron-right text-[10px]"></i>
                       </div>
                     </div>
                   </div>
@@ -155,8 +155,8 @@
               <div class="flex items-center justify-between px-4 py-3 bg-slate-50/50 border-t border-slate-100 rounded-b-xl">
                 <div class="flex items-center gap-6">
                   <div class="flex flex-col">
-                    <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Actividad</span>
-                    <span class="text-[10px] font-bold" :class="isUserActive(item.user._id) ? 'text-emerald-500' : 'text-slate-500'">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Actividad</span>
+                    <span class="text-[12px] font-bold" :class="isUserActive(item.user._id) ? 'text-emerald-500' : 'text-slate-500'">
                       {{ isUserActive(item.user._id) ? 'Trabajando' : 'En pausa' }}
                     </span>
                   </div>
@@ -193,7 +193,7 @@
           
           <div class="space-y-5">
             <div class="group">
-              <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1 group-focus-within:text-indigo-600 transition-colors">Destinatario Principal</label>
+              <label class="block text-[12px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1 group-focus-within:text-indigo-600 transition-colors">Destinatario Principal</label>
               <div class="relative">
                 <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-400 transition-colors"></i>
                 <input
@@ -206,13 +206,13 @@
             </div>
 
             <div class="flex gap-3">
-              <button @click="showEmailModal = false" class="flex-1 h-9 px-4 bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all border border-slate-200">
+              <button @click="showEmailModal = false" class="flex-1 h-9 px-4 bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-xl text-[13px] font-black uppercase tracking-widest transition-all border border-slate-200">
                 Cancelar
               </button>
               <button
                 @click="confirmSendReport"
                 :disabled="sendingEmail || !reportEmail"
-                class="flex-[1.5] h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[11px] font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-95"
+                class="flex-[1.5] h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[13px] font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-95"
               >
                 <div v-if="sendingEmail" class="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                 <i v-else class="fas fa-paper-plane text-xs"></i>

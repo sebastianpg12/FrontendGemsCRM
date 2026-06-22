@@ -9,24 +9,24 @@
         </div>
         <div>
           <h1 class="text-[18px] font-black text-slate-800 dark:text-slate-100 leading-tight">{{ client?.name || '...' }}</h1>
-          <p class="text-[11px] text-slate-400 font-medium mt-0.5">{{ client?.company || 'Sin empresa' }}<span v-if="client?.email"> · {{ client.email }}</span></p>
+          <p class="text-[13px] text-slate-400 font-medium mt-0.5">{{ client?.company || 'Sin empresa' }}<span v-if="client?.email"> · {{ client.email }}</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 shrink-0">
-        <router-link to="/clients" class="h-8 px-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg hover:bg-slate-100 transition-colors flex items-center gap-1.5">
-          <i class="fas fa-arrow-left text-[9px]"></i> Volver
+        <router-link to="/clients" class="h-8 px-3 text-[13px] font-bold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg hover:bg-slate-100 transition-colors flex items-center gap-1.5">
+          <i class="fas fa-arrow-left text-[11px]"></i> Volver
         </router-link>
         <button @click="editOverview = !editOverview"
-          class="h-8 px-3 text-[11px] font-bold rounded-lg transition-colors flex items-center gap-1.5"
+          class="h-8 px-3 text-[13px] font-bold rounded-lg transition-colors flex items-center gap-1.5"
           :class="editOverview
             ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500 border border-rose-200 dark:border-rose-500/30'
             : 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/30 hover:bg-amber-100'">
-          <i :class="editOverview ? 'fas fa-times' : 'fas fa-edit'" class="text-[9px]"></i>
+          <i :class="editOverview ? 'fas fa-times' : 'fas fa-edit'" class="text-[11px]"></i>
           {{ editOverview ? 'Cancelar' : 'Editar' }}
         </button>
         <button v-if="editOverview" @click="handleSave"
-          class="h-8 px-3 text-[11px] font-bold text-white bg-emerald-500 hover:bg-emerald-600 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
-          <i class="fas fa-save text-[9px]"></i> Guardar
+          class="h-8 px-3 text-[13px] font-bold text-white bg-emerald-500 hover:bg-emerald-600 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
+          <i class="fas fa-save text-[11px]"></i> Guardar
         </button>
       </div>
     </div>
@@ -41,11 +41,11 @@
       <!-- Tabs -->
       <div class="flex gap-1 px-3 pt-3 border-b border-slate-100 dark:border-[#334155] overflow-x-auto">
         <button v-for="t in tabs" :key="t.key" @click="activeTab = t.key"
-          class="px-4 py-2 rounded-t-lg whitespace-nowrap text-[11px] font-bold transition-all flex items-center gap-1.5 min-w-max border-b-2 -mb-px"
+          class="px-4 py-2 rounded-t-lg whitespace-nowrap text-[13px] font-bold transition-all flex items-center gap-1.5 min-w-max border-b-2 -mb-px"
           :class="activeTab === t.key
             ? 'text-primary-600 dark:text-primary-400 border-primary-500 bg-primary-50/50 dark:bg-primary-500/10'
             : 'text-slate-500 dark:text-slate-400 border-transparent hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/20'">
-          <i :class="[t.icon, 'text-[9px]']"></i>{{ t.label }}
+          <i :class="[t.icon, 'text-[11px]']"></i>{{ t.label }}
         </button>
       </div>
 

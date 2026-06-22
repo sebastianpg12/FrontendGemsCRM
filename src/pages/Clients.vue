@@ -4,17 +4,17 @@
     <div class="mb-3 flex items-center justify-between gap-3">
       <div>
         <div class="flex items-center gap-2 mb-0.5">
-          <i class="fas fa-gem text-primary-400 text-[9px]"></i>
-          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
+          <i class="fas fa-gem text-primary-400 text-[11px]"></i>
+          <span class="text-[11px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
         </div>
         <h1 class="text-[22px] font-black text-slate-900 tracking-tight leading-tight">Clientes</h1>
-        <p class="text-slate-400 text-[11px] font-medium">Gestiona tus contactos y relaciones comerciales.</p>
+        <p class="text-slate-400 text-[13px] font-medium">Gestiona tus contactos y relaciones comerciales.</p>
       </div>
       
       <PermissionGuard :permissions="['create-clients']" :fallback="false">
         <button 
           @click="showModal = true; editingClient = null; resetForm()" 
-          class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[11px] font-black shadow-md shadow-primary-500/20 transition-all"
+          class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[13px] font-black shadow-md shadow-primary-500/20 transition-all"
         >
           <PlusIcon class="w-3.5 h-3.5" />
           Añadir Cliente
@@ -38,15 +38,15 @@
           </div>
           
           <div class="flex items-center gap-2 w-full sm:w-auto">
-            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Ordenar por</span>
+            <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Ordenar por</span>
             <div class="cl-chip" @click.stop="openCLChip = openCLChip === 'sort' ? null : 'sort'">
               <i class="fas fa-sort"></i>
               <span class="cl-label">{{ sortBy === 'name' ? 'Nombre' : sortBy === 'company' ? 'Empresa' : 'Recientes' }}</span>
               <i class="fas fa-chevron-down cl-caret" :class="{ 'rotate-180': openCLChip === 'sort' }"></i>
               <div v-if="openCLChip === 'sort'" class="cl-dropdown" @click.stop>
-                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'name' }" @click="sortBy = 'name'; openCLChip = null"><span>Nombre</span><i v-if="sortBy === 'name'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'company' }" @click="sortBy = 'company'; openCLChip = null"><span>Empresa</span><i v-if="sortBy === 'company'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'createdAt' }" @click="sortBy = 'createdAt'; openCLChip = null"><span>Recientes</span><i v-if="sortBy === 'createdAt'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'name' }" @click="sortBy = 'name'; openCLChip = null"><span>Nombre</span><i v-if="sortBy === 'name'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'company' }" @click="sortBy = 'company'; openCLChip = null"><span>Empresa</span><i v-if="sortBy === 'company'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+                <div class="cl-dropdown-item" :class="{ 'cl-dropdown-item--active': sortBy === 'createdAt' }" @click="sortBy = 'createdAt'; openCLChip = null"><span>Recientes</span><i v-if="sortBy === 'createdAt'" class="fas fa-check text-[12px] text-primary-500"></i></div>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
         <div v-if="loading" class="flex items-center justify-center absolute inset-0 z-10 bg-white/60 backdrop-blur-[2px]">
           <div class="flex flex-col items-center gap-3">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
-            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Cargando Clientes</span>
+            <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Cargando Clientes</span>
           </div>
         </div>
       
@@ -81,11 +81,11 @@
             <table class="min-w-full divide-y divide-slate-100">
               <thead>
                 <tr class="bg-slate-50/50 dark:bg-[#161f2e]">
-                  <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
-                  <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Empresa</th>
-                  <th class="px-4 py-3 text-left text-[9px] font-black text-slate-400 uppercase tracking-widest">Contacto</th>
-                  <th class="px-4 py-3 text-center text-[9px] font-black text-slate-400 uppercase tracking-widest">Registro</th>
-                  <th class="px-4 py-3 text-right text-[9px] font-black text-slate-400 uppercase tracking-widest">Acciones</th>
+                  <th class="px-4 py-3 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
+                  <th class="px-4 py-3 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Empresa</th>
+                  <th class="px-4 py-3 text-left text-[11px] font-black text-slate-400 uppercase tracking-widest">Contacto</th>
+                  <th class="px-4 py-3 text-center text-[11px] font-black text-slate-400 uppercase tracking-widest">Registro</th>
+                  <th class="px-4 py-3 text-right text-[11px] font-black text-slate-400 uppercase tracking-widest">Acciones</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-50 dark:divide-[#334155]">
@@ -96,40 +96,40 @@
                 >
                   <td class="px-4 py-2.5 whitespace-nowrap">
                     <div class="flex items-center gap-3">
-                      <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-primary-50 to-primary-100/60 flex items-center justify-center text-primary-600 font-black text-[11px] ring-1 ring-primary-100 shrink-0">
+                      <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-primary-50 to-primary-100/60 flex items-center justify-center text-primary-600 font-black text-[13px] ring-1 ring-primary-100 shrink-0">
                         {{ client.name.charAt(0).toUpperCase() }}
                       </div>
                       <div class="min-w-0">
-                        <div class="text-slate-900 font-black text-[12px] leading-tight group-hover:text-primary-600 transition-colors truncate">{{ client.name }}</div>
-                        <div class="text-slate-400 text-[9px] font-black uppercase tracking-widest">Contacto</div>
+                        <div class="text-slate-900 font-black text-[14px] leading-tight group-hover:text-primary-600 transition-colors truncate">{{ client.name }}</div>
+                        <div class="text-slate-400 text-[11px] font-black uppercase tracking-widest">Contacto</div>
                       </div>
                     </div>
                   </td>
                   <td class="px-4 py-2.5 whitespace-nowrap">
-                    <span class="text-slate-700 text-[11px] font-bold">{{ client.company || '—' }}</span>
+                    <span class="text-slate-700 text-[13px] font-bold">{{ client.company || '—' }}</span>
                   </td>
                   <td class="px-4 py-2.5 whitespace-nowrap">
                     <div class="space-y-0.5">
-                      <div class="text-slate-600 text-[11px] font-medium flex items-center gap-1.5">
-                        <i class="fas fa-envelope text-slate-300 text-[9px] w-3 text-center"></i>
+                      <div class="text-slate-600 text-[13px] font-medium flex items-center gap-1.5">
+                        <i class="fas fa-envelope text-slate-300 text-[11px] w-3 text-center"></i>
                         {{ client.email }}
                       </div>
-                      <div class="text-slate-400 text-[10px] font-medium flex items-center gap-1.5">
-                        <i class="fas fa-phone text-slate-300 text-[9px] w-3 text-center"></i>
+                      <div class="text-slate-400 text-[12px] font-medium flex items-center gap-1.5">
+                        <i class="fas fa-phone text-slate-300 text-[11px] w-3 text-center"></i>
                         {{ client.phone }}
                       </div>
                     </div>
                   </td>
                   <td class="px-4 py-2.5 whitespace-nowrap">
                     <div class="flex flex-col items-center">
-                      <span class="text-slate-700 text-[11px] font-bold">{{ formatDate(client.createdAt) }}</span>
-                      <span class="text-slate-400 text-[9px] font-black uppercase tracking-widest">Activo</span>
+                      <span class="text-slate-700 text-[13px] font-bold">{{ formatDate(client.createdAt) }}</span>
+                      <span class="text-slate-400 text-[11px] font-black uppercase tracking-widest">Activo</span>
                     </div>
                   </td>
                   <td class="px-4 py-2.5 whitespace-nowrap text-right">
                     <div class="flex items-center justify-end gap-0.5 opacity-0 group-hover:opacity-100 transition-all translate-x-1 group-hover:translate-x-0">
                       <router-link :to="`/clients/${client._id}`" class="p-1.5 rounded-lg transition-all text-primary-500 hover:bg-primary-50" title="Ver Perfil">
-                        <i class="fas fa-arrow-right text-[11px]"></i>
+                        <i class="fas fa-arrow-right text-[13px]"></i>
                       </router-link>
                       <PermissionGuard :permissions="['edit-clients']" :fallback="false">
                         <button @click="editClient(client)" class="p-1.5 rounded-lg transition-all text-amber-500 hover:bg-amber-50" title="Editar">
@@ -162,7 +162,7 @@
                   </div>
                   <div>
                     <h3 class="text-slate-900 font-bold text-sm">{{ client.name }}</h3>
-                    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">{{ client.company }}</p>
+                    <p class="text-slate-400 text-[12px] font-black uppercase tracking-widest">{{ client.company }}</p>
                   </div>
                 </div>
                 <div class="flex gap-2">
@@ -249,7 +249,7 @@
             <h3 class="text-xl font-black text-slate-900 leading-tight">
               {{ editingClient ? 'Editar Expediente' : 'Nuevo Cliente' }}
             </h3>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Completa los datos de contacto</p>
+            <p class="text-[12px] font-black text-slate-400 uppercase tracking-widest mt-1">Completa los datos de contacto</p>
           </div>
           <button @click="showModal = false" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
             <i class="fas fa-times"></i>
@@ -259,24 +259,24 @@
         <form @submit.prevent="saveClient" class="p-8">
           <div class="space-y-6">
             <div class="space-y-2">
-              <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Nombre Completo</label>
+              <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest pl-1">Nombre Completo</label>
               <input v-model="form.name" type="text" required placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all" />
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Correo Electrónico</label>
+                <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest pl-1">Correo Electrónico</label>
                 <input v-model="form.email" type="email" required placeholder="correo@ejemplo.com" class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
               </div>
               
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Teléfono</label>
+                <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest pl-1">Teléfono</label>
                 <input v-model="form.phone" type="tel" required placeholder="+57 ..." class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
               </div>
             </div>
             
             <div class="space-y-2">
-              <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Empresa / Organización</label>
+              <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest pl-1">Empresa / Organización</label>
               <input v-model="form.company" type="text" required placeholder="Nombre de la empresa" class="w-full bg-slate-50 rounded-xl px-5 py-4 text-sm font-bold text-slate-800 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/10 transition-all" />
             </div>
           </div>

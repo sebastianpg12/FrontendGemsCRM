@@ -82,7 +82,7 @@
             </div>
             <div class="flex-1 min-w-0">
               <h3 class="font-bold text-slate-800 text-sm truncate">{{ member.name }}</h3>
-              <span class="inline-block px-2 py-0.5 bg-primary-50 text-primary-600 rounded-md text-[10px] font-black uppercase tracking-wider mt-0.5">{{ member.role }}</span>
+              <span class="inline-block px-2 py-0.5 bg-primary-50 text-primary-600 rounded-md text-[12px] font-black uppercase tracking-wider mt-0.5">{{ member.role }}</span>
             </div>
           </div>
 
@@ -101,10 +101,10 @@
           <!-- Actions -->
           <div class="flex gap-2 pt-3 border-t border-slate-100">
             <button @click="editMember(member)" class="btn btn-secondary btn-sm flex-1">
-              <i class="fas fa-pen text-[10px]"></i>Editar
+              <i class="fas fa-pen text-[12px]"></i>Editar
             </button>
             <button @click="confirmDelete(member)" class="btn btn-danger btn-sm flex-1">
-              <i class="fas fa-trash text-[10px]"></i>Eliminar
+              <i class="fas fa-trash text-[12px]"></i>Eliminar
             </button>
           </div>
         </div>

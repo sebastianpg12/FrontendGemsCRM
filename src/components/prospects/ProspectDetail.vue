@@ -12,7 +12,7 @@
             <div class="min-w-0 flex-1">
               <h2 class="text-sm font-black text-slate-900 truncate">{{ prospect.prospectName }}</h2>
               <p v-if="prospect.company" class="text-xs font-bold text-slate-500 truncate mt-0.5">
-                <i class="fas fa-building text-[10px] mr-1 opacity-60"></i>{{ prospect.company }}
+                <i class="fas fa-building text-[12px] mr-1 opacity-60"></i>{{ prospect.company }}
               </p>
             </div>
           </div>
@@ -28,8 +28,8 @@
         <!-- Pipeline Progress -->
         <div class="mb-2">
           <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Pipeline</span>
-            <span class="text-[10px] font-black text-slate-600">{{ currentProb }}% probabilidad</span>
+            <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Pipeline</span>
+            <span class="text-[12px] font-black text-slate-600">{{ currentProb }}% probabilidad</span>
           </div>
           <div class="flex gap-1">
             <button
@@ -43,7 +43,7 @@
               :title="`${stage.label} · ${stage.probability}%`"
             >
               <span :class="[
-                'absolute -top-5 left-1/2 -translate-x-1/2 text-[8px] font-black uppercase opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap',
+                'absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap',
                 isStageActive(stage.value, i) ? 'text-slate-900' : 'text-slate-500',
               ]">
                 {{ stage.label }}
@@ -55,34 +55,34 @@
 
       <!-- Action Bar -->
       <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-2 overflow-x-auto custom-scrollbar bg-white">
-        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap mr-1">Atacar:</span>
-        <button @click="openOutreach('email')" class="px-3 py-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 border border-primary-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
-          <i class="fas fa-envelope text-[10px]"></i>Email
+        <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap mr-1">Atacar:</span>
+        <button @click="openOutreach('email')" class="px-3 py-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 border border-primary-200 rounded-lg text-[12px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
+          <i class="fas fa-envelope text-[12px]"></i>Email
         </button>
-        <button @click="openOutreach('call')" class="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 text-cyan-700 border border-cyan-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
-          <i class="fas fa-phone text-[10px]"></i>Script llamada
+        <button @click="openOutreach('call')" class="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 text-cyan-700 border border-cyan-200 rounded-lg text-[12px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all">
+          <i class="fas fa-phone text-[12px]"></i>Script llamada
         </button>
         <button
           @click="scheduleOpen = true"
-          class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all"
+          class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-lg text-[12px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all"
         >
-          <i class="fas fa-calendar-plus text-[10px]"></i>Agendar seguimiento
+          <i class="fas fa-calendar-plus text-[12px]"></i>Agendar seguimiento
         </button>
         <button
           v-if="proposalMarkdown"
           @click="exportPdf"
-          class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all"
+          class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-[12px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all"
           title="Descargar la propuesta en PDF"
         >
-          <i class="fas fa-file-pdf text-[10px]"></i>PDF
+          <i class="fas fa-file-pdf text-[12px]"></i>PDF
         </button>
         <div class="w-px h-5 bg-slate-200 mx-1"></div>
         <button
           @click="convertToClient"
           :disabled="converting"
-          class="px-3 py-1.5 bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white border border-emerald-600 rounded-lg text-[10px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all shadow-sm disabled:opacity-60"
+          class="px-3 py-1.5 bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white border border-emerald-600 rounded-lg text-[12px] font-black flex items-center gap-1.5 whitespace-nowrap transition-all shadow-sm disabled:opacity-60"
         >
-          <i :class="['fas', converting ? 'fa-circle-notch fa-spin' : 'fa-trophy', 'text-[10px]']"></i>
+          <i :class="['fas', converting ? 'fa-circle-notch fa-spin' : 'fa-trophy', 'text-[12px]']"></i>
           {{ prospect.status === 'ganado' ? 'Convertir a cliente' : 'Cerrar como ganado' }}
         </button>
       </div>
@@ -94,13 +94,13 @@
           :key="tab.id"
           @click="activeTab = tab.id"
           :class="[
-            'px-3 py-1.5 rounded-lg text-[10px] font-black flex items-center gap-1.5 transition-all whitespace-nowrap',
+            'px-3 py-1.5 rounded-lg text-[12px] font-black flex items-center gap-1.5 transition-all whitespace-nowrap',
             activeTab === tab.id ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700',
           ]"
         >
-          <i :class="['fas', tab.icon, 'text-[10px]']"></i>
+          <i :class="['fas', tab.icon, 'text-[12px]']"></i>
           {{ tab.label }}
-          <span v-if="tab.count !== undefined" class="text-[9px] font-bold opacity-60">{{ tab.count }}</span>
+          <span v-if="tab.count !== undefined" class="text-[11px] font-bold opacity-60">{{ tab.count }}</span>
         </button>
       </div>
 
@@ -159,54 +159,54 @@
     <div v-if="scheduleOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50">
       <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm p-5">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Agendar seguimiento</h3>
+          <h3 class="text-[17px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Agendar seguimiento</h3>
           <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="scheduleOpen = false">
-            <i class="fas fa-times text-[12px]"></i>
+            <i class="fas fa-times text-[14px]"></i>
           </button>
         </div>
         <div class="space-y-3.5">
           <div>
-            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Acción *</label>
+            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Acción *</label>
             <input
               v-model="scheduleForm.title"
               type="text"
               :placeholder="`Llamar a ${prospect.contactName || prospect.prospectName}`"
-              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
             />
           </div>
           <div>
-            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Fecha *</label>
+            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Fecha *</label>
             <input
               v-model="scheduleForm.date"
               type="date"
               :min="todayIso"
-              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[13px] font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
             />
           </div>
           <div>
-            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Notas</label>
+            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Notas</label>
             <textarea
               v-model="scheduleForm.notes"
               rows="2"
               placeholder="Contexto para el seguimiento..."
-              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all resize-none"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[13px] font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all resize-none"
             ></textarea>
           </div>
-          <p class="text-[10px] font-medium text-slate-400 leading-relaxed">
+          <p class="text-[12px] font-medium text-slate-400 leading-relaxed">
             <i class="fas fa-circle-info mr-1"></i>Se creará una actividad en el módulo de Actividades y una tarea en este prospecto.
           </p>
         </div>
         <div class="flex justify-end gap-2 mt-5">
           <button
-            class="inline-flex items-center gap-2 h-9 px-4 text-[11px] font-bold rounded-lg bg-white dark:bg-[#1e293b] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
+            class="inline-flex items-center gap-2 h-9 px-4 text-[13px] font-bold rounded-lg bg-white dark:bg-[#1e293b] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
             @click="scheduleOpen = false"
           >Cancelar</button>
           <button
-            class="inline-flex items-center gap-2 h-9 px-4 text-[11px] font-bold rounded-lg text-white bg-primary-600 hover:bg-primary-700 transition-colors disabled:opacity-60"
+            class="inline-flex items-center gap-2 h-9 px-4 text-[13px] font-bold rounded-lg text-white bg-primary-600 hover:bg-primary-700 transition-colors disabled:opacity-60"
             :disabled="!scheduleForm.title.trim() || !scheduleForm.date || scheduling"
             @click="scheduleFollowUp"
           >
-            <i class="fas text-[10px]" :class="scheduling ? 'fa-circle-notch fa-spin' : 'fa-calendar-check'"></i>Agendar
+            <i class="fas text-[12px]" :class="scheduling ? 'fa-circle-notch fa-spin' : 'fa-calendar-check'"></i>Agendar
           </button>
         </div>
       </div>

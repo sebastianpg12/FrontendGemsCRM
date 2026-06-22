@@ -9,11 +9,11 @@
         class="w-full bg-transparent border-none outline-none text-xs font-medium text-slate-800 placeholder-slate-400 resize-none leading-relaxed"
       ></textarea>
       <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-100">
-        <span class="text-[10px] text-slate-400 font-bold">📝 Notas internas, solo visibles aquí</span>
+        <span class="text-[12px] text-slate-400 font-bold">📝 Notas internas, solo visibles aquí</span>
         <button
           @click="addNote"
           :disabled="!newNote.trim()"
-          class="px-3 py-1.5 bg-slate-900 text-white text-[10px] font-black rounded-lg hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          class="px-3 py-1.5 bg-slate-900 text-white text-[12px] font-black rounded-lg hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
           Guardar nota
         </button>
@@ -29,12 +29,12 @@
       >
         <p class="text-xs font-medium text-slate-800 leading-relaxed whitespace-pre-wrap">{{ note.content }}</p>
         <div class="flex items-center justify-between mt-2 pt-2 border-t border-yellow-200/40">
-          <span class="text-[10px] font-bold text-slate-500">{{ formatDate(note.createdAt) }}</span>
+          <span class="text-[12px] font-bold text-slate-500">{{ formatDate(note.createdAt) }}</span>
           <button
             @click="confirmRemove(note.id)"
-            class="text-[10px] font-bold text-rose-500 hover:text-rose-700 opacity-0 group-hover:opacity-100 transition-opacity"
+            class="text-[12px] font-bold text-rose-500 hover:text-rose-700 opacity-0 group-hover:opacity-100 transition-opacity"
           >
-            <i class="fas fa-trash text-[9px]"></i>
+            <i class="fas fa-trash text-[11px]"></i>
           </button>
         </div>
       </div>
@@ -43,7 +43,7 @@
     <div v-else class="text-center py-8">
       <i class="fas fa-note-sticky text-3xl text-slate-200 mb-2 block"></i>
       <p class="text-xs font-bold text-slate-400">Sin notas aún</p>
-      <p class="text-[10px] text-slate-400 mt-1">Anota observaciones o recordatorios internos sobre el prospect</p>
+      <p class="text-[12px] text-slate-400 mt-1">Anota observaciones o recordatorios internos sobre el prospect</p>
     </div>
   </div>
 </template>

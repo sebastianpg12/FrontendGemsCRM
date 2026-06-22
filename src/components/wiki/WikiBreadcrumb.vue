@@ -5,10 +5,10 @@
       title="Inicio de la Wiki"
       @click="$emit('navigate', null)"
     >
-      <i class="fas fa-book-open text-[10px]"></i>
+      <i class="fas fa-book-open text-[12px]"></i>
     </button>
     <template v-for="(crumb, idx) in trail" :key="crumb._id">
-      <i class="fas fa-chevron-right text-[7px] text-slate-300 dark:text-slate-600 shrink-0"></i>
+      <i class="fas fa-chevron-right text-[9px] text-slate-300 dark:text-slate-600 shrink-0"></i>
       <button
         class="crumb truncate"
         :class="{ 'text-slate-800 dark:text-slate-100 pointer-events-none': idx === trail.length - 1 }"

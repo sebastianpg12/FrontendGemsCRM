@@ -16,7 +16,7 @@
           v-if="msg.role === 'assistant'"
           class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-primary-500/20"
         >
-          <i class="fas fa-wand-magic-sparkles text-[11px]"></i>
+          <i class="fas fa-wand-magic-sparkles text-[13px]"></i>
         </div>
 
         <div
@@ -29,19 +29,19 @@
         >
           <div
             v-if="msg.role === 'assistant'"
-            class="prose-msg text-[12.5px] leading-relaxed"
+            class="prose-msg text-[14px] leading-relaxed"
             v-html="renderMarkdown(msg.content)"
           ></div>
-          <p v-else class="text-[12.5px] leading-relaxed whitespace-pre-wrap font-medium">{{ msg.content }}</p>
+          <p v-else class="text-[14px] leading-relaxed whitespace-pre-wrap font-medium">{{ msg.content }}</p>
 
           <div class="flex items-center justify-between gap-3 mt-2 pt-2 border-t" :class="msg.role === 'user' ? 'border-primary-500/30' : 'border-slate-100'">
-            <span :class="['text-[9px] font-bold', msg.role === 'user' ? 'text-primary-200' : 'text-slate-400']">
+            <span :class="['text-[11px] font-bold', msg.role === 'user' ? 'text-primary-200' : 'text-slate-400']">
               {{ formatTime(msg.timestamp) }}
             </span>
             <button
               v-if="msg.role === 'assistant'"
               @click="copyMessage(msg.content)"
-              class="text-[9px] font-bold text-slate-400 hover:text-primary-600 transition-colors flex items-center gap-1"
+              class="text-[11px] font-bold text-slate-400 hover:text-primary-600 transition-colors flex items-center gap-1"
             >
               <i class="fas fa-copy"></i>Copiar
             </button>
@@ -52,14 +52,14 @@
           v-if="msg.role === 'user'"
           class="w-8 h-8 rounded-xl bg-slate-200 text-slate-600 flex items-center justify-center flex-shrink-0"
         >
-          <i class="fas fa-user text-[11px]"></i>
+          <i class="fas fa-user text-[13px]"></i>
         </div>
       </div>
 
       <!-- AI thinking -->
       <div v-if="aiThinking" class="flex gap-3 justify-start">
         <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center flex-shrink-0">
-          <i class="fas fa-wand-magic-sparkles text-[11px]"></i>
+          <i class="fas fa-wand-magic-sparkles text-[13px]"></i>
         </div>
         <div class="bg-white rounded-xl rounded-bl-md px-4 py-3 shadow-sm">
           <div class="flex gap-1.5">
@@ -91,13 +91,13 @@
           class="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-800 text-white rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center"
           title="Enviar y obtener respuesta IA (Enter)"
         >
-          <i v-if="aiThinking" class="fas fa-circle-notch fa-spin text-[11px]"></i>
-          <i v-else class="fas fa-paper-plane text-[11px]"></i>
+          <i v-if="aiThinking" class="fas fa-circle-notch fa-spin text-[13px]"></i>
+          <i v-else class="fas fa-paper-plane text-[13px]"></i>
         </button>
       </div>
-      <p class="text-[9px] text-slate-400 mt-1.5 px-1 font-medium">
-        <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[8px] font-mono">Enter</kbd> enviar y obtener respuesta ·
-        <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[8px] font-mono">Shift+Enter</kbd> salto de línea
+      <p class="text-[11px] text-slate-400 mt-1.5 px-1 font-medium">
+        <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[10px] font-mono">Enter</kbd> enviar y obtener respuesta ·
+        <kbd class="px-1 py-0.5 bg-slate-100 rounded text-[10px] font-mono">Shift+Enter</kbd> salto de línea
       </p>
     </div>
   </div>

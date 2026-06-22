@@ -10,9 +10,9 @@
           :class="currentView === v.id
             ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm ring-1 ring-slate-200 dark:ring-[#334155] font-black'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold'"
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] transition-all duration-150"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] transition-all duration-150"
         >
-          <i :class="v.icon + ' text-[10px]'"></i>
+          <i :class="v.icon + ' text-[12px]'"></i>
           <span class="hidden sm:inline">{{ v.label }}</span>
         </button>
         <button
@@ -21,9 +21,9 @@
           :class="currentView === 'team'
             ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm ring-1 ring-slate-200 dark:ring-[#334155] font-black'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold'"
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] transition-all duration-150"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] transition-all duration-150"
         >
-          <i class="fas fa-users text-[10px]"></i>
+          <i class="fas fa-users text-[12px]"></i>
           <span class="hidden sm:inline">Equipo</span>
         </button>
       </div>
@@ -31,18 +31,18 @@
       <div class="flex items-center gap-2">
         <!-- Search -->
         <div class="relative hidden md:block">
-          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 text-[10px]"></i>
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 text-[12px]"></i>
           <input
             :value="searchTerm"
             @input="$emit('update:searchTerm', ($event.target as HTMLInputElement).value)"
             type="text"
             placeholder="Buscar actividad..."
-            class="w-52 pl-8 pr-3 py-1.5 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl text-[11px] text-slate-700 dark:text-slate-200 placeholder-slate-300 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none"
+            class="w-52 pl-8 pr-3 py-1.5 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl text-[13px] text-slate-700 dark:text-slate-200 placeholder-slate-300 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none"
           />
         </div>
 
         <!-- Mini stats -->
-        <div class="hidden lg:flex items-center gap-2 text-[10px] font-black uppercase tracking-wider">
+        <div class="hidden lg:flex items-center gap-2 text-[12px] font-black uppercase tracking-wider">
           <span class="flex items-center gap-1 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-lg border border-amber-100 dark:border-amber-800/30">
             <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {{ pendingActivities.length }}
           </span>
@@ -55,10 +55,10 @@
         <button
           v-if="authStore.canCreateActivities"
           @click="showCreateModal = true"
-          class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[11px] font-black shadow-md shadow-primary-500/20 transition-all"
+          class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[13px] font-black shadow-md shadow-primary-500/20 transition-all"
           title="Nueva Actividad"
         >
-          <i class="fas fa-plus text-[9px]"></i>
+          <i class="fas fa-plus text-[11px]"></i>
           <span class="hidden sm:inline">Nueva</span>
         </button>
       </div>
@@ -69,10 +69,10 @@
       <div class="flex items-center gap-2.5">
         <!-- Label -->
         <div class="flex items-center gap-1.5 text-primary-700 dark:text-primary-400 shrink-0 ml-0.5">
-          <i class="fas fa-bolt text-[10px]"></i>
-          <span class="font-black text-[10px] tracking-widest uppercase hidden sm:inline">Tarea Rápida</span>
-          <span class="text-[9px] bg-primary-100 dark:bg-primary-800/30 text-primary-700 dark:text-primary-300 font-black px-1.5 py-0.5 rounded-lg hidden lg:inline-flex items-center gap-1">
-            <i class="fas fa-clock text-[8px]"></i> {{ quickTaskSettings.dueDays }}d ·
+          <i class="fas fa-bolt text-[12px]"></i>
+          <span class="font-black text-[12px] tracking-widest uppercase hidden sm:inline">Tarea Rápida</span>
+          <span class="text-[11px] bg-primary-100 dark:bg-primary-800/30 text-primary-700 dark:text-primary-300 font-black px-1.5 py-0.5 rounded-lg hidden lg:inline-flex items-center gap-1">
+            <i class="fas fa-clock text-[10px]"></i> {{ quickTaskSettings.dueDays }}d ·
             {{ quickTaskSettings.priority === 'low' ? 'Baja' : quickTaskSettings.priority === 'medium' ? 'Media' : quickTaskSettings.priority === 'high' ? 'Alta' : 'Urgente' }} ·
             {{ quickTaskSettings.estimatedTime }}
           </span>
@@ -88,7 +88,7 @@
             @blur="setTimeout(() => showQuickTaskHints = false, 200)"
             type="text"
             placeholder="¿Qué necesitas hacer? Enter para crear..."
-            class="w-full pl-3 pr-10 py-1.5 bg-white dark:bg-[#1e293b] border border-primary-100 dark:border-[#334155] rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-300 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none font-medium text-[11px]"
+            class="w-full pl-3 pr-10 py-1.5 bg-white dark:bg-[#1e293b] border border-primary-100 dark:border-[#334155] rounded-xl text-slate-800 dark:text-slate-100 placeholder-slate-300 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all outline-none font-medium text-[13px]"
           />
           <VoiceDictateButton
             v-model="quickTaskTitle"
@@ -98,7 +98,7 @@
           />
           <div
             v-if="showQuickTaskHints && quickTaskTitle"
-            class="absolute top-full left-0 mt-1 bg-slate-900 shadow-xl rounded-xl p-2 text-[10px] text-white z-20 font-medium flex gap-3"
+            class="absolute top-full left-0 mt-1 bg-slate-900 shadow-xl rounded-xl p-2 text-[12px] text-white z-20 font-medium flex gap-3"
           >
             <span><kbd class="bg-slate-700 px-1 py-0.5 rounded mr-1">Enter</kbd>Crear</span>
             <span><kbd class="bg-slate-700 px-1 py-0.5 rounded mr-1">Esc</kbd>Limpiar</span>
@@ -109,9 +109,9 @@
         <button
           @click="createQuickTaskNow"
           :disabled="!quickTaskTitle.trim()"
-          class="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl font-black text-[11px] shadow-md shadow-primary-500/20 transition-all disabled:opacity-40 flex items-center gap-1.5 shrink-0"
+          class="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl font-black text-[13px] shadow-md shadow-primary-500/20 transition-all disabled:opacity-40 flex items-center gap-1.5 shrink-0"
         >
-          <i class="fas fa-bolt text-[9px]"></i> Crear
+          <i class="fas fa-bolt text-[11px]"></i> Crear
         </button>
 
         <!-- Config -->
@@ -120,7 +120,7 @@
           class="p-2 text-primary-400 dark:text-primary-300 hover:text-primary-600 dark:hover:text-primary-200 hover:bg-primary-100/50 dark:hover:bg-primary-800/30 rounded-lg transition-colors shrink-0"
           title="Configuración rápida"
         >
-          <i class="fas fa-cog text-[13px]"></i>
+          <i class="fas fa-cog text-[14px]"></i>
         </button>
       </div>
     </div>
@@ -133,16 +133,16 @@
       <!-- Filter Header -->
       <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-50 dark:border-[#334155]">
         <div class="flex items-center gap-1.5">
-          <i class="fas fa-filter text-[10px] text-slate-400"></i>
-          <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Filtros</span>
+          <i class="fas fa-filter text-[12px] text-slate-400"></i>
+          <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Filtros</span>
           <span v-if="hasActiveFilters"
-            class="w-4 h-4 bg-primary-500 text-white text-[8px] font-black rounded-full flex items-center justify-center">
+            class="w-4 h-4 bg-primary-500 text-white text-[10px] font-black rounded-full flex items-center justify-center">
             {{ [selectedDepartment, selectedTeamMember, selectedStatus].filter(Boolean).length }}
           </span>
         </div>
         <div class="flex items-center gap-1.5">
-          <span v-if="filtersLocked" class="text-[9px] text-primary-600 font-black flex items-center gap-1">
-            <i class="fas fa-lock text-[8px]"></i> Guardado
+          <span v-if="filtersLocked" class="text-[11px] text-primary-600 font-black flex items-center gap-1">
+            <i class="fas fa-lock text-[10px]"></i> Guardado
           </span>
           <button
             @click="toggleLockFilters"
@@ -150,25 +150,25 @@
             class="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
             title="Guardar filtro"
           >
-            <i :class="filtersLocked ? 'fas fa-lock' : 'fas fa-lock-open'" class="text-[10px]"></i>
+            <i :class="filtersLocked ? 'fas fa-lock' : 'fas fa-lock-open'" class="text-[12px]"></i>
           </button>
           <button
             @click="copyActivitiesSummary"
             title="Copiar resumen"
             class="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-500 text-white hover:bg-primary-600 transition-all"
           >
-            <i class="fas fa-copy text-[10px]"></i>
+            <i class="fas fa-copy text-[12px]"></i>
           </button>
           <button
             @click="setMyTasksFilter"
             :class="selectedTeamMember === authStore.user?._id ? 'bg-primary-500 text-white' : 'bg-slate-100 text-slate-500 hover:bg-primary-50 hover:text-primary-600'"
-            class="px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-1"
+            class="px-2.5 py-1 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all flex items-center gap-1"
           >
-            <i class="fas fa-user text-[8px]"></i> Mis tareas
+            <i class="fas fa-user text-[10px]"></i> Mis tareas
           </button>
           <button
             @click="clearFilters"
-            class="px-2.5 py-1 bg-slate-100 text-slate-400 hover:bg-slate-200 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all"
+            class="px-2.5 py-1 bg-slate-100 text-slate-400 hover:bg-slate-200 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all"
           >
             <i class="fas fa-times mr-0.5"></i> Limpiar
           </button>
@@ -179,7 +179,7 @@
       <div class="flex flex-wrap gap-3 items-center p-2.5 sm:p-3">
         <!-- Filtro por cliente -->
         <div class="flex-1 min-w-[180px]">
-          <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
+          <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
             Cliente
           </label>
           <CustomSelect
@@ -194,7 +194,7 @@
         </div>
         <!-- Filtro por departamento -->
         <div class="flex-1 min-w-[140px]">
-          <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
+          <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
             Departamento
           </label>
           <CustomSelect
@@ -211,7 +211,7 @@
 
         <!-- Filtro por miembro del equipo -->
         <div class="flex-1 min-w-[180px]">
-          <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
+          <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
             Miembro del equipo
           </label>
           <CustomSelect
@@ -228,7 +228,7 @@
 
         <!-- Filtro por estado -->
         <div class="flex-1 min-w-[160px]">
-          <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
+          <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
             Estado
           </label>
           <CustomSelect
@@ -246,13 +246,13 @@
         <!-- Filtro por rango de fechas -->
         <div class="flex items-center gap-2 min-w-[280px]">
           <div class="flex-1">
-            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
+            <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
               Desde
             </label>
             <DatePicker v-model="startDate" placeholder="dd/mm/aaaa" />
           </div>
           <div class="flex-1">
-            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
+            <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
               Hasta
             </label>
             <DatePicker v-model="endDate" placeholder="dd/mm/aaaa" />
@@ -288,7 +288,7 @@
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
-            <tr class="bg-slate-50/50 border-b border-slate-200 text-[10px] uppercase font-black text-slate-500 tracking-wider">
+            <tr class="bg-slate-50/50 border-b border-slate-200 text-[12px] uppercase font-black text-slate-500 tracking-wider">
               <th class="py-5 px-4 pl-8">Actividad</th>
               <th class="py-5 px-4 hidden md:table-cell">Cliente</th>
               <th class="py-5 px-4">Asignado</th>
@@ -302,7 +302,7 @@
               <td class="py-6 px-4 pl-8">
                 <div class="font-bold text-slate-800 text-sm tracking-tight cursor-pointer hover:text-primary-600 transition-colors" @click="toggleCardExpansion(activity._id!)">{{ activity.title }}</div>
                 <div 
-                  class="text-[11px] text-slate-500 mt-1.5 max-w-md font-medium cursor-pointer transition-all duration-300"
+                  class="text-[13px] text-slate-500 mt-1.5 max-w-md font-medium cursor-pointer transition-all duration-300"
                   :class="expandedCards.has(activity._id!) ? 'line-clamp-none bg-slate-50 p-2 rounded mt-2' : 'line-clamp-1'"
                   @click="toggleCardExpansion(activity._id!)"
                 >
@@ -317,7 +317,7 @@
                   <div class="flex items-center gap-3">
                     <!-- Percentage Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[10px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[12px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white transition-all">
                       <span class="text-primary-600">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
                       <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
@@ -326,7 +326,7 @@
                           v-model="activity.completionPercentage" 
                           max="100"
                           min="0"
-                          class="w-12 text-[10px] font-bold border-slate-200 rounded p-1"
+                          class="w-12 text-[12px] font-bold border-slate-200 rounded p-1"
                           @input="activity.completionPercentage = Math.min(activity.completionPercentage || 0, 100)"
                           @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null"
                           @blur="editingPercentageId = null"
@@ -345,16 +345,16 @@
                         :class="isTimerActive(activity) ? 'text-red-500 bg-red-50 hover:bg-red-100 border border-red-100 animate-pulse' : 'text-primary-500 bg-primary-50 hover:bg-primary-100 border border-primary-50'"
                         title="Iniciar/Detener Temporizador"
                       >
-                        <i :class="isTimerActive(activity) ? 'fas fa-stop' : 'fas fa-play'" class="text-[9px]"></i>
+                        <i :class="isTimerActive(activity) ? 'fas fa-stop' : 'fas fa-play'" class="text-[11px]"></i>
                       </button>
 
                       <!-- Manual Time Display (Click to edit) -->
                       <div class="relative">
                         <div 
                           @click.stop="startEditingTime(activity)" 
-                          class="flex items-center gap-1.5 text-[10px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer transition-all shadow-sm"
+                          class="flex items-center gap-1.5 text-[12px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer transition-all shadow-sm"
                         >
-                          <i class="far fa-clock text-[8px] text-slate-400"></i>
+                          <i class="far fa-clock text-[10px] text-slate-400"></i>
                           <span :class="isTimerActive(activity) ? 'text-red-500 font-black' : ''">{{ formatTime(activity.timeSpent) }}</span>
                         </div>
 
@@ -362,17 +362,17 @@
                         <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
-                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[9px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[9px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -397,7 +397,7 @@
                         class="ring-2 ring-white relative"
                         :style="{ zIndex: 10 - i }"
                       />
-                      <span v-if="activity.assignedTo.length > 3" class="text-[10px] font-black text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full ring-2 ring-white relative z-0 flex items-center justify-center">
+                      <span v-if="activity.assignedTo.length > 3" class="text-[12px] font-black text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full ring-2 ring-white relative z-0 flex items-center justify-center">
                         +{{ activity.assignedTo.length - 3 }}
                       </span>
                     </div>
@@ -412,14 +412,14 @@
                 </div>
               </td>
               <td class="py-6 px-4">
-                <span :class="getStatusBadgeClass(activity.status)" class="text-[10px] font-black px-2.5 py-1 rounded-lg border inline-block whitespace-nowrap shadow-sm">
+                <span :class="getStatusBadgeClass(activity.status)" class="text-[12px] font-black px-2.5 py-1 rounded-lg border inline-block whitespace-nowrap shadow-sm">
                   {{ getStatusLabel(activity.status) }}
                 </span>
               </td>
               <td class="py-6 px-4 hidden sm:table-cell">
                 <span 
                   v-if="activity.priority"
-                  class="px-2.5 py-1 rounded-lg text-[10px] font-black border inline-flex items-center gap-1.5 shadow-sm"
+                  class="px-2.5 py-1 rounded-lg text-[12px] font-black border inline-flex items-center gap-1.5 shadow-sm"
                   :class="getPriorityClass(activity.priority)"
                 >
                   <i :class="getPriorityIcon(activity.priority)"></i>
@@ -664,13 +664,13 @@
               <div class="flex gap-1.5">
                 <button 
                   @click="openCaseLinkingModal"
-                  class="text-[10px] font-black uppercase tracking-wider px-2 py-1 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded border border-indigo-100 transition-colors"
+                  class="text-[12px] font-black uppercase tracking-wider px-2 py-1 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded border border-indigo-100 transition-colors"
                 >
                   + Caso
                 </button>
                 <button 
                   @click="openWikiLinkingModal"
-                  class="text-[10px] font-black uppercase tracking-wider px-2 py-1 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded border border-emerald-100 transition-colors"
+                  class="text-[12px] font-black uppercase tracking-wider px-2 py-1 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded border border-emerald-100 transition-colors"
                 >
                   + Wiki
                 </button>
@@ -686,7 +686,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="text-xs font-bold text-slate-800 truncate">{{ c.title }}</div>
-                  <div class="text-[10px] text-slate-500 font-medium">{{ c.caseNumber }} • {{ c.status }}</div>
+                  <div class="text-[12px] text-slate-500 font-medium">{{ c.caseNumber }} • {{ c.status }}</div>
                 </div>
                 <div class="flex items-center gap-1.5">
                   <button @click="openResource(c, 'case')" class="p-1.5 text-indigo-400 hover:text-indigo-600 opacity-0 group-hover:opacity-100 transition-all" title="Ver caso">
@@ -705,7 +705,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="text-xs font-bold text-slate-800 truncate">{{ a.title }}</div>
-                  <div class="text-[10px] text-slate-500 font-medium">{{ a.category }}</div>
+                  <div class="text-[12px] text-slate-500 font-medium">{{ a.category }}</div>
                 </div>
                 <div class="flex items-center gap-1.5">
                   <button @click="openResource(a)" class="p-1.5 text-emerald-400 hover:text-emerald-600 opacity-0 group-hover:opacity-100 transition-all" title="Ver wiki">
@@ -718,7 +718,7 @@
               </div>
             </div>
             <div v-else class="text-center py-4 bg-slate-50/50 border border-dashed border-slate-200 rounded-lg">
-              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Sin recursos vinculados</p>
+              <p class="text-[12px] text-slate-400 font-bold uppercase tracking-widest">Sin recursos vinculados</p>
             </div>
           </div>
 
@@ -845,12 +845,12 @@
           <div class="py-4 flex items-center justify-center gap-4 bg-slate-50 rounded-lg mt-2">
             <div class="flex flex-col items-center">
               <div class="w-3 h-3 bg-primary-500 rounded-full shadow-sm"></div>
-              <div class="text-[10px] font-bold text-slate-500 mt-2 uppercase">{{ branchForm.baseBranch }}</div>
+              <div class="text-[12px] font-bold text-slate-500 mt-2 uppercase">{{ branchForm.baseBranch }}</div>
             </div>
             <div class="flex-1 h-0.5 bg-slate-300"></div>
             <div class="flex flex-col items-center">
               <div class="w-3 h-3 bg-green-500 rounded-full shadow-sm"></div>
-              <div class="text-[10px] font-bold text-slate-500 mt-2 text-center max-w-[120px] truncate uppercase">
+              <div class="text-[12px] font-bold text-slate-500 mt-2 text-center max-w-[120px] truncate uppercase">
                 {{ branchForm.customName || generateBranchName() }}
               </div>
             </div>
@@ -910,7 +910,7 @@
             <i class="far fa-clock text-amber-500 text-sm"></i>
           </div>
           <h2 class="text-xs font-black text-slate-800 uppercase tracking-wide">Pendiente</h2>
-          <span class="w-5 h-5 flex items-center justify-center bg-amber-100 border border-amber-200 text-amber-600 rounded-full text-[10px] font-black shadow-sm">
+          <span class="w-5 h-5 flex items-center justify-center bg-amber-100 border border-amber-200 text-amber-600 rounded-full text-[12px] font-black shadow-sm">
             {{ pendingActivities.length }}
           </span>
         </div>
@@ -947,25 +947,25 @@
               <div class="p-2.5 flex flex-col h-full">
                 <!-- Top Row -->
                 <div class="flex justify-between items-center mb-1">
-                  <span class="text-[7px] font-black uppercase text-amber-600 tracking-widest bg-amber-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
+                  <span class="text-[9px] font-black uppercase text-amber-600 tracking-widest bg-amber-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
                 </div>
 
                 <!-- Middle: Title & Client -->
                 <div class="flex-1 min-w-0 pr-12">
-                  <h3 class="text-slate-800 font-black text-[13px] leading-tight line-clamp-2 group-hover:text-amber-600 transition-colors" :title="activity.title">{{ activity.title }}</h3>
-                  <p class="text-slate-400 font-bold text-[10px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
+                  <h3 class="text-slate-800 font-black text-[14px] leading-tight line-clamp-2 group-hover:text-amber-600 transition-colors" :title="activity.title">{{ activity.title }}</h3>
+                  <p class="text-slate-400 font-bold text-[12px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
                   
                   <!-- Visible Expand Toggle -->
                   <button @click.stop="toggleCardExpansion(activity._id!)" class="mt-1 flex items-center gap-1 text-slate-400 hover:text-amber-500 transition-colors py-0.5">
-                    <i class="fas text-[8px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    <span class="text-[7px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
+                    <i class="fas text-[10px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    <span class="text-[9px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
                   </button>
 
                   <!-- Expandable Description (Enlarged Card Style) -->
-                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[10px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
+                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[12px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
                     <div class="flex items-center gap-2 mb-2 text-slate-400">
-                      <i class="fas fa-align-left text-[8px]"></i>
-                      <span class="text-[8px] font-black uppercase tracking-widest">Detalles de actividad</span>
+                      <i class="fas fa-align-left text-[10px]"></i>
+                      <span class="text-[10px] font-black uppercase tracking-widest">Detalles de actividad</span>
                     </div>
                     <p class="whitespace-pre-wrap break-words overflow-hidden">{{ activity.description || 'Sin descripción adicional' }}</p>
                   </div>
@@ -980,15 +980,15 @@
                         @click.stop="toggleTimer(activity)" 
                         class="w-6 h-6 flex items-center justify-center rounded-lg transition-all shadow-sm border text-amber-500 bg-amber-50 border-amber-200 hover:bg-white hover:border-amber-400"
                       >
-                        <i class="fas fa-play text-[8px]"></i>
+                        <i class="fas fa-play text-[10px]"></i>
                       </button>
 
                       <div class="relative">
                         <div 
                           @click.stop="startEditingTime(activity)" 
-                          class="flex items-center gap-1 text-[9px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-amber-300 transition-all shadow-sm"
+                          class="flex items-center gap-1 text-[11px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-amber-300 transition-all shadow-sm"
                         >
-                          <i class="far fa-clock text-[8px] text-slate-400"></i>
+                          <i class="far fa-clock text-[10px] text-slate-400"></i>
                           <span class="whitespace-nowrap">{{ formatTime(activity.timeSpent) }}</span>
                         </div>
 
@@ -996,17 +996,17 @@
                         <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
-                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[9px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[9px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -1014,18 +1014,18 @@
                     
                     <!-- Progress % with Inline Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white hover:border-amber-300 transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[11px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white hover:border-amber-300 transition-all">
                         <span class="text-amber-600">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
                       
                       <!-- Popover de edición de porcentaje -->
                       <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
-                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
+                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
                         <button @click.stop="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null" class="p-1 bg-amber-600 text-white rounded hover:bg-amber-700 transition-colors">
-                          <i class="fas fa-check text-[8px]"></i>
+                          <i class="fas fa-check text-[10px]"></i>
                         </button>
                         <button @click="editingPercentageId = null" class="p-1 bg-slate-100 text-slate-500 rounded hover:bg-slate-200 transition-colors">
-                          <i class="fas fa-times text-[8px]"></i>
+                          <i class="fas fa-times text-[10px]"></i>
                         </button>
                       </div>
                     </div>
@@ -1035,7 +1035,7 @@
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
                         <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
-                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
+                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[11px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
                       </div>
@@ -1046,8 +1046,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[9px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[9px]"></i></button>
               </div>
             </div>
           </div>
@@ -1056,7 +1056,7 @@
           <div v-if="hasMorePending" class="mt-4 pb-2">
             <button 
               @click="increaseLimit('pending')"
-              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-amber-400 hover:text-amber-600 shadow-sm"
+              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[12px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-amber-400 hover:text-amber-600 shadow-sm"
             >
               <i class="fas fa-plus-circle mr-1.5"></i>
               Ver más tareas pendientes
@@ -1089,7 +1089,7 @@
             <i class="fas fa-play text-primary-500 text-sm"></i>
           </div>
           <h2 class="text-xs font-black text-slate-800 uppercase tracking-wide">En Proceso</h2>
-          <span class="w-5 h-5 flex items-center justify-center bg-primary-100 border border-primary-200 text-primary-600 rounded-full text-[10px] font-black shadow-sm">
+          <span class="w-5 h-5 flex items-center justify-center bg-primary-100 border border-primary-200 text-primary-600 rounded-full text-[12px] font-black shadow-sm">
             {{ inProgressActivities.length }}
           </span>
         </div>
@@ -1126,25 +1126,25 @@
               <div class="p-2.5 flex flex-col h-full">
                 <!-- Top Row -->
                 <div class="flex justify-between items-center mb-1">
-                  <span class="text-[7px] font-black uppercase text-primary-600 tracking-widest bg-primary-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
+                  <span class="text-[9px] font-black uppercase text-primary-600 tracking-widest bg-primary-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
                 </div>
 
                 <!-- Middle -->
                 <div class="flex-1 min-w-0 pr-12">
-                  <h3 class="text-slate-800 font-black text-[13px] leading-tight line-clamp-2 group-hover:text-primary-600 transition-colors" :title="activity.title">{{ activity.title }}</h3>
-                  <p class="text-slate-400 font-bold text-[10px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
+                  <h3 class="text-slate-800 font-black text-[14px] leading-tight line-clamp-2 group-hover:text-primary-600 transition-colors" :title="activity.title">{{ activity.title }}</h3>
+                  <p class="text-slate-400 font-bold text-[12px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
                   
                   <!-- Visible Expand Toggle -->
                   <button @click.stop="toggleCardExpansion(activity._id!)" class="mt-1 flex items-center gap-1 text-slate-400 hover:text-primary-500 transition-colors py-0.5">
-                    <i class="fas text-[8px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    <span class="text-[7px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
+                    <i class="fas text-[10px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    <span class="text-[9px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
                   </button>
 
                   <!-- Expandable Description (Enlarged Card Style) -->
-                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[10px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
+                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[12px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
                     <div class="flex items-center gap-2 mb-2 text-slate-400">
-                      <i class="fas fa-align-left text-[8px]"></i>
-                      <span class="text-[8px] font-black uppercase tracking-widest">Detalles de actividad</span>
+                      <i class="fas fa-align-left text-[10px]"></i>
+                      <span class="text-[10px] font-black uppercase tracking-widest">Detalles de actividad</span>
                     </div>
                     <p class="whitespace-pre-wrap break-words overflow-hidden">{{ activity.description || 'Sin descripción adicional' }}</p>
                   </div>
@@ -1160,15 +1160,15 @@
                         class="w-6 h-6 flex items-center justify-center rounded-lg transition-all shadow-sm border" 
                         :class="isTimerActive(activity) ? 'text-red-500 bg-red-50 border-red-200 animate-pulse' : 'text-primary-500 bg-primary-50 border-primary-200 hover:bg-white hover:border-primary-400'"
                       >
-                        <i :class="isTimerActive(activity) ? 'fas fa-stop' : 'fas fa-play'" class="text-[8px]"></i>
+                        <i :class="isTimerActive(activity) ? 'fas fa-stop' : 'fas fa-play'" class="text-[10px]"></i>
                       </button>
 
                       <div class="relative">
                         <div 
                           @click.stop="startEditingTime(activity)" 
-                          class="flex items-center gap-1 text-[9px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer transition-all shadow-sm"
+                          class="flex items-center gap-1 text-[11px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer transition-all shadow-sm"
                         >
-                          <i class="far fa-clock text-[8px] text-slate-400"></i>
+                          <i class="far fa-clock text-[10px] text-slate-400"></i>
                           <span :class="isTimerActive(activity) ? 'text-red-500' : ''" class="whitespace-nowrap">{{ formatTime(activity.timeSpent) }}</span>
                         </div>
 
@@ -1176,17 +1176,17 @@
                         <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
-                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[9px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[9px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -1194,18 +1194,18 @@
                     
                     <!-- Progress % with Inline Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[11px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white transition-all">
                         <span :class="activity.status === 'overdue' ? 'text-red-600' : 'text-primary-600'">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
 
                       <!-- Popover de edición de porcentaje -->
                       <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
-                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
+                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
                         <button @click.stop="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null" class="p-1 bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors">
-                          <i class="fas fa-check text-[8px]"></i>
+                          <i class="fas fa-check text-[10px]"></i>
                         </button>
                         <button @click="editingPercentageId = null" class="p-1 bg-slate-100 text-slate-500 rounded hover:bg-slate-200 transition-colors">
-                          <i class="fas fa-times text-[8px]"></i>
+                          <i class="fas fa-times text-[10px]"></i>
                         </button>
                       </div>
                     </div>
@@ -1215,7 +1215,7 @@
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
                         <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
-                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
+                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[11px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
                       </div>
@@ -1226,8 +1226,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="markAsCompleted(activity._id!)" class="w-6 h-6 flex items-center justify-center text-emerald-600 bg-white/95 hover:bg-emerald-500 hover:text-white rounded-lg shadow-sm border border-emerald-100 transition-all" title="Completar"><i class="fas fa-check text-[9px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[9px]"></i></button>
               </div>
             </div>
           </div>
@@ -1236,7 +1236,7 @@
           <div v-if="hasMoreInProgress" class="mt-4 pb-2">
             <button 
               @click="increaseLimit('inProgress')"
-              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-primary-400 hover:text-primary-600 shadow-sm"
+              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[12px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-primary-400 hover:text-primary-600 shadow-sm"
             >
               <i class="fas fa-plus-circle mr-1.5"></i>
               Ver más tareas en proceso
@@ -1268,7 +1268,7 @@
             <i class="fas fa-check text-emerald-500 text-sm"></i>
           </div>
           <h2 class="text-xs font-black text-slate-800 uppercase tracking-wide">Completada</h2>
-          <span class="w-5 h-5 flex items-center justify-center bg-emerald-100 border border-emerald-200 text-emerald-600 rounded-full text-[10px] font-black shadow-sm">
+          <span class="w-5 h-5 flex items-center justify-center bg-emerald-100 border border-emerald-200 text-emerald-600 rounded-full text-[12px] font-black shadow-sm">
             {{ completedActivities.length }}
           </span>
         </div>
@@ -1302,25 +1302,25 @@
               <div class="p-2.5 flex flex-col h-full">
                 <!-- Top Row -->
                 <div class="flex justify-between items-center mb-1">
-                  <span class="text-[7px] font-black uppercase text-emerald-600 tracking-widest bg-emerald-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
+                  <span class="text-[9px] font-black uppercase text-emerald-600 tracking-widest bg-emerald-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
                 </div>
 
                 <!-- Middle -->
                 <div class="flex-1 min-w-0 pr-12">
-                  <h3 class="text-slate-500 font-bold text-[13px] leading-snug mb-1 line-clamp-2 line-through decoration-slate-300" :title="activity.title">{{ activity.title }}</h3>
-                  <p class="text-slate-400 font-bold text-[10px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
+                  <h3 class="text-slate-500 font-bold text-[14px] leading-snug mb-1 line-clamp-2 line-through decoration-slate-300" :title="activity.title">{{ activity.title }}</h3>
+                  <p class="text-slate-400 font-bold text-[12px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
                   
                   <!-- Visible Expand Toggle -->
                   <button @click.stop="toggleCardExpansion(activity._id!)" class="mt-1 flex items-center gap-1 text-slate-400 hover:text-emerald-500 transition-colors py-0.5">
-                    <i class="fas text-[8px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    <span class="text-[7px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
+                    <i class="fas text-[10px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    <span class="text-[9px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
                   </button>
 
                   <!-- Expandable Description (Enlarged Card Style) -->
-                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[10px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
+                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[12px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
                     <div class="flex items-center gap-2 mb-2 text-slate-400">
-                      <i class="fas fa-align-left text-[8px]"></i>
-                      <span class="text-[8px] font-black uppercase tracking-widest">Detalles de actividad</span>
+                      <i class="fas fa-align-left text-[10px]"></i>
+                      <span class="text-[10px] font-black uppercase tracking-widest">Detalles de actividad</span>
                     </div>
                     <p class="whitespace-pre-wrap break-words overflow-hidden">{{ activity.description || 'Sin descripción adicional' }}</p>
                   </div>
@@ -1329,31 +1329,31 @@
                 <!-- Bottom Row -->
                 <div class="mt-auto flex items-center justify-between pt-2">
                   <div class="flex items-center gap-2">
-                    <div class="flex items-center gap-1.5 text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded border border-emerald-100 shadow-sm shrink-0">
-                      <i class="fas fa-check-circle text-[8px]"></i>
+                    <div class="flex items-center gap-1.5 text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded border border-emerald-100 shadow-sm shrink-0">
+                      <i class="fas fa-check-circle text-[10px]"></i>
                       <span>COMPLETADO</span>
                     </div>
 
                     <!-- Manual Time (Completed) -->
                     <div class="relative">
-                      <div @click.stop="startEditingTime(activity)" class="flex items-center gap-1.5 text-[9px] font-black text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-emerald-300 transition-all shadow-sm">
-                        <i class="far fa-clock text-[8px] text-slate-400"></i>
+                      <div @click.stop="startEditingTime(activity)" class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-emerald-300 transition-all shadow-sm">
+                        <i class="far fa-clock text-[10px] text-slate-400"></i>
                         <span class="whitespace-nowrap">{{ formatTime(activity.timeSpent) }}</span>
                       </div>
                       <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
                         <div class="flex items-center gap-2 mb-2">
                           <div class="flex flex-col gap-1">
-                            <span class="text-[8px] font-black text-slate-400 uppercase">Horas</span>
-                            <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                            <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
+                            <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                           </div>
                           <div class="flex flex-col gap-1">
-                            <span class="text-[8px] font-black text-slate-400 uppercase">Minutos</span>
-                            <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                            <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
+                            <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                           </div>
                         </div>
                         <div class="flex gap-1.5">
-                          <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[9px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                          <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[9px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                          <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
+                          <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
                         </div>
                       </div>
                     </div>
@@ -1363,7 +1363,7 @@
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
                         <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
-                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
+                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[11px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
                       </div>
@@ -1374,8 +1374,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="markAsPending(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Deshacer"><i class="fas fa-undo text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="markAsPending(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Deshacer"><i class="fas fa-undo text-[9px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[9px]"></i></button>
               </div>
             </div>
           </div>
@@ -1384,7 +1384,7 @@
           <div v-if="hasMoreCompleted" class="mt-4 pb-2">
             <button 
               @click="increaseLimit('completed')"
-              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-emerald-400 hover:text-emerald-600 shadow-sm"
+              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[12px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-emerald-400 hover:text-emerald-600 shadow-sm"
             >
               <i class="fas fa-plus-circle mr-1.5"></i>
               Ver más tareas completadas
@@ -1406,7 +1406,7 @@
             <i class="fas fa-exclamation-triangle text-red-600 text-sm"></i>
           </div>
           <h2 class="text-xs font-black text-red-800 uppercase tracking-wide">Vencida</h2>
-          <span class="w-5 h-5 flex items-center justify-center bg-red-100 border border-red-200 text-red-600 rounded-full text-[10px] font-black shadow-sm">
+          <span class="w-5 h-5 flex items-center justify-center bg-red-100 border border-red-200 text-red-600 rounded-full text-[12px] font-black shadow-sm">
             {{ overdueActivities.length }}
           </span>
         </div>
@@ -1440,25 +1440,25 @@
               <div class="p-2.5 flex flex-col h-full">
                 <!-- Top Row -->
                 <div class="flex justify-between items-center mb-1">
-                  <span class="text-[7px] font-black uppercase text-red-600 tracking-widest bg-red-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
+                  <span class="text-[9px] font-black uppercase text-red-600 tracking-widest bg-red-50 px-1 rounded">{{ activity.dueDate ? formatDate(activity.dueDate) : 'Sin fecha' }}</span>
                 </div>
 
                 <!-- Middle -->
                 <div class="flex-1 min-w-0 pr-12">
-                  <h3 class="text-red-900 font-bold text-[13px] leading-snug mb-1 line-clamp-2 group-hover:text-red-600 transition-colors" :title="activity.title">{{ activity.title }}</h3>
-                  <p class="text-red-500 font-bold text-[10px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
+                  <h3 class="text-red-900 font-bold text-[14px] leading-snug mb-1 line-clamp-2 group-hover:text-red-600 transition-colors" :title="activity.title">{{ activity.title }}</h3>
+                  <p class="text-red-500 font-bold text-[12px] uppercase tracking-wider mt-0.5 truncate">{{ getClientName(activity.clientId) }}</p>
                   
                   <!-- Visible Expand Toggle -->
                   <button @click.stop="toggleCardExpansion(activity._id!)" class="mt-1 flex items-center gap-1 text-slate-400 hover:text-red-500 transition-colors py-0.5">
-                    <i class="fas text-[8px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                    <span class="text-[7px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
+                    <i class="fas text-[10px]" :class="expandedCards.has(activity._id!) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    <span class="text-[9px] font-black uppercase tracking-tighter">{{ expandedCards.has(activity._id!) ? 'Ocultar' : 'Detalles' }}</span>
                   </button>
 
                   <!-- Expandable Description (Enlarged Card Style) -->
-                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[10px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
+                  <div v-if="expandedCards.has(activity._id!)" class="mt-4 text-[12px] text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-scale-up font-medium bg-slate-50/50 -mx-3.5 px-3.5 pb-2 rounded-b-xl">
                     <div class="flex items-center gap-2 mb-2 text-slate-400">
-                      <i class="fas fa-align-left text-[8px]"></i>
-                      <span class="text-[8px] font-black uppercase tracking-widest">Detalles de actividad</span>
+                      <i class="fas fa-align-left text-[10px]"></i>
+                      <span class="text-[10px] font-black uppercase tracking-widest">Detalles de actividad</span>
                     </div>
                     <p class="whitespace-pre-wrap break-words overflow-hidden">{{ activity.description || 'Sin descripción adicional' }}</p>
                   </div>
@@ -1473,15 +1473,15 @@
                         @click.stop="toggleTimer(activity)" 
                         class="w-6 h-6 flex items-center justify-center rounded-lg transition-all shadow-sm border text-red-500 bg-red-50 border-red-200 hover:bg-white hover:border-red-400"
                       >
-                        <i class="fas fa-play text-[8px]"></i>
+                        <i class="fas fa-play text-[10px]"></i>
                       </button>
 
                       <div class="relative">
                         <div 
                           @click.stop="startEditingTime(activity)" 
-                          class="flex items-center gap-1 text-[9px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-red-300 transition-all shadow-sm"
+                          class="flex items-center gap-1 text-[11px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer hover:border-red-300 transition-all shadow-sm"
                         >
-                          <i class="far fa-clock text-[8px] text-slate-400"></i>
+                          <i class="far fa-clock text-[10px] text-slate-400"></i>
                           <span class="whitespace-nowrap">{{ formatTime(activity.timeSpent) }}</span>
                         </div>
 
@@ -1489,17 +1489,17 @@
                         <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
-                              <span class="text-[8px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all">
+                              <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
-                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[9px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[9px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -1507,18 +1507,18 @@
                     
                     <!-- Progress % with Inline Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[9px] font-black text-red-600 bg-red-50 px-2 py-1 rounded border border-red-100 cursor-pointer hover:bg-white hover:border-red-300 transition-all">
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[11px] font-black text-red-600 bg-red-50 px-2 py-1 rounded border border-red-100 cursor-pointer hover:bg-white hover:border-red-300 transition-all">
                         <span>{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
 
                       <!-- Popover de edición de porcentaje -->
                       <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
-                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
+                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
                         <button @click.stop="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null" class="p-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
-                          <i class="fas fa-check text-[8px]"></i>
+                          <i class="fas fa-check text-[10px]"></i>
                         </button>
                         <button @click="editingPercentageId = null" class="p-1 bg-slate-100 text-slate-500 rounded hover:bg-slate-200 transition-colors">
-                          <i class="fas fa-times text-[8px]"></i>
+                          <i class="fas fa-times text-[10px]"></i>
                         </button>
                       </div>
                     </div>
@@ -1528,7 +1528,7 @@
                     <template v-if="Array.isArray(activity.assignedTo) && activity.assignedTo.length">
                       <div v-for="user in activity.assignedTo.slice(0, 3)" :key="user._id || user" class="relative">
                         <img v-if="getUserInfo(user).photo" :src="getFullPhotoUrl(getUserInfo(user).photo)" class="w-5 h-5 rounded-full border border-white shadow-sm object-cover" :title="getUserInfo(user).name">
-                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[9px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
+                        <div v-else class="w-5 h-5 rounded-full bg-slate-200 border border-white flex items-center justify-center text-[11px] font-bold text-slate-500 shadow-sm" :title="getUserInfo(user).name">
                           {{ getUserInfo(user).name.charAt(0).toUpperCase() }}
                         </div>
                       </div>
@@ -1539,8 +1539,8 @@
 
               <!-- Floating Actions Pill -->
               <div class="absolute right-1.5 top-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-10" @click.stop>
-                <button @click.stop="extendDeadline(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Extender"><i class="fas fa-calendar-plus text-[7px]"></i></button>
-                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[7px]"></i></button>
+                <button @click.stop="extendDeadline(activity._id!)" class="w-6 h-6 flex items-center justify-center text-amber-600 bg-white/95 hover:bg-amber-500 hover:text-white rounded-lg shadow-sm border border-amber-100 transition-all" title="Extender"><i class="fas fa-calendar-plus text-[9px]"></i></button>
+                <button @click.stop="deleteActivity(activity._id!)" class="w-6 h-6 flex items-center justify-center text-red-600 bg-white/95 hover:bg-red-500 hover:text-white rounded-lg shadow-sm border border-red-100 transition-all" title="Eliminar"><i class="fas fa-trash-alt text-[9px]"></i></button>
               </div>
             </div>
           </div>
@@ -1549,7 +1549,7 @@
           <div v-if="hasMoreOverdue" class="mt-4 pb-2">
             <button 
               @click="increaseLimit('overdue')"
-              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-red-400 hover:text-red-600 shadow-sm"
+              class="w-full py-2.5 bg-white/50 hover:bg-white border border-slate-200 border-dashed rounded-xl text-[12px] font-black text-slate-500 uppercase tracking-widest transition-all hover:border-red-400 hover:text-red-600 shadow-sm"
             >
               <i class="fas fa-plus-circle mr-1.5"></i>
               Ver más tareas vencidas
@@ -1680,7 +1680,7 @@
                         : 'bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#334155]/50'
                     ]"
                   >
-                    <i :class="`fas fa-circle text-${priority.color}-500 text-[10px]`"></i>
+                    <i :class="`fas fa-circle text-${priority.color}-500 text-[12px]`"></i>
                     {{ priority.label }}
                   </button>
                 </div>
@@ -2062,7 +2062,7 @@
                   {{ client.name }}{{ client.company ? ` - ${client.company}` : '' }}
                 </option>
               </select>
-              <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mt-1.5 flex items-center gap-1">
+              <p class="text-[12px] uppercase font-bold text-slate-400 tracking-wider mt-1.5 flex items-center gap-1">
                 <i class="fas fa-info-circle"></i>
                 El tablero se asociará a este cliente/proyecto
               </p>
@@ -2153,7 +2153,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Total Sprints</div>
+                <div class="text-[12px] uppercase font-bold text-slate-400 tracking-wider">Total Sprints</div>
                 <div class="text-2xl font-black text-primary-600 leading-none mt-1">{{ selectedBoard.sprints?.length || 0 }}</div>
               </div>
             </div>
@@ -2168,7 +2168,7 @@
             <form @submit.prevent="createSprint" class="space-y-4">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Nombre del Sprint *</label>
+                  <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Nombre del Sprint *</label>
                   <input
                     v-model="newSprint.name"
                     type="text"
@@ -2178,7 +2178,7 @@
                   />
                 </div>
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Objetivo</label>
+                  <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Objetivo</label>
                   <input
                     v-model="newSprint.goal"
                     type="text"
@@ -2189,7 +2189,7 @@
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Fecha Inicio *</label>
+                  <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Fecha Inicio *</label>
                   <input
                     v-model="newSprint.startDate"
                     type="date"
@@ -2198,7 +2198,7 @@
                   />
                 </div>
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Fecha Fin *</label>
+                  <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Fecha Fin *</label>
                   <input
                     v-model="newSprint.endDate"
                     type="date"
@@ -2220,7 +2220,7 @@
 
           <!-- Lista de Sprints -->
           <div class="space-y-4 pt-2">
-            <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+            <h3 class="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-2">
               <i class="fas fa-list mr-1"></i>
               Sprints Existentes
             </h3>
@@ -2247,7 +2247,7 @@
                           'bg-slate-100 text-slate-600 border-slate-200 shadow-sm': sprint.status === 'planned',
                           'bg-primary-100 text-primary-700 border-primary-200 shadow-sm': sprint.status === 'completed'
                         }"
-                        class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md border"
+                        class="text-[12px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md border"
                       >
                         {{ sprint.status === 'active' ? 'Activo' : sprint.status === 'planned' ? 'Planeado' : 'Completado' }}
                       </span>
@@ -2315,7 +2315,7 @@
 
           <!-- Filtro por Estado del Board -->
           <div>
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+            <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
               Estado en Tablero
             </label>
             <select
@@ -2333,7 +2333,7 @@
 
           <!-- Filtro por Prioridad -->
           <div>
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+            <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
               Prioridad
             </label>
             <select
@@ -2350,7 +2350,7 @@
 
           <!-- Filtro por Tipo -->
           <div>
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+            <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
               Tipo de Tarea
             </label>
             <select
@@ -2368,7 +2368,7 @@
 
           <!-- Filtro por Asignado -->
           <div>
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+            <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
               Asignado a
             </label>
             <select
@@ -2385,7 +2385,7 @@
 
           <!-- Filtro por Tags -->
           <div v-if="availableTags.length > 0">
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+            <label class="block text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-2">
               Etiquetas
             </label>
             <div class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
@@ -2393,7 +2393,7 @@
                 v-for="tag in availableTags"
                 :key="tag"
                 @click="toggleTagFilter(tag)"
-                class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-md transition-colors border shadow-sm"
+                class="px-2.5 py-1 text-[13px] font-bold uppercase tracking-wider rounded-md transition-colors border shadow-sm"
                 :class="taskFilters.tags.includes(tag) 
                   ? 'bg-primary-500 text-white border-primary-500' 
                   : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'"
@@ -2467,7 +2467,7 @@
                 <div class="flex items-center justify-between font-bold bg-red-50 border border-red-200 shadow-sm rounded-lg px-3 py-2">
                   <div class="flex items-center gap-2">
                     <i class="fas fa-trash text-red-500"></i>
-                    <span class="text-red-700 uppercase tracking-wider text-[11px]">Total</span>
+                    <span class="text-red-700 uppercase tracking-wider text-[13px]">Total</span>
                   </div>
                   <span class="text-red-600 font-black text-lg">{{ cascadeDeleteInfo.total + 1 }}</span>
                 </div>
@@ -2490,10 +2490,10 @@
             <div class="flex items-start gap-2">
               <i class="fab fa-github text-emerald-500 mt-0.5 flex-shrink-0 text-sm"></i>
               <div class="flex-1">
-                <p class="text-emerald-800 text-[11px] uppercase tracking-wider font-bold mb-1">
+                <p class="text-emerald-800 text-[13px] uppercase tracking-wider font-bold mb-1">
                   Ramas de GitHub
                 </p>
-                <p class="text-emerald-700 font-medium text-[11px] leading-relaxed">
+                <p class="text-emerald-700 font-medium text-[13px] leading-relaxed">
                   Las ramas asociadas a estas tareas (sin PR abierto) también se eliminarán automáticamente de GitHub.
                 </p>
               </div>
@@ -2514,7 +2514,7 @@
               @click="confirmCascadeDelete"
               class="flex-1 px-4 py-2.5 text-sm font-bold text-white bg-red-600 rounded-lg hover:bg-red-700 shadow-sm transition-colors flex items-center justify-center gap-1"
             >
-              Sí, eliminar<span v-if="cascadeDeleteInfo.total > 0" class="font-bold text-[11px] bg-red-700 px-1.5 py-0.5 rounded-md ml-1">{{ cascadeDeleteInfo.total + 1 }}</span>
+              Sí, eliminar<span v-if="cascadeDeleteInfo.total > 0" class="font-bold text-[13px] bg-red-700 px-1.5 py-0.5 rounded-md ml-1">{{ cascadeDeleteInfo.total + 1 }}</span>
             </button>
           </div>
         </div>
@@ -2548,12 +2548,12 @@
                 @click="linkCase(c)"
                 class="p-3 bg-white rounded-xl hover:border-indigo-500 hover:bg-indigo-50/30 cursor-pointer transition-all flex items-center gap-3"
               >
-                <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold text-[10px]">
+                <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold text-[12px]">
                   {{ c.caseNumber?.slice(-3) }}
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="text-xs font-bold text-slate-800 truncate">{{ c.title }}</div>
-                  <div class="text-[10px] text-slate-500">{{ c.status }} • {{ c.priority }}</div>
+                  <div class="text-[12px] text-slate-500">{{ c.status }} • {{ c.priority }}</div>
                 </div>
                 <i class="fas fa-plus text-indigo-400 text-xs"></i>
               </div>
@@ -2592,7 +2592,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="text-xs font-bold text-slate-800 truncate">{{ a.title }}</div>
-                  <div class="text-[10px] text-slate-500">{{ a.category }}</div>
+                  <div class="text-[12px] text-slate-500">{{ a.category }}</div>
                 </div>
                 <i class="fas fa-plus text-emerald-400 text-xs"></i>
               </div>

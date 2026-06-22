@@ -6,7 +6,7 @@
       <!-- Header -->
       <div class="flex items-center justify-between gap-3">
         <button class="btn-primary self-start sm:self-auto" @click="openCreateModal()">
-          <i class="fas fa-plus text-[10px]"></i>Nuevo caso
+          <i class="fas fa-plus text-[12px]"></i>Nuevo caso
         </button>
       </div>
 
@@ -17,7 +17,7 @@
           <button
             v-for="chip in statusChips"
             :key="chip.id"
-            class="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-[11px] font-bold transition-colors border"
+            class="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-[13px] font-bold transition-colors border"
             :class="filterEstado === chip.id
               ? 'bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900 border-transparent'
               : 'bg-white dark:bg-[#0f172a] text-slate-500 dark:text-slate-400 border-slate-200 dark:border-[#334155] dark:hover:border-slate-500'"
@@ -25,19 +25,19 @@
           >
             <span v-if="chip.dot" class="w-1.5 h-1.5 rounded-full" :class="chip.dot"></span>
             {{ chip.label }}
-            <span class="text-[9px] font-black opacity-60">{{ chip.count }}</span>
+            <span class="text-[11px] font-black opacity-60">{{ chip.count }}</span>
           </button>
         </div>
 
         <!-- Selects + búsqueda -->
         <div class="flex flex-col sm:flex-row gap-2">
           <div class="relative flex-1">
-            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[12px]"></i>
             <input
               v-model="searchTerm"
               type="text"
               placeholder="Buscar por título, cliente o categoría..."
-              class="w-full h-9 pl-8 pr-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+              class="w-full h-9 pl-8 pr-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[13px] font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
             />
           </div>
           <div class="cv-chip" :class="{ 'cv-chip--on': filterPrioridad }" @click.stop="toggleCasesChip('prioridad')">
@@ -49,7 +49,7 @@
                 class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterPrioridad === opt.value }"
                 @click="setCasesFilter('prioridad', opt.value)">
                 <span>{{ opt.label }}</span>
-                <i v-if="filterPrioridad === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterPrioridad === opt.value" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
             </div>
           </div>
@@ -61,13 +61,13 @@
               <div class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterResponsable === '' }"
                 @click="setCasesFilter('responsable', '')">
                 <span>Todos</span>
-                <i v-if="filterResponsable === ''" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterResponsable === ''" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
               <div v-for="m in team" :key="m._id"
                 class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterResponsable === m._id }"
                 @click="setCasesFilter('responsable', m._id)">
                 <span>{{ m.name }}</span>
-                <i v-if="filterResponsable === m._id" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterResponsable === m._id" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
                 class="cv-dropdown-item" :class="{ 'cv-dropdown-item--active': filterTipo === opt.value }"
                 @click="setCasesFilter('tipo', opt.value)">
                 <span>{{ opt.label }}</span>
-                <i v-if="filterTipo === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterTipo === opt.value" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
             </div>
           </div>
@@ -97,16 +97,16 @@
         <div class="w-16 h-16 bg-primary-50 dark:bg-primary-500/10 rounded-2xl flex items-center justify-center mb-4">
           <i class="fas fa-folder-open text-xl text-primary-500"></i>
         </div>
-        <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 mb-1">
+        <h3 class="text-[17px] font-black text-slate-800 dark:text-slate-100 mb-1">
           {{ cases.length === 0 ? 'Aún no hay casos' : 'Sin resultados con estos filtros' }}
         </h3>
-        <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 max-w-sm mb-5">
+        <p class="text-[13px] font-medium text-slate-500 dark:text-slate-400 max-w-sm mb-5">
           {{ cases.length === 0
             ? 'Crea el primer caso para hacer seguimiento de incidencias, proyectos y documentos.'
             : 'Prueba ajustando la búsqueda o limpiando los filtros.' }}
         </p>
         <button v-if="cases.length === 0" class="btn-primary" @click="openCreateModal()">
-          <i class="fas fa-plus text-[10px]"></i>Crear primer caso
+          <i class="fas fa-plus text-[12px]"></i>Crear primer caso
         </button>
         <button v-else class="btn-secondary" @click="clearFilters">Limpiar filtros</button>
       </div>
@@ -121,37 +121,37 @@
         >
           <!-- Prioridad -->
           <span class="w-6 h-6 rounded-md flex items-center justify-center shrink-0" :class="priorityConfig[c.prioridad]?.soft" :title="`Prioridad ${c.prioridad}`">
-            <i :class="priorityConfig[c.prioridad]?.icon" class="text-[9px]"></i>
+            <i :class="priorityConfig[c.prioridad]?.icon" class="text-[11px]"></i>
           </span>
 
           <!-- Título + meta -->
           <div class="flex-1 min-w-0">
-            <p class="text-[12px] font-bold text-slate-800 dark:text-slate-100 truncate group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
+            <p class="text-[14px] font-bold text-slate-800 dark:text-slate-100 truncate group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
               {{ c.titulo }}
             </p>
-            <p class="text-[10px] font-medium text-slate-400 dark:text-slate-500 truncate mt-0.5">
-              <i :class="typeConfig[c.tipo]?.icon" class="mr-1 text-[9px]"></i>{{ typeConfig[c.tipo]?.label }}
+            <p class="text-[12px] font-medium text-slate-400 dark:text-slate-500 truncate mt-0.5">
+              <i :class="typeConfig[c.tipo]?.icon" class="mr-1 text-[11px]"></i>{{ typeConfig[c.tipo]?.label }}
               <template v-if="clientName(c)"> · {{ clientName(c) }}</template>
               <template v-if="c.categoria"> · {{ c.categoria }}</template>
             </p>
           </div>
 
           <!-- Estado -->
-          <span class="hidden sm:inline-flex items-center gap-1.5 h-6 px-2.5 rounded-md text-[9px] font-black uppercase tracking-widest shrink-0" :class="statusConfig[c.estado]?.badge">
+          <span class="hidden sm:inline-flex items-center gap-1.5 h-6 px-2.5 rounded-md text-[11px] font-black uppercase tracking-widest shrink-0" :class="statusConfig[c.estado]?.badge">
             <span class="w-1.5 h-1.5 rounded-full" :class="statusConfig[c.estado]?.dot"></span>
             {{ statusConfig[c.estado]?.label }}
           </span>
 
           <!-- Responsable -->
           <span
-            class="w-6 h-6 rounded-full bg-slate-100 dark:bg-[#334155] flex items-center justify-center text-[8px] font-black text-slate-500 dark:text-slate-300 shrink-0"
+            class="w-6 h-6 rounded-full bg-slate-100 dark:bg-[#334155] flex items-center justify-center text-[10px] font-black text-slate-500 dark:text-slate-300 shrink-0"
             :title="assigneeName(c) || 'Sin responsable'"
           >
             {{ initials(assigneeName(c)) }}
           </span>
 
           <!-- Fecha -->
-          <span class="hidden md:block text-[10px] font-bold text-slate-400 dark:text-slate-500 w-20 text-right shrink-0">
+          <span class="hidden md:block text-[12px] font-bold text-slate-400 dark:text-slate-500 w-20 text-right shrink-0">
             {{ relativeDate(c.updatedAt) }}
           </span>
         </button>
@@ -163,31 +163,31 @@
       <!-- Barra superior -->
       <div class="flex items-center gap-2 flex-wrap">
         <button class="btn-secondary" @click="closeCase">
-          <i class="fas fa-arrow-left text-[10px]"></i><span class="hidden sm:inline">Casos</span>
+          <i class="fas fa-arrow-left text-[12px]"></i><span class="hidden sm:inline">Casos</span>
         </button>
 
         <!-- Dropdown de estado -->
         <div class="relative">
           <button
-            class="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg text-[11px] font-bold border transition-colors"
+            class="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg text-[13px] font-bold border transition-colors"
             :class="statusConfig[selectedCase.estado]?.badgeStrong"
             @click="statusMenuOpen = !statusMenuOpen"
           >
             <span class="w-1.5 h-1.5 rounded-full" :class="statusConfig[selectedCase.estado]?.dot"></span>
             {{ statusConfig[selectedCase.estado]?.label }}
-            <i class="fas fa-chevron-down text-[8px] opacity-60"></i>
+            <i class="fas fa-chevron-down text-[10px] opacity-60"></i>
           </button>
           <div v-if="statusMenuOpen" class="absolute left-0 top-full mt-1 w-44 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl shadow-xl z-30 p-1">
             <button
               v-for="(cfg, key) in statusConfig"
               :key="key"
-              class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
+              class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[13px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
               :class="{ 'opacity-40 pointer-events-none': key === selectedCase.estado }"
               @click="changeStatus(key as CaseStatus)"
             >
               <span class="w-1.5 h-1.5 rounded-full" :class="cfg.dot"></span>
               {{ cfg.label }}
-              <i v-if="key === selectedCase.estado" class="fas fa-check text-[9px] ml-auto text-primary-500"></i>
+              <i v-if="key === selectedCase.estado" class="fas fa-check text-[11px] ml-auto text-primary-500"></i>
             </button>
           </div>
         </div>
@@ -195,14 +195,14 @@
         <div class="flex-1"></div>
 
         <button class="btn-secondary" @click="openEditModal">
-          <i class="fas fa-pen text-[10px]"></i><span class="hidden sm:inline">Editar</span>
+          <i class="fas fa-pen text-[12px]"></i><span class="hidden sm:inline">Editar</span>
         </button>
         <button
           class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
           title="Eliminar caso"
           @click="askDeleteCase"
         >
-          <i class="fas fa-trash text-[12px]"></i>
+          <i class="fas fa-trash text-[14px]"></i>
         </button>
       </div>
 
@@ -213,19 +213,19 @@
           <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-start gap-3">
               <span class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5" :class="priorityConfig[selectedCase.prioridad]?.soft">
-                <i :class="typeConfig[selectedCase.tipo]?.icon" class="text-[13px]"></i>
+                <i :class="typeConfig[selectedCase.tipo]?.icon" class="text-[14px]"></i>
               </span>
               <div class="min-w-0">
                 <h1 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight leading-tight">
                   {{ selectedCase.titulo }}
                 </h1>
-                <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-1">
+                <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-1">
                   {{ typeConfig[selectedCase.tipo]?.label }} · Creado {{ relativeDate(selectedCase.createdAt) }}
                   <template v-if="selectedCase.categoria"> · {{ selectedCase.categoria }}</template>
                 </p>
               </div>
             </div>
-            <p v-if="selectedCase.descripcion" class="text-[12px] font-medium text-slate-600 dark:text-slate-300 leading-relaxed mt-4">
+            <p v-if="selectedCase.descripcion" class="text-[14px] font-medium text-slate-600 dark:text-slate-300 leading-relaxed mt-4">
               {{ selectedCase.descripcion }}
             </p>
           </div>
@@ -233,9 +233,9 @@
           <!-- Documentación -->
           <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-center justify-between mb-3">
-              <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Documentación</p>
+              <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Documentación</p>
               <button v-if="!editingDocs && selectedCase.wikiContent" class="btn-ghost" @click="startEditDocs">
-                <i class="fas fa-pen text-[9px]"></i>Editar
+                <i class="fas fa-pen text-[11px]"></i>Editar
               </button>
             </div>
             <template v-if="editingDocs">
@@ -243,7 +243,7 @@
               <div class="flex justify-end gap-2 mt-3">
                 <button class="btn-secondary" @click="editingDocs = false">Cancelar</button>
                 <button class="btn-primary" :disabled="savingDocs" @click="saveDocs">
-                  <i class="fas text-[10px]" :class="savingDocs ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>Guardar
+                  <i class="fas text-[12px]" :class="savingDocs ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>Guardar
                 </button>
               </div>
             </template>
@@ -251,24 +251,24 @@
               <WikiContent v-if="selectedCase.wikiContent" :content="selectedCase.wikiContent" />
               <button
                 v-else
-                class="w-full py-8 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#334155] text-slate-400 dark:text-slate-500 hover:text-primary-500 transition-colors text-[11px] font-bold"
+                class="w-full py-8 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#334155] text-slate-400 dark:text-slate-500 hover:text-primary-500 transition-colors text-[13px] font-bold"
                 @click="startEditDocs"
               >
-                <i class="fas fa-pen mr-2 text-[10px]"></i>Documentar este caso
+                <i class="fas fa-pen mr-2 text-[12px]"></i>Documentar este caso
               </button>
             </template>
           </div>
 
           <!-- Timeline de actividad -->
           <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
-            <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">
+            <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">
               Actividad
               <span class="ml-1 px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-[#334155] text-slate-500 dark:text-slate-400">{{ timeline.length }}</span>
             </p>
 
             <!-- Composer -->
             <div class="flex gap-2.5 mb-5">
-              <span class="w-7 h-7 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center text-[9px] font-black text-primary-600 dark:text-primary-300 shrink-0">
+              <span class="w-7 h-7 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center text-[11px] font-black text-primary-600 dark:text-primary-300 shrink-0">
                 {{ initials(authStore.user?.name) }}
               </span>
               <div class="flex-1">
@@ -276,11 +276,11 @@
                   v-model="newComment"
                   rows="2"
                   placeholder="Escribe un comentario interno..."
-                  class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[11px] font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all resize-none"
+                  class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[13px] font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all resize-none"
                 ></textarea>
                 <div class="flex justify-end mt-1.5">
                   <button class="btn-primary !h-8 !px-3.5" :disabled="!newComment.trim() || sendingComment" @click="addComment">
-                    <i class="fas text-[9px]" :class="sendingComment ? 'fa-circle-notch fa-spin' : 'fa-paper-plane'"></i>Comentar
+                    <i class="fas text-[11px]" :class="sendingComment ? 'fa-circle-notch fa-spin' : 'fa-paper-plane'"></i>Comentar
                   </button>
                 </div>
               </div>
@@ -293,25 +293,25 @@
                 <span class="absolute -left-[18px] top-1 w-2 h-2 rounded-full border-2 border-white dark:border-[#1e293b]" :class="ev.dotClass"></span>
 
                 <!-- Evento de sistema (cambio de estado) -->
-                <div v-if="ev.kind === 'system'" class="flex items-center gap-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                  <i :class="ev.icon" class="text-[10px]"></i>
+                <div v-if="ev.kind === 'system'" class="flex items-center gap-2 text-[13px] font-medium text-slate-500 dark:text-slate-400">
+                  <i :class="ev.icon" class="text-[12px]"></i>
                   <span><span class="font-bold text-slate-600 dark:text-slate-300">{{ ev.author }}</span> — {{ ev.text }}</span>
-                  <span class="text-[9px] font-bold text-slate-300 dark:text-slate-600 ml-auto shrink-0">{{ relativeDate(ev.fecha) }}</span>
+                  <span class="text-[11px] font-bold text-slate-300 dark:text-slate-600 ml-auto shrink-0">{{ relativeDate(ev.fecha) }}</span>
                 </div>
 
                 <!-- Comentario / bitácora -->
                 <div v-else class="bg-slate-50 dark:bg-[#0f172a] rounded-xl px-3.5 py-2.5">
                   <div class="flex items-center gap-2 mb-1">
-                    <span v-if="ev.emoji" class="text-[13px]">{{ ev.emoji }}</span>
-                    <span class="text-[10px] font-black text-slate-600 dark:text-slate-300">{{ ev.author }}</span>
-                    <span v-if="ev.kind === 'log'" class="text-[8px] font-black uppercase tracking-widest text-primary-500 bg-primary-50 dark:bg-primary-500/10 px-1.5 py-0.5 rounded">Bitácora</span>
-                    <span class="text-[9px] font-bold text-slate-300 dark:text-slate-600 ml-auto">{{ relativeDate(ev.fecha) }}</span>
+                    <span v-if="ev.emoji" class="text-[14px]">{{ ev.emoji }}</span>
+                    <span class="text-[12px] font-black text-slate-600 dark:text-slate-300">{{ ev.author }}</span>
+                    <span v-if="ev.kind === 'log'" class="text-[10px] font-black uppercase tracking-widest text-primary-500 bg-primary-50 dark:bg-primary-500/10 px-1.5 py-0.5 rounded">Bitácora</span>
+                    <span class="text-[11px] font-bold text-slate-300 dark:text-slate-600 ml-auto">{{ relativeDate(ev.fecha) }}</span>
                   </div>
-                  <p class="text-[11px] font-medium text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{{ ev.text }}</p>
+                  <p class="text-[13px] font-medium text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{{ ev.text }}</p>
                 </div>
               </div>
             </div>
-            <p v-else class="text-[11px] font-medium text-slate-400 text-center py-4">Sin actividad todavía — escribe el primer comentario.</p>
+            <p v-else class="text-[13px] font-medium text-slate-400 text-center py-4">Sin actividad todavía — escribe el primer comentario.</p>
             </div>
           </div>
         </div>
@@ -320,47 +320,47 @@
         <div class="space-y-4">
           <!-- Detalles -->
           <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5 space-y-3.5">
-            <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Detalles</p>
+            <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Detalles</p>
 
             <div class="detail-row">
               <span class="detail-label">Prioridad</span>
-              <span class="inline-flex items-center gap-1.5 h-6 px-2 rounded-md text-[9px] font-black uppercase tracking-widest" :class="priorityConfig[selectedCase.prioridad]?.soft">
-                <i :class="priorityConfig[selectedCase.prioridad]?.icon" class="text-[8px]"></i>
+              <span class="inline-flex items-center gap-1.5 h-6 px-2 rounded-md text-[11px] font-black uppercase tracking-widest" :class="priorityConfig[selectedCase.prioridad]?.soft">
+                <i :class="priorityConfig[selectedCase.prioridad]?.icon" class="text-[10px]"></i>
                 {{ selectedCase.prioridad }}
               </span>
             </div>
 
             <div class="detail-row">
               <span class="detail-label">Cliente</span>
-              <span class="text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">{{ clientName(selectedCase) || 'Interno' }}</span>
+              <span class="text-[13px] font-bold text-slate-700 dark:text-slate-200 truncate">{{ clientName(selectedCase) || 'Interno' }}</span>
             </div>
 
             <div class="detail-row">
               <span class="detail-label">Responsable</span>
               <span class="flex items-center gap-1.5 min-w-0">
-                <span class="w-5 h-5 rounded-full bg-slate-100 dark:bg-[#334155] flex items-center justify-center text-[7px] font-black text-slate-500 dark:text-slate-300">
+                <span class="w-5 h-5 rounded-full bg-slate-100 dark:bg-[#334155] flex items-center justify-center text-[9px] font-black text-slate-500 dark:text-slate-300">
                   {{ initials(assigneeName(selectedCase)) }}
                 </span>
-                <span class="text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">{{ assigneeName(selectedCase) || 'Sin asignar' }}</span>
+                <span class="text-[13px] font-bold text-slate-700 dark:text-slate-200 truncate">{{ assigneeName(selectedCase) || 'Sin asignar' }}</span>
               </span>
             </div>
 
             <div v-if="selectedCase.fecha_limite" class="detail-row">
               <span class="detail-label">Fecha límite</span>
-              <span class="text-[11px] font-bold" :class="isOverdue ? 'text-rose-500' : 'text-slate-700 dark:text-slate-200'">
+              <span class="text-[13px] font-bold" :class="isOverdue ? 'text-rose-500' : 'text-slate-700 dark:text-slate-200'">
                 {{ shortDate(selectedCase.fecha_limite) }}
               </span>
             </div>
 
             <div v-if="selectedCase.fecha_resolucion" class="detail-row">
               <span class="detail-label">Resuelto</span>
-              <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">{{ shortDate(selectedCase.fecha_resolucion) }}</span>
+              <span class="text-[13px] font-bold text-emerald-600 dark:text-emerald-400">{{ shortDate(selectedCase.fecha_resolucion) }}</span>
             </div>
 
             <div v-if="selectedCase.tipo === 'seguimiento'" class="pt-1">
               <div class="flex items-center justify-between mb-1.5">
                 <span class="detail-label">Progreso</span>
-                <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">{{ selectedCase.progreso || 0 }}%</span>
+                <span class="text-[13px] font-black text-slate-700 dark:text-slate-200">{{ selectedCase.progreso || 0 }}%</span>
               </div>
               <div class="h-1.5 bg-slate-100 dark:bg-[#334155] rounded-full overflow-hidden">
                 <div class="h-full bg-primary-500 rounded-full transition-all duration-300" :style="{ width: `${selectedCase.progreso || 0}%` }"></div>
@@ -378,12 +378,12 @@
           <!-- Adjuntos -->
           <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-center justify-between mb-3">
-              <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+              <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                 Adjuntos
                 <span v-if="selectedCase.archivos?.length" class="ml-1 px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-[#334155] text-slate-500 dark:text-slate-400">{{ selectedCase.archivos.length }}</span>
               </p>
               <label class="btn-ghost cursor-pointer">
-                <i class="fas text-[9px]" :class="uploadingFiles ? 'fa-circle-notch fa-spin' : 'fa-plus'"></i>Subir
+                <i class="fas text-[11px]" :class="uploadingFiles ? 'fa-circle-notch fa-spin' : 'fa-plus'"></i>Subir
                 <input type="file" multiple class="hidden" @change="uploadFiles" />
               </label>
             </div>
@@ -393,29 +393,29 @@
                 :key="idx"
                 class="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
               >
-                <i :class="fileIcon(file.nombre)" class="text-[13px] shrink-0"></i>
-                <a :href="fileUrl(file.url)" target="_blank" class="flex-1 min-w-0 text-[11px] font-bold text-slate-600 dark:text-slate-300 truncate hover:text-primary-600 dark:hover:text-primary-300 transition-colors">
+                <i :class="fileIcon(file.nombre)" class="text-[14px] shrink-0"></i>
+                <a :href="fileUrl(file.url)" target="_blank" class="flex-1 min-w-0 text-[13px] font-bold text-slate-600 dark:text-slate-300 truncate hover:text-primary-600 dark:hover:text-primary-300 transition-colors">
                   {{ file.nombre }}
                 </a>
-                <span class="text-[9px] font-bold text-slate-300 dark:text-slate-600 shrink-0">{{ fileSize(file.tamaño) }}</span>
+                <span class="text-[11px] font-bold text-slate-300 dark:text-slate-600 shrink-0">{{ fileSize(file.tamaño) }}</span>
                 <button
                   class="w-6 h-6 hidden group-hover:flex items-center justify-center rounded-md text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors shrink-0"
                   title="Eliminar adjunto"
                   @click="askDeleteFile(idx)"
                 >
-                  <i class="fas fa-trash text-[9px]"></i>
+                  <i class="fas fa-trash text-[11px]"></i>
                 </button>
               </div>
             </div>
-            <p v-else class="text-[11px] font-medium text-slate-400 text-center py-3">Sin archivos adjuntos</p>
+            <p v-else class="text-[13px] font-medium text-slate-400 text-center py-3">Sin archivos adjuntos</p>
           </div>
 
           <!-- Tickets vinculados -->
           <div class="bg-white dark:bg-[#1e293b] rounded-xl p-5">
             <div class="flex items-center justify-between mb-3">
-              <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Tickets</p>
+              <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Tickets</p>
               <button class="btn-ghost" @click="openLinkTicketModal">
-                <i class="fas fa-link text-[9px]"></i>Vincular
+                <i class="fas fa-link text-[11px]"></i>Vincular
               </button>
             </div>
             <div v-if="selectedCase.linkedTickets?.length" class="space-y-1.5">
@@ -424,18 +424,18 @@
                 :key="ticket._id"
                 class="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
               >
-                <span class="text-[9px] font-black text-slate-400 shrink-0">#{{ ticket.ticketNumber || ticket._id?.slice(-5).toUpperCase() }}</span>
-                <span class="flex-1 min-w-0 text-[11px] font-bold text-slate-600 dark:text-slate-300 truncate">{{ ticket.subject || ticket.titulo }}</span>
+                <span class="text-[11px] font-black text-slate-400 shrink-0">#{{ ticket.ticketNumber || ticket._id?.slice(-5).toUpperCase() }}</span>
+                <span class="flex-1 min-w-0 text-[13px] font-bold text-slate-600 dark:text-slate-300 truncate">{{ ticket.subject || ticket.titulo }}</span>
                 <button
                   class="w-6 h-6 hidden group-hover:flex items-center justify-center rounded-md text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors shrink-0"
                   title="Desvincular"
                   @click="unlinkTicket(ticket._id)"
                 >
-                  <i class="fas fa-unlink text-[9px]"></i>
+                  <i class="fas fa-unlink text-[11px]"></i>
                 </button>
               </div>
             </div>
-            <p v-else class="text-[11px] font-medium text-slate-400 text-center py-3">Sin tickets vinculados</p>
+            <p v-else class="text-[13px] font-medium text-slate-400 text-center py-3">Sin tickets vinculados</p>
           </div>
         </div>
       </div>
@@ -449,65 +449,65 @@
         <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-[#334155] shrink-0">
           <div class="flex items-center gap-3">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(var(--brand-accent-rgb),0.1)">
-              <i class="fas fa-folder-open text-[11px]" style="color: var(--brand-accent)"></i>
+              <i class="fas fa-folder-open text-[13px]" style="color: var(--brand-accent)"></i>
             </div>
-            <h3 class="text-[14px] font-black text-slate-800 dark:text-slate-100">
+            <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100">
               {{ form._id ? 'Editar caso' : 'Nuevo caso' }}
             </h3>
           </div>
           <button class="h-7 w-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-[#334155] transition-colors" @click="showFormModal = false">
-            <i class="fas fa-times text-[11px]"></i>
+            <i class="fas fa-times text-[13px]"></i>
           </button>
         </div>
 
         <!-- Body -->
         <div class="p-5 space-y-3 overflow-y-auto custom-scrollbar">
           <div>
-            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Título *</label>
+            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Título *</label>
             <input v-model="form.titulo" type="text" placeholder="Ej: Migración de servidor a Oracle Cloud"
-              class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
+              class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[14px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
           </div>
 
           <div>
-            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Descripción *</label>
+            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Descripción *</label>
             <textarea v-model="form.descripcion" rows="3" placeholder="Contexto y objetivo del caso..."
-              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"></textarea>
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[14px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"></textarea>
           </div>
 
           <div class="grid grid-cols-2 gap-2.5">
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Tipo</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Tipo</label>
               <CustomSelect v-model="form.tipo" :options="caseTypeOpts" size="sm" />
             </div>
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Prioridad</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Prioridad</label>
               <CustomSelect v-model="form.prioridad" :options="casePriorityOpts" size="sm" />
             </div>
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Cliente</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Cliente</label>
               <CustomSelect v-model="form.cliente_id" :options="clientOpts" size="sm" :searchable="true" />
             </div>
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Responsable</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Responsable</label>
               <CustomSelect v-model="form.asignado_a" :options="teamOpts" size="sm" />
             </div>
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Fecha límite</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Fecha límite</label>
               <DatePicker v-model="form.fecha_limite" placeholder="Sin fecha" />
             </div>
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Categoría</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Categoría</label>
               <input v-model="form.categoria" type="text" placeholder="Backend, Legal, Soporte..."
-                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
+                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[14px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
             </div>
           </div>
         </div>
 
         <!-- Footer -->
         <div class="px-5 py-3.5 border-t border-slate-100 dark:border-[#334155] flex justify-end gap-2 shrink-0">
-          <button class="h-8 px-4 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[11px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors" @click="showFormModal = false">Cancelar</button>
-          <button class="h-8 px-4 rounded-xl bg-primary-600 text-white text-[11px] font-black hover:bg-primary-700 transition-colors shadow-sm flex items-center gap-1.5 disabled:opacity-60" :disabled="savingForm" @click="submitForm">
-            <i class="fas text-[9px]" :class="savingForm ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
+          <button class="h-8 px-4 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[13px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors" @click="showFormModal = false">Cancelar</button>
+          <button class="h-8 px-4 rounded-xl bg-primary-600 text-white text-[13px] font-black hover:bg-primary-700 transition-colors shadow-sm flex items-center gap-1.5 disabled:opacity-60" :disabled="savingForm" @click="submitForm">
+            <i class="fas text-[11px]" :class="savingForm ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
             {{ form._id ? 'Guardar cambios' : 'Crear caso' }}
           </button>
         </div>
@@ -520,19 +520,19 @@
     <div v-if="showLinkModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50" @click.self="showLinkModal = false">
       <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden">
         <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between shrink-0 bg-slate-50 dark:bg-[#273449]">
-          <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Vincular ticket</h3>
+          <h3 class="text-[17px] font-black text-slate-800 dark:text-slate-100 tracking-tight">Vincular ticket</h3>
           <button class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showLinkModal = false">
-            <i class="fas fa-times text-[12px]"></i>
+            <i class="fas fa-times text-[14px]"></i>
           </button>
         </div>
         <div class="p-4 shrink-0">
           <div class="relative">
-            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[12px]"></i>
             <input
               v-model="ticketSearch"
               type="text"
               placeholder="Buscar por título o número..."
-              class="w-full h-9 pl-8 pr-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+              class="w-full h-9 pl-8 pr-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[13px] font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
             />
           </div>
         </div>
@@ -547,11 +547,11 @@
               class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
               @click="linkTicket(t)"
             >
-              <span class="text-[9px] font-black text-slate-400 shrink-0">#{{ t.ticketNumber || t._id.slice(-5).toUpperCase() }}</span>
-              <span class="flex-1 min-w-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">{{ t.subject || t.titulo }}</span>
-              <i class="fas fa-plus text-[9px] text-primary-500 shrink-0"></i>
+              <span class="text-[11px] font-black text-slate-400 shrink-0">#{{ t.ticketNumber || t._id.slice(-5).toUpperCase() }}</span>
+              <span class="flex-1 min-w-0 text-[13px] font-bold text-slate-700 dark:text-slate-200 truncate">{{ t.subject || t.titulo }}</span>
+              <i class="fas fa-plus text-[11px] text-primary-500 shrink-0"></i>
             </button>
-            <p v-if="!filteredTickets.length" class="text-[11px] font-medium text-slate-400 text-center py-6">No se encontraron tickets</p>
+            <p v-if="!filteredTickets.length" class="text-[13px] font-medium text-slate-400 text-center py-6">No se encontraron tickets</p>
           </template>
         </div>
       </div>
@@ -565,11 +565,11 @@
         <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center mx-auto mb-3">
           <i class="fas fa-trash text-sm"></i>
         </div>
-        <h3 class="text-[14px] font-black text-slate-800 dark:text-slate-100 mb-1">{{ confirmDialog.title }}</h3>
-        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed mb-5">{{ confirmDialog.message }}</p>
+        <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 mb-1">{{ confirmDialog.title }}</h3>
+        <p class="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed mb-5">{{ confirmDialog.message }}</p>
         <div class="flex gap-2">
-          <button class="flex-1 h-8 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[11px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors" @click="confirmDialog = null">Cancelar</button>
-          <button class="flex-1 h-8 rounded-xl text-white bg-rose-500 hover:bg-rose-600 text-[11px] font-bold transition-colors"
+          <button class="flex-1 h-8 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[13px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors" @click="confirmDialog = null">Cancelar</button>
+          <button class="flex-1 h-8 rounded-xl text-white bg-rose-500 hover:bg-rose-600 text-[13px] font-bold transition-colors"
             @click="confirmDialog.onConfirm(); confirmDialog = null">
             Eliminar
           </button>

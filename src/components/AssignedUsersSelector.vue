@@ -8,7 +8,7 @@
         <div v-if="user?.photo || user?.avatar" class="w-5 h-5 rounded-full overflow-hidden flex-shrink-0">
            <img :src="user.photo || user.avatar" class="w-full h-full object-cover" />
         </div>
-        <div v-else class="w-5 h-5 rounded-full bg-primary-100 flex items-center justify-center text-[10px] font-black text-primary-600 flex-shrink-0">
+        <div v-else class="w-5 h-5 rounded-full bg-primary-100 flex items-center justify-center text-[12px] font-black text-primary-600 flex-shrink-0">
           {{ user?.name?.charAt(0) || '?' }}
         </div>
         <span class="text-xs font-bold text-slate-700 whitespace-nowrap">{{ user?.name || 'Usuario' }}</span>
@@ -39,7 +39,7 @@
       <button
         type="button"
         @click="selectedDepartment = ''"
-        class="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-colors border"
+        class="px-3 py-1.5 rounded-lg text-[12px] font-bold uppercase tracking-wider whitespace-nowrap transition-colors border"
         :class="selectedDepartment === '' ? 'bg-primary-500 text-white border-primary-600 shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700'"
       >
         Todos
@@ -49,7 +49,7 @@
         :key="dept"
         type="button"
         @click="selectedDepartment = dept"
-        class="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-colors border"
+        class="px-3 py-1.5 rounded-lg text-[12px] font-bold uppercase tracking-wider whitespace-nowrap transition-colors border"
         :class="selectedDepartment === dept ? 'bg-primary-500 text-white border-primary-600 shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700'"
       >
         {{ dept }}
@@ -76,11 +76,11 @@
         </div>
         <div class="flex flex-col items-start min-w-0">
           <span class="text-sm font-bold truncate">{{ member.name }}</span>
-          <span class="text-[10px] text-slate-400 font-medium truncate uppercase tracking-wider">{{ member.department || member.role || 'Miembro' }}</span>
+          <span class="text-[12px] text-slate-400 font-medium truncate uppercase tracking-wider">{{ member.department || member.role || 'Miembro' }}</span>
         </div>
         <div class="ml-auto flex-shrink-0 pl-2">
           <div v-if="isUserSelected(member._id!)" class="w-5 h-5 bg-primary-500 rounded-full flex items-center justify-center shadow-lg shadow-primary-200">
-             <i class="fas fa-check text-[10px] text-white"></i>
+             <i class="fas fa-check text-[12px] text-white"></i>
           </div>
           <div v-else class="w-5 h-5 border-2 border-slate-200 rounded-full group-hover:border-primary-300 transition-colors"></div>
         </div>

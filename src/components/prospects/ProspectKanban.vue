@@ -15,12 +15,12 @@
         <div class="px-3 py-2.5 border-b border-slate-200 flex items-center justify-between bg-white">
           <div class="flex items-center gap-2">
             <div :class="['w-6 h-6 rounded-md border flex items-center justify-center', status.color]">
-              <i :class="['fas', status.icon, 'text-[10px]']"></i>
+              <i :class="['fas', status.icon, 'text-[12px]']"></i>
             </div>
-            <span class="text-[11px] font-black text-slate-700">{{ status.label }}</span>
-            <span class="text-[10px] font-bold text-slate-400">·  {{ countFor(status.value) }}</span>
+            <span class="text-[13px] font-black text-slate-700">{{ status.label }}</span>
+            <span class="text-[12px] font-bold text-slate-400">·  {{ countFor(status.value) }}</span>
           </div>
-          <span v-if="totalValueFor(status.value) > 0" class="text-[9px] font-black text-emerald-600">
+          <span v-if="totalValueFor(status.value) > 0" class="text-[11px] font-black text-emerald-600">
             ${{ formatMoney(totalValueFor(status.value)) }}
           </span>
         </div>
@@ -42,7 +42,7 @@
             <div class="flex items-start gap-2 mb-2">
               <div
                 :class="[
-                  'w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-black flex-shrink-0',
+                  'w-8 h-8 rounded-lg flex items-center justify-center text-[12px] font-black flex-shrink-0',
                   avatarClass(prospect),
                 ]"
               >
@@ -50,21 +50,21 @@
               </div>
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-1">
-                  <h4 class="text-[11px] font-black text-slate-900 truncate leading-tight flex-1">
+                  <h4 class="text-[13px] font-black text-slate-900 truncate leading-tight flex-1">
                     {{ prospect.prospectName }}
                   </h4>
-                  <span v-if="tempOf(prospect)" class="text-[10px]" :title="`Score: ${scoreOf(prospect)}/100`">{{ tempOf(prospect) }}</span>
+                  <span v-if="tempOf(prospect)" class="text-[12px]" :title="`Score: ${scoreOf(prospect)}/100`">{{ tempOf(prospect) }}</span>
                 </div>
-                <p v-if="prospect.company" class="text-[10px] font-bold text-slate-500 truncate mt-0.5">
+                <p v-if="prospect.company" class="text-[12px] font-bold text-slate-500 truncate mt-0.5">
                   {{ prospect.company }}
                 </p>
               </div>
             </div>
 
-            <div class="flex items-center justify-between text-[9px] font-medium">
+            <div class="flex items-center justify-between text-[11px] font-medium">
               <div class="flex items-center gap-2 text-slate-400">
                 <span class="flex items-center gap-1">
-                  <i class="fas fa-comment text-[8px]"></i>
+                  <i class="fas fa-comment text-[10px]"></i>
                   {{ prospect.messages?.length || 0 }}
                 </span>
                 <span v-if="prospect.estimatedValue" class="text-emerald-600 font-black">
@@ -81,7 +81,7 @@
             v-if="!groupedProspects[status.value]?.length"
             class="p-4 text-center"
           >
-            <p class="text-[10px] text-slate-400 font-medium">Sin prospectos</p>
+            <p class="text-[12px] text-slate-400 font-medium">Sin prospectos</p>
           </div>
         </div>
       </div>

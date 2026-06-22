@@ -3,11 +3,11 @@
     <!-- Header -->
     <div>
       <div class="flex items-center gap-2 mb-1">
-        <i class="fas fa-gem text-primary-400 text-[9px]"></i>
-        <span class="text-[9px] font-black uppercase tracking-widest text-primary-400">GEMS Hub</span>
+        <i class="fas fa-gem text-primary-400 text-[11px]"></i>
+        <span class="text-[11px] font-black uppercase tracking-widest text-primary-400">GEMS Hub</span>
       </div>
       <h2 class="text-[22px] font-black text-slate-900 dark:text-slate-100 tracking-tight">Personalización de marca</h2>
-      <p class="text-[11px] font-medium text-slate-400 dark:text-slate-500 mt-0.5">
+      <p class="text-[13px] font-medium text-slate-400 dark:text-slate-500 mt-0.5">
         Logo, nombre y color de acento de tu organización — con legibilidad garantizada en toda la interfaz
       </p>
     </div>
@@ -38,8 +38,8 @@
               <div v-if="config.logo" class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#0f172a] rounded-xl mb-2.5">
                 <img :src="config.logo" alt="Logo actual" class="h-9 w-auto max-w-[110px] object-contain" />
                 <div class="flex-1 min-w-0">
-                  <p class="text-[11px] font-bold text-slate-600 dark:text-slate-300">Logo activo</p>
-                  <p class="text-[9px] font-medium text-slate-400">Sidebar y login</p>
+                  <p class="text-[13px] font-bold text-slate-600 dark:text-slate-300">Logo activo</p>
+                  <p class="text-[11px] font-medium text-slate-400">Sidebar y login</p>
                 </div>
                 <button
                   class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
@@ -47,7 +47,7 @@
                   :disabled="saving"
                   @click="removeLogo"
                 >
-                  <i class="fas fa-trash text-[10px]"></i>
+                  <i class="fas fa-trash text-[12px]"></i>
                 </button>
               </div>
 
@@ -64,10 +64,10 @@
                 <input ref="fileInput" type="file" accept="image/png,image/svg+xml,image/jpeg,image/jpg,image/webp,image/gif"
                   class="hidden" @change="onFileChange" />
                 <i class="fas text-lg text-slate-300 dark:text-slate-600 mb-1 block" :class="uploading ? 'fa-circle-notch fa-spin text-primary-400' : 'fa-cloud-upload-alt'"></i>
-                <p class="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                <p class="text-[13px] font-bold text-slate-500 dark:text-slate-400">
                   {{ uploading ? 'Subiendo...' : 'Arrastra o haz clic para subir' }}
                 </p>
-                <p class="text-[9px] font-medium text-slate-300 dark:text-slate-600 mt-0.5">PNG, SVG, JPG, WebP · Máx 3 MB</p>
+                <p class="text-[11px] font-medium text-slate-300 dark:text-slate-600 mt-0.5">PNG, SVG, JPG, WebP · Máx 3 MB</p>
               </div>
             </div>
           </div>
@@ -89,7 +89,7 @@
               :title="preset.name"
               @click="accentColor = preset.value"
             >
-              <i v-if="accentColor.toLowerCase() === preset.value" class="fas fa-check text-white text-[9px]"></i>
+              <i v-if="accentColor.toLowerCase() === preset.value" class="fas fa-check text-white text-[11px]"></i>
             </button>
           </div>
 
@@ -112,7 +112,7 @@
             />
             <div class="w-9 h-9 rounded-lg shrink-0" :style="{ backgroundColor: safeAccent }"></div>
           </div>
-          <p v-if="accentColor && !isValidHex" class="text-[10px] font-bold text-rose-500 mt-1.5">
+          <p v-if="accentColor && !isValidHex" class="text-[12px] font-bold text-rose-500 mt-1.5">
             <i class="fas fa-circle-exclamation mr-1"></i>Hex inválido — usa el formato #RRGGBB
           </p>
 
@@ -121,11 +121,11 @@
             ? 'border-amber-200 bg-amber-50 dark:border-amber-500/30 dark:bg-amber-500/10'
             : 'border-emerald-200 bg-emerald-50 dark:border-emerald-500/30 dark:bg-emerald-500/10'">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-[9px] font-black uppercase tracking-widest" :class="wasAdjusted ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'">
+              <span class="text-[11px] font-black uppercase tracking-widest" :class="wasAdjusted ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'">
                 <i class="fas mr-1" :class="wasAdjusted ? 'fa-wand-magic-sparkles' : 'fa-circle-check'"></i>
                 Legibilidad
               </span>
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black"
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-black"
                 :class="contrastLevel === 'AAA'
                   ? 'bg-emerald-600 text-white'
                   : 'bg-emerald-500 text-white'">
@@ -133,24 +133,24 @@
               </span>
             </div>
 
-            <p v-if="wasAdjusted" class="text-[10px] font-medium text-amber-700 dark:text-amber-300 leading-relaxed">
+            <p v-if="wasAdjusted" class="text-[12px] font-medium text-amber-700 dark:text-amber-300 leading-relaxed">
               El color elegido no alcanza el contraste mínimo (4.5:1) para texto blanco
               <span class="font-black">({{ rawRatio.toFixed(1) }}:1)</span>.
               Se ajustó automáticamente el tono para garantizar la lectura:
             </p>
-            <p v-else class="text-[10px] font-medium text-emerald-700 dark:text-emerald-300 leading-relaxed">
+            <p v-else class="text-[12px] font-medium text-emerald-700 dark:text-emerald-300 leading-relaxed">
               Este color es legible sobre texto blanco en botones, badges y la barra lateral.
             </p>
 
             <div v-if="wasAdjusted" class="flex items-center gap-2 mt-2.5">
               <span class="flex items-center gap-1.5">
                 <span class="w-6 h-6 rounded-md border border-amber-200 dark:border-amber-500/30" :style="{ backgroundColor: isValidHex ? accentColor : '#cccccc' }"></span>
-                <span class="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase">Elegido</span>
+                <span class="text-[11px] font-black text-amber-600 dark:text-amber-400 uppercase">Elegido</span>
               </span>
-              <i class="fas fa-arrow-right text-[9px] text-amber-400"></i>
+              <i class="fas fa-arrow-right text-[11px] text-amber-400"></i>
               <span class="flex items-center gap-1.5">
                 <span class="w-6 h-6 rounded-md" :style="{ backgroundColor: safeAccent }"></span>
-                <span class="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase">Se aplicará · {{ safeAccent }}</span>
+                <span class="text-[11px] font-black text-amber-600 dark:text-amber-400 uppercase">Se aplicará · {{ safeAccent }}</span>
               </span>
             </div>
           </div>
@@ -161,8 +161,8 @@
           <p class="card-title"><i class="fas fa-moon text-primary-400 mr-1.5"></i>Apariencia</p>
           <button class="w-full flex items-center justify-between gap-3 group" @click="darkMode = !darkMode">
             <span class="text-left">
-              <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200">Modo oscuro</span>
-              <span class="block text-[10px] font-medium text-slate-400 mt-0.5">Tema oscuro para toda la organización</span>
+              <span class="block text-[13px] font-bold text-slate-700 dark:text-slate-200">Modo oscuro</span>
+              <span class="block text-[12px] font-medium text-slate-400 mt-0.5">Tema oscuro para toda la organización</span>
             </span>
             <span
               class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0"
@@ -177,11 +177,11 @@
         <!-- Acciones -->
         <div class="flex gap-2">
           <button class="btn-primary flex-1 justify-center" :disabled="saving || !isValidHex" @click="saveTheme">
-            <i class="fas text-[10px]" :class="saving ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
+            <i class="fas text-[12px]" :class="saving ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
             {{ saving ? 'Guardando...' : 'Guardar cambios' }}
           </button>
           <button class="btn-secondary" :disabled="saving" title="Restaurar valores por defecto" @click="resetTheme">
-            <i class="fas fa-rotate-left text-[10px]"></i>Restaurar
+            <i class="fas fa-rotate-left text-[12px]"></i>Restaurar
           </button>
         </div>
       </div>
@@ -200,7 +200,7 @@
               <div class="w-8 h-8 rounded-lg overflow-hidden mb-1 flex items-center justify-center"
                 :style="{ backgroundColor: safeAccent + '20' }">
                 <img v-if="config.logo" :src="config.logo" class="w-full h-full object-contain" />
-                <i v-else class="fas fa-gem text-[10px]" :style="{ color: safeAccent }"></i>
+                <i v-else class="fas fa-gem text-[12px]" :style="{ color: safeAccent }"></i>
               </div>
               <div v-for="i in 5" :key="i" class="w-7 h-7 rounded-lg"
                 :style="{ backgroundColor: i === 1 ? safeAccent : (darkMode ? '#1e293b' : '#f1f5f9') }"></div>
@@ -221,7 +221,7 @@
                 </div>
               </div>
               <div class="h-6 flex items-center justify-center">
-                <span class="text-[8px] font-black" :style="{ color: darkMode ? '#94a3b8' : safeAccent }">
+                <span class="text-[10px] font-black" :style="{ color: darkMode ? '#94a3b8' : safeAccent }">
                   {{ brandName || 'GEMS Hub' }}
                 </span>
               </div>
@@ -233,20 +233,20 @@
         <div class="card">
           <p class="card-title">Elementos de interfaz</p>
           <div class="space-y-2.5">
-            <button class="w-full h-9 rounded-lg text-white text-[11px] font-bold transition-all"
+            <button class="w-full h-9 rounded-lg text-white text-[13px] font-bold transition-all"
               :style="{ backgroundColor: safeAccent }">
-              <i class="fas fa-check mr-1.5 text-[10px]"></i>Botón primario
+              <i class="fas fa-check mr-1.5 text-[12px]"></i>Botón primario
             </button>
             <div class="flex flex-wrap gap-2">
-              <span class="inline-flex items-center h-7 px-3 rounded-lg text-[10px] font-black text-white"
+              <span class="inline-flex items-center h-7 px-3 rounded-lg text-[12px] font-black text-white"
                 :style="{ backgroundColor: safeAccent }">
                 Badge sólido
               </span>
-              <span class="inline-flex items-center h-7 px-3 rounded-lg text-[10px] font-black border"
+              <span class="inline-flex items-center h-7 px-3 rounded-lg text-[12px] font-black border"
                 :style="{ color: safeAccent, borderColor: safeAccent + '60' }">
                 Outline
               </span>
-              <span class="inline-flex items-center h-7 px-3 rounded-lg text-[10px] font-black"
+              <span class="inline-flex items-center h-7 px-3 rounded-lg text-[12px] font-black"
                 :style="{ backgroundColor: safeAccent + '18', color: safeAccent }">
                 Soft
               </span>
@@ -254,7 +254,7 @@
             <div class="flex items-center gap-2 px-3 h-9 rounded-lg border"
               :style="{ borderColor: safeAccent + '50' }">
               <span class="w-2 h-2 rounded-full animate-pulse" :style="{ backgroundColor: safeAccent }"></span>
-              <span class="text-[11px] font-bold text-slate-600 dark:text-slate-300">Input con foco activo</span>
+              <span class="text-[13px] font-bold text-slate-600 dark:text-slate-300">Input con foco activo</span>
             </div>
           </div>
         </div>
@@ -266,13 +266,13 @@
             :style="{ borderColor: safeAccent + '30', background: safeAccent + '06' }">
             <img v-if="config.logo" :src="config.logo" class="h-8 w-auto object-contain" />
             <div v-else class="w-9 h-9 rounded-lg flex items-center justify-center" :style="{ background: safeAccent + '20' }">
-              <i class="fas fa-gem text-[12px]" :style="{ color: safeAccent }"></i>
+              <i class="fas fa-gem text-[14px]" :style="{ color: safeAccent }"></i>
             </div>
-            <p class="text-[11px] font-black" :style="{ color: safeAccent }">{{ brandName || 'GEMS Hub' }}</p>
+            <p class="text-[13px] font-black" :style="{ color: safeAccent }">{{ brandName || 'GEMS Hub' }}</p>
             <input disabled type="text" placeholder="usuario@empresa.com"
-              class="w-full px-3 h-8 border rounded-lg text-[10px] bg-white dark:bg-[#0f172a] dark:text-slate-400"
+              class="w-full px-3 h-8 border rounded-lg text-[12px] bg-white dark:bg-[#0f172a] dark:text-slate-400"
               :style="{ borderColor: safeAccent + '40' }" />
-            <button disabled class="w-full h-8 rounded-lg text-white text-[10px] font-black"
+            <button disabled class="w-full h-8 rounded-lg text-white text-[12px] font-black"
               :style="{ backgroundColor: safeAccent }">
               Iniciar sesión
             </button>

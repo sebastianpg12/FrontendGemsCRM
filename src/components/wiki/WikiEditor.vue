@@ -26,13 +26,13 @@
       <!-- Headings -->
       <div class="wiki-editor__group">
         <button type="button" @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ active: editor.isActive('heading', { level: 1 }) }" title="Título 1">
-          <span class="text-[11px] font-black">H1</span>
+          <span class="text-[13px] font-black">H1</span>
         </button>
         <button type="button" @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ active: editor.isActive('heading', { level: 2 }) }" title="Título 2">
-          <span class="text-[11px] font-black">H2</span>
+          <span class="text-[13px] font-black">H2</span>
         </button>
         <button type="button" @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ active: editor.isActive('heading', { level: 3 }) }" title="Título 3">
-          <span class="text-[11px] font-black">H3</span>
+          <span class="text-[13px] font-black">H3</span>
         </button>
       </div>
 

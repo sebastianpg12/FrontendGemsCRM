@@ -63,7 +63,7 @@
           title="Páginas"
           @click="mobileSidebarOpen = true"
         >
-          <i class="fas fa-bars text-[12px]"></i>
+          <i class="fas fa-bars text-[14px]"></i>
         </button>
 
         <WikiBreadcrumb :trail="breadcrumb" @navigate="onBreadcrumbNavigate" />
@@ -71,25 +71,25 @@
         <div class="flex-1"></div>
 
         <template v-if="currentPage && !editing">
-          <span class="hidden sm:flex items-center gap-1.5 text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mr-1" title="Vistas">
-            <i class="fas fa-eye text-[10px]"></i>{{ currentPage.vistas || 0 }}
+          <span class="hidden sm:flex items-center gap-1.5 text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mr-1" title="Vistas">
+            <i class="fas fa-eye text-[12px]"></i>{{ currentPage.vistas || 0 }}
           </span>
           <button class="btn-secondary" @click="startEditing">
-            <i class="fas fa-pen text-[10px]"></i><span class="hidden sm:inline">Editar</span>
+            <i class="fas fa-pen text-[12px]"></i><span class="hidden sm:inline">Editar</span>
           </button>
           <button
             class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
             title="Archivar página"
             @click="askArchive(currentPage._id!)"
           >
-            <i class="fas fa-box-archive text-[12px]"></i>
+            <i class="fas fa-box-archive text-[14px]"></i>
           </button>
         </template>
 
         <template v-else-if="editing">
           <button class="btn-secondary" @click="cancelEditing">Cancelar</button>
           <button class="btn-primary" :disabled="saving" @click="savePage">
-            <i class="fas text-[10px]" :class="saving ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
+            <i class="fas text-[12px]" :class="saving ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
             Guardar
           </button>
         </template>
@@ -108,11 +108,11 @@
             <i class="fas fa-book-open text-2xl text-primary-500"></i>
           </div>
           <h3 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-2">Tu base de conocimiento está vacía</h3>
-          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 max-w-sm mb-6 leading-relaxed">
+          <p class="text-[13px] font-medium text-slate-500 dark:text-slate-400 max-w-sm mb-6 leading-relaxed">
             Documenta procesos, manuales y guías de tu equipo. Organiza todo en páginas y sub-páginas, como en Notion.
           </p>
           <button class="btn-primary" @click="createPage(null)">
-            <i class="fas fa-plus text-[10px]"></i>Crear primera página
+            <i class="fas fa-plus text-[12px]"></i>Crear primera página
           </button>
         </div>
 
@@ -122,7 +122,7 @@
             <i class="fas fa-hand-pointer text-2xl text-slate-300 dark:text-slate-600"></i>
           </div>
           <h3 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-2">Selecciona una página</h3>
-          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
+          <p class="text-[13px] font-medium text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
             Elige una página del panel izquierdo o crea una nueva para empezar.
           </p>
         </div>
@@ -147,7 +147,7 @@
             <h1 class="text-[22px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">
               {{ currentPage.titulo }}
             </h1>
-            <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">
+            <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">
               Por {{ currentPage.autor?.name || 'Usuario' }} · Actualizado {{ formatDate(currentPage.updatedAt) }}
             </p>
             <div v-if="hasContent">
@@ -155,15 +155,15 @@
             </div>
             <button
               v-else
-              class="w-full py-10 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#334155] text-slate-400 dark:text-slate-500 hover:text-primary-500 transition-colors text-[11px] font-bold"
+              class="w-full py-10 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#334155] text-slate-400 dark:text-slate-500 hover:text-primary-500 transition-colors text-[13px] font-bold"
               @click="startEditing"
             >
-              <i class="fas fa-pen mr-2 text-[10px]"></i>Esta página está vacía — haz click para escribir
+              <i class="fas fa-pen mr-2 text-[12px]"></i>Esta página está vacía — haz click para escribir
             </button>
 
             <!-- Sub-páginas -->
             <div v-if="currentChildren.length" class="mt-8 pt-6 border-t border-slate-100 dark:border-[#334155]">
-              <p class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Sub-páginas</p>
+              <p class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Sub-páginas</p>
               <div class="space-y-1">
                 <button
                   v-for="child in currentChildren"
@@ -171,8 +171,8 @@
                   class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors text-left"
                   @click="navigateTo(child._id)"
                 >
-                  <i class="fas fa-file-lines text-[10px] text-slate-400"></i>
-                  <span class="text-[11px] font-bold">{{ child.titulo }}</span>
+                  <i class="fas fa-file-lines text-[12px] text-slate-400"></i>
+                  <span class="text-[13px] font-bold">{{ child.titulo }}</span>
                 </button>
               </div>
             </div>
@@ -189,12 +189,12 @@
           :class="confirmDialog.danger ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500' : 'bg-amber-50 dark:bg-amber-500/10 text-amber-500'">
           <i class="fas text-[16px]" :class="confirmDialog.danger ? 'fa-trash' : 'fa-box-archive'"></i>
         </div>
-        <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">{{ confirmDialog.title }}</h3>
-        <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 leading-relaxed mb-6">{{ confirmDialog.message }}</p>
+        <h3 class="text-[17px] font-black text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">{{ confirmDialog.title }}</h3>
+        <p class="text-[13px] font-medium text-slate-500 dark:text-slate-400 leading-relaxed mb-6">{{ confirmDialog.message }}</p>
         <div class="flex justify-end gap-2">
           <button class="btn-secondary" @click="confirmDialog = null">Cancelar</button>
           <button
-            class="inline-flex items-center gap-2 h-9 px-4 text-[11px] font-bold rounded-lg text-white transition-colors"
+            class="inline-flex items-center gap-2 h-9 px-4 text-[13px] font-bold rounded-lg text-white transition-colors"
             :class="confirmDialog.danger ? 'bg-rose-600 hover:bg-rose-700' : 'bg-amber-500 hover:bg-amber-600'"
             @click="confirmDialog.onConfirm(); confirmDialog = null"
           >

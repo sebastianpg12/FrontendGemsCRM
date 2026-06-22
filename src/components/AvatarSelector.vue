@@ -11,11 +11,11 @@
           />
         </div>
         <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-          <i class="fas fa-check text-[10px] text-white"></i>
+          <i class="fas fa-check text-[12px] text-white"></i>
         </div>
       </div>
       <div class="flex-1">
-        <p class="text-[10px] font-black text-primary-400 uppercase tracking-widest mb-1">Avatar Seleccionado</p>
+        <p class="text-[12px] font-black text-primary-400 uppercase tracking-widest mb-1">Avatar Seleccionado</p>
         <h4 class="text-slate-800 font-black text-lg tracking-tight">{{ getSelectedAvatarData()?.name }}</h4>
       </div>
     </div>
@@ -40,7 +40,7 @@
             class="w-full h-full object-cover"
           />
         </div>
-        <p class="text-[10px] font-black text-center mt-3 uppercase tracking-wider transition-colors"
+        <p class="text-[12px] font-black text-center mt-3 uppercase tracking-wider transition-colors"
            :class="selectedAvatar === avatar.id ? 'text-primary-600' : 'text-slate-400 group-hover:text-slate-600'">
           {{ avatar.name }}
         </p>

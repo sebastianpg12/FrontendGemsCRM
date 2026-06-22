@@ -22,17 +22,17 @@
         :class="{ 'opacity-0 pointer-events-none': !hasChildren }"
         @click.stop="$emit('toggle', node._id)"
       >
-        <i class="fas fa-chevron-right text-[8px] transition-transform duration-150" :class="{ 'rotate-90': isExpanded }"></i>
+        <i class="fas fa-chevron-right text-[10px] transition-transform duration-150" :class="{ 'rotate-90': isExpanded }"></i>
       </button>
 
-      <i class="fas fa-file-lines text-[10px] shrink-0" :class="isActive ? 'text-primary-500' : 'text-slate-400 dark:text-slate-500'"></i>
+      <i class="fas fa-file-lines text-[12px] shrink-0" :class="isActive ? 'text-primary-500' : 'text-slate-400 dark:text-slate-500'"></i>
 
       <!-- Título / edición inline -->
       <input
         v-if="renaming"
         ref="renameInput"
         v-model="renameValue"
-        class="flex-1 min-w-0 bg-white dark:bg-[#0f172a] border border-primary-400 rounded-md px-1.5 py-0.5 text-[11px] font-bold text-slate-800 dark:text-slate-100 outline-none"
+        class="flex-1 min-w-0 bg-white dark:bg-[#0f172a] border border-primary-400 rounded-md px-1.5 py-0.5 text-[13px] font-bold text-slate-800 dark:text-slate-100 outline-none"
         @click.stop
         @keyup.enter="commitRename"
         @keyup.esc="cancelRename"
@@ -40,7 +40,7 @@
       />
       <span
         v-else
-        class="flex-1 min-w-0 truncate py-1.5 text-[11px] font-bold"
+        class="flex-1 min-w-0 truncate py-1.5 text-[13px] font-bold"
         @dblclick.stop="startRename"
       >
         {{ node.titulo }}
@@ -49,16 +49,16 @@
       <!-- Acciones hover -->
       <div v-if="!renaming" class="hidden group-hover:flex items-center gap-0.5 shrink-0">
         <button class="tree-action" title="Subir" @click.stop="$emit('move-up', node._id)">
-          <i class="fas fa-arrow-up text-[8px]"></i>
+          <i class="fas fa-arrow-up text-[10px]"></i>
         </button>
         <button class="tree-action" title="Bajar" @click.stop="$emit('move-down', node._id)">
-          <i class="fas fa-arrow-down text-[8px]"></i>
+          <i class="fas fa-arrow-down text-[10px]"></i>
         </button>
         <button class="tree-action" title="Nueva sub-página" @click.stop="$emit('create-child', node._id)">
-          <i class="fas fa-plus text-[8px]"></i>
+          <i class="fas fa-plus text-[10px]"></i>
         </button>
         <button class="tree-action hover:!text-rose-500" title="Archivar" @click.stop="$emit('archive', node._id)">
-          <i class="fas fa-box-archive text-[8px]"></i>
+          <i class="fas fa-box-archive text-[10px]"></i>
         </button>
       </div>
     </div>

@@ -9,12 +9,12 @@
       title="Notificaciones"
     >
       <!-- Icono -->
-      <i class="fas fa-bell text-[15px] text-white"></i>
+      <i class="fas fa-bell text-[17px] text-white"></i>
 
       <!-- Badge no leídas -->
       <span
         v-if="unreadCount > 0"
-        class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-[2px] border-white shadow-lg tabular-nums leading-none"
+        class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-rose-500 text-white text-[12px] font-bold rounded-full flex items-center justify-center border-[2px] border-white shadow-lg tabular-nums leading-none"
       >{{ unreadCount > 99 ? '99+' : unreadCount }}</span>
 
       <!-- Punto verde cuando sin no leídas -->
@@ -44,7 +44,7 @@
             v-if="hasUnread"
             type="button"
             @click="markAllAsRead"
-            class="text-[10px] font-black text-primary-500 hover:text-primary-600 uppercase tracking-wider transition-colors"
+            class="text-[12px] font-black text-primary-500 hover:text-primary-600 uppercase tracking-wider transition-colors"
           >Marcar todas leídas</button>
         </div>
 
@@ -55,7 +55,7 @@
             :key="t.id"
             type="button"
             @click="activeTab = t.id"
-            class="flex-1 py-2 px-2 text-[10px] font-black uppercase tracking-wider transition-colors relative"
+            class="flex-1 py-2 px-2 text-[12px] font-black uppercase tracking-wider transition-colors relative"
             :class="activeTab === t.id ? 'text-primary-500' : 'text-slate-400 hover:text-slate-600'"
           >
             {{ t.label }}
@@ -76,8 +76,8 @@
             <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center mb-2">
               <i class="fas fa-inbox text-slate-300 text-lg"></i>
             </div>
-            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Sin notificaciones</p>
-            <p class="text-[10px] text-slate-300 mt-1">Estás al día</p>
+            <p class="text-[13px] font-bold text-slate-400 uppercase tracking-widest">Sin notificaciones</p>
+            <p class="text-[12px] text-slate-300 mt-1">Estás al día</p>
           </div>
 
           <div
@@ -93,7 +93,7 @@
             >
               <!-- Icono según categoría -->
               <div
-                class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-[14px]"
+                class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-[15px]"
                 :class="categoryIconBg(n.category)"
               >
                 <i :class="categoryIcon(n.category)"></i>
@@ -102,11 +102,11 @@
               <!-- Contenido -->
               <div class="flex-1 min-w-0 pr-6">
                 <div class="flex items-center gap-1">
-                  <p class="text-[12px] truncate" :class="!n.read ? 'font-black text-slate-800' : 'font-bold text-slate-500'">{{ n.title }}</p>
+                  <p class="text-[14px] truncate" :class="!n.read ? 'font-black text-slate-800' : 'font-bold text-slate-500'">{{ n.title }}</p>
                   <span v-if="!n.read" class="w-1.5 h-1.5 bg-primary-500 rounded-full shrink-0 ml-auto"></span>
                 </div>
-                <p v-if="n.message" class="text-[11px] mt-0.5 line-clamp-2" :class="!n.read ? 'text-slate-600' : 'text-slate-400'">{{ n.message }}</p>
-                <p class="text-[9px] text-slate-300 mt-1 font-bold uppercase tracking-wider">{{ formatDate(n.createdAt) }}</p>
+                <p v-if="n.message" class="text-[13px] mt-0.5 line-clamp-2" :class="!n.read ? 'text-slate-600' : 'text-slate-400'">{{ n.message }}</p>
+                <p class="text-[11px] text-slate-300 mt-1 font-bold uppercase tracking-wider">{{ formatDate(n.createdAt) }}</p>
               </div>
             </button>
 
@@ -118,7 +118,7 @@
               class="absolute top-2 right-2 w-6 h-6 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow-sm"
               title="Marcar como leída"
             >
-              <i class="fas fa-check text-[9px]"></i>
+              <i class="fas fa-check text-[11px]"></i>
             </button>
           </div>
         </div>

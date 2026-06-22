@@ -51,10 +51,10 @@
           <span class="am-label">{{ statusFilter === 'completed' ? 'Completadas' : statusFilter === 'pending' ? 'Pendientes' : statusFilter === 'in-progress' ? 'En Progreso' : 'Todos los estados' }}</span>
           <i class="fas fa-chevron-down am-caret" :class="{ 'rotate-180': openAMChip === 'status' }"></i>
           <div v-if="openAMChip === 'status'" class="am-dropdown" @click.stop>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === '' }" @click="statusFilter = ''; openAMChip = null"><span>Todos los estados</span><i v-if="statusFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'completed' }" @click="statusFilter = 'completed'; openAMChip = null"><span>Completadas</span><i v-if="statusFilter === 'completed'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'pending' }" @click="statusFilter = 'pending'; openAMChip = null"><span>Pendientes</span><i v-if="statusFilter === 'pending'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'in-progress' }" @click="statusFilter = 'in-progress'; openAMChip = null"><span>En Progreso</span><i v-if="statusFilter === 'in-progress'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === '' }" @click="statusFilter = ''; openAMChip = null"><span>Todos los estados</span><i v-if="statusFilter === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'completed' }" @click="statusFilter = 'completed'; openAMChip = null"><span>Completadas</span><i v-if="statusFilter === 'completed'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'pending' }" @click="statusFilter = 'pending'; openAMChip = null"><span>Pendientes</span><i v-if="statusFilter === 'pending'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': statusFilter === 'in-progress' }" @click="statusFilter = 'in-progress'; openAMChip = null"><span>En Progreso</span><i v-if="statusFilter === 'in-progress'" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
 
@@ -63,11 +63,11 @@
           <span class="am-label">{{ typeFilter === 'call' ? 'Llamada' : typeFilter === 'meeting' ? 'Reunión' : typeFilter === 'email' ? 'Email' : typeFilter === 'task' ? 'Tarea' : 'Todos los tipos' }}</span>
           <i class="fas fa-chevron-down am-caret" :class="{ 'rotate-180': openAMChip === 'type' }"></i>
           <div v-if="openAMChip === 'type'" class="am-dropdown" @click.stop>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === '' }" @click="typeFilter = ''; openAMChip = null"><span>Todos los tipos</span><i v-if="typeFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'call' }" @click="typeFilter = 'call'; openAMChip = null"><span>Llamada</span><i v-if="typeFilter === 'call'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'meeting' }" @click="typeFilter = 'meeting'; openAMChip = null"><span>Reunión</span><i v-if="typeFilter === 'meeting'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'email' }" @click="typeFilter = 'email'; openAMChip = null"><span>Email</span><i v-if="typeFilter === 'email'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'task' }" @click="typeFilter = 'task'; openAMChip = null"><span>Tarea</span><i v-if="typeFilter === 'task'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === '' }" @click="typeFilter = ''; openAMChip = null"><span>Todos los tipos</span><i v-if="typeFilter === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'call' }" @click="typeFilter = 'call'; openAMChip = null"><span>Llamada</span><i v-if="typeFilter === 'call'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'meeting' }" @click="typeFilter = 'meeting'; openAMChip = null"><span>Reunión</span><i v-if="typeFilter === 'meeting'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'email' }" @click="typeFilter = 'email'; openAMChip = null"><span>Email</span><i v-if="typeFilter === 'email'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="am-dropdown-item" :class="{ 'am-dropdown-item--active': typeFilter === 'task' }" @click="typeFilter = 'task'; openAMChip = null"><span>Tarea</span><i v-if="typeFilter === 'task'" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
       </div>

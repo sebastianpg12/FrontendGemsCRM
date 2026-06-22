@@ -62,12 +62,12 @@
           <span class="kb-label">{{ filters.type ? filters.type.charAt(0).toUpperCase() + filters.type.slice(1).replace('-', ' ') : 'Tipo' }}</span>
           <i class="fas fa-chevron-down kb-caret" :class="{ 'rotate-180': openKBChip === 'type' }"></i>
           <div v-if="openKBChip === 'type'" class="kb-dropdown" @click.stop>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === '' }" @click="filters.type = ''; openKBChip = null"><span>Todos</span><i v-if="filters.type === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'task' }" @click="filters.type = 'task'; openKBChip = null"><span>Task</span><i v-if="filters.type === 'task'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'bug' }" @click="filters.type = 'bug'; openKBChip = null"><span>Bug</span><i v-if="filters.type === 'bug'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'feature' }" @click="filters.type = 'feature'; openKBChip = null"><span>Feature</span><i v-if="filters.type === 'feature'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'user-story' }" @click="filters.type = 'user-story'; openKBChip = null"><span>User Story</span><i v-if="filters.type === 'user-story'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'epic' }" @click="filters.type = 'epic'; openKBChip = null"><span>Epic</span><i v-if="filters.type === 'epic'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === '' }" @click="filters.type = ''; openKBChip = null"><span>Todos</span><i v-if="filters.type === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'task' }" @click="filters.type = 'task'; openKBChip = null"><span>Task</span><i v-if="filters.type === 'task'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'bug' }" @click="filters.type = 'bug'; openKBChip = null"><span>Bug</span><i v-if="filters.type === 'bug'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'feature' }" @click="filters.type = 'feature'; openKBChip = null"><span>Feature</span><i v-if="filters.type === 'feature'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'user-story' }" @click="filters.type = 'user-story'; openKBChip = null"><span>User Story</span><i v-if="filters.type === 'user-story'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.type === 'epic' }" @click="filters.type = 'epic'; openKBChip = null"><span>Epic</span><i v-if="filters.type === 'epic'" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
         <div class="kb-chip" :class="{ 'kb-chip--on': filters.priority }" @click.stop="openKBChip = openKBChip === 'priority' ? null : 'priority'">
@@ -75,11 +75,11 @@
           <span class="kb-label">{{ filters.priority === 'low' ? 'Baja' : filters.priority === 'medium' ? 'Media' : filters.priority === 'high' ? 'Alta' : filters.priority === 'critical' ? 'Crítica' : 'Prioridad' }}</span>
           <i class="fas fa-chevron-down kb-caret" :class="{ 'rotate-180': openKBChip === 'priority' }"></i>
           <div v-if="openKBChip === 'priority'" class="kb-dropdown" @click.stop>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === '' }" @click="filters.priority = ''; openKBChip = null"><span>Todas</span><i v-if="filters.priority === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'low' }" @click="filters.priority = 'low'; openKBChip = null"><span>Baja</span><i v-if="filters.priority === 'low'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'medium' }" @click="filters.priority = 'medium'; openKBChip = null"><span>Media</span><i v-if="filters.priority === 'medium'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'high' }" @click="filters.priority = 'high'; openKBChip = null"><span>Alta</span><i v-if="filters.priority === 'high'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'critical' }" @click="filters.priority = 'critical'; openKBChip = null"><span>Crítica</span><i v-if="filters.priority === 'critical'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === '' }" @click="filters.priority = ''; openKBChip = null"><span>Todas</span><i v-if="filters.priority === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'low' }" @click="filters.priority = 'low'; openKBChip = null"><span>Baja</span><i v-if="filters.priority === 'low'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'medium' }" @click="filters.priority = 'medium'; openKBChip = null"><span>Media</span><i v-if="filters.priority === 'medium'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'high' }" @click="filters.priority = 'high'; openKBChip = null"><span>Alta</span><i v-if="filters.priority === 'high'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.priority === 'critical' }" @click="filters.priority = 'critical'; openKBChip = null"><span>Crítica</span><i v-if="filters.priority === 'critical'" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
         <div class="kb-chip" :class="{ 'kb-chip--on': filters.status }" @click.stop="openKBChip = openKBChip === 'status' ? null : 'status'">
@@ -87,10 +87,10 @@
           <span class="kb-label">{{ filters.status === 'active' ? 'Activo' : filters.status === 'blocked' ? 'Bloqueado' : filters.status === 'completed' ? 'Completado' : 'Estado' }}</span>
           <i class="fas fa-chevron-down kb-caret" :class="{ 'rotate-180': openKBChip === 'status' }"></i>
           <div v-if="openKBChip === 'status'" class="kb-dropdown" @click.stop>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === '' }" @click="filters.status = ''; openKBChip = null"><span>Todos</span><i v-if="filters.status === ''" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'active' }" @click="filters.status = 'active'; openKBChip = null"><span>Activo</span><i v-if="filters.status === 'active'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'blocked' }" @click="filters.status = 'blocked'; openKBChip = null"><span>Bloqueado</span><i v-if="filters.status === 'blocked'" class="fas fa-check text-[10px] text-primary-500"></i></div>
-            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'completed' }" @click="filters.status = 'completed'; openKBChip = null"><span>Completado</span><i v-if="filters.status === 'completed'" class="fas fa-check text-[10px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === '' }" @click="filters.status = ''; openKBChip = null"><span>Todos</span><i v-if="filters.status === ''" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'active' }" @click="filters.status = 'active'; openKBChip = null"><span>Activo</span><i v-if="filters.status === 'active'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'blocked' }" @click="filters.status = 'blocked'; openKBChip = null"><span>Bloqueado</span><i v-if="filters.status === 'blocked'" class="fas fa-check text-[12px] text-primary-500"></i></div>
+            <div class="kb-dropdown-item" :class="{ 'kb-dropdown-item--active': filters.status === 'completed' }" @click="filters.status = 'completed'; openKBChip = null"><span>Completado</span><i v-if="filters.status === 'completed'" class="fas fa-check text-[12px] text-primary-500"></i></div>
           </div>
         </div>
         <div class="flex items-center">

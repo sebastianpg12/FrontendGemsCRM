@@ -12,11 +12,11 @@
               styleFor(entry.type).bg,
             ]"
           >
-            <i :class="['fas text-[10px] text-white', styleFor(entry.type).icon]"></i>
+            <i :class="['fas text-[12px] text-white', styleFor(entry.type).icon]"></i>
           </div>
           <div class="flex-1 min-w-0 pt-1.5 pb-3">
             <p class="text-xs font-bold text-slate-800 leading-snug">{{ entry.description }}</p>
-            <p class="text-[10px] font-bold text-slate-400 mt-0.5">{{ formatDate(entry.createdAt) }}</p>
+            <p class="text-[12px] font-bold text-slate-400 mt-0.5">{{ formatDate(entry.createdAt) }}</p>
           </div>
         </div>
       </div>

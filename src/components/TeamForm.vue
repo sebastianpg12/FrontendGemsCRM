@@ -7,16 +7,16 @@
       <div class="flex items-center justify-between px-5 py-4 border-b border-slate-50">
         <div>
           <div class="flex items-center gap-2 mb-0.5">
-            <i class="fas fa-gem text-primary-400 text-[8px]"></i>
-            <span class="text-[9px] font-black uppercase tracking-[0.2em] text-primary-400">GEMS Hub</span>
+            <i class="fas fa-gem text-primary-400 text-[10px]"></i>
+            <span class="text-[11px] font-black uppercase tracking-[0.2em] text-primary-400">GEMS Hub</span>
           </div>
-          <h3 class="text-[15px] font-black text-slate-900 leading-tight">
+          <h3 class="text-[17px] font-black text-slate-900 leading-tight">
             {{ isEditing ? 'Editar Miembro' : 'Nuevo Miembro' }}
           </h3>
         </div>
         <button @click="closeForm"
           class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-all">
-          <i class="fas fa-times text-[12px]"></i>
+          <i class="fas fa-times text-[14px]"></i>
         </button>
       </div>
 
@@ -24,39 +24,39 @@
       <form @submit.prevent="handleSubmit" class="p-5 space-y-3.5">
         <!-- Nombre -->
         <div>
-          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Nombre Completo *</label>
+          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Nombre Completo *</label>
           <input v-model="form.name" type="text" required placeholder="Ej: Juan Pérez"
-            class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+            class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[14px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
         </div>
 
         <!-- Rol -->
         <div>
-          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol *</label>
+          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol *</label>
           <CustomSelect v-model="form.role" :options="roleOptions" placeholder="Selecciona un rol" size="sm" />
         </div>
 
         <!-- Email -->
         <div>
-          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Email *</label>
+          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Email *</label>
           <input v-model="form.email" type="email" required placeholder="correo@empresa.com"
-            class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[12px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
+            class="w-full h-8 bg-slate-50 border border-slate-100 rounded-lg px-3 text-[14px] font-medium text-slate-700 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-400/30 focus:border-primary-400 transition-all" />
         </div>
 
         <!-- Departamento -->
         <div>
-          <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Departamento *</label>
+          <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Departamento *</label>
           <CustomSelect v-model="form.department" :options="departmentOptions" placeholder="Selecciona un departamento" size="sm" />
         </div>
 
         <!-- Actions -->
         <div class="flex gap-2 pt-2 border-t border-slate-50">
           <button type="button" @click="closeForm"
-            class="flex-1 h-8 rounded-lg border border-slate-200 text-[11px] font-bold text-slate-600 hover:bg-slate-50 transition-all">
+            class="flex-1 h-8 rounded-lg border border-slate-200 text-[13px] font-bold text-slate-600 hover:bg-slate-50 transition-all">
             Cancelar
           </button>
           <button type="submit" :disabled="loading || !isFormValid"
-            class="flex-1 h-8 rounded-lg bg-primary-600 text-white text-[11px] font-bold hover:bg-primary-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-1.5">
-            <i v-if="loading" class="fas fa-circle-notch fa-spin text-[10px]"></i>
+            class="flex-1 h-8 rounded-lg bg-primary-600 text-white text-[13px] font-bold hover:bg-primary-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-1.5">
+            <i v-if="loading" class="fas fa-circle-notch fa-spin text-[12px]"></i>
             {{ loading ? (isEditing ? 'Actualizando...' : 'Creando...') : (isEditing ? 'Actualizar' : 'Crear') }}
           </button>
         </div>

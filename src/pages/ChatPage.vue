@@ -54,7 +54,7 @@
                   </div>
                   <div class="flex items-center justify-between gap-2">
                     <p class="text-xs text-gray-400 whitespace-nowrap">👥 {{ room.participants.length }} · <span :class="onlineCount(room) > 0 ? 'text-emerald-300' : 'text-gray-400'">● {{ onlineCount(room) }}</span></p>
-                    <span v-if="getUnreadCount(room._id) > 0" class="text-[10px] rounded-full bg-pink-600 px-2 py-0.5 notification-pulse">{{ getUnreadCount(room._id) }}</span>
+                    <span v-if="getUnreadCount(room._id) > 0" class="text-[12px] rounded-full bg-pink-600 px-2 py-0.5 notification-pulse">{{ getUnreadCount(room._id) }}</span>
                   </div>
                 </div>
                 <button

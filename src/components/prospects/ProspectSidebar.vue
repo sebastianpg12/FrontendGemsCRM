@@ -3,14 +3,14 @@
     <!-- Score + Temperatura -->
     <div class="px-5 py-4 border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Lead Score</span>
-        <span :class="['inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black border', tempStyle.color]">
+        <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Lead Score</span>
+        <span :class="['inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-black border', tempStyle.color]">
           {{ tempStyle.icon }} {{ tempStyle.label }}
         </span>
       </div>
       <div class="flex items-baseline gap-2">
         <span class="text-3xl font-black" :class="scoreColor">{{ score }}</span>
-        <span class="text-[10px] text-slate-400 font-bold">/ 100</span>
+        <span class="text-[12px] text-slate-400 font-bold">/ 100</span>
       </div>
       <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mt-2">
         <div :class="['h-full transition-all', scoreBarBg]" :style="{ width: score + '%' }"></div>
@@ -21,11 +21,11 @@
     <div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-4">
       <!-- Valor estimado -->
       <div>
-        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Valor estimado</label>
+        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1">Valor estimado</label>
         <div v-if="!editingValue" @click="startEditValue" class="cursor-pointer group">
           <p v-if="prospect.estimatedValue" class="text-base font-black text-emerald-600">
             ${{ formatMoney(prospect.estimatedValue) }}
-            <span v-if="weighted" class="text-[10px] text-slate-400 font-bold ml-2">
+            <span v-if="weighted" class="text-[12px] text-slate-400 font-bold ml-2">
               (forecast: ${{ formatMoney(weighted) }})
             </span>
           </p>
@@ -41,13 +41,13 @@
             @keydown.escape="editingValue = false"
             ref="valueInputRef"
           />
-          <button @click="saveValue" class="px-2 bg-primary-600 text-white rounded-lg text-[10px] font-black">OK</button>
+          <button @click="saveValue" class="px-2 bg-primary-600 text-white rounded-lg text-[12px] font-black">OK</button>
         </div>
       </div>
 
       <!-- Fuente -->
       <div>
-        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Fuente</label>
+        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1">Fuente</label>
         <select
           :value="prospect.source || ''"
           @change="updateSource(($event.target as HTMLSelectElement).value as ProspectSource)"
@@ -62,7 +62,7 @@
 
       <!-- Contacto -->
       <div class="space-y-2">
-        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Contacto</label>
+        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1">Contacto</label>
         <SidebarField
           icon="fa-user"
           placeholder="Nombre del contacto"
@@ -86,20 +86,20 @@
 
       <!-- Empresa -->
       <div v-if="prospect.company">
-        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Empresa</label>
+        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1">Empresa</label>
         <p class="text-xs font-bold text-slate-700">{{ prospect.company }}</p>
       </div>
 
       <!-- Fechas -->
       <div>
-        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Tiempo</label>
+        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1">Tiempo</label>
         <div class="space-y-1">
-          <p class="text-[10px] text-slate-500 font-bold">
-            <i class="fas fa-plus text-[9px] opacity-50 mr-1"></i>
+          <p class="text-[12px] text-slate-500 font-bold">
+            <i class="fas fa-plus text-[11px] opacity-50 mr-1"></i>
             Creado {{ formatRelative(prospect.createdAt) }}
           </p>
-          <p v-if="prospect.lastUpdated" class="text-[10px] text-slate-500 font-bold">
-            <i class="fas fa-clock text-[9px] opacity-50 mr-1"></i>
+          <p v-if="prospect.lastUpdated" class="text-[12px] text-slate-500 font-bold">
+            <i class="fas fa-clock text-[11px] opacity-50 mr-1"></i>
             Última actividad {{ formatRelative(prospect.lastUpdated) }}
           </p>
         </div>
@@ -109,14 +109,14 @@
       <div class="pt-3 border-t border-slate-100">
         <div class="grid grid-cols-2 gap-2">
           <div class="bg-slate-50 rounded-lg p-2.5">
-            <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Mensajes</p>
+            <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Mensajes</p>
             <p class="text-sm font-black text-slate-800">{{ prospect.messages?.length || 0 }}</p>
           </div>
           <div class="bg-slate-50 rounded-lg p-2.5">
-            <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Tareas</p>
+            <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Tareas</p>
             <p class="text-sm font-black text-slate-800">
               {{ tasks.filter((t) => !t.done).length }}
-              <span class="text-[10px] text-slate-400">/ {{ tasks.length }}</span>
+              <span class="text-[12px] text-slate-400">/ {{ tasks.length }}</span>
             </p>
           </div>
         </div>
@@ -247,10 +247,10 @@ const SidebarField = defineComponent({
             onClick: start,
           },
           [
-            h('i', { class: `fas ${props.icon} text-[10px] text-slate-400 group-hover:text-primary-600` }),
+            h('i', { class: `fas ${props.icon} text-[12px] text-slate-400 group-hover:text-primary-600` }),
             props.value
-              ? h('span', { class: 'text-[11px] font-bold text-slate-700 truncate flex-1' }, props.value)
-              : h('span', { class: 'text-[11px] font-bold text-slate-400 italic flex-1' }, props.placeholder),
+              ? h('span', { class: 'text-[13px] font-bold text-slate-700 truncate flex-1' }, props.value)
+              : h('span', { class: 'text-[13px] font-bold text-slate-400 italic flex-1' }, props.placeholder),
           ]
         )
       }
@@ -260,7 +260,7 @@ const SidebarField = defineComponent({
           type: props.type,
           value: input.value,
           placeholder: props.placeholder,
-          class: 'flex-1 px-2.5 py-1.5 bg-white border border-primary-300 rounded-lg text-[11px] font-bold focus:border-primary-500 outline-none',
+          class: 'flex-1 px-2.5 py-1.5 bg-white border border-primary-300 rounded-lg text-[13px] font-bold focus:border-primary-500 outline-none',
           onInput: (e: any) => (input.value = e.target.value),
           onKeydown: (e: KeyboardEvent) => {
             if (e.key === 'Enter') save()
@@ -268,7 +268,7 @@ const SidebarField = defineComponent({
           },
         }),
         h('button', {
-          class: 'px-2 bg-primary-600 text-white rounded-lg text-[10px] font-black',
+          class: 'px-2 bg-primary-600 text-white rounded-lg text-[12px] font-black',
           onClick: save,
         }, 'OK'),
       ])

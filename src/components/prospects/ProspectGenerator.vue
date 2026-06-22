@@ -17,7 +17,7 @@
           <button
             @click="mode = 'simple'"
             :class="[
-              'px-3 py-1.5 rounded-lg text-[11px] font-black transition-all flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-lg text-[13px] font-black transition-all flex items-center gap-1.5',
               mode === 'simple' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700',
             ]"
           >
@@ -26,7 +26,7 @@
           <button
             @click="mode = 'architect'"
             :class="[
-              'px-3 py-1.5 rounded-lg text-[11px] font-black transition-all flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-lg text-[13px] font-black transition-all flex items-center gap-1.5',
               mode === 'architect' ? 'bg-white text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700',
             ]"
           >
@@ -41,7 +41,7 @@
       <!-- Datos del prospecto -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">Empresa</label>
+          <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">Empresa</label>
           <input
             v-model="company"
             type="text"
@@ -50,7 +50,7 @@
           />
         </div>
         <div>
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">Contacto (opcional)</label>
+          <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">Contacto (opcional)</label>
           <input
             v-model="contactName"
             type="text"
@@ -63,7 +63,7 @@
       <!-- Diagnóstico -->
       <div>
         <div class="flex items-center justify-between mb-1.5">
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+          <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest">
             Diagnóstico del prospecto <span class="text-rose-500">*</span>
           </label>
           <VoiceDictateButton v-model="inputText" />
@@ -79,10 +79,10 @@
         <!-- Indicador de calidad del diagnóstico -->
         <div v-if="inputText.trim().length > 0" class="mt-2 px-1">
           <div class="flex items-center justify-between mb-1">
-            <span class="text-[9px] font-black uppercase tracking-widest" :class="quality.textClass">
-              <i :class="quality.icon" class="mr-1 text-[9px]"></i>Calidad: {{ quality.label }}
+            <span class="text-[11px] font-black uppercase tracking-widest" :class="quality.textClass">
+              <i :class="quality.icon" class="mr-1 text-[11px]"></i>Calidad: {{ quality.label }}
             </span>
-            <span class="text-[10px] text-slate-400 font-bold">{{ inputText.length }} caracteres</span>
+            <span class="text-[12px] text-slate-400 font-bold">{{ inputText.length }} caracteres</span>
           </div>
           <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
             <div
@@ -91,7 +91,7 @@
               :style="{ width: `${quality.score}%` }"
             ></div>
           </div>
-          <p v-if="quality.missing.length" class="text-[10px] font-medium text-slate-400 mt-1.5 leading-relaxed">
+          <p v-if="quality.missing.length" class="text-[12px] font-medium text-slate-400 mt-1.5 leading-relaxed">
             Mejora la propuesta mencionando:
             <span v-for="(m, i) in quality.missing" :key="m" class="font-bold text-slate-500">{{ m }}{{ i < quality.missing.length - 1 ? ', ' : '' }}</span>
           </p>
@@ -103,7 +103,7 @@
         <div v-if="mode === 'architect'" class="space-y-4 pt-3 border-t border-slate-100">
           <!-- Módulos a proponer -->
           <div>
-            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">
+            <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-2">
               Módulos GEMS Hub a incluir
             </label>
             <div class="flex flex-wrap gap-2">
@@ -113,7 +113,7 @@
                 type="button"
                 @click="toggleModule(mod.id)"
                 :class="[
-                  'px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all flex items-center gap-1.5',
+                  'px-3 py-1.5 rounded-lg text-[13px] font-bold border transition-all flex items-center gap-1.5',
                   selectedModules.includes(mod.id)
                     ? 'bg-primary-50 text-primary-700 border-primary-400 ring-1 ring-primary-300 shadow-sm'
                     : 'bg-slate-50 text-slate-600 border-slate-200 hover:text-primary-600'
@@ -125,7 +125,7 @@
           </div>
           <!-- Notas adicionales -->
           <div>
-            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
+            <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
               Contexto adicional (opcional)
             </label>
             <textarea
@@ -140,7 +140,7 @@
 
       <!-- Image Upload -->
       <div>
-        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
+        <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
           Evidencia visual (opcional, multimodal)
         </label>
         <div
@@ -160,7 +160,7 @@
           <div v-if="!images.length" class="px-4 py-6 text-center pointer-events-none">
             <i class="fas fa-cloud-arrow-up text-2xl text-slate-300 mb-2 block"></i>
             <p class="text-xs font-bold text-slate-500">Arrastra imágenes o haz click para seleccionar</p>
-            <p class="text-[10px] text-slate-400 mt-0.5">PNG, JPG, WebP — máx 4MB cada una</p>
+            <p class="text-[12px] text-slate-400 mt-0.5">PNG, JPG, WebP — máx 4MB cada una</p>
           </div>
           <div v-else class="p-3 grid grid-cols-4 gap-2 pointer-events-none">
             <div
@@ -171,7 +171,7 @@
               <img :src="img.dataUrl" class="w-full h-full object-cover" />
               <button
                 type="button"
-                class="absolute top-1 right-1 w-6 h-6 rounded-full bg-rose-500 text-white text-[10px] flex items-center justify-center pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity"
+                class="absolute top-1 right-1 w-6 h-6 rounded-full bg-rose-500 text-white text-[12px] flex items-center justify-center pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity"
                 @click.stop="removeImage(idx)"
               >
                 <i class="fas fa-xmark"></i>

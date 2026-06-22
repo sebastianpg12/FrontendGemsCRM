@@ -19,30 +19,30 @@
           </div>
         </div>
 
-        <h2 class="text-[14px] font-black text-slate-800 dark:text-slate-100 leading-tight mb-1.5">{{ profileData.name || '...' }}</h2>
+        <h2 class="text-[15px] font-black text-slate-800 dark:text-slate-100 leading-tight mb-1.5">{{ profileData.name || '...' }}</h2>
 
-        <span class="px-2.5 py-0.5 bg-primary-50 dark:bg-primary-500/20 text-primary-600 dark:text-primary-300 rounded-full text-[8px] font-black uppercase tracking-widest mb-2.5">
+        <span class="px-2.5 py-0.5 bg-primary-50 dark:bg-primary-500/20 text-primary-600 dark:text-primary-300 rounded-full text-[10px] font-black uppercase tracking-widest mb-2.5">
           {{ getRoleDisplayName(profileData.role) }}
         </span>
 
-        <p class="text-[10px] text-slate-400 font-medium truncate max-w-full mb-3">{{ profileData.email }}</p>
+        <p class="text-[12px] text-slate-400 font-medium truncate max-w-full mb-3">{{ profileData.email }}</p>
 
         <div class="flex items-center gap-1.5 mb-1">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
-          <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Activo</span>
+          <span class="text-[12px] font-bold text-emerald-600 dark:text-emerald-400">Activo</span>
         </div>
-        <p class="text-[9px] text-slate-400 font-medium">Desde {{ formatDate(profileData.createdAt) }}</p>
+        <p class="text-[11px] text-slate-400 font-medium">Desde {{ formatDate(profileData.createdAt) }}</p>
       </div>
 
       <!-- Edit toggle -->
       <button
         @click="toggleEditMode"
-        class="h-9 rounded-xl font-black text-[11px] uppercase tracking-widest transition-all duration-200 active:scale-95"
+        class="h-9 rounded-xl font-black text-[13px] uppercase tracking-widest transition-all duration-200 active:scale-95"
         :class="isEditing
           ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500 border border-rose-200 dark:border-rose-500/30'
           : 'bg-primary-500 text-white shadow-lg shadow-primary-500/25 hover:bg-primary-600'"
       >
-        <i :class="isEditing ? 'fas fa-times' : 'fas fa-pen-nib'" class="mr-1.5 text-[10px]"></i>
+        <i :class="isEditing ? 'fas fa-times' : 'fas fa-pen-nib'" class="mr-1.5 text-[12px]"></i>
         {{ isEditing ? 'Cancelar' : 'Editar perfil' }}
       </button>
 
@@ -51,12 +51,12 @@
         <button
           v-for="tab in TABS" :key="tab.id"
           @click="activeTab = tab.id"
-          class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[11px] font-bold transition-all text-left w-full"
+          class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-bold transition-all text-left w-full"
           :class="activeTab === tab.id
             ? 'bg-primary-50 dark:bg-primary-500/15 text-primary-600 dark:text-primary-300'
             : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/30 hover:text-slate-700 dark:hover:text-slate-200'"
         >
-          <i :class="['fas', tab.icon, 'text-[10px] w-3.5 text-center']"></i>
+          <i :class="['fas', tab.icon, 'text-[12px] w-3.5 text-center']"></i>
           {{ tab.label }}
         </button>
       </div>
@@ -68,14 +68,14 @@
       <!-- Tab header -->
       <div class="px-5 py-3 border-b border-slate-100 dark:border-[#334155] shrink-0 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <i :class="['fas', TABS.find(t => t.id === activeTab)?.icon, 'text-[10px] text-slate-400']"></i>
-          <h2 class="text-[13px] font-black text-slate-800 dark:text-slate-100">{{ TABS.find(t => t.id === activeTab)?.label }}</h2>
+          <i :class="['fas', TABS.find(t => t.id === activeTab)?.icon, 'text-[12px] text-slate-400']"></i>
+          <h2 class="text-[14px] font-black text-slate-800 dark:text-slate-100">{{ TABS.find(t => t.id === activeTab)?.label }}</h2>
         </div>
         <!-- Save button for datos tab when editing -->
         <button v-if="activeTab === 'datos' && isEditing"
           @click="updateProfile" :disabled="loading"
-          class="h-8 px-4 bg-primary-500 hover:bg-primary-600 text-white rounded-lg text-[11px] font-black transition-all disabled:opacity-50 shadow-sm">
-          <i class="fas fa-save mr-1.5 text-[10px]"></i>{{ loading ? 'Guardando...' : 'Guardar' }}
+          class="h-8 px-4 bg-primary-500 hover:bg-primary-600 text-white rounded-lg text-[13px] font-black transition-all disabled:opacity-50 shadow-sm">
+          <i class="fas fa-save mr-1.5 text-[12px]"></i>{{ loading ? 'Guardando...' : 'Guardar' }}
         </button>
       </div>
 
@@ -86,36 +86,36 @@
         <div v-if="activeTab === 'datos'" class="grid grid-cols-2 gap-4">
 
           <div v-for="field in dataFields" :key="field.key" :class="field.full ? 'col-span-2' : ''">
-            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">{{ field.label }}</label>
+            <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">{{ field.label }}</label>
             <div v-if="isEditing && field.key !== 'department'" class="relative">
-              <i :class="['fas', field.icon, 'absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 text-[11px]']"></i>
+              <i :class="['fas', field.icon, 'absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 text-[13px]']"></i>
               <input
                 v-model="(editForm as any)[field.key]"
                 :type="field.type || 'text'"
                 :placeholder="field.placeholder"
-                class="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition-all outline-none"
+                class="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[14px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition-all outline-none"
               />
             </div>
             <!-- Department field when editing -->
             <div v-else-if="isEditing && field.key === 'department'">
               <div v-if="profileAddingDept" class="flex gap-2">
                 <input v-model="profileNewDept" @keydown.enter.prevent="confirmProfileDept" @keydown.escape="profileAddingDept = false" autofocus placeholder="Nuevo departamento..."
-                  class="flex-1 px-3.5 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-primary-200 dark:border-primary-500/40 rounded-xl text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 transition-all outline-none" />
-                <button @click="confirmProfileDept" :disabled="!profileNewDept.trim()" class="px-3 bg-primary-500 text-white rounded-xl text-[11px] disabled:opacity-40 transition-all"><i class="fas fa-check"></i></button>
-                <button @click="profileAddingDept = false" class="px-3 bg-slate-100 dark:bg-[#334155] text-slate-500 rounded-xl text-[11px] transition-all"><i class="fas fa-times"></i></button>
+                  class="flex-1 px-3.5 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-primary-200 dark:border-primary-500/40 rounded-xl text-[14px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 transition-all outline-none" />
+                <button @click="confirmProfileDept" :disabled="!profileNewDept.trim()" class="px-3 bg-primary-500 text-white rounded-xl text-[13px] disabled:opacity-40 transition-all"><i class="fas fa-check"></i></button>
+                <button @click="profileAddingDept = false" class="px-3 bg-slate-100 dark:bg-[#334155] text-slate-500 rounded-xl text-[13px] transition-all"><i class="fas fa-times"></i></button>
               </div>
               <div v-else class="flex gap-2">
                 <select v-model="editForm.department"
-                  class="flex-1 px-3.5 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 transition-all outline-none appearance-none">
+                  class="flex-1 px-3.5 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[14px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 transition-all outline-none appearance-none">
                   <option value="">Sin departamento</option>
                   <option v-for="d in allProfileDepartments" :key="d" :value="d">{{ d }}</option>
                 </select>
-                <button @click="profileAddingDept = true" class="px-3 bg-primary-50 dark:bg-primary-500/10 text-primary-500 rounded-xl text-[11px] transition-all hover:bg-primary-100"><i class="fas fa-plus"></i></button>
+                <button @click="profileAddingDept = true" class="px-3 bg-primary-50 dark:bg-primary-500/10 text-primary-500 rounded-xl text-[13px] transition-all hover:bg-primary-100"><i class="fas fa-plus"></i></button>
               </div>
             </div>
             <!-- Read-only value -->
             <div v-else class="px-3.5 py-2.5 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
-              <p class="text-[12px] text-slate-700 dark:text-slate-200 font-medium">
+              <p class="text-[14px] text-slate-700 dark:text-slate-200 font-medium">
                 {{ field.key === 'timezone' ? timezoneLabel : (profileData as any)[field.key] || '—' }}
               </p>
             </div>
@@ -123,9 +123,9 @@
 
           <!-- Timezone (editing) -->
           <div v-if="isEditing" class="col-span-2">
-            <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">Zona horaria</label>
+            <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">Zona horaria</label>
             <select v-model="editForm.timezone"
-              class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 transition-all outline-none appearance-none">
+              class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[14px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 transition-all outline-none appearance-none">
               <option v-for="tz in TIMEZONES" :key="tz.value" :value="tz.value">{{ tz.label }}</option>
             </select>
           </div>
@@ -134,20 +134,20 @@
           <div class="col-span-2 pt-3 border-t border-slate-100 dark:border-[#334155] flex gap-6">
             <div class="flex items-center gap-2.5">
               <div class="w-7 h-7 rounded-lg bg-slate-50 dark:bg-[#0f172a] flex items-center justify-center shrink-0">
-                <i class="fas fa-calendar-plus text-slate-400 text-[10px]"></i>
+                <i class="fas fa-calendar-plus text-slate-400 text-[12px]"></i>
               </div>
               <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Registrado</p>
-                <p class="text-[11px] font-bold text-slate-700 dark:text-slate-200">{{ formatDate(profileData.createdAt) }}</p>
+                <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Registrado</p>
+                <p class="text-[13px] font-bold text-slate-700 dark:text-slate-200">{{ formatDate(profileData.createdAt) }}</p>
               </div>
             </div>
             <div class="flex items-center gap-2.5">
               <div class="w-7 h-7 rounded-lg bg-slate-50 dark:bg-[#0f172a] flex items-center justify-center shrink-0">
-                <i class="fas fa-history text-slate-400 text-[10px]"></i>
+                <i class="fas fa-history text-slate-400 text-[12px]"></i>
               </div>
               <div>
-                <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Última edición</p>
-                <p class="text-[11px] font-bold text-slate-700 dark:text-slate-200">{{ formatDate(profileData.updatedAt) }}</p>
+                <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider">Última edición</p>
+                <p class="text-[13px] font-bold text-slate-700 dark:text-slate-200">{{ formatDate(profileData.updatedAt) }}</p>
               </div>
             </div>
           </div>
@@ -157,28 +157,28 @@
         <div v-else-if="activeTab === 'seguridad'" class="max-w-sm mx-auto space-y-4">
           <form @submit.prevent="updatePassword" class="space-y-4">
             <div v-for="pwField in pwFields" :key="pwField.key">
-              <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">{{ pwField.label }}</label>
+              <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">{{ pwField.label }}</label>
               <div class="relative">
                 <input
                   v-model="(passwordForm as any)[pwField.key]"
                   :type="(showPwd as any)[pwField.show] ? 'text' : 'password'"
-                  class="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition-all outline-none"
+                  class="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-[14px] text-slate-700 dark:text-slate-200 font-medium focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition-all outline-none"
                   placeholder="••••••••" required
                 />
                 <button type="button" @click="(showPwd as any)[pwField.show] = !(showPwd as any)[pwField.show]"
-                  class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors text-[11px]">
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors text-[13px]">
                   <i :class="(showPwd as any)[pwField.show] ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
                 </button>
               </div>
               <p v-if="pwField.key === 'confirmPassword' && passwordForm.confirmPassword && passwordForm.newPassword !== passwordForm.confirmPassword"
-                class="text-[10px] font-bold text-rose-500 mt-1 ml-0.5">
+                class="text-[12px] font-bold text-rose-500 mt-1 ml-0.5">
                 <i class="fas fa-circle-exclamation mr-1"></i>Las contraseñas no coinciden
               </p>
             </div>
             <button type="submit"
               :disabled="loading || !passwordForm.currentPassword || !passwordForm.newPassword || passwordForm.newPassword !== passwordForm.confirmPassword"
-              class="w-full h-9 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest transition-all shadow-md shadow-primary-500/20 disabled:opacity-50">
-              <i class="fas fa-key mr-2 text-[10px]"></i>{{ loading ? 'Actualizando...' : 'Actualizar contraseña' }}
+              class="w-full h-9 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-black text-[13px] uppercase tracking-widest transition-all shadow-md shadow-primary-500/20 disabled:opacity-50">
+              <i class="fas fa-key mr-2 text-[12px]"></i>{{ loading ? 'Actualizando...' : 'Actualizar contraseña' }}
             </button>
           </form>
         </div>
@@ -191,31 +191,31 @@
               <div class="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center shrink-0">
                 <i class="fas fa-mobile-screen-button text-indigo-500 text-sm"></i>
               </div>
-              <p class="text-[11px] text-slate-600 dark:text-slate-300 font-medium leading-snug">Agrega una capa extra de seguridad con Google Authenticator o Authy.</p>
+              <p class="text-[13px] text-slate-600 dark:text-slate-300 font-medium leading-snug">Agrega una capa extra de seguridad con Google Authenticator o Authy.</p>
             </div>
             <button @click="init2FASetup" :disabled="loading"
-              class="w-full h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg disabled:opacity-50">
-              <i class="fas fa-shield-halved mr-2 text-[10px]"></i>Configurar 2FA
+              class="w-full h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-black text-[13px] uppercase tracking-widest transition-all shadow-lg disabled:opacity-50">
+              <i class="fas fa-shield-halved mr-2 text-[12px]"></i>Configurar 2FA
             </button>
           </div>
 
           <!-- Setup flow -->
           <div v-if="setup2FAData && !profileData.isTwoFactorEnabled" class="space-y-4">
             <div class="bg-slate-50 dark:bg-[#0f172a] rounded-xl p-4 text-center">
-              <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">1. Escanea el código QR</p>
+              <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">1. Escanea el código QR</p>
               <img :src="setup2FAData.qrCode" alt="QR" class="mx-auto rounded-xl bg-white p-2 shadow-sm mb-3 w-36" />
-              <p class="text-[9px] text-slate-400 break-all">O clave manual:<br/><span class="font-mono text-indigo-500 text-[10px]">{{ setup2FAData.secret }}</span></p>
+              <p class="text-[11px] text-slate-400 break-all">O clave manual:<br/><span class="font-mono text-indigo-500 text-[12px]">{{ setup2FAData.secret }}</span></p>
             </div>
             <div>
-              <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">2. Código de 6 dígitos</label>
+              <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1.5 ml-0.5">2. Código de 6 dígitos</label>
               <input v-model="twoFactorCode" type="text" maxlength="6" placeholder="000000"
                 class="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-center text-xl font-mono tracking-[0.5em] text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-all outline-none" />
             </div>
             <div class="flex gap-2">
               <button @click="setup2FAData = null; twoFactorCode = ''"
-                class="flex-1 h-9 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-xl font-black text-[11px] transition-all">Cancelar</button>
+                class="flex-1 h-9 bg-slate-100 dark:bg-[#334155] hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-xl font-black text-[13px] transition-all">Cancelar</button>
               <button @click="confirm2FA" :disabled="loading || twoFactorCode.length !== 6"
-                class="flex-1 h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-black text-[11px] transition-all disabled:opacity-50">Activar</button>
+                class="flex-1 h-9 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-black text-[13px] transition-all disabled:opacity-50">Activar</button>
             </div>
           </div>
 
@@ -224,23 +224,23 @@
             <div class="flex items-center gap-3 p-3.5 bg-emerald-50 dark:bg-emerald-500/10 rounded-xl border border-emerald-100 dark:border-emerald-500/20">
               <i class="fas fa-shield-check text-emerald-500 text-lg"></i>
               <div>
-                <p class="text-[12px] font-black text-emerald-800 dark:text-emerald-300">2FA Activado</p>
-                <p class="text-[10px] text-emerald-600 dark:text-emerald-400">Tu cuenta está protegida.</p>
+                <p class="text-[14px] font-black text-emerald-800 dark:text-emerald-300">2FA Activado</p>
+                <p class="text-[12px] text-emerald-600 dark:text-emerald-400">Tu cuenta está protegida.</p>
               </div>
             </div>
             <button v-if="!showDisable2FAForm" @click="showDisable2FAForm = true"
-              class="w-full h-9 bg-rose-50 dark:bg-rose-500/10 text-rose-500 hover:bg-rose-100 rounded-xl font-black text-[11px] uppercase tracking-widest transition-all">
+              class="w-full h-9 bg-rose-50 dark:bg-rose-500/10 text-rose-500 hover:bg-rose-100 rounded-xl font-black text-[13px] uppercase tracking-widest transition-all">
               Desactivar 2FA
             </button>
             <div v-if="showDisable2FAForm" class="space-y-3 pt-3 border-t border-slate-100 dark:border-[#334155]">
-              <label class="text-[9px] font-black text-rose-400 uppercase tracking-widest block mb-1.5">Ingresa tu contraseña</label>
+              <label class="text-[11px] font-black text-rose-400 uppercase tracking-widest block mb-1.5">Ingresa tu contraseña</label>
               <input v-model="disable2FAPassword" type="password" placeholder="••••••••"
-                class="w-full px-4 py-2.5 bg-rose-50/30 dark:bg-[#0f172a] border border-rose-200 dark:border-rose-500/30 rounded-xl text-[12px] text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-rose-100 transition-all outline-none" />
+                class="w-full px-4 py-2.5 bg-rose-50/30 dark:bg-[#0f172a] border border-rose-200 dark:border-rose-500/30 rounded-xl text-[14px] text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-rose-100 transition-all outline-none" />
               <div class="flex gap-2">
                 <button @click="showDisable2FAForm = false; disable2FAPassword = ''"
-                  class="flex-1 h-9 bg-slate-100 dark:bg-[#334155] text-slate-600 dark:text-slate-300 rounded-xl font-black text-[11px] transition-all">Cancelar</button>
+                  class="flex-1 h-9 bg-slate-100 dark:bg-[#334155] text-slate-600 dark:text-slate-300 rounded-xl font-black text-[13px] transition-all">Cancelar</button>
                 <button @click="disable2FA" :disabled="loading || !disable2FAPassword"
-                  class="flex-1 h-9 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-black text-[11px] transition-all disabled:opacity-50">Confirmar</button>
+                  class="flex-1 h-9 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-black text-[13px] transition-all disabled:opacity-50">Confirmar</button>
               </div>
             </div>
           </div>
@@ -250,8 +250,8 @@
         <div v-else-if="activeTab === 'preferencias'" class="max-w-sm mx-auto space-y-1">
           <div class="flex items-center justify-between py-3 border-b border-slate-100 dark:border-[#334155]">
             <div>
-              <p class="text-[12px] font-black text-slate-700 dark:text-slate-200">Modo oscuro</p>
-              <p class="text-[10px] text-slate-400 mt-0.5">Tema oscuro de la interfaz</p>
+              <p class="text-[14px] font-black text-slate-700 dark:text-slate-200">Modo oscuro</p>
+              <p class="text-[12px] text-slate-400 mt-0.5">Tema oscuro de la interfaz</p>
             </div>
             <button type="button" @click="toggleDarkMode"
               class="relative w-10 h-5 rounded-full transition-colors duration-200 shrink-0"
@@ -263,23 +263,23 @@
 
           <div class="flex items-center justify-between py-3 border-b border-slate-100 dark:border-[#334155]">
             <div>
-              <p class="text-[12px] font-black text-slate-700 dark:text-slate-200">Idioma</p>
-              <p class="text-[10px] text-slate-400 mt-0.5">Idioma de la interfaz</p>
+              <p class="text-[14px] font-black text-slate-700 dark:text-slate-200">Idioma</p>
+              <p class="text-[12px] text-slate-400 mt-0.5">Idioma de la interfaz</p>
             </div>
             <div class="flex bg-slate-100 dark:bg-[#0f172a] rounded-lg p-0.5">
               <button type="button" @click="prefs.language = 'es'"
-                class="px-3 h-6 rounded-md text-[11px] font-bold transition-all"
+                class="px-3 h-6 rounded-md text-[13px] font-bold transition-all"
                 :class="prefs.language === 'es' ? 'bg-white dark:bg-[#1e293b] text-primary-600 dark:text-primary-300 shadow-sm' : 'text-slate-500'">ES</button>
               <button type="button" @click="prefs.language = 'en'"
-                class="px-3 h-6 rounded-md text-[11px] font-bold transition-all"
+                class="px-3 h-6 rounded-md text-[13px] font-bold transition-all"
                 :class="prefs.language === 'en' ? 'bg-white dark:bg-[#1e293b] text-primary-600 dark:text-primary-300 shadow-sm' : 'text-slate-500'">EN</button>
             </div>
           </div>
 
           <div class="flex items-center justify-between py-3 border-b border-slate-100 dark:border-[#334155]">
             <div>
-              <p class="text-[12px] font-black text-slate-700 dark:text-slate-200">Notificaciones push</p>
-              <p class="text-[10px] text-slate-400 mt-0.5">Avisos de actividad y menciones</p>
+              <p class="text-[14px] font-black text-slate-700 dark:text-slate-200">Notificaciones push</p>
+              <p class="text-[12px] text-slate-400 mt-0.5">Avisos de actividad y menciones</p>
             </div>
             <button type="button" @click="prefs.pushNotifications = !prefs.pushNotifications; handlePushToggle()"
               class="relative w-10 h-5 rounded-full transition-colors duration-200 shrink-0"
@@ -290,8 +290,8 @@
           </div>
 
           <button @click="savePreferences" :disabled="savingPrefs"
-            class="w-full h-9 mt-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest transition-all shadow-md shadow-primary-500/20 disabled:opacity-50">
-            <i class="fas mr-2 text-[10px]" :class="savingPrefs ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
+            class="w-full h-9 mt-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-black text-[13px] uppercase tracking-widest transition-all shadow-md shadow-primary-500/20 disabled:opacity-50">
+            <i class="fas mr-2 text-[12px]" :class="savingPrefs ? 'fa-circle-notch fa-spin' : 'fa-check'"></i>
             {{ savingPrefs ? 'Guardando...' : 'Guardar preferencias' }}
           </button>
         </div>
@@ -302,18 +302,18 @@
             <div v-for="(entry, idx) in profileData.loginHistory" :key="idx"
               class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-[#0f172a]">
               <div class="w-7 h-7 rounded-lg bg-white dark:bg-[#1e293b] flex items-center justify-center text-slate-400 shrink-0">
-                <i class="fas fa-right-to-bracket text-[10px]"></i>
+                <i class="fas fa-right-to-bracket text-[12px]"></i>
               </div>
               <div class="min-w-0 flex-1">
-                <p class="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate">{{ formatLoginEntry(entry.userAgent) }}</p>
-                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{{ formatLoginTime(entry.at) }}<span v-if="entry.ip"> · {{ entry.ip }}</span></p>
+                <p class="text-[13px] font-black text-slate-700 dark:text-slate-200 truncate">{{ formatLoginEntry(entry.userAgent) }}</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{{ formatLoginTime(entry.at) }}<span v-if="entry.ip"> · {{ entry.ip }}</span></p>
               </div>
-              <span v-if="idx === 0" class="text-[8px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded shrink-0 uppercase tracking-widest">Actual</span>
+              <span v-if="idx === 0" class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded shrink-0 uppercase tracking-widest">Actual</span>
             </div>
           </div>
           <div v-else class="flex flex-col items-center justify-center py-12 gap-2">
             <i class="fas fa-clock-rotate-left text-slate-200 dark:text-slate-700 text-2xl"></i>
-            <p class="text-[11px] text-slate-400 font-medium text-center">Sin accesos registrados aún.</p>
+            <p class="text-[13px] text-slate-400 font-medium text-center">Sin accesos registrados aún.</p>
           </div>
         </div>
 
@@ -324,9 +324,9 @@
     <div v-if="showPhotoUploader" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50" @click.self="showPhotoUploader = false">
       <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-sm overflow-hidden">
         <div class="px-5 py-3.5 border-b border-slate-100 dark:border-[#334155] flex items-center justify-between">
-          <h3 class="text-[13px] font-black text-slate-800 dark:text-slate-100">Foto de perfil</h3>
+          <h3 class="text-[14px] font-black text-slate-800 dark:text-slate-100">Foto de perfil</h3>
           <button class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-[#273449] transition-colors" @click="showPhotoUploader = false">
-            <i class="fas fa-times text-[11px]"></i>
+            <i class="fas fa-times text-[13px]"></i>
           </button>
         </div>
         <div class="p-5">

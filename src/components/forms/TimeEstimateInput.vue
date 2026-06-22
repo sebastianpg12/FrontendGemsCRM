@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-4">
-    <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest">
+    <label class="block text-[13px] font-black text-slate-400 uppercase tracking-widest">
       <i class="fas fa-clock text-primary-500 mr-2"></i>
       Tiempo Estimado
     </label>
@@ -12,7 +12,7 @@
         v-for="preset in timePresets"
         :key="preset.value"
         @click="selectPreset(preset.value)"
-        class="py-2.5 px-2 text-[10px] font-black uppercase tracking-wider rounded-xl transition-all duration-200 border"
+        class="py-2.5 px-2 text-[12px] font-black uppercase tracking-wider rounded-xl transition-all duration-200 border"
         :class="modelValue === preset.value 
           ? 'bg-primary-600 text-white border-primary-600 shadow-lg shadow-primary-200 scale-105' 
           : 'bg-white text-slate-500 border-slate-100 hover:bg-slate-50'"
@@ -25,7 +25,7 @@
     <!-- Divisor -->
     <div class="flex items-center gap-4">
       <div class="flex-1 h-px bg-slate-100"></div>
-      <span class="text-[10px] font-bold text-slate-300 uppercase tracking-tighter italic">Personalizado</span>
+      <span class="text-[12px] font-bold text-slate-300 uppercase tracking-tighter italic">Personalizado</span>
       <div class="flex-1 h-px bg-slate-100"></div>
     </div>
     
@@ -33,7 +33,7 @@
     <div class="flex gap-4">
       <!-- Horas -->
       <div class="flex-1">
-        <label class="block text-[10px] font-black text-slate-400 mb-1.5 uppercase">Horas</label>
+        <label class="block text-[12px] font-black text-slate-400 mb-1.5 uppercase">Horas</label>
         <div class="relative group">
           <input
             v-model.number="customHours"
@@ -44,13 +44,13 @@
             class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-bold text-sm"
             placeholder="0"
           />
-          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-300 uppercase">h</span>
+          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[12px] font-black text-slate-300 uppercase">h</span>
         </div>
       </div>
       
       <!-- Minutos -->
       <div class="flex-1">
-        <label class="block text-[10px] font-black text-slate-400 mb-1.5 uppercase">Minutos</label>
+        <label class="block text-[12px] font-black text-slate-400 mb-1.5 uppercase">Minutos</label>
         <div class="relative group">
           <select
             v-model.number="customMinutes"
@@ -62,7 +62,7 @@
             <option value="30">30</option>
             <option value="45">45</option>
           </select>
-          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-300 uppercase pointer-events-none">m</span>
+          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[12px] font-black text-slate-300 uppercase pointer-events-none">m</span>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
             <i class="fas fa-stopwatch text-primary-500"></i>
           </div>
           <div>
-            <span class="text-[10px] font-black text-primary-400 uppercase tracking-widest block">Seleccionado</span>
+            <span class="text-[12px] font-black text-primary-400 uppercase tracking-widest block">Seleccionado</span>
             <span class="text-sm text-primary-900 font-black">{{ modelValue }}</span>
           </div>
         </div>

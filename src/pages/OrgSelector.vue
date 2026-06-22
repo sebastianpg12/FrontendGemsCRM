@@ -10,8 +10,8 @@
         <img src="/gems-logo.png" alt="GEMS Hub" class="h-14 w-auto mb-3 drop-shadow-2xl" />
         <h1 class="text-white/95 text-xl font-bold">Selecciona tu organización</h1>
         <p v-if="!authStore.isSuperAdmin" class="text-white/40 text-xs mt-1">Tienes acceso a varias workspaces</p>
-        <div v-else class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-amber-300" style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.25);">
-          <i class="fas fa-crown text-[9px]"></i> Sesión super-admin · Acceso total
+        <div v-else class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest text-amber-300" style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.25);">
+          <i class="fas fa-crown text-[11px]"></i> Sesión super-admin · Acceso total
         </div>
       </div>
 
@@ -38,7 +38,7 @@
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-white font-bold text-sm truncate">{{ m.organizationName }}</p>
-            <p class="text-white/40 text-[11px] uppercase tracking-wide">{{ m.role }}<span v-if="m.isOwner"> · Owner</span></p>
+            <p class="text-white/40 text-[13px] uppercase tracking-wide">{{ m.role }}<span v-if="m.isOwner"> · Owner</span></p>
           </div>
           <i class="fas fa-arrow-right text-white/30 text-sm"></i>
         </button>

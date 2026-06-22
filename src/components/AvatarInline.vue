@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-2 min-w-0">
     <div
-      class="flex-shrink-0 w-5 h-5 rounded-full overflow-hidden border border-gray-600 bg-gray-700 text-[10px] flex items-center justify-center text-white"
+      class="flex-shrink-0 w-5 h-5 rounded-full overflow-hidden border border-gray-600 bg-gray-700 text-[12px] flex items-center justify-center text-white"
       :title="name"
     >
       <!-- Avatar de gema -->

@@ -33,7 +33,7 @@
       <!-- Uploading Status -->
       <div v-if="uploading" class="flex flex-col items-center justify-center py-4 text-primary-500">
         <i class="fas fa-circle-notch fa-spin text-3xl mb-3"></i>
-        <p class="text-[11px] font-black uppercase tracking-widest">Subiendo imagen...</p>
+        <p class="text-[13px] font-black uppercase tracking-widest">Subiendo imagen...</p>
       </div>
 
       <!-- Action Buttons -->
@@ -68,7 +68,7 @@
       
       <!-- Helper Messages -->
       <div class="bg-slate-50 rounded-xl p-4 text-center" v-if="!previewUrl && !uploading">
-        <p class="text-slate-500 text-[11px] font-bold leading-relaxed">
+        <p class="text-slate-500 text-[13px] font-bold leading-relaxed">
           <i class="fas fa-info-circle mr-1"></i>
           Sube una foto cuadrada para mejores resultados.<br>
           Formato JPG, PNG o WebP (Máx. 2MB).

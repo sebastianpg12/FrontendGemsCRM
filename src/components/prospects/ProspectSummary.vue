@@ -8,11 +8,11 @@
       >
         <span class="flex items-center gap-2">
           <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-rose-500 to-rose-600 text-white flex items-center justify-center shadow-sm">
-            <i class="fas fa-file-lines text-[10px]"></i>
+            <i class="fas fa-file-lines text-[12px]"></i>
           </span>
           <span class="text-xs font-black text-slate-900">Propuesta comercial</span>
         </span>
-        <i class="fas fa-chevron-down text-[9px] text-slate-400 transition-transform duration-150" :class="{ 'rotate-180': proposalExpanded }"></i>
+        <i class="fas fa-chevron-down text-[11px] text-slate-400 transition-transform duration-150" :class="{ 'rotate-180': proposalExpanded }"></i>
       </button>
       <div v-if="proposalExpanded" class="px-4 pb-4 border-t border-slate-100">
         <div class="prose-proposal text-xs font-medium text-slate-700 leading-relaxed pt-3" v-html="renderMd(proposal)"></div>
@@ -24,21 +24,21 @@
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2">
           <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center shadow-sm">
-            <i class="fas fa-wand-magic-sparkles text-[10px]"></i>
+            <i class="fas fa-wand-magic-sparkles text-[12px]"></i>
           </div>
           <h3 class="text-xs font-black text-slate-900">TL;DR del prospect</h3>
         </div>
         <button
           @click="generateSummary"
           :disabled="loadingSummary"
-          class="text-[10px] font-black text-primary-600 hover:text-primary-800 disabled:opacity-50 flex items-center gap-1"
+          class="text-[12px] font-black text-primary-600 hover:text-primary-800 disabled:opacity-50 flex items-center gap-1"
         >
-          <i :class="['fas text-[9px]', loadingSummary ? 'fa-circle-notch fa-spin' : summary ? 'fa-arrows-rotate' : 'fa-bolt']"></i>
+          <i :class="['fas text-[11px]', loadingSummary ? 'fa-circle-notch fa-spin' : summary ? 'fa-arrows-rotate' : 'fa-bolt']"></i>
           {{ loadingSummary ? 'Generando...' : summary ? 'Regenerar' : 'Generar' }}
         </button>
       </div>
       <div v-if="summary" class="prose-md text-xs font-medium text-slate-700 leading-relaxed" v-html="renderMd(summary)"></div>
-      <p v-else-if="!loadingSummary" class="text-[11px] text-slate-500 font-medium">
+      <p v-else-if="!loadingSummary" class="text-[13px] text-slate-500 font-medium">
         Pulsa "Generar" para que la IA resuma este prospect en 3 bullets accionables.
       </p>
     </div>
@@ -48,21 +48,21 @@
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2">
           <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 text-white flex items-center justify-center shadow-sm">
-            <i class="fas fa-brain text-[10px]"></i>
+            <i class="fas fa-brain text-[12px]"></i>
           </div>
           <h3 class="text-xs font-black text-slate-900">Next Best Action</h3>
         </div>
         <button
           @click="generateAction"
           :disabled="loadingAction"
-          class="text-[10px] font-black text-emerald-600 hover:text-emerald-800 disabled:opacity-50 flex items-center gap-1"
+          class="text-[12px] font-black text-emerald-600 hover:text-emerald-800 disabled:opacity-50 flex items-center gap-1"
         >
-          <i :class="['fas text-[9px]', loadingAction ? 'fa-circle-notch fa-spin' : action ? 'fa-arrows-rotate' : 'fa-bolt']"></i>
+          <i :class="['fas text-[11px]', loadingAction ? 'fa-circle-notch fa-spin' : action ? 'fa-arrows-rotate' : 'fa-bolt']"></i>
           {{ loadingAction ? 'Pensando...' : action ? 'Regenerar' : 'Sugerir' }}
         </button>
       </div>
       <div v-if="action" class="prose-md text-xs font-medium text-slate-700 leading-relaxed" v-html="renderMd(action)"></div>
-      <p v-else-if="!loadingAction" class="text-[11px] text-slate-500 font-medium">
+      <p v-else-if="!loadingAction" class="text-[13px] text-slate-500 font-medium">
         Pulsa "Sugerir" para que la IA recomiende qué hacer hoy con este prospect.
       </p>
     </div>
@@ -70,15 +70,15 @@
     <!-- Quick stats -->
     <div class="grid grid-cols-3 gap-2">
       <div class="bg-white border border-slate-200 rounded-xl p-3 text-center">
-        <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Status</p>
+        <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider mb-1">Status</p>
         <p class="text-xs font-black text-slate-800 capitalize">{{ prospect.status || 'nuevo' }}</p>
       </div>
       <div class="bg-white border border-slate-200 rounded-xl p-3 text-center">
-        <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Mensajes</p>
+        <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider mb-1">Mensajes</p>
         <p class="text-xs font-black text-slate-800">{{ prospect.messages?.length || 0 }}</p>
       </div>
       <div class="bg-white border border-slate-200 rounded-xl p-3 text-center">
-        <p class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Tareas</p>
+        <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider mb-1">Tareas</p>
         <p class="text-xs font-black text-slate-800">
           {{ tasks.filter((t) => !t.done).length }}/{{ tasks.length }}
         </p>

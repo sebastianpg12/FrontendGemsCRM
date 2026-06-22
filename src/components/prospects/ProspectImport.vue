@@ -23,7 +23,7 @@
           <p class="text-xs font-bold text-cyan-900 mb-1.5">
             <i class="fas fa-lightbulb mr-1"></i>Formato esperado
           </p>
-          <p class="text-[11px] text-cyan-800 font-medium leading-relaxed">
+          <p class="text-[13px] text-cyan-800 font-medium leading-relaxed">
             Una empresa por línea. Las columnas pueden venir separadas por <strong>tab</strong>, <strong>coma</strong> o <strong>punto y coma</strong>.
             Encabezados detectables: <code class="bg-white px-1 rounded">empresa</code>, <code class="bg-white px-1 rounded">contacto</code>,
             <code class="bg-white px-1 rounded">email</code>, <code class="bg-white px-1 rounded">telefono</code>, <code class="bg-white px-1 rounded">notas</code>.
@@ -31,7 +31,7 @@
         </div>
 
         <div>
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
+          <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
             Pega tu CSV / Excel aquí
           </label>
           <textarea
@@ -46,7 +46,7 @@
           <label class="flex-1 cursor-pointer">
             <input type="file" accept=".csv,.tsv,.txt" class="hidden" @change="onFile" />
             <div class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-black rounded-xl text-center transition-all flex items-center justify-center gap-2">
-              <i class="fas fa-paperclip text-[11px]"></i>
+              <i class="fas fa-paperclip text-[13px]"></i>
               O sube un archivo CSV
             </div>
           </label>
@@ -55,7 +55,7 @@
             :disabled="!rawText.trim()"
             class="px-5 py-2.5 bg-gradient-to-br from-cyan-500 to-primary-500 text-white text-xs font-black rounded-xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
           >
-            <i class="fas fa-eye text-[11px]"></i>
+            <i class="fas fa-eye text-[13px]"></i>
             Previsualizar
           </button>
         </div>
@@ -68,14 +68,14 @@
             {{ rows.length }} filas detectadas
             <span v-if="invalidRows > 0" class="text-rose-500 ml-2">· {{ invalidRows }} sin empresa</span>
           </p>
-          <button @click="step = 'input'" class="text-[10px] font-black text-slate-500 hover:text-slate-900">
+          <button @click="step = 'input'" class="text-[12px] font-black text-slate-500 hover:text-slate-900">
             <i class="fas fa-arrow-left mr-1"></i>Volver
           </button>
         </div>
 
         <div class="border border-slate-200 rounded-xl overflow-hidden">
           <table class="w-full text-xs">
-            <thead class="bg-slate-50 text-[10px] font-black text-slate-500 uppercase tracking-wider">
+            <thead class="bg-slate-50 text-[12px] font-black text-slate-500 uppercase tracking-wider">
               <tr>
                 <th class="px-3 py-2 text-left">Empresa</th>
                 <th class="px-3 py-2 text-left">Contacto</th>
@@ -94,13 +94,13 @@
               </tr>
             </tbody>
           </table>
-          <div v-if="rows.length > 12" class="px-3 py-2 bg-slate-50 text-[10px] text-slate-500 font-bold text-center">
+          <div v-if="rows.length > 12" class="px-3 py-2 bg-slate-50 text-[12px] text-slate-500 font-bold text-center">
             +{{ rows.length - 12 }} filas más
           </div>
         </div>
 
         <div class="flex items-center justify-between gap-3 pt-2 border-t border-slate-100">
-          <p class="text-[10px] text-slate-500 font-medium">
+          <p class="text-[12px] text-slate-500 font-medium">
             Cada prospecto se crea sin pasar por IA. Puedes generar la propuesta luego desde el detalle.
           </p>
           <button
@@ -108,7 +108,7 @@
             :disabled="validRows === 0"
             class="px-5 py-2.5 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white text-xs font-black rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
           >
-            <i class="fas fa-cloud-arrow-up text-[11px]"></i>
+            <i class="fas fa-cloud-arrow-up text-[13px]"></i>
             Importar {{ validRows }} prospectos
           </button>
         </div>

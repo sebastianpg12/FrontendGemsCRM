@@ -8,7 +8,7 @@
       :title="`${p.label}: ${p.value}`"
     >
       <span
-        class="opacity-0 group-hover:opacity-100 absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap pointer-events-none transition-opacity"
+        class="opacity-0 group-hover:opacity-100 absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[12px] font-bold px-2 py-1 rounded whitespace-nowrap pointer-events-none transition-opacity"
       >{{ p.label }}: {{ p.value }}</span>
     </div>
     <div v-if="!points.length" class="w-full h-full flex items-center justify-center text-slate-400 text-xs">

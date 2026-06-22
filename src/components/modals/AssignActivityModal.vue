@@ -9,7 +9,7 @@
           </div>
           <div>
             <h2 class="text-lg font-black text-slate-900 tracking-tight">Asignar Actividad</h2>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Control de responsabilidades</p>
+            <p class="text-[12px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Control de responsabilidades</p>
           </div>
         </div>
         <button
@@ -33,12 +33,12 @@
               
               <!-- Metadata tags -->
               <div class="mt-4 flex flex-wrap gap-3">
-                <div class="flex items-center gap-1.5 px-2 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-black text-slate-500 uppercase tracking-tighter">
+                <div class="flex items-center gap-1.5 px-2 py-1 bg-white border border-slate-200 rounded-md text-[12px] font-black text-slate-500 uppercase tracking-tighter">
                   <i class="fas fa-calendar-alt text-primary-400"></i>
                   <span>{{ formatDate(activity?.date || '') }}</span>
                 </div>
                 <div v-if="activity?.priority" 
-                  class="flex items-center gap-1.5 px-2 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-black uppercase tracking-tighter"
+                  class="flex items-center gap-1.5 px-2 py-1 bg-white border border-slate-200 rounded-md text-[12px] font-black uppercase tracking-tighter"
                   :class="{
                     'text-emerald-600': activity.priority === 'low',
                     'text-primary-600': activity.priority === 'medium',
@@ -95,7 +95,7 @@
           <div class="flex-1 min-w-0">
             <h4 class="text-slate-900 font-black text-base truncate">{{ selectedMember.name }}</h4>
             <p class="text-slate-400 font-bold text-xs uppercase tracking-widest">{{ selectedMember.role }}</p>
-            <div v-if="selectedMember.department" class="mt-1 inline-flex items-center px-2 py-0.5 bg-slate-50 text-slate-500 rounded text-[9px] font-black uppercase tracking-tighter">
+            <div v-if="selectedMember.department" class="mt-1 inline-flex items-center px-2 py-0.5 bg-slate-50 text-slate-500 rounded text-[11px] font-black uppercase tracking-tighter">
               {{ selectedMember.department }}
             </div>
           </div>

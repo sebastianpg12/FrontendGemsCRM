@@ -19,7 +19,7 @@
           class="hidden lg:flex absolute -right-[11px] top-5 w-[22px] h-[22px] bg-white dark:bg-[#1a1d27] text-slate-400 rounded-full items-center justify-center border border-slate-200 dark:border-white/10 z-[60] transition-colors hover:text-primary-500 dark:hover:border-primary-500/40"
           :class="isSidebarMini ? 'rotate-180' : ''"
         >
-          <i class="fas fa-chevron-left" style="font-size:7px"></i>
+          <i class="fas fa-chevron-left" style="font-size:9px"></i>
         </button>
 
         <!-- Logo + Brand -->
@@ -35,7 +35,7 @@
           />
           <span
             v-if="!isSidebarMini"
-            class="text-[13px] font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap tracking-tight"
+            class="text-[14px] font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap tracking-tight"
           >
             {{ themeStore.config.brandName }}
           </span>
@@ -67,10 +67,10 @@
               'shrink-0',
               !isSidebarMini ? 'mr-2.5' : '',
               isModuleActive(module.path) ? 'text-primary-500 dark:text-primary-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'
-            ]" style="font-size:13px"></i>
+            ]" style="font-size:14px"></i>
             <span
               v-if="!isSidebarMini"
-              class="text-[12.5px] font-medium truncate whitespace-nowrap"
+              class="text-[14px] font-medium truncate whitespace-nowrap"
             >{{ localeStore.t(module.id) }}</span>
           </router-link>
         </nav>
@@ -91,8 +91,8 @@
               class="border border-slate-100 dark:border-white/10 flex-shrink-0"
             />
             <div class="min-w-0 flex-1">
-              <p class="text-[12px] font-semibold text-slate-800 dark:text-slate-200 truncate leading-tight">{{ authStore.user?.name }}</p>
-              <p class="text-[10px] text-slate-400 dark:text-slate-500 truncate">{{ getRoleDisplayName(authStore.user?.role) }}</p>
+              <p class="text-[14px] font-semibold text-slate-800 dark:text-slate-200 truncate leading-tight">{{ authStore.user?.name }}</p>
+              <p class="text-[12px] text-slate-400 dark:text-slate-500 truncate">{{ getRoleDisplayName(authStore.user?.role) }}</p>
             </div>
           </div>
           <UserAvatar
@@ -112,8 +112,8 @@
               isSidebarMini ? 'w-8 h-8 justify-center' : 'w-full px-2 py-1.5'
             ]"
           >
-            <i class="fas fa-power-off" style="font-size:11px;flex-shrink:0"></i>
-            <span v-if="!isSidebarMini" class="text-[12px] font-medium">Salir</span>
+            <i class="fas fa-power-off" style="font-size:13px;flex-shrink:0"></i>
+            <span v-if="!isSidebarMini" class="text-[14px] font-medium">Salir</span>
           </button>
         </div>
       </div>
@@ -150,16 +150,16 @@
           class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
           :class="isModuleActive(item.path) ? 'text-primary-600 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500'"
         >
-          <i :class="[item.icon, 'text-[15px]']"></i>
-          <span class="text-[9px] font-black tracking-tight truncate max-w-full px-0.5">{{ localeStore.t(item.id) }}</span>
+          <i :class="[item.icon, 'text-[17px]']"></i>
+          <span class="text-[11px] font-black tracking-tight truncate max-w-full px-0.5">{{ localeStore.t(item.id) }}</span>
         </router-link>
         <button
           class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
           :class="sidebarOpen ? 'text-primary-600 dark:text-primary-300' : 'text-slate-400 dark:text-slate-500'"
           @click="sidebarOpen = true"
         >
-          <i class="fas fa-ellipsis text-[15px]"></i>
-          <span class="text-[9px] font-black tracking-tight">{{ localeStore.t('nav.more') }}</span>
+          <i class="fas fa-ellipsis text-[17px]"></i>
+          <span class="text-[11px] font-black tracking-tight">{{ localeStore.t('nav.more') }}</span>
         </button>
       </nav>
 
@@ -173,7 +173,7 @@
       class="nav-tooltip-wrap fixed z-[9999] pointer-events-none"
       :style="{ top: navTooltip.y + 'px', left: navTooltip.x + 'px', transform: 'translateY(-50%)' }"
     >
-      <span class="nav-tooltip block px-2.5 py-1.5 text-white text-[11px] font-black rounded-lg whitespace-nowrap tracking-wide">
+      <span class="nav-tooltip block px-2.5 py-1.5 text-white text-[13px] font-black rounded-lg whitespace-nowrap tracking-wide">
         {{ navTooltip.label }}
       </span>
     </div>

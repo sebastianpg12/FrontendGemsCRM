@@ -11,7 +11,7 @@
             class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
             :class="viewMode === 'board' ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'"
           >
-            <i class="fas fa-columns text-[10px]"></i>
+            <i class="fas fa-columns text-[12px]"></i>
             <span class="hidden sm:inline">Tablero</span>
           </button>
           <button
@@ -19,15 +19,15 @@
             class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
             :class="viewMode === 'inbox' ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'"
           >
-            <i class="fas fa-list text-[10px]"></i>
+            <i class="fas fa-list text-[12px]"></i>
             <span class="hidden sm:inline">Mi Bandeja</span>
           </button>
         </div>
 
         <div class="flex items-center gap-2">
           <button v-if="hasActiveFilters" @click="clearFilters"
-            class="px-3 py-1.5 rounded-xl text-[10px] font-black text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center gap-1.5 transition-all uppercase tracking-widest">
-            <i class="fas fa-times text-[9px]"></i>
+            class="px-3 py-1.5 rounded-xl text-[12px] font-black text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center gap-1.5 transition-all uppercase tracking-widest">
+            <i class="fas fa-times text-[11px]"></i>
             <span class="hidden sm:inline">Limpiar</span>
           </button>
           <button @click="loadTickets" :disabled="loading"
@@ -36,7 +36,7 @@
           </button>
           <button @click="showNewTicketModal = true"
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-xs font-black transition-all shadow-sm shadow-primary-500/20 active:scale-95">
-            <i class="fas fa-plus text-[10px]"></i>
+            <i class="fas fa-plus text-[12px]"></i>
             <span class="hidden sm:inline">Nuevo</span>
           </button>
         </div>
@@ -46,9 +46,9 @@
       <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2.5">
         <!-- Search -->
         <div class="relative min-w-0 flex-1 max-w-xs group">
-          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors text-[10px]"></i>
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors text-[12px]"></i>
           <input v-model="searchQuery" type="text" placeholder="Buscar por #, asunto o cliente..."
-            class="w-full pl-8 pr-3 py-1.5 bg-slate-100/60 dark:bg-slate-800/50 border border-transparent rounded-lg text-[11px] font-bold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-primary-200 focus:ring-2 focus:ring-primary-500/10 transition-all outline-none" />
+            class="w-full pl-8 pr-3 py-1.5 bg-slate-100/60 dark:bg-slate-800/50 border border-transparent rounded-lg text-[13px] font-bold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-primary-200 focus:ring-2 focus:ring-primary-500/10 transition-all outline-none" />
         </div>
 
         <div class="h-5 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
@@ -65,7 +65,7 @@
                 class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterStatus === opt.value }"
                 @click="setChipFilter('status', opt.value)">
                 <span>{{ opt.label }}</span>
-                <i v-if="filterStatus === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterStatus === opt.value" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@
                 class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterCategory === opt.value }"
                 @click="setChipFilter('category', opt.value)">
                 <span>{{ opt.label }}</span>
-                <i v-if="filterCategory === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterCategory === opt.value" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@
                 class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterPriority === opt.value }"
                 @click="setChipFilter('priority', opt.value)">
                 <span>{{ opt.label }}</span>
-                <i v-if="filterPriority === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterPriority === opt.value" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
             </div>
           </div>
@@ -106,13 +106,13 @@
               <div class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': !filterAssignedTo }"
                 @click="setChipFilter('agent', '')">
                 <span>Cualquier agente</span>
-                <i v-if="!filterAssignedTo" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="!filterAssignedTo" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
               <div v-for="member in supportAgents" :key="member._id"
                 class="tk-dropdown-item" :class="{ 'tk-dropdown-item--active': filterAssignedTo === member._id }"
                 @click="setChipFilter('agent', member._id)">
                 <span>{{ member.name }}</span>
-                <i v-if="filterAssignedTo === member._id" class="fas fa-check text-[10px] text-primary-500"></i>
+                <i v-if="filterAssignedTo === member._id" class="fas fa-check text-[12px] text-primary-500"></i>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@
               </div>
               <div>
                 <h3 class="text-xs font-black text-slate-700 uppercase tracking-widest">{{ col.title }}</h3>
-                <p class="text-[9px] font-bold text-slate-400">{{ getTicketsByStatus(col.id).length }} tickets</p>
+                <p class="text-[11px] font-bold text-slate-400">{{ getTicketsByStatus(col.id).length }} tickets</p>
               </div>
             </div>
           </div>
@@ -148,12 +148,12 @@
           <!-- Búsqueda específica para Resueltos -->
           <div v-if="col.id === 'resolved'" class="px-5 pb-2">
             <div class="relative">
-              <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 text-[10px]"></i>
+              <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 text-[12px]"></i>
               <input
                 v-model="resolvedSearchQuery"
                 type="text"
                 placeholder="Buscar en resueltos..."
-                class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-lg text-[11px] font-bold text-slate-700 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 outline-none transition-all"
+                class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-lg text-[13px] font-bold text-slate-700 placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 outline-none transition-all"
               />
             </div>
           </div>
@@ -169,13 +169,13 @@
               <!-- Card Content -->
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                  <span class="text-[9px] font-black font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-lg border border-primary-100 dark:border-primary-700/40 shadow-sm">
+                  <span class="text-[11px] font-black font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-lg border border-primary-100 dark:border-primary-700/40 shadow-sm">
                     #{{ ticket.ticketNumber }}
                   </span>
                 </div>
                 <span
                   :class="getPriorityBadgeClass(ticket.priority)"
-                  class="text-[9px] font-black px-2 py-1 rounded-md uppercase tracking-wider border flex items-center gap-1"
+                  class="text-[11px] font-black px-2 py-1 rounded-md uppercase tracking-wider border flex items-center gap-1"
                   :title="`${PRIORITY_META[ticket.priority]?.label || ''} — SLA ${getPrioritySla(ticket.priority)}`"
                 >
                   <span class="w-1.5 h-1.5 rounded-full" :class="ticket.priority === 'urgent' ? 'bg-rose-500 animate-pulse' : ticket.priority === 'high' ? 'bg-orange-500' : ticket.priority === 'medium' ? 'bg-amber-500' : 'bg-primary-500'"></span>
@@ -188,24 +188,24 @@
               </h4>
 
               <div class="flex items-center gap-2 mt-1">
-                <div class="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[8px] font-black text-slate-500 overflow-hidden shadow-inner">
+                <div class="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-500 overflow-hidden shadow-inner">
                   {{ getInitials(ticket.submittedBy?.name || 'G') }}
                 </div>
-                <p class="text-[10px] text-slate-500 font-bold truncate">{{ ticket.submittedBy?.name || 'Usuario' }}</p>
+                <p class="text-[12px] text-slate-500 font-bold truncate">{{ ticket.submittedBy?.name || 'Usuario' }}</p>
               </div>
 
               <div class="flex items-center justify-between pt-3 border-t border-slate-50 mt-1">
                 <div class="flex items-center gap-1.5">
-                  <i class="far fa-clock text-[9px] text-slate-300"></i>
-                  <span class="text-[9px] text-slate-400 font-bold">hace {{ formatDateRelative(ticket.createdAt) }}</span>
+                  <i class="far fa-clock text-[11px] text-slate-300"></i>
+                  <span class="text-[11px] text-slate-400 font-bold">hace {{ formatDateRelative(ticket.createdAt) }}</span>
                 </div>
                 
                 <div v-if="ticket.assignedTo" class="w-7 h-7 rounded-xl bg-indigo-50 flex items-center justify-center border border-indigo-100 shadow-sm overflow-hidden group-hover:scale-110 transition-transform">
                   <img v-if="ticket.assignedTo.avatar || ticket.assignedTo.photo" :src="resolveImageUrl(ticket.assignedTo.avatar || ticket.assignedTo.photo)" class="w-full h-full object-cover">
-                  <span v-else class="text-[9px] font-black text-primary-700">{{ getInitials(ticket.assignedTo.name) }}</span>
+                  <span v-else class="text-[11px] font-black text-primary-700">{{ getInitials(ticket.assignedTo.name) }}</span>
                 </div>
                 <div v-else class="w-7 h-7 rounded-xl bg-slate-50 border border-slate-200 border-dashed flex items-center justify-center" title="Sin asignar">
-                   <i class="fas fa-user-slash text-[9px] text-slate-300"></i>
+                   <i class="fas fa-user-slash text-[11px] text-slate-300"></i>
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@
             <div v-if="hasMoreInColumn(col.id)" class="pt-2 pb-2">
               <button 
                 @click="increaseColumnLimit(col.id)"
-                class="w-full py-3 bg-white/40 hover:bg-white border border-dashed border-slate-200 rounded-xl text-[10px] font-black text-slate-500 uppercase tracking-widest transition-all hover:text-primary-600 shadow-sm"
+                class="w-full py-3 bg-white/40 hover:bg-white border border-dashed border-slate-200 rounded-xl text-[12px] font-black text-slate-500 uppercase tracking-widest transition-all hover:text-primary-600 shadow-sm"
               >
                 <i class="fas fa-plus-circle mr-2"></i>
                 Ver más tickets
@@ -226,7 +226,7 @@
                <div class="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center mb-3">
                  <i class="fas fa-inbox text-xl text-slate-300"></i>
                </div>
-               <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Columna Vacía</span>
+               <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Columna Vacía</span>
             </div>
           </div>
         </div>
@@ -245,13 +245,13 @@
                 </div>
                 <div>
                   <h3 class="text-base font-black text-slate-800">Mi Bandeja</h3>
-                  <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tickets asignados a ti</p>
+                  <p class="text-[12px] font-bold text-slate-400 uppercase tracking-wider">Tickets asignados a ti</p>
                 </div>
               </div>
               <div class="h-8 w-px bg-slate-200"></div>
               <div class="flex items-center gap-3">
                  <div class="flex flex-col">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Pendientes</span>
+                    <span class="text-[12px] font-black text-slate-400 uppercase tracking-tighter">Pendientes</span>
                     <span class="text-sm font-black text-slate-800">{{ inboxTickets.filter(t => t.status !== 'resolved' && t.status !== 'closed').length }}</span>
                  </div>
               </div>
@@ -273,12 +273,12 @@
           <table v-else class="w-full text-left border-collapse mt-4">
             <thead>
               <tr class="border-b border-slate-100">
-                <th class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
-                <th class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Ticket</th>
-                <th class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Asunto</th>
-                <th class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
-                <th class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Prioridad</th>
-                <th class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Antigüedad</th>
+                <th class="px-4 py-4 text-[12px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                <th class="px-4 py-4 text-[12px] font-black text-slate-400 uppercase tracking-widest">Ticket</th>
+                <th class="px-4 py-4 text-[12px] font-black text-slate-400 uppercase tracking-widest">Asunto</th>
+                <th class="px-4 py-4 text-[12px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
+                <th class="px-4 py-4 text-[12px] font-black text-slate-400 uppercase tracking-widest">Prioridad</th>
+                <th class="px-4 py-4 text-[12px] font-black text-slate-400 uppercase tracking-widest">Antigüedad</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-50">
@@ -289,7 +289,7 @@
                 class="hover:bg-primary-50 transition-all cursor-pointer group"
               >
                 <td class="px-4 py-5">
-                  <span :class="getStatusPillClass(ticket.status)" class="px-3 py-1 rounded-xl text-[9px] font-black uppercase border shadow-sm transition-transform group-hover:scale-105">
+                  <span :class="getStatusPillClass(ticket.status)" class="px-3 py-1 rounded-xl text-[11px] font-black uppercase border shadow-sm transition-transform group-hover:scale-105">
                     {{ ticket.status }}
                   </span>
                 </td>
@@ -299,24 +299,24 @@
                 <td class="px-4 py-5">
                   <div class="max-w-md">
                     <p class="text-sm font-black text-slate-800 line-clamp-1 group-hover:text-primary-600 transition-colors">{{ ticket.subject }}</p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">{{ ticket.category }}</p>
+                    <p class="text-[12px] font-bold text-slate-400 uppercase mt-0.5">{{ ticket.category }}</p>
                   </div>
                 </td>
                 <td class="px-4 py-5">
                   <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-500 shadow-inner">
+                    <div class="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[12px] font-black text-slate-500 shadow-inner">
                       {{ getInitials(ticket.submittedBy?.name || 'G') }}
                     </div>
                     <div class="flex flex-col">
                        <span class="text-xs font-black text-slate-700">{{ ticket.submittedBy?.name || 'Usuario' }}</span>
-                       <span class="text-[9px] font-bold text-slate-400 truncate max-w-[120px]">{{ ticket.submittedBy?.email || 'N/A' }}</span>
+                       <span class="text-[11px] font-bold text-slate-400 truncate max-w-[120px]">{{ ticket.submittedBy?.email || 'N/A' }}</span>
                     </div>
                   </div>
                 </td>
                 <td class="px-4 py-5">
                    <span
                      :class="getPriorityBadgeClass(ticket.priority)"
-                     class="px-2.5 py-1.5 rounded-xl text-[9px] font-black uppercase border shadow-sm"
+                     class="px-2.5 py-1.5 rounded-xl text-[11px] font-black uppercase border shadow-sm"
                      :title="getPrioritySla(ticket.priority)"
                    >
                      {{ getPriorityCode(ticket.priority) }} · {{ PRIORITY_META[ticket.priority]?.label || ticket.priority }}
@@ -325,7 +325,7 @@
                 <td class="px-4 py-5">
                   <div class="flex flex-col">
                     <span class="text-xs font-black text-slate-600">{{ formatDateRelative(ticket.createdAt) }}</span>
-                    <span class="text-[9px] font-bold text-slate-400 uppercase">{{ formatDate(ticket.createdAt) }}</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">{{ formatDate(ticket.createdAt) }}</span>
                   </div>
                 </td>
               </tr>
@@ -361,13 +361,13 @@
                    <h2 class="text-lg font-black text-slate-800">{{ selectedTicket.subject }}</h2>
                 </div>
                 <div class="flex items-center gap-2 mt-1">
-                  <span :class="getStatusPillClass(selectedTicket.status)" class="text-[9px] font-black px-2 py-0.5 rounded-full uppercase border">
+                  <span :class="getStatusPillClass(selectedTicket.status)" class="text-[11px] font-black px-2 py-0.5 rounded-full uppercase border">
                     {{ selectedTicket.status }}
                   </span>
-                  <span :class="getPriorityBadgeClass(selectedTicket.priority)" class="text-[9px] font-black px-2 py-0.5 rounded-full uppercase border">
+                  <span :class="getPriorityBadgeClass(selectedTicket.priority)" class="text-[11px] font-black px-2 py-0.5 rounded-full uppercase border">
                     {{ selectedTicket.priority }}
                   </span>
-                  <span class="text-[10px] font-bold text-slate-400 border-l border-slate-200 pl-2 ml-1">{{ selectedTicket.category }}</span>
+                  <span class="text-[12px] font-bold text-slate-400 border-l border-slate-200 pl-2 ml-1">{{ selectedTicket.category }}</span>
                 </div>
               </div>
             </div>
@@ -382,8 +382,8 @@
             <!-- Description -->
             <div class="bg-slate-50 rounded-xl p-5 relative">
                <div class="absolute -top-3 left-4 bg-white px-3 py-1 rounded-full flex items-center gap-2">
-                 <i class="fas fa-info-circle text-[10px] text-primary-500"></i>
-                 <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Descripción Inicial</span>
+                 <i class="fas fa-info-circle text-[12px] text-primary-500"></i>
+                 <span class="text-[12px] font-black text-slate-500 uppercase tracking-widest">Descripción Inicial</span>
                </div>
                <p class="text-sm text-slate-700 leading-relaxed font-medium whitespace-pre-wrap mt-2">{{ selectedTicket.description }}</p>
                
@@ -394,10 +394,10 @@
                    </div>
                    <div class="flex flex-col">
                      <span class="text-xs font-black text-slate-800">{{ selectedTicket.submittedBy?.name || 'Usuario' }}</span>
-                     <span class="text-[10px] font-bold text-slate-400">{{ selectedTicket.submittedBy?.email || 'N/A' }}</span>
+                     <span class="text-[12px] font-bold text-slate-400">{{ selectedTicket.submittedBy?.email || 'N/A' }}</span>
                    </div>
                  </div>
-                 <div class="text-[10px] font-black text-slate-400 uppercase">
+                 <div class="text-[12px] font-black text-slate-400 uppercase">
                     RECIBIDO EL {{ formatDateLong(selectedTicket.createdAt) }}
                  </div>
                </div>
@@ -406,7 +406,7 @@
             <!-- Meta info grid -->
             <div class="grid grid-cols-2 gap-4">
               <div class="bg-white rounded-xl p-4 border border-slate-200 flex flex-col gap-2">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Asignado a:</span>
+                <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Asignado a:</span>
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center overflow-hidden">
@@ -418,7 +418,7 @@
                   <div class="relative">
                     <button 
                       @click="showAgentSelector = !showAgentSelector"
-                      class="text-[10px] font-black text-primary-600 hover:underline uppercase tracking-tighter"
+                      class="text-[12px] font-black text-primary-600 hover:underline uppercase tracking-tighter"
                     >
                       {{ showAgentSelector ? 'Cancelar' : 'Cambiar' }}
                     </button>
@@ -426,8 +426,8 @@
                     <!-- Dropdown de agentes -->
                     <div v-if="showAgentSelector" class="absolute right-0 top-full mt-2 w-64 bg-white border border-slate-200 rounded-2xl shadow-2xl z-[70] py-2 animate-fade-in ring-4 ring-slate-900/5">
                        <div class="px-4 py-2 mb-2 border-b border-slate-100 flex items-center justify-between">
-                         <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Reasignar a...</span>
-                         <button @click="showAgentSelector = false" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-[10px]"></i></button>
+                         <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Reasignar a...</span>
+                         <button @click="showAgentSelector = false" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-[12px]"></i></button>
                        </div>
                        <div class="max-h-64 overflow-y-auto custom-scrollbar-slim px-2">
                          <button 
@@ -436,12 +436,12 @@
                           @click.stop="reassignTicket(agent._id)"
                           class="w-full px-3 py-2.5 text-left hover:bg-primary-50 rounded-xl flex items-center gap-3 transition-all group/agent"
                          >
-                           <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-500 group-hover/agent:bg-primary-100 group-hover/agent:text-primary-600 transition-colors">
+                           <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-[12px] font-black text-slate-500 group-hover/agent:bg-primary-100 group-hover/agent:text-primary-600 transition-colors">
                              {{ getInitials(agent.name) }}
                            </div>
                            <div class="flex flex-col">
                              <span class="text-xs font-bold text-slate-700 group-hover/agent:text-primary-700">{{ agent.name }}</span>
-                             <span class="text-[9px] font-bold text-slate-400 uppercase">{{ agent.role }}</span>
+                             <span class="text-[11px] font-bold text-slate-400 uppercase">{{ agent.role }}</span>
                            </div>
                          </button>
                        </div>
@@ -450,15 +450,15 @@
                 </div>
               </div>
               <div class="bg-white rounded-xl p-4 border border-slate-200 flex flex-col gap-2">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado Actual:</span>
+                <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Estado Actual:</span>
                 <div class="flex items-center justify-between">
-                  <span :class="getStatusPillClass(selectedTicket.status)" class="text-[10px] font-black px-2 py-1 rounded-lg uppercase border">
+                  <span :class="getStatusPillClass(selectedTicket.status)" class="text-[12px] font-black px-2 py-1 rounded-lg uppercase border">
                     {{ selectedTicket.status }}
                   </span>
                   <button 
                     v-if="selectedTicket.status !== 'resolved'"
                     @click="updateTicketStatus('resolved')"
-                    class="px-3 py-1.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[10px] font-black hover:bg-emerald-100 transition-all uppercase"
+                    class="px-3 py-1.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[12px] font-black hover:bg-emerald-100 transition-all uppercase"
                   >Resolver Ticket</button>
                 </div>
               </div>
@@ -471,11 +471,11 @@
                   <i class="fas fa-link text-primary-500"></i> Recursos Vinculados
                 </h3>
                 <div class="flex gap-2">
-                  <button @click="openLinkResourceModal('case')" class="px-2.5 py-1.5 bg-white hover:bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-lg text-[9px] font-black uppercase transition-all flex items-center gap-1.5">
-                    <i class="fas fa-briefcase text-[8px]"></i> + Caso
+                  <button @click="openLinkResourceModal('case')" class="px-2.5 py-1.5 bg-white hover:bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-lg text-[11px] font-black uppercase transition-all flex items-center gap-1.5">
+                    <i class="fas fa-briefcase text-[10px]"></i> + Caso
                   </button>
-                  <button @click="openLinkResourceModal('wiki')" class="px-2.5 py-1.5 bg-white hover:bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[9px] font-black uppercase transition-all flex items-center gap-1.5">
-                    <i class="fas fa-book-open text-[8px]"></i> + Wiki
+                  <button @click="openLinkResourceModal('wiki')" class="px-2.5 py-1.5 bg-white hover:bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[11px] font-black uppercase transition-all flex items-center gap-1.5">
+                    <i class="fas fa-book-open text-[10px]"></i> + Wiki
                   </button>
                 </div>
               </div>
@@ -484,7 +484,7 @@
                 <div v-if="(selectedTicket.linkedCases?.length || 0) + (selectedTicket.linkedWikiArticles?.length || 0) === 0" 
                      class="py-6 border border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center opacity-40">
                   <i class="fas fa-puzzle-piece text-lg mb-2 text-slate-300"></i>
-                  <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Sin recursos asociados</span>
+                  <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Sin recursos asociados</span>
                 </div>
                 
                 <div class="grid grid-cols-1 gap-2">
@@ -496,16 +496,16 @@
                         <i class="fas fa-briefcase text-xs"></i>
                       </div>
                       <div class="flex flex-col">
-                        <span class="text-[10px] font-black text-indigo-700 uppercase tracking-tighter">Caso Vinculado</span>
+                        <span class="text-[12px] font-black text-indigo-700 uppercase tracking-tighter">Caso Vinculado</span>
                         <span class="text-xs font-bold text-slate-700">{{ item.titulo || item.title }}</span>
                       </div>
                     </div>
                     <div class="flex items-center gap-2">
                       <button @click="openResource(item, 'case')" class="opacity-0 group-hover:opacity-100 p-1.5 text-indigo-400 hover:text-indigo-600 transition-all" title="Ver recurso">
-                        <i class="fas fa-external-link-alt text-[10px]"></i>
+                        <i class="fas fa-external-link-alt text-[12px]"></i>
                       </button>
                       <button @click="unlinkResource('case', item._id)" class="opacity-0 group-hover:opacity-100 p-1.5 text-slate-400 hover:text-rose-500 transition-all" title="Desvincular">
-                        <i class="fas fa-unlink text-[10px]"></i>
+                        <i class="fas fa-unlink text-[12px]"></i>
                       </button>
                     </div>
                   </div>
@@ -518,16 +518,16 @@
                         <i class="fas fa-book-open text-xs"></i>
                       </div>
                       <div class="flex flex-col">
-                        <span class="text-[10px] font-black text-emerald-700 uppercase tracking-tighter">Manual / Wiki</span>
+                        <span class="text-[12px] font-black text-emerald-700 uppercase tracking-tighter">Manual / Wiki</span>
                         <span class="text-xs font-bold text-slate-700">{{ item.titulo }}</span>
                       </div>
                     </div>
                     <div class="flex items-center gap-2">
                       <button @click="openResource(item)" class="opacity-0 group-hover:opacity-100 p-1.5 text-primary-400 hover:text-primary-600 transition-all" title="Ver recurso">
-                        <i class="fas fa-external-link-alt text-[10px]"></i>
+                        <i class="fas fa-external-link-alt text-[12px]"></i>
                       </button>
                       <button @click="unlinkResource('wiki', item._id)" class="opacity-0 group-hover:opacity-100 p-1.5 text-slate-400 hover:text-rose-500 transition-all" title="Desvincular">
-                        <i class="fas fa-unlink text-[10px]"></i>
+                        <i class="fas fa-unlink text-[12px]"></i>
                       </button>
                     </div>
                   </div>
@@ -541,7 +541,7 @@
                 <h3 class="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
                   <i class="fas fa-comments text-primary-500"></i> Seguimiento
                 </h3>
-                <span class="text-[10px] font-bold text-slate-400">{{ selectedTicket.comments?.length || 0 }} mensajes</span>
+                <span class="text-[12px] font-bold text-slate-400">{{ selectedTicket.comments?.length || 0 }} mensajes</span>
               </div>
 
               <!-- Message List -->
@@ -554,15 +554,15 @@
                 >
                   <div class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex-shrink-0 overflow-hidden">
                     <img v-if="comment.author.avatar" :src="comment.author.avatar" class="w-full h-full object-cover">
-                    <span v-else class="w-full h-full flex items-center justify-center text-[10px] font-black text-slate-400">
+                    <span v-else class="w-full h-full flex items-center justify-center text-[12px] font-black text-slate-400">
                       {{ getInitials(comment.author.name) }}
                     </span>
                   </div>
                   <div class="flex flex-col max-w-[80%]" :class="{ 'items-end': comment.author._id === authStore.user?._id }">
                     <div class="flex items-center gap-2 mb-1">
-                      <span class="text-[10px] font-black text-slate-700">{{ comment.author.name }}</span>
-                      <span v-if="comment.isInternal" class="text-[8px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded uppercase tracking-tighter">Nota Interna</span>
-                      <span class="text-[8px] font-bold text-slate-400">{{ formatDateRelative(comment.createdAt) }}</span>
+                      <span class="text-[12px] font-black text-slate-700">{{ comment.author.name }}</span>
+                      <span v-if="comment.isInternal" class="text-[10px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded uppercase tracking-tighter">Nota Interna</span>
+                      <span class="text-[10px] font-bold text-slate-400">{{ formatDateRelative(comment.createdAt) }}</span>
                     </div>
                     <div 
                       class="p-3 text-xs leading-relaxed font-medium shadow-sm"
@@ -582,8 +582,8 @@
                         >
                           <img v-if="isImgUrl(att)" :src="resolveImageUrl(att)" class="w-full h-full object-cover">
                           <div v-else class="w-full h-full flex flex-col items-center justify-center gap-1">
-                            <i class="fas fa-file-alt text-[10px]" :class="comment.author._id === authStore.user?._id ? 'text-primary-200' : 'text-slate-300'"></i>
-                            <span class="text-[7px] font-black uppercase" :class="comment.author._id === authStore.user?._id ? 'text-primary-100' : 'text-slate-400'">Doc</span>
+                            <i class="fas fa-file-alt text-[12px]" :class="comment.author._id === authStore.user?._id ? 'text-primary-200' : 'text-slate-300'"></i>
+                            <span class="text-[9px] font-black uppercase" :class="comment.author._id === authStore.user?._id ? 'text-primary-100' : 'text-slate-400'">Doc</span>
                           </div>
                         </div>
                       </div>
@@ -611,12 +611,12 @@
                 <div class="flex items-center gap-3 pl-2">
                   <label class="flex items-center gap-2 cursor-pointer group">
                     <input type="checkbox" v-model="newCommentIsInternal" class="w-3.5 h-3.5 rounded text-primary-600 border-slate-200 focus:ring-primary-500">
-                    <span class="text-[10px] font-black text-slate-400 group-hover:text-amber-600 uppercase tracking-tighter transition-colors">Nota Interna</span>
+                    <span class="text-[12px] font-black text-slate-400 group-hover:text-amber-600 uppercase tracking-tighter transition-colors">Nota Interna</span>
                   </label>
                   <label class="p-1.5 text-slate-400 hover:text-primary-600 cursor-pointer relative transition-colors">
                     <i class="fas fa-paperclip text-sm"></i>
                     <input type="file" multiple @change="handleCommentFiles" class="hidden">
-                    <span v-if="commentFiles.length" class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-primary-600 text-[7px] text-white rounded-full flex items-center justify-center font-black">
+                    <span v-if="commentFiles.length" class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-primary-600 text-[9px] text-white rounded-full flex items-center justify-center font-black">
                       {{ commentFiles.length }}
                     </span>
                   </label>
@@ -627,7 +627,7 @@
                   class="px-4 py-2 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-sm transition-all"
                 >
                   {{ sendingComment ? 'Enviando...' : 'Enviar Mensaje' }}
-                  <i class="fas fa-paper-plane text-[10px]"></i>
+                  <i class="fas fa-paper-plane text-[12px]"></i>
                 </button>
               </div>
             </div>
@@ -645,15 +645,15 @@
         <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-[#334155]">
           <div class="flex items-center gap-3">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center text-primary-600 dark:text-primary-300" style="background: rgba(var(--brand-accent-rgb),0.1)">
-              <i class="fas fa-ticket-alt text-[12px]"></i>
+              <i class="fas fa-ticket-alt text-[14px]"></i>
             </div>
             <div>
-              <h3 class="text-[14px] font-black text-slate-800 dark:text-slate-100 leading-tight">Nuevo ticket</h3>
-              <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Soporte interno</p>
+              <h3 class="text-[15px] font-black text-slate-800 dark:text-slate-100 leading-tight">Nuevo ticket</h3>
+              <p class="text-[12px] text-slate-400 uppercase tracking-widest font-bold">Soporte interno</p>
             </div>
           </div>
           <button @click="showNewTicketModal = false" class="h-7 w-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-[#334155] transition-colors">
-            <i class="fas fa-times text-[11px]"></i>
+            <i class="fas fa-times text-[13px]"></i>
           </button>
         </div>
 
@@ -661,52 +661,52 @@
         <div class="p-5 space-y-3">
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Cliente</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Cliente</label>
               <input v-model="newTicketData.name" type="text" placeholder="Nombre"
-                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
+                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[14px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
             </div>
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Email</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Email</label>
               <input v-model="newTicketData.email" type="email" placeholder="correo@ejemplo.com"
-                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
+                class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[14px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
             </div>
           </div>
 
           <div>
-            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Asunto</label>
+            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Asunto</label>
             <input v-model="newTicketData.subject" type="text" placeholder="Describe brevemente el problema..."
-              class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
+              class="w-full h-8 px-3 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[14px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
           </div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Prioridad</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Prioridad</label>
               <CustomSelect v-model="newTicketData.priority" :options="newTicketPriorityOpts" size="sm" />
             </div>
             <div>
-              <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Categoría</label>
+              <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Categoría</label>
               <CustomSelect v-model="newTicketData.category" :options="newTicketCategoryOpts" size="sm" />
             </div>
           </div>
 
           <div>
-            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Descripción</label>
+            <label class="block text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Descripción</label>
             <textarea v-model="newTicketData.description" rows="3"
               placeholder="Detalla el problema o solicitud..."
-              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[12px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"></textarea>
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[14px] font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all resize-none"></textarea>
           </div>
         </div>
 
         <!-- Footer -->
         <div class="px-5 py-3.5 border-t border-slate-100 dark:border-[#334155] flex gap-2.5">
           <button @click="showNewTicketModal = false"
-            class="flex-1 h-9 border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors">
+            class="flex-1 h-9 border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 rounded-xl font-black text-[13px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors">
             Cancelar
           </button>
           <button @click="createNewTicket" :disabled="creating"
-            class="flex-1 h-9 bg-primary-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-60">
-            <i v-if="creating" class="fas fa-circle-notch fa-spin text-[10px]"></i>
-            <i v-else class="fas fa-plus text-[10px]"></i>
+            class="flex-1 h-9 bg-primary-600 text-white rounded-xl font-black text-[13px] uppercase tracking-widest hover:bg-primary-700 transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-60">
+            <i v-if="creating" class="fas fa-circle-notch fa-spin text-[12px]"></i>
+            <i v-else class="fas fa-plus text-[12px]"></i>
             {{ creating ? 'Creando...' : 'Crear ticket' }}
           </button>
         </div>
@@ -746,8 +746,8 @@
             >
               <div class="flex flex-col">
                 <span class="text-xs font-black text-slate-800 group-hover:text-primary-700 transition-colors">{{ item.titulo }}</span>
-                <span v-if="showLinkModal === 'wiki'" class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">{{ item.categoria }}</span>
-                <span v-else class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">{{ item.estado }} • {{ item.prioridad }}</span>
+                <span v-if="showLinkModal === 'wiki'" class="text-[12px] text-slate-400 font-bold uppercase tracking-tighter">{{ item.categoria }}</span>
+                <span v-else class="text-[12px] text-slate-400 font-bold uppercase tracking-tighter">{{ item.estado }} • {{ item.prioridad }}</span>
               </div>
               <i class="fas fa-link text-slate-300 group-hover:text-primary-500 transition-colors"></i>
             </div>

@@ -4,11 +4,11 @@
     
     <div class="flex flex-col relative z-10">
       <div class="flex items-center mb-1">
-        <i class="fas fa-lightbulb text-amber-500 text-[10px] mr-1.5"></i>
-        <h4 class="text-[10px] font-black text-slate-800 uppercase tracking-wider">Breve Inspiración</h4>
+        <i class="fas fa-lightbulb text-amber-500 text-[12px] mr-1.5"></i>
+        <h4 class="text-[12px] font-black text-slate-800 uppercase tracking-wider">Breve Inspiración</h4>
       </div>
-      <p class="text-slate-600 text-[11px] font-medium leading-snug mb-1 italic">"{{ currentQuote }}"</p>
-      <p class="text-primary-600 text-[10px] font-bold text-right">- {{ currentAuthor }}</p>
+      <p class="text-slate-600 text-[13px] font-medium leading-snug mb-1 italic">"{{ currentQuote }}"</p>
+      <p class="text-primary-600 text-[12px] font-bold text-right">- {{ currentAuthor }}</p>
     </div>
   </div>
 </template>

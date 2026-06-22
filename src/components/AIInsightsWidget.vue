@@ -4,20 +4,20 @@
     <!-- Header -->
     <div class="flex items-center justify-between gap-2 px-3 py-2 shrink-0">
       <div class="flex items-center gap-1.5 min-w-0">
-        <i class="fas fa-brain text-primary-500 text-[9px]"></i>
-        <span class="text-[8px] font-black text-primary-500 uppercase tracking-widest">IA · {{ userName }}</span>
+        <i class="fas fa-brain text-primary-500 text-[11px]"></i>
+        <span class="text-[10px] font-black text-primary-500 uppercase tracking-widest">IA · {{ userName }}</span>
       </div>
       <div class="flex items-center gap-1 shrink-0">
         <button
           @click="expanded = !expanded"
-          class="px-2 py-1 rounded-lg text-[9px] font-bold text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors"
+          class="px-2 py-1 rounded-lg text-[11px] font-bold text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors"
         >{{ expanded ? 'Menos' : 'Más' }}</button>
         <button
           @click="generateInsights(false)"
           :disabled="loading"
           class="w-6 h-6 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-40"
         >
-          <i :class="loading ? 'fas fa-spinner fa-spin' : 'fas fa-sync-alt'" class="text-[9px]"></i>
+          <i :class="loading ? 'fas fa-spinner fa-spin' : 'fas fa-sync-alt'" class="text-[11px]"></i>
         </button>
       </div>
     </div>
@@ -25,7 +25,7 @@
     <!-- Loading -->
     <div v-if="loading" class="flex-1 flex items-center justify-center gap-2 py-6">
       <i class="fas fa-brain text-primary-400 text-sm animate-pulse"></i>
-      <p class="text-slate-400 text-[10px]">Analizando...</p>
+      <p class="text-slate-400 text-[12px]">Analizando...</p>
     </div>
 
     <!-- Content -->
@@ -34,10 +34,10 @@
       <!-- LECTURA -->
       <div class="px-3 py-2">
         <div class="flex items-center gap-1 mb-1">
-          <i class="fas fa-lightbulb text-amber-500 text-[8px]"></i>
-          <span class="text-[7px] font-black text-amber-500 uppercase tracking-widest">Lectura</span>
+          <i class="fas fa-lightbulb text-amber-500 text-[10px]"></i>
+          <span class="text-[9px] font-black text-amber-500 uppercase tracking-widest">Lectura</span>
         </div>
-        <p class="text-[9px] text-slate-500 dark:text-slate-400 leading-relaxed" :class="!expanded && 'line-clamp-5'">
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed" :class="!expanded && 'line-clamp-5'">
           {{ insights.lectura }}
         </p>
       </div>
@@ -45,12 +45,12 @@
       <!-- ACCIONES -->
       <div class="px-3 py-2">
         <div class="flex items-center gap-1 mb-1">
-          <i class="fas fa-bullseye text-emerald-500 text-[8px]"></i>
-          <span class="text-[7px] font-black text-emerald-500 uppercase tracking-widest">Acciones</span>
+          <i class="fas fa-bullseye text-emerald-500 text-[10px]"></i>
+          <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">Acciones</span>
         </div>
         <ul class="space-y-1">
           <li v-for="(accion, i) in (expanded ? insights.acciones : insights.acciones.slice(0, 3))" :key="i"
-            class="flex items-start gap-1.5 text-[9px] text-slate-500 dark:text-slate-400 leading-snug">
+            class="flex items-start gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
             <span class="w-1 h-1 rounded-full bg-emerald-400 mt-1 shrink-0"></span>
             <span :class="!expanded && 'line-clamp-2'">{{ accion }}</span>
           </li>
@@ -60,12 +60,12 @@
       <!-- RIESGOS -->
       <div class="px-3 py-2">
         <div class="flex items-center gap-1 mb-1">
-          <i class="fas fa-chart-line text-primary-500 text-[8px]"></i>
-          <span class="text-[7px] font-black text-primary-500 uppercase tracking-widest">Riesgos</span>
+          <i class="fas fa-chart-line text-primary-500 text-[10px]"></i>
+          <span class="text-[9px] font-black text-primary-500 uppercase tracking-widest">Riesgos</span>
         </div>
         <ul class="space-y-1">
           <li v-for="(riesgo, i) in (expanded ? insights.riesgos : insights.riesgos.slice(0, 3))" :key="i"
-            class="flex items-start gap-1.5 text-[9px] text-slate-500 dark:text-slate-400 leading-snug">
+            class="flex items-start gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
             <span class="w-1 h-1 rounded-full bg-primary-400 mt-1 shrink-0"></span>
             <span :class="!expanded && 'line-clamp-2'">{{ riesgo }}</span>
           </li>
@@ -76,9 +76,9 @@
     <!-- Error -->
     <div v-else-if="error" class="flex-1 flex flex-col items-center justify-center gap-2 py-6 px-4">
       <i class="fas fa-exclamation-triangle text-red-400"></i>
-      <p class="text-red-500 text-[10px] text-center">{{ error }}</p>
+      <p class="text-red-500 text-[12px] text-center">{{ error }}</p>
       <button @click="generateInsights(false)"
-        class="px-3 py-1 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-[10px] font-bold text-slate-600 dark:text-slate-300 transition-colors">
+        class="px-3 py-1 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-[12px] font-bold text-slate-600 dark:text-slate-300 transition-colors">
         Reintentar
       </button>
     </div>
@@ -86,9 +86,9 @@
     <!-- Empty -->
     <div v-else class="flex-1 flex flex-col items-center justify-center gap-2 py-6 px-4">
       <i class="fas fa-brain text-slate-200 dark:text-slate-600"></i>
-      <p class="text-slate-400 text-[10px]">Sin análisis disponible</p>
+      <p class="text-slate-400 text-[12px]">Sin análisis disponible</p>
       <button @click="generateInsights(false)"
-        class="px-3 py-1 bg-primary-50 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/30 rounded-lg text-[10px] font-bold text-primary-600 dark:text-primary-400 transition-colors">
+        class="px-3 py-1 bg-primary-50 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/30 rounded-lg text-[12px] font-bold text-primary-600 dark:text-primary-400 transition-colors">
         Generar análisis
       </button>
     </div>

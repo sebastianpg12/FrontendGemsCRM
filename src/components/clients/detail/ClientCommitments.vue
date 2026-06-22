@@ -3,16 +3,16 @@
     <!-- Header -->
     <div class="flex items-center justify-between border-b border-slate-100 dark:border-[#334155] pb-3">
       <div class="flex items-center gap-2">
-        <i class="fas fa-handshake text-[10px] text-primary-400"></i>
-        <span class="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Compromisos</span>
-        <span v-if="client.commitments?.length" class="px-1.5 py-0.5 rounded-md bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-300 text-[9px] font-black">{{ client.commitments.length }}</span>
+        <i class="fas fa-handshake text-[12px] text-primary-400"></i>
+        <span class="text-[13px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Compromisos</span>
+        <span v-if="client.commitments?.length" class="px-1.5 py-0.5 rounded-md bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-300 text-[11px] font-black">{{ client.commitments.length }}</span>
       </div>
     </div>
 
     <!-- Form -->
     <div class="bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl p-3 space-y-2.5">
       <input v-model="commitTitle" placeholder="Título del compromiso..."
-        class="w-full h-8 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
+        class="w-full h-8 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[14px] text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all" />
       <div class="flex flex-wrap gap-2">
         <div class="flex-1 min-w-[140px]">
           <DatePicker v-model="commitDueDate" placeholder="Fecha límite" />
@@ -21,8 +21,8 @@
           <CustomSelect v-model="commitStatus" :options="statusOptions" size="sm" />
         </div>
         <button @click="handleCreate" :disabled="!commitTitle.trim()"
-          class="h-8 px-4 rounded-lg bg-primary-600 text-white text-[12px] font-black hover:bg-primary-700 transition-colors shadow-sm flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shrink-0">
-          <i class="fas fa-plus text-[9px]"></i> Agregar
+          class="h-8 px-4 rounded-lg bg-primary-600 text-white text-[14px] font-black hover:bg-primary-700 transition-colors shadow-sm flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shrink-0">
+          <i class="fas fa-plus text-[11px]"></i> Agregar
         </button>
       </div>
     </div>
@@ -37,23 +37,23 @@
         <div v-if="editingCommitmentId !== c._id" class="flex items-start justify-between gap-3">
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 flex-wrap">
-              <h4 class="text-[13px] font-black text-slate-800 dark:text-slate-100 leading-tight">{{ c.title }}</h4>
-              <span :class="statusChip(c.status)" class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full">
+              <h4 class="text-[14px] font-black text-slate-800 dark:text-slate-100 leading-tight">{{ c.title }}</h4>
+              <span :class="statusChip(c.status)" class="text-[11px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full">
                 {{ statusLabel(c.status) }}
               </span>
             </div>
             <div v-if="c.dueDate" class="flex items-center gap-1 mt-1">
-              <i class="fas fa-calendar-alt text-[8px] text-slate-400"></i>
-              <span class="text-[10px] text-slate-400 font-medium">{{ formatDate(c.dueDate) }}</span>
+              <i class="fas fa-calendar-alt text-[10px] text-slate-400"></i>
+              <span class="text-[12px] text-slate-400 font-medium">{{ formatDate(c.dueDate) }}</span>
             </div>
-            <p v-if="c.description" class="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">{{ c.description }}</p>
+            <p v-if="c.description" class="text-[13px] text-slate-500 dark:text-slate-400 mt-1.5">{{ c.description }}</p>
           </div>
           <div class="flex gap-1 shrink-0">
             <button @click="startEdit(c)" class="h-6 w-6 rounded-lg flex items-center justify-center text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors">
-              <i class="fas fa-edit text-[9px]"></i>
+              <i class="fas fa-edit text-[11px]"></i>
             </button>
             <button @click="requestDelete(c._id)" class="h-6 w-6 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
-              <i class="fas fa-trash text-[9px]"></i>
+              <i class="fas fa-trash text-[11px]"></i>
             </button>
           </div>
         </div>
@@ -61,7 +61,7 @@
         <!-- Edición -->
         <div v-else class="space-y-2">
           <input v-model="editCommitTitle"
-            class="w-full h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400" />
+            class="w-full h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[14px] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400" />
           <div class="flex gap-2 flex-wrap">
             <div class="flex-1 min-w-[140px]">
               <DatePicker v-model="editCommitDueDate" placeholder="Fecha límite" />
@@ -71,10 +71,10 @@
             </div>
           </div>
           <input v-model="editCommitDescription" placeholder="Descripción..."
-            class="w-full h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[12px] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400" />
+            class="w-full h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg px-3 text-[14px] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-400" />
           <div class="flex gap-2 justify-end">
-            <button @click="cancelEdit" class="h-7 px-3 rounded-lg bg-slate-100 dark:bg-[#334155] text-slate-500 dark:text-slate-300 text-[11px] font-bold hover:bg-slate-200 transition-colors">Cancelar</button>
-            <button @click="confirmEdit" class="h-7 px-3 rounded-lg bg-emerald-500 text-white text-[11px] font-bold hover:bg-emerald-600 transition-colors">Guardar</button>
+            <button @click="cancelEdit" class="h-7 px-3 rounded-lg bg-slate-100 dark:bg-[#334155] text-slate-500 dark:text-slate-300 text-[13px] font-bold hover:bg-slate-200 transition-colors">Cancelar</button>
+            <button @click="confirmEdit" class="h-7 px-3 rounded-lg bg-emerald-500 text-white text-[13px] font-bold hover:bg-emerald-600 transition-colors">Guardar</button>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
 
     <div v-else class="text-center py-10 border border-dashed border-slate-200 dark:border-[#334155] rounded-xl">
       <i class="fas fa-handshake text-2xl text-slate-200 dark:text-slate-700 mb-2"></i>
-      <p class="text-slate-400 text-[11px]">Sin compromisos registrados.</p>
+      <p class="text-slate-400 text-[13px]">Sin compromisos registrados.</p>
     </div>
 
     <!-- Modal -->
@@ -92,11 +92,11 @@
           <div class="w-10 h-10 bg-red-50 dark:bg-red-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
             <i class="fas fa-trash text-red-500 text-sm"></i>
           </div>
-          <h4 class="text-[14px] font-black text-slate-900 dark:text-slate-100 mb-1">¿Eliminar compromiso?</h4>
-          <p class="text-[11px] text-slate-400 mb-4">Esta acción no se puede deshacer.</p>
+          <h4 class="text-[15px] font-black text-slate-900 dark:text-slate-100 mb-1">¿Eliminar compromiso?</h4>
+          <p class="text-[13px] text-slate-400 mb-4">Esta acción no se puede deshacer.</p>
           <div class="flex gap-2">
-            <button @click="commitToDelete = null" class="flex-1 h-8 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[11px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors">Cancelar</button>
-            <button @click="confirmDelete" class="flex-1 h-8 rounded-xl bg-red-500 text-white text-[11px] font-bold hover:bg-red-600 transition-colors">Eliminar</button>
+            <button @click="commitToDelete = null" class="flex-1 h-8 rounded-xl border border-slate-200 dark:border-[#334155] text-slate-600 dark:text-slate-300 text-[13px] font-bold hover:bg-slate-50 dark:hover:bg-[#334155] transition-colors">Cancelar</button>
+            <button @click="confirmDelete" class="flex-1 h-8 rounded-xl bg-red-500 text-white text-[13px] font-bold hover:bg-red-600 transition-colors">Eliminar</button>
           </div>
         </div>
       </div>

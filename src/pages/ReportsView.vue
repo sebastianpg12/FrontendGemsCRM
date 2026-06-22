@@ -7,7 +7,7 @@
         <div>
           <div class="flex items-center gap-2 mb-1">
             <i class="fas fa-gem text-primary-500 text-xs"></i>
-            <h1 class="text-[10px] font-black uppercase tracking-[0.25em] text-primary-600">Reportes &amp; KPIs — Centro de Análisis</h1>
+            <h1 class="text-[12px] font-black uppercase tracking-[0.25em] text-primary-600">Reportes &amp; KPIs — Centro de Análisis</h1>
           </div>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
             <span v-if="data?.meta">Datos del {{ fmtDate(data.meta.from) }} al {{ fmtDate(data.meta.to) }}</span>
@@ -21,14 +21,14 @@
           :disabled="loading"
           class="self-start md:self-auto flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 transition-colors disabled:opacity-50"
         >
-          <i :class="['fas fa-arrows-rotate text-[11px]', loading && 'fa-spin']"></i>
+          <i :class="['fas fa-arrows-rotate text-[13px]', loading && 'fa-spin']"></i>
           Actualizar
         </button>
       </div>
 
       <!-- ══ Filtros globales ══ -->
       <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-4 py-3 mb-5 flex flex-wrap items-center gap-2">
-        <span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 shrink-0 hidden sm:inline">Filtros</span>
+        <span class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 shrink-0 hidden sm:inline">Filtros</span>
         <div class="h-4 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
 
         <div class="filter-chip" :class="{ 'filter-chip--active': filters.period !== 'month' }" @click.stop="toggleReportChip('period')">
@@ -40,7 +40,7 @@
               class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.period === opt.value }"
               @click="setReportFilter('period', opt.value)">
               <span>{{ opt.label }}</span>
-              <i v-if="filters.period === opt.value" class="fas fa-check text-[10px] text-primary-500"></i>
+              <i v-if="filters.period === opt.value" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
           </div>
         </div>
@@ -51,12 +51,12 @@
           <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'dept' }"></i>
           <div v-if="openReportChip === 'dept'" class="chip-dropdown" @click.stop>
             <div class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': !filters.department }" @click="setReportFilter('dept', '')">
-              <span>Todos</span><i v-if="!filters.department" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Todos</span><i v-if="!filters.department" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
             <div v-for="d in departments" :key="d"
               class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.department === d }"
               @click="setReportFilter('dept', d)">
-              <span>{{ d }}</span><i v-if="filters.department === d" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>{{ d }}</span><i v-if="filters.department === d" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
           </div>
         </div>
@@ -67,12 +67,12 @@
           <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'owner' }"></i>
           <div v-if="openReportChip === 'owner'" class="chip-dropdown" @click.stop>
             <div class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': !filters.ownerId }" @click="setReportFilter('owner', '')">
-              <span>Todos</span><i v-if="!filters.ownerId" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Todos</span><i v-if="!filters.ownerId" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
             <div v-for="m in teamMembers" :key="m._id"
               class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.ownerId === m._id }"
               @click="setReportFilter('owner', m._id)">
-              <span>{{ m.name }}</span><i v-if="filters.ownerId === m._id" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>{{ m.name }}</span><i v-if="filters.ownerId === m._id" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
           </div>
         </div>
@@ -83,12 +83,12 @@
           <i class="fas fa-chevron-down chip-chevron" :class="{ 'rotate-180': openReportChip === 'client' }"></i>
           <div v-if="openReportChip === 'client'" class="chip-dropdown chip-dropdown--end" @click.stop>
             <div class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': !filters.clientId }" @click="setReportFilter('client', '')">
-              <span>Todos</span><i v-if="!filters.clientId" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Todos</span><i v-if="!filters.clientId" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
             <div v-for="c in clients" :key="c._id"
               class="chip-dropdown-item" :class="{ 'chip-dropdown-item--active': filters.clientId === c._id }"
               @click="setReportFilter('client', c._id)">
-              <span>{{ c.name }}</span><i v-if="filters.clientId === c._id" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>{{ c.name }}</span><i v-if="filters.clientId === c._id" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
           </div>
         </div>
@@ -96,9 +96,9 @@
         <button
           v-if="hasActiveFilters"
           @click="resetFilters"
-          class="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors uppercase tracking-widest"
+          class="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-black text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors uppercase tracking-widest"
         >
-          <i class="fas fa-times text-[9px]"></i> Limpiar
+          <i class="fas fa-times text-[11px]"></i> Limpiar
         </button>
       </div>
 
@@ -113,7 +113,7 @@
             ? 'bg-primary-600 text-white'
             : 'text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'"
         >
-          <i :class="['fas', t.icon, 'text-[11px]']"></i>
+          <i :class="['fas', t.icon, 'text-[13px]']"></i>
           {{ t.label }}
         </button>
       </div>
@@ -153,7 +153,7 @@
           <div class="bg-white dark:bg-slate-900 rounded-xl p-5 lg:col-span-2">
             <div class="flex items-center justify-between mb-3">
               <h3 class="text-sm font-black text-slate-900 dark:text-white">Actividad por semana</h3>
-              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tendencia del período</span>
+              <span class="text-[12px] font-bold text-slate-400 uppercase tracking-widest">Tendencia del período</span>
             </div>
             <div class="h-40">
               <MiniBarChart :points="weeklyPoints" />
@@ -165,9 +165,9 @@
               <TrendBadge v-if="data.executive.clientsDelta !== null" :value="data.executive.clientsDelta" />
             </div>
             <p class="text-4xl font-black text-slate-900 dark:text-white tabular-nums mb-1">{{ data.executive.newClients }}</p>
-            <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Clientes nuevos</p>
+            <p class="text-[13px] font-bold uppercase tracking-widest text-slate-400">Clientes nuevos</p>
             <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <span class="text-[11px] text-slate-500">Cartera total</span>
+              <span class="text-[13px] text-slate-500">Cartera total</span>
               <span class="text-sm font-black tabular-nums text-slate-800 dark:text-white">{{ data.executive.totalClients }}</span>
             </div>
           </div>
@@ -209,7 +209,7 @@
           <template #clientId="{ value }">{{ (value as any)?.name || '—' }}</template>
           <template #dueDate="{ value }">{{ fmtDate(value as string) }}</template>
           <template #priority="{ value }">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase" :class="priorityClass(value as string)">
+            <span class="px-2 py-0.5 rounded text-[12px] font-bold uppercase" :class="priorityClass(value as string)">
               {{ value }}
             </span>
           </template>
@@ -230,10 +230,10 @@
           <template #submittedBy="{ value }">{{ (value as any)?.name || '—' }}</template>
           <template #assignedTo="{ value }">{{ (value as any)?.name || 'Sin asignar' }}</template>
           <template #status="{ value }">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase" :class="ticketStatusClass(value as string)">{{ value }}</span>
+            <span class="px-2 py-0.5 rounded text-[12px] font-bold uppercase" :class="ticketStatusClass(value as string)">{{ value }}</span>
           </template>
           <template #priority="{ value }">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase" :class="priorityClass(value as string)">{{ value }}</span>
+            <span class="px-2 py-0.5 rounded text-[12px] font-bold uppercase" :class="priorityClass(value as string)">{{ value }}</span>
           </template>
         </DataTable>
 
@@ -288,7 +288,7 @@
           <template #name="{ row }">
             <div>
               <p class="font-bold text-slate-800 dark:text-white">{{ row.name || 'Sin asignar' }}</p>
-              <p class="text-[10px] text-slate-400">{{ row.email || '—' }}</p>
+              <p class="text-[12px] text-slate-400">{{ row.email || '—' }}</p>
             </div>
           </template>
           <template #overdue="{ value }">

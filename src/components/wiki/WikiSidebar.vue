@@ -3,22 +3,22 @@
     <!-- Header -->
     <div class="px-4 pt-4 pb-3 border-b border-slate-100 dark:border-[#334155]">
       <div class="flex items-center justify-between mb-3">
-        <span class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Páginas</span>
+        <span class="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Páginas</span>
         <button
           class="w-7 h-7 flex items-center justify-center rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition-colors shadow-sm"
           title="Nueva página raíz"
           @click="$emit('create-page', null)"
         >
-          <i class="fas fa-plus text-[10px]"></i>
+          <i class="fas fa-plus text-[12px]"></i>
         </button>
       </div>
       <div class="relative">
-        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
+        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[12px]"></i>
         <input
           v-model="search"
           type="text"
           placeholder="Buscar páginas..."
-          class="w-full pl-8 pr-3 h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[11px] font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+          class="w-full pl-8 pr-3 h-8 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-lg text-[13px] font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
         />
       </div>
     </div>
@@ -35,10 +35,10 @@
             : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#273449]'"
           @click="$emit('select', page._id)"
         >
-          <i class="fas fa-file-lines text-[10px] text-slate-400"></i>
-          <span class="text-[11px] font-bold truncate">{{ page.titulo }}</span>
+          <i class="fas fa-file-lines text-[12px] text-slate-400"></i>
+          <span class="text-[13px] font-bold truncate">{{ page.titulo }}</span>
         </button>
-        <p v-if="searchResults.length === 0" class="px-2 py-4 text-[11px] font-medium text-slate-400 text-center">
+        <p v-if="searchResults.length === 0" class="px-2 py-4 text-[13px] font-medium text-slate-400 text-center">
           Sin resultados para «{{ search }}»
         </p>
       </template>
@@ -62,7 +62,7 @@
           @move-into="(id: string, parentId: string) => $emit('move-into', id, parentId)"
         />
 
-        <p v-if="rootNodes.length === 0" class="px-2 py-4 text-[11px] font-medium text-slate-400 text-center">
+        <p v-if="rootNodes.length === 0" class="px-2 py-4 text-[13px] font-medium text-slate-400 text-center">
           Aún no hay páginas
         </p>
       </template>
@@ -74,14 +74,14 @@
         class="w-full flex items-center justify-between px-4 h-9 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
         @click="$emit('toggle-archived')"
       >
-        <span class="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest">
-          <i class="fas fa-box-archive text-[10px]"></i>
+        <span class="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest">
+          <i class="fas fa-box-archive text-[12px]"></i>
           Archivadas
-          <span v-if="archivedPages.length" class="px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-[#334155] text-slate-500 dark:text-slate-400 text-[9px] font-black">
+          <span v-if="archivedPages.length" class="px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-[#334155] text-slate-500 dark:text-slate-400 text-[11px] font-black">
             {{ archivedPages.length }}
           </span>
         </span>
-        <i class="fas fa-chevron-down text-[8px] transition-transform duration-150" :class="{ 'rotate-180': showArchived }"></i>
+        <i class="fas fa-chevron-down text-[10px] transition-transform duration-150" :class="{ 'rotate-180': showArchived }"></i>
       </button>
 
       <div v-if="showArchived" class="max-h-44 overflow-y-auto custom-scrollbar px-2 pb-2">
@@ -90,26 +90,26 @@
           :key="page._id"
           class="group flex items-center gap-2 px-2 py-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
         >
-          <i class="fas fa-file-lines text-[10px]"></i>
-          <span class="flex-1 min-w-0 truncate text-[11px] font-medium line-through">{{ page.titulo }}</span>
+          <i class="fas fa-file-lines text-[12px]"></i>
+          <span class="flex-1 min-w-0 truncate text-[13px] font-medium line-through">{{ page.titulo }}</span>
           <div class="hidden group-hover:flex items-center gap-0.5 shrink-0">
             <button
               class="w-5 h-5 flex items-center justify-center rounded-md text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors"
               title="Restaurar"
               @click="$emit('restore', page._id)"
             >
-              <i class="fas fa-rotate-left text-[8px]"></i>
+              <i class="fas fa-rotate-left text-[10px]"></i>
             </button>
             <button
               class="w-5 h-5 flex items-center justify-center rounded-md text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
               title="Eliminar permanentemente"
               @click="$emit('delete-permanent', page._id)"
             >
-              <i class="fas fa-trash text-[8px]"></i>
+              <i class="fas fa-trash text-[10px]"></i>
             </button>
           </div>
         </div>
-        <p v-if="archivedPages.length === 0" class="px-2 py-3 text-[11px] font-medium text-slate-400 text-center">
+        <p v-if="archivedPages.length === 0" class="px-2 py-3 text-[13px] font-medium text-slate-400 text-center">
           Nada archivado
         </p>
       </div>

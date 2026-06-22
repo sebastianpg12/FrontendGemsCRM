@@ -14,13 +14,13 @@
         style="width:20px;height:20px;background:#fff;border:1px solid #d1d5db;top:20px;right:-10px;color:#9ca3af;"
         :style="isSidebarCollapsed ? 'transform:rotate(180deg)' : ''"
       >
-        <i class="fas fa-chevron-left" style="font-size:7px"></i>
+        <i class="fas fa-chevron-left" style="font-size:9px"></i>
       </button>
 
       <!-- Logo -->
       <div class="flex items-center flex-shrink-0 overflow-hidden" style="height:52px;padding:0 14px;border-bottom:1px solid #e8eaed;">
         <img :src="logoSrc" alt="GEMS Hub" style="height:28px;width:auto;object-fit:contain;flex-shrink:0" @error="logoSrc='/gems-logo.png'" />
-        <span v-show="!isSidebarCollapsed" style="margin-left:10px;font-size:13px;font-weight:700;color:#111827;white-space:nowrap;letter-spacing:-0.01em">GEMS Hub</span>
+        <span v-show="!isSidebarCollapsed" style="margin-left:10px;font-size:14px;font-weight:700;color:#111827;white-space:nowrap;letter-spacing:-0.01em">GEMS Hub</span>
       </div>
 
       <!-- Nav -->
@@ -45,10 +45,10 @@
           <span v-if="$route.path === item.path" style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:16px;background:#7c3aed;border-radius:0 2px 2px 0"></span>
 
           <span style="flex-shrink:0;width:16px;height:16px;display:flex;align-items:center;justify-content:center">
-            <i v-if="item.icon === 'logo'" class="fas fa-th-large" style="font-size:13px"></i>
+            <i v-if="item.icon === 'logo'" class="fas fa-th-large" style="font-size:14px"></i>
             <component v-else :is="item.icon" style="width:15px;height:15px;stroke-width:1.5" />
           </span>
-          <span v-show="!isSidebarCollapsed" style="margin-left:9px;font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden">
+          <span v-show="!isSidebarCollapsed" style="margin-left:9px;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden">
             {{ localeStore.t(item.id) }}
           </span>
         </router-link>
@@ -60,18 +60,18 @@
           <div style="width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#e5e7eb;border:1px solid #d1d5db;display:flex;align-items:center;justify-content:center">
             <img v-if="user?.photo" :src="resolveImageUrl(user.photo)" style="width:100%;height:100%;object-fit:cover" @error="onAvatarError" />
             <img v-else-if="user?.avatar && getAvatarById(user.avatar)" :src="getAvatarById(user.avatar)?.path" style="width:100%;height:100%;object-fit:cover" />
-            <span v-else style="font-size:9px;font-weight:700;color:#6b7280">{{ getUserInitials() }}</span>
+            <span v-else style="font-size:11px;font-weight:700;color:#6b7280">{{ getUserInitials() }}</span>
           </div>
           <div v-show="!isSidebarCollapsed" style="min-width:0;flex:1">
-            <p style="font-size:12px;font-weight:600;color:#111827;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3">{{ user?.name || 'Usuario' }}</p>
-            <p style="font-size:10px;color:#9ca3af;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3">{{ getRoleDisplayName() }}</p>
+            <p style="font-size:14px;font-weight:600;color:#111827;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3">{{ user?.name || 'Usuario' }}</p>
+            <p style="font-size:12px;color:#9ca3af;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3">{{ getRoleDisplayName() }}</p>
           </div>
           <div v-show="!isSidebarCollapsed" style="display:flex;gap:4px;flex-shrink:0">
             <router-link to="/profile" title="Perfil" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#9ca3af;transition:background 0.15s,color 0.15s" class="hover:bg-slate-100 hover:text-primary-600">
-              <i class="fas fa-cog" style="font-size:11px"></i>
+              <i class="fas fa-cog" style="font-size:13px"></i>
             </router-link>
             <button @click="$emit('logout')" title="Salir" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#9ca3af;transition:background 0.15s,color 0.15s;cursor:pointer;background:transparent;border:none" class="hover:bg-red-50 hover:text-rose-500">
-              <i class="fas fa-sign-out-alt" style="font-size:11px"></i>
+              <i class="fas fa-sign-out-alt" style="font-size:13px"></i>
             </button>
           </div>
         </div>
@@ -90,15 +90,15 @@
             </svg>
           </button>
           <div>
-            <h1 style="font-size:14px;font-weight:600;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">{{ pageTitle }}</h1>
-            <p style="font-size:11px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">{{ pageDescription }}</p>
+            <h1 style="font-size:15px;font-weight:600;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">{{ pageTitle }}</h1>
+            <p style="font-size:13px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">{{ pageDescription }}</p>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <OnlineUsersPopover />
           <router-link to="/chat" style="position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:6px;color:#9ca3af;transition:background 0.15s" class="hover:bg-slate-50 hover:text-primary-600">
             <ChatBubbleLeftRightIcon style="width:18px;height:18px;stroke-width:1.5" />
-            <span v-if="chatUnread > 0" style="position:absolute;top:2px;right:2px;width:14px;height:14px;background:#ef4444;color:#fff;font-size:8px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center">
+            <span v-if="chatUnread > 0" style="position:absolute;top:2px;right:2px;width:14px;height:14px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center">
               {{ chatUnread > 9 ? '9+' : chatUnread }}
             </span>
           </router-link>

@@ -32,13 +32,13 @@
           <i class="fas fa-chevron-down fe-caret" :class="{ 'rotate-180': openFEChip === 'status' }"></i>
           <div v-if="openFEChip === 'status'" class="fe-dropdown" @click.stop>
             <div class="fe-dropdown-item" :class="{ 'fe-dropdown-item--active': statusFilter === '' }" @click="statusFilter = ''; openFEChip = null">
-              <span>Todos los estados</span><i v-if="statusFilter === ''" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Todos los estados</span><i v-if="statusFilter === ''" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
             <div class="fe-dropdown-item" :class="{ 'fe-dropdown-item--active': statusFilter === 'true' }" @click="statusFilter = 'true'; openFEChip = null">
-              <span>Activos</span><i v-if="statusFilter === 'true'" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Activos</span><i v-if="statusFilter === 'true'" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
             <div class="fe-dropdown-item" :class="{ 'fe-dropdown-item--active': statusFilter === 'false' }" @click="statusFilter = 'false'; openFEChip = null">
-              <span>Inactivos</span><i v-if="statusFilter === 'false'" class="fas fa-check text-[10px] text-primary-500"></i>
+              <span>Inactivos</span><i v-if="statusFilter === 'false'" class="fas fa-check text-[12px] text-primary-500"></i>
             </div>
           </div>
         </div>

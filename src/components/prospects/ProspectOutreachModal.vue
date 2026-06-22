@@ -29,7 +29,7 @@
       <div v-else-if="result" class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-4">
         <!-- Subject (only email) -->
         <div v-if="channel === 'email' && result.subject">
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">Asunto</label>
+          <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">Asunto</label>
           <input
             v-model="result.subject"
             type="text"
@@ -39,7 +39,7 @@
 
         <!-- Body -->
         <div>
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
+          <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
             {{ channel === 'call' ? 'Script' : 'Mensaje' }}
           </label>
           <textarea
@@ -51,7 +51,7 @@
 
         <!-- Contact destination (solo email queda como canal con destino) -->
         <div v-if="channel === 'email'" class="bg-slate-50 rounded-xl p-3 border border-slate-200">
-          <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
+          <label class="text-[12px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">
             Email del contacto
           </label>
           <div class="flex items-center gap-2">
@@ -61,11 +61,11 @@
               placeholder="cliente@empresa.com"
               class="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 placeholder-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 outline-none transition-all"
             />
-            <span v-if="contactInput && saved" class="text-[9px] font-black text-emerald-600">
+            <span v-if="contactInput && saved" class="text-[11px] font-black text-emerald-600">
               <i class="fas fa-check-circle mr-1"></i>Guardado
             </span>
           </div>
-          <p class="text-[10px] text-slate-400 font-medium mt-1.5">
+          <p class="text-[12px] text-slate-400 font-medium mt-1.5">
             Se guarda en este prospecto al enviar
           </p>
         </div>
@@ -77,7 +77,7 @@
           @click="copyToClipboard"
           class="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 text-xs font-black rounded-xl hover:bg-slate-100 transition-all flex items-center gap-2"
         >
-          <i :class="['fas', copied ? 'fa-check' : 'fa-copy', 'text-[11px]']"></i>
+          <i :class="['fas', copied ? 'fa-check' : 'fa-copy', 'text-[13px]']"></i>
           {{ copied ? 'Copiado' : 'Copiar' }}
         </button>
         <button
@@ -85,7 +85,7 @@
           @click="saveToHistory"
           class="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 text-xs font-black rounded-xl hover:bg-slate-100 transition-all flex items-center gap-2"
         >
-          <i class="fas fa-floppy-disk text-[11px]"></i>
+          <i class="fas fa-floppy-disk text-[13px]"></i>
           Guardar en historial
         </button>
         <div class="flex-1"></div>
@@ -95,7 +95,7 @@
           :disabled="!contactInput.trim()"
           class="px-5 py-2.5 bg-gradient-to-br from-primary-600 to-primary-800 text-white text-xs font-black rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
         >
-          <i class="fas fa-paper-plane text-[11px]"></i>
+          <i class="fas fa-paper-plane text-[13px]"></i>
           Abrir cliente de email
         </button>
         <button
@@ -103,7 +103,7 @@
           class="px-4 py-2.5 bg-white border border-slate-200 text-slate-500 text-xs font-black rounded-xl hover:bg-slate-100 transition-all flex items-center gap-2"
           title="Regenerar"
         >
-          <i class="fas fa-arrows-rotate text-[11px]"></i>
+          <i class="fas fa-arrows-rotate text-[13px]"></i>
         </button>
       </div>
     </div>

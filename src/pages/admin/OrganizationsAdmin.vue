@@ -9,8 +9,8 @@
           </div>
           <h1 class="text-2xl font-black text-slate-900 dark:text-white">Panel de Control</h1>
           <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Gestión de tenants y auditoría</p>
-          <div v-if="authStore.organization" class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-300 text-[11px] font-bold">
-            <i class="fas fa-building text-[9px]"></i>
+          <div v-if="authStore.organization" class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-300 text-[13px] font-bold">
+            <i class="fas fa-building text-[11px]"></i>
             Dentro de: <span class="font-black ml-0.5">{{ authStore.organization.name }}</span>
           </div>
         </div>
@@ -110,17 +110,17 @@
             </div>
             <div class="flex-1 min-w-0">
               <p class="text-slate-900 dark:text-white font-bold text-sm truncate">{{ org.name }}</p>
-              <p class="text-slate-400 text-[11px] truncate font-mono">{{ org.slug }}</p>
+              <p class="text-slate-400 text-[13px] truncate font-mono">{{ org.slug }}</p>
             </div>
             <span
-              class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md"
+              class="text-[12px] font-bold uppercase tracking-wider px-2 py-1 rounded-md"
               :class="statusClass(org.status)"
             >
               {{ org.status }}
             </span>
           </div>
 
-          <div class="grid grid-cols-2 gap-2 text-[11px] mb-4">
+          <div class="grid grid-cols-2 gap-2 text-[13px] mb-4">
             <div class="rounded-lg p-2 bg-slate-50 dark:bg-slate-800/50">
               <p class="text-slate-400">Plan</p>
               <p class="text-slate-800 dark:text-white font-bold uppercase">{{ org.plan }}</p>
@@ -185,7 +185,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="font-bold text-slate-900 dark:text-white">{{ log.superAdminId?.name || 'Desconocido' }}</div>
-                  <div class="text-[11px] text-slate-500">{{ log.superAdminId?.email }}</div>
+                  <div class="text-[13px] text-slate-500">{{ log.superAdminId?.email }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-300">
@@ -258,7 +258,7 @@
           </div>
 
           <div v-if="modal.mode === 'create'" class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800">
-            <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wider mb-3">Owner inicial (opcional)</p>
+            <p class="text-slate-400 text-[13px] font-bold uppercase tracking-wider mb-3">Owner inicial (opcional)</p>
             <div class="space-y-2">
               <input v-model="form.ownerEmail" type="email" placeholder="Email del owner" class="form-input" />
               <input v-model="form.ownerName" type="text" placeholder="Nombre" class="form-input" />

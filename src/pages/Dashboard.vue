@@ -8,15 +8,15 @@
     <div class="flex items-center justify-between gap-3 flex-wrap relative z-[50]">
       <div>
         <div class="flex items-center gap-2 mb-0.5">
-          <i class="fas fa-gem text-primary-400 text-[9px] animate-pulse-slow"></i>
-          <span class="text-[9px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
+          <i class="fas fa-gem text-primary-400 text-[11px] animate-pulse-slow"></i>
+          <span class="text-[11px] font-black uppercase tracking-[0.22em] text-primary-400">GEMS Hub</span>
           <span class="w-1 h-1 rounded-full bg-primary-200 inline-block"></span>
-          <span class="px-2 py-0.5 bg-primary-50 dark:bg-primary-500/20 text-primary-600 dark:text-primary-400 text-[9px] font-black rounded-full uppercase tracking-widest">{{ userRoleLabel }}</span>
+          <span class="px-2 py-0.5 bg-primary-50 dark:bg-primary-500/20 text-primary-600 dark:text-primary-400 text-[11px] font-black rounded-full uppercase tracking-widest">{{ userRoleLabel }}</span>
         </div>
         <h1 class="text-[26px] sm:text-[30px] font-black tracking-tight leading-tight gems-title">
           Hola, {{ firstName }}<span class="text-primary-500">.</span>
         </h1>
-        <p class="text-[11px] text-slate-400 mt-0.5 font-medium">
+        <p class="text-[13px] text-slate-400 mt-0.5 font-medium">
           {{ todayLabel }} ·
           <span v-if="criticalCount > 0" class="text-amber-500 font-black">{{ criticalCount }} {{ criticalCount === 1 ? 'actividad requiere' : 'actividades requieren' }} atención</span>
           <span v-else class="text-emerald-500 font-black">Todo bajo control</span>
@@ -28,19 +28,19 @@
         <!-- Toggle acciones rápidas -->
         <button
           @click="showActions = !showActions"
-          class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-black border transition-all duration-200 active:scale-95"
+          class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[13px] font-black border transition-all duration-200 active:scale-95"
           :class="showActions
             ? 'bg-primary-600 text-white border-primary-600 shadow-lg shadow-primary-500/25'
             : 'bg-white dark:bg-[#1e293b] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-[#334155] hover:text-primary-600 hover:bg-primary-50'"
         >
-          <i class="fas fa-bolt text-[10px]"></i>
+          <i class="fas fa-bolt text-[12px]"></i>
           <span class="hidden sm:inline">Acciones</span>
-          <i class="fas fa-chevron-down text-[9px] transition-transform duration-200" :class="{ 'rotate-180': showActions }"></i>
+          <i class="fas fa-chevron-down text-[11px] transition-transform duration-200" :class="{ 'rotate-180': showActions }"></i>
         </button>
 
 <router-link v-if="authStore.canCreateActivities" to="/activities"
-          class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[12px] font-black shadow-lg shadow-primary-500/20 transition-all shrink-0">
-          <i class="fas fa-plus text-[10px]"></i>
+          class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[14px] font-black shadow-lg shadow-primary-500/20 transition-all shrink-0">
+          <i class="fas fa-plus text-[12px]"></i>
           <span class="hidden sm:inline">Nueva actividad</span>
         </router-link>
 
@@ -55,7 +55,7 @@
         >
           <div v-if="showActions"
             class="absolute top-full right-0 mt-1.5 bg-white dark:bg-[#1e293b] rounded-xl shadow-xl border border-slate-100 dark:border-[#334155] p-2.5 w-[280px] sm:w-[340px] origin-top-right">
-            <p class="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-1 mb-2">Acciones rápidas</p>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 px-1 mb-2">Acciones rápidas</p>
             <div class="grid grid-cols-3 sm:grid-cols-4 gap-1.5">
               <router-link
                 v-for="qa in quickActions"
@@ -65,9 +65,9 @@
                 class="group flex flex-col items-center gap-1.5 rounded-xl px-1.5 py-2.5 transition-all duration-150 hover:bg-slate-50 dark:hover:bg-[#0f172a]"
               >
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-150 group-hover:scale-110" :class="qa.iconBg">
-                  <i :class="['fas', qa.icon, qa.iconColor, 'text-[13px]']"></i>
+                  <i :class="['fas', qa.icon, qa.iconColor, 'text-[14px]']"></i>
                 </div>
-                <span class="text-[9px] font-black text-slate-600 dark:text-slate-300 group-hover:text-primary-600 text-center leading-tight">{{ qa.label }}</span>
+                <span class="text-[11px] font-black text-slate-600 dark:text-slate-300 group-hover:text-primary-600 text-center leading-tight">{{ qa.label }}</span>
               </router-link>
             </div>
           </div>
@@ -85,29 +85,29 @@
       <div class="grid grid-cols-3 gap-2">
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-3 px-3 flex items-center gap-2.5">
           <div class="w-7 h-7 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center shrink-0">
-            <i class="fas fa-exclamation text-red-500 text-[10px]"></i>
+            <i class="fas fa-exclamation text-red-500 text-[12px]"></i>
           </div>
           <div>
             <span class="block text-[18px] font-black leading-none text-red-500">{{ overdueCount }}</span>
-            <span class="block text-[9px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Vencidas</span>
+            <span class="block text-[11px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Vencidas</span>
           </div>
         </div>
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-3 px-3 flex items-center gap-2.5">
           <div class="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center shrink-0">
-            <i class="fas fa-calendar-day text-amber-500 text-[10px]"></i>
+            <i class="fas fa-calendar-day text-amber-500 text-[12px]"></i>
           </div>
           <div>
             <span class="block text-[18px] font-black leading-none text-amber-500">{{ todayCount }}</span>
-            <span class="block text-[9px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Para hoy</span>
+            <span class="block text-[11px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Para hoy</span>
           </div>
         </div>
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-3 px-3 flex items-center gap-2.5">
           <div class="w-7 h-7 rounded-lg bg-primary-50 dark:bg-primary-500/10 flex items-center justify-center shrink-0">
-            <i class="fas fa-flag text-primary-500 text-[10px]"></i>
+            <i class="fas fa-flag text-primary-500 text-[12px]"></i>
           </div>
           <div>
             <span class="block text-[18px] font-black leading-none text-primary-500">{{ highPriorityCount }}</span>
-            <span class="block text-[9px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Alta prioridad</span>
+            <span class="block text-[11px] font-black uppercase tracking-wide text-slate-400 mt-0.5">Alta prioridad</span>
           </div>
         </div>
       </div>
@@ -117,26 +117,26 @@
         <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-[#334155]">
           <div class="flex items-center gap-2">
             <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center">
-              <i class="fas fa-tasks text-primary-500 text-[9px]"></i>
+              <i class="fas fa-tasks text-primary-500 text-[11px]"></i>
             </div>
             <div>
-              <div class="text-[8px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Mi trabajo</div>
-              <div class="text-[12px] font-black text-slate-900 dark:text-slate-100 leading-tight">Actividades pendientes</div>
+              <div class="text-[10px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Mi trabajo</div>
+              <div class="text-[14px] font-black text-slate-900 dark:text-slate-100 leading-tight">Actividades pendientes</div>
             </div>
           </div>
           <router-link to="/activities"
-            class="flex items-center gap-1 text-[9px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors">
-            Ver todas <i class="fas fa-arrow-right text-[8px]"></i>
+            class="flex items-center gap-1 text-[11px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors">
+            Ver todas <i class="fas fa-arrow-right text-[10px]"></i>
           </router-link>
         </div>
 
         <div v-if="agendaActivities.length === 0" class="flex flex-col items-center justify-center gap-2 py-12">
           <div class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-[#334155] flex items-center justify-center">
-            <i class="fas fa-check-circle text-slate-300 dark:text-slate-500 text-[14px]"></i>
+            <i class="fas fa-check-circle text-slate-300 dark:text-slate-500 text-[15px]"></i>
           </div>
-          <p class="text-[11px] text-slate-400 font-black uppercase tracking-wide">Sin actividades pendientes</p>
+          <p class="text-[13px] text-slate-400 font-black uppercase tracking-wide">Sin actividades pendientes</p>
           <router-link v-if="authStore.canCreateActivities" to="/activities"
-            class="mt-1 px-3 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black hover:bg-primary-700 transition-colors">
+            class="mt-1 px-3 py-1.5 bg-primary-600 text-white rounded-lg text-[13px] font-black hover:bg-primary-700 transition-colors">
             Crear actividad
           </router-link>
         </div>
@@ -149,12 +149,12 @@
               act.priority === 'urgent' ? 'border-l-red-400' : act.priority === 'high' ? 'border-l-amber-400' : 'border-l-slate-200'
             ]">
             <div class="flex-1 min-w-0">
-              <p class="text-[12px] font-black text-slate-800 dark:text-slate-200 truncate">{{ act.title }}</p>
-              <p class="text-[10px] text-slate-400 mt-0.5 truncate">
-                <i class="fas fa-clock text-[8px] mr-1"></i>{{ formatDateShort(act.dueDate || act.date) }}
+              <p class="text-[14px] font-black text-slate-800 dark:text-slate-200 truncate">{{ act.title }}</p>
+              <p class="text-[12px] text-slate-400 mt-0.5 truncate">
+                <i class="fas fa-clock text-[10px] mr-1"></i>{{ formatDateShort(act.dueDate || act.date) }}
               </p>
             </div>
-            <span :class="['shrink-0 px-2 py-1 rounded-lg text-[9px] font-black', agendaStatusClass(act)]">
+            <span :class="['shrink-0 px-2 py-1 rounded-lg text-[11px] font-black', agendaStatusClass(act)]">
               {{ agendaStatusLabel(act) }}
             </span>
           </div>
@@ -172,11 +172,11 @@
       <div v-for="card in statCards" :key="card.label"
         class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl py-2 px-2 flex items-center gap-2 min-w-0 cursor-default transition-all duration-150">
         <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0" :class="card.iconBg">
-          <i :class="['fas', card.icon, card.iconColor, 'text-[10px]']"></i>
+          <i :class="['fas', card.icon, card.iconColor, 'text-[12px]']"></i>
         </div>
         <div class="min-w-0">
-          <span class="block text-[15px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
-          <span class="block text-[8px] font-black uppercase tracking-[0.15em] text-slate-400 truncate leading-tight mt-0.5">{{ card.label }}</span>
+          <span class="block text-[17px] font-black leading-none" :class="card.iconColor">{{ card.value }}</span>
+          <span class="block text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 truncate leading-tight mt-0.5">{{ card.label }}</span>
         </div>
       </div>
     </div>
@@ -196,23 +196,23 @@
             <div class="flex items-center justify-between px-3 py-2 shrink-0">
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
-                  <i class="fas fa-calendar-alt text-primary-500 text-[9px]"></i>
+                  <i class="fas fa-calendar-alt text-primary-500 text-[11px]"></i>
                 </div>
                 <div>
-                  <div class="text-[8px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Agenda operativa</div>
-                  <div class="text-[12px] font-black text-slate-900 dark:text-slate-100 leading-tight">Actividades próximas</div>
+                  <div class="text-[10px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Agenda operativa</div>
+                  <div class="text-[14px] font-black text-slate-900 dark:text-slate-100 leading-tight">Actividades próximas</div>
                 </div>
               </div>
               <router-link to="/activities"
-                class="flex items-center gap-1 text-[9px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors shrink-0">
-                Ver todas <i class="fas fa-arrow-right text-[8px]"></i>
+                class="flex items-center gap-1 text-[11px] font-black text-primary-500 hover:text-primary-700 uppercase tracking-widest transition-colors shrink-0">
+                Ver todas <i class="fas fa-arrow-right text-[10px]"></i>
               </router-link>
             </div>
             <div v-if="agendaActivities.length === 0" class="flex-1 flex flex-col items-center justify-center gap-2 py-8">
               <div class="w-9 h-9 rounded-2xl bg-slate-100 dark:bg-[#334155] flex items-center justify-center">
-                <i class="fas fa-calendar-check text-slate-300 dark:text-slate-500 text-[12px]"></i>
+                <i class="fas fa-calendar-check text-slate-300 dark:text-slate-500 text-[14px]"></i>
               </div>
-              <p class="text-[10px] text-slate-400 font-black uppercase tracking-wide">Sin actividades</p>
+              <p class="text-[12px] text-slate-400 font-black uppercase tracking-wide">Sin actividades</p>
             </div>
             <div v-else class="flex-1 overflow-y-auto custom-scrollbar">
               <div v-for="(act, idx) in agendaActivities" :key="act._id"
@@ -222,14 +222,14 @@
                   act.priority === 'urgent' ? 'border-l-red-400' : act.priority === 'high' ? 'border-l-amber-400' : 'border-l-slate-100'
                 ]">
                 <div class="flex-1 min-w-0">
-                  <p class="text-[11px] font-black text-slate-800 dark:text-slate-200 truncate">{{ act.title }}</p>
-                  <p class="text-[10px] text-slate-400 truncate">{{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}</p>
+                  <p class="text-[13px] font-black text-slate-800 dark:text-slate-200 truncate">{{ act.title }}</p>
+                  <p class="text-[12px] text-slate-400 truncate">{{ clientsStore.clients.find(c => c._id === act.clientId)?.name || '—' }}</p>
                 </div>
-                <span :class="['shrink-0 px-2 py-0.5 rounded-full text-[9px] font-black', agendaStatusClass(act)]">
+                <span :class="['shrink-0 px-2 py-0.5 rounded-full text-[11px] font-black', agendaStatusClass(act)]">
                   {{ agendaStatusLabel(act) }}
                 </span>
-                <span class="shrink-0 hidden lg:flex items-center gap-1 text-[9px] text-slate-400">
-                  <i class="fas fa-clock text-[8px]"></i>
+                <span class="shrink-0 hidden lg:flex items-center gap-1 text-[11px] text-slate-400">
+                  <i class="fas fa-clock text-[10px]"></i>
                   {{ formatDateShort(act.dueDate || act.date) }}
                 </span>
               </div>
@@ -242,50 +242,50 @@
       <div class="flex flex-col gap-2 h-full min-h-0">
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2 shrink-0 flex items-center gap-3">
           <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/20 flex items-center justify-center shrink-0">
-            <i class="fas fa-fire text-primary-500 text-[9px]"></i>
+            <i class="fas fa-fire text-primary-500 text-[11px]"></i>
           </div>
           <div class="hidden sm:block shrink-0">
-            <div class="text-[8px] font-black uppercase tracking-[0.15em] text-slate-400 leading-none">Ritmo</div>
-            <div class="text-[11px] font-black text-slate-800 dark:text-slate-100 leading-tight">Foco operativo</div>
+            <div class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 leading-none">Ritmo</div>
+            <div class="text-[13px] font-black text-slate-800 dark:text-slate-100 leading-tight">Foco operativo</div>
           </div>
           <div class="flex-1 flex items-center gap-1.5 min-w-0">
             <div class="flex-1 h-1 bg-slate-200 dark:bg-slate-600 rounded-full overflow-hidden">
               <div class="h-full bg-primary-500 rounded-full transition-all duration-700" :style="{ width: focusProgress + '%' }"></div>
             </div>
-            <span class="text-[9px] font-black text-primary-500 shrink-0">{{ focusProgress }}%</span>
+            <span class="text-[11px] font-black text-primary-500 shrink-0">{{ focusProgress }}%</span>
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
             <div class="flex flex-col items-center px-2 py-1 bg-red-50 dark:bg-red-500/10 rounded-lg">
-              <span class="text-[13px] font-black text-red-500 leading-none">{{ overdueCount }}</span>
-              <span class="text-[7px] font-black uppercase text-red-400 tracking-wide leading-none mt-0.5">Venc.</span>
+              <span class="text-[14px] font-black text-red-500 leading-none">{{ overdueCount }}</span>
+              <span class="text-[9px] font-black uppercase text-red-400 tracking-wide leading-none mt-0.5">Venc.</span>
             </div>
             <div class="flex flex-col items-center px-2 py-1 bg-amber-50 dark:bg-amber-500/10 rounded-lg">
-              <span class="text-[13px] font-black text-amber-500 leading-none">{{ todayCount }}</span>
-              <span class="text-[7px] font-black uppercase text-amber-400 tracking-wide leading-none mt-0.5">Hoy</span>
+              <span class="text-[14px] font-black text-amber-500 leading-none">{{ todayCount }}</span>
+              <span class="text-[9px] font-black uppercase text-amber-400 tracking-wide leading-none mt-0.5">Hoy</span>
             </div>
             <div class="flex flex-col items-center px-2 py-1 bg-primary-50 dark:bg-primary-500/10 rounded-lg">
-              <span class="text-[13px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</span>
-              <span class="text-[7px] font-black uppercase text-primary-400 tracking-wide leading-none mt-0.5">Alta</span>
+              <span class="text-[14px] font-black text-primary-500 leading-none">{{ highPriorityCount }}</span>
+              <span class="text-[9px] font-black uppercase text-primary-400 tracking-wide leading-none mt-0.5">Alta</span>
             </div>
           </div>
         </div>
 
         <div class="bg-white dark:bg-[#1e293b] shadow-sm rounded-xl px-3 py-2.5 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
           <div class="flex items-center gap-1.5 mb-2">
-            <i class="fas fa-chart-line text-amber-500 text-[9px]"></i>
-            <span class="text-[8px] font-black uppercase tracking-[0.18em] text-slate-400">Pulso comercial</span>
+            <i class="fas fa-chart-line text-amber-500 text-[11px]"></i>
+            <span class="text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">Pulso comercial</span>
           </div>
           <div class="flex flex-col gap-1.5">
             <div v-for="(item, i) in pulsoItems" :key="i" class="flex items-start gap-2">
-              <i :class="['fas', item.icon, item.color, 'text-[9px] mt-0.5 shrink-0']"></i>
-              <span class="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">{{ item.text }}</span>
+              <i :class="['fas', item.icon, item.color, 'text-[11px] mt-0.5 shrink-0']"></i>
+              <span class="text-[12px] text-slate-500 dark:text-slate-400 leading-snug">{{ item.text }}</span>
             </div>
           </div>
         </div>
 
         <div class="flex items-start gap-2 px-3 py-1.5 bg-primary-50 dark:bg-primary-500/10 rounded-xl shrink-0">
-          <i class="fas fa-gem text-primary-400 text-[9px] mt-0.5 shrink-0"></i>
-          <p class="text-[10px] font-medium leading-relaxed text-slate-500 dark:text-slate-400">{{ focusNote }}</p>
+          <i class="fas fa-gem text-primary-400 text-[11px] mt-0.5 shrink-0"></i>
+          <p class="text-[12px] font-medium leading-relaxed text-slate-500 dark:text-slate-400">{{ focusNote }}</p>
         </div>
       </div>
     </div>

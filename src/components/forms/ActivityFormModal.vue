@@ -15,7 +15,7 @@
             <h2 class="text-base sm:text-2xl font-black text-slate-800 tracking-tight leading-tight">
               {{ isEditing ? 'Refinar Tarea' : 'Lanzar Nueva Tarea' }}
             </h2>
-            <p class="hidden sm:flex text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1 items-center gap-2">
+            <p class="hidden sm:flex text-[12px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1 items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
               GEMS Hub · Gestión de Productividad
             </p>
@@ -39,7 +39,7 @@
             <!-- Título -->
             <div class="space-y-2">
               <div class="flex items-center justify-between ml-1">
-                <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Título de la Actividad</label>
+                <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest">Título de la Actividad</label>
                 <VoiceDictateButton v-model="form.title" size="xs" />
               </div>
               <input
@@ -54,7 +54,7 @@
             <!-- Fila 1: Tipo, Prioridad, Fechas -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div class="space-y-2">
-                <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Tipo</label>
+                <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Tipo</label>
                 <CustomSelect
                   v-model="form.type"
                   :options="[
@@ -66,7 +66,7 @@
                 />
               </div>
               <div class="space-y-2">
-                <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Prioridad</label>
+                <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Prioridad</label>
                 <CustomSelect
                   v-model="form.priority"
                   :options="[
@@ -78,7 +78,7 @@
                 />
               </div>
               <div class="space-y-2">
-                <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Inicio</label>
+                <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Inicio</label>
                 <div class="relative group">
                   <i class="fas fa-calendar-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-400 transition-colors"></i>
                   <input
@@ -89,7 +89,7 @@
                 </div>
               </div>
               <div class="space-y-2">
-                <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Entrega</label>
+                <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Entrega</label>
                 <div class="relative group">
                   <i class="fas fa-flag-checkered absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-400 transition-colors"></i>
                   <input
@@ -106,7 +106,7 @@
               <!-- Columna Izquierda -->
               <div class="space-y-4">
                 <div class="space-y-2">
-                  <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Cliente / Proyecto</label>
+                  <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Cliente / Proyecto</label>
                   <CustomSelect
                     v-model="form.clientId"
                     searchable
@@ -117,7 +117,7 @@
                   />
                 </div>
                 <div class="space-y-2">
-                  <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo Responsable</label>
+                  <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo Responsable</label>
                   <div class="bg-slate-50/50 border border-slate-200 rounded-xl p-3 shadow-inner h-[180px] sm:h-[320px] flex flex-col overflow-hidden">
                     <AssignedUsersSelector
                       v-model="form.assignedTo"
@@ -131,7 +131,7 @@
               <div class="space-y-4">
                 <div class="space-y-2">
                   <div class="flex items-center justify-between ml-1">
-                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Detalles y Notas</label>
+                    <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest">Detalles y Notas</label>
                     <VoiceDictateButton v-model="form.description" size="xs" />
                   </div>
                   <textarea
@@ -145,7 +145,7 @@
                 <!-- Tiempo Estimado y Progreso -->
                 <div class="space-y-5 shrink-0">
                   <div class="space-y-2">
-                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1 flex justify-between">
+                    <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1 flex justify-between">
                     <span>Tiempo Estimado</span>
                     <button type="button" @click="form.estimatedTime = ''" class="text-primary-500 hover:text-primary-600">Limpiar</button>
                   </label>
@@ -162,7 +162,7 @@
                       :key="time.val"
                       type="button"
                       @click="form.estimatedTime = time.val"
-                      class="px-1 py-2 rounded-xl text-[11px] font-black tracking-wider uppercase transition-all border shadow-sm flex items-center justify-center gap-1"
+                      class="px-1 py-2 rounded-xl text-[13px] font-black tracking-wider uppercase transition-all border shadow-sm flex items-center justify-center gap-1"
                       :class="form.estimatedTime === time.val 
                         ? 'bg-primary-500 text-white border-primary-600 ring-2 ring-primary-500/20 shadow-primary-500/20' 
                         : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700'"
@@ -173,13 +173,13 @@
                     
                     <div class="col-span-2 relative group">
                       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-pen text-[10px] text-slate-400 group-focus-within:text-primary-500 transition-colors"></i>
+                        <i class="fas fa-pen text-[12px] text-slate-400 group-focus-within:text-primary-500 transition-colors"></i>
                       </div>
                       <input 
                         v-model="form.estimatedTime"
                         type="text"
                         placeholder="Ej: 3.5h"
-                        class="w-full h-full pl-8 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-700 text-[11px] font-black focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm placeholder-slate-300"
+                        class="w-full h-full pl-8 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-700 text-[13px] font-black focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm placeholder-slate-300"
                       />
                     </div>
                     </div>
@@ -187,7 +187,7 @@
 
                   <!-- Progreso -->
                   <div class="mt-3 bg-white p-2 rounded-xl shadow-sm flex items-center gap-3">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest w-12 text-right">{{ form.completionPercentage || 0 }}%</span>
+                    <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest w-12 text-right">{{ form.completionPercentage || 0 }}%</span>
                     <input 
                       type="range" 
                       v-model.number="form.completionPercentage" 
@@ -205,7 +205,7 @@
               <button
                 type="button"
                 @click="$emit('close')"
-                class="h-9 px-5 bg-white text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl transition-all font-black text-[11px] uppercase tracking-widest hover:bg-slate-50 active:scale-95 shadow-sm"
+                class="h-9 px-5 bg-white text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl transition-all font-black text-[13px] uppercase tracking-widest hover:bg-slate-50 active:scale-95 shadow-sm"
               >
                 Descartar
               </button>
@@ -233,10 +233,10 @@
           <div class="w-7 h-7 rounded-xl bg-primary-50 flex items-center justify-center border border-primary-100">
             <i class="fas fa-comments text-primary-400 text-xs"></i>
           </div>
-          <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Comentarios</span>
+          <span class="text-[13px] font-black text-slate-400 uppercase tracking-widest">Comentarios</span>
           <span
             v-if="localComments.length > 0"
-            class="ml-auto px-2 py-0.5 bg-primary-100 text-primary-600 text-[10px] font-black rounded-full"
+            class="ml-auto px-2 py-0.5 bg-primary-100 text-primary-600 text-[12px] font-black rounded-full"
           >{{ localComments.length }}</span>
         </div>
 
@@ -247,8 +247,8 @@
             <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center mb-3">
               <i class="fas fa-comment-slash text-slate-300 text-lg"></i>
             </div>
-            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Sin comentarios</p>
-            <p class="text-[10px] text-slate-300 mt-1">Sé el primero en comentar</p>
+            <p class="text-[13px] font-bold text-slate-400 uppercase tracking-widest">Sin comentarios</p>
+            <p class="text-[12px] text-slate-300 mt-1">Sé el primero en comentar</p>
           </div>
 
           <!-- Comentarios (instantáneo desde props.activity) -->
@@ -258,11 +258,11 @@
             class="bg-white rounded-xl p-3 shadow-sm group"
           >
             <div class="flex items-center gap-2 mb-1.5">
-              <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[9px] font-black shrink-0">
+              <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[11px] font-black shrink-0">
                 {{ getInitials(commentAuthorName(comment)) }}
               </div>
-              <span class="text-[11px] font-black text-slate-700 truncate">{{ commentAuthorName(comment) }}</span>
-              <span class="text-[10px] text-slate-300 ml-auto shrink-0">{{ formatCommentDate(comment.createdAt) }}</span>
+              <span class="text-[13px] font-black text-slate-700 truncate">{{ commentAuthorName(comment) }}</span>
+              <span class="text-[12px] text-slate-300 ml-auto shrink-0">{{ formatCommentDate(comment.createdAt) }}</span>
 
               <!-- Botones edit/delete (solo autor) -->
               <div v-if="canEditComment(comment)" class="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity ml-1">
@@ -272,7 +272,7 @@
                   class="w-5 h-5 rounded-md text-slate-400 hover:text-primary-500 hover:bg-primary-50 flex items-center justify-center transition-all"
                   title="Editar"
                 >
-                  <i class="fas fa-pen text-[9px]"></i>
+                  <i class="fas fa-pen text-[11px]"></i>
                 </button>
                 <button
                   type="button"
@@ -280,7 +280,7 @@
                   class="w-5 h-5 rounded-md text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-all"
                   title="Eliminar"
                 >
-                  <i class="fas fa-trash text-[9px]"></i>
+                  <i class="fas fa-trash text-[11px]"></i>
                 </button>
               </div>
             </div>
@@ -290,19 +290,19 @@
               <textarea
                 v-model="editingCommentText"
                 rows="2"
-                class="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-[12px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
+                class="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
               />
               <div class="flex items-center gap-2 mt-1.5">
                 <button
                   type="button"
                   @click="saveEditComment(comment)"
                   :disabled="!editingCommentText.trim() || savingEdit"
-                  class="px-3 py-1 bg-primary-500 hover:bg-primary-600 text-white text-[9px] font-black uppercase tracking-wider rounded-lg transition-all disabled:opacity-40"
+                  class="px-3 py-1 bg-primary-500 hover:bg-primary-600 text-white text-[11px] font-black uppercase tracking-wider rounded-lg transition-all disabled:opacity-40"
                 >Guardar</button>
                 <button
                   type="button"
                   @click="cancelEditComment"
-                  class="px-3 py-1 bg-slate-100 text-slate-500 hover:bg-slate-200 text-[9px] font-black uppercase tracking-wider rounded-lg transition-all"
+                  class="px-3 py-1 bg-slate-100 text-slate-500 hover:bg-slate-200 text-[11px] font-black uppercase tracking-wider rounded-lg transition-all"
                 >Cancelar</button>
               </div>
             </div>
@@ -310,7 +310,7 @@
             <!-- Texto con menciones resaltadas -->
             <p
               v-else-if="comment.text"
-              class="text-[12px] text-slate-600 leading-relaxed ml-8 whitespace-pre-wrap"
+              class="text-[14px] text-slate-600 leading-relaxed ml-8 whitespace-pre-wrap"
               v-html="renderMentions(comment.text)"
             ></p>
 
@@ -342,12 +342,12 @@
               class="w-full flex items-center gap-2 px-3 py-2 hover:bg-primary-50 transition-colors text-left"
               :class="idx === mentionActiveIdx ? 'bg-primary-50' : ''"
             >
-              <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[9px] font-black shrink-0">
+              <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[11px] font-black shrink-0">
                 {{ getInitials(member.name) }}
               </div>
               <div class="flex-1 min-w-0">
-                <p class="text-[11px] font-bold text-slate-700 truncate">{{ member.name }}</p>
-                <p v-if="member.email" class="text-[9px] text-slate-400 truncate">{{ member.email }}</p>
+                <p class="text-[13px] font-bold text-slate-700 truncate">{{ member.name }}</p>
+                <p v-if="member.email" class="text-[11px] text-slate-400 truncate">{{ member.email }}</p>
               </div>
             </button>
           </div>
@@ -359,7 +359,7 @@
               <button
                 type="button"
                 @click="removeCommentImage(idx)"
-                class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-[9px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-[11px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
               >×</button>
             </div>
           </div>
@@ -371,12 +371,12 @@
             rows="2"
             @input="onCommentInput"
             @keydown="onCommentKeydown"
-            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-2xl text-slate-700 placeholder-slate-300 text-[12px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
+            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-2xl text-slate-700 placeholder-slate-300 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
           />
           <div class="flex items-center justify-between mt-2">
             <label class="cursor-pointer flex items-center gap-1.5 text-slate-400 hover:text-primary-500 transition-colors">
               <i class="fas fa-image text-sm"></i>
-              <span class="text-[10px] font-black uppercase tracking-wider">Imagen</span>
+              <span class="text-[12px] font-black uppercase tracking-wider">Imagen</span>
               <input
                 ref="commentImageInput"
                 type="file"
@@ -390,10 +390,10 @@
               type="button"
               @click="submitComment"
               :disabled="(!newCommentText.trim() && commentImages.length === 0) || submittingComment"
-              class="px-4 py-1.5 bg-primary-500 hover:bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 active:scale-95 shadow-sm shadow-primary-200"
+              class="px-4 py-1.5 bg-primary-500 hover:bg-primary-600 text-white text-[12px] font-black uppercase tracking-widest rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 active:scale-95 shadow-sm shadow-primary-200"
             >
               <div v-if="submittingComment" class="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin"></div>
-              <i v-else class="fas fa-paper-plane text-[10px]"></i>
+              <i v-else class="fas fa-paper-plane text-[12px]"></i>
               {{ submittingComment ? '...' : 'Enviar' }}
             </button>
           </div>

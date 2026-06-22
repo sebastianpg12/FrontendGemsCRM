@@ -22,7 +22,7 @@
           </div>
           <h2 class="text-white text-xl font-bold mb-2">¡Cuenta verificada!</h2>
           <p class="text-white/50 text-sm mb-8">Tu cuenta de GEMS Hub ha sido activada correctamente. Ahora puedes iniciar sesión y disfrutar de tus 14 días de prueba gratis.</p>
-          <router-link to="/login" class="w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 text-[11px] uppercase tracking-widest hover:scale-[1.02]" style="background: var(--brand-accent); box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);">
+          <router-link to="/login" class="w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 text-[13px] uppercase tracking-widest hover:scale-[1.02]" style="background: var(--brand-accent); box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);">
             Iniciar Sesión
           </router-link>
         </div>
@@ -33,7 +33,7 @@
           </div>
           <h2 class="text-white text-xl font-bold mb-2">Error de verificación</h2>
           <p class="text-white/50 text-sm mb-8">{{ error }}</p>
-          <router-link to="/login" class="w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 text-[11px] uppercase tracking-widest" style="background: rgba(255,255,255,0.1);">
+          <router-link to="/login" class="w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 text-[13px] uppercase tracking-widest" style="background: rgba(255,255,255,0.1);">
             Volver al Inicio
           </router-link>
         </div>

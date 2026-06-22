@@ -17,7 +17,7 @@
         </span>
       </div>
       <i
-        class="fas fa-chevron-down text-[10px] text-slate-400 transition-transform duration-300"
+        class="fas fa-chevron-down text-[12px] text-slate-400 transition-transform duration-300"
         :class="{ 'rotate-180 text-primary-500': isOpen }"
       ></i>
     </button>
@@ -38,7 +38,7 @@
         <!-- Search input -->
         <div v-if="searchable" class="p-2 border-b border-slate-100 dark:border-[#334155]">
           <div class="relative">
-            <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[10px]"></i>
+            <i class="fas fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[12px]"></i>
             <input
               ref="searchInput"
               v-model="searchQuery"

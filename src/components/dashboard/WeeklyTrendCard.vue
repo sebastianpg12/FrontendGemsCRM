@@ -4,22 +4,22 @@
     <div class="flex items-center justify-between mb-1">
       <div class="flex items-center gap-2">
         <div class="w-6 h-6 rounded-lg bg-primary-50 dark:bg-primary-500/10 flex items-center justify-center shrink-0">
-          <i class="fas fa-chart-area text-primary-500 text-[9px]"></i>
+          <i class="fas fa-chart-area text-primary-500 text-[11px]"></i>
         </div>
         <div>
-          <div class="text-[8px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Tendencia semanal</div>
-          <div class="text-[12px] font-black text-slate-900 dark:text-slate-100 leading-tight">Últimos 7 días</div>
+          <div class="text-[10px] font-black uppercase tracking-[0.18em] text-primary-400 leading-none">Tendencia semanal</div>
+          <div class="text-[14px] font-black text-slate-900 dark:text-slate-100 leading-tight">Últimos 7 días</div>
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span class="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-slate-400">
+        <span class="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
           <span class="w-2 h-2 rounded-sm" :style="{ background: 'var(--brand-accent)' }"></span>Completadas
         </span>
-        <span class="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-slate-400">
+        <span class="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400">
           <span class="w-2 h-2 rounded-sm bg-slate-300 dark:bg-slate-600"></span>Creadas
         </span>
-        <span class="text-[11px] font-black" :class="completionDelta >= 0 ? 'text-emerald-500' : 'text-rose-500'">
-          <i :class="completionDelta >= 0 ? 'fas fa-arrow-trend-up' : 'fas fa-arrow-trend-down'" class="text-[9px] mr-0.5"></i>
+        <span class="text-[13px] font-black" :class="completionDelta >= 0 ? 'text-emerald-500' : 'text-rose-500'">
+          <i :class="completionDelta >= 0 ? 'fas fa-arrow-trend-up' : 'fas fa-arrow-trend-down'" class="text-[11px] mr-0.5"></i>
           {{ totalCompleted }} completadas
         </span>
       </div>

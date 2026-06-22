@@ -8,7 +8,7 @@
         </span>
         <span class="tabular-nums text-slate-500 dark:text-slate-400">
           <strong class="text-slate-800 dark:text-white">{{ item.value }}</strong>
-          <span class="text-[10px] ml-1">({{ pctOf(item.value) }}%)</span>
+          <span class="text-[12px] ml-1">({{ pctOf(item.value) }}%)</span>
         </span>
       </div>
       <div class="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">

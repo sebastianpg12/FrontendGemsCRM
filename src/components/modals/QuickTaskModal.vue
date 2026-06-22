@@ -9,7 +9,7 @@
           </div>
           <div>
             <h3 class="text-lg font-black text-slate-900 tracking-tight">Tarea Rápida</h3>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Creación instantánea</p>
+            <p class="text-[12px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Creación instantánea</p>
           </div>
         </div>
         <button
@@ -52,21 +52,21 @@
 
           <!-- Información automática -->
           <div class="bg-indigo-50/50 rounded-xl p-5 border border-indigo-100 shadow-inner">
-            <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-4 flex items-center gap-2">
+            <h4 class="text-[12px] font-black text-indigo-700 uppercase tracking-widest mb-4 flex items-center gap-2">
               <i class="fas fa-magic text-indigo-400"></i>
               Pre-configuración inteligente
             </h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center bg-white/60 p-2 rounded-lg border border-white">
-                <span class="text-[11px] font-bold text-slate-500 flex items-center gap-2"><i class="fas fa-calendar-day text-indigo-300"></i> Fecha ejecución:</span>
+                <span class="text-[13px] font-bold text-slate-500 flex items-center gap-2"><i class="fas fa-calendar-day text-indigo-300"></i> Fecha ejecución:</span>
                 <span class="text-xs font-black text-slate-800 uppercase tracking-tighter">{{ formatDate(selectedDate) }}</span>
               </div>
               <div class="flex justify-between items-center bg-white/60 p-2 rounded-lg border border-white">
-                <span class="text-[11px] font-bold text-slate-500 flex items-center gap-2"><i class="fas fa-hourglass-end text-orange-300"></i> Fecha Límite:</span>
+                <span class="text-[13px] font-bold text-slate-500 flex items-center gap-2"><i class="fas fa-hourglass-end text-orange-300"></i> Fecha Límite:</span>
                 <span class="text-xs font-black text-slate-800 uppercase tracking-tighter">{{ formatDate(dueDate) }}</span>
               </div>
               <div class="flex justify-between items-center bg-white/60 p-2 rounded-lg border border-white">
-                <span class="text-[11px] font-bold text-slate-500 flex items-center gap-2"><i class="fas fa-user-circle text-indigo-300"></i> Responsable:</span>
+                <span class="text-[13px] font-bold text-slate-500 flex items-center gap-2"><i class="fas fa-user-circle text-indigo-300"></i> Responsable:</span>
                 <span class="text-xs font-black text-slate-800 uppercase tracking-tighter">{{ currentUser?.name || 'Propietario' }}</span>
               </div>
             </div>
@@ -81,7 +81,7 @@
                 v-for="priority in priorities"
                 :key="priority.value"
                 @click="form.priority = priority.value as 'low' | 'medium' | 'high' | 'urgent'"
-                class="flex-1 py-3 px-1 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border"
+                class="flex-1 py-3 px-1 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all border"
                 :class="form.priority === priority.value 
                   ? priority.activeClass + ' ring-4 ring-offset-1 shadow-md' 
                   : 'bg-white text-slate-500 border-slate-100 hover:bg-slate-50'"

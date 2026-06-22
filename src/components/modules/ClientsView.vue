@@ -4,7 +4,7 @@
     <div class="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
       <div>
         <h1 class="text-2xl font-black text-slate-800 tracking-tight">Gestión de Clientes</h1>
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Administra tu cartera de clientes</p>
+        <p class="text-[12px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Administra tu cartera de clientes</p>
       </div>
       
       <div class="flex items-center gap-4 pr-20">
@@ -52,7 +52,7 @@
           @click="$emit('create')"
           class="px-5 py-2.5 bg-primary-500 text-white rounded-xl hover:bg-primary-600 transition-all duration-200 flex items-center gap-2 font-black text-xs uppercase tracking-widest shadow-lg shadow-primary-200"
         >
-          <i class="fas fa-plus text-[10px]"></i>
+          <i class="fas fa-plus text-[12px]"></i>
           Nuevo Cliente
         </button>
       </div>
@@ -130,7 +130,7 @@
 
         <!-- Acciones -->
         <div class="flex items-center justify-between pt-4 border-t border-slate-50">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+          <span class="text-[12px] font-bold text-slate-400 uppercase tracking-tighter">
             {{ formatDate(client.createdAt) }}
           </span>
           <div class="flex items-center gap-2">
@@ -157,12 +157,12 @@
         <table class="w-full">
           <thead class="bg-slate-50">
             <tr>
-              <th class="text-left py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
-              <th class="text-left py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Contacto</th>
-              <th class="text-left py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Empresa</th>
-              <th class="text-left py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
-              <th class="text-left py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Fecha</th>
-              <th class="text-left py-4 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Acciones</th>
+              <th class="text-left py-4 px-6 text-[12px] font-black text-slate-400 uppercase tracking-widest">Cliente</th>
+              <th class="text-left py-4 px-6 text-[12px] font-black text-slate-400 uppercase tracking-widest">Contacto</th>
+              <th class="text-left py-4 px-6 text-[12px] font-black text-slate-400 uppercase tracking-widest">Empresa</th>
+              <th class="text-left py-4 px-6 text-[12px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
+              <th class="text-left py-4 px-6 text-[12px] font-black text-slate-400 uppercase tracking-widest">Fecha</th>
+              <th class="text-left py-4 px-6 text-[12px] font-black text-slate-400 uppercase tracking-widest text-right">Acciones</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
@@ -185,7 +185,7 @@
               </td>
               <td class="py-4 px-6">
                 <div class="text-slate-600 text-xs font-bold">{{ client.email }}</div>
-                <div v-if="client.phone" class="text-slate-400 text-[10px] font-medium">{{ client.phone }}</div>
+                <div v-if="client.phone" class="text-slate-400 text-[12px] font-medium">{{ client.phone }}</div>
               </td>
               <td class="py-4 px-6">
                 <span class="text-slate-500 text-xs font-bold uppercase tracking-tight">{{ client.company || '-' }}</span>

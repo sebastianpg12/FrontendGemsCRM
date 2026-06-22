@@ -28,7 +28,7 @@
           @click="goToCurrentMonth"
           class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all text-xs font-bold shadow-sm flex items-center"
         >
-          <i class="fas fa-calendar-day mr-2 text-[10px]"></i>
+          <i class="fas fa-calendar-day mr-2 text-[12px]"></i>
           Hoy
         </button>
         
@@ -37,7 +37,7 @@
           @click="toggleView"
           class="px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all text-xs font-bold shadow-sm flex items-center"
         >
-          <i class="fas fa-eye mr-2 text-[10px]"></i>
+          <i class="fas fa-eye mr-2 text-[12px]"></i>
           {{ showTasks ? 'Ocultar' : 'Ver' }}
         </button>
       </div>
@@ -48,7 +48,7 @@
       <div
         v-for="day in weekDays"
         :key="day"
-        class="p-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] border-b border-slate-100"
+        class="p-2 text-center text-[12px] font-black text-slate-400 uppercase tracking-[0.15em] border-b border-slate-100"
       >
         {{ day }}
       </div>
@@ -68,7 +68,7 @@
         <!-- Número del día -->
         <div class="flex justify-between items-center mb-1">
           <span
-            class="text-[11px]"
+            class="text-[13px]"
             :class="day.isCurrentMonth ? 'text-slate-800 font-black' : 'text-slate-300 font-bold'"
           >
             {{ day.date.getDate() }}
@@ -82,7 +82,7 @@
               class="w-5 h-5 flex items-center justify-center rounded-md text-slate-300 hover:text-primary-600 hover:bg-primary-50 transition-all opacity-0 group-hover:opacity-100"
               title="Agregar tarea"
             >
-              <i class="fas fa-plus text-[8px]"></i>
+              <i class="fas fa-plus text-[10px]"></i>
             </button>
 
             <!-- Indicador de hoy -->
@@ -98,7 +98,7 @@
           <div
             v-for="activity in getActivitiesForDay(day.date).slice(0, 3)"
             :key="activity._id"
-            class="px-1.5 py-0.5 rounded-md text-[9px] cursor-pointer border-l-2 hover:translate-x-0.5 transition-all duration-200 group/task truncate"
+            class="px-1.5 py-0.5 rounded-md text-[11px] cursor-pointer border-l-2 hover:translate-x-0.5 transition-all duration-200 group/task truncate"
             :class="getActivityClasses(activity)"
             @dblclick="viewActivity(activity)"
             :title="`${activity.title} - ${getAssignedToName(activity)} (Doble clic para abrir)`"
@@ -113,7 +113,7 @@
           >
             <button 
               @click.stop="expandedDay = day.date"
-              class="text-[8px] font-black text-primary-600 hover:text-primary-700 pl-1.5 py-0.5 uppercase tracking-tighter hover:bg-primary-50 rounded transition-colors w-full text-left"
+              class="text-[10px] font-black text-primary-600 hover:text-primary-700 pl-1.5 py-0.5 uppercase tracking-tighter hover:bg-primary-50 rounded transition-colors w-full text-left"
             >
               +{{ getActivitiesForDay(day.date).length - 3 }} más
             </button>
@@ -126,16 +126,16 @@
           class="absolute inset-0 z-[60] bg-white shadow-2xl rounded-xl border border-primary-200 p-2 flex flex-col animate-in zoom-in-95 duration-200"
         >
           <div class="flex items-center justify-between mb-2 border-b border-slate-100 pb-1">
-            <span class="text-[10px] font-black text-slate-800 uppercase tracking-widest">{{ day.date.getDate() }} {{ currentMonthName }}</span>
+            <span class="text-[12px] font-black text-slate-800 uppercase tracking-widest">{{ day.date.getDate() }} {{ currentMonthName }}</span>
             <button @click.stop="expandedDay = null" class="text-slate-400 hover:text-rose-500 transition-colors">
-              <i class="fas fa-times text-[10px]"></i>
+              <i class="fas fa-times text-[12px]"></i>
             </button>
           </div>
           <div class="flex-1 overflow-y-auto space-y-1 custom-scrollbar-slim pr-1">
             <div
               v-for="activity in getActivitiesForDay(day.date)"
               :key="'exp-' + activity._id"
-              class="px-1.5 py-1 rounded-md text-[9px] cursor-pointer border-l-2 hover:bg-slate-50 transition-all truncate"
+              class="px-1.5 py-1 rounded-md text-[11px] cursor-pointer border-l-2 hover:bg-slate-50 transition-all truncate"
               :class="getActivityClasses(activity)"
               @dblclick="viewActivity(activity); expandedDay = null"
               :title="activity.title"
