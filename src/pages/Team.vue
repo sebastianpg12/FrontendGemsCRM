@@ -98,10 +98,10 @@
                <div class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': !selectedRole }" @click="setTeamFilter('role', '')">
                  <span>Todos</span><i v-if="!selectedRole" class="fas fa-check text-[10px] text-primary-500"></i>
                </div>
-               <div v-for="role in allAvailableRoles" :key="role.name"
-                 class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedRole === role.name }"
-                 @click="setTeamFilter('role', role.name)">
-                 <span>{{ getRoleDisplayName(role.name) }}</span><i v-if="selectedRole === role.name" class="fas fa-check text-[10px] text-primary-500"></i>
+               <div v-for="role in allAvailableRoles" :key="role.value"
+                 class="tm-dropdown-item" :class="{ 'tm-dropdown-item--active': selectedRole === role.value }"
+                 @click="setTeamFilter('role', role.value)">
+                 <span>{{ role.label }}</span><i v-if="selectedRole === role.value" class="fas fa-check text-[10px] text-primary-500"></i>
                </div>
              </div>
            </div>
