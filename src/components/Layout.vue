@@ -166,22 +166,28 @@ watch(() => themeStore?.config?.logo, (val) => { logoSrc.value = val || '/gems-l
 // Acceso al usuario actual
 const user = computed(() => authStore.user)
 
-const navigation = [
-  { id: 'dashboard', name: 'Dashboard', path: '/', icon: 'logo' },
-  { id: 'clients', name: 'Clientes', path: '/clients', icon: UserGroupIcon },
-  { id: 'tickets', name: 'Tickets', path: '/tickets', icon: TicketIcon },
-  { id: 'activities', name: 'Actividades', path: '/activities', icon: ClipboardDocumentListIcon },
-  { id: 'boards', name: 'Tableros', path: '/boards', icon: Squares2X2Icon },
-  { id: 'daily-scrum', name: 'Daily Scrum', path: '/daily-scrum', icon: PresentationChartLineIcon },
-  { id: 'team-activities', name: 'Actividades por Equipo', path: '/team-activities', icon: UsersIcon },
-  { id: 'accounting', name: 'Contabilidad', path: '/accounting', icon: CurrencyDollarIcon },
-  { id: 'cases', name: 'Gestión de Casos', path: '/cases', icon: FolderIcon },
-  { id: 'team', name: 'Equipo', path: '/team', icon: DocumentTextIcon },
-  { id: 'wiki', name: 'Wiki', path: '/wiki', icon: BookOpenIcon },
-  { id: 'chat', name: 'Chat Interno', path: '/chat', icon: ChatBubbleLeftRightIcon },
-  { id: 'prospects', name: 'Prospectos IA', path: '/prospectos', icon: SparklesIcon },
-  { id: 'theme-settings', name: 'Personalización', path: '/settings/theme', icon: SwatchIcon },
-]
+const COLLABORATOR_HIDDEN = ['prospects', 'team', 'reports']
+
+const navigation = computed(() => {
+  const isCollaborator = authStore.user?.role === 'collaborator'
+  const all = [
+    { id: 'dashboard', name: 'Dashboard', path: '/', icon: 'logo' },
+    { id: 'clients', name: 'Clientes', path: '/clients', icon: UserGroupIcon },
+    { id: 'tickets', name: 'Tickets', path: '/tickets', icon: TicketIcon },
+    { id: 'activities', name: 'Actividades', path: '/activities', icon: ClipboardDocumentListIcon },
+    { id: 'boards', name: 'Tableros', path: '/boards', icon: Squares2X2Icon },
+    { id: 'daily-scrum', name: 'Daily Scrum', path: '/daily-scrum', icon: PresentationChartLineIcon },
+    { id: 'team-activities', name: 'Actividades por Equipo', path: '/team-activities', icon: UsersIcon },
+    { id: 'accounting', name: 'Contabilidad', path: '/accounting', icon: CurrencyDollarIcon },
+    { id: 'cases', name: 'Gestión de Casos', path: '/cases', icon: FolderIcon },
+    { id: 'team', name: 'Equipo', path: '/team', icon: DocumentTextIcon },
+    { id: 'wiki', name: 'Wiki', path: '/wiki', icon: BookOpenIcon },
+    { id: 'chat', name: 'Chat Interno', path: '/chat', icon: ChatBubbleLeftRightIcon },
+    { id: 'prospects', name: 'Prospectos IA', path: '/prospectos', icon: SparklesIcon },
+    { id: 'theme-settings', name: 'Personalización', path: '/settings/theme', icon: SwatchIcon },
+  ]
+  return isCollaborator ? all.filter(i => !COLLABORATOR_HIDDEN.includes(i.id)) : all
+})
 
 const pageTitle = computed(() => {
   const current = navigation.find(item => item.path === route.path)
