@@ -38,12 +38,7 @@
           <i class="fas fa-chevron-down text-[9px] transition-transform duration-200" :class="{ 'rotate-180': showActions }"></i>
         </button>
 
-        <button @click="refreshData" :disabled="isRefreshing"
-          class="w-9 h-9 flex items-center justify-center rounded-xl bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] text-slate-400 hover:text-primary-500 transition-all disabled:opacity-50 shadow-sm shrink-0">
-          <i class="fas fa-sync-alt text-[11px]" :class="{ 'animate-spin': isRefreshing }"></i>
-        </button>
-
-        <router-link v-if="authStore.canCreateActivities" to="/activities"
+<router-link v-if="authStore.canCreateActivities" to="/activities"
           class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 active:scale-95 text-white rounded-xl text-[12px] font-black shadow-lg shadow-primary-500/20 transition-all shrink-0">
           <i class="fas fa-plus text-[10px]"></i>
           <span class="hidden sm:inline">Nueva actividad</span>
