@@ -463,16 +463,20 @@ export const useAuthStore = defineStore('auth', () => {
       { id: 'dashboard', name: 'Dashboard', icon: 'fas fa-house', path: '/', canAccess: canViewDashboard.value }
     ]
 
+    const isCollaborator = user.value.role === 'collaborator'
+
     if (canViewClients.value) {
       modules.push({ id: 'clients', name: 'Clientes', icon: 'fas fa-address-book', path: '/clients', canAccess: true })
-      modules.push({ id: 'prospects', name: 'Prospectos IA', icon: 'fas fa-wand-magic-sparkles', path: '/prospectos', canAccess: true })
+      if (!isCollaborator) {
+        modules.push({ id: 'prospects', name: 'Prospectos IA', icon: 'fas fa-wand-magic-sparkles', path: '/prospectos', canAccess: true })
+      }
     }
 
     if (canViewActivities.value) {
       modules.push({ id: 'activities', name: 'Actividades', icon: 'fas fa-list-check', path: '/activities', canAccess: true })
     }
 
-    if (canViewReports.value) {
+    if (canViewReports.value && !isCollaborator) {
       modules.push({ id: 'reports', name: 'Reportes', icon: 'fas fa-chart-line', path: '/reports', canAccess: true })
     }
 
@@ -487,7 +491,7 @@ export const useAuthStore = defineStore('auth', () => {
     // Base de conocimiento: visible para todo el equipo interno
     modules.push({ id: 'wiki', name: 'Wiki', icon: 'fas fa-book-open', path: '/wiki', canAccess: true })
 
-    if (canViewTeam.value) {
+    if (canViewTeam.value && !isCollaborator) {
       modules.push({ id: 'team', name: 'Equipo', icon: 'fas fa-user-group', path: '/team', canAccess: true })
     }
 
