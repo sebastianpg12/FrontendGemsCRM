@@ -64,7 +64,7 @@
         </div>
         <h1 class="neon-title text-white text-2xl font-black tracking-tight leading-none mb-1"
           :style="`background: linear-gradient(135deg, var(--brand-accent), rgba(${accentRgb},0.65)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`">
-          GEMS HUB PORTAL
+          GEMS HUB
         </h1>
         <p class="text-white/30 text-[9px] font-black uppercase tracking-[0.45em]">Tu plataforma de gestión empresarial</p>
       </div>
