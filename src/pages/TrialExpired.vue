@@ -63,11 +63,10 @@
 
         <!-- CTA principal -->
         <a
-          :href="whatsappLink"
-          target="_blank"
-          class="flex items-center justify-center gap-2.5 w-full h-11 bg-green-500 hover:bg-green-600 text-white rounded-xl font-semibold text-[14px] transition-colors mb-3"
+          href="mailto:info@gemsinnovations.com?subject=Activar%20plan%20GEMS%20Hub"
+          class="flex items-center justify-center gap-2.5 w-full h-11 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-semibold text-[14px] transition-colors mb-3"
         >
-          <i class="fab fa-whatsapp text-[18px]"></i>
+          <i class="fas fa-envelope text-[15px]"></i>
           Contactar para activar mi plan
         </a>
 
@@ -120,13 +119,6 @@ const planFeatures = {
   basic: ['Hasta 5 usuarios', 'Clientes y actividades', 'Tickets y casos', 'Chat interno'],
   pro:   ['Usuarios ilimitados', 'Todo lo de Básico', 'Prospectos IA', 'Reportes y Wiki'],
 }
-
-const whatsappLink = computed(() => {
-  const msg = encodeURIComponent(
-    `Hola, quiero activar mi plan de GEMS Hub para ${orgName.value || 'mi organización'}.`
-  )
-  return `https://wa.me/573000000000?text=${msg}`
-})
 
 function logout() {
   authStore.logout()
