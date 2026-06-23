@@ -83,7 +83,7 @@
     <!-- Footer -->
     <p class="mt-6 text-[11px] text-slate-400 text-center">
       ¿Problemas? Escríbenos a
-      <a href="mailto:pulgaringomezsebastian@gmail.com" class="underline hover:text-slate-600">pulgaringomezsebastian@gmail.com</a>
+      <a href="mailto:info@gemsinnovations.com" class="underline hover:text-slate-600">info@gemsinnovations.com</a>
     </p>
 
   </div>
