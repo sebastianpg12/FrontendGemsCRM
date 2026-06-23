@@ -289,6 +289,7 @@ router.beforeEach(async (to, _from, next) => {
   }
 
   // Trial expirado: bloquear toda la app excepto la página de expiración
+  console.log('[trial-guard] org:', authStore.organization?.plan, authStore.organization?.trialExpiresAt, 'expired:', authStore.isTrialExpired)
   if (authStore.isTrialExpired && to.path !== '/trial-expired') {
     next('/trial-expired')
     return

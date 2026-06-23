@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center font-['Inter',sans-serif] overflow-hidden relative py-8 px-4" style="background: #04060d;">
+  <div class="min-h-screen flex items-center justify-center font-['Inter',sans-serif] overflow-hidden relative py-4 px-4" style="background: #04060d;">
 
     <!-- Nebula layers -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -35,17 +35,17 @@
     <div class="relative z-10 w-full max-w-[500px] animate-fade-in">
 
       <!-- Logo -->
-      <div class="flex flex-col items-center mb-5">
-        <div class="relative mb-3">
-          <div class="pulse-ring" style="width:60px;height:60px;"></div>
-          <div class="pulse-ring" style="width:60px;height:60px;animation-delay:1.3s;"></div>
-          <div class="absolute inset-0 blur-2xl opacity-60 scale-110" style="background: radial-gradient(circle, rgba(245,158,11,0.9) 0%, transparent 70%);"></div>
-          <img src="/gems-logo.png" alt="GEMS Hub" class="relative h-14 w-auto drop-shadow-2xl" />
+      <div class="flex flex-col items-center mb-3">
+        <div class="relative mb-2">
+          <div class="pulse-ring" style="width:46px;height:46px;"></div>
+          <div class="pulse-ring" style="width:46px;height:46px;animation-delay:1.3s;"></div>
+          <div class="absolute inset-0 blur-xl opacity-60 scale-110" style="background: radial-gradient(circle, rgba(245,158,11,0.9) 0%, transparent 70%);"></div>
+          <img src="/gems-logo.png" alt="GEMS Hub" class="relative h-10 w-auto drop-shadow-2xl" />
         </div>
-        <h1 class="neon-title text-white text-2xl font-black tracking-tight leading-none mb-1" style="background: linear-gradient(135deg, #f59e0b, rgba(245,158,11,0.6)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        <h1 class="neon-title text-white text-xl font-black tracking-tight leading-none mb-0.5" style="background: linear-gradient(135deg, #f59e0b, rgba(245,158,11,0.6)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
           GEMS HUB
         </h1>
-        <p class="text-white/30 text-[11px] font-black uppercase tracking-[0.45em]">Tu plataforma de gestión empresarial</p>
+        <p class="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">Tu plataforma de gestión empresarial</p>
       </div>
 
       <!-- Glass card -->
@@ -57,37 +57,47 @@
           <div class="absolute -bottom-16 -left-12 w-36 h-36 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 70%);"></div>
 
           <!-- Header -->
-          <div class="px-8 pt-7 pb-5 border-b border-white/[0.06] relative z-10">
-            <div class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider mb-3" style="background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.22); color: #fbbf24;">
+          <div class="px-6 pt-5 pb-4 border-b border-white/[0.06] relative z-10">
+            <div class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider mb-2" style="background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.22); color: #fbbf24;">
               <i class="fas fa-hourglass-end text-[9px]"></i>
               Período de prueba finalizado
             </div>
-            <h2 class="text-white/90 text-[20px] font-bold mb-1 leading-tight">
+            <h2 class="text-white/90 text-[17px] font-bold mb-0.5 leading-tight">
               Tu prueba gratuita ha expirado
             </h2>
-            <p class="text-white/40 text-[13px]">
+            <p class="text-white/40 text-[12px]">
               <span v-if="orgName" class="text-white/60 font-semibold">{{ orgName }}</span>
               <span v-if="daysExpired > 0"> · venció hace <span class="text-amber-400 font-semibold">{{ daysExpired }} {{ daysExpired === 1 ? 'día' : 'días' }}</span></span>
             </p>
           </div>
 
           <!-- Body -->
-          <div class="px-8 py-6 relative z-10">
+          <div class="px-6 py-4 relative z-10">
 
-            <p class="text-white/40 text-[13px] mb-5 leading-relaxed">
-              Tus datos están guardados y seguros. Elige un plan para continuar con tu equipo — nada se borra al activar.
+            <p class="text-white/40 text-[12px] mb-3 leading-relaxed">
+              Tus datos están guardados. Activa un plan para continuar — nada se borra.
             </p>
 
+            <!-- Promo urgency badge -->
+            <div class="flex items-center gap-2 mb-2.5 px-3 py-1.5 rounded-xl" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+              <span class="text-[10px] font-bold text-red-400 uppercase tracking-wide">Precio especial por tiempo limitado</span>
+            </div>
+
             <!-- Plan único -->
-            <div class="plan-card-pro rounded-2xl p-5 mb-5">
-              <div class="flex items-center justify-between mb-3">
+            <div class="plan-card-pro rounded-xl p-4 mb-3">
+              <div class="flex items-center justify-between mb-1">
                 <div class="text-[10px] font-bold uppercase tracking-wider" style="color: #fbbf24;">Plan Básico</div>
-                <div class="text-white/90 text-[20px] font-bold">
-                  $290.000<span class="text-[11px] font-normal text-white/30">/mes</span>
+                <div class="text-right">
+                  <div class="text-white/25 text-[11px] line-through leading-none mb-0.5">$99.99 USD/mes</div>
+                  <div class="text-white/90 text-[20px] font-bold leading-none">
+                    $59.99<span class="text-[11px] font-normal text-white/30"> USD/mes</span>
+                  </div>
                 </div>
               </div>
-              <div class="grid grid-cols-2 gap-x-4 gap-y-2">
-                <div v-for="f in planFeatures" :key="f" class="flex items-center gap-1.5 text-[12px] text-white/50">
+              <p class="text-amber-400/70 text-[10px] mb-3">Ahorra $480 al año · La promo se acaba pronto</p>
+              <div class="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                <div v-for="f in planFeatures" :key="f" class="flex items-center gap-1.5 text-[11px] text-white/50">
                   <i class="fas fa-check text-[8px] text-amber-400"></i>{{ f }}
                 </div>
               </div>
@@ -96,15 +106,15 @@
             <!-- CTA -->
             <a
               href="mailto:info@gemsinnovations.com?subject=Activar%20plan%20GEMS%20Hub"
-              class="cta-btn flex items-center justify-center gap-2.5 w-full h-11 rounded-xl font-bold text-[14px] transition-all mb-3 text-[#04060d]"
+              class="cta-btn flex items-center justify-center gap-2 w-full h-10 rounded-xl font-bold text-[13px] transition-all mb-2 text-[#04060d]"
             >
-              <i class="fas fa-envelope text-[14px]"></i>
+              <i class="fas fa-envelope text-[13px]"></i>
               Contactar para activar mi plan
             </a>
 
             <button
               @click="logout"
-              class="w-full h-9 text-[12px] font-medium text-white/25 hover:text-white/50 transition-colors"
+              class="w-full h-8 text-[11px] font-medium text-white/25 hover:text-white/50 transition-colors"
             >
               Cerrar sesión
             </button>
@@ -112,8 +122,8 @@
           </div>
 
           <!-- Footer dentro de la card -->
-          <div class="px-8 pb-5 text-center relative z-10">
-            <p class="text-[11px] text-white/20">
+          <div class="px-6 pb-4 text-center relative z-10">
+            <p class="text-[10px] text-white/20">
               ¿Problemas? <a href="mailto:info@gemsinnovations.com" class="text-white/40 hover:text-white/60 underline underline-offset-2 transition-colors">info@gemsinnovations.com</a>
             </p>
           </div>
