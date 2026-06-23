@@ -78,38 +78,19 @@
               Tus datos están guardados y seguros. Elige un plan para continuar con tu equipo — nada se borra al activar.
             </p>
 
-            <!-- Plans -->
-            <div class="grid grid-cols-2 gap-3 mb-5">
-
-              <!-- Básico -->
-              <div class="plan-card rounded-2xl p-4">
-                <div class="text-[10px] font-bold uppercase tracking-wider mb-1" style="color: rgba(255,255,255,0.35);">Básico</div>
-                <div class="text-white/90 text-[20px] font-bold mb-0.5">
+            <!-- Plan único -->
+            <div class="plan-card-pro rounded-2xl p-5 mb-5">
+              <div class="flex items-center justify-between mb-3">
+                <div class="text-[10px] font-bold uppercase tracking-wider" style="color: #fbbf24;">Plan Básico</div>
+                <div class="text-white/90 text-[20px] font-bold">
                   $290.000<span class="text-[11px] font-normal text-white/30">/mes</span>
                 </div>
-                <ul class="mt-3 space-y-1.5">
-                  <li v-for="f in planFeatures.basic" :key="f" class="flex items-start gap-1.5 text-[11px] text-white/40">
-                    <i class="fas fa-check text-[8px] mt-[3px] text-amber-400/70"></i>{{ f }}
-                  </li>
-                </ul>
               </div>
-
-              <!-- Pro -->
-              <div class="plan-card-pro rounded-2xl p-4 relative">
-                <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 text-[9px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-full" style="background: rgba(245,158,11,0.9); color: #04060d;">
-                  Recomendado
+              <div class="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div v-for="f in planFeatures" :key="f" class="flex items-center gap-1.5 text-[12px] text-white/50">
+                  <i class="fas fa-check text-[8px] text-amber-400"></i>{{ f }}
                 </div>
-                <div class="text-[10px] font-bold uppercase tracking-wider mb-1" style="color: #fbbf24;">Pro</div>
-                <div class="text-white/90 text-[20px] font-bold mb-0.5">
-                  $490.000<span class="text-[11px] font-normal text-white/30">/mes</span>
-                </div>
-                <ul class="mt-3 space-y-1.5">
-                  <li v-for="f in planFeatures.pro" :key="f" class="flex items-start gap-1.5 text-[11px] text-white/50">
-                    <i class="fas fa-check text-[8px] mt-[3px] text-amber-400"></i>{{ f }}
-                  </li>
-                </ul>
               </div>
-
             </div>
 
             <!-- CTA -->
@@ -164,10 +145,14 @@ const daysExpired = computed(() => {
   return Math.max(0, Math.floor((Date.now() - new Date(trialEndsAt).getTime()) / 86400000))
 })
 
-const planFeatures = {
-  basic: ['Hasta 5 usuarios', 'Clientes y actividades', 'Tickets y casos', 'Chat interno'],
-  pro:   ['Usuarios ilimitados', 'Todo lo de Básico', 'Prospectos IA', 'Reportes y Wiki'],
-}
+const planFeatures = [
+  'Clientes y prospectos IA',
+  'Actividades y tableros',
+  'Casos y tickets',
+  'Reportes y contabilidad',
+  'Wiki y Daily Scrum',
+  'Gestión de equipo',
+]
 
 const stars = Array.from({ length: 120 }, (_, i) => ({
   id: i,
