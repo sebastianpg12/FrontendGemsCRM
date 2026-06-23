@@ -138,11 +138,11 @@ const orgName = computed(() =>
 )
 
 const daysExpired = computed(() => {
-  const trialEndsAt = (authStore.organization as any)?.trialEndsAt
+  const trialExpiresAt = authStore.organization?.trialExpiresAt
   const forceDays = Number(route.query.days)
   if (forceDays) return forceDays
-  if (!trialEndsAt) return 0
-  return Math.max(0, Math.floor((Date.now() - new Date(trialEndsAt).getTime()) / 86400000))
+  if (!trialExpiresAt) return 0
+  return Math.max(0, Math.floor((Date.now() - new Date(trialExpiresAt).getTime()) / 86400000))
 })
 
 const planFeatures = [

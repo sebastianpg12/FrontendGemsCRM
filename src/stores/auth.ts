@@ -99,9 +99,9 @@ export const useAuthStore = defineStore('auth', () => {
   const isTrialExpired = computed(() => {
     const org = organization.value
     if (!org) return false
-    if (org.plan && org.plan !== 'trial') return false
-    if (!org.trialEndsAt) return false
-    return new Date(org.trialEndsAt) < new Date()
+    if (org.plan && org.plan !== 'free_trial') return false
+    if (!org.trialExpiresAt) return false
+    return new Date(org.trialExpiresAt) < new Date()
   })
   
   // Helper function to safely access permissions

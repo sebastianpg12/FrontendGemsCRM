@@ -100,8 +100,8 @@ export interface OrganizationSummary {
   _id: string
   name: string
   slug: string
-  trialEndsAt?: string | null
-  plan?: 'trial' | 'basic' | 'pro' | 'enterprise' | null
+  trialExpiresAt?: string | null
+  plan?: 'free' | 'free_trial' | 'starter' | 'pro' | 'enterprise' | null
   branding?: {
     displayName?: string | null
     logo?: string | null
