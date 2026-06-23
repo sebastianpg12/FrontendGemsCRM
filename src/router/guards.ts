@@ -30,6 +30,12 @@ export const authGuard = async (
     return
   }
 
+  // Trial expirado: bloquear toda la app excepto la página de expiración
+  if (to.path !== '/trial-expired' && authStore.isTrialExpired) {
+    next('/trial-expired')
+    return
+  }
+
   // Define route permissions
   const routePermissions: Record<string, (role: string, department?: string) => boolean> = {
     '/reports': (role) => ['admin', 'supervisor'].includes(role),

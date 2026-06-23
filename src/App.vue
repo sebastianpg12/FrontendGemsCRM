@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- Rutas standalone (sin sidebar): login y selector de organización -->
-    <router-view v-if="!authStore.isAuthenticated || $route.path === '/login' || $route.path === '/select-org'" />
+    <router-view v-if="!authStore.isAuthenticated || $route.path === '/login' || $route.path === '/select-org' || $route.path === '/trial-expired'" />
     
     <!-- Show main app if authenticated -->
   <div v-else class="min-h-screen bg-slate-50 dark:bg-[#0f172a]">

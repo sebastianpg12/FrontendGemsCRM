@@ -95,6 +95,14 @@ export const useAuthStore = defineStore('auth', () => {
   const isManager = computed(() => ['admin', 'supervisor'].includes(user.value?.role || ''))
   const isSupport = computed(() => ['admin', 'supervisor', 'support'].includes(user.value?.role || ''))
   const isClient = computed(() => user.value?.role === 'client')
+
+  const isTrialExpired = computed(() => {
+    const org = organization.value
+    if (!org) return false
+    if (org.plan && org.plan !== 'trial') return false
+    if (!org.trialEndsAt) return false
+    return new Date(org.trialEndsAt) < new Date()
+  })
   
   // Helper function to safely access permissions
   const getUserPermission = (module: keyof NonNullable<User['permissions']>, action: string) => {
@@ -529,6 +537,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAdmin,
     isSuperAdmin,
     isManager,
+    isTrialExpired,
     
     // Permission computed properties
     canViewDashboard,

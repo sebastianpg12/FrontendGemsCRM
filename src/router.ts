@@ -29,6 +29,7 @@ import OrgSelector from './pages/OrgSelector.vue'
 import OrganizationsAdmin from './pages/admin/OrganizationsAdmin.vue'
 import AuditLog from './pages/admin/AuditLog.vue'
 import Wiki from './pages/Wiki.vue'
+import TrialExpired from './pages/TrialExpired.vue'
 
 const routes = [
   {
@@ -77,6 +78,11 @@ const routes = [
     name: 'OrgSelector',
     component: OrgSelector,
     meta: { requiresAuth: true, skipOrgCheck: true }
+  },
+  {
+    path: '/trial-expired',
+    name: 'TrialExpired',
+    component: TrialExpired,
   },
   {
     path: '/admin/organizations',
@@ -259,7 +265,7 @@ router.beforeEach(async (to, _from, next) => {
   const authStore = useAuthStore()
   
   // Always allow access to public pages
-  if (to.name === 'Login' || to.name === 'Register' || to.name === 'VerifyEmail' || to.name === 'Support') {
+  if (to.name === 'Login' || to.name === 'Register' || to.name === 'VerifyEmail' || to.name === 'Support' || to.name === 'TrialExpired') {
     // If already authenticated and trying to access auth pages, redirect to dashboard
     if ((to.name === 'Login' || to.name === 'Register' || to.name === 'VerifyEmail') && authStore.isAuthenticated) {
       const redirectPath = authStore.user?.role === 'client' ? '/support' : '/'
@@ -280,6 +286,12 @@ router.beforeEach(async (to, _from, next) => {
       next('/login')
       return
     }
+  }
+
+  // Trial expirado: bloquear toda la app excepto la página de expiración
+  if (authStore.isTrialExpired && to.path !== '/trial-expired') {
+    next('/trial-expired')
+    return
   }
 
   // Multi-tenant: si el usuario tiene varias orgs y no eligió una, mandar al selector.
