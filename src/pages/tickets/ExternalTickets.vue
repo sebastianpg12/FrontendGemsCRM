@@ -291,7 +291,7 @@
                   <div class="flex items-center gap-2 pl-2">
                     <label class="p-2 text-slate-400 hover:text-primary-600 cursor-pointer transition-colors relative">
                       <i class="fas fa-paperclip text-sm"></i>
-                      <input type="file" multiple @change="handleCommentFiles" class="hidden">
+                      <input type="file" multiple :accept="TICKET_FILE_ACCEPT" @change="handleCommentFiles" class="hidden">
                       <span v-if="commentFiles.length" class="absolute -top-1 -right-1 w-4 h-4 bg-primary-600 text-[10px] text-white rounded-full flex items-center justify-center font-black animate-bounce">
                         {{ commentFiles.length }}
                       </span>
@@ -325,6 +325,8 @@ import { useAuthStore } from '../../stores/auth'
 import { ticketService } from '../../services/ticketService'
 import PublicTicketForm from '../../components/tickets/PublicTicketForm.vue'
 import { API_CONFIG } from '@/config/api'
+import { useNotifications } from '../../composables/useNotifications'
+import { validateTicketFiles, TICKET_FILE_ACCEPT } from '../../utils/ticketFiles'
 
 const authStore = useAuthStore()
 const tickets = ref<any[]>([])
@@ -339,13 +341,17 @@ const pagination = ref({
 })
 
 // Comment Logic
+const { showError } = useNotifications()
 const commentText = ref('')
 const commentFiles = ref<File[]>([])
 const sendingComment = ref(false)
 
 const handleCommentFiles = (e: any) => {
   const files = Array.from(e.target.files) as File[]
-  commentFiles.value = [...commentFiles.value, ...files]
+  const { accepted, error } = validateTicketFiles(commentFiles.value, files)
+  if (error) showError(error)
+  if (accepted.length) commentFiles.value = [...commentFiles.value, ...accepted]
+  e.target.value = ''
 }
 
 const sendComment = async () => {

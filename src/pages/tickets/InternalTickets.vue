@@ -386,7 +386,24 @@
                  <span class="text-[12px] font-black text-slate-500 uppercase tracking-widest">Descripción Inicial</span>
                </div>
                <p class="text-sm text-slate-700 leading-relaxed font-medium whitespace-pre-wrap mt-2">{{ selectedTicket.description }}</p>
-               
+
+               <!-- Evidencias que el cliente adjuntó al crear el ticket (antes sólo el
+                    cliente las veía en su propia vista; el agente no tenía forma de verlas). -->
+               <div v-if="selectedTicket.attachments?.length" class="mt-4 pt-4 border-t border-slate-200/50">
+                 <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">Evidencias adjuntas por el cliente</p>
+                 <div class="flex flex-wrap gap-2">
+                   <div v-for="(att, i) in selectedTicket.attachments" :key="i"
+                     @click="viewAttachment(att)"
+                     class="group relative w-16 h-16 bg-white border border-slate-200 rounded-lg overflow-hidden cursor-pointer hover:border-primary-400 transition-all"
+                   >
+                     <img v-if="isImgUrl(att)" :src="resolveImageUrl(att)" class="w-full h-full object-cover">
+                     <div v-else class="w-full h-full flex items-center justify-center">
+                       <i class="fas fa-file-alt text-slate-300 text-lg"></i>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+
                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-6 pt-4 border-t border-slate-200/50">
                  <div class="flex items-center gap-3 min-w-0">
                    <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0">
@@ -615,7 +632,7 @@
                   </label>
                   <label class="p-1.5 text-slate-400 hover:text-primary-600 cursor-pointer relative transition-colors">
                     <i class="fas fa-paperclip text-sm"></i>
-                    <input type="file" multiple @change="handleCommentFiles" class="hidden">
+                    <input type="file" multiple :accept="TICKET_FILE_ACCEPT" @change="handleCommentFiles" class="hidden">
                     <span v-if="commentFiles.length" class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-primary-600 text-[9px] text-white rounded-full flex items-center justify-center font-black">
                       {{ commentFiles.length }}
                     </span>
@@ -777,6 +794,7 @@ import type { Case } from '../../services/casesService'
 import type { WikiArticle } from '../../services/wikiService'
 import { formatDistanceToNow, format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import { validateTicketFiles, TICKET_FILE_ACCEPT } from '../../utils/ticketFiles'
 const authStore = useAuthStore()
 const { showSuccess, showError, showWarning, confirmDelete } = useNotifications()
 
@@ -848,7 +866,10 @@ const showAgentSelector = ref(false)
 
 const handleCommentFiles = (e: any) => {
   const files = Array.from(e.target.files) as File[]
-  commentFiles.value = [...commentFiles.value, ...files]
+  const { accepted, error } = validateTicketFiles(commentFiles.value, files)
+  if (error) showError(error)
+  if (accepted.length) commentFiles.value = [...commentFiles.value, ...accepted]
+  e.target.value = ''
 }
 
 const newTicketData = ref({

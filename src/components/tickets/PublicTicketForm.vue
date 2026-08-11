@@ -252,7 +252,7 @@
                   <p class="text-[11px] text-slate-400 uppercase tracking-wider">JPG · PNG · PDF (máx. 5)</p>
                 </div>
               </div>
-              <input type="file" ref="fileInput" multiple class="hidden" @change="handleFileChange" />
+              <input type="file" ref="fileInput" multiple :accept="TICKET_FILE_ACCEPT" class="hidden" @change="handleFileChange" />
 
               <div v-if="selectedFiles.length > 0" class="mt-4 flex flex-wrap gap-2">
                 <div v-for="(file, index) in selectedFiles" :key="index" class="relative group/file bg-white dark:bg-[#334155] border border-slate-200 dark:border-[#334155] p-2 rounded-xl flex items-center gap-3 animate-slide-in">
@@ -355,6 +355,7 @@ import { useNotifications } from '../../composables/useNotifications'
 import { useAuthStore } from '../../stores/auth'
 import WikiContent from '../wiki/WikiContent.vue'
 import { useRoute } from 'vue-router'
+import { validateTicketFiles, TICKET_FILE_ACCEPT } from '../../utils/ticketFiles'
 
 const { showError, showSuccess } = useNotifications()
 const authStore = useAuthStore()
@@ -556,11 +557,9 @@ const handleDrop = (e: DragEvent) => {
 }
 
 const addFiles = (files: File[]) => {
-  if (selectedFiles.value.length + files.length > 5) {
-    showError('Máximo 5 archivos permitidos')
-    return
-  }
-  selectedFiles.value = [...selectedFiles.value, ...files]
+  const { accepted, error } = validateTicketFiles(selectedFiles.value, files)
+  if (error) showError(error)
+  if (accepted.length) selectedFiles.value = [...selectedFiles.value, ...accepted]
 }
 
 const removeFile = (index: number) => {
