@@ -458,6 +458,7 @@ import autoTable from 'jspdf-autotable'
 import { adminService, MODULE_REGISTRY, type OrganizationAdmin, type OrgStats } from '@/services/adminService'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
+import { useNotifications } from '@/composables/useNotifications'
 import ApexCharts from 'vue3-apexcharts'
 
 const apexchart = ApexCharts
@@ -465,6 +466,7 @@ const apexchart = ApexCharts
 const router = useRouter()
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
+const { showError } = useNotifications()
 
 const orgs = ref<OrganizationAdmin[]>([])
 const loading = ref(true)
@@ -567,8 +569,8 @@ async function loadGlobalModules() {
   loadingModules.value = true
   try {
     globalModules.value = await adminService.getGlobalModuleToggles()
-  } catch (err) {
-    console.error(err)
+  } catch (err: any) {
+    showError(err.response?.data?.message || 'No se pudieron cargar los módulos globales')
   } finally {
     loadingModules.value = false
   }
@@ -579,8 +581,8 @@ async function toggleGlobalModule(key: string) {
   savingModule.value = key
   try {
     globalModules.value = await adminService.updateGlobalModuleToggles({ [key]: next })
-  } catch (err) {
-    console.error(err)
+  } catch (err: any) {
+    showError(err.response?.data?.message || 'No se pudo guardar el cambio — intenta de nuevo')
   } finally {
     savingModule.value = null
   }
@@ -783,8 +785,8 @@ async function setOrgModuleOverride(key: string, opt: 'inherit' | 'on' | 'off') 
     statsModal.org.moduleOverrides = updated.moduleOverrides
     const idx = orgs.value.findIndex(o => o._id === statsModal.org!._id)
     if (idx !== -1) orgs.value[idx] = { ...orgs.value[idx], moduleOverrides: updated.moduleOverrides }
-  } catch (err) {
-    console.error(err)
+  } catch (err: any) {
+    showError(err.response?.data?.message || 'No se pudo guardar la excepción de esta organización')
   } finally {
     savingOverride.value = false
   }
