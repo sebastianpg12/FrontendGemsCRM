@@ -387,17 +387,17 @@
                </div>
                <p class="text-sm text-slate-700 leading-relaxed font-medium whitespace-pre-wrap mt-2">{{ selectedTicket.description }}</p>
                
-               <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-200/50">
-                 <div class="flex items-center gap-3">
-                   <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center">
+               <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-6 pt-4 border-t border-slate-200/50">
+                 <div class="flex items-center gap-3 min-w-0">
+                   <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0">
                      <i class="fas fa-user text-xs text-slate-400"></i>
                    </div>
-                   <div class="flex flex-col">
+                   <div class="flex flex-col min-w-0">
                      <span class="text-xs font-black text-slate-800">{{ selectedTicket.submittedBy?.name || 'Usuario' }}</span>
-                     <span class="text-[12px] font-bold text-slate-400">{{ selectedTicket.submittedBy?.email || 'N/A' }}</span>
+                     <span class="text-[12px] font-bold text-slate-400 truncate">{{ selectedTicket.submittedBy?.email || 'N/A' }}</span>
                    </div>
                  </div>
-                 <div class="text-[12px] font-black text-slate-400 uppercase">
+                 <div class="text-[12px] font-black text-slate-400 uppercase whitespace-nowrap shrink-0 sm:text-right">
                     RECIBIDO EL {{ formatDateLong(selectedTicket.createdAt) }}
                  </div>
                </div>
