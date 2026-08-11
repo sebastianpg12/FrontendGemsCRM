@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center font-['Inter',sans-serif] relative overflow-hidden" style="background:#04060d;">
-    <div class="absolute inset-0 pointer-events-none">
+  <div class="min-h-screen w-full flex items-center justify-center font-['Inter',sans-serif] relative overflow-x-hidden overflow-y-auto py-10" style="background:#04060d;">
+    <div class="fixed inset-0 pointer-events-none">
       <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 60% at 20% 30%, rgba(139,92,246,0.18) 0%, transparent 60%);"></div>
       <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 70% at 85% 70%, rgba(139,92,246,0.10) 0%, transparent 60%);"></div>
     </div>
@@ -15,9 +15,19 @@
         </div>
       </div>
 
-      <div class="space-y-3">
+      <div v-if="memberships.length > 6" class="relative mb-3">
+        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-xs"></i>
+        <input
+          v-model="search"
+          type="text"
+          placeholder="Buscar organización…"
+          class="org-search w-full pl-10 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
+        />
+      </div>
+
+      <div class="org-list-scroll space-y-3 max-h-[42vh] overflow-y-auto pr-1 -mr-1">
         <button
-          v-for="m in memberships"
+          v-for="m in filteredMemberships"
           :key="m.organizationId"
           @click="select(m.organizationId)"
           :disabled="loading"
@@ -42,6 +52,10 @@
           </div>
           <i class="fas fa-arrow-right text-white/30 text-sm"></i>
         </button>
+
+        <p v-if="!filteredMemberships.length" class="text-white/30 text-xs text-center py-6">
+          Ninguna organización coincide con "{{ search }}"
+        </p>
       </div>
 
       <button
@@ -75,9 +89,16 @@ const themeStore = useThemeStore()
 
 const loading = ref(false)
 const error = ref<string | null>(null)
+const search = ref('')
 const memberships = computed(() => authStore.memberships)
 // Logos que fallaron al cargar — muestra iniciales en su lugar
 const failedLogos = reactive(new Set<string>())
+
+const filteredMemberships = computed(() => {
+  const q = search.value.trim().toLowerCase()
+  if (!q) return memberships.value
+  return memberships.value.filter(m => m.organizationName.toLowerCase().includes(q))
+})
 
 function initials(name: string) {
   return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
@@ -135,6 +156,31 @@ onMounted(async () => {
   background: rgba(255,255,255,0.07);
   border-color: rgba(139,92,246,0.4);
   transform: translateY(-1px);
+}
+.org-search {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.org-search:focus {
+  border-color: rgba(139,92,246,0.4);
+  background: rgba(255,255,255,0.06);
+}
+.org-list-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,92,246,0.35) transparent;
+}
+.org-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.org-list-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.org-list-scroll::-webkit-scrollbar-thumb {
+  background: rgba(139,92,246,0.35);
+  border-radius: 999px;
+}
+.org-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(139,92,246,0.55);
 }
 .animate-fade-in {
   animation: fadeIn 0.45s cubic-bezier(0.22, 0.68, 0, 1.2) forwards;
