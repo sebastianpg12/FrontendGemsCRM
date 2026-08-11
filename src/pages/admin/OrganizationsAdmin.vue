@@ -64,7 +64,7 @@
       <!-- Filters -->
       <div class="flex flex-col sm:flex-row gap-3 mb-6">
         <div class="relative flex-1">
-          <i class="far fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+          <i class="fas fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
           <input
             v-model="search"
             type="text"
@@ -97,7 +97,7 @@
       <!-- Grid -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div
-          v-for="org in filteredOrgs"
+          v-for="org in pagedOrgs"
           :key="org._id"
           class="org-card p-5 rounded-2xl bg-white dark:bg-slate-900"
         >
@@ -167,7 +167,7 @@
               class="px-3 py-2 rounded-lg text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white bg-slate-100 dark:bg-slate-800 transition"
               title="Editar"
             >
-              <i class="far fa-pen-to-square"></i>
+              <i class="fas fa-pen-to-square"></i>
             </button>
             <button
               v-if="org.status !== 'archived'"
@@ -175,10 +175,38 @@
               class="px-3 py-2 rounded-lg text-xs text-rose-500 hover:text-rose-600 bg-rose-50 dark:bg-rose-500/10 transition"
               title="Archivar"
             >
-              <i class="far fa-trash-can"></i>
+              <i class="fas fa-trash-can"></i>
             </button>
           </div>
         </div>
+      </div>
+
+      <!-- Pagination -->
+      <div v-if="totalPages > 1" class="flex items-center justify-center gap-1.5 mt-6">
+        <button
+          @click="page = Math.max(1, page - 1)"
+          :disabled="page === 1"
+          class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed hover:text-primary-600 transition"
+        >
+          <i class="fas fa-chevron-left text-xs"></i>
+        </button>
+        <button
+          v-for="p in pageNumbers"
+          :key="p"
+          @click="page = p"
+          class="min-w-9 h-9 px-2 rounded-xl text-xs font-bold transition"
+          :class="p === page ? 'bg-primary-600 text-white' : 'text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 shadow-sm hover:text-primary-600'"
+        >
+          {{ p }}
+        </button>
+        <button
+          @click="page = Math.min(totalPages, page + 1)"
+          :disabled="page === totalPages"
+          class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed hover:text-primary-600 transition"
+        >
+          <i class="fas fa-chevron-right text-xs"></i>
+        </button>
+        <span class="text-xs text-slate-400 ml-2">{{ filteredOrgs.length }} organizaciones</span>
       </div>
       </div>
 
@@ -451,7 +479,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
@@ -520,6 +548,20 @@ const filteredOrgs = computed(() =>
     return true
   })
 )
+
+const page = ref(1)
+const pageSize = 12
+const totalPages = computed(() => Math.max(1, Math.ceil(filteredOrgs.value.length / pageSize)))
+const pagedOrgs = computed(() => filteredOrgs.value.slice((page.value - 1) * pageSize, page.value * pageSize))
+// Ventana corta de páginas alrededor de la actual, para no saturar con 40+ botones.
+const pageNumbers = computed(() => {
+  const total = totalPages.value
+  const current = page.value
+  const start = Math.max(1, Math.min(current - 2, total - 4))
+  const end = Math.min(total, start + 4)
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i)
+})
+watch([search, statusFilter], () => { page.value = 1 })
 
 function initials(name: string) {
   return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
