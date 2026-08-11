@@ -407,15 +407,15 @@ class ProspectService {
 
   // ──────────── AI Helpers ────────────
   /**
-   * Llama a Gemini a través del proxy del backend.
-   * La API key NO está en el frontend (seguridad). Vive en GEMINI_API_KEY
-   * del backend y el endpoint /api/ai/gemini-generate la usa internamente.
+   * Llama a OpenAI a través del proxy del backend.
+   * La API key NO está en el frontend (seguridad). Vive en OPENAI_API_KEY
+   * del backend y el endpoint /api/ai/generate la usa internamente.
    */
-  async generateWithGemini(input: {
+  async generateWithAI(input: {
     prompt: string
     images?: Array<{ mimeType: string; data: string }>
   }): Promise<string> {
-    const response = await apiFetch(`${API_CONFIG.BASE_URL}/ai/gemini-generate`, {
+    const response = await apiFetch(`${API_CONFIG.BASE_URL}/ai/generate`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify({
@@ -457,7 +457,7 @@ ESTRUCTURA REQUERIDA (3 bullets exactos):
 
 Tono: directo, sin relleno. Solo los 3 bullets, nada más.`
 
-    const result = await this.generateWithGemini({ prompt })
+    const result = await this.generateWithAI({ prompt })
     await this.addTimelineEntry(prospect._id, {
       type: 'ai_summary',
       description: 'TL;DR generado con IA',
@@ -493,7 +493,7 @@ DEVUELVE EN MARKDOWN (NADA MÁS):
 **Por qué:** (1 frase justificando)
 **Cuándo:** (hoy / esta semana / día específico)`
 
-    const result = await this.generateWithGemini({ prompt })
+    const result = await this.generateWithAI({ prompt })
     await this.addTimelineEntry(prospect._id, {
       type: 'ai_action',
       description: 'Next Best Action sugerida por IA',

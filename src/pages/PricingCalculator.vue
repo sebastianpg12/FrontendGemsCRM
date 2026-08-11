@@ -296,7 +296,7 @@ const DEFAULTS = {
   variableCosts: [
     { key: 'storage',   label: 'Storage promedio (5GB)', icon: 'fa-hard-drive',  value: 0.10, hint: 'Oracle Block Volume: ~$0.0255/GB. Mongo: $0.10/GB después del free tier.' },
     { key: 'egress',    label: 'Egress + bandwidth',     icon: 'fa-arrow-up',    value: 0,    hint: 'Oracle: 10TB/mes gratis (extra $0.0085/GB). En la práctica $0 para SaaS típico.' },
-    { key: 'gemini',    label: 'Gemini API (IA)',        icon: 'fa-microchip',   value: 1.5,  hint: 'Asumiendo ~500 prompts/mes promedio por tenant (Gemini Flash es muy barato).' },
+    { key: 'openai',    label: 'OpenAI API (IA)',        icon: 'fa-microchip',   value: 1.5,  hint: 'Asumiendo ~500 prompts/mes promedio por tenant (gpt-4o-mini es muy barato).' },
     { key: 'attach',    label: 'Adjuntos extra',         icon: 'fa-paperclip',   value: 0.2,  hint: 'Object Storage Oracle: $0.0255/GB. Tickets + casos con archivos.' }
   ] as CostLine[],
   plans: [
