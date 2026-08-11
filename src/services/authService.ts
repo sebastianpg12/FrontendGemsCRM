@@ -185,7 +185,7 @@ export const authService = {
     }
   },
 
-  async registerOrg(data: { orgName: string; userName: string; email: string; password: string }): Promise<AuthResponse> {
+  async registerOrg(data: { orgName: string; userName: string; email: string; password: string; phone: string }): Promise<AuthResponse> {
     try {
       const response = await apiClient.post('/auth/register-org', data)
       return {
@@ -196,6 +196,22 @@ export const authService = {
       return {
         success: false,
         message: error.response?.data?.message || 'Error al registrar organización'
+      }
+    }
+  },
+
+  // Lead de trial vencido: no perder el contacto aunque no responda al mailto.
+  async sendTrialContactRequest(data: { phone?: string; message?: string }): Promise<AuthResponse> {
+    try {
+      const response = await apiClient.post('/auth/trial-contact', data)
+      return {
+        success: response.data.success,
+        message: response.data.message
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.response?.data?.message || 'No se pudo enviar tu solicitud'
       }
     }
   },

@@ -112,6 +112,46 @@
               Contactar para activar mi plan
             </a>
 
+            <!-- Formulario de contacto: no perder el lead si el mailto no abre nada -->
+            <button
+              v-if="!showContactForm && !contactSent"
+              @click="showContactForm = true"
+              class="w-full h-8 text-[11px] font-medium text-white/40 hover:text-white/70 transition-colors mb-1 flex items-center justify-center gap-1.5"
+            >
+              <i class="fas fa-comment-dots text-[10px]"></i>
+              O deja tus datos y te contactamos nosotros
+            </button>
+
+            <div v-if="showContactForm && !contactSent" class="mb-2 p-3 rounded-xl relative z-10" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+              <input
+                v-model="contactPhone"
+                type="tel"
+                placeholder="Tu teléfono (con prefijo, ej. +506 8888-8888)"
+                class="contact-input w-full rounded-lg py-2 px-3 text-[12px] text-white placeholder-white/25 outline-none mb-2 transition-all"
+              />
+              <textarea
+                v-model="contactMessage"
+                rows="2"
+                placeholder="Cuéntanos qué necesitas (opcional)"
+                class="contact-input w-full rounded-lg py-2 px-3 text-[12px] text-white placeholder-white/25 outline-none resize-none mb-2 transition-all"
+              ></textarea>
+              <p v-if="contactError" class="text-rose-400 text-[10px] mb-2">{{ contactError }}</p>
+              <button
+                @click="submitContact"
+                :disabled="contactLoading"
+                class="w-full h-8 rounded-lg text-[11px] font-bold text-amber-300 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
+                style="background: rgba(245,158,11,0.14); border: 1px solid rgba(245,158,11,0.28);"
+              >
+                <i v-if="contactLoading" class="fas fa-circle-notch fa-spin text-[10px]"></i>
+                <span v-else>Enviar y que me contacten</span>
+              </button>
+            </div>
+
+            <div v-if="contactSent" class="mb-2 p-3 rounded-xl flex items-center gap-2 relative z-10" style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25);">
+              <i class="fas fa-check-circle text-emerald-400 text-sm shrink-0"></i>
+              <p class="text-emerald-300 text-[11px] font-semibold">¡Recibido! Te contactaremos pronto.</p>
+            </div>
+
             <button
               @click="logout"
               class="w-full h-8 text-[11px] font-medium text-white/25 hover:text-white/50 transition-colors"
@@ -136,12 +176,36 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useRoute } from 'vue-router'
+import { authService } from '../services/authService'
 
 const authStore = useAuthStore()
 const route = useRoute()
+
+// ── Formulario de contacto (lead) ──
+const showContactForm = ref(false)
+const contactPhone = ref('')
+const contactMessage = ref('')
+const contactLoading = ref(false)
+const contactSent = ref(false)
+const contactError = ref('')
+
+async function submitContact() {
+  contactError.value = ''
+  contactLoading.value = true
+  const result = await authService.sendTrialContactRequest({
+    phone: contactPhone.value.trim(),
+    message: contactMessage.value.trim()
+  })
+  contactLoading.value = false
+  if (result.success) {
+    contactSent.value = true
+  } else {
+    contactError.value = result.message || 'No se pudo enviar tu solicitud. Inténtalo de nuevo.'
+  }
+}
 
 const orgName = computed(() =>
   authStore.organization?.branding?.displayName || authStore.organization?.name || ''
@@ -241,6 +305,15 @@ function logout() {
 .plan-card {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.07);
+}
+
+.contact-input {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.contact-input:focus {
+  border-color: rgba(245,158,11,0.4);
+  background: rgba(255,255,255,0.06);
 }
 
 .plan-card-pro {

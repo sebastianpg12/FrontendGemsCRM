@@ -326,7 +326,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const registerOrg = async (data: { orgName: string; userName: string; email: string; password: string }) => {
+  const registerOrg = async (data: { orgName: string; userName: string; email: string; password: string; phone: string }) => {
     isLoading.value = true
     error.value = null
     try {

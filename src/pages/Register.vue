@@ -115,6 +115,9 @@
             />
           </div>
 
+          <!-- Phone (prefijo país + número) -->
+          <PhoneInput v-model:dial="formData.phoneDial" v-model:number="formData.phoneNumber" />
+
           <!-- Password -->
           <div class="relative group">
             <div class="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 text-white/25 group-focus-within:text-primary-400">
@@ -175,6 +178,8 @@
 import { ref, computed, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useThemeStore } from '../stores/theme'
+import { DEFAULT_COUNTRY_DIAL } from '../utils/countryCodes'
+import PhoneInput from '../components/ui/PhoneInput.vue'
 
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
@@ -183,7 +188,9 @@ const formData = ref({
   orgName: '',
   userName: '',
   email: '',
-  password: ''
+  password: '',
+  phoneDial: DEFAULT_COUNTRY_DIAL,
+  phoneNumber: ''
 })
 
 const showPassword = ref(false)
@@ -212,11 +219,23 @@ const stars = Array.from({ length: 80 }, (_, i) => ({
 }))
 
 const handleRegister = async () => {
-  isLoading.value = true
   error.value = ''
-  
-  const result = await authStore.registerOrg(formData.value)
-  
+
+  const digits = formData.value.phoneNumber.replace(/\D/g, '')
+  if (digits.length < 6) {
+    error.value = 'Ingresa un número de teléfono válido.'
+    return
+  }
+
+  isLoading.value = true
+  const result = await authStore.registerOrg({
+    orgName: formData.value.orgName,
+    userName: formData.value.userName,
+    email: formData.value.email,
+    password: formData.value.password,
+    phone: `${formData.value.phoneDial} ${formData.value.phoneNumber.trim()}`
+  })
+
   isLoading.value = false
   if (result.success) {
     success.value = true
