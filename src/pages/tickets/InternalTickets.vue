@@ -1181,7 +1181,7 @@ const reassignTicket = async (agentId: string) => {
 const createNewTicket = async () => {
   creating.value = true
   try {
-    const response = await ticketService.createPublic(newTicketData.value)
+    const response = await ticketService.createInternal(newTicketData.value)
     if (response.success && response.data) {
       tickets.value.unshift(response.data)
       showNewTicketModal.value = false

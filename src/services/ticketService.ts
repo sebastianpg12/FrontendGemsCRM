@@ -38,6 +38,23 @@ class TicketService {
   }
 
 
+  // Crear ticket manualmente (agente autenticado) — usa la org del propio token,
+  // a diferencia de createPublic() que depende de adivinar el orgSlug en la URL.
+  async createInternal(data: any): Promise<{ success: boolean; data?: Ticket; error?: string }> {
+    try {
+      const response = await fetch(`${this.baseUrl}${this.endpoint}`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      return result;
+    } catch (error: any) {
+      console.error('Error creating internal ticket:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
   // Get all tickets (authenticated) with pagination
   async getAll(filters?: { status?: string; priority?: string; category?: string; assignedTo?: string; page?: number; limit?: number }): Promise<{ success: boolean; data: Ticket[]; pagination: any }> {
     try {

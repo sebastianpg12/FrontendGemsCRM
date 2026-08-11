@@ -5,9 +5,7 @@
     <header v-if="!authStore.isAuthenticated" class="absolute inset-x-0 top-0 z-10 bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-sm border-b border-slate-100 dark:border-[#334155]">
       <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
-          <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center">
-            <i class="fas fa-gem text-white text-[12px]"></i>
-          </div>
+          <img src="/gems-logo.png" alt="GEMS Hub" class="w-7 h-7 rounded-lg object-cover flex-shrink-0" />
           <div>
             <p class="text-xs font-black text-slate-800 dark:text-slate-100 tracking-tight leading-none">GEMS Hub</p>
             <p class="text-[11px] text-slate-400 font-bold uppercase tracking-[0.2em] leading-none mt-0.5">Soporte</p>
