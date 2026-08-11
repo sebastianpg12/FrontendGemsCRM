@@ -112,12 +112,21 @@
               <p class="text-slate-900 dark:text-white font-bold text-sm truncate">{{ org.name }}</p>
               <p class="text-slate-400 text-[13px] truncate font-mono">{{ org.slug }}</p>
             </div>
-            <span
-              class="text-[12px] font-bold uppercase tracking-wider px-2 py-1 rounded-md"
-              :class="statusClass(org.status)"
-            >
-              {{ org.status }}
-            </span>
+            <div class="flex flex-col items-end gap-1 shrink-0">
+              <span
+                class="text-[12px] font-bold uppercase tracking-wider px-2 py-1 rounded-md"
+                :class="statusClass(org.status)"
+              >
+                {{ org.status }}
+              </span>
+              <span
+                v-if="trialBadge(org)"
+                class="text-[11px] font-bold px-2 py-0.5 rounded-md whitespace-nowrap"
+                :class="trialBadge(org)!.class"
+              >
+                {{ trialBadge(org)!.text }}
+              </span>
+            </div>
           </div>
 
           <div class="grid grid-cols-2 gap-2 text-[13px] mb-4">
@@ -138,6 +147,13 @@
               class="flex-1 py-2 rounded-lg text-xs font-bold text-white bg-primary-600 hover:bg-primary-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
             >
               <i class="fas fa-arrow-right-to-bracket mr-1"></i> Entrar
+            </button>
+            <button
+              @click="openStats(org)"
+              class="px-3 py-2 rounded-lg text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white bg-slate-100 dark:bg-slate-800 transition"
+              title="Ver estadísticas"
+            >
+              <i class="fas fa-chart-pie"></i>
             </button>
             <button
               @click="openEdit(org)"
@@ -281,6 +297,86 @@
         </form>
       </div>
     </div>
+
+    <!-- Stats modal -->
+    <div v-if="statsModal.open" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-black/70 backdrop-blur-sm">
+      <div class="rounded-xl max-w-2xl w-full p-7 max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 shadow-2xl">
+        <div class="flex items-start justify-between mb-5">
+          <div class="flex items-center gap-3 min-w-0">
+            <div
+              class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black shrink-0"
+              :style="{ background: statsModal.org?.branding?.accentColor || '#8b5cf6' }"
+            >
+              {{ statsModal.org ? initials(statsModal.org.name) : '' }}
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-slate-900 dark:text-white text-lg font-bold truncate">{{ statsModal.org?.name }}</h3>
+              <p class="text-slate-400 text-xs font-mono truncate">{{ statsModal.org?.slug }}</p>
+            </div>
+          </div>
+          <button @click="closeStats" class="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <i class="fas fa-xmark"></i>
+          </button>
+        </div>
+
+        <div v-if="statsModal.loading" class="text-center py-16 text-slate-400 text-sm">
+          <i class="fas fa-circle-notch fa-spin text-2xl mb-3"></i>
+          <p>Cargando estadísticas…</p>
+        </div>
+        <div v-else-if="statsModal.error" class="p-4 rounded-xl text-rose-700 dark:text-rose-300 text-sm bg-rose-50 dark:bg-rose-500/10">
+          {{ statsModal.error }}
+        </div>
+        <div v-else-if="statsModal.data">
+          <!-- Salud + Trial -->
+          <div class="flex flex-wrap items-center gap-4 mb-5 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full" :class="health.dot"></span>
+              <span class="text-[13px] font-bold" :class="health.text">{{ health.label }}</span>
+            </div>
+            <div v-if="trialInfo" class="text-[13px] font-bold" :class="trialInfo.class">
+              <i class="fas fa-hourglass-half mr-1 text-[11px]"></i>{{ trialInfo.label }}
+            </div>
+            <div class="text-[13px] text-slate-400 font-medium ml-auto">
+              Creada el {{ new Date(statsModal.data.createdAt).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }) }}
+            </div>
+          </div>
+
+          <!-- KPI grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-6">
+            <div v-for="kpi in statsKpis" :key="kpi.label" class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <i :class="['fas', kpi.icon]" class="text-primary-500 text-[13px] mb-1.5"></i>
+              <p class="text-slate-900 dark:text-white font-black text-lg leading-none">{{ kpi.value }}</p>
+              <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wide mt-1">{{ kpi.label }}</p>
+              <p v-if="kpi.sub" class="text-amber-500 text-[11px] font-bold mt-0.5">{{ kpi.sub }}</p>
+            </div>
+          </div>
+
+          <!-- Miembros por rol -->
+          <div v-if="Object.keys(statsModal.data.membersByRole || {}).length" class="mb-6">
+            <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wide mb-2">Miembros por rol</p>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="[role, count] in membersByRoleList(statsModal.data)"
+                :key="role"
+                class="text-[12px] font-bold px-2.5 py-1 rounded-lg bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300"
+              >
+                {{ role }} · {{ count }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Distribución de uso -->
+          <div v-if="hasAnyData">
+            <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wide mb-2">Distribución de uso</p>
+            <apexchart type="donut" height="240" :options="chartOptions" :series="chartSeries" />
+          </div>
+          <div v-else class="text-center py-8 text-slate-400 text-sm">
+            <i class="fas fa-chart-pie text-2xl mb-2 opacity-30"></i>
+            <p>Esta organización todavía no tiene datos registrados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -289,9 +385,12 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
-import { adminService, type OrganizationAdmin } from '@/services/adminService'
+import { adminService, type OrganizationAdmin, type OrgStats } from '@/services/adminService'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
+import ApexCharts from 'vue3-apexcharts'
+
+const apexchart = ApexCharts
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -314,6 +413,14 @@ const modal = reactive({
   editingId: '' as string,
   saving: false,
   error: '' as string
+})
+
+const statsModal = reactive({
+  open: false,
+  loading: false,
+  org: null as OrganizationAdmin | null,
+  data: null as OrgStats | null,
+  error: ''
 })
 
 const form = reactive({
@@ -349,6 +456,17 @@ function statusClass(status: string) {
     pending: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300',
     archived: 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
   }[status] || 'bg-slate-100 text-slate-500'
+}
+
+// Cuenta regresiva de trial visible de un vistazo en la tarjeta, sin abrir el
+// modal de estadísticas — es la señal que más le importa a control/ventas.
+function trialBadge(org: OrganizationAdmin) {
+  if (org.plan !== 'free_trial' || !org.trialExpiresAt) return null
+  const days = Math.ceil((new Date(org.trialExpiresAt).getTime() - Date.now()) / 86400000)
+  if (days < 0) return { text: `Trial vencido hace ${Math.abs(days)}d`, class: 'bg-rose-100 dark:bg-rose-500/15 text-rose-700 dark:text-rose-300' }
+  if (days <= 3) return { text: `Trial: ${days}d restantes`, class: 'bg-rose-100 dark:bg-rose-500/15 text-rose-700 dark:text-rose-300' }
+  if (days <= 7) return { text: `Trial: ${days}d restantes`, class: 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300' }
+  return { text: `Trial: ${days}d restantes`, class: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300' }
 }
 
 async function load() {
@@ -526,6 +644,82 @@ async function enterOrg(org: OrganizationAdmin) {
     try { await themeStore.load() } catch {}
     await router.push('/')
   }
+}
+
+async function openStats(org: OrganizationAdmin) {
+  statsModal.open = true
+  statsModal.org = org
+  statsModal.data = null
+  statsModal.error = ''
+  statsModal.loading = true
+  try {
+    statsModal.data = await adminService.getStats(org._id)
+  } catch (err: any) {
+    statsModal.error = err.response?.data?.message || err.message || 'No se pudieron cargar las estadísticas'
+  } finally {
+    statsModal.loading = false
+  }
+}
+
+function closeStats() {
+  statsModal.open = false
+}
+
+// Salud de uso: ¿esta organización sigue activa de verdad, o quedó abandonada?
+// Es la señal que más le importa a alguien vendiendo/dando soporte al producto —
+// un plan activo con 0 actividad hace 40 días es una señal de alerta comercial.
+const health = computed(() => {
+  const last = statsModal.data?.lastActivityAt
+  if (!last) return { label: 'Sin actividad registrada', dot: 'bg-slate-300', text: 'text-slate-400' }
+  const days = Math.floor((Date.now() - new Date(last).getTime()) / 86400000)
+  if (days <= 7) return { label: `Activa · hace ${days === 0 ? 'menos de 1 día' : days + 'd'}`, dot: 'bg-emerald-400', text: 'text-emerald-600 dark:text-emerald-400' }
+  if (days <= 30) return { label: `Actividad baja · hace ${days}d`, dot: 'bg-amber-400', text: 'text-amber-600 dark:text-amber-400' }
+  return { label: `Inactiva · hace ${days}d`, dot: 'bg-rose-400', text: 'text-rose-600 dark:text-rose-400' }
+})
+
+const trialInfo = computed(() => {
+  const d = statsModal.data
+  if (!d || d.plan !== 'free_trial' || d.trialDaysRemaining === null) return null
+  const days = d.trialDaysRemaining
+  if (days < 0) return { label: `Trial vencido hace ${Math.abs(days)} días`, class: 'text-rose-600 dark:text-rose-400' }
+  return { label: `${days} días restantes de trial`, class: days <= 3 ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400' }
+})
+
+const statsKpis = computed(() => {
+  const d = statsModal.data
+  if (!d) return []
+  return [
+    { label: 'Miembros activos', value: d.members, icon: 'fa-users' },
+    { label: 'Clientes', value: d.client, icon: 'fa-building-user' },
+    { label: 'Actividades', value: d.activity, icon: 'fa-list-check' },
+    { label: 'Casos / Proyectos', value: d.case, icon: 'fa-briefcase' },
+    { label: 'Tickets', value: d.ticket, sub: `${d.ticketsOpen} abiertos`, icon: 'fa-headset' },
+    { label: 'Tareas', value: d.task, icon: 'fa-clipboard-check' },
+    { label: 'Artículos Wiki', value: d.wiki, icon: 'fa-book' },
+    { label: 'Prospectos', value: d.prospectconversation, icon: 'fa-comments' },
+  ]
+})
+
+const chartSeries = computed(() => {
+  const d = statsModal.data
+  if (!d) return []
+  return [d.client, d.activity, d.case, d.ticket, d.task, d.wiki, d.prospectconversation]
+})
+const chartLabels = ['Clientes', 'Actividades', 'Casos', 'Tickets', 'Tareas', 'Wiki', 'Prospectos']
+const chartOptions = computed(() => ({
+  chart: { fontFamily: 'Inter, sans-serif' },
+  labels: chartLabels,
+  colors: ['#8b5cf6', '#3b82f6', '#f59e0b', '#ef4444', '#10b981', '#06b6d4', '#ec4899'],
+  legend: { position: 'bottom', fontSize: '11px', fontWeight: 700, labels: { colors: '#94a3b8' } },
+  dataLabels: { enabled: false },
+  stroke: { width: 2 },
+  tooltip: { theme: 'light' },
+  plotOptions: { pie: { donut: { size: '62%', labels: { show: true, total: { show: true, label: 'Total', fontSize: '11px', color: '#94a3b8' } } } } }
+}))
+const hasAnyData = computed(() => chartSeries.value.some(n => n > 0))
+
+function membersByRoleList(data: OrgStats) {
+  return Object.entries(data.membersByRole || {}).sort((a, b) => b[1] - a[1])
 }
 
 onMounted(load)

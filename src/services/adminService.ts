@@ -5,7 +5,8 @@ export interface OrganizationAdmin {
   name: string
   slug: string
   status: 'active' | 'suspended' | 'pending' | 'archived'
-  plan: 'free' | 'starter' | 'pro' | 'enterprise'
+  plan: 'free' | 'free_trial' | 'starter' | 'pro' | 'enterprise'
+  trialExpiresAt?: string | null
   branding?: {
     displayName?: string | null
     logo?: string | null
@@ -19,6 +20,24 @@ export interface OrganizationAdmin {
   memberCount?: number
   createdAt?: string
   updatedAt?: string
+}
+
+export interface OrgStats {
+  client: number
+  activity: number
+  case: number
+  ticket: number
+  task: number
+  wiki: number
+  prospectconversation: number
+  members: number
+  membersByRole: Record<string, number>
+  ticketsOpen: number
+  plan: string
+  status: string
+  createdAt: string
+  trialDaysRemaining: number | null
+  lastActivityAt: string | null
 }
 
 export interface CreateOrgPayload {
@@ -58,7 +77,7 @@ export const adminService = {
     return data.data
   },
 
-  async getStats(id: string): Promise<Record<string, number>> {
+  async getStats(id: string): Promise<OrgStats> {
     const { data } = await apiClient.get(`/admin/organizations/${id}/stats`)
     return data.data || {}
   },
