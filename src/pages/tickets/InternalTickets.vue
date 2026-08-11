@@ -481,32 +481,33 @@
               </div>
             </div>
 
-            <!-- Linked Resources -->
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <!-- Linked Resources: cada mitad (Casos/Wiki) se apaga de forma independiente
+                 si su módulo está deshabilitado, sin afectar la otra. -->
+            <div v-if="authStore.isModuleEnabled('cases') || authStore.isModuleEnabled('wiki')" class="bg-white rounded-xl shadow-sm overflow-hidden">
               <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                 <h3 class="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
                   <i class="fas fa-link text-primary-500"></i> Recursos Vinculados
                 </h3>
                 <div class="flex gap-2">
-                  <button @click="openLinkResourceModal('case')" class="px-2.5 py-1.5 bg-white hover:bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-lg text-[11px] font-black uppercase transition-all flex items-center gap-1.5">
+                  <button v-if="authStore.isModuleEnabled('cases')" @click="openLinkResourceModal('case')" class="px-2.5 py-1.5 bg-white hover:bg-indigo-50 text-indigo-600 border border-indigo-100 rounded-lg text-[11px] font-black uppercase transition-all flex items-center gap-1.5">
                     <i class="fas fa-briefcase text-[10px]"></i> + Caso
                   </button>
-                  <button @click="openLinkResourceModal('wiki')" class="px-2.5 py-1.5 bg-white hover:bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[11px] font-black uppercase transition-all flex items-center gap-1.5">
+                  <button v-if="authStore.isModuleEnabled('wiki')" @click="openLinkResourceModal('wiki')" class="px-2.5 py-1.5 bg-white hover:bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[11px] font-black uppercase transition-all flex items-center gap-1.5">
                     <i class="fas fa-book-open text-[10px]"></i> + Wiki
                   </button>
                 </div>
               </div>
-              
+
               <div class="p-4">
-                <div v-if="(selectedTicket.linkedCases?.length || 0) + (selectedTicket.linkedWikiArticles?.length || 0) === 0" 
+                <div v-if="(authStore.isModuleEnabled('cases') ? (selectedTicket.linkedCases?.length || 0) : 0) + (authStore.isModuleEnabled('wiki') ? (selectedTicket.linkedWikiArticles?.length || 0) : 0) === 0"
                      class="py-6 border border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center opacity-40">
                   <i class="fas fa-puzzle-piece text-lg mb-2 text-slate-300"></i>
                   <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Sin recursos asociados</span>
                 </div>
-                
+
                 <div class="grid grid-cols-1 gap-2">
                   <!-- Linked Cases -->
-                  <div v-for="item in selectedTicket.linkedCases" :key="item._id" 
+                  <div v-if="authStore.isModuleEnabled('cases')" v-for="item in selectedTicket.linkedCases" :key="item._id"
                        class="p-3 bg-indigo-50/30 border border-indigo-100 rounded-xl flex items-center justify-between group">
                     <div class="flex items-center gap-3">
                       <div class="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-600 shadow-sm">
@@ -528,7 +529,7 @@
                   </div>
 
                   <!-- Linked Wiki -->
-                  <div v-for="item in selectedTicket.linkedWikiArticles" :key="item._id" 
+                  <div v-if="authStore.isModuleEnabled('wiki')" v-for="item in selectedTicket.linkedWikiArticles" :key="item._id"
                        class="p-3 bg-emerald-50/30 border border-emerald-100 rounded-xl flex items-center justify-between group">
                     <div class="flex items-center gap-3">
                       <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-sm">

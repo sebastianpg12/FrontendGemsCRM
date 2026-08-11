@@ -1,6 +1,7 @@
 ﻿import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { authService, type MembershipSummary, type OrganizationSummary } from '../services/authService'
+import { moduleService, type EnabledModules } from '../services/moduleService'
 
 export interface User {
   _id: string
@@ -80,6 +81,9 @@ export const useAuthStore = defineStore('auth', () => {
   const requiresOrgSelection = ref<boolean>(false)
   // Cuántas orgs tiene el usuario — persiste en localStorage para sobrevivir reloads
   const membershipsCount = ref<number>(Number(localStorage.getItem('memberships_count') || 0))
+  // Apagador de módulos (Prospectos IA, Casos, Wiki, etc.) — global + excepción por
+  // organización, resuelto server-side. null = todavía no se cargó esta sesión.
+  const enabledModules = ref<EnabledModules | null>(null)
 
   // Getters
   const isAuthenticated = computed(() => !!user.value && !!token.value)
@@ -242,6 +246,7 @@ export const useAuthStore = defineStore('auth', () => {
         if (response.organization) {
           organization.value = response.organization
           localStorage.setItem('organization', JSON.stringify(response.organization))
+          loadEnabledModules()
         } else {
           organization.value = null
           localStorage.removeItem('organization')
@@ -282,6 +287,7 @@ export const useAuthStore = defineStore('auth', () => {
         if (response.organization) {
           organization.value = response.organization
           localStorage.setItem('organization', JSON.stringify(response.organization))
+          loadEnabledModules()
         } else {
           organization.value = null
           localStorage.removeItem('organization')
@@ -364,7 +370,10 @@ export const useAuthStore = defineStore('auth', () => {
         requiresOrgSelection.value = false
         if (response.token) localStorage.setItem('token', response.token)
         if (response.refreshToken) localStorage.setItem('refreshToken', response.refreshToken)
-        if (response.organization) localStorage.setItem('organization', JSON.stringify(response.organization))
+        if (response.organization) {
+          localStorage.setItem('organization', JSON.stringify(response.organization))
+          loadEnabledModules()
+        }
         return { success: true }
       }
       error.value = response.message || 'No se pudo seleccionar la organización'
@@ -389,6 +398,7 @@ export const useAuthStore = defineStore('auth', () => {
     memberships.value = []
     membershipsCount.value = 0
     requiresOrgSelection.value = false
+    enabledModules.value = null
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('user')
@@ -420,12 +430,31 @@ export const useAuthStore = defineStore('auth', () => {
       if (response.organization) {
         organization.value = response.organization
         localStorage.setItem('organization', JSON.stringify(response.organization))
+        loadEnabledModules()
       }
       return true
     } catch (err) {
       clearSession()
       return false
     }
+  }
+
+  // Se llama cada vez que queda resuelta una organización activa (login directo,
+  // selectOrganization, o restaurar sesión en checkAuth).
+  const loadEnabledModules = async () => {
+    try {
+      enabledModules.value = await moduleService.getEnabledModules()
+    } catch {
+      enabledModules.value = null // fail-open: isModuleEnabled asume habilitado
+    }
+  }
+
+  // Módulos sin registro aquí (dashboard, clients, profile, etc.) siempre true —
+  // el apagador sólo aplica a los ids listados en TOGGLEABLE_MODULES del backend.
+  const isModuleEnabled = (moduleId: string) => {
+    if (!enabledModules.value) return true
+    if (!(moduleId in enabledModules.value)) return true
+    return enabledModules.value[moduleId] !== false
   }
 
   const updateProfile = async (profileData: Partial<User>) => {
@@ -506,7 +535,9 @@ export const useAuthStore = defineStore('auth', () => {
       modules.push({ id: 'pricing-calculator', name: 'Calculadora', icon: 'fas fa-calculator', path: '/pricing-calculator', canAccess: true })
     }
 
-    return modules.filter(m => m.canAccess)
+    // isModuleEnabled devuelve true para ids que no están en el apagador
+    // (dashboard, clients, theme-settings, admin-orgs, pricing-calculator, etc.)
+    return modules.filter(m => m.canAccess && isModuleEnabled(m.id))
   })
 
   // Helper functions for updating user data
@@ -545,8 +576,10 @@ export const useAuthStore = defineStore('auth', () => {
     canViewActivities,
     canViewReports,
     canViewAccounting,
+    canViewTickets,
     canViewCases,
     canViewTeam,
+    canViewTeamActivities,
     canCreateClients,
     canEditClients,
     canDeleteClients,
@@ -587,7 +620,12 @@ export const useAuthStore = defineStore('auth', () => {
     getAvailableModules,
     registerOrg,
     verifyEmail,
-    checkPermission: getUserPermission
+    checkPermission: getUserPermission,
+
+    // Apagador de módulos
+    enabledModules,
+    isModuleEnabled,
+    loadEnabledModules
   }
 })
 

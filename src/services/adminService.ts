@@ -17,6 +17,7 @@ export interface OrganizationAdmin {
   contact?: { email?: string | null; phone?: string | null; country?: string | null }
   limits?: { maxUsers?: number; maxStorageMb?: number }
   dbConnection?: { uri?: string | null; dbName?: string | null; migratedAt?: string | null }
+  moduleOverrides?: Record<string, boolean>
   memberCount?: number
   createdAt?: string
   updatedAt?: string
@@ -100,6 +101,26 @@ export const adminService = {
   async getAuditLogs(page = 1, limit = 50) {
     const { data } = await apiClient.get('/admin/audit-logs', { params: { page, limit } })
     return data
+  },
+
+  async getGlobalModuleToggles(): Promise<Record<string, boolean>> {
+    const { data } = await apiClient.get('/admin/module-toggles')
+    return data.data || {}
+  },
+
+  async updateGlobalModuleToggles(modules: Record<string, boolean>): Promise<Record<string, boolean>> {
+    const { data } = await apiClient.patch('/admin/module-toggles', { modules })
+    return data.data || {}
   }
 }
+
+export const MODULE_REGISTRY: { key: string; label: string; icon: string }[] = [
+  { key: 'prospects', label: 'Prospectos IA', icon: 'fa-wand-magic-sparkles' },
+  { key: 'activities', label: 'Actividades', icon: 'fa-list-check' },
+  { key: 'reports', label: 'Reportes', icon: 'fa-chart-line' },
+  { key: 'tickets', label: 'Soporte (Tickets)', icon: 'fa-headset' },
+  { key: 'cases', label: 'Casos', icon: 'fa-folder-tree' },
+  { key: 'wiki', label: 'Wiki', icon: 'fa-book-open' },
+  { key: 'team', label: 'Equipo', icon: 'fa-user-group' },
+]
 

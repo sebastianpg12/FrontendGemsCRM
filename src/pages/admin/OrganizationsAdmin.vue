@@ -50,6 +50,13 @@
         >
           <i class="fas fa-shield-alt mr-1.5"></i> Auditoría de Accesos
         </button>
+        <button
+          @click="activeTab = 'modules'; loadGlobalModules()"
+          class="pb-3 text-sm font-bold transition-all border-b-2"
+          :class="activeTab === 'modules' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white'"
+        >
+          <i class="fas fa-toggle-on mr-1.5"></i> Módulos
+        </button>
       </div>
 
       <div v-if="activeTab === 'orgs'">
@@ -219,6 +226,43 @@
           </table>
         </div>
       </div>
+
+      <div v-else-if="activeTab === 'modules'" class="max-w-2xl">
+        <p class="text-slate-500 dark:text-slate-400 text-sm mb-5">
+          Interruptor maestro — apaga aquí un módulo que todavía está en desarrollo para que
+          <strong>ninguna</strong> organización lo vea, sin importar el rol de sus usuarios. Cada
+          organización puede tener su propia excepción desde su modal de estadísticas.
+        </p>
+        <div v-if="loadingModules" class="text-center py-16 text-slate-400 text-sm">
+          <i class="fas fa-circle-notch fa-spin text-2xl mb-3"></i>
+          <p>Cargando módulos…</p>
+        </div>
+        <div v-else class="space-y-2">
+          <div
+            v-for="m in MODULE_REGISTRY"
+            :key="m.key"
+            class="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-900 shadow-sm"
+          >
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-primary-50 dark:bg-primary-500/10 flex items-center justify-center shrink-0">
+                <i :class="['fas', m.icon]" class="text-primary-500 text-sm"></i>
+              </div>
+              <span class="text-sm font-bold text-slate-800 dark:text-white">{{ m.label }}</span>
+            </div>
+            <button
+              @click="toggleGlobalModule(m.key)"
+              :disabled="savingModule === m.key"
+              class="relative w-11 h-6 rounded-full transition-colors disabled:opacity-50 shrink-0"
+              :class="globalModules[m.key] !== false ? 'bg-primary-600' : 'bg-slate-300 dark:bg-slate-700'"
+            >
+              <span
+                class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform"
+                :class="globalModules[m.key] !== false ? 'translate-x-5' : 'translate-x-0'"
+              ></span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Create/Edit modal -->
@@ -365,6 +409,32 @@
             </div>
           </div>
 
+          <!-- Módulos: excepción puntual para esta organización -->
+          <div class="mb-6">
+            <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wide mb-2">
+              Módulos habilitados <span class="normal-case font-medium">(excepción sólo para esta organización)</span>
+            </p>
+            <div class="space-y-1.5">
+              <div v-for="m in MODULE_REGISTRY" :key="m.key" class="flex items-center justify-between px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+                <span class="text-[13px] font-bold text-slate-700 dark:text-slate-300">{{ m.label }}</span>
+                <div class="flex rounded-lg overflow-hidden shadow-sm">
+                  <button
+                    v-for="opt in (['inherit', 'on', 'off'] as const)"
+                    :key="opt"
+                    @click="setOrgModuleOverride(m.key, opt)"
+                    :disabled="savingOverride"
+                    class="px-2.5 py-1 text-[11px] font-bold uppercase transition-colors disabled:opacity-50"
+                    :class="orgOverrideState(m.key) === opt
+                      ? (opt === 'off' ? 'bg-rose-500 text-white' : opt === 'on' ? 'bg-emerald-500 text-white' : 'bg-slate-400 text-white')
+                      : 'bg-white dark:bg-slate-900 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
+                  >
+                    {{ opt === 'inherit' ? 'Global' : opt === 'on' ? 'Activo' : 'Apagado' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Distribución de uso -->
           <div v-if="hasAnyData">
             <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wide mb-2">Distribución de uso</p>
@@ -385,7 +455,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
-import { adminService, type OrganizationAdmin, type OrgStats } from '@/services/adminService'
+import { adminService, MODULE_REGISTRY, type OrganizationAdmin, type OrgStats } from '@/services/adminService'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
 import ApexCharts from 'vue3-apexcharts'
@@ -406,6 +476,10 @@ const activeTab = ref('orgs')
 const auditLogs = ref<any[]>([])
 const loadingAudit = ref(false)
 const exportingPdf = ref(false)
+
+const globalModules = ref<Record<string, boolean>>({})
+const loadingModules = ref(false)
+const savingModule = ref<string | null>(null)
 
 const modal = reactive({
   open: false,
@@ -485,6 +559,30 @@ async function loadAudit() {
     console.error(err)
   } finally {
     loadingAudit.value = false
+  }
+}
+
+async function loadGlobalModules() {
+  if (Object.keys(globalModules.value).length > 0) return
+  loadingModules.value = true
+  try {
+    globalModules.value = await adminService.getGlobalModuleToggles()
+  } catch (err) {
+    console.error(err)
+  } finally {
+    loadingModules.value = false
+  }
+}
+
+async function toggleGlobalModule(key: string) {
+  const next = globalModules.value[key] === false
+  savingModule.value = key
+  try {
+    globalModules.value = await adminService.updateGlobalModuleToggles({ [key]: next })
+  } catch (err) {
+    console.error(err)
+  } finally {
+    savingModule.value = null
   }
 }
 
@@ -663,6 +761,33 @@ async function openStats(org: OrganizationAdmin) {
 
 function closeStats() {
   statsModal.open = false
+}
+
+const savingOverride = ref(false)
+
+function orgOverrideState(key: string): 'inherit' | 'on' | 'off' {
+  const v = statsModal.org?.moduleOverrides?.[key]
+  if (v === undefined || v === null) return 'inherit'
+  return v ? 'on' : 'off'
+}
+
+async function setOrgModuleOverride(key: string, opt: 'inherit' | 'on' | 'off') {
+  if (!statsModal.org) return
+  savingOverride.value = true
+  try {
+    const next = { ...(statsModal.org.moduleOverrides || {}) }
+    if (opt === 'inherit') delete next[key]
+    else next[key] = opt === 'on'
+
+    const updated = await adminService.updateOrganization(statsModal.org._id, { moduleOverrides: next })
+    statsModal.org.moduleOverrides = updated.moduleOverrides
+    const idx = orgs.value.findIndex(o => o._id === statsModal.org!._id)
+    if (idx !== -1) orgs.value[idx] = { ...orgs.value[idx], moduleOverrides: updated.moduleOverrides }
+  } catch (err) {
+    console.error(err)
+  } finally {
+    savingOverride.value = false
+  }
 }
 
 // Salud de uso: ¿esta organización sigue activa de verdad, o quedó abandonada?

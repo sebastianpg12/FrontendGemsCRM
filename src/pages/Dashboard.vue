@@ -372,10 +372,10 @@ const focusProgress = computed(() => {
 const quickActions = computed(() => {
   const all = [
     { label: 'Nuevo cliente', to: '/clients', icon: 'fa-user-plus', iconBg: 'bg-primary-50 group-hover:bg-primary-100', iconColor: 'text-primary-500', hover: 'hover:border-primary-200', can: authStore.canCreateClients },
-    { label: 'Nueva actividad', to: '/activities', icon: 'fa-plus-circle', iconBg: 'bg-green-50 group-hover:bg-green-100', iconColor: 'text-green-500', hover: 'hover:border-green-200', can: authStore.canCreateActivities },
-    { label: 'Revisar tickets', to: '/tickets', icon: 'fa-ticket-alt', iconBg: 'bg-blue-50 group-hover:bg-blue-100', iconColor: 'text-blue-500', hover: 'hover:border-blue-200', can: authStore.canViewCases },
-    { label: 'Nuevo caso', to: '/cases', icon: 'fa-exclamation-circle', iconBg: 'bg-orange-50 group-hover:bg-orange-100', iconColor: 'text-orange-500', hover: 'hover:border-orange-200', can: authStore.canCreateCases },
-    { label: 'Gestionar equipo', to: '/team', icon: 'fa-users-cog', iconBg: 'bg-purple-50 group-hover:bg-purple-100', iconColor: 'text-purple-500', hover: 'hover:border-primary-200', can: authStore.canCreateTeam },
+    { label: 'Nueva actividad', to: '/activities', icon: 'fa-plus-circle', iconBg: 'bg-green-50 group-hover:bg-green-100', iconColor: 'text-green-500', hover: 'hover:border-green-200', can: authStore.canCreateActivities && authStore.isModuleEnabled('activities') },
+    { label: 'Revisar tickets', to: '/tickets', icon: 'fa-ticket-alt', iconBg: 'bg-blue-50 group-hover:bg-blue-100', iconColor: 'text-blue-500', hover: 'hover:border-blue-200', can: authStore.canViewTickets && authStore.isModuleEnabled('tickets') },
+    { label: 'Nuevo caso', to: '/cases', icon: 'fa-exclamation-circle', iconBg: 'bg-orange-50 group-hover:bg-orange-100', iconColor: 'text-orange-500', hover: 'hover:border-orange-200', can: authStore.canCreateCases && authStore.isModuleEnabled('cases') },
+    { label: 'Gestionar equipo', to: '/team', icon: 'fa-users-cog', iconBg: 'bg-purple-50 group-hover:bg-purple-100', iconColor: 'text-purple-500', hover: 'hover:border-primary-200', can: authStore.canCreateTeam && authStore.isModuleEnabled('team') },
   ]
   return all.filter(a => a.can)
 })
@@ -383,10 +383,10 @@ const quickActions = computed(() => {
 const statCards = computed(() => {
   const all = [
     { label: 'Clientes', value: clientsStore.clients.length, tag: 'Base', tagColor: 'text-primary-500', icon: 'fa-users', iconBg: 'bg-primary-50', iconColor: 'text-primary-500', accentBar: 'bg-gradient-to-r from-primary-400 to-primary-300', can: authStore.canViewClients },
-    { label: 'Actividades', value: activeActivities.value, tag: 'Activas', tagColor: 'text-emerald-500', icon: 'fa-clipboard-list', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-500', accentBar: 'bg-gradient-to-r from-emerald-400 to-emerald-300', can: authStore.canViewActivities },
-    { label: 'Casos', value: openCases.value, tag: 'Abiertos', tagColor: 'text-red-500', icon: 'fa-exclamation-triangle', iconBg: 'bg-red-50', iconColor: 'text-red-500', accentBar: 'bg-gradient-to-r from-red-400 to-red-300', can: authStore.canViewCases },
-    { label: 'Tickets', value: pendingTickets.value, tag: 'Pendientes', tagColor: 'text-orange-500', icon: 'fa-ticket-alt', iconBg: 'bg-orange-50', iconColor: 'text-orange-500', accentBar: 'bg-gradient-to-r from-orange-400 to-orange-300', can: authStore.canViewCases },
-    { label: 'Equipo', value: teamStore.members.length, tag: 'Activos', tagColor: 'text-primary-500', icon: 'fa-user-friends', iconBg: 'bg-primary-50', iconColor: 'text-primary-500', accentBar: 'bg-gradient-to-r from-primary-400 to-primary-300', can: authStore.canViewTeam },
+    { label: 'Actividades', value: activeActivities.value, tag: 'Activas', tagColor: 'text-emerald-500', icon: 'fa-clipboard-list', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-500', accentBar: 'bg-gradient-to-r from-emerald-400 to-emerald-300', can: authStore.canViewActivities && authStore.isModuleEnabled('activities') },
+    { label: 'Casos', value: openCases.value, tag: 'Abiertos', tagColor: 'text-red-500', icon: 'fa-exclamation-triangle', iconBg: 'bg-red-50', iconColor: 'text-red-500', accentBar: 'bg-gradient-to-r from-red-400 to-red-300', can: authStore.canViewCases && authStore.isModuleEnabled('cases') },
+    { label: 'Tickets', value: pendingTickets.value, tag: 'Pendientes', tagColor: 'text-orange-500', icon: 'fa-ticket-alt', iconBg: 'bg-orange-50', iconColor: 'text-orange-500', accentBar: 'bg-gradient-to-r from-orange-400 to-orange-300', can: authStore.canViewTickets && authStore.isModuleEnabled('tickets') },
+    { label: 'Equipo', value: teamStore.members.length, tag: 'Activos', tagColor: 'text-primary-500', icon: 'fa-user-friends', iconBg: 'bg-primary-50', iconColor: 'text-primary-500', accentBar: 'bg-gradient-to-r from-primary-400 to-primary-300', can: authStore.canViewTeam && authStore.isModuleEnabled('team') },
   ]
   return all.filter(s => s.can)
 })
@@ -447,9 +447,12 @@ const refreshData = async () => {
   try {
     const ps: Promise<any>[] = []
     if (authStore.canViewClients) ps.push(clientsStore.fetchClients())
-    if (authStore.canViewActivities) ps.push(activitiesStore.fetchActivities())
-    if (authStore.canViewCases) ps.push(issuesStore.fetchIssues())
-    if (authStore.canViewTeam) ps.push(teamStore.fetchTeam())
+    if (authStore.canViewActivities && authStore.isModuleEnabled('activities')) ps.push(activitiesStore.fetchActivities())
+    // El stat "Tickets" también lee de issuesStore (Casos) — se carga si cualquiera
+    // de los dos módulos está habilitado, para no dejar el stat de Tickets en 0
+    // cuando alguien puede verlo pero no tiene permiso/módulo de Casos.
+    if ((authStore.canViewCases && authStore.isModuleEnabled('cases')) || (authStore.canViewTickets && authStore.isModuleEnabled('tickets'))) ps.push(issuesStore.fetchIssues())
+    if (authStore.canViewTeam && authStore.isModuleEnabled('team')) ps.push(teamStore.fetchTeam())
     await Promise.all(ps)
   } finally { isRefreshing.value = false }
 }
@@ -458,9 +461,12 @@ onMounted(async () => {
   try {
     const ps: Promise<any>[] = []
     if (authStore.canViewClients) ps.push(clientsStore.fetchClients())
-    if (authStore.canViewActivities) ps.push(activitiesStore.fetchActivities())
-    if (authStore.canViewCases) ps.push(issuesStore.fetchIssues())
-    if (authStore.canViewTeam) ps.push(teamStore.fetchTeam())
+    if (authStore.canViewActivities && authStore.isModuleEnabled('activities')) ps.push(activitiesStore.fetchActivities())
+    // El stat "Tickets" también lee de issuesStore (Casos) — se carga si cualquiera
+    // de los dos módulos está habilitado, para no dejar el stat de Tickets en 0
+    // cuando alguien puede verlo pero no tiene permiso/módulo de Casos.
+    if ((authStore.canViewCases && authStore.isModuleEnabled('cases')) || (authStore.canViewTickets && authStore.isModuleEnabled('tickets'))) ps.push(issuesStore.fetchIssues())
+    if (authStore.canViewTeam && authStore.isModuleEnabled('team')) ps.push(teamStore.fetchTeam())
     await Promise.all(ps)
   } catch (e) { console.error('Error loading dashboard:', e) }
 })

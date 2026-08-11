@@ -52,7 +52,8 @@ const routes = [
     component: InternalTickets,
     meta: {
       requiresAuth: true,
-      requiredRoles: ['admin', 'supervisor', 'support']
+      requiredRoles: ['admin', 'supervisor', 'support'],
+      moduleKey: 'tickets'
     }
   },
   {
@@ -123,25 +124,28 @@ const routes = [
     component: Prospects,
     meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-clients']
+      requiredPermissions: ['view-clients'],
+      moduleKey: 'prospects'
     }
   },
   {
     path: '/activities',
     name: 'Activities',
     component: Activities,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-activities']
+      requiredPermissions: ['view-activities'],
+      moduleKey: 'activities'
     }
   },
   {
     path: '/reports',
     name: 'Reports',
     component: ReportsView,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredRoles: ['admin', 'supervisor']
+      requiredRoles: ['admin', 'supervisor'],
+      moduleKey: 'reports'
     }
   },
   {
@@ -157,27 +161,30 @@ const routes = [
     path: '/cases',
     name: 'Cases',
     component: CasesView,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-cases']
+      requiredPermissions: ['view-cases'],
+      moduleKey: 'cases'
     }
   },
   {
     path: '/team',
     name: 'Team',
     component: Team,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-team']
+      requiredPermissions: ['view-team'],
+      moduleKey: 'team'
     }
   },
   {
     path: '/team-activities',
     name: 'TeamActivities',
     component: TeamActivities,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-activities', 'view-team']
+      requiredPermissions: ['view-activities', 'view-team'],
+      moduleKey: 'activities'
     }
   },
   {
@@ -200,27 +207,30 @@ const routes = [
     path: '/boards',
     name: 'Boards',
     component: BoardsPage,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-activities']
+      requiredPermissions: ['view-activities'],
+      moduleKey: 'activities'
     }
   },
   {
     path: '/boards/:id',
     name: 'BoardView',
     component: BoardView,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-activities']
+      requiredPermissions: ['view-activities'],
+      moduleKey: 'activities'
     }
   },
   {
     path: '/tasks',
     name: 'Tasks',
     component: TasksBoard,
-    meta: { 
+    meta: {
       requiresAuth: true,
-      requiredPermissions: ['view-activities']
+      requiredPermissions: ['view-activities'],
+      moduleKey: 'activities'
     }
   },
   {
@@ -246,7 +256,8 @@ const routes = [
     name: 'Wiki',
     component: Wiki,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      moduleKey: 'wiki'
     }
   },
   {
@@ -356,7 +367,15 @@ router.beforeEach(async (to, _from, next) => {
     }
 
   }
-  
+
+  // Apagador de módulos: aunque el rol tenga permiso, el módulo puede estar
+  // apagado (global o por excepción de esta organización) — bloquea el acceso
+  // directo por URL igual que ya se oculta del menú lateral.
+  if (to.meta.moduleKey && !authStore.isModuleEnabled(to.meta.moduleKey as string)) {
+    next('/')
+    return
+  }
+
   next()
 })
 
