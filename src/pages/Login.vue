@@ -249,6 +249,15 @@
             />
           </div>
 
+          <label class="flex items-center gap-2.5 px-1 cursor-pointer select-none">
+            <input
+              v-model="trustThisDevice"
+              type="checkbox"
+              class="w-4 h-4 rounded accent-primary-500 cursor-pointer"
+            />
+            <span class="text-[12.5px] text-white/50">No pedir código en este dispositivo por 30 días</span>
+          </label>
+
           <button
             type="submit"
             :disabled="isLoading || twoFactorCode.length !== 6"
@@ -260,7 +269,7 @@
               Verificar
             </template>
           </button>
-          
+
           <div class="text-center mt-4">
              <button type="button" @click="cancel2FA" class="text-[12px] text-white/40 hover:text-white transition-colors uppercase tracking-wider font-bold">
                Cancelar
@@ -358,6 +367,7 @@ const forgotPasswordLoading = ref(false)
 const requires2FA = ref(false)
 const twoFactorCode = ref('')
 const tempToken = ref('')
+const trustThisDevice = ref(true)
 const currentYear = new Date().getFullYear()
 
 // El login es genérico — siempre branding GEMS Hub, sin theme de tenant.
@@ -480,7 +490,7 @@ const handleLogin = async () => {
 
 const handleVerify2FA = async () => {
   if (twoFactorCode.value.length !== 6) return
-  const result = await authStore.verify2FA(tempToken.value, twoFactorCode.value)
+  const result = await authStore.verify2FA(tempToken.value, twoFactorCode.value, trustThisDevice.value)
   if (result.success) {
     localStorage.removeItem(LOGIN_ATTEMPTS_KEY)
     if (result.requiresOrgSelection) {

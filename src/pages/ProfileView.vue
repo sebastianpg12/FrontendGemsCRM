@@ -243,6 +243,34 @@
                   class="flex-1 h-9 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-black text-[13px] transition-all disabled:opacity-50">Confirmar</button>
               </div>
             </div>
+
+            <!-- Dispositivos que se saltan el código 2FA -->
+            <div class="pt-3 border-t border-slate-100 dark:border-[#334155]">
+              <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">Dispositivos de confianza</p>
+              <p class="text-[12px] text-slate-400 mb-3">No piden código por 30 días desde el último uso.</p>
+              <div v-if="loadingTrustedDevices" class="text-center py-4 text-slate-400 text-[12px]">
+                <i class="fas fa-circle-notch fa-spin mr-1.5"></i>Cargando…
+              </div>
+              <div v-else-if="trustedDevices.length === 0" class="text-center py-4 text-slate-400 text-[12px]">
+                Ningún dispositivo marcado como de confianza.
+              </div>
+              <div v-else class="space-y-2">
+                <div v-for="d in trustedDevices" :key="d._id"
+                  class="flex items-center justify-between gap-2 p-2.5 bg-slate-50 dark:bg-[#0f172a] rounded-xl">
+                  <div class="min-w-0">
+                    <p class="text-[12.5px] font-bold text-slate-600 dark:text-slate-300 truncate" :title="d.deviceInfo">
+                      {{ formatLoginEntry(d.deviceInfo) }}
+                    </p>
+                    <p class="text-[11px] text-slate-400">Usado {{ new Date(d.lastUsedAt).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' }) }}</p>
+                  </div>
+                  <button @click="revokeDevice(d._id)" :disabled="revokingDevice === d._id"
+                    class="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition disabled:opacity-50"
+                    title="Revocar">
+                    <i class="fas fa-xmark text-xs"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -339,12 +367,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
 import { useLocaleStore } from '@/stores/localeStore'
 import { usePushNotifications } from '@/composables/usePushNotifications'
-import { userService } from '@/services/userService'
+import { userService, type TrustedDevice } from '@/services/userService'
 import { AvatarService } from '@/services/avatarService'
 import { useNotifications } from '@/composables/useNotifications'
 import ProfilePhotoUploader from '@/components/ProfilePhotoUploader.vue'
@@ -436,6 +464,9 @@ const setup2FAData = ref<{ secret: string; qrCode: string } | null>(null)
 const twoFactorCode = ref('')
 const showDisable2FAForm = ref(false)
 const disable2FAPassword = ref('')
+const trustedDevices = ref<TrustedDevice[]>([])
+const loadingTrustedDevices = ref(false)
+const revokingDevice = ref<string | null>(null)
 
 // ── Computed ──────────────────────────────────────────────────────
 const timezoneLabel = computed(() =>
@@ -557,10 +588,33 @@ const disable2FA = async () => {
     await userService.disable2FA(disable2FAPassword.value)
     profileData.value.isTwoFactorEnabled = false
     showDisable2FAForm.value = false; disable2FAPassword.value = ''
+    trustedDevices.value = []
     showSuccess('2FA desactivado')
   } catch (e: any) { showError(e.message || 'Error desactivando 2FA') }
   finally { loading.value = false }
 }
+
+const loadTrustedDevices = async () => {
+  loadingTrustedDevices.value = true
+  try { trustedDevices.value = await userService.listTrustedDevices() }
+  catch { /* no es crítico, se deja la lista vacía */ }
+  finally { loadingTrustedDevices.value = false }
+}
+
+const revokeDevice = async (id: string) => {
+  revokingDevice.value = id
+  try {
+    await userService.revokeTrustedDevice(id)
+    trustedDevices.value = trustedDevices.value.filter(d => d._id !== id)
+  } catch (e: any) { showError(e.message || 'No se pudo revocar el dispositivo') }
+  finally { revokingDevice.value = null }
+}
+
+watch([activeTab, () => profileData.value.isTwoFactorEnabled], ([tab, enabled]) => {
+  if (tab === '2fa' && enabled && trustedDevices.value.length === 0 && !loadingTrustedDevices.value) {
+    loadTrustedDevices()
+  }
+}, { immediate: true })
 
 const loadProfile = async () => {
   try {

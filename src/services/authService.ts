@@ -23,6 +23,20 @@ apiClient.interceptors.request.use((config) => {
   return config
 })
 
+// Dispositivo "de confianza" para 2FA: un id opaco generado en el cliente y
+// persistido en localStorage, que el backend asocia al usuario cuando marca
+// "confiar en este dispositivo" al verificar el código. Se manda en cada login
+// para que el backend decida si puede saltarse el 2FA.
+const DEVICE_ID_KEY = 'device_id'
+function getDeviceId(): string {
+  let id = localStorage.getItem(DEVICE_ID_KEY)
+  if (!id) {
+    id = crypto.randomUUID()
+    localStorage.setItem(DEVICE_ID_KEY, id)
+  }
+  return id
+}
+
 let isRefreshing = false
 let failedQueue: any[] = []
 
@@ -138,7 +152,7 @@ export interface AuthResponse {
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      const response = await apiClient.post('/auth/login', credentials)
+      const response = await apiClient.post('/auth/login', { ...credentials, deviceId: getDeviceId() })
       if (response.data.success) {
         const d = response.data.data
         if (d.require2FA) {
@@ -231,11 +245,15 @@ export const authService = {
     }
   },
 
-  async verify2FA(tempToken: string, code: string): Promise<AuthResponse> {
+  async verify2FA(tempToken: string, code: string, trustDevice = false): Promise<AuthResponse> {
     try {
-      const response = await apiClient.post('/auth/verify-2fa', { tempToken, code })
+      const response = await apiClient.post('/auth/verify-2fa', { tempToken, code, trustDevice })
       if (response.data.success) {
         const d = response.data.data
+        // Si el usuario pidió confiar en este dispositivo, el backend devuelve
+        // el nuevo deviceId — lo guardamos para que el próximo login lo mande
+        // y se salte el 2FA en esta máquina.
+        if (d.trustedDeviceId) localStorage.setItem(DEVICE_ID_KEY, d.trustedDeviceId)
         return {
           success: true,
           user: d.user,

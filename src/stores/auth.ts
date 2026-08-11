@@ -264,12 +264,12 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const verify2FA = async (tempToken: string, code: string) => {
+  const verify2FA = async (tempToken: string, code: string, trustDevice = false) => {
     try {
       isLoading.value = true
       error.value = null
-      
-      const response = await authService.verify2FA(tempToken, code)
+
+      const response = await authService.verify2FA(tempToken, code, trustDevice)
 
       if (response.success) {
         user.value = response.user || null

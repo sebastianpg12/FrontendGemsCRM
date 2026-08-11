@@ -24,6 +24,15 @@ interface UpdatePasswordData {
   newPassword: string
 }
 
+interface TrustedDevice {
+  _id: string
+  deviceInfo?: string
+  ipAddress?: string
+  lastUsedAt: string
+  expiresAt: string
+  createdAt: string
+}
+
 import { API_CONFIG } from '@/config/api'
 
 class UserService {
@@ -223,7 +232,29 @@ class UserService {
       throw error
     }
   }
+
+  async listTrustedDevices(): Promise<TrustedDevice[]> {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${this.baseUrl}${this.endpoint}/trusted-devices`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    if (!response.ok) throw new Error('Error obteniendo dispositivos de confianza')
+    const data = await response.json()
+    return data.data || []
+  }
+
+  async revokeTrustedDevice(id: string): Promise<void> {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${this.baseUrl}${this.endpoint}/trusted-devices/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    if (!response.ok) {
+      const err = await response.json()
+      throw new Error(err.message || 'Error revocando el dispositivo')
+    }
+  }
 }
 
 export const userService = new UserService()
-export type { UserProfileData, UpdateProfileData, UpdatePasswordData }
+export type { UserProfileData, UpdateProfileData, UpdatePasswordData, TrustedDevice }
