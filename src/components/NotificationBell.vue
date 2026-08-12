@@ -35,11 +35,11 @@
     >
       <div
         v-if="open"
-        class="absolute right-0 bottom-full mb-3 w-96 max-w-[calc(100vw-2rem)] bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden origin-bottom-right"
+        class="absolute right-0 bottom-full mb-3 w-96 max-w-[calc(100vw-2rem)] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] overflow-hidden origin-bottom-right"
       >
         <!-- Header -->
-        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50/40">
-          <h3 class="text-sm font-black text-slate-700 tracking-tight">Notificaciones</h3>
+        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-[#334155] bg-slate-50/40 dark:bg-[#0f172a]/40">
+          <h3 class="text-sm font-black text-slate-700 dark:text-slate-200 tracking-tight">Notificaciones</h3>
           <button
             v-if="hasUnread"
             type="button"
@@ -49,14 +49,14 @@
         </div>
 
         <!-- Filtros tabs -->
-        <div class="flex border-b border-slate-100 px-2">
+        <div class="flex border-b border-slate-100 dark:border-[#334155] px-2">
           <button
             v-for="t in tabs"
             :key="t.id"
             type="button"
             @click="activeTab = t.id"
             class="flex-1 py-2 px-2 text-[12px] font-black uppercase tracking-wider transition-colors relative"
-            :class="activeTab === t.id ? 'text-primary-500' : 'text-slate-400 hover:text-slate-600'"
+            :class="activeTab === t.id ? 'text-primary-500' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'"
           >
             {{ t.label }}
             <span
@@ -73,23 +73,23 @@
           </div>
 
           <div v-else-if="filteredNotifications.length === 0" class="flex flex-col items-center justify-center py-10 text-center px-6">
-            <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center mb-2">
-              <i class="fas fa-inbox text-slate-300 text-lg"></i>
+            <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center mb-2">
+              <i class="fas fa-inbox text-slate-300 dark:text-slate-500 text-lg"></i>
             </div>
             <p class="text-[13px] font-bold text-slate-400 uppercase tracking-widest">Sin notificaciones</p>
-            <p class="text-[12px] text-slate-300 mt-1">Estás al día</p>
+            <p class="text-[12px] text-slate-300 dark:text-slate-500 mt-1">Estás al día</p>
           </div>
 
           <div
             v-for="n in filteredNotifications"
             :key="n._id"
-            class="relative border-b border-slate-100 group"
-            :class="!n.read ? 'bg-primary-50/30' : ''"
+            class="relative border-b border-slate-100 dark:border-[#334155] group"
+            :class="!n.read ? 'bg-primary-50/30 dark:bg-primary-500/10' : ''"
           >
             <button
               type="button"
               @click="onNotificationClick(n)"
-              class="w-full px-4 py-3 hover:bg-slate-50 text-left transition-colors flex items-start gap-3"
+              class="w-full px-4 py-3 hover:bg-slate-50 dark:hover:bg-[#273449] text-left transition-colors flex items-start gap-3"
             >
               <!-- Icono según categoría -->
               <div
@@ -102,11 +102,11 @@
               <!-- Contenido -->
               <div class="flex-1 min-w-0 pr-6">
                 <div class="flex items-center gap-1">
-                  <p class="text-[14px] truncate" :class="!n.read ? 'font-black text-slate-800' : 'font-bold text-slate-500'">{{ n.title }}</p>
+                  <p class="text-[14px] truncate" :class="!n.read ? 'font-black text-slate-800 dark:text-slate-100' : 'font-bold text-slate-500 dark:text-slate-400'">{{ n.title }}</p>
                   <span v-if="!n.read" class="w-1.5 h-1.5 bg-primary-500 rounded-full shrink-0 ml-auto"></span>
                 </div>
-                <p v-if="n.message" class="text-[13px] mt-0.5 line-clamp-2" :class="!n.read ? 'text-slate-600' : 'text-slate-400'">{{ n.message }}</p>
-                <p class="text-[11px] text-slate-300 mt-1 font-bold uppercase tracking-wider">{{ formatDate(n.createdAt) }}</p>
+                <p v-if="n.message" class="text-[13px] mt-0.5 line-clamp-2" :class="!n.read ? 'text-slate-600 dark:text-slate-300' : 'text-slate-400 dark:text-slate-500'">{{ n.message }}</p>
+                <p class="text-[11px] text-slate-300 dark:text-slate-500 mt-1 font-bold uppercase tracking-wider">{{ formatDate(n.createdAt) }}</p>
               </div>
             </button>
 
@@ -115,7 +115,7 @@
               v-if="!n.read"
               type="button"
               @click="dismissNotification($event, n)"
-              class="absolute top-2 right-2 w-6 h-6 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow-sm"
+              class="absolute top-2 right-2 w-6 h-6 rounded-full bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] text-slate-400 hover:text-rose-500 hover:border-rose-200 dark:hover:border-rose-500/40 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow-sm"
               title="Marcar como leída"
             >
               <i class="fas fa-check text-[11px]"></i>
@@ -304,12 +304,12 @@ function categoryIcon(category: string): string {
 
 function categoryIconBg(category: string): string {
   switch (category) {
-    case 'mention': return 'bg-primary-50'
-    case 'assignment': return 'bg-primary-50'
-    case 'comment': return 'bg-emerald-50'
-    case 'due-soon': return 'bg-amber-50'
-    case 'overdue': return 'bg-rose-50'
-    default: return 'bg-slate-50'
+    case 'mention': return 'bg-primary-50 dark:bg-primary-500/15'
+    case 'assignment': return 'bg-primary-50 dark:bg-primary-500/15'
+    case 'comment': return 'bg-emerald-50 dark:bg-emerald-500/15'
+    case 'due-soon': return 'bg-amber-50 dark:bg-amber-500/15'
+    case 'overdue': return 'bg-rose-50 dark:bg-rose-500/15'
+    default: return 'bg-slate-50 dark:bg-slate-700'
   }
 }
 
@@ -370,6 +370,9 @@ onBeforeUnmount(() => {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #E2E8F0;
   border-radius: 10px;
+}
+:global(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 .line-clamp-2 {
   display: -webkit-box;
