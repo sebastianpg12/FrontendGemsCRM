@@ -31,6 +31,10 @@
   /* intento de conexión roto — una línea que no llega */
   .snap{position:absolute;z-index:3;opacity:.5}
 
+  /* scrim — garantiza contraste del título sin importar qué orbe quede detrás */
+  .scrim{position:absolute;left:0;right:0;bottom:0;height:60%;z-index:5;pointer-events:none;
+    background:linear-gradient(to top,rgba(4,5,15,.88) 0%,rgba(4,5,15,.6) 42%,transparent 100%)}
+
   .copy{position:absolute;left:7%;bottom:8%;right:7%;z-index:10}
   .kicker{display:flex;align-items:center;gap:0.9vmin;font-size:1.5vmin;font-weight:800;letter-spacing:.28em;color:var(--gems2);text-transform:uppercase;margin-bottom:1.8vmin}
   .kicker img{width:2.8vmin;height:2.8vmin;object-fit:contain;filter:drop-shadow(0 0 6px rgba(139,92,246,.65))}
@@ -50,11 +54,12 @@
 <div class="stage">
   <div class="grain"></div>
   <div class="field" id="field"></div>
+  <div class="scrim"></div>
 
   <div class="copy">
     <div class="kicker"><img src="public/gems-logo.png" alt="">Gems Hub</div>
     <div class="headline">Tu equipo crece.<br><span class="red">La conexión,</span> <span class="hl">no.</span></div>
-    <div class="sub">Más personas, más chats, más ruido. Y nadie sabe qué está haciendo el otro.</div>
+    <div class="sub">Más personas, más ruido. Y nadie sabe qué está haciendo el otro.</div>
     <div class="cta">Empieza gratis →</div>
   </div>
 </div>
