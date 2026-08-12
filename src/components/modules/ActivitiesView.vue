@@ -92,8 +92,16 @@
       </div>
     </div>
 
-    <!-- Barra de tarea rápida -->
-    <div class="bg-primary-50/60 dark:bg-primary-900/15 rounded-xl p-2 border border-primary-100/80 dark:border-primary-700/30 relative">
+    <!-- Barra de tarea rápida — colapsada por defecto -->
+    <button
+      v-if="!showQuickTask"
+      @click="showQuickTask = true"
+      class="w-full flex items-center gap-2 px-3 py-2 bg-primary-50/60 dark:bg-primary-900/15 hover:bg-primary-100/60 dark:hover:bg-primary-900/25 border border-primary-100/80 dark:border-primary-700/30 rounded-xl text-primary-600 dark:text-primary-400 text-[12px] font-black uppercase tracking-widest transition-colors"
+    >
+      <i class="fas fa-bolt text-[11px]"></i> Tarea rápida
+      <i class="fas fa-chevron-down text-[10px] ml-auto"></i>
+    </button>
+    <div v-else class="bg-primary-50/60 dark:bg-primary-900/15 rounded-xl p-2 border border-primary-100/80 dark:border-primary-700/30 relative">
       <div class="flex items-center gap-2.5">
         <!-- Label -->
         <div class="flex items-center gap-1.5 text-primary-700 dark:text-primary-400 shrink-0 ml-0.5">
@@ -150,6 +158,15 @@
         >
           <i class="fas fa-cog text-[14px]"></i>
         </button>
+
+        <!-- Colapsar -->
+        <button
+          @click.stop="showQuickTask = false"
+          class="p-2 text-primary-300 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-200 hover:bg-primary-100/50 dark:hover:bg-primary-800/30 rounded-lg transition-colors shrink-0"
+          title="Ocultar"
+        >
+          <i class="fas fa-chevron-up text-[12px]"></i>
+        </button>
       </div>
     </div>
 
@@ -200,11 +217,18 @@
           >
             <i class="fas fa-times mr-0.5"></i> Limpiar
           </button>
+          <button
+            @click="showFiltersPanel = !showFiltersPanel"
+            class="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-700 text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-all"
+            :title="showFiltersPanel ? 'Minimizar filtros' : 'Mostrar filtros'"
+          >
+            <i :class="showFiltersPanel ? 'fa-chevron-up' : 'fa-chevron-down'" class="fas text-[12px]"></i>
+          </button>
         </div>
       </div>
 
-      <!-- Filter Selects -->
-      <div class="flex flex-wrap gap-3 items-center p-2.5 sm:p-3">
+      <!-- Filter Selects — minimizados por defecto -->
+      <div v-if="showFiltersPanel" class="flex flex-wrap gap-3 items-center p-2.5 sm:p-3">
         <!-- Filtro por cliente -->
         <div class="flex-1 min-w-[180px]">
           <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
@@ -348,7 +372,7 @@
                       <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[12px] font-black text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-[#0f172a] px-2 py-1 rounded cursor-pointer hover:bg-white dark:hover:bg-[#1e293b] transition-all">
                       <span class="text-primary-600 dark:text-primary-400">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
-                      <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white dark:bg-[#1e293b] rounded-lg shadow-xl border border-slate-200 dark:border-[#334155] p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
+                      <div v-if="editingPercentageId === activity._id" class="absolute top-full left-0 mt-2 z-50 bg-white dark:bg-[#1e293b] rounded-lg shadow-xl border border-slate-200 dark:border-[#334155] p-2 flex items-center gap-2 animate-scale-up origin-top-left" @click.stop>
                         <input
                           type="number"
                           v-model="activity.completionPercentage"
@@ -387,7 +411,7 @@
                         </div>
 
                         <!-- Inline Manual Time Edit Popover -->
-                        <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
+                        <div v-if="editingTimeId === activity._id" class="absolute top-full left-0 mt-2 z-[60] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] p-3 min-w-[140px] animate-scale-up origin-top-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
@@ -971,7 +995,7 @@
 
             <div 
               class="flex flex-col relative group/card transition-all duration-300 cursor-pointer h-full"
-              :class="expandedCards.has(activity._id!) ? '' : 'overflow-hidden'"
+              :class="(expandedCards.has(activity._id!) || editingPercentageId === activity._id || editingTimeId === activity._id) ? '' : 'overflow-hidden'"
               @click="editActivity(activity)"
             >
               <div class="p-2.5 flex flex-col h-full">
@@ -1023,20 +1047,20 @@
                         </div>
 
                         <!-- Manual Time Edit Popover -->
-                        <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
+                        <div v-if="editingTimeId === activity._id" class="absolute top-full left-0 mt-2 z-[60] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] p-3 min-w-[140px] animate-scale-up origin-top-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
                             <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 dark:hover:bg-slate-600 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -1049,8 +1073,8 @@
                       </div>
                       
                       <!-- Popover de edición de porcentaje -->
-                      <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
-                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
+                      <div v-if="editingPercentageId === activity._id" class="absolute top-full left-0 mt-2 z-50 bg-white dark:bg-[#1e293b] rounded-lg shadow-xl border border-slate-200 dark:border-[#334155] p-2 flex items-center gap-2 animate-scale-up origin-top-left" @click.stop>
+                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
                         <button @click.stop="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null" class="p-1 bg-amber-600 text-white rounded hover:bg-amber-700 transition-colors">
                           <i class="fas fa-check text-[10px]"></i>
                         </button>
@@ -1150,7 +1174,7 @@
 
             <div 
               class="flex flex-col relative group/card transition-all duration-300 cursor-pointer h-full"
-              :class="expandedCards.has(activity._id!) ? '' : 'overflow-hidden'"
+              :class="(expandedCards.has(activity._id!) || editingPercentageId === activity._id || editingTimeId === activity._id) ? '' : 'overflow-hidden'"
               @click="editActivity(activity)"
             >
               <div class="p-2.5 flex flex-col h-full">
@@ -1203,20 +1227,20 @@
                         </div>
 
                         <!-- Manual Time Edit Popover -->
-                        <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
+                        <div v-if="editingTimeId === activity._id" class="absolute top-full left-0 mt-2 z-[60] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] p-3 min-w-[140px] animate-scale-up origin-top-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
                             <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 dark:hover:bg-slate-600 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -1229,8 +1253,8 @@
                       </div>
 
                       <!-- Popover de edición de porcentaje -->
-                      <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
-                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
+                      <div v-if="editingPercentageId === activity._id" class="absolute top-full left-0 mt-2 z-50 bg-white dark:bg-[#1e293b] rounded-lg shadow-xl border border-slate-200 dark:border-[#334155] p-2 flex items-center gap-2 animate-scale-up origin-top-left" @click.stop>
+                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
                         <button @click.stop="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null" class="p-1 bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors">
                           <i class="fas fa-check text-[10px]"></i>
                         </button>
@@ -1326,7 +1350,7 @@
 
             <div 
               class="flex flex-col relative group/card transition-all duration-300 cursor-pointer h-full"
-              :class="expandedCards.has(activity._id!) ? '' : 'overflow-hidden'"
+              :class="(expandedCards.has(activity._id!) || editingPercentageId === activity._id || editingTimeId === activity._id) ? '' : 'overflow-hidden'"
               @click="editActivity(activity)"
             >
               <div class="p-2.5 flex flex-col h-full">
@@ -1370,20 +1394,20 @@
                         <i class="far fa-clock text-[10px] text-slate-400"></i>
                         <span class="whitespace-nowrap">{{ formatTime(activity.timeSpent) }}</span>
                       </div>
-                      <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
+                      <div v-if="editingTimeId === activity._id" class="absolute top-full left-0 mt-2 z-[60] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] p-3 min-w-[140px] animate-scale-up origin-top-left" @click.stop>
                         <div class="flex items-center gap-2 mb-2">
                           <div class="flex flex-col gap-1">
                             <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
-                            <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                            <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                           </div>
                           <div class="flex flex-col gap-1">
                             <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
-                            <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                            <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                           </div>
                         </div>
                         <div class="flex gap-1.5">
                           <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                          <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                          <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 dark:hover:bg-slate-600 transition-all">X</button>
                         </div>
                       </div>
                     </div>
@@ -1464,7 +1488,7 @@
 
             <div 
               class="flex flex-col relative group/card transition-all duration-300 cursor-pointer h-full"
-              :class="expandedCards.has(activity._id!) ? '' : 'overflow-hidden'"
+              :class="(expandedCards.has(activity._id!) || editingPercentageId === activity._id || editingTimeId === activity._id) ? '' : 'overflow-hidden'"
               @click="editActivity(activity)"
             >
               <div class="p-2.5 flex flex-col h-full">
@@ -1516,20 +1540,20 @@
                         </div>
 
                         <!-- Manual Time Edit Popover -->
-                        <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
+                        <div v-if="editingTimeId === activity._id" class="absolute top-full left-0 mt-2 z-[60] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] p-3 min-w-[140px] animate-scale-up origin-top-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
                             <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 dark:hover:bg-slate-600 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -1542,8 +1566,8 @@
                       </div>
 
                       <!-- Popover de edición de porcentaje -->
-                      <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
-                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
+                      <div v-if="editingPercentageId === activity._id" class="absolute top-full left-0 mt-2 z-50 bg-white dark:bg-[#1e293b] rounded-lg shadow-xl border border-slate-200 dark:border-[#334155] p-2 flex items-center gap-2 animate-scale-up origin-top-left" @click.stop>
+                        <input v-model="activity.completionPercentage" type="number" min="0" max="100" class="w-16 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all" @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null">
                         <button @click.stop="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null" class="p-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
                           <i class="fas fa-check text-[10px]"></i>
                         </button>
@@ -2744,6 +2768,16 @@ const vFocus = {
 const quickTaskTitle = ref('')
 const showQuickSettings = ref(false)
 const showQuickTaskHints = ref(false)
+// Tarea rápida y filtros: abiertos en Actividades (Kanban/Lista), colapsados
+// en Calendario/Daily — ahí el espacio vertical importa más y antes siempre
+// exigían scroll. Se ajustan solos al cambiar de pestaña.
+const showQuickTask = ref(true)
+const showFiltersPanel = ref(true)
+watch(currentView, (v) => {
+  const compact = v === 'calendar' || v === 'daily'
+  showQuickTask.value = !compact
+  showFiltersPanel.value = !compact
+}, { immediate: true })
 
 // Estados de collapse para vista jerárquica
 const collapsedEpics = ref<Set<string>>(new Set())

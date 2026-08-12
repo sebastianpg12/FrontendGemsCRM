@@ -32,9 +32,12 @@
     </div>
 
     <!-- ═══════════ MES ═══════════ -->
-    <div v-if="view === 'month'" class="p-3">
-      <div class="grid grid-cols-7 gap-1 mb-1">
-        <div v-for="d in weekDays" :key="d" class="py-1.5 text-center text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+    <!-- Filas de eventos estilo Google Calendar (punto + texto, sin chip)
+         para que quepan más sin achicar ni esconder nada; celdas con una
+         altura mínima razonable en vez de crecer sin límite como antes. -->
+    <div v-if="view === 'month'" class="p-3 flex flex-col max-h-[calc(100dvh-260px)] overflow-y-auto custom-scrollbar">
+      <div class="grid grid-cols-7 gap-1 mb-1 shrink-0">
+        <div v-for="d in weekDays" :key="d" class="py-1 text-center text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
           {{ d }}
         </div>
       </div>
@@ -42,7 +45,7 @@
         <div
           v-for="(day, i) in monthDays"
           :key="i"
-          class="group min-h-[104px] rounded-lg border p-1.5 flex flex-col transition-colors cursor-pointer"
+          class="group min-h-[88px] rounded-lg border p-1.5 flex flex-col transition-colors cursor-pointer overflow-hidden"
           :class="[
             day.inMonth ? 'bg-white dark:bg-[#1e293b] border-slate-100 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#273449]'
                         : 'bg-slate-50/60 dark:bg-[#0f172a]/40 border-transparent',
@@ -50,7 +53,7 @@
           ]"
           @click="emitQuickTask(day.date)"
         >
-          <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center justify-between mb-1 shrink-0">
             <span
               class="text-[13px]"
               :class="[
@@ -66,23 +69,24 @@
               <i class="fas fa-plus text-[10px]"></i>
             </button>
           </div>
-          <div class="space-y-0.5 flex-1">
+          <div class="space-y-[1px] flex-1 min-h-0 overflow-hidden">
             <button
-              v-for="a in activitiesForDay(day.date).slice(0, 3)"
+              v-for="a in activitiesForDay(day.date).slice(0, 4)"
               :key="a._id"
-              class="w-full text-left px-1.5 py-0.5 rounded text-[11px] font-bold truncate border-l-2 transition-colors"
-              :class="chipClass(a)"
+              class="w-full flex items-center gap-1.5 text-left px-0.5 py-[1px] rounded text-[11px] font-semibold truncate hover:bg-slate-50 dark:hover:bg-[#273449] transition-colors"
+              :class="a.status === 'cancelled' ? 'line-through opacity-60' : ''"
               :title="a.title"
               @click.stop="emitView(a)"
             >
-              {{ timePrefix(a) }}{{ a.title }}
+              <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="dotClass(a)"></span>
+              <span class="truncate text-slate-700 dark:text-slate-200">{{ timePrefix(a) }}{{ a.title }}</span>
             </button>
             <button
-              v-if="activitiesForDay(day.date).length > 3"
-              class="text-[11px] font-black text-primary-600 dark:text-primary-300 pl-1.5 hover:underline"
+              v-if="activitiesForDay(day.date).length > 4"
+              class="text-[11px] font-black text-primary-600 dark:text-primary-300 pl-2 hover:underline"
               @click.stop="openDay(day.date)"
             >
-              +{{ activitiesForDay(day.date).length - 3 }} más
+              +{{ activitiesForDay(day.date).length - 4 }} más
             </button>
           </div>
         </div>
@@ -212,7 +216,7 @@
     </div>
 
     <!-- Leyenda -->
-    <div class="flex flex-wrap gap-x-4 gap-y-1.5 px-4 py-2.5 border-t border-slate-100 dark:border-[#334155]">
+    <div class="flex flex-wrap gap-x-4 gap-y-1 px-4 py-1.5 border-t border-slate-100 dark:border-[#334155] shrink-0">
       <span v-for="s in legend" :key="s.label" class="flex items-center gap-1.5">
         <span class="w-2.5 h-2.5 rounded" :class="s.dot"></span>
         <span class="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">{{ s.label }}</span>
@@ -369,6 +373,16 @@ const chipClass = (a: Activity) => {
   if (a.status === 'in-progress') return 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500 hover:bg-blue-100 dark:hover:bg-blue-500/20'
   if (isOverdue(a)) return 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500 hover:bg-rose-100 dark:hover:bg-rose-500/20'
   return 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500 hover:bg-amber-100 dark:hover:bg-amber-500/20'
+}
+
+// Fila estilo Google Calendar para la vista de Mes — un punto de color +
+// texto, sin chip/fondo por evento. Cabe más sin esconder ni acortar nada.
+const dotClass = (a: Activity) => {
+  if (a.status === 'completed') return 'bg-emerald-500'
+  if (a.status === 'cancelled') return 'bg-slate-400'
+  if (a.status === 'in-progress') return 'bg-blue-500'
+  if (isOverdue(a)) return 'bg-rose-500'
+  return 'bg-amber-500'
 }
 
 const assigneeName = (a: Activity): string => {

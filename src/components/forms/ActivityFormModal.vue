@@ -1,18 +1,18 @@
 11  |q1|<template>
   <div class="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-2 sm:p-4 z-[100] animate-in fade-in duration-300" @click="closeOnOutsideClick">
     <div
-      class="bg-white rounded-xl shadow-xl w-full max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300"
+      class="bg-white dark:bg-[#1e293b] rounded-xl shadow-xl w-full max-h-[95vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300"
       :class="isEditingTask ? 'max-w-6xl' : 'max-w-3xl'"
       @click.stop
     >
       <!-- Header -->
-      <div class="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-100 bg-slate-50/30">
+      <div class="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-100 dark:border-[#334155] bg-slate-50/30 dark:bg-[#0f172a]/40">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 sm:w-12 sm:h-12 bg-primary-50 rounded-xl flex items-center justify-center border border-primary-100 shadow-sm transition-transform hover:rotate-3 shrink-0">
+          <div class="w-9 h-9 sm:w-12 sm:h-12 bg-primary-50 dark:bg-primary-500/10 rounded-xl flex items-center justify-center border border-primary-100 dark:border-primary-500/20 shadow-sm transition-transform hover:rotate-3 shrink-0">
             <i :class="isEditing ? 'fas fa-pen-nib text-primary-500' : 'fas fa-rocket text-primary-500'" class="text-base sm:text-xl"></i>
           </div>
           <div>
-            <h2 class="text-base sm:text-2xl font-black text-slate-800 tracking-tight leading-tight">
+            <h2 class="text-base sm:text-2xl font-black text-slate-800 dark:text-white tracking-tight leading-tight">
               {{ isEditing ? 'Refinar Tarea' : 'Lanzar Nueva Tarea' }}
             </h2>
             <p class="hidden sm:flex text-[12px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1 items-center gap-2">
@@ -24,7 +24,7 @@
         <button
           type="button"
           @click="$emit('close')"
-          class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all border border-transparent hover:border-rose-100 shrink-0"
+          class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl transition-all border border-transparent hover:border-rose-100 dark:hover:border-rose-500/20 shrink-0"
         >
           <i class="fas fa-times text-base"></i>
         </button>
@@ -46,7 +46,7 @@
                 v-model="form.title"
                 type="text"
                 required
-                class="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all text-sm font-bold shadow-sm placeholder-slate-300"
+                class="w-full px-5 py-3.5 bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-white focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all text-sm font-bold shadow-sm placeholder-slate-300 dark:placeholder-slate-600"
                 placeholder="Ej: Implementar pasarela de pagos..."
               />
             </div>
@@ -84,7 +84,7 @@
                   <input
                     v-model="form.date"
                     type="datetime-local"
-                    class="w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all text-xs font-bold shadow-sm"
+                    class="w-full pl-10 pr-4 py-3 bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-white focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all text-xs font-bold shadow-sm"
                   />
                 </div>
               </div>
@@ -95,7 +95,7 @@
                   <input
                     v-model="form.dueDate"
                     type="datetime-local"
-                    class="w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all text-xs font-bold shadow-sm"
+                    class="w-full pl-10 pr-4 py-3 bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-white focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all text-xs font-bold shadow-sm"
                   />
                 </div>
               </div>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="space-y-2">
                   <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo Responsable</label>
-                  <div class="bg-slate-50/50 border border-slate-200 rounded-xl p-3 shadow-inner h-[180px] sm:h-[320px] flex flex-col overflow-hidden">
+                  <div class="bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl p-3 shadow-inner h-[180px] sm:h-[320px] flex flex-col overflow-hidden">
                     <AssignedUsersSelector
                       v-model="form.assignedTo"
                       :teamMembers="teamMembers"
@@ -137,7 +137,7 @@
                   <textarea
                     v-model="form.description"
                     rows="5"
-                    class="w-full px-5 py-3 bg-slate-50/50 border border-slate-200 rounded-2xl text-slate-700 placeholder-slate-300 focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all resize-none text-sm font-medium leading-relaxed shadow-sm custom-scrollbar"
+                    class="w-full px-5 py-3 bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all resize-none text-sm font-medium leading-relaxed shadow-sm custom-scrollbar"
                     placeholder="Describe los pasos, criterios de aceptación o contexto..."
                   ></textarea>
                 </div>
@@ -163,9 +163,9 @@
                       type="button"
                       @click="form.estimatedTime = time.val"
                       class="px-1 py-2 rounded-xl text-[13px] font-black tracking-wider uppercase transition-all border shadow-sm flex items-center justify-center gap-1"
-                      :class="form.estimatedTime === time.val 
-                        ? 'bg-primary-500 text-white border-primary-600 ring-2 ring-primary-500/20 shadow-primary-500/20' 
-                        : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700'"
+                      :class="form.estimatedTime === time.val
+                        ? 'bg-primary-500 text-white border-primary-600 ring-2 ring-primary-500/20 shadow-primary-500/20'
+                        : 'bg-white dark:bg-[#0f172a] text-slate-500 dark:text-slate-400 border-slate-200 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#1e293b] hover:text-slate-700 dark:hover:text-slate-200'"
                     >
                       <i class="fas fa-clock opacity-70 hidden sm:inline-block"></i>
                       {{ time.label }}
@@ -175,24 +175,24 @@
                       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-pen text-[12px] text-slate-400 group-focus-within:text-primary-500 transition-colors"></i>
                       </div>
-                      <input 
+                      <input
                         v-model="form.estimatedTime"
                         type="text"
                         placeholder="Ej: 3.5h"
-                        class="w-full h-full pl-8 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-700 text-[13px] font-black focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm placeholder-slate-300"
+                        class="w-full h-full pl-8 pr-3 py-2 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-white text-[13px] font-black focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm placeholder-slate-300 dark:placeholder-slate-600"
                       />
                     </div>
                     </div>
                   </div>
 
                   <!-- Progreso -->
-                  <div class="mt-3 bg-white p-2 rounded-xl shadow-sm flex items-center gap-3">
+                  <div class="mt-3 bg-white dark:bg-[#0f172a] p-2 rounded-xl shadow-sm flex items-center gap-3">
                     <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest w-12 text-right">{{ form.completionPercentage || 0 }}%</span>
-                    <input 
-                      type="range" 
-                      v-model.number="form.completionPercentage" 
+                    <input
+                      type="range"
+                      v-model.number="form.completionPercentage"
                       min="0" max="100" step="5"
-                      class="flex-1 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary-500"
+                      class="flex-1 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
                     />
                   </div>
                 </div>
@@ -201,11 +201,11 @@
           </div>
 
           <!-- Footer Actions -->
-          <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-4 pt-4 pb-3 px-1 border-t border-slate-100 mt-6">
+          <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-4 pt-4 pb-3 px-1 border-t border-slate-100 dark:border-[#334155] mt-6">
               <button
                 type="button"
                 @click="$emit('close')"
-                class="h-9 px-5 bg-white text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl transition-all font-black text-[13px] uppercase tracking-widest hover:bg-slate-50 active:scale-95 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                class="h-9 px-5 bg-white dark:bg-[#0f172a] text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white border border-slate-200 dark:border-[#334155] rounded-xl transition-all font-black text-[13px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-[#1e293b] active:scale-95 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
               >
                 Descartar
               </button>
@@ -226,17 +226,17 @@
       <!-- ── Columna de Comentarios (solo al editar una tarea) ── -->
       <div
         v-if="isEditingTask"
-        class="hidden sm:flex w-80 shrink-0 border-l border-slate-100 flex-col bg-slate-50/40"
+        class="hidden sm:flex w-80 shrink-0 border-l border-slate-100 dark:border-[#334155] flex-col bg-slate-50/40 dark:bg-[#0f172a]/40"
       >
         <!-- Header comentarios -->
-        <div class="px-5 py-4 border-b border-slate-100 flex items-center gap-2 shrink-0">
-          <div class="w-7 h-7 rounded-xl bg-primary-50 flex items-center justify-center border border-primary-100">
+        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center gap-2 shrink-0">
+          <div class="w-7 h-7 rounded-xl bg-primary-50 dark:bg-primary-500/10 flex items-center justify-center border border-primary-100 dark:border-primary-500/20">
             <i class="fas fa-comments text-primary-400 text-xs"></i>
           </div>
           <span class="text-[13px] font-black text-slate-400 uppercase tracking-widest">Comentarios</span>
           <span
             v-if="localComments.length > 0"
-            class="ml-auto px-2 py-0.5 bg-primary-100 text-primary-600 text-[12px] font-black rounded-full"
+            class="ml-auto px-2 py-0.5 bg-primary-100 dark:bg-primary-500/15 text-primary-600 dark:text-primary-400 text-[12px] font-black rounded-full"
           >{{ localComments.length }}</span>
         </div>
 
@@ -244,32 +244,32 @@
         <div class="flex-1 overflow-y-auto px-4 py-3 space-y-3 custom-scrollbar">
           <!-- Empty state -->
           <div v-if="localComments.length === 0 && !loadingComments" class="flex flex-col items-center justify-center py-10 text-center">
-            <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center mb-3">
-              <i class="fas fa-comment-slash text-slate-300 text-lg"></i>
+            <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center mb-3">
+              <i class="fas fa-comment-slash text-slate-300 dark:text-slate-500 text-lg"></i>
             </div>
             <p class="text-[13px] font-bold text-slate-400 uppercase tracking-widest">Sin comentarios</p>
-            <p class="text-[12px] text-slate-300 mt-1">Sé el primero en comentar</p>
+            <p class="text-[12px] text-slate-300 dark:text-slate-500 mt-1">Sé el primero en comentar</p>
           </div>
 
           <!-- Comentarios (instantáneo desde props.activity) -->
           <div
             v-for="comment in localComments"
             :key="comment._id"
-            class="bg-white rounded-xl p-3 shadow-sm group"
+            class="bg-white dark:bg-[#1e293b] rounded-xl p-3 shadow-sm group"
           >
             <div class="flex items-center gap-2 mb-1.5">
               <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[11px] font-black shrink-0">
                 {{ getInitials(commentAuthorName(comment)) }}
               </div>
-              <span class="text-[13px] font-black text-slate-700 truncate">{{ commentAuthorName(comment) }}</span>
-              <span class="text-[12px] text-slate-300 ml-auto shrink-0">{{ formatCommentDate(comment.createdAt) }}</span>
+              <span class="text-[13px] font-black text-slate-700 dark:text-slate-200 truncate">{{ commentAuthorName(comment) }}</span>
+              <span class="text-[12px] text-slate-300 dark:text-slate-500 ml-auto shrink-0">{{ formatCommentDate(comment.createdAt) }}</span>
 
               <!-- Botones edit/delete (solo autor) -->
               <div v-if="canEditComment(comment)" class="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity ml-1">
                 <button
                   type="button"
                   @click="startEditComment(comment)"
-                  class="w-5 h-5 rounded-md text-slate-400 hover:text-primary-500 hover:bg-primary-50 flex items-center justify-center transition-all"
+                  class="w-5 h-5 rounded-md text-slate-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-500/10 flex items-center justify-center transition-all"
                   title="Editar"
                 >
                   <i class="fas fa-pen text-[11px]"></i>
@@ -277,7 +277,7 @@
                 <button
                   type="button"
                   @click="deleteComment(comment)"
-                  class="w-5 h-5 rounded-md text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-all"
+                  class="w-5 h-5 rounded-md text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center justify-center transition-all"
                   title="Eliminar"
                 >
                   <i class="fas fa-trash text-[11px]"></i>
@@ -290,7 +290,7 @@
               <textarea
                 v-model="editingCommentText"
                 rows="2"
-                class="w-full px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
+                class="w-full px-2 py-1.5 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-white text-[14px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
               />
               <div class="flex items-center gap-2 mt-1.5">
                 <button
@@ -302,7 +302,7 @@
                 <button
                   type="button"
                   @click="cancelEditComment"
-                  class="px-3 py-1 bg-slate-100 text-slate-500 hover:bg-slate-200 text-[11px] font-black uppercase tracking-wider rounded-lg transition-all"
+                  class="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 text-[11px] font-black uppercase tracking-wider rounded-lg transition-all"
                 >Cancelar</button>
               </div>
             </div>
@@ -310,7 +310,7 @@
             <!-- Texto con menciones resaltadas -->
             <p
               v-else-if="comment.text"
-              class="text-[14px] text-slate-600 leading-relaxed ml-8 whitespace-pre-wrap"
+              class="text-[14px] text-slate-600 dark:text-slate-300 leading-relaxed ml-8 whitespace-pre-wrap"
               v-html="renderMentions(comment.text)"
             ></p>
 
@@ -328,25 +328,25 @@
         </div>
 
         <!-- Input nuevo comentario (fijo al fondo) -->
-        <div class="px-4 py-3 border-t border-slate-100 bg-white shrink-0 relative">
+        <div class="px-4 py-3 border-t border-slate-100 dark:border-[#334155] bg-white dark:bg-[#1e293b] shrink-0 relative">
           <!-- Dropdown de menciones @ -->
           <div
             v-if="mentionOpen && mentionMatches.length > 0"
-            class="absolute bottom-full left-4 right-4 mb-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-44 overflow-y-auto z-30"
+            class="absolute bottom-full left-4 right-4 mb-1 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-[#334155] rounded-xl shadow-xl max-h-44 overflow-y-auto z-30"
           >
             <button
               v-for="(member, idx) in mentionMatches"
               :key="member._id || member.id || idx"
               type="button"
               @mousedown.prevent="selectMention(member)"
-              class="w-full flex items-center gap-2 px-3 py-2 hover:bg-primary-50 transition-colors text-left"
-              :class="idx === mentionActiveIdx ? 'bg-primary-50' : ''"
+              class="w-full flex items-center gap-2 px-3 py-2 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-colors text-left"
+              :class="idx === mentionActiveIdx ? 'bg-primary-50 dark:bg-primary-500/10' : ''"
             >
               <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-[11px] font-black shrink-0">
                 {{ getInitials(member.name) }}
               </div>
               <div class="flex-1 min-w-0">
-                <p class="text-[13px] font-bold text-slate-700 truncate">{{ member.name }}</p>
+                <p class="text-[13px] font-bold text-slate-700 dark:text-slate-200 truncate">{{ member.name }}</p>
                 <p v-if="member.email" class="text-[11px] text-slate-400 truncate">{{ member.email }}</p>
               </div>
             </button>
@@ -355,7 +355,7 @@
           <!-- Previews de imágenes a enviar -->
           <div v-if="commentImagePreviews.length > 0" class="flex flex-wrap gap-1.5 mb-2">
             <div v-for="(src, idx) in commentImagePreviews" :key="idx" class="relative group">
-              <img :src="src" class="w-12 h-12 object-cover rounded-xl border border-slate-200" />
+              <img :src="src" class="w-12 h-12 object-cover rounded-xl border border-slate-200 dark:border-[#334155]" />
               <button
                 type="button"
                 @click="removeCommentImage(idx)"
@@ -371,7 +371,7 @@
             rows="2"
             @input="onCommentInput"
             @keydown="onCommentKeydown"
-            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-2xl text-slate-700 placeholder-slate-300 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
+            class="w-full px-3 py-2 bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 text-[14px] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 resize-none transition-all"
           />
           <div class="flex items-center justify-between mt-2">
             <label class="cursor-pointer flex items-center gap-1.5 text-slate-400 hover:text-primary-500 transition-colors">
