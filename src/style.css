@@ -31,6 +31,13 @@
   box-sizing: border-box;
 }
 
+/* Quita el halo blanco/gris que Chrome y Safari muestran al tocar
+   botones/links en móvil — no es un estilo nuestro, es el highlight
+   táctil nativo del navegador. */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
