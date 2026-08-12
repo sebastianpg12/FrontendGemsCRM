@@ -312,11 +312,11 @@
     </div>
 
     <!-- Vista de Lista -->
-    <div v-else-if="currentView === 'tasks'" class="bg-white rounded-xl shadow-sm shadow-sm mt-6 flex flex-col min-h-0 overflow-visible">
+    <div v-else-if="currentView === 'tasks'" class="bg-white dark:bg-[#1e293b] rounded-xl shadow-sm mt-6 flex flex-col min-h-0 overflow-visible">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
-            <tr class="bg-slate-50/50 border-b border-slate-200 text-[12px] uppercase font-black text-slate-500 tracking-wider">
+            <tr class="bg-slate-50 dark:bg-[#0f172a]/60 border-b border-slate-200 dark:border-[#334155] text-[12px] uppercase font-black text-slate-500 dark:text-slate-400 tracking-wider">
               <th class="py-5 px-4 pl-8">Actividad</th>
               <th class="py-5 px-4 hidden md:table-cell">Cliente</th>
               <th class="py-5 px-4">Asignado</th>
@@ -325,36 +325,36 @@
               <th class="py-5 px-4 pr-8 text-right">Acciones</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100">
-            <tr v-for="activity in filteredActivities" :key="activity._id" class="hover:bg-slate-50/80 transition-colors group">
+          <tbody class="divide-y divide-slate-100 dark:divide-[#334155]">
+            <tr v-for="activity in filteredActivities" :key="activity._id" class="hover:bg-slate-50/80 dark:hover:bg-[#0f172a]/40 transition-colors group">
               <td class="py-6 px-4 pl-8">
-                <div class="font-bold text-slate-800 text-sm tracking-tight cursor-pointer hover:text-primary-600 transition-colors" @click="toggleCardExpansion(activity._id!)">{{ activity.title }}</div>
-                <div 
-                  class="text-[13px] text-slate-500 mt-1.5 max-w-md font-medium cursor-pointer transition-all duration-300"
-                  :class="expandedCards.has(activity._id!) ? 'line-clamp-none bg-slate-50 p-2 rounded mt-2' : 'line-clamp-1'"
+                <div class="font-bold text-slate-800 dark:text-white text-sm tracking-tight cursor-pointer hover:text-primary-600 dark:hover:text-primary-400 transition-colors" @click="toggleCardExpansion(activity._id!)">{{ activity.title }}</div>
+                <div
+                  class="text-[13px] text-slate-500 dark:text-slate-400 mt-1.5 max-w-md font-medium cursor-pointer transition-all duration-300"
+                  :class="expandedCards.has(activity._id!) ? 'line-clamp-none bg-slate-50 dark:bg-[#0f172a] p-2 rounded mt-2' : 'line-clamp-1'"
                   @click="toggleCardExpansion(activity._id!)"
                 >
                   {{ activity.description || 'Sin descripción' }}
                 </div>
-                
+
                 <div v-if="activity.estimatedTime || activity.timeSpent || activity.completionPercentage !== undefined" class="mt-4 flex items-center gap-4">
-                  <div class="flex-1 max-w-[140px] bg-slate-100 rounded-full h-1.5 overflow-hidden flex items-center shadow-inner relative group/progress">
+                  <div class="flex-1 max-w-[140px] bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 overflow-hidden flex items-center shadow-inner relative group/progress">
                     <div class="bg-primary-500 h-1.5 rounded-full transition-all shadow-sm" :style="{ width: `${activity.completionPercentage || 0}%` }"></div>
                   </div>
-                  
+
                   <div class="flex items-center gap-3">
                     <!-- Percentage Edit -->
                     <div class="relative">
-                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[12px] font-black text-slate-600 bg-slate-50 px-2 py-1 rounded cursor-pointer hover:bg-white transition-all">
-                      <span class="text-primary-600">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
+                      <div @click.stop="editingPercentageId = activity._id!" class="flex items-center gap-1 text-[12px] font-black text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-[#0f172a] px-2 py-1 rounded cursor-pointer hover:bg-white dark:hover:bg-[#1e293b] transition-all">
+                      <span class="text-primary-600 dark:text-primary-400">{{ Math.min(activity.completionPercentage || 0, 100) }}%</span>
                       </div>
-                      <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white rounded-lg shadow-xl border border-slate-200 p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
-                        <input 
-                          type="number" 
-                          v-model="activity.completionPercentage" 
+                      <div v-if="editingPercentageId === activity._id" class="absolute bottom-full left-0 mb-2 z-50 bg-white dark:bg-[#1e293b] rounded-lg shadow-xl border border-slate-200 dark:border-[#334155] p-2 flex items-center gap-2 animate-scale-up origin-bottom-left" @click.stop>
+                        <input
+                          type="number"
+                          v-model="activity.completionPercentage"
                           max="100"
                           min="0"
-                          class="w-12 text-[12px] font-bold border-slate-200 rounded p-1"
+                          class="w-12 text-[12px] font-bold border-slate-200 dark:border-[#334155] dark:bg-[#0f172a] dark:text-white rounded p-1"
                           @input="activity.completionPercentage = Math.min(activity.completionPercentage || 0, 100)"
                           @keyup.enter="updatePercentage(activity, activity.completionPercentage); editingPercentageId = null"
                           @blur="editingPercentageId = null"
@@ -367,10 +367,10 @@
                     <!-- Timer & Manual Edit -->
                     <div class="flex items-center gap-1.5">
                       <!-- Starter (Iniciador) -->
-                      <button 
-                        @click.stop="toggleTimer(activity)" 
-                        class="w-7 h-7 flex items-center justify-center rounded-lg transition-all shadow-sm" 
-                        :class="isTimerActive(activity) ? 'text-red-500 bg-red-50 hover:bg-red-100 border border-red-100 animate-pulse' : 'text-primary-500 bg-primary-50 hover:bg-primary-100 border border-primary-50'"
+                      <button
+                        @click.stop="toggleTimer(activity)"
+                        class="w-7 h-7 flex items-center justify-center rounded-lg transition-all shadow-sm"
+                        :class="isTimerActive(activity) ? 'text-red-500 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 border border-red-100 dark:border-red-500/20 animate-pulse' : 'text-primary-500 bg-primary-50 dark:bg-primary-500/10 hover:bg-primary-100 dark:hover:bg-primary-500/20 border border-primary-50 dark:border-primary-500/20'"
                         title="Iniciar/Detener Temporizador"
                       >
                         <i :class="isTimerActive(activity) ? 'fas fa-stop' : 'fas fa-play'" class="text-[11px]"></i>
@@ -378,29 +378,29 @@
 
                       <!-- Manual Time Display (Click to edit) -->
                       <div class="relative">
-                        <div 
-                          @click.stop="startEditingTime(activity)" 
-                          class="flex items-center gap-1.5 text-[12px] font-black text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 cursor-pointer transition-all shadow-sm"
+                        <div
+                          @click.stop="startEditingTime(activity)"
+                          class="flex items-center gap-1.5 text-[12px] font-black text-slate-700 dark:text-slate-200 bg-white dark:bg-[#0f172a] px-2 py-1 rounded border border-slate-200 dark:border-[#334155] cursor-pointer transition-all shadow-sm"
                         >
                           <i class="far fa-clock text-[10px] text-slate-400"></i>
                           <span :class="isTimerActive(activity) ? 'text-red-500 font-black' : ''">{{ formatTime(activity.timeSpent) }}</span>
                         </div>
 
                         <!-- Inline Manual Time Edit Popover -->
-                        <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white rounded-xl shadow-2xl border border-slate-200 p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
+                        <div v-if="editingTimeId === activity._id" class="absolute bottom-full left-0 mb-2 z-[60] bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-slate-200 dark:border-[#334155] p-3 min-w-[140px] animate-scale-up origin-bottom-left" @click.stop>
                           <div class="flex items-center gap-2 mb-2">
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Horas</span>
-                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualHours" type="number" min="0" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                             <div class="flex flex-col gap-1">
                               <span class="text-[10px] font-black text-slate-400 uppercase">Minutos</span>
-                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[12px] font-bold focus:bg-white transition-all">
+                              <input v-model="manualMinutes" type="number" min="0" max="59" class="w-12 px-2 py-1 bg-slate-50 dark:bg-[#0f172a] dark:text-white border border-slate-200 dark:border-[#334155] rounded text-[12px] font-bold focus:bg-white dark:focus:bg-[#0f172a] transition-all">
                             </div>
                           </div>
                           <div class="flex gap-1.5">
                             <button @click="saveManualTime(activity)" class="flex-1 py-1.5 bg-primary-600 text-white rounded-lg text-[11px] font-black uppercase hover:bg-primary-700 transition-all">Guardar</button>
-                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 text-slate-500 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 transition-all">X</button>
+                            <button @click="editingTimeId = null" class="px-2 py-1.5 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-lg text-[11px] font-black uppercase hover:bg-slate-200 dark:hover:bg-slate-600 transition-all">X</button>
                           </div>
                         </div>
                       </div>
@@ -408,7 +408,7 @@
                   </div>
                 </div>
               </td>
-              <td class="py-6 px-4 hidden md:table-cell text-xs font-bold text-slate-600">
+              <td class="py-6 px-4 hidden md:table-cell text-xs font-bold text-slate-600 dark:text-slate-300">
                 {{ getClientName(activity.clientId) }}
               </td>
               <td class="py-6 px-4">
@@ -422,10 +422,10 @@
                         :photo="getUserInfo(user).photo"
                         :avatar="getUserInfo(user).avatar"
                         :hide-name="true"
-                        class="ring-2 ring-white relative"
+                        class="ring-2 ring-white dark:ring-[#1e293b] relative"
                         :style="{ zIndex: 10 - i }"
                       />
-                      <span v-if="activity.assignedTo.length > 3" class="text-[12px] font-black text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full ring-2 ring-white relative z-0 flex items-center justify-center">
+                      <span v-if="activity.assignedTo.length > 3" class="text-[12px] font-black text-slate-500 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded-full ring-2 ring-white dark:ring-[#1e293b] relative z-0 flex items-center justify-center">
                         +{{ activity.assignedTo.length - 3 }}
                       </span>
                     </div>
@@ -455,22 +455,24 @@
                 </span>
               </td>
               <td class="py-6 px-4 pr-8 text-right">
-                <div class="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button @click="markAsCompleted(activity._id!)" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="Completar">
+                <!-- Visibles al 60% siempre (no solo al hover) — en touch no
+                     hay hover, así que quedaban imposibles de descubrir. -->
+                <div class="flex items-center justify-end gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
+                  <button @click="markAsCompleted(activity._id!)" class="p-1.5 text-slate-400 dark:text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 rounded-lg transition-all" title="Completar">
                     <i class="fas fa-check text-xs"></i>
                   </button>
-                  <button v-if="authStore.canEditActivities" @click="editActivity(activity)" class="p-1.5 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all" title="Editar">
+                  <button v-if="authStore.canEditActivities" @click="editActivity(activity)" class="p-1.5 text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-500/10 rounded-lg transition-all" title="Editar">
                     <i class="fas fa-edit text-xs"></i>
                   </button>
-                  <button v-if="authStore.canDeleteActivities" @click="deleteActivity(activity._id!)" class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Eliminar">
+                  <button v-if="authStore.canDeleteActivities" @click="deleteActivity(activity._id!)" class="p-1.5 text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-all" title="Eliminar">
                     <i class="fas fa-trash text-xs"></i>
                   </button>
                 </div>
               </td>
             </tr>
             <tr v-if="filteredActivities.length === 0">
-              <td colspan="6" class="p-12 text-center text-slate-500 text-sm font-medium">
-                <i class="fas fa-list text-4xl text-slate-200 mb-4 block"></i>
+              <td colspan="6" class="p-12 text-center text-slate-500 dark:text-slate-400 text-sm font-medium">
+                <i class="fas fa-list text-4xl text-slate-200 dark:text-slate-600 mb-4 block"></i>
                 No hay actividades para mostrar en la lista
               </td>
             </tr>
@@ -4807,26 +4809,28 @@ const toggleGroup = (groupName: keyof typeof groupsExpanded.value) => {
   groupsExpanded.value[groupName] = !groupsExpanded.value[groupName]
 }
 
+// Los estados reales de una actividad son pending/in-progress/completed/
+// overdue/cancelled (ver visualStatusFor) — las claves anteriores (backlog/
+// todo/review/testing/done) eran de otro tablero y nunca coincidían, por
+// eso el badge en la vista de Lista siempre caía al gris genérico.
 const getStatusBadgeClass = (status: string) => {
   const classes = {
-    backlog: 'bg-gray-600/50 text-gray-300',
-    todo: 'bg-primary-600/50 text-primary-300',
-    'in-progress': 'bg-yellow-600/50 text-yellow-300',
-    review: 'bg-primary-600/50 text-purple-300',
-    testing: 'bg-orange-600/50 text-orange-300',
-    done: 'bg-green-600/50 text-green-300'
+    pending: 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/30',
+    'in-progress': 'bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-400 border-primary-200 dark:border-primary-500/30',
+    completed: 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/30',
+    overdue: 'bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 border-red-200 dark:border-red-500/30',
+    cancelled: 'bg-slate-100 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-600'
   }
-  return classes[status as keyof typeof classes] || classes.backlog
+  return classes[status as keyof typeof classes] || classes.pending
 }
 
 const getStatusLabel = (status: string) => {
   const labels = {
-    backlog: 'Backlog',
-    todo: 'To Do',
-    'in-progress': 'In Progress',
-    review: 'Review',
-    testing: 'Testing',
-    done: 'Done'
+    pending: 'Pendiente',
+    'in-progress': 'En Proceso',
+    completed: 'Completada',
+    overdue: 'Vencida',
+    cancelled: 'Cancelada'
   }
   return labels[status as keyof typeof labels] || status
 }
