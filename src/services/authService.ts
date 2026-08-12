@@ -199,7 +199,7 @@ export const authService = {
     }
   },
 
-  async registerOrg(data: { orgName: string; userName: string; email: string; password: string; phone: string }): Promise<AuthResponse> {
+  async registerOrg(data: { orgName: string; userName: string; email: string; password: string; phone: string; planInterest?: 'monthly' | 'quarterly' | null }): Promise<AuthResponse> {
     try {
       const response = await apiClient.post('/auth/register-org', data)
       return {

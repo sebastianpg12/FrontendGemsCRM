@@ -55,27 +55,63 @@
           <p class="text-white/35 text-[13px] font-medium">Configura tu organización y empieza ahora mismo.</p>
         </div>
 
-        <!-- Pricing teaser: informativo, no bloquea el trial -->
+        <!-- Selector de plan: no bloquea el registro, solo decide el mensaje/aviso -->
         <div class="mb-5 relative z-10">
+          <!-- Gratis -->
+          <button
+            type="button"
+            @click="selectedPlan = 'trial'"
+            class="w-full text-left rounded-xl p-3 mb-2 relative transition-all flex items-center justify-between"
+            :style="selectedPlan === 'trial'
+              ? `background: rgba(16,185,129,0.10); border: 1.5px solid rgba(16,185,129,0.5);`
+              : 'background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.08);'"
+          >
+            <div>
+              <p class="text-[12px] font-bold text-emerald-300 mb-0.5"><i class="fas fa-gift text-[11px] mr-1"></i>Empezar gratis 14 días</p>
+              <p class="text-white/30 text-[10px]">Sin tarjeta · luego $64.99/mes, sin descuento</p>
+            </div>
+            <i v-if="selectedPlan === 'trial'" class="fas fa-circle-check text-emerald-400"></i>
+            <i v-else class="far fa-circle text-white/15"></i>
+          </button>
+
+          <p class="text-center text-[10px] font-bold uppercase tracking-wider text-white/25 mb-2">o apuesta por nosotros — y de por vida apostamos por ti</p>
+
           <div class="grid grid-cols-2 gap-2.5">
             <!-- Mensual -->
-            <div class="rounded-xl p-3 relative" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
-              <p class="text-[9px] font-bold uppercase tracking-wider text-white/35 mb-1.5">Mensual</p>
-              <p class="text-white text-[19px] font-black leading-none mb-0.5">$64.99<span class="text-[10px] font-medium text-white/35">/mes</span></p>
-              <p class="text-white/30 text-[10px]">Cancela cuando quieras</p>
-            </div>
+            <button
+              type="button"
+              @click="selectedPlan = 'monthly'"
+              class="text-left rounded-xl p-3 relative transition-all"
+              :style="selectedPlan === 'monthly'
+                ? `background: rgba(${accentRgb},0.14); border: 1.5px solid rgba(${accentRgb},0.6);`
+                : 'background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.08);'"
+            >
+              <div class="flex items-center justify-between mb-1.5">
+                <p class="text-[9px] font-bold uppercase tracking-wider text-white/35">Mensual</p>
+                <i v-if="selectedPlan === 'monthly'" class="fas fa-circle-check text-[12px]" :style="`color: var(--brand-accent);`"></i>
+              </div>
+              <p class="text-white text-[19px] font-black leading-none mb-0.5">$58.49<span class="text-[10px] font-medium text-white/35">/mes</span></p>
+              <p class="text-white/30 text-[10px] line-through mb-0.5">$64.99/mes</p>
+              <p class="text-[10px] font-bold text-white/50">Reserva tu cupo hoy</p>
+            </button>
             <!-- Trimestral (destacado) -->
-            <div class="rounded-xl p-3 relative overflow-hidden" :style="`background: rgba(${accentRgb},0.12); border: 1.5px solid rgba(${accentRgb},0.5); box-shadow: 0 8px 28px -10px rgba(${accentRgb},0.5);`">
+            <button
+              type="button"
+              @click="selectedPlan = 'quarterly'"
+              class="text-left rounded-xl p-3 relative overflow-hidden transition-all"
+              :style="selectedPlan === 'quarterly'
+                ? `background: rgba(${accentRgb},0.18); border: 1.5px solid rgba(${accentRgb},0.8); box-shadow: 0 8px 28px -10px rgba(${accentRgb},0.6);`
+                : `background: rgba(${accentRgb},0.08); border: 1.5px solid rgba(${accentRgb},0.3);`"
+            >
               <span class="absolute top-0 right-0 text-[8px] font-black px-2 py-0.5 rounded-bl-lg" style="background:#10b981; color:#04160f;">-18% · MEJOR VALOR</span>
-              <p class="text-[9px] font-bold uppercase tracking-wider mb-1.5" :style="`color: var(--brand-accent);`">Trimestral</p>
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <p class="text-[9px] font-bold uppercase tracking-wider" :style="`color: var(--brand-accent);`">Trimestral</p>
+                <i v-if="selectedPlan === 'quarterly'" class="fas fa-circle-check text-[12px]" :style="`color: var(--brand-accent);`"></i>
+              </div>
               <p class="text-white text-[19px] font-black leading-none mb-0.5">$159.99<span class="text-[10px] font-medium text-white/35">/3 meses</span></p>
               <p class="text-[10px] font-bold" :style="`color: var(--brand-accent);`">Precio congelado para siempre</p>
-            </div>
+            </button>
           </div>
-          <p class="text-center text-[11px] text-white/30 mt-2.5">
-            <i class="fas fa-gift text-emerald-400/70 mr-1"></i>
-            Ambos empiezan con <span class="text-emerald-300/90 font-bold">14 días 100% gratis</span> — no se cobra nada hasta que actives tu plan.
-          </p>
         </div>
 
         <!-- Success Message -->
@@ -84,6 +120,9 @@
           <div>
             <h3 class="text-emerald-300 font-bold mb-1 text-sm">¡Registro exitoso!</h3>
             <p class="text-[14px] text-emerald-400/80 leading-snug">Hemos enviado un correo de verificación a <strong>{{ formData.email }}</strong>. Por favor revisa tu bandeja de entrada o spam para activar tu cuenta.</p>
+            <p v-if="selectedPlan !== 'trial'" class="text-[13px] text-emerald-400/80 leading-snug mt-2">
+              Ya avisamos a nuestro equipo que quieres el plan <strong>{{ selectedPlan === 'quarterly' ? 'Trimestral' : 'Mensual' }}</strong> — te contactaremos en breve para activarlo con tu precio fundador.
+            </p>
           </div>
         </div>
 
@@ -172,9 +211,13 @@
             style="background: var(--brand-accent); box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);"
           >
             <i v-if="isLoading" class="fas fa-circle-notch fa-spin text-sm"></i>
-            <template v-else>
+            <template v-else-if="selectedPlan === 'trial'">
               <i class="fas fa-rocket text-xs opacity-75"></i>
               Comenzar prueba gratis
+            </template>
+            <template v-else>
+              <i class="fas fa-star text-xs opacity-75"></i>
+              Crear cuenta y reservar mi precio
             </template>
           </button>
           
@@ -220,6 +263,7 @@ const showPassword = ref(false)
 const isLoading = ref(false)
 const error = ref('')
 const success = ref(false)
+const selectedPlan = ref<'trial' | 'monthly' | 'quarterly'>('trial')
 
 const themeLogo = computed(() => '/gems-logo.png')
 const brandName = computed(() => 'GEMS Hub')
@@ -256,7 +300,8 @@ const handleRegister = async () => {
     userName: formData.value.userName,
     email: formData.value.email,
     password: formData.value.password,
-    phone: `${formData.value.phoneDial} ${formData.value.phoneNumber.trim()}`
+    phone: `${formData.value.phoneDial} ${formData.value.phoneNumber.trim()}`,
+    planInterest: selectedPlan.value === 'trial' ? null : selectedPlan.value
   })
 
   isLoading.value = false

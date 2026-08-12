@@ -332,7 +332,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const registerOrg = async (data: { orgName: string; userName: string; email: string; password: string; phone: string }) => {
+  const registerOrg = async (data: { orgName: string; userName: string; email: string; password: string; phone: string; planInterest?: 'monthly' | 'quarterly' | null }) => {
     isLoading.value = true
     error.value = null
     try {
