@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS Hub — Todo tu negocio, en un solo lugar</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--gems:#8b5cf6;--gems2:#a78bfa;--red:#ff5470}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
+  html,body{background:#000;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+  .stage{
+    position:relative;width:96vmin;height:96vmin;
+    background:#04050f;overflow:hidden;
+    box-shadow:0 40px 140px rgba(0,0,0,.8);
+  }
+
+  .art{
+    position:absolute;inset:0;width:100%;height:100%;z-index:1;
+    object-fit:cover;object-position:56% 42%;
+    filter:saturate(1.05) contrast(1.03);
+  }
+
+  /* funde los bordes de la foto con el #04050f de marca */
+  .vignette{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(120% 100% at 55% 38%,transparent 48%,#04050f 100%)}
+
+  .grain{position:absolute;inset:0;opacity:.35;z-index:3;pointer-events:none;
+    background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);
+    background-size:36px 36px}
+
+  /* scrim — el título siempre se lee, sin importar qué haya detrás en la foto */
+  .scrim{position:absolute;left:0;right:0;bottom:0;height:56%;z-index:4;pointer-events:none;
+    background:linear-gradient(to top,rgba(4,5,15,.92) 0%,rgba(4,5,15,.65) 40%,transparent 100%)}
+
+  .copy{position:absolute;left:7%;bottom:8%;right:7%;z-index:10}
+  .kicker{display:flex;align-items:center;gap:0.9vmin;font-size:1.5vmin;font-weight:800;letter-spacing:.28em;color:var(--gems2);text-transform:uppercase;margin-bottom:1.8vmin}
+  .kicker img{width:2.8vmin;height:2.8vmin;object-fit:contain;filter:drop-shadow(0 0 6px rgba(139,92,246,.65))}
+  .headline{font-size:7.4vmin;font-weight:900;line-height:1.02;letter-spacing:-.02em;color:#fff}
+  .headline .hl{background:linear-gradient(120deg,var(--gems),var(--gems2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:2.2vmin;font-size:2.5vmin;font-weight:500;color:#9aa0b0;max-width:82%;line-height:1.4}
+  .cta{
+    display:inline-flex;align-items:center;gap:1vmin;margin-top:3.2vmin;
+    padding:1.6vmin 3vmin;border-radius:100px;font-size:2vmin;font-weight:800;color:#fff;
+    background:linear-gradient(120deg,var(--gems),var(--gems2));
+    box-shadow:0 10px 34px rgba(139,92,246,.5);
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <img class="art" src="public/mantis-teclado.png" alt="GEMS Hub">
+  <div class="vignette"></div>
+  <div class="grain"></div>
+  <div class="scrim"></div>
+
+  <div class="copy">
+    <div class="kicker"><img src="public/gems-logo.png" alt="">Gems Hub</div>
+    <div class="headline">Todo tu negocio,<br><span class="hl">en un solo lugar.</span></div>
+    <div class="sub">Clientes, tareas y equipo — visibles y bajo control, sin saltar entre apps.</div>
+    <div class="cta">Velo en acción →</div>
+  </div>
+</div>
+</body>
+</html>
