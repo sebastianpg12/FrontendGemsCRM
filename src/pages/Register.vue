@@ -50,9 +50,32 @@
       <div class="login-card rounded-[2rem] p-8 sm:p-10 relative overflow-hidden" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(20px);">
 
         <!-- Card header -->
-        <div class="mb-7 relative z-10">
+        <div class="mb-5 relative z-10">
           <h2 class="text-white/90 text-lg font-bold mb-0.5">Crea tu cuenta</h2>
           <p class="text-white/35 text-[13px] font-medium">Configura tu organización y empieza ahora mismo.</p>
+        </div>
+
+        <!-- Pricing teaser: informativo, no bloquea el trial -->
+        <div class="mb-5 relative z-10">
+          <div class="grid grid-cols-2 gap-2.5">
+            <!-- Mensual -->
+            <div class="rounded-xl p-3 relative" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+              <p class="text-[9px] font-bold uppercase tracking-wider text-white/35 mb-1.5">Mensual</p>
+              <p class="text-white text-[19px] font-black leading-none mb-0.5">$64.99<span class="text-[10px] font-medium text-white/35">/mes</span></p>
+              <p class="text-white/30 text-[10px]">Cancela cuando quieras</p>
+            </div>
+            <!-- Trimestral (destacado) -->
+            <div class="rounded-xl p-3 relative overflow-hidden" :style="`background: rgba(${accentRgb},0.12); border: 1.5px solid rgba(${accentRgb},0.5); box-shadow: 0 8px 28px -10px rgba(${accentRgb},0.5);`">
+              <span class="absolute top-0 right-0 text-[8px] font-black px-2 py-0.5 rounded-bl-lg" style="background:#10b981; color:#04160f;">-18% · MEJOR VALOR</span>
+              <p class="text-[9px] font-bold uppercase tracking-wider mb-1.5" :style="`color: var(--brand-accent);`">Trimestral</p>
+              <p class="text-white text-[19px] font-black leading-none mb-0.5">$159.99<span class="text-[10px] font-medium text-white/35">/3 meses</span></p>
+              <p class="text-[10px] font-bold" :style="`color: var(--brand-accent);`">Precio congelado para siempre</p>
+            </div>
+          </div>
+          <p class="text-center text-[11px] text-white/30 mt-2.5">
+            <i class="fas fa-gift text-emerald-400/70 mr-1"></i>
+            Ambos empiezan con <span class="text-emerald-300/90 font-bold">14 días 100% gratis</span> — no se cobra nada hasta que actives tu plan.
+          </p>
         </div>
 
         <!-- Success Message -->

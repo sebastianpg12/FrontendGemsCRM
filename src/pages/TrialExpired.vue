@@ -78,24 +78,45 @@
               Tus datos están guardados. Activa un plan para continuar — nada se borra.
             </p>
 
+            <!-- Toggle Mensual / Trimestral -->
+            <div class="flex items-center gap-1 p-1 rounded-xl mb-2.5" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);">
+              <button
+                type="button"
+                @click="billingPeriod = 'monthly'"
+                class="flex-1 h-8 rounded-lg text-[11px] font-bold transition-all"
+                :class="billingPeriod === 'monthly' ? 'text-[#04060d]' : 'text-white/40 hover:text-white/60'"
+                :style="billingPeriod === 'monthly' ? 'background: linear-gradient(135deg, #f59e0b, #d97706);' : ''"
+              >Mensual</button>
+              <button
+                type="button"
+                @click="billingPeriod = 'quarterly'"
+                class="flex-1 h-8 rounded-lg text-[11px] font-bold transition-all relative"
+                :class="billingPeriod === 'quarterly' ? 'text-[#04060d]' : 'text-white/40 hover:text-white/60'"
+                :style="billingPeriod === 'quarterly' ? 'background: linear-gradient(135deg, #f59e0b, #d97706);' : ''"
+              >
+                Trimestral
+                <span class="absolute -top-2 -right-1.5 text-[8px] font-black px-1.5 py-0.5 rounded-full" style="background:#10b981; color:#04160f;">-18%</span>
+              </button>
+            </div>
+
             <!-- Promo urgency badge -->
             <div class="flex items-center gap-2 mb-2.5 px-3 py-1.5 rounded-xl" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);">
               <span class="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
-              <span class="text-[10px] font-bold text-red-400 uppercase tracking-wide">Precio especial por tiempo limitado</span>
+              <span class="text-[10px] font-bold text-red-400 uppercase tracking-wide">{{ currentPlan.badge }}</span>
             </div>
 
-            <!-- Plan único -->
+            <!-- Plan -->
             <div class="plan-card-pro rounded-xl p-4 mb-3">
               <div class="flex items-center justify-between mb-1">
-                <div class="text-[10px] font-bold uppercase tracking-wider" style="color: #fbbf24;">Plan Básico</div>
+                <div class="text-[10px] font-bold uppercase tracking-wider" style="color: #fbbf24;">{{ currentPlan.name }}</div>
                 <div class="text-right">
-                  <div class="text-white/25 text-[11px] line-through leading-none mb-0.5">$99.99 USD/mes</div>
+                  <div class="text-white/25 text-[11px] line-through leading-none mb-0.5">${{ currentPlan.was }} {{ currentPlan.unit }}</div>
                   <div class="text-white/90 text-[20px] font-bold leading-none">
-                    $59.99<span class="text-[11px] font-normal text-white/30"> USD/mes</span>
+                    ${{ currentPlan.price }}<span class="text-[11px] font-normal text-white/30"> {{ currentPlan.unit }}</span>
                   </div>
                 </div>
               </div>
-              <p class="text-amber-400/70 text-[10px] mb-3">Ahorra $480 al año · La promo se acaba pronto</p>
+              <p class="text-amber-400/70 text-[10px] mb-3">{{ currentPlan.note }}</p>
               <div class="grid grid-cols-2 gap-x-4 gap-y-1.5">
                 <div v-for="f in planFeatures" :key="f" class="flex items-center gap-1.5 text-[11px] text-white/50">
                   <i class="fas fa-check text-[8px] text-amber-400"></i>{{ f }}
@@ -105,7 +126,7 @@
 
             <!-- CTA -->
             <a
-              href="mailto:info@gemsinnovations.com?subject=Activar%20plan%20GEMS%20Hub"
+              :href="`mailto:info@gemsinnovations.com?subject=Activar%20plan%20${billingPeriod === 'quarterly' ? 'Trimestral%20Fundador' : 'Mensual'}%20GEMS%20Hub`"
               class="cta-btn flex items-center justify-center gap-2 w-full h-10 rounded-xl font-bold text-[13px] transition-all mb-2 text-[#04060d]"
             >
               <i class="fas fa-envelope text-[13px]"></i>
@@ -218,6 +239,29 @@ const daysExpired = computed(() => {
   if (!trialExpiresAt) return 0
   return Math.max(0, Math.floor((Date.now() - new Date(trialExpiresAt).getTime()) / 86400000))
 })
+
+const billingPeriod = ref<'monthly' | 'quarterly'>('monthly')
+
+const plans = {
+  monthly: {
+    name: 'Plan Básico',
+    price: '64.99',
+    was: '99.99',
+    unit: 'USD/mes',
+    note: 'Ahorra $420 al año · La promo se acaba pronto',
+    badge: 'Precio especial por tiempo limitado'
+  },
+  quarterly: {
+    name: 'Plan Fundador · Trimestral',
+    price: '159.99',
+    was: '194.97',
+    unit: 'USD/trimestre',
+    note: 'Ahorras $35 vs. pagar mes a mes · Precio congelado para siempre · Cupos limitados',
+    badge: 'Precio fundador · cupos limitados'
+  }
+}
+
+const currentPlan = computed(() => plans[billingPeriod.value])
 
 const planFeatures = [
   'Clientes y prospectos IA',
