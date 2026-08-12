@@ -30,7 +30,7 @@
             <i class="fas fa-times text-[11px]"></i>
             <span class="hidden sm:inline">Limpiar</span>
           </button>
-          <button @click="loadTickets" :disabled="loading"
+          <button @click="loadTickets()" :disabled="loading"
             class="w-8 h-8 flex items-center justify-center rounded-xl text-slate-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-500/10 transition-all">
             <i class="fas fa-sync-alt text-xs" :class="{ 'fa-spin': loading }"></i>
           </button>
@@ -830,6 +830,11 @@ const closeChips = () => { openChip.value = null }
 
 // State
 const viewMode = ref<'board' | 'inbox'>('board')
+// Evita re-pedir al backend cada vez que se alterna Tablero/Mi Bandeja — solo
+// al cambiar de pestaña, nunca al refrescar a propósito (botones de refresh).
+const BOARD_CACHE_MS = 15000
+let boardLoadedAt = 0
+let inboxLoadedAt = 0
 const tickets = ref<Ticket[]>([])
 const loading = ref(false)
 const searchQuery = ref('')
@@ -1056,6 +1061,7 @@ const loadTickets = async (page = 1) => {
     if (response.success) {
       tickets.value = response.data
       pagination.value = response.pagination
+      boardLoadedAt = Date.now()
     }
   } catch (err: any) {
     showError(err.message)
@@ -1069,6 +1075,7 @@ const loadMyTickets = async () => {
   try {
     const data = await ticketService.getMyTickets()
     myInboxTickets.value = data
+    inboxLoadedAt = Date.now()
   } catch (err: any) {
     showError(err.message)
   } finally {
@@ -1270,6 +1277,10 @@ const viewAttachment = (url: string) => window.open(resolveImageUrl(url), '_blan
 const formatDateLong = (dateStr?: string) => dateStr ? format(new Date(dateStr), "d 'DE' MMMM, yyyy", { locale: es }) : ''
 
 watch(viewMode, (newVal) => {
+  const isFresh = newVal === 'inbox'
+    ? Date.now() - inboxLoadedAt < BOARD_CACHE_MS
+    : Date.now() - boardLoadedAt < BOARD_CACHE_MS
+  if (isFresh) return
   if (newVal === 'inbox') loadMyTickets()
   else loadTickets()
 })
@@ -1282,20 +1293,21 @@ const loadTeamMembers = async () => {
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   document.addEventListener('click', closeChips)
-  await loadTeamMembers()
   // Set default filter if current user is support
   const isSupport = ['support', 'supervisor'].includes(authStore.user?.role || '')
   if (isSupport && authStore.user?._id) {
     filterAssignedTo.value = authStore.user._id
   }
 
-  if (viewMode.value === 'inbox') {
-    loadMyTickets()
-  } else {
-    loadTickets()
-  }
+  // loadTeamMembers no depende de los tickets ni viceversa — en paralelo en
+  // vez de esperar uno para empezar el otro (era un round-trip extra en
+  // cada carga de la página).
+  Promise.all([
+    loadTeamMembers(),
+    viewMode.value === 'inbox' ? loadMyTickets() : loadTickets()
+  ])
 })
 
 onUnmounted(() => { document.removeEventListener('click', closeChips) })
