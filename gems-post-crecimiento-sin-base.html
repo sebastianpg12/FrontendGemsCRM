@@ -19,10 +19,10 @@
     background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);
     background-size:36px 36px}
 
-  /* escalera de cristal ascendente, en perspectiva. Arranca en bottom:46% —
-     por encima de todo el bloque de texto (que termina ~44%), para que
-     ninguna barra quede nunca detrás de "Tu base no." */
-  .stairs{position:absolute;right:6%;bottom:46%;width:64%;height:42%;
+  /* escalera de cristal ascendente, en perspectiva. Arranca al ras del
+     suelo (bottom:0) — el texto ahora vive arriba, así que las barras
+     tienen todo el espacio de abajo para crecer sin tocarlo. */
+  .stairs{position:absolute;right:6%;bottom:0;width:64%;height:50%;
     perspective:900px;z-index:2}
   .bar{
     position:absolute;bottom:0;border-radius:6px 6px 2px 2px;
@@ -39,27 +39,33 @@
   /* base enredada — hilos de caos sosteniendo el crecimiento. Confinada bajo
      las barras más altas (x>72%), fuera del ancho máximo del texto (~65%),
      para que nunca lo toque sin importar cuánto ocupe el párrafo. */
-  .roots{position:absolute;left:72%;right:0;bottom:0;height:46%;z-index:3;
+  /* Base bajo TODA la escalera, no solo bajo la barra más alta — ahora que
+     el texto vive arriba, el resto del ancho ya no tiene por qué quedar
+     vacío. */
+  .roots{position:absolute;left:0;right:0;bottom:0;height:26%;z-index:3;
     -webkit-mask-image:linear-gradient(to top,#000 40%,transparent 100%)}
   .roots svg{width:100%;height:100%}
 
   /* fractura entre base y crecimiento */
-  .fault{position:absolute;left:0;right:0;bottom:45%;height:1px;
+  .fault{position:absolute;left:0;right:0;bottom:16%;height:1px;
     background:linear-gradient(90deg,transparent,rgba(255,84,112,.55) 30%,rgba(255,84,112,.55) 75%,transparent);
     z-index:4}
 
-  .copy{position:absolute;left:7%;bottom:8%;right:7%;z-index:10}
+  /* texto arriba esta vez — rompe el molde frente al resto de la serie,
+     que lo tiene abajo. */
+  .copy{position:absolute;left:7%;top:8%;right:7%;z-index:10}
   .kicker{display:flex;align-items:center;gap:0.9vmin;font-size:1.5vmin;font-weight:800;letter-spacing:.28em;color:var(--gems2);text-transform:uppercase;margin-bottom:1.8vmin}
   .kicker img{width:2.8vmin;height:2.8vmin;object-fit:contain;filter:drop-shadow(0 0 6px rgba(139,92,246,.65))}
   .headline{font-size:7.4vmin;font-weight:900;line-height:1.02;letter-spacing:-.02em;color:#fff}
   .headline .hl{background:linear-gradient(120deg,var(--gems),var(--gems2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .headline .red{color:var(--red)}
   .sub{margin-top:2.2vmin;font-size:2.5vmin;font-weight:500;color:#9aa0b0;max-width:82%;line-height:1.4}
-  .cta{
-    display:inline-flex;align-items:center;gap:1vmin;margin-top:3.2vmin;
-    padding:1.6vmin 3vmin;border-radius:100px;font-size:2vmin;font-weight:800;color:#fff;
-    background:linear-gradient(120deg,var(--gems),var(--gems2));
-    box-shadow:0 10px 34px rgba(139,92,246,.5);
+  /* CTA como badge flotante con borde, arriba a la derecha — separado del
+     bloque de texto y sin relleno, variedad frente al resto de la serie. */
+  .cta-badge{
+    display:inline-flex;align-items:center;gap:1.4vmin;margin-top:3vmin;
+    padding:1.8vmin 3.4vmin;border-radius:100px;font-size:2.6vmin;font-weight:800;color:#fff;
+    border:2px solid rgba(167,139,250,.7);background:rgba(15,10,35,.45);backdrop-filter:blur(6px);
   }
 </style>
 </head>
@@ -95,7 +101,7 @@
     <div class="kicker"><img src="public/gems-logo.png" alt="">Gems Hub</div>
     <div class="headline">Creciste rápido.<br><span class="red">Tu base</span> <span class="hl">no.</span></div>
     <div class="sub">Cada nuevo cliente sin un sistema detrás es una grieta más en la operación.</div>
-    <div class="cta">Pon una base real →</div>
+    <div class="cta-badge">Pon una base real →</div>
   </div>
 </div>
 

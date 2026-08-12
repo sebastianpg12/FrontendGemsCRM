@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GEMS Hub — 1.000 clientes, cero visibilidad</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
   :root{--gems:#8b5cf6;--gems2:#a78bfa;--red:#ff5470}
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
@@ -47,12 +48,12 @@
   .headline .hl{background:linear-gradient(120deg,var(--gems),var(--gems2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .headline .red{color:var(--red)}
   .sub{margin-top:2.2vmin;font-size:2.5vmin;font-weight:500;color:#9aa0b0;max-width:80%;line-height:1.4}
-  .cta{
-    display:inline-flex;align-items:center;gap:1vmin;margin-top:3.2vmin;
-    padding:1.6vmin 3vmin;border-radius:100px;font-size:2vmin;font-weight:800;color:#fff;
-    background:linear-gradient(120deg,var(--gems),var(--gems2));
-    box-shadow:0 10px 34px rgba(139,92,246,.5);
-  }
+  /* CTA como texto grande + botón-flecha circular, sin píldora — variedad
+     frente al resto de la serie. */
+  .cta{display:inline-flex;align-items:center;gap:1.6vmin;margin-top:3.4vmin;font-size:3.6vmin;font-weight:900;color:#fff}
+  .cta .arrow{width:5.4vmin;height:5.4vmin;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-size:2.3vmin;color:#fff;background:linear-gradient(120deg,var(--gems),var(--gems2));
+    box-shadow:0 10px 28px rgba(139,92,246,.55)}
 </style>
 </head>
 <body>
@@ -68,7 +69,7 @@
     <div class="kicker"><img src="public/gems-logo.png" alt="">Gems Hub</div>
     <div class="headline">1.000 clientes.<br><span class="red">Cero</span> <span class="hl">visibilidad.</span></div>
     <div class="sub">Vender más no resuelve nada si por dentro nadie sabe qué está pasando.</div>
-    <div class="cta">Toma el control →</div>
+    <div class="cta">Toma el control <span class="arrow"><i class="fas fa-arrow-right"></i></span></div>
   </div>
 </div>
 

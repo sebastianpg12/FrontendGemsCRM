@@ -31,22 +31,25 @@
   /* intento de conexión roto — una línea que no llega */
   .snap{position:absolute;z-index:3;opacity:.5}
 
-  /* scrim — garantiza contraste del título sin importar qué orbe quede detrás */
-  .scrim{position:absolute;left:0;right:0;bottom:0;height:60%;z-index:5;pointer-events:none;
-    background:linear-gradient(to top,rgba(4,5,15,.88) 0%,rgba(4,5,15,.6) 42%,transparent 100%)}
+  /* scrim — garantiza contraste del título sin importar qué orbe quede detrás.
+     Ahora cae desde arriba porque el texto vive arriba en esta pieza. */
+  .scrim{position:absolute;left:0;right:0;top:0;height:56%;z-index:5;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(4,5,15,.88) 0%,rgba(4,5,15,.6) 42%,transparent 100%)}
 
-  .copy{position:absolute;left:7%;bottom:8%;right:7%;z-index:10}
+  /* texto arriba, orbes abajo — espejo vertical frente al resto de la serie */
+  .copy{position:absolute;left:7%;top:8%;right:7%;z-index:10}
   .kicker{display:flex;align-items:center;gap:0.9vmin;font-size:1.5vmin;font-weight:800;letter-spacing:.28em;color:var(--gems2);text-transform:uppercase;margin-bottom:1.8vmin}
   .kicker img{width:2.8vmin;height:2.8vmin;object-fit:contain;filter:drop-shadow(0 0 6px rgba(139,92,246,.65))}
   .headline{font-size:7.4vmin;font-weight:900;line-height:1.02;letter-spacing:-.02em;color:#fff}
   .headline .hl{background:linear-gradient(120deg,var(--gems),var(--gems2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .headline .red{color:var(--red)}
   .sub{margin-top:2.2vmin;font-size:2.5vmin;font-weight:500;color:#9aa0b0;max-width:82%;line-height:1.4}
+  /* CTA como texto grande en gradiente, sin botón — se lee casi como parte
+     del headline. Variedad frente al resto de la serie. */
   .cta{
-    display:inline-flex;align-items:center;gap:1vmin;margin-top:3.2vmin;
-    padding:1.6vmin 3vmin;border-radius:100px;font-size:2vmin;font-weight:800;color:#fff;
+    display:block;margin-top:3.4vmin;font-size:5vmin;font-weight:900;letter-spacing:-.01em;
     background:linear-gradient(120deg,var(--gems),var(--gems2));
-    box-shadow:0 10px 34px rgba(139,92,246,.5);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
   }
 </style>
 </head>
@@ -67,18 +70,18 @@
 <script>
 const field = document.getElementById('field');
 // Cada orbe = una persona del equipo, flotando sola en el espacio, sin líneas
-// que las conecten entre sí — deliberado. Distribuidas en la mitad superior
-// derecha para no chocar con el bloque de texto.
+// que las conecten entre sí — deliberado. Distribuidas en la mitad inferior
+// derecha para no chocar con el bloque de texto (que ahora vive arriba).
 const people = [
-  {x:58,y:10,s:9.5,c:['#8b5cf6','#5b21b6'],i:'MP',depth:1},
-  {x:74,y:8, s:6.5,c:['#a78bfa','#6d28d9'],i:'JS',depth:.7},
-  {x:88,y:16,s:8,  c:['#c4b5fd','#7c3aed'],i:'LR',depth:.9},
-  {x:66,y:24,s:5,  c:['#818cf8','#4338ca'],i:'AN',depth:.5},
-  {x:82,y:30,s:10, c:['#a78bfa','#6d28d9'],i:'TG',depth:1},
-  {x:52,y:26,s:6,  c:['#c4b5fd','#7c3aed'],i:'RM',depth:.6},
-  {x:94,y:40,s:5.5,c:['#818cf8','#4338ca'],i:'KV',depth:.55},
-  {x:63,y:38,s:4.5,c:['#8b5cf6','#5b21b6'],i:'EF',depth:.45},
-  {x:76,y:44,s:7,  c:['#a78bfa','#6d28d9'],i:'DS',depth:.75},
+  {x:58,y:80,s:9.5,c:['#8b5cf6','#5b21b6'],i:'MP',depth:1},
+  {x:74,y:82,s:6.5,c:['#a78bfa','#6d28d9'],i:'JS',depth:.7},
+  {x:88,y:74,s:8,  c:['#c4b5fd','#7c3aed'],i:'LR',depth:.9},
+  {x:66,y:66,s:5,  c:['#818cf8','#4338ca'],i:'AN',depth:.5},
+  {x:82,y:60,s:10, c:['#a78bfa','#6d28d9'],i:'TG',depth:1},
+  {x:52,y:64,s:6,  c:['#c4b5fd','#7c3aed'],i:'RM',depth:.6},
+  {x:94,y:50,s:5.5,c:['#818cf8','#4338ca'],i:'KV',depth:.55},
+  {x:63,y:52,s:4.5,c:['#8b5cf6','#5b21b6'],i:'EF',depth:.45},
+  {x:76,y:46,s:7,  c:['#a78bfa','#6d28d9'],i:'DS',depth:.75},
 ];
 people.forEach((p,i)=>{
   const el=document.createElement('div');
@@ -101,7 +104,7 @@ const snap=document.createElementNS('http://www.w3.org/2000/svg','svg');
 snap.setAttribute('class','snap');
 snap.setAttribute('viewBox','0 0 100 100');
 snap.setAttribute('preserveAspectRatio','none');
-snap.style.left='50%';snap.style.top='6%';snap.style.width='42%';snap.style.height='32%';
+snap.style.left='50%';snap.style.top='52%';snap.style.width='42%';snap.style.height='32%';
 snap.innerHTML='<path d="M4 10 C 20 20, 30 26, 42 34" fill="none" stroke="#ff5470" stroke-width="0.6" stroke-dasharray="2 3" stroke-linecap="round"/>';
 field.appendChild(snap);
 </script>

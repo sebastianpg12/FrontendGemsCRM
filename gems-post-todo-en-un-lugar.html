@@ -34,17 +34,20 @@
   .scrim{position:absolute;left:0;right:0;bottom:0;height:56%;z-index:4;pointer-events:none;
     background:linear-gradient(to top,rgba(4,5,15,.92) 0%,rgba(4,5,15,.65) 40%,transparent 100%)}
 
-  .copy{position:absolute;left:7%;bottom:8%;right:7%;z-index:10}
-  .kicker{display:flex;align-items:center;gap:0.9vmin;font-size:1.5vmin;font-weight:800;letter-spacing:.28em;color:var(--gems2);text-transform:uppercase;margin-bottom:1.8vmin}
+  /* texto centrado abajo — mold distinto al resto de la serie (izq/der) */
+  .copy{position:absolute;left:10%;right:10%;bottom:7%;z-index:10;text-align:center}
+  .kicker{display:flex;align-items:center;justify-content:center;gap:0.9vmin;font-size:1.5vmin;font-weight:800;letter-spacing:.28em;color:var(--gems2);text-transform:uppercase;margin-bottom:1.8vmin}
   .kicker img{width:2.8vmin;height:2.8vmin;object-fit:contain;filter:drop-shadow(0 0 6px rgba(139,92,246,.65))}
-  .headline{font-size:7.4vmin;font-weight:900;line-height:1.02;letter-spacing:-.02em;color:#fff}
+  .headline{font-size:7vmin;font-weight:900;line-height:1.05;letter-spacing:-.02em;color:#fff}
   .headline .hl{background:linear-gradient(120deg,var(--gems),var(--gems2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .sub{margin-top:2.2vmin;font-size:2.5vmin;font-weight:500;color:#9aa0b0;max-width:82%;line-height:1.4}
-  .cta{
-    display:inline-flex;align-items:center;gap:1vmin;margin-top:3.2vmin;
-    padding:1.6vmin 3vmin;border-radius:100px;font-size:2vmin;font-weight:800;color:#fff;
-    background:linear-gradient(120deg,var(--gems),var(--gems2));
-    box-shadow:0 10px 34px rgba(139,92,246,.5);
+  .sub{margin:2.2vmin auto 0;font-size:2.5vmin;font-weight:500;color:#9aa0b0;max-width:70%;line-height:1.4}
+  /* CTA como píldora clara, invertida (oscura sobre clara) — variedad frente
+     al resto de la serie, centrada junto con el resto del bloque. */
+  .cta-badge{
+    display:inline-flex;align-items:center;gap:1.2vmin;margin-top:3vmin;
+    padding:1.8vmin 3.4vmin;border-radius:100px;font-size:2.9vmin;font-weight:800;color:#2e1065;
+    background:linear-gradient(120deg,#fff,#e9d8fd);
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
   }
 </style>
 </head>
@@ -59,7 +62,7 @@
     <div class="kicker"><img src="public/gems-logo.png" alt="">Gems Hub</div>
     <div class="headline">Todo tu negocio,<br><span class="hl">en un solo lugar.</span></div>
     <div class="sub">Clientes, tareas y equipo — visibles y bajo control, sin saltar entre apps.</div>
-    <div class="cta">Velo en acción →</div>
+    <div class="cta-badge">Velo en acción →</div>
   </div>
 </div>
 </body>
