@@ -3,7 +3,18 @@
     <!-- Header con controles -->
     <div class="flex flex-wrap items-center justify-between gap-3 mb-1">
       <!-- View Toggle — pills premium -->
+      <div class="flex items-center gap-2 flex-wrap">
       <div class="flex items-center bg-slate-100 dark:bg-[#1e293b] rounded-xl p-1 gap-0.5">
+        <button
+          @click="currentView = isActivitiesTab ? currentView : lastActivityLayout"
+          :class="isActivitiesTab
+            ? 'bg-white dark:bg-[#0f172a] text-primary-600 shadow-sm ring-1 ring-slate-200 dark:ring-[#334155] font-black'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold'"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] transition-all duration-150"
+        >
+          <i class="fas fa-list-check text-[12px]"></i>
+          <span class="hidden sm:inline">Actividades</span>
+        </button>
         <button
           v-for="v in viewOptions" :key="v.id"
           @click="currentView = v.id"
@@ -26,6 +37,23 @@
           <i class="fas fa-users text-[12px]"></i>
           <span class="hidden sm:inline">Equipo</span>
         </button>
+      </div>
+
+      <!-- Slider Kanban ⇄ Lista — solo dentro de la pestaña Actividades -->
+      <div v-if="isActivitiesTab" class="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-[#334155]">
+        <i class="fas fa-columns text-[12px]" :class="currentView === 'kanban' ? 'text-primary-600' : 'text-slate-300 dark:text-slate-600'"></i>
+        <button
+          role="switch"
+          :aria-checked="currentView === 'tasks'"
+          @click="currentView = currentView === 'kanban' ? 'tasks' : 'kanban'"
+          class="relative w-9 h-5 rounded-full transition-colors duration-200 shrink-0"
+          :class="currentView === 'tasks' ? 'bg-primary-600' : 'bg-slate-300 dark:bg-slate-600'"
+        >
+          <span class="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200"
+            :class="currentView === 'tasks' ? 'translate-x-4' : 'translate-x-0'"></span>
+        </button>
+        <i class="fas fa-list text-[12px]" :class="currentView === 'tasks' ? 'text-primary-600' : 'text-slate-300 dark:text-slate-600'"></i>
+      </div>
       </div>
 
       <div class="flex items-center gap-2">
@@ -2671,9 +2699,15 @@ import TeamActivities from '../../pages/TeamActivities.vue'
 
 const currentView = ref<'kanban' | 'tasks' | 'calendar' | 'daily' | 'team'>('kanban')
 
+// Kanban y Lista ya no son dos tabs separadas — son dos formas de mostrar la
+// misma pestaña "Actividades", alternadas con un slider en vez de un botón más.
+const isActivitiesTab = computed(() => currentView.value === 'kanban' || currentView.value === 'tasks')
+// Recuerda cuál de las dos se usó por última vez, para volver ahí (y no
+// resetear siempre a Kanban) al salir a Cal./Daily y regresar.
+const lastActivityLayout = ref<'kanban' | 'tasks'>('kanban')
+watch(currentView, (v) => { if (v === 'kanban' || v === 'tasks') lastActivityLayout.value = v })
+
 const viewOptions = [
-  { id: 'kanban', label: 'Kanban', icon: 'fas fa-columns' },
-  { id: 'tasks',  label: 'Lista',  icon: 'fas fa-list' },
   { id: 'calendar', label: 'Cal.',  icon: 'fas fa-calendar-alt' },
   { id: 'daily',  label: 'Daily',  icon: 'fas fa-sun' },
 ] as const
