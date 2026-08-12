@@ -212,7 +212,7 @@
               <button
                 type="submit"
                 :disabled="loading"
-                class="h-9 px-6 bg-primary-500 text-white rounded-xl hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-black text-xs uppercase tracking-[0.15em] shadow-lg shadow-primary-200 flex items-center justify-center gap-3 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-primary-300"
+                class="h-9 px-6 bg-primary-500 text-white rounded-xl hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-black text-xs uppercase tracking-[0.15em] shadow-lg shadow-primary-200 dark:shadow-primary-900/40 flex items-center justify-center gap-3 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-primary-300"
               >
                 <div v-if="loading" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                 <i v-else :class="isEditing ? 'fas fa-save' : 'fas fa-paper-plane'" class="group-hover:translate-x-1 transition-transform"></i>
