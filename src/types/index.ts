@@ -60,8 +60,19 @@ export interface Activity {
   createdByUser?: TeamMember // Datos del usuario que creó (populated)
   linkedCases?: any[]
   linkedWikiArticles?: any[]
+  completionPercentage?: number
+  timeSpent?: number
+  history?: ActivityHistoryEntry[]
   createdAt?: string
   updatedAt?: string
+}
+
+export interface ActivityHistoryEntry {
+  field: string
+  oldValue: any
+  newValue: any
+  changedBy?: TeamMember | string
+  changedAt: string
 }
 
 export interface Payment {

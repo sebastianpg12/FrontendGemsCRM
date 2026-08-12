@@ -228,19 +228,60 @@
         v-if="isEditingTask"
         class="hidden sm:flex w-80 shrink-0 border-l border-slate-100 dark:border-[#334155] flex-col bg-slate-50/40 dark:bg-[#0f172a]/40"
       >
-        <!-- Header comentarios -->
-        <div class="px-5 py-4 border-b border-slate-100 dark:border-[#334155] flex items-center gap-2 shrink-0">
-          <div class="w-7 h-7 rounded-xl bg-primary-50 dark:bg-primary-500/10 flex items-center justify-center border border-primary-100 dark:border-primary-500/20">
-            <i class="fas fa-comments text-primary-400 text-xs"></i>
+        <!-- Tabs: Comentarios / Historial -->
+        <div class="flex border-b border-slate-100 dark:border-[#334155] shrink-0">
+          <button
+            type="button"
+            @click="sidebarTab = 'comments'"
+            class="flex-1 px-3 py-3 flex items-center justify-center gap-1.5 text-[12px] font-black uppercase tracking-wider transition-colors border-b-2"
+            :class="sidebarTab === 'comments' ? 'text-primary-600 dark:text-primary-400 border-primary-500' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 border-transparent'"
+          >
+            <i class="fas fa-comments text-xs"></i> Comentarios
+            <span v-if="localComments.length > 0" class="px-1.5 py-0.5 bg-primary-100 dark:bg-primary-500/15 text-primary-600 dark:text-primary-400 text-[10px] font-black rounded-full">{{ localComments.length }}</span>
+          </button>
+          <button
+            type="button"
+            @click="sidebarTab = 'history'"
+            class="flex-1 px-3 py-3 flex items-center justify-center gap-1.5 text-[12px] font-black uppercase tracking-wider transition-colors border-b-2"
+            :class="sidebarTab === 'history' ? 'text-primary-600 dark:text-primary-400 border-primary-500' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 border-transparent'"
+          >
+            <i class="fas fa-clock-rotate-left text-xs"></i> Historial
+            <span v-if="activityHistory.length > 0" class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-black rounded-full">{{ activityHistory.length }}</span>
+          </button>
+        </div>
+
+        <!-- Panel de Historial -->
+        <div v-if="sidebarTab === 'history'" class="flex-1 overflow-y-auto px-4 py-3 space-y-2.5 custom-scrollbar">
+          <div v-if="activityHistory.length === 0" class="flex flex-col items-center justify-center py-10 text-center">
+            <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center mb-3">
+              <i class="fas fa-clock-rotate-left text-slate-300 dark:text-slate-500 text-lg"></i>
+            </div>
+            <p class="text-[13px] font-bold text-slate-400 uppercase tracking-widest">Sin cambios registrados</p>
+            <p class="text-[12px] text-slate-300 dark:text-slate-500 mt-1">Aquí aparecerá quién cambió qué</p>
           </div>
-          <span class="text-[13px] font-black text-slate-400 uppercase tracking-widest">Comentarios</span>
-          <span
-            v-if="localComments.length > 0"
-            class="ml-auto px-2 py-0.5 bg-primary-100 dark:bg-primary-500/15 text-primary-600 dark:text-primary-400 text-[12px] font-black rounded-full"
-          >{{ localComments.length }}</span>
+          <div
+            v-for="(entry, i) in historyNewestFirst"
+            :key="i"
+            class="bg-white dark:bg-[#1e293b] rounded-xl p-3 shadow-sm"
+          >
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-6 h-6 rounded-full bg-slate-400 flex items-center justify-center text-white text-[11px] font-black shrink-0">
+                {{ getInitials(historyAuthorName(entry)) }}
+              </div>
+              <span class="text-[13px] font-black text-slate-700 dark:text-slate-200 truncate">{{ historyAuthorName(entry) }}</span>
+              <span class="text-[12px] text-slate-300 dark:text-slate-500 ml-auto shrink-0">{{ formatCommentDate(entry.changedAt) }}</span>
+            </div>
+            <p class="text-[13px] text-slate-600 dark:text-slate-300 leading-relaxed">
+              <span class="font-bold">{{ formatHistoryField(entry.field) }}</span>:
+              <span class="line-through text-slate-400 dark:text-slate-500">{{ formatHistoryValue(entry.field, entry.oldValue) }}</span>
+              <i class="fas fa-arrow-right text-[10px] text-slate-300 mx-0.5"></i>
+              <span class="font-bold text-slate-700 dark:text-slate-200">{{ formatHistoryValue(entry.field, entry.newValue) }}</span>
+            </p>
+          </div>
         </div>
 
         <!-- Lista de comentarios (scrollable) -->
+        <template v-if="sidebarTab === 'comments'">
         <div class="flex-1 overflow-y-auto px-4 py-3 space-y-3 custom-scrollbar">
           <!-- Empty state -->
           <div v-if="localComments.length === 0 && !loadingComments" class="flex flex-col items-center justify-center py-10 text-center">
@@ -398,6 +439,7 @@
             </button>
           </div>
         </div>
+        </template>
       </div>
       <!-- ── Fin columna comentarios ── -->
 
@@ -844,6 +886,68 @@ function formatCommentDate(date: Date | string): string {
   } catch {
     return ''
   }
+}
+
+// ── Historial de cambios ──────────────────────────────────────────────────────
+const sidebarTab = ref<'comments' | 'history'>('comments')
+
+const activityHistory = computed(() => localTask.value?.history || [])
+const historyNewestFirst = computed(() => [...activityHistory.value].reverse())
+
+function historyAuthorName(entry: any): string {
+  return entry?.changedBy?.name || 'Usuario'
+}
+
+const HISTORY_FIELD_LABELS: Record<string, string> = {
+  title: 'Título',
+  status: 'Estado',
+  priority: 'Prioridad',
+  date: 'Fecha de inicio',
+  dueDate: 'Fecha de entrega',
+  assignedTo: 'Asignados',
+  clientId: 'Cliente',
+  estimatedTime: 'Tiempo estimado',
+  completionPercentage: 'Progreso',
+  description: 'Descripción',
+  timer: 'Cronómetro',
+  timeSpent: 'Tiempo invertido'
+}
+
+function formatHistoryField(field: string): string {
+  return HISTORY_FIELD_LABELS[field] || field
+}
+
+const STATUS_LABELS: Record<string, string> = {
+  pending: 'Pendiente',
+  'in-progress': 'En progreso',
+  completed: 'Completada',
+  cancelled: 'Cancelada',
+  overdue: 'Vencida'
+}
+
+const PRIORITY_LABELS: Record<string, string> = {
+  low: 'Baja',
+  medium: 'Media',
+  high: 'Alta',
+  urgent: 'Urgente'
+}
+
+function formatHistoryValue(field: string, value: any): string {
+  if (value === null || value === undefined || value === '') return '—'
+  if (field === 'status') return STATUS_LABELS[value] || value
+  if (field === 'priority') return PRIORITY_LABELS[value] || value
+  if (field === 'date' || field === 'dueDate') {
+    try { return format(new Date(value), "d MMM yyyy", { locale: es }) } catch { return value }
+  }
+  if (field === 'completionPercentage') return `${value}%`
+  if (field === 'timeSpent') {
+    const mins = Math.round(Number(value) / 60)
+    return mins >= 60 ? `${Math.floor(mins / 60)}h ${mins % 60}m` : `${mins} min`
+  }
+  if (Array.isArray(value)) {
+    return value.map((v: any) => v?.name || v).join(', ') || '—'
+  }
+  return String(value)
 }
 
 async function loadFullTask() {
