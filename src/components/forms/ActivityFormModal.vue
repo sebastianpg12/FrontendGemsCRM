@@ -205,14 +205,14 @@
               <button
                 type="button"
                 @click="$emit('close')"
-                class="h-9 px-5 bg-white text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl transition-all font-black text-[13px] uppercase tracking-widest hover:bg-slate-50 active:scale-95 shadow-sm"
+                class="h-9 px-5 bg-white text-slate-500 hover:text-slate-800 border border-slate-200 rounded-xl transition-all font-black text-[13px] uppercase tracking-widest hover:bg-slate-50 active:scale-95 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
               >
                 Descartar
               </button>
               <button
                 type="submit"
                 :disabled="loading"
-                class="h-9 px-6 bg-primary-500 text-white rounded-xl hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-black text-xs uppercase tracking-[0.15em] shadow-lg shadow-primary-200 flex items-center justify-center gap-3 active:scale-95 group"
+                class="h-9 px-6 bg-primary-500 text-white rounded-xl hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-black text-xs uppercase tracking-[0.15em] shadow-lg shadow-primary-200 flex items-center justify-center gap-3 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-primary-300"
               >
                 <div v-if="loading" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                 <i v-else :class="isEditing ? 'fas fa-save' : 'fas fa-paper-plane'" class="group-hover:translate-x-1 transition-transform"></i>
