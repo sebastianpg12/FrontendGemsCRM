@@ -14,7 +14,7 @@ export interface OrganizationAdmin {
     accentColor?: string
     darkMode?: boolean
   }
-  contact?: { email?: string | null; phone?: string | null; country?: string | null }
+  contact?: { email?: string | null; phone?: string | null; country?: string | null; planInterest?: 'monthly' | 'quarterly' | null }
   limits?: { maxUsers?: number; maxStorageMb?: number }
   dbConnection?: { uri?: string | null; dbName?: string | null; migratedAt?: string | null }
   moduleOverrides?: Record<string, boolean>

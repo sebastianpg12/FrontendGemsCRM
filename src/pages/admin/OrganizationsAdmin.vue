@@ -133,6 +133,21 @@
               >
                 {{ trialBadge(org)!.text }}
               </span>
+              <span
+                v-if="org.contact?.planInterest"
+                class="text-[11px] font-bold px-2 py-0.5 rounded-md whitespace-nowrap bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400"
+                title="Quiere pagar de una vez — contactar cuanto antes"
+              >
+                💰 {{ org.contact.planInterest === 'quarterly' ? 'Trimestral' : 'Mensual' }}
+              </span>
+            </div>
+          </div>
+
+          <div v-if="org.contact?.email || org.contact?.phone" class="rounded-lg p-2 mb-2 bg-slate-50 dark:bg-slate-800/50 text-[12px]">
+            <p class="text-slate-400 mb-0.5">Contacto</p>
+            <div class="flex items-center justify-between gap-2">
+              <a v-if="org.contact?.email" :href="`mailto:${org.contact.email}`" class="text-slate-700 dark:text-slate-200 truncate hover:underline">{{ org.contact.email }}</a>
+              <a v-if="org.contact?.phone" :href="`tel:${org.contact.phone.replace(/[^\d+]/g,'')}`" class="text-slate-700 dark:text-slate-200 font-bold whitespace-nowrap hover:underline">{{ org.contact.phone }}</a>
             </div>
           </div>
 
