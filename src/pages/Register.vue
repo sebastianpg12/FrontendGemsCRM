@@ -207,7 +207,7 @@
           <button
             type="submit"
             :disabled="isLoading"
-            class="w-full py-3.5 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 disabled:opacity-50 mt-4 text-[13px] uppercase tracking-widest hover:scale-[1.02]"
+            class="w-full py-3.5 px-3 text-white font-black rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4 text-[11.5px] sm:text-[13px] uppercase tracking-wide sm:tracking-widest leading-tight text-center hover:scale-[1.02]"
             style="background: var(--brand-accent); box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);"
           >
             <i v-if="isLoading" class="fas fa-circle-notch fa-spin text-sm"></i>
