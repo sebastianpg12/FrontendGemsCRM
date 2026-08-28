@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>GEMS LMS — Diapositivas para sustentación</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --p:#7c3aed; --p-deep:#4c1d95; --p-soft:#a78bfa;
+    --tint:#f5f3ff; --tint2:#efeaff;
+    --ink:#1e1b2e; --mut:#6b7280; --line:#e4e0f0;
+    --ok:#059669; --bad:#dc2626; --warn:#b45309;
+  }
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:#e9eaf0; color:var(--ink); padding:32px 24px 80px;
+  }
+  .doc-head{max-width:1280px;margin:0 auto 28px;background:#fff;border-radius:14px;padding:24px 30px;box-shadow:0 1px 3px rgba(30,27,46,.10)}
+  .doc-head h1{font-size:24px;color:var(--p-deep)}
+  .doc-head p{font-size:14px;color:var(--mut);margin-top:8px;line-height:1.6}
+  .doc-head b{color:var(--ink)}
+
+  .lbl{max-width:1280px;margin:34px auto 8px;font-size:13px;font-weight:700;color:var(--p-deep);letter-spacing:.04em;text-transform:uppercase}
+  .lbl span{color:var(--mut);font-weight:600;text-transform:none;letter-spacing:0}
+
+  .slide{
+    width:1280px;height:720px;margin:0 auto;background:#fff;
+    padding:52px 60px;position:relative;overflow:hidden;
+    outline:1px solid #d9d4e8;
+  }
+  .skip{
+    width:1280px;margin:0 auto;background:#fff;border-radius:12px;
+    padding:18px 26px;font-size:15px;color:var(--mut);
+    box-shadow:0 1px 3px rgba(30,27,46,.08);
+  }
+  .skip b{color:var(--p-deep)}
+
+  .kick{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--p-soft);margin-bottom:10px}
+  h2.st{font-size:36px;font-weight:700;color:var(--p-deep);line-height:1.15}
+  h2.st.sm{font-size:30px}
+  .sub{font-size:16px;color:var(--mut);margin-top:10px;line-height:1.5}
+  .rule{height:0;margin:22px 0}
+
+  .card{background:var(--tint);border-radius:12px;padding:20px 22px}
+  .card.w{background:#f7f7fa}
+  .card h4{font-size:15px;font-weight:700;color:var(--p-deep);margin-bottom:10px;letter-spacing:.01em}
+  .card h4.b{color:var(--ink)}
+  .card p{font-size:14px;line-height:1.55;color:#3a3552}
+  ul{list-style:none}
+  ul li{font-size:14px;line-height:1.5;color:#3a3552;padding-left:15px;position:relative;margin-bottom:7px}
+  ul li:before{content:'';position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--p-soft)}
+  ul.tight li{margin-bottom:5px;font-size:13.5px;line-height:1.45}
+  ul.xt li{margin-bottom:4px;font-size:13px;line-height:1.4}
+  li b{color:var(--ink)}
+
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{background:var(--p-deep);color:#fff;font-weight:600;text-align:left;padding:9px 11px;font-size:12.5px;letter-spacing:.02em}
+  th.r,td.r{text-align:right}
+  th.c,td.c{text-align:center}
+  td{padding:8px 11px;border-bottom:1px solid var(--line);color:#3a3552;line-height:1.4}
+  tbody tr:nth-child(even) td{background:#faf9fd}
+  tr.tot td{background:var(--tint2)!important;font-weight:700;color:var(--p-deep)}
+  table.sm{font-size:12.5px} table.sm td{padding:6px 9px} table.sm th{padding:7px 9px;font-size:11.5px}
+  table.xs{font-size:11.5px} table.xs td{padding:5px 8px} table.xs th{padding:6px 8px;font-size:11px}
+
+  .kpi{background:var(--tint);border-radius:12px;padding:18px;text-align:center}
+  .kpi .n{font-size:32px;font-weight:700;color:var(--p-deep);line-height:1.1}
+  .kpi .n.ok{color:var(--ok)} .kpi .n.sm{font-size:26px}
+  .kpi .l{font-size:12.5px;color:var(--mut);margin-top:7px;line-height:1.35}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--tint2);color:var(--p-deep);letter-spacing:.03em}
+  .tag.ok{background:#d1fae5;color:#047857} .tag.no{background:#fee2e2;color:#b91c1c}
+  .tag.mid{background:#fef3c7;color:#92400e}
+
+  .divider-slide{background:var(--p-deep);color:#fff;display:flex;flex-direction:column;justify-content:center}
+  .divider-slide .kick{color:var(--p-soft)}
+  .divider-slide h2{font-size:52px;color:#fff;font-weight:700;line-height:1.1}
+
+  .foot{position:absolute;bottom:26px;left:60px;right:60px;font-size:11.5px;color:#a09bb5;display:flex;justify-content:space-between}
+
+  @media print{
+    body{background:#fff;padding:0}
+    .doc-head,.lbl,.skip{display:none}
+    .slide{outline:none;page-break-after:always;margin:0}
+    @page{size:1280px 720px;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <h1>GEMS LMS — 30 diapositivas listas para capturar</h1>
+  <p>
+    Cada bloque blanco de abajo mide <b>1280 × 720 px (16:9)</b>, la proporción exacta de una diapositiva.
+    Captura cada uno con <b>Win + Shift + S</b> y pégalo en la diapositiva correspondiente del PPTX.<br>
+    <b>Atajo mucho más rápido:</b> <b>Ctrl + P</b> → Destino "Guardar como PDF" → Márgenes "Ninguno" → desactiva encabezados.
+    Sale un PDF con una diapositiva por página, listo para insertar como imagen.<br>
+    Las cifras financieras vienen todas del Excel <b>«...empresarial (6).xlsm»</b> — el único con VPN positivo y TIR sobre el costo de capital.
+  </p>
+</div>
+
+<!-- ══════════ 1 ══════════ -->
+<div class="lbl">Diapositiva 1 <span>— Portada institucional de la plantilla</span></div>
+<div class="skip"><b>No se modifica.</b> Es la portada del SENA que ya trae el archivo.</div>
+
+<!-- ══════════ 2 ══════════ -->
+<div class="lbl">Diapositiva 2 <span>— Título del proyecto</span></div>
+<div class="slide" style="display:flex;flex-direction:column;justify-content:center">
+  <div class="kick">Proyecto productivo bajo enfoque empresarial</div>
+  <h2 class="st" style="font-size:76px;letter-spacing:-.02em">GEMS LMS</h2>
+  <p style="font-size:21px;color:#3a3552;margin-top:16px;max-width:840px;line-height:1.45">
+    Plataforma SaaS de gestión académica multi-institucional para colegios K-12
+  </p>
+  <div style="height:1px;background:var(--line);margin:40px 0 34px;width:520px"></div>
+  <div class="g4" style="max-width:1000px">
+    <div><div style="font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Aprendiz</div><div style="font-size:16px;font-weight:600">Sebastián Pulgarín Gómez</div></div>
+    <div><div style="font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Programa</div><div style="font-size:16px;font-weight:600">Análisis y Desarrollo<br>de Software — ADSO</div></div>
+    <div><div style="font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Ficha</div><div style="font-size:16px;font-weight:600">2721550</div></div>
+    <div><div style="font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Centro de formación</div><div style="font-size:16px;font-weight:600">Regional Santander</div></div>
+  </div>
+  <div class="foot"><span>Unidad productiva: GEMAS S.A.S. · Marca: GEMS LMS</span><span>2026</span></div>
+</div>
+
+<!-- ══════════ 3 ══════════ -->
+<div class="lbl">Diapositiva 3 <span>— Divisor de sección</span></div>
+<div class="skip"><b>No se modifica.</b> «Aspectos base y generales del proyecto empresarial».</div>
+
+<!-- ══════════ 4 ══════════ -->
+<div class="lbl">Diapositiva 4 <span>— Objetivos del proyecto</span></div>
+<div class="slide">
+  <div class="kick">1.5 Idea de negocio</div>
+  <h2 class="st">Objetivos del proyecto</h2>
+  <div class="rule"></div>
+  <div class="card" style="background:var(--p-deep);padding:24px 26px;margin-bottom:22px">
+    <h4 style="color:var(--p-soft)">Objetivo general</h4>
+    <p style="color:#fff;font-size:17px;line-height:1.5">
+      Formular un plan de negocios para la creación de una unidad productiva dedicada al desarrollo
+      e implementación de una plataforma LMS orientada a la gestión académica y la educación digital.
+    </p>
+  </div>
+  <h4 style="font-size:14px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Objetivos específicos</h4>
+  <div class="g4">
+    <div class="card"><div style="font-size:26px;font-weight:700;color:var(--p-soft);margin-bottom:8px">01</div><p><b>Identificar</b> las características del mercado objetivo mediante el análisis de las necesidades de instituciones educativas interesadas en soluciones LMS.</p></div>
+    <div class="card"><div style="font-size:26px;font-weight:700;color:var(--p-soft);margin-bottom:8px">02</div><p><b>Determinar</b> la viabilidad técnica mediante la evaluación de tecnologías, infraestructura y recursos necesarios para el desarrollo de la plataforma.</p></div>
+    <div class="card"><div style="font-size:26px;font-weight:700;color:var(--p-soft);margin-bottom:8px">03</div><p><b>Definir</b> la estructura administrativa estableciendo funciones, roles y organización del proyecto para garantizar su correcto funcionamiento.</p></div>
+    <div class="card"><div style="font-size:26px;font-weight:700;color:var(--p-soft);margin-bottom:8px">04</div><p><b>Calcular</b> la viabilidad financiera y económica mediante el análisis de costos, inversión y sostenibilidad del proyecto.</p></div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Objetivos</span></div>
+</div>
+
+<!-- ══════════ 5 ══════════ -->
+<div class="lbl">Diapositiva 5 <span>— Lienzo del proyecto (Business Model Canvas)</span></div>
+<div class="slide" style="padding:40px 44px">
+  <h2 class="st sm" style="margin-bottom:16px">Lienzo del proyecto</h2>
+  <div class="g5" style="gap:9px;grid-template-rows:auto auto">
+    <div class="card" style="padding:13px 14px;grid-row:span 2"><h4 style="font-size:12.5px">Socios clave</h4>
+      <ul class="xt"><li>Amazon Web Services</li><li>Mercado Pago / Wompi</li><li>SendGrid — Twilio</li><li>Google Cloud Workspace</li><li>Sectigo / DigiCert (SSL)</li><li>Consultores del SIEE en Antioquia</li></ul></div>
+    <div class="card" style="padding:13px 14px"><h4 style="font-size:12.5px">Actividades clave</h4>
+      <ul class="xt"><li>Desarrollo y mantenimiento del software</li><li>Parametrización del SIEE</li><li>Migración de bases de datos</li><li>Soporte y capacitación</li><li>Venta consultiva B2B</li></ul></div>
+    <div class="card" style="padding:13px 14px;grid-row:span 2;background:var(--p-deep)"><h4 style="font-size:12.5px;color:var(--p-soft)">Propuesta de valor</h4>
+      <p style="color:#fff;font-size:12.5px;line-height:1.45">Un solo ecosistema SaaS especializado en colegios K-12 que reemplaza las herramientas sueltas del colegio: gestión académica, calificaciones bajo el SIEE, asistencia, contenidos y evaluaciones sobre una única base de datos centralizada.</p>
+      <p style="color:var(--p-soft);font-size:12px;line-height:1.45;margin-top:10px">Cero mantenimiento técnico para el colegio. Boletines automáticos bajo su propio SIEE.</p></div>
+    <div class="card" style="padding:13px 14px"><h4 style="font-size:12.5px">Relación con el cliente</h4>
+      <ul class="xt"><li>Venta consultiva con demo</li><li>Onboarding acompañado</li><li>SLA 99,5% de disponibilidad</li><li>Mesa de ayuda L–V 7am–5pm</li><li>Monitoreo 24/7</li></ul></div>
+    <div class="card" style="padding:13px 14px;grid-row:span 2"><h4 style="font-size:12.5px">Segmentos de cliente</h4>
+      <ul class="xt"><li>Colegios privados premium (80–150 empleados)</li><li>Colegios medianos tradicionales (35–75)</li><li>Redes educativas multi-sede (+200)</li><li><b>Usuarios:</b> rectores, docentes, estudiantes, acudientes</li></ul></div>
+    <div class="card" style="padding:13px 14px"><h4 style="font-size:12.5px">Recursos clave</h4>
+      <ul class="xt"><li>Código fuente propietario (DNDA)</li><li>Infraestructura cloud AWS</li><li>Equipo técnico: dev, DevOps, QA, diseño</li><li>Marca GEMS ante la SIC</li></ul></div>
+    <div class="card" style="padding:13px 14px"><h4 style="font-size:12.5px">Canales</h4>
+      <ul class="xt"><li>Venta directa B2B (60 visitas/año)</li><li>Landing page con SEO local</li><li>LinkedIn Ads por cargo directivo</li><li>Congresos de rectores</li><li>Webinars y newsletter</li></ul></div>
+  </div>
+  <div class="g2" style="gap:9px;margin-top:9px">
+    <div class="card w" style="padding:13px 14px"><h4 class="b" style="font-size:12.5px">Estructura de costos <span class="tag" style="margin-left:6px">Año 1: $172.802.862</span></h4>
+      <ul class="xt" style="columns:2;column-gap:16px"><li>Costos de producción — $91.911.482</li><li>Mano de obra administrativa — $34.981.380</li><li>Mezcla de mercadeo — $42.910.000</li><li>Administración y generales — $3.000.000</li><li>Inversión en activos — $68.360.000</li></ul></div>
+    <div class="card w" style="padding:13px 14px"><h4 class="b" style="font-size:12.5px">Fuentes de ingreso <span class="tag" style="margin-left:6px">Año 1: $171.314.111</span></h4>
+      <ul class="xt" style="columns:2;column-gap:16px"><li><b>GEMS Plataforma</b> — licencia anual de $2,5 a $2,9 M por institución</li><li><b>Soporte y mantenimiento</b> — de $950 mil a $1,2 M anuales</li><li>Descuento del 15% por contratar ambos servicios</li><li><b>Año 5: $347.397.284</b></li></ul></div>
+  </div>
+</div>
+
+<!-- ══════════ 6 ══════════ -->
+<div class="lbl">Diapositiva 6 <span>— Divisor de sección</span></div>
+<div class="skip"><b>No se modifica.</b> «Análisis y estudio de mercados».</div>
+
+<!-- ══════════ 7 ══════════ -->
+<div class="lbl">Diapositiva 7 <span>— Estudio de mercado</span></div>
+<div class="slide">
+  <div class="kick">2.3 Mercado potencial</div>
+  <h2 class="st">Estudio de mercado</h2>
+  <div class="rule"></div>
+  <div class="g2" style="grid-template-columns:1.05fr 1fr;gap:22px">
+    <div>
+      <h4 style="font-size:13px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Zona donde se ofertará el servicio</h4>
+      <table class="sm" style="margin-bottom:20px">
+        <tbody>
+          <tr><td style="width:38%;font-weight:600;color:var(--ink)">País</td><td>Colombia</td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Departamento</td><td>Antioquia</td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Ciudad</td><td>Medellín</td></tr>
+          <tr><td style="font-weight:600;color:var(--ink)">Zona</td><td>Área metropolitana del Valle de Aburrá — El Poblado, Laureles-Estadio, Belén, Envigado y Sabaneta (estratos 3 a 6)</td></tr>
+        </tbody>
+      </table>
+      <h4 style="font-size:13px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Precios de venta — valor anual por institución</h4>
+      <table class="sm">
+        <thead><tr><th>Servicio</th><th class="r">Mínimo</th><th class="r">Máximo</th></tr></thead>
+        <tbody>
+          <tr><td><b>GEMS Plataforma</b><br><span style="font-size:11.5px;color:var(--mut)">Licenciamiento anual del ecosistema de gestión académica</span></td><td class="r">$2.500.000</td><td class="r">$2.900.000</td></tr>
+          <tr><td><b>Soporte y mantenimiento</b><br><span style="font-size:11.5px;color:var(--mut)">Implementación, capacitación, soporte técnico y actualizaciones</span></td><td class="r">$950.000</td><td class="r">$1.200.000</td></tr>
+          <tr class="tot"><td>Descuento por contratar plataforma + soporte</td><td class="r" colspan="2">15%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+        <h4 style="font-size:13px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em">Demanda potencial</h4>
+        <span class="tag" style="font-size:14px;padding:4px 12px">40%</span>
+      </div>
+      <div class="g2" style="gap:14px;margin-bottom:16px">
+        <div class="kpi"><div class="n">+142.000</div><div class="l"><b>Personas</b><br>Estudiantes y docentes de instituciones privadas del Valle de Aburrá</div></div>
+        <div class="kpi"><div class="n">+380</div><div class="l"><b>Empresas</b><br>Instituciones educativas privadas con licencia vigente</div></div>
+      </div>
+      <div class="card w" style="margin-bottom:16px;padding:14px 16px">
+        <p style="font-size:12.5px;line-height:1.5"><b>Fuentes:</b> censo educativo de la Secretaría de Educación de Medellín, clúster de servicios del Valle de Aburrá, Directorio Único de Establecimientos Educativos (DUE) del MEN y Cámara de Comercio de Medellín.</p>
+      </div>
+      <h4 style="font-size:13px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Demandantes potenciales reales</h4>
+      <div class="g2" style="gap:14px">
+        <div class="kpi" style="background:var(--tint2)"><div class="n sm">+350</div><div class="l">Rectores y directores con autonomía presupuestal</div></div>
+        <div class="kpi" style="background:var(--tint2)"><div class="n sm">+150</div><div class="l">Colegios privados en transformación digital</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Estudio de mercado</span></div>
+</div>
+
+<!-- ══════════ 8 ══════════ -->
+<div class="lbl">Diapositiva 8 <span>— Análisis de la competencia</span></div>
+<div class="slide">
+  <div class="kick">2.8 Análisis de la competencia</div>
+  <h2 class="st sm">Cinco competidores del mercado LMS</h2>
+  <div style="height:18px"></div>
+  <table class="xs">
+    <thead><tr>
+      <th style="width:13%">Competidor</th><th class="c" style="width:8%">Aceptación</th>
+      <th style="width:20%">Cliente que atiende</th><th style="width:24%">¿Por qué lo eligen?</th>
+      <th style="width:14%">Precio</th><th style="width:21%">Nuestra ventaja</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;color:var(--ink)">Moodle</td><td class="c"><span class="tag mid">Regular</span></td>
+        <td>Universidades, educación superior e institutos técnicos (ETDH)</td>
+        <td>Código abierto, licencia gratuita, comunidad global masiva de desarrolladores</td>
+        <td>Licencia $0 + hosting y soporte desde <b>$2.500.000/año</b></td>
+        <td>Es genérico y exige que el colegio administre su propio servidor. Sin portal de padres ni analítica nativa.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--ink)">Google Classroom</td><td class="c"><span class="tag ok">Alta</span></td>
+        <td>Colegios públicos y privados de todos los niveles, docentes independientes</td>
+        <td>Interfaz muy intuitiva, gratuito con Google Workspace, integración nativa con la nube</td>
+        <td>Gratuito; Enterprise desde <b>$22.000/usuario/mes</b></td>
+        <td>Gestiona tareas, no gestiona el colegio. Sin boletines bajo SIEE, observador, recaudo ni analítica directiva.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--ink)">Phidias</td><td class="c"><span class="tag ok">Alta</span></td>
+        <td>Colegios privados de estratos 5 y 6, bilingües de gran tamaño</td>
+        <td>Centraliza administración, facturación de pensiones y matrícula en una interfaz robusta</td>
+        <td>Cotización B2B, promedio <b>+$12.000.000/año</b></td>
+        <td>Nuestro precio es 4 a 5 veces menor y atendemos el segmento medio que Phidias deja por fuera.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--ink)">Master2000</td><td class="c"><span class="tag ok">Alta</span></td>
+        <td>Colegios públicos y privados de Antioquia y el Eje Cafetero, de todos los estratos</td>
+        <td>Plataforma colombiana muy arraigada en la región, parametrizada al SIEE, con boletines y notas ya resueltos y un precio muy bajo por estudiante</td>
+        <td>Cobro anual por estudiante matriculado <span style="font-size:10px;color:var(--mut)">(verificar tarifa vigente)</span></td>
+        <td>Interfaz heredada y poco adaptada a móviles. Sin analítica de deserción, sin experiencia de aprendizaje ni contenidos: es un sistema de notas, no un LMS.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--ink)">Q10 Académico</td><td class="c"><span class="tag ok">Alta</span></td>
+        <td>Institutos de ETDH, colegios privados y centros de formación en toda Colombia</td>
+        <td>SaaS colombiano con gestión académica, cartera y matrícula integradas, cobertura nacional y soporte en español con horario local</td>
+        <td>Suscripción anual escalada por número de estudiantes <span style="font-size:10px;color:var(--mut)">(verificar tarifa vigente)</span></td>
+        <td>Su enfoque es administrativo y de cartera, no pedagógico. Sin reproductor de contenidos, sin evaluación en línea ni white-labeling por institución.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="card" style="margin-top:18px;background:var(--p-deep);padding:16px 20px">
+    <p style="color:#fff;font-size:14px;line-height:1.5">
+      <b style="color:var(--p-soft)">Conclusión:</b> el mercado está partido en tres. Los <b>LMS genéricos gratuitos</b> (Moodle, Classroom) enseñan pero no administran el colegio y exigen que la institución sea su propio administrador de sistemas.
+      Los <b>sistemas de notas colombianos</b> (Master2000, Q10) administran bien y cuestan poco, pero no son plataformas de aprendizaje: no tienen contenidos, evaluación en línea ni analítica.
+      El <b>segmento premium</b> (Phidias) lo hace casi todo, pero a 4 o 5 veces nuestro precio y solo para estratos altos.
+      <b>GEMS LMS es el único que une gestión académica bajo SIEE y experiencia de aprendizaje real en un solo producto, al precio del segmento medio.</b>
+    </p>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Análisis de la competencia</span></div>
+</div>
+
+<!-- ══════════ 9 ══════════ -->
+<div class="lbl">Diapositiva 9 <span>— Estrategias de mercado y promociones</span></div>
+<div class="slide">
+  <div class="kick">2.9.2 Estrategia de precio</div>
+  <h2 class="st sm">Estrategias de mercado y promociones</h2>
+  <div style="height:20px"></div>
+  <div class="g2" style="gap:16px">
+    <div class="card" style="padding:18px 20px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <h4>Descuentos — penetración de mercado</h4><span class="tag">$6.000.000 / año</span>
+      </div>
+      <p><b>15% de descuento</b> a las primeras 15 instituciones que contraten <b>plataforma + soporte</b> durante el primer trimestre de lanzamiento.</p>
+    </div>
+    <div class="card" style="padding:18px 20px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <h4>Subsidio de inclusión digital</h4><span class="tag">$4.500.000 / año</span>
+      </div>
+      <p><b>10% de descuento</b> en la licencia anual para colegios con menos de 250 estudiantes matriculados o de zonas vulnerables.</p>
+    </div>
+    <div class="card" style="padding:18px 20px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <h4>Pronto pago y renovación anticipada</h4><span class="tag">$2.500.000 / año</span>
+      </div>
+      <p><b>5% de descuento</b> si el contrato se liquida antes del inicio del año escolar, dentro de los primeros 30 días del calendario formativo.</p>
+    </div>
+    <div class="card" style="padding:18px 20px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <h4>Congelación de tarifas</h4><span class="tag">$0</span>
+      </div>
+      <p>Tarifa congelada por <b>24 meses</b> para instituciones que firmen acuerdos de permanencia bienales. La empresa absorbe la inflación de la infraestructura.</p>
+    </div>
+  </div>
+  <div class="g2" style="gap:16px;margin-top:18px;grid-template-columns:1fr 1.4fr">
+    <div class="kpi" style="background:var(--p-deep);padding:20px"><div class="n" style="color:#fff">$13.000.000</div><div class="l" style="color:var(--p-soft)">Subtotal estrategias de precio — Año 1</div></div>
+    <div class="card w" style="padding:16px 20px">
+      <h4 class="b">Promoción de ventas más fuerte</h4>
+      <ul class="tight" style="margin-top:6px"><li><b>Prueba piloto gratuita de 30 días</b> de la plataforma completa, con soporte incluido</li><li><b>Cero costo de implementación inicial</b> si firman durante el primer mes de contacto</li><li><b>Tres talleres de capacitación docente certificados</b> sin costo adicional</li></ul>
+    </div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Estrategias de mercado</span></div>
+</div>
+
+<!-- ══════════ 10 ══════════ -->
+<div class="lbl">Diapositiva 10 <span>— Canales y formas de distribución</span></div>
+<div class="slide">
+  <div class="kick">2.9.4 Plaza — distribución</div>
+  <h2 class="st sm">Canales y formas de distribución</h2>
+  <div style="height:18px"></div>
+  <div class="g2" style="gap:22px;grid-template-columns:1.15fr 1fr">
+    <div>
+      <h4 style="font-size:13px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Canales de distribución</h4>
+      <table class="sm">
+        <thead><tr><th style="width:32%">Opción</th><th class="c" style="width:12%">Aplica</th><th>Justificación</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:var(--ink)">Distribución directa<br><span style="font-size:11px;color:var(--mut)">Consumidor final</span></td><td class="c"><span class="tag ok">Sí</span></td>
+            <td>Venta consultiva B2B sin intermediarios. El equipo comercial contacta directamente a juntas directivas y rectores. Indispensable: el software exige negociación de presupuesto institucional, contrato de manejo de datos e implementación guiada.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink)">Indirecta — canal corto</td><td class="c"><span class="tag no">No</span></td>
+            <td>Un intermediario encarecería la anualidad y debilitaría el soporte prioritario que debemos garantizar directamente al colegio.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink)">Indirecta — canal largo</td><td class="c"><span class="tag no">No</span></td>
+            <td>La complejidad técnica, la ciberseguridad y el despliegue personalizado en la nube impiden delegar la comercialización a mayoristas.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink)">Local físico / domicilio</td><td class="c"><span class="tag no">No</span></td>
+            <td>El producto es intangible: se entrega como subdominio web con credenciales cifradas por rol. La operación es <b>desde casa</b>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h4 style="font-size:13px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Formas de distribución</h4>
+      <table class="sm" style="margin-bottom:18px">
+        <thead><tr><th style="width:26%">Forma</th><th class="c" style="width:14%"></th><th>Por qué</th></tr></thead>
+        <tbody>
+          <tr><td>Intensiva</td><td class="c"><span class="tag no">No</span></td><td>Es para consumo masivo de baja implicación. Un software escolar no se oferta en marketplaces genéricos.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink)">Selectiva</td><td class="c"><span class="tag ok">Sí</span></td><td>Nicho corporativo específico: colegios privados K-12 urbanos de estrato medio-alto con perfil técnico mínimo de conectividad.</td></tr>
+          <tr><td>Exclusiva</td><td class="c"><span class="tag no">No</span></td><td>No se otorga exclusividad territorial. Cualquier establecimiento del Área Metropolitana puede contratar.</td></tr>
+        </tbody>
+      </table>
+      <h4 style="font-size:13px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Estrategias de distribución</h4>
+      <table class="sm">
+        <tbody>
+          <tr><td>Venta consultiva directa corporativa</td><td class="r" style="font-weight:600">$2.400.000</td></tr>
+          <tr><td>Email marketing a directivos</td><td class="r" style="font-weight:600">$600.000</td></tr>
+          <tr><td>Congresos educativos en Antioquia</td><td class="r" style="font-weight:600">$3.500.000</td></tr>
+          <tr><td>Alianzas con consultores del SIEE</td><td class="r" style="font-weight:600">$0</td></tr>
+          <tr class="tot"><td>Subtotal plaza — Año 1</td><td class="r">$6.500.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Distribución</span></div>
+</div>
+
+<!-- ══════════ 11 ══════════ -->
+<div class="lbl">Diapositiva 11 <span>— Divisor de sección</span></div>
+<div class="skip"><b>No se modifica.</b> «Análisis y estudio técnico».</div>
+
+<!-- ══════════ 12 ══════════ -->
+<div class="lbl">Diapositiva 12 <span>— Fichas técnicas: productos 1 y 2</span></div>
+<div class="slide" style="padding:40px 44px">
+  <h2 class="st sm" style="margin-bottom:16px">Ficha técnica del producto o servicio</h2>
+  <div class="g2" style="gap:18px">
+    <div>
+      <div style="background:var(--p-deep);color:#fff;padding:10px 14px;border-radius:10px 10px 0 0;font-size:12.5px;font-weight:700;letter-spacing:.05em">FICHA TÉCNICA PRODUCTO No. 1</div>
+      <table class="xs">
+        <tbody>
+          <tr><td style="width:34%;font-weight:700;color:var(--ink);background:var(--tint)">Nombre del producto</td><td>Ecosistema Tecnológico de Gestión Académica GEMS LMS</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Nombre comercial</td><td><b>GEMS Plataforma</b></td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Descripción general</td><td>Plataforma web integral en la nube (SaaS) para administración, control pedagógico y seguimiento académico de instituciones K-12. Centraliza matrículas, asistencia, observador del alumno, actividades virtuales y automatiza boletines.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Presentación y empaque</td><td>Entrega 100% digital: subdominio institucional personalizado (colegio.gemslms.com) con entornos cifrados y acceso por rol.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Vida útil</td><td>Indefinida, sujeta al contrato de licenciamiento anual. Incluye actualizaciones y mantenimiento continuo.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Condiciones de almacenamiento</td><td>AWS con redundancia de datos, HTTPS, cifrado SSL/TLS en tránsito y reposo, backups diarios.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Condiciones de uso</td><td>Dispositivo con internet estable y navegador moderno (Chrome, Firefox, Safari, Edge).</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Composición</td><td>Backend reactivo, bases de datos relacionales, APIs modulares, frontend responsive.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Mín. / máx. de producción</td><td>1 licencia institucional parametrizada / Ilimitado (escalabilidad horizontal en la nube)</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Otro</td><td>Cumplimiento de la Ley 1581 de 2012 (Habeas Data) para datos de menores de edad.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="background:var(--p-deep);color:#fff;padding:10px 14px;border-radius:10px 10px 0 0;font-size:12.5px;font-weight:700;letter-spacing:.05em">FICHA TÉCNICA SERVICIO No. 2</div>
+      <table class="xs">
+        <tbody>
+          <tr><td style="width:34%;font-weight:700;color:var(--ink);background:var(--tint)">Nombre del servicio</td><td>Servicio de Implementación, Soporte Técnico y Mantenimiento del Ecosistema GEMS</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Nombre comercial</td><td><b>Soporte y mantenimiento GEMS</b></td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Descripción general</td><td>Servicio profesional que acompaña el ciclo de vida de la plataforma en la institución: parametrización del SIEE, migración de bases de datos de estudiantes y docentes, capacitación al personal, mesa de ayuda y actualizaciones evolutivas.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Actividades incluidas</td><td>Parametrización de escalas y criterios de evaluación · Migración masiva de datos · Despliegue del subdominio · Capacitación técnica y pedagógica · Parches de seguridad · Actualizaciones mensuales de interfaz.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Condiciones especiales</td><td><b>Horario:</b> monitoreo automatizado de servidores 24/7. Ingeniería de soporte de lunes a viernes, 7:00 a.m. a 5:00 p.m.<br><b>Duración:</b> contrato anual renovable al inicio de cada calendario escolar.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Garantía</td><td>Disponibilidad de la plataforma (SLA) del <b>99,5% anual</b> respaldada por AWS, con copias de seguridad diarias automáticas y políticas de cifrado SSL.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Condiciones de uso</td><td>Requiere un canal de comunicación designado por la institución y un responsable técnico o administrativo de contacto.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Composición</td><td>Horas de ingeniería de implementación, DevOps y control de calidad · Plataforma de tickets · Guías de usuario y videotutoriales autogestionables.</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Mín. / máx. de producción</td><td>1 contrato anual por institución aliada / Ilimitado, sujeto a la capacidad del equipo de soporte</td></tr>
+          <tr><td style="font-weight:700;color:var(--ink);background:var(--tint)">Otro</td><td>Al ser un servicio intensivo en mano de obra especializada, su costo unitario es superior al de la plataforma, pero garantiza la adopción efectiva del software y la retención del cliente.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 13 ══════════ -->
+<div class="lbl">Diapositiva 13 <span>&mdash; Fichas técnicas 3 y 4</span></div>
+<div class="skip"><b>Ya no se usa.</b> El portafolio quedó en dos servicios &mdash; GEMS Plataforma y Soporte y mantenimiento &mdash; y ambas fichas caben en la diapositiva 12. <b>Elimina esta diapositiva del PPTX</b> (clic derecho sobre la miniatura → Eliminar diapositiva).</div>
+
+<div class="lbl">Diapositiva 14 <span>— Requerimientos y activos</span></div>
+<div class="slide">
+  <div class="kick">3.5 Requerimientos de activos</div>
+  <h2 class="st sm">Requerimiento y activos</h2>
+  <div style="height:16px"></div>
+  <table class="xs">
+    <thead><tr><th style="width:24%">Categoría</th><th>Detalle</th><th class="r" style="width:14%">Cantidad y precio total</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:700;color:var(--ink)">Maquinaria y equipo</td>
+        <td>2 servidores en rack Xeon 24 núcleos / 128 GB RAM / NVMe RAID · 3 estaciones de compilación Core i9 / GPU 16 GB / 64 GB RAM · 2 NAS de 4 TB · 1 impresora térmica · 2 UPS 1500 VA</td>
+        <td class="r" style="font-weight:700;color:var(--p-deep)">$66.790.000</td></tr>
+      <tr><td style="font-weight:700;color:var(--ink)">Equipo de comunicación<br>y computación</td>
+        <td>Router corporativo con VPN y firewall · Switch administrable 24 puertos PoE · Firewall físico IPS/IDS · Access Point Wi-Fi 6 · Kit de diademas profesionales</td>
+        <td class="r" style="font-weight:700;color:var(--p-deep)">$1.100.000</td></tr>
+      <tr><td style="font-weight:700;color:var(--ink)">Muebles y enseres</td>
+        <td>1 archivador metálico con cerradura · 2 escritorios de desarrollo · 3 sillas ergonómicas ajustables</td>
+        <td class="r" style="font-weight:700;color:var(--p-deep)">$140.000</td></tr>
+      <tr><td style="font-weight:700;color:var(--ink)">Herramientas y otros</td>
+        <td>Licencia de IDE de desarrollo backend · 2 licencias de herramientas UI/UX y prototipado · Kit de herramientas de mantenimiento</td>
+        <td class="r" style="font-weight:700;color:var(--p-deep)">$120.000</td></tr>
+      <tr><td style="font-weight:700;color:var(--mut)">Semovientes y cultivos</td>
+        <td style="color:var(--mut)"><b>No aplica.</b> Proyecto de economía digital y desarrollo de plataformas SaaS. Sin actividades agrícolas, pecuarias ni de explotación de suelos.</td>
+        <td class="r" style="font-weight:700;color:var(--mut)">$0</td></tr>
+      <tr><td style="font-weight:700;color:var(--ink)">Infraestructura<br>y adecuaciones</td>
+        <td>Cableado estructurado Cat 6A con canaletas perimetrales · Sistema eléctrico independiente y polo a tierra · Adecuación lumínica con paneles LED</td>
+        <td class="r" style="font-weight:700;color:var(--p-deep)">$120.000</td></tr>
+      <tr><td style="font-weight:700;color:var(--ink)">Gastos pre-operativos</td>
+        <td>Constitución legal ante Cámara de Comercio · Registro del software ante la DNDA · Registro marcario GEMS ante la SIC</td>
+        <td class="r" style="font-weight:700;color:var(--p-deep)">$90.000</td></tr>
+      <tr class="tot"><td colspan="2" style="font-size:14px">VALOR TOTAL REQUERIMIENTO Y ACTIVOS</td>
+        <td class="r" style="font-size:16px">$68.360.000</td></tr>
+    </tbody>
+  </table>
+  <div class="g3" style="margin-top:20px;gap:14px">
+    <div class="kpi"><div class="n sm">$68.360.000</div><div class="l">Inversión total en activos</div></div>
+    <div class="kpi"><div class="n sm">$28.800.477</div><div class="l">Capital de trabajo</div></div>
+    <div class="kpi" style="background:var(--p-deep)"><div class="n sm" style="color:#fff">$97.160.477</div><div class="l" style="color:var(--p-soft)">Inversión total del proyecto</div></div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Requerimientos y activos</span></div>
+</div>
+
+<!-- ══════════ 15 ══════════ -->
+<div class="lbl">Diapositiva 15 <span>— Estimación de la demanda y presupuesto de costos</span></div>
+<div class="slide">
+  <div class="kick">3.6 y 3.11 Análisis de la producción</div>
+  <h2 class="st sm">Estimación de la demanda y presupuesto de costos</h2>
+  <div style="height:16px"></div>
+  <div class="g2" style="gap:22px;grid-template-columns:1fr 1.25fr">
+    <div>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Costos variables por unidad de servicio — Año 1</h4>
+      <table class="xs" style="margin-bottom:18px">
+        <thead><tr><th>Servicio</th><th class="r">Costo unitario</th><th class="r">Valor anual</th></tr></thead>
+        <tbody>
+          <tr><td>GEMS Plataforma</td><td class="r">$36.747</td><td class="r">$35.276.724</td></tr>
+          <tr><td>Soporte y mantenimiento</td><td class="r">$58.995</td><td class="r">$35.396.724</td></tr>
+          <tr class="tot"><td>Total costo variable</td><td class="r">$95.742</td><td class="r">$70.673.448</td></tr>
+        </tbody>
+      </table>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Plan de producción — unidades de servicio</h4>
+      <table class="xs">
+        <thead><tr><th>Servicio</th><th class="r">Mensual</th><th class="r">Año 1</th><th class="r">Año 5</th></tr></thead>
+        <tbody>
+          <tr><td>GEMS Plataforma</td><td class="r">80</td><td class="r">960</td><td class="r">1.195</td></tr>
+          <tr><td>Soporte y mantenimiento</td><td class="r">50</td><td class="r">600</td><td class="r">747</td></tr>
+          <tr class="tot"><td>Total unidades / año</td><td class="r">130</td><td class="r">1.560</td><td class="r">1.942</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11.5px;color:var(--mut);margin-top:10px;line-height:1.45">Crecimiento proyectado con el PIB del sector: <b>5,2%</b> (A2) · <b>5,5%</b> (A3) · <b>5,8%</b> (A4) · <b>6,0%</b> (A5)</p>
+    </div>
+    <div>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Presupuesto de costos de producción proyectado</h4>
+      <table class="xs">
+        <thead><tr><th>Servicio</th><th class="r">Año 1</th><th class="r">Año 2</th><th class="r">Año 3</th><th class="r">Año 4</th><th class="r">Año 5</th></tr></thead>
+        <tbody>
+          <tr><td>GEMS Plataforma</td><td class="r">$35.276.724</td><td class="r">$38.261.558</td><td class="r">$41.576.922</td><td class="r">$45.308.035</td><td class="r">$49.467.313</td></tr>
+          <tr><td>Soporte y mantenimiento</td><td class="r">$56.634.758</td><td class="r">$61.426.738</td><td class="r">$66.749.365</td><td class="r">$72.739.454</td><td class="r">$79.416.935</td></tr>
+          <tr class="tot"><td>TOTAL</td><td class="r">$91.911.482</td><td class="r">$99.688.297</td><td class="r">$108.326.288</td><td class="r">$118.047.489</td><td class="r">$128.884.248</td></tr>
+        </tbody>
+      </table>
+      <div class="g3" style="gap:12px;margin-top:18px">
+        <div class="kpi" style="padding:14px"><div class="n sm">$91,9 M</div><div class="l">Costo de producción Año 1</div></div>
+        <div class="kpi" style="padding:14px"><div class="n sm">+40%</div><div class="l">Crecimiento del costo a 5 años</div></div>
+        <div class="kpi" style="padding:14px;background:var(--tint2)"><div class="n sm">+103%</div><div class="l">Crecimiento del ingreso a 5 años</div></div>
+      </div>
+      <div class="card w" style="margin-top:14px;padding:14px 16px">
+        <p style="font-size:12.5px;line-height:1.5">El ingreso crece <b>2,5 veces más rápido</b> que el costo de producción. Eso es la economía de escala del modelo SaaS: el costo marginal de una institución adicional es casi cero una vez la plataforma está desplegada.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Presupuesto de costos de producción</span></div>
+</div>
+
+<!-- ══════════ 16 ══════════ -->
+<div class="lbl">Diapositiva 16 <span>— Requerimientos de mano de obra directa</span></div>
+<div class="slide">
+  <div class="kick">3.7 Requerimientos de mano de obra</div>
+  <h2 class="st sm">Requerimientos de mano de obra directa</h2>
+  <div style="height:18px"></div>
+  <table class="sm">
+    <thead><tr><th>Nombre del cargo</th><th class="c">Cantidad</th><th>Tipo de contrato</th><th class="r">Salario básico</th><th class="r">Valor neto pagado</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:700;color:var(--ink)">Desarrollador Backend / Ingeniero de Software</td><td class="c">1</td><td>Contrato de nómina</td><td class="r">$2.800.000</td><td class="r" style="font-weight:700;color:var(--p-deep)">$4.514.727</td></tr>
+      <tr class="tot"><td>Total mano de obra directa — Año 1</td><td class="c">1</td><td></td><td class="r">$2.800.000</td><td class="r">$4.514.727</td></tr>
+    </tbody>
+  </table>
+  <div class="g2" style="gap:20px;margin-top:22px;grid-template-columns:1.25fr 1fr">
+    <div class="card w" style="padding:18px 20px">
+      <h4 class="b">Estructura objetivo del área técnica</h4>
+      <p style="font-size:13px;margin-bottom:10px">El Año 1 opera con un desarrollador de tiempo completo. Los siguientes cargos se incorporan según el plan de escalamiento del negocio:</p>
+      <ul class="tight">
+        <li><b>Diseñador Web UI/UX y Frontend</b> — interfaces, wireframes, identidad visual, pruebas de usabilidad</li>
+        <li><b>Ingeniero de Operaciones / DevOps</b> — servidores, backups, monitoreo, seguridad de infraestructura</li>
+        <li><b>Analista de Control de Calidad / QA Tester</b> — planes de prueba, detección de errores antes de producción</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Proyección de la mano de obra directa</h4>
+      <table class="sm">
+        <tbody>
+          <tr><td>Año 1</td><td class="r" style="font-weight:600">$54.176.724</td></tr>
+          <tr><td>Año 2</td><td class="r" style="font-weight:600">$55.856.201</td></tr>
+          <tr><td>Año 3</td><td class="r" style="font-weight:600">$57.531.887</td></tr>
+          <tr><td>Año 4</td><td class="r" style="font-weight:600">$59.257.844</td></tr>
+          <tr class="tot"><td>Año 5</td><td class="r">$61.035.579</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11.5px;color:var(--mut);margin-top:10px;line-height:1.45">Incremento salarial proyectado: <b>3,1%</b> (A2) y <b>3,0%</b> (A3 a A5). Riesgo laboral <b>Clase I — 0,522%</b> (trabajos de oficina).</p>
+    </div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Mano de obra directa</span></div>
+</div>
+
+<!-- ══════════ 17 ══════════ -->
+<div class="lbl">Diapositiva 17 <span>— Divisor de sección</span></div>
+<div class="skip"><b>No se modifica.</b> «Análisis organizacional y legal».</div>
+
+<!-- ══════════ 18 ══════════ -->
+<div class="lbl">Diapositiva 18 <span>— Organigrama</span></div>
+<div class="slide">
+  <div class="kick">4.2 Aspectos organizacionales</div>
+  <h2 class="st sm">Organigrama — GEMAS S.A.S.</h2>
+  <div style="height:22px"></div>
+  <div style="display:flex;flex-direction:column;align-items:center">
+    <!-- nivel 1 -->
+    <div style="background:var(--p-deep);color:#fff;border-radius:12px;padding:16px 34px;text-align:center;min-width:330px">
+      <div style="font-size:11px;color:var(--p-soft);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px">Gerencia General</div>
+      <div style="font-size:17px;font-weight:700">Gerente General / Líder de Proyectos</div>
+    </div>
+    <div style="width:2px;height:26px;background:var(--p-soft)"></div>
+    <div style="width:74%;height:2px;background:var(--p-soft)"></div>
+    <div style="display:flex;justify-content:space-between;width:74%">
+      <div style="width:2px;height:26px;background:var(--p-soft)"></div>
+      <div style="width:2px;height:26px;background:var(--p-soft)"></div>
+      <div style="width:2px;height:26px;background:var(--p-soft)"></div>
+    </div>
+    <!-- nivel 2 -->
+    <div class="g3" style="width:100%;gap:20px">
+      <div>
+        <div style="background:var(--p-soft);color:#fff;border-radius:10px;padding:11px 16px;text-align:center;font-size:14px;font-weight:700;margin-bottom:12px">Área de Desarrollo y Backend</div>
+        <div class="card" style="padding:14px 16px">
+          <ul class="tight">
+            <li><b>Desarrollador Backend / Ingeniero de Software</b></li>
+            <li><b>Ingeniero de Operaciones / DevOps</b></li>
+            <li><b>Analista de Control de Calidad / QA Tester</b></li>
+          </ul>
+          <p style="font-size:12px;color:var(--mut);margin-top:10px;line-height:1.45">Arquitectura lógica y bases de datos, APIs, algoritmos, servidores, backups, monitoreo, pruebas y calidad.</p>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--p-soft);color:#fff;border-radius:10px;padding:11px 16px;text-align:center;font-size:14px;font-weight:700;margin-bottom:12px">Área de Diseño y Frontend</div>
+        <div class="card" style="padding:14px 16px">
+          <ul class="tight"><li><b>Diseñador Web UI/UX y Frontend</b></li></ul>
+          <p style="font-size:12px;color:var(--mut);margin-top:10px;line-height:1.45">Interfaz gráfica, wireframes y flujos de usuario, frontend responsive, identidad visual y assets digitales, pruebas de usabilidad.</p>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--p-soft);color:#fff;border-radius:10px;padding:11px 16px;text-align:center;font-size:14px;font-weight:700;margin-bottom:12px">Área Comercial y de Servicios</div>
+        <div class="card" style="padding:14px 16px">
+          <ul class="tight"><li><b>Asesor Comercial</b></li><li><b>Auxiliar de Soporte y Éxito del Cliente</b></li></ul>
+          <p style="font-size:12px;color:var(--mut);margin-top:10px;line-height:1.45">Prospección y venta consultiva B2B, soporte técnico, onboarding de clientes, tickets, manuales y encuestas de satisfacción.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="g4" style="gap:14px;margin-top:24px">
+    <div class="kpi" style="padding:13px"><div class="n sm" style="font-size:19px">GEMAS S.A.S.</div><div class="l">Razón social — persona jurídica</div></div>
+    <div class="kpi" style="padding:13px"><div class="n sm" style="font-size:19px">Individual</div><div class="l">Número de socios</div></div>
+    <div class="kpi" style="padding:13px"><div class="n sm" style="font-size:19px">Desde casa</div><div class="l">Forma de operar — zona periurbana</div></div>
+    <div class="kpi" style="padding:13px"><div class="n sm" style="font-size:19px">2 indirectos</div><div class="l">Empleos a generar</div></div>
+  </div>
+  <div class="foot"><span>Marca: GEMS LMS</span><span>Estructura organizacional</span></div>
+</div>
+
+<!-- ══════════ 19 ══════════ -->
+<div class="lbl">Diapositiva 19 <span>— Requerimientos de mano de obra administrativa</span></div>
+<div class="slide">
+  <div class="kick">4.3 Gastos de personal administrativo</div>
+  <h2 class="st sm">Requerimientos de mano de obra administrativa</h2>
+  <div style="height:18px"></div>
+  <table class="sm">
+    <thead><tr><th>Nombre del cargo</th><th class="c">Cantidad</th><th>Tipo de contrato</th><th class="r">Salario básico</th><th class="r">Valor neto pagado</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:700;color:var(--ink)">Asesor Comercial</td><td class="c">1</td><td>Contrato de nómina</td><td class="r">$1.750.000</td><td class="r" style="font-weight:700;color:var(--p-deep)">$2.915.115</td></tr>
+      <tr class="tot"><td>Total mano de obra administrativa — mensual</td><td class="c">1</td><td></td><td class="r">$1.750.000</td><td class="r">$2.915.115</td></tr>
+    </tbody>
+  </table>
+  <div class="g2" style="gap:22px;margin-top:22px">
+    <div>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Proyección del gasto de personal administrativo</h4>
+      <table class="sm">
+        <tbody>
+          <tr><td>Año 1</td><td class="r" style="font-weight:600">$34.981.380</td></tr>
+          <tr><td>Año 2</td><td class="r" style="font-weight:600">$36.065.803</td></tr>
+          <tr><td>Año 3</td><td class="r" style="font-weight:600">$37.147.777</td></tr>
+          <tr><td>Año 4</td><td class="r" style="font-weight:600">$38.262.210</td></tr>
+          <tr class="tot"><td>Año 5</td><td class="r">$39.410.076</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Valores de referencia aplicados</h4>
+      <table class="xs">
+        <tbody>
+          <tr><td>Salario mínimo legal vigente</td><td class="r" style="font-weight:600">$1.750.905</td></tr>
+          <tr><td>Auxilio de transporte</td><td class="r" style="font-weight:600">$249.095</td></tr>
+          <tr><td>Prestaciones sociales <span style="font-size:10.5px;color:var(--mut)">(prima 8,3% + cesantías 8,33% + vacaciones 4,17% + intereses 1%)</span></td><td class="r" style="font-weight:600">21,80%</td></tr>
+          <tr><td>Seguridad social a cargo del empleador <span style="font-size:10.5px;color:var(--mut)">(salud 8,5% + pensión 12%)</span></td><td class="r" style="font-weight:600">20,50%</td></tr>
+          <tr><td>Parafiscales <span style="font-size:10.5px;color:var(--mut)">(caja 4% + ICBF 3% + SENA 2%)</span></td><td class="r" style="font-weight:600">9,00%</td></tr>
+          <tr class="tot"><td>Riesgo laboral Clase I — trabajos de oficina y administrativos</td><td class="r">0,522%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Mano de obra administrativa</span></div>
+</div>
+
+<!-- ══════════ 20 ══════════ -->
+<div class="lbl">Diapositiva 20 <span>— Gastos administrativos de la unidad</span></div>
+<div class="slide">
+  <div class="kick">4.4 Gastos de administración, ventas y generales</div>
+  <h2 class="st sm">Gastos administrativos de la unidad productiva</h2>
+  <div style="height:18px"></div>
+  <table class="sm">
+    <thead><tr><th>Rubros</th><th class="r">Valor mensual</th><th class="r">Año 1</th><th class="r">Año 2</th><th class="r">Año 3</th><th class="r">Año 4</th><th class="r">Año 5</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;color:var(--ink)">Mezcla de mercados</td><td class="r">$3.575.833</td><td class="r">$42.910.000</td><td class="r">$44.240.210</td><td class="r">$45.567.416</td><td class="r">$46.934.439</td><td class="r">$48.342.472</td></tr>
+      <tr><td style="font-weight:600;color:var(--ink)">Agua y aseo</td><td class="r">$100.000</td><td class="r">$1.200.000</td><td class="r">$1.237.200</td><td class="r">$1.274.316</td><td class="r">$1.312.545</td><td class="r">$1.351.922</td></tr>
+      <tr><td style="font-weight:600;color:var(--ink)">Papelería</td><td class="r">$50.000</td><td class="r">$600.000</td><td class="r">$618.600</td><td class="r">$637.158</td><td class="r">$656.273</td><td class="r">$655.636</td></tr>
+      <tr><td style="font-weight:600;color:var(--ink)">Viáticos</td><td class="r">$100.000</td><td class="r">$1.200.000</td><td class="r">$1.237.200</td><td class="r">$1.274.316</td><td class="r">$1.312.545</td><td class="r">$1.311.272</td></tr>
+      <tr class="tot"><td>TOTAL</td><td class="r">$3.825.833</td><td class="r">$45.910.000</td><td class="r">$47.333.210</td><td class="r">$48.753.206</td><td class="r">$50.215.802</td><td class="r">$51.661.302</td></tr>
+    </tbody>
+  </table>
+  <div style="height:24px"></div>
+  <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Resumen consolidado de gastos administrativos, ventas y generales</h4>
+  <table class="sm">
+    <thead><tr><th>Detalle</th><th class="r">Año 1</th><th class="r">Año 2</th><th class="r">Año 3</th><th class="r">Año 4</th><th class="r">Año 5</th></tr></thead>
+    <tbody>
+      <tr><td>Mano de obra administrativa</td><td class="r">$34.981.380</td><td class="r">$36.065.803</td><td class="r">$37.147.777</td><td class="r">$38.262.210</td><td class="r">$39.410.076</td></tr>
+      <tr><td>Gastos de administración, ventas y generales</td><td class="r">$45.910.000</td><td class="r">$47.333.210</td><td class="r">$48.753.206</td><td class="r">$50.215.802</td><td class="r">$51.661.302</td></tr>
+      <tr class="tot"><td>TOTAL</td><td class="r">$80.891.380</td><td class="r">$83.399.013</td><td class="r">$85.900.983</td><td class="r">$88.478.012</td><td class="r">$91.071.379</td></tr>
+    </tbody>
+  </table>
+  <div class="card w" style="margin-top:20px;padding:16px 20px">
+    <p style="font-size:13px;line-height:1.5"><b>La mezcla de mercados concentra el 93% del gasto de administración y ventas del Año 1.</b> No es un gasto de estructura: es la inversión comercial necesaria para penetrar un mercado donde la decisión de compra depende de comités directivos y ciclos de venta largos.</p>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Gastos administrativos</span></div>
+</div>
+
+<!-- ══════════ 21 ══════════ -->
+<div class="lbl">Diapositiva 21 <span>— Divisor de sección</span></div>
+<div class="skip"><b>No se modifica.</b> «Análisis de viabilidad financiera».</div>
+
+<!-- ══════════ 22 ══════════ -->
+<div class="lbl">Diapositiva 22 <span>— Costos operacionales y precio</span></div>
+<div class="slide">
+  <div class="kick">5.3 y 5.4 Costos operacionales y precios</div>
+  <h2 class="st sm">Costos operacionales y precio</h2>
+  <div style="height:16px"></div>
+  <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Presupuesto de costos operacionales — costo unitario de producción</h4>
+  <table class="sm">
+    <thead><tr><th class="c" style="width:6%">Ítem</th><th>Bien / Servicio</th><th class="r">Año 1</th><th class="r">Año 2</th><th class="r">Año 3</th><th class="r">Año 4</th><th class="r">Año 5</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td style="font-weight:600;color:var(--ink)">GEMS Plataforma</td><td class="r">$36.747</td><td class="r">$37.886</td><td class="r">$39.022</td><td class="r">$40.193</td><td class="r">$41.399</td></tr>
+      <tr><td class="c">2</td><td style="font-weight:600;color:var(--ink)">Soporte y mantenimiento</td><td class="r">$58.995</td><td class="r">$60.823</td><td class="r">$62.648</td><td class="r">$64.528</td><td class="r">$64.528</td></tr>
+    </tbody>
+  </table>
+  <div style="height:22px"></div>
+  <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Precios proyectados</h4>
+  <table class="sm">
+    <thead><tr><th class="c" style="width:6%">Ítem</th><th>Bien / Servicio</th><th class="r">Costo unitario</th><th class="c">Margen</th><th class="r">Precio Año 1</th><th class="r">Año 2</th><th class="r">Año 3</th><th class="r">Año 4</th><th class="r">Año 5</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td style="font-weight:600;color:var(--ink)">GEMS Plataforma</td><td class="r">$36.747</td><td class="c"><span class="tag">100%</span></td><td class="r" style="font-weight:700;color:var(--p-deep)">$110.240</td><td class="r">$121.264</td><td class="r">$135.815</td><td class="r">$154.830</td><td class="r">$179.602</td></tr>
+      <tr><td class="c">2</td><td style="font-weight:600;color:var(--ink)">Soporte y mantenimiento</td><td class="r">$58.995</td><td class="c"><span class="tag">85%</span></td><td class="r" style="font-weight:700;color:var(--p-deep)">$109.140</td><td class="r">$120.054</td><td class="r">$134.460</td><td class="r">$153.285</td><td class="r">$177.810</td></tr>
+    </tbody>
+  </table>
+  <div class="card w" style="margin-top:20px;padding:15px 20px">
+    <p style="font-size:12.5px;line-height:1.5">Incremento del precio proyectado: <b>10%</b> (A2) · <b>12%</b> (A3) · <b>14%</b> (A4) · <b>16%</b> (A5). El precio unitario corresponde a la <b>unidad de servicio del plan de producción</b> (paquete por grupo de usuarios), no a la licencia institucional completa, que se comercializa entre $2.500.000 y $2.900.000 anuales. El <b>soporte tiene un costo unitario mayor que la plataforma</b> porque es intensivo en horas de ingeniería, mientras el software tiene costo marginal casi nulo: de ahí el margen del 85% frente al 100%.</p>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Costos operacionales y precios</span></div>
+</div>
+
+<!-- ══════════ 23 ══════════ -->
+<div class="lbl">Diapositiva 23 <span>— Estados financieros</span></div>
+<div class="slide">
+  <div class="kick">5.5 y 5.7 Estados financieros</div>
+  <h2 class="st sm">Estados financieros proyectados</h2>
+  <div style="height:20px"></div>
+
+  <div style="margin-bottom:18px">
+    <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Ingresos de ventas</h4>
+    <div class="g5" style="gap:12px">
+      <div class="kpi" style="padding:15px"><div class="l" style="margin:0 0 6px">Año 1</div><div class="n sm" style="font-size:21px">$171.314.111</div></div>
+      <div class="kpi" style="padding:15px"><div class="l" style="margin:0 0 6px">Año 2</div><div class="n sm" style="font-size:21px">$198.244.690</div></div>
+      <div class="kpi" style="padding:15px"><div class="l" style="margin:0 0 6px">Año 3</div><div class="n sm" style="font-size:21px">$234.245.925</div></div>
+      <div class="kpi" style="padding:15px"><div class="l" style="margin:0 0 6px">Año 4</div><div class="n sm" style="font-size:21px">$282.528.695</div></div>
+      <div class="kpi" style="padding:15px;background:var(--tint2)"><div class="l" style="margin:0 0 6px">Año 5</div><div class="n sm" style="font-size:21px">$347.397.284</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:18px">
+    <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Egresos</h4>
+    <div class="g5" style="gap:12px">
+      <div class="kpi w" style="padding:15px;background:#f7f7fa"><div class="l" style="margin:0 0 6px">Año 1</div><div class="n sm" style="font-size:21px;color:#4b5563">$172.802.862</div></div>
+      <div class="kpi w" style="padding:15px;background:#f7f7fa"><div class="l" style="margin:0 0 6px">Año 2</div><div class="n sm" style="font-size:21px;color:#4b5563">$183.031.510</div></div>
+      <div class="kpi w" style="padding:15px;background:#f7f7fa"><div class="l" style="margin:0 0 6px">Año 3</div><div class="n sm" style="font-size:21px;color:#4b5563">$194.169.797</div></div>
+      <div class="kpi w" style="padding:15px;background:#f7f7fa"><div class="l" style="margin:0 0 6px">Año 4</div><div class="n sm" style="font-size:21px;color:#4b5563">$206.466.303</div></div>
+      <div class="kpi w" style="padding:15px;background:#f7f7fa"><div class="l" style="margin:0 0 6px">Año 5</div><div class="n sm" style="font-size:21px;color:#4b5563">$219.955.627</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:18px">
+    <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Utilidad neta</h4>
+    <div class="g5" style="gap:12px">
+      <div class="kpi" style="padding:15px;background:#ecfdf5"><div class="l" style="margin:0 0 6px">Año 1</div><div class="n sm ok" style="font-size:21px">$5.649.337</div></div>
+      <div class="kpi" style="padding:15px;background:#ecfdf5"><div class="l" style="margin:0 0 6px">Año 2</div><div class="n sm ok" style="font-size:21px">$17.605.032</div></div>
+      <div class="kpi" style="padding:15px;background:#ecfdf5"><div class="l" style="margin:0 0 6px">Año 3</div><div class="n sm ok" style="font-size:21px">$37.377.282</div></div>
+      <div class="kpi" style="padding:15px;background:#ecfdf5"><div class="l" style="margin:0 0 6px">Año 4</div><div class="n sm ok" style="font-size:21px">$65.875.816</div></div>
+      <div class="kpi" style="padding:15px;background:#d1fae5"><div class="l" style="margin:0 0 6px">Año 5</div><div class="n sm ok" style="font-size:21px">$144.104.283</div></div>
+    </div>
+  </div>
+
+  <div class="g2" style="gap:16px;grid-template-columns:1.5fr 1fr">
+    <div class="card w" style="padding:15px 18px">
+      <p style="font-size:12.5px;line-height:1.5"><b>Composición de egresos Año 1:</b> costos de producción $91.911.482 · mezcla de mercados $42.910.000 · mano de obra administrativa $34.981.380 · administración y generales $3.000.000 · depreciación $3.625.500. <b>Sin intereses ni amortización</b>, porque el proyecto no se apalanca con crédito bancario.</p>
+    </div>
+    <div class="kpi" style="background:var(--p-deep);padding:16px"><div class="n sm" style="color:#fff;font-size:24px">$270.611.749</div><div class="l" style="color:var(--p-soft)">Saldo final de caja acumulado — Año 5</div></div>
+  </div>
+  <div class="foot"><span>Impuesto de renta persona jurídica: 35% · Política de cartera: 15 días</span><span>Estados financieros</span></div>
+</div>
+
+<!-- ══════════ 24 ══════════ -->
+<div class="lbl">Diapositiva 24 <span>— Análisis de la viabilidad financiera</span></div>
+<div class="slide">
+  <div class="kick">5.8 Indicadores de viabilidad financiera</div>
+  <h2 class="st sm">Análisis de la viabilidad financiera</h2>
+  <div style="height:20px"></div>
+  <div class="g4" style="gap:14px;margin-bottom:16px">
+    <div class="kpi" style="background:var(--tint)"><div class="n">20%</div><div class="l"><b>Costo de capital</b><br>Rentabilidad mínima exigida al proyecto</div></div>
+    <div class="kpi" style="background:var(--tint)"><div class="n sm">$128.244.963</div><div class="l"><b>Valor actual de la inversión</b><br>Valor presente de los flujos futuros</div></div>
+    <div class="kpi" style="background:#d1fae5"><div class="n ok">+$31.084.486</div><div class="l"><b>Valor presente neto (VPN)</b><br>Positivo: el proyecto genera valor sobre el 20% exigido</div></div>
+    <div class="kpi" style="background:#d1fae5"><div class="n ok">28,77%</div><div class="l"><b>Tasa interna de retorno (TIR)</b><br>Supera el costo de capital en 8,77 puntos</div></div>
+  </div>
+  <div class="g4" style="gap:14px;margin-bottom:20px">
+    <div class="kpi" style="background:#d1fae5"><div class="n ok">1,11</div><div class="l"><b>Relación beneficio / costo</b><br>Por cada peso invertido se recuperan $1,11</div></div>
+    <div class="kpi" style="background:var(--tint2)"><div class="n">Año 5</div><div class="l"><b>Recuperación de la inversión</b><br>PRI dentro del horizonte evaluado</div></div>
+    <div class="kpi" style="background:var(--p-deep)"><div class="n" style="color:#fff;font-size:26px">$97.160.477</div><div class="l" style="color:var(--p-soft)"><b>Inversión inicial requerida</b><br>Capital propio 40% · socios 50% · convocatoria 10%</div></div>
+    <div class="kpi" style="background:var(--tint2)"><div class="n">$0</div><div class="l"><b>Crédito bancario</b><br>El proyecto no se apalanca con deuda financiera</div></div>
+  </div>
+  <div class="card" style="background:var(--p-deep);padding:20px 24px">
+    <h4 style="color:var(--p-soft);margin-bottom:10px">Análisis</h4>
+    <p style="color:#fff;font-size:14px;line-height:1.55">
+      El proyecto es <b>financieramente viable</b>. Con un costo de capital del 20%, el VPN es positivo en $31.084.486 y la TIR alcanza el 28,77%.
+      A diferencia de la mayoría de emprendimientos de software, la unidad productiva genera <b>utilidad neta positiva desde el primer año</b> ($5.649.337),
+      gracias a que el modelo SaaS tiene un costo marginal muy bajo por usuario adicional y a que no se recurre a crédito bancario, lo que elimina la carga de intereses.
+      Los ingresos escalan <b>103%</b> en cinco años mientras los egresos solo crecen <b>27%</b>, ampliando progresivamente el margen operativo.
+      La estructura de financiación mantiene la unidad libre de deuda, reduciendo el riesgo en la etapa de penetración de mercado.
+    </p>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Viabilidad financiera</span></div>
+</div>
+
+<!-- ══════════ 25 ══════════ -->
+<div class="lbl">Diapositiva 25 <span>— Divisor de sección</span></div>
+<div class="skip"><b>No se modifica.</b> «Producto Mínimo Viable».</div>
+
+<!-- ══════════ 26 ══════════ -->
+<div class="lbl">Diapositiva 26 <span>— Aspectos clave del producto mínimo viable</span></div>
+<div class="slide" style="padding:42px 48px">
+  <h2 class="st sm" style="margin-bottom:16px">Aspectos clave del producto mínimo viable</h2>
+  <div class="g2" style="gap:15px">
+    <div class="card" style="padding:16px 18px">
+      <h4 style="font-size:13.5px">¿Qué competencias de mi programa de formación se alinean con la elaboración de mi PMV?</h4>
+      <ul class="xt">
+        <li><b>Analizar requisitos del cliente</b> — 4 perfiles de usuario y 22 rutas con permisos diferenciados</li>
+        <li><b>Diseñar el sistema de información</b> — Arquitectura Hexagonal con DDD en backend y frontend</li>
+        <li><b>Producir el código de los módulos</b> — 683 archivos, ~58.900 líneas: Java 24 + Spring Boot reactivo y Angular 22</li>
+        <li><b>Implementar la estructura de datos</b> — 11 tablas en PostgreSQL 16, modelo database-per-service</li>
+        <li><b>Aplicar calidad y realizar pruebas</b> — 67 clases de test, 7.568 líneas, cobertura exigida del 100%</li>
+        <li><b>Desplegar el sistema</b> — Docker Compose, Nginx con TLS y certificados Let's Encrypt</li>
+        <li><b>Aplicar seguridad informática</b> — JWT, BCrypt, rate limiting con Redis, cabeceras HTTP y CORS</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <h4 style="font-size:13.5px">¿Qué importancia tiene la elaboración del PMV con la funcionalidad de mi proyecto?</h4>
+      <p style="font-size:13px;line-height:1.5;margin-bottom:10px">El PMV convierte el plan de negocio en algo demostrable. <b>Un rector no compra una promesa: compra lo que ve funcionando en una demo de veinte minutos.</b></p>
+      <ul class="xt">
+        <li><b>Validó la arquitectura</b> — comprobó que el multi-tenant con white-labeling es viable sobre una sola base de código, premisa de la que depende toda la estructura de costos del modelo SaaS</li>
+        <li><b>Validó la experiencia de usuario</b> — los 4 roles probados con datos realistas: 11 cursos con currículo completo, 5 rutas y casos límite para verificar certificación y encuesta</li>
+        <li><b>Habilitó la estrategia comercial</b> — la prueba piloto de 30 días y el «cero costo de implementación» solo son ofertables porque existe un producto desplegable</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <h4 style="font-size:13.5px">¿Qué quiero lograr con la elaboración de mi PMV?</h4>
+      <ul class="xt">
+        <li><b>Demostrar el recorrido completo</b> de los 4 roles: desde que el super administrador crea una institución con su branding hasta que el estudiante descarga su certificado en PDF</li>
+        <li><b>Probar técnicamente el multi-tenant</b> — una institución nueva operativa con identidad visual propia en minutos, sin tocar código</li>
+        <li><b>Validar el ciclo académico completo</b> — crear curso con 6 tipos de contenido, matricular un grupo, avance con progresión bloqueada, quiz autocalificado, tarea calificada y certificado emitido</li>
+        <li><b>Tener una base de demo para la venta consultiva</b> con rectores del Área Metropolitana</li>
+        <li><b>Dejar la arquitectura lista para escalar</b> hacia Connect, Analytics y Pay sin reescribir el núcleo</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:16px 18px;background:var(--p-deep)">
+      <h4 style="font-size:13.5px;color:var(--p-soft)">Características diferenciadoras del PMV realizado</h4>
+      <ul class="xt" style="--x:1">
+        <li style="color:#e9e5f8"><b style="color:#fff">White-labeling en tiempo real</b> — logo, favicon, colores, tema claro-oscuro y CSS propio por institución sobre una sola base de código</li>
+        <li style="color:#e9e5f8"><b style="color:#fff">Progresión secuencial bloqueada</b> — un bloque queda inaccesible hasta completar el anterior; los quizzes desbloquean solo si el mejor intento aprueba</li>
+        <li style="color:#e9e5f8"><b style="color:#fff">Seis tipos de bloque de contenido</b> — video, markdown, quiz, tarea con rúbrica, SCORM y sesión en vivo</li>
+        <li style="color:#e9e5f8"><b style="color:#fff">Certificación automática en PDF</b> — al 100% se genera y descarga el certificado con id verificable</li>
+        <li style="color:#e9e5f8"><b style="color:#fff">Panel del instructor por cohorte</b> — estadísticas, calificación de entregas y radar comparativo del estudiante contra su grupo</li>
+        <li style="color:#e9e5f8"><b style="color:#fff">Importación y exportación en Excel</b> — carga masiva de usuarios y reportes de notas</li>
+        <li style="color:#e9e5f8"><b style="color:#fff">Backend reactivo no bloqueante</b> — más concurrencia con menos infraestructura, clave en temporada de matrículas</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 27 ══════════ -->
+<div class="lbl">Diapositiva 27 <span>— Proceso y resultados</span></div>
+<div class="slide" style="padding:40px 46px">
+  <h2 class="st sm" style="margin-bottom:14px">Proceso y resultados</h2>
+  <div class="g3" style="gap:14px;margin-bottom:14px">
+    <div class="card" style="padding:15px 17px">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">
+        <span style="background:var(--p-soft);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</span>
+        <h4 style="font-size:13px;margin:0">Fundación: arquitectura, identidad y multi-tenancy</h4>
+      </div>
+      <ul class="xt">
+        <li><b>ms-auth</b> operativo: registro, login con JWT, desactivación lógica, consulta por institución</li>
+        <li><b>ms-admin</b> operativo: CRUD de instituciones y de branding — el cimiento del white-labeling</li>
+        <li>Cadena de filtros de seguridad: cabeceras HTTP, rate limiting con Redis y validación de JWT</li>
+        <li>Infraestructura: PostgreSQL 16 con base por servicio, Redis 7, Nginx con TLS y Docker Compose</li>
+        <li>Design system propio, login de dos paneles, sesión persistente y guards por rol</li>
+      </ul>
+      <p style="font-size:11.5px;color:var(--p-deep);margin-top:9px;font-weight:600;line-height:1.4">→ Un super administrador puede crear una institución con su identidad visual propia.</p>
+    </div>
+    <div class="card" style="padding:15px 17px">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">
+        <span style="background:var(--p-soft);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</span>
+        <h4 style="font-size:13px;margin:0">Dominio académico y autoría de contenido</h4>
+      </div>
+      <ul class="xt">
+        <li><b>ms-education</b> con el modelo en cascada: cursos → módulos → lecciones → contenidos</li>
+        <li>Entidad estudiante con 8 value objects validados</li>
+        <li><b>Editor de cursos completo</b>: árbol de currículo navegable, cálculo automático de duraciones, publicar y archivar</li>
+        <li>Modal de bloques con los 6 tipos, incluido el editor markdown con preview en vivo</li>
+        <li>Módulo admin: dashboard institucional, vista de Personas e <b>importación masiva desde Excel</b></li>
+      </ul>
+      <p style="font-size:11.5px;color:var(--p-deep);margin-top:9px;font-weight:600;line-height:1.4">→ Un instructor puede construir un curso completo y cargar usuarios desde una hoja de cálculo.</p>
+    </div>
+    <div class="card" style="padding:15px 17px">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">
+        <span style="background:var(--p-soft);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</span>
+        <h4 style="font-size:13px;margin:0">Evaluación, experiencia del estudiante y seguimiento</h4>
+      </div>
+      <ul class="xt">
+        <li>Quizzes con <b>calificación automática</b>, rutas de aprendizaje y matriculación masiva</li>
+        <li><b>Reproductor de curso</b>: progresión bloqueada, feedback por pregunta, control de intentos, entrega de tareas y <b>certificado en PDF</b></li>
+        <li>Zona del estudiante: inicio, catálogo con filtros, «Mi aprendizaje» y encuesta al 100%</li>
+        <li><b>Módulo instructor</b>: 5 pestañas por cohorte, panel de calificación, radar comparativo y exportación a Excel y PDF</li>
+      </ul>
+      <p style="font-size:11.5px;color:var(--p-deep);margin-top:9px;font-weight:600;line-height:1.4">→ El ciclo académico completo, de la creación del curso a la certificación y el reporte de notas.</p>
+    </div>
+  </div>
+  <div class="g2" style="gap:14px;grid-template-columns:1fr 1.08fr">
+    <div class="card" style="padding:15px 18px;background:var(--p-deep)">
+      <h4 style="font-size:13px;color:var(--p-soft)">Resultado final del PMV</h4>
+      <p style="color:#fff;font-size:12.5px;line-height:1.5;margin-bottom:10px"><b>GEMS LMS Core es un LMS multi-tenant funcionalmente completo y demostrable de extremo a extremo.</b> Los 4 roles tienen su recorrido navegable con datos semilla realistas. El backend está desplegable con Docker Compose y Nginx con TLS sobre tres subdominios productivos.</p>
+      <div class="g4" style="gap:8px">
+        <div style="text-align:center"><div style="font-size:17px;font-weight:700;color:#fff">683</div><div style="font-size:9.5px;color:var(--p-soft);line-height:1.3">archivos</div></div>
+        <div style="text-align:center"><div style="font-size:17px;font-weight:700;color:#fff">58.900</div><div style="font-size:9.5px;color:var(--p-soft);line-height:1.3">líneas</div></div>
+        <div style="text-align:center"><div style="font-size:17px;font-weight:700;color:#fff">113</div><div style="font-size:9.5px;color:var(--p-soft);line-height:1.3">componentes</div></div>
+        <div style="text-align:center"><div style="font-size:17px;font-weight:700;color:#fff">43</div><div style="font-size:9.5px;color:var(--p-soft);line-height:1.3">endpoints</div></div>
+      </div>
+    </div>
+    <div class="card w" style="padding:15px 18px">
+      <h4 class="b" style="font-size:13px">¿Qué falta para llegar a la fase de comercialización?</h4>
+      <ul class="xt">
+        <li><b>Integrar frontend y backend</b> — apagar los flags de datos simulados e implementar las llamadas HTTP reales con interceptor de JWT · <b>3–4 semanas</b></li>
+        <li><b>Cerrar la brecha del modelo de datos</b> — tablas y endpoints para intentos de quiz, entregas, grupos, encuestas y certificados · <b>4–6 semanas</b></li>
+        <li><b>Autorización por rol en el backend</b> — requisito no negociable antes de manejar datos de menores · <b>1–2 semanas</b></li>
+        <li><b>Subida real de archivos y correo transaccional</b> · <b>4 semanas</b></li>
+        <li><b>Pruebas del frontend</b> · <b>3 semanas</b></li>
+        <li><b>Capacidades del roadmap</b> — portal de acudientes, analítica predictiva de deserción y recaudo en línea · <b>2 a 3 trimestres</b></li>
+        <li><b>Trámites legales</b> — constitución de GEMAS S.A.S., registro del software ante la DNDA, marca ante la SIC y política de tratamiento de datos</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 28 ══════════ -->
+<div class="lbl">Diapositiva 28 <span>— Matriz DOFA del producto mínimo viable</span></div>
+<div class="slide" style="padding:40px 48px">
+  <h2 class="st sm" style="margin-bottom:16px">Matriz DOFA del producto mínimo viable</h2>
+  <div class="g2" style="gap:15px">
+    <div class="card" style="padding:16px 18px;background:#ecfdf5">
+      <h4 style="font-size:13.5px;color:#047857">Fortalezas del PMV</h4>
+      <ul class="xt">
+        <li><b>Arquitectura hexagonal estricta con DDD</b> aplicada de forma consistente en las 8 unidades del monorepo</li>
+        <li><b>Calidad verificada en el backend</b>: 40% del código Java es prueba, con exigencia de cobertura del 100% en la capa de negocio</li>
+        <li><b>Stack de última generación</b>: Java 24, Spring Boot 3.4.5 reactivo, Angular 22 con signals y zoneless change detection</li>
+        <li><b>Multi-tenancy con white-labeling en runtime</b>, funcionando y demostrable</li>
+        <li><b>UI muy trabajada, no wireframes</b>: ~16.900 líneas de estilos, design system de 27 componentes, dark mode, accesibilidad y responsive</li>
+        <li><b>Recorrido completo de los 4 roles</b> con datos semilla que cubren casos límite</li>
+        <li><b>Backend reactivo no bloqueante</b>: más concurrencia con menos infraestructura</li>
+        <li><b>Listo para desplegar</b>: Docker Compose de producción y Nginx con TLS</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:16px 18px;background:#fef2f2">
+      <h4 style="font-size:13.5px;color:#b91c1c">Debilidades del PMV</h4>
+      <ul class="xt">
+        <li><b>Frontend y backend no están integrados</b>: el frontend corre sobre datos simulados en memoria y los datos se pierden al recargar</li>
+        <li><b>El esquema de base de datos cubre ~40% del modelo</b> que el frontend ya maneja</li>
+        <li><b>Autorización por rol ausente en el backend</b>; hoy es solo del frontend</li>
+        <li><b>Cero pruebas en el frontend</b>, pese a tener el runner configurado</li>
+        <li><b>Las capacidades del roadmap no están desarrolladas</b> —portal de acudientes, analítica predictiva y recaudo en línea— y el rol de padre de familia no existe en el sistema</li>
+        <li><b>El componente innovador de IA no está implementado</b>: no hay dependencias ni servicios de IA en el proyecto</li>
+        <li><b>Sin almacenamiento de archivos ni correo transaccional</b></li>
+        <li><b>Deuda técnica menor</b>: módulo api-gateway huérfano y Swagger faltante en ms-education</li>
+        <li><b>Dependencia de un solo desarrollador</b>: el conocimiento técnico está concentrado en una persona</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:16px 18px;background:var(--tint)">
+      <h4 style="font-size:13.5px">Oportunidades de mejora del PMV</h4>
+      <ul class="xt">
+        <li><b>Integración frontend–backend</b>: el paso de mayor impacto y el más cercano; el trabajo pesado de ambos lados ya está hecho</li>
+        <li><b>Ampliar ms-education</b> con las tablas y endpoints faltantes para cerrar la brecha del modelo</li>
+        <li><b>Convertir el panel del instructor en analítica predictiva real</b>: ya existen las estadísticas por cohorte y el radar comparativo</li>
+        <li><b>Crear el rol de acudiente</b> reutilizando el sistema de roles y guards ya construido — la vía más corta hacia el portal de acudientes</li>
+        <li><b>Aprovechar SCORM y sesión en vivo</b>, ya modelados: dos funcionalidades vendibles a bajo costo incremental</li>
+        <li><b>Programa piloto con colegios reales</b> del Valle de Aburrá para conseguir casos de éxito</li>
+        <li><b>Certificación en ciberseguridad y habeas data</b> como argumento diferenciador frente a los competidores gratuitos</li>
+        <li><b>Exportar el modelo a otros segmentos</b>: academias, ETDH y capacitación corporativa</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:16px 18px;background:#fffbeb">
+      <h4 style="font-size:13.5px;color:#92400e">Amenazas del PMV</h4>
+      <ul class="xt">
+        <li><b>Competidores gratuitos muy arraigados</b>: Google Classroom y Moodle, con comunidades y adopción masivas</li>
+        <li><b>Competidores locales muy arraigados</b>: Master2000 y Q10 ya están instalados en los colegios de la región, con precios bajos y costos de cambio altos</li>
+        <li><b>Ciclo de venta institucional largo</b>: las decisiones dependen de comités y presupuestos anuales; se puede perder un año escolar completo</li>
+        <li><b>Riesgo regulatorio alto</b>: manejar datos de menores bajo la Ley 1581 de 2012 y la Ley 1273 de 2009. Un incidente de seguridad sería difícil de sobrevivir</li>
+        <li><b>Costos de nube en dólares frente a ingresos en pesos</b>: la devaluación afecta directamente el margen</li>
+        <li><b>Barrera de adopción docente</b>: la resistencia al cambio puede hundir una implementación técnicamente correcta</li>
+        <li><b>Velocidad del mercado EdTech</b>: si los competidores incorporan analítica con IA antes, se pierde el diferenciador prometido</li>
+        <li><b>Deuda técnica acumulada</b> si la integración se posterga</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 29 ══════════ -->
+<div class="lbl">Diapositiva 29 <span>— Funcionalidad del PMV</span></div>
+<div class="slide">
+  <div class="kick">Producto mínimo viable</div>
+  <h2 class="st sm">Funcionalidad del PMV</h2>
+  <div style="height:18px"></div>
+  <div class="g2" style="gap:22px;grid-template-columns:1.3fr 1fr">
+    <div>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Recorrido de la demostración</h4>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div class="card" style="padding:11px 15px;display:flex;gap:11px;align-items:flex-start">
+          <span style="background:var(--p-deep);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">1</span>
+          <p style="font-size:12.5px"><b>Super administrador</b> crea una institución con logo y colores propios → <b>toda la interfaz cambia en tiempo real</b></p>
+        </div>
+        <div class="card" style="padding:11px 15px;display:flex;gap:11px;align-items:flex-start">
+          <span style="background:var(--p-deep);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">2</span>
+          <p style="font-size:12.5px"><b>Administrador</b> importa usuarios desde un archivo Excel, crea un grupo y lo matricula completo en un curso</p>
+        </div>
+        <div class="card" style="padding:11px 15px;display:flex;gap:11px;align-items:flex-start">
+          <span style="background:var(--p-deep);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">3</span>
+          <p style="font-size:12.5px"><b>Instructor</b> crea un curso: módulo, lección, video, documento markdown y quiz con explicaciones</p>
+        </div>
+        <div class="card" style="padding:11px 15px;display:flex;gap:11px;align-items:flex-start">
+          <span style="background:var(--p-deep);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">4</span>
+          <p style="font-size:12.5px"><b>Estudiante</b> entra al reproductor: <b>progresión bloqueada</b>, resuelve el quiz, recibe calificación automática con feedback y entrega una tarea</p>
+        </div>
+        <div class="card" style="padding:11px 15px;display:flex;gap:11px;align-items:flex-start">
+          <span style="background:var(--p-deep);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">5</span>
+          <p style="font-size:12.5px"><b>Instructor</b> califica la entrega con retroalimentación y muestra el <b>radar comparativo</b> del estudiante contra el promedio del grupo</p>
+        </div>
+        <div class="card" style="padding:11px 15px;display:flex;gap:11px;align-items:flex-start;background:var(--tint2)">
+          <span style="background:var(--p-deep);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">6</span>
+          <p style="font-size:12.5px"><b>Estudiante</b> completa el curso al 100% → <b>descarga su certificado en PDF</b> · El instructor exporta el reporte de notas a Excel</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4 style="font-size:12.5px;font-weight:700;color:var(--p-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Métricas del producto construido</h4>
+      <table class="sm" style="margin-bottom:16px">
+        <tbody>
+          <tr><td>Archivos de código</td><td class="r" style="font-weight:700;color:var(--p-deep)">683</td></tr>
+          <tr><td>Líneas de código</td><td class="r" style="font-weight:700;color:var(--p-deep)">~58.900</td></tr>
+          <tr><td>Microservicios</td><td class="r" style="font-weight:700;color:var(--p-deep)">3</td></tr>
+          <tr><td>Endpoints REST</td><td class="r" style="font-weight:700;color:var(--p-deep)">43</td></tr>
+          <tr><td>Componentes Angular</td><td class="r" style="font-weight:700;color:var(--p-deep)">113</td></tr>
+          <tr><td>Casos de uso</td><td class="r" style="font-weight:700;color:var(--p-deep)">61</td></tr>
+          <tr><td>Clases de prueba (backend)</td><td class="r" style="font-weight:700;color:var(--p-deep)">67</td></tr>
+          <tr><td>Tablas de base de datos</td><td class="r" style="font-weight:700;color:var(--p-deep)">11</td></tr>
+          <tr class="tot"><td>Roles con recorrido completo</td><td class="r">4</td></tr>
+        </tbody>
+      </table>
+      <div class="card w" style="padding:14px 16px">
+        <h4 class="b" style="font-size:12.5px">Material de soporte</h4>
+        <ul class="xt" style="margin-top:6px">
+          <li>Video de demostración de 3 a 5 minutos</li>
+          <li>Diagrama de arquitectura del repositorio</li>
+          <li>Capturas clave: dashboard con branding, editor de cursos, bloque bloqueado, certificado y panel del instructor</li>
+          <li>Enlace al repositorio del proyecto</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px;background:var(--p-deep);padding:16px 22px">
+    <p style="color:#fff;font-size:13.5px;line-height:1.5">
+      El portafolio comercial son dos servicios: <b>GEMS Plataforma y Soporte y mantenimiento</b>. <b>Hoy la plataforma está construida y funcionando</b>, con el recorrido completo de los cuatro roles, arquitectura multi-tenant y calidad verificada en el backend. El portal de acudientes, la analítica predictiva y el recaudo en línea son el roadmap de los próximos tres trimestres, y la arquitectura ya está preparada para recibirlos sin reescribir el núcleo. <b style="color:var(--p-soft)">Lo que traigo no es una idea: es un producto que se puede desplegar y demostrar hoy.</b>
+    </p>
+  </div>
+  <div class="foot"><span>GEMS LMS</span><span>Funcionalidad del PMV</span></div>
+</div>
+
+<!-- ══════════ 30 ══════════ -->
+<div class="lbl">Diapositiva 30 <span>— Cierre</span></div>
+<div class="slide" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--p-deep)">
+  <div style="font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--p-soft);margin-bottom:18px">Gracias por su atención</div>
+  <h2 style="font-size:80px;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1">GEMS LMS</h2>
+  <p style="font-size:19px;color:var(--p-soft);margin-top:16px">Plataforma SaaS de gestión académica para colegios K-12</p>
+  <div style="width:120px;height:2px;background:var(--p-soft);margin:38px 0 32px;opacity:.5"></div>
+  <div style="display:flex;gap:56px">
+    <div><div style="font-size:11px;color:var(--p-soft);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px">Aprendiz</div><div style="font-size:17px;color:#fff;font-weight:600">Sebastián Pulgarín Gómez</div></div>
+    <div><div style="font-size:11px;color:var(--p-soft);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px">Correo</div><div style="font-size:17px;color:#fff;font-weight:600">pulgaringomezsebastian@gmail.com</div></div>
+    <div><div style="font-size:11px;color:var(--p-soft);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px">Celular</div><div style="font-size:17px;color:#fff;font-weight:600">301 250 8805</div></div>
+  </div>
+  <div style="position:absolute;bottom:30px;font-size:12px;color:var(--p-soft);opacity:.75">Análisis y Desarrollo de Software — Ficha 2721550 · Regional Santander · GEMAS S.A.S.</div>
+</div>
+
+<!-- ══════════════ GRÁFICAS DE APOYO ══════════════ -->
+
+<div class="doc-head" style="margin-top:64px">
+  <h1>Gráficas de apoyo</h1>
+  <p>
+    Ocho gráficas y diagramas. Cada una dice a qué diapositiva va. Captúralas igual que las diapositivas,
+    o insértalas como imagen al lado del contenido.<br>
+    Los colores se validaron con un verificador de daltonismo: <b>morado #7c3aed</b> y <b>naranja #eb6834</b> tienen
+    una separación ΔE de 124 (el mínimo aceptable es 12), así que las series se distinguen incluso impresas en
+    escala de grises o vistas por alguien con deuteranopia.
+  </p>
+</div>
+
+<style>
+  .gfx{width:1000px;margin:0 auto 12px;background:#fff;padding:30px 34px 26px;border-radius:14px;
+       box-shadow:0 1px 3px rgba(30,27,46,.10);outline:1px solid #e6e2f0}
+  .gfx h3{font-size:19px;color:var(--p-deep);margin-bottom:5px}
+  .gfx .cap{font-size:13px;color:var(--mut);line-height:1.5;margin-bottom:18px}
+  .gfx .note{font-size:12.5px;color:#3a3552;line-height:1.55;margin-top:14px;background:var(--tint);
+             padding:12px 15px;border-radius:9px}
+  .gfx svg{display:block;width:100%;height:auto}
+  .lgd{display:flex;gap:22px;align-items:center;font-size:13px;color:#52514e;margin-bottom:14px}
+  .lgd i{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+</style>
+
+<!-- ───────── G1 · Embudo de mercado ───────── -->
+<div class="lbl">Gráfica 1 <span>— va en la diapositiva 7 (Estudio de mercado)</span></div>
+<div class="gfx">
+  <h3>Embudo del mercado objetivo</h3>
+  <p class="cap">De las instituciones privadas del Valle de Aburrá a la meta de conversión del primer año.</p>
+  <svg viewBox="0 0 940 272" role="img" aria-label="Embudo: 380 instituciones privadas, 150 de nicho viable, 60 visitas comerciales al año, 15 de meta de conversión en el año 1">
+    <text x="228" y="42" text-anchor="end" font-size="14" font-weight="600" fill="#1e1b2e">Instituciones privadas</text>
+    <text x="228" y="59" text-anchor="end" font-size="11.5" fill="#898781">Valle de Aburrá · DUE del MEN</text>
+    <rect x="244" y="24" width="620" height="44" rx="4" fill="#a78bfa"/>
+    <text x="264" y="52" font-size="18" font-weight="700" fill="#2a1a52">380</text>
+
+    <text x="228" y="106" text-anchor="end" font-size="14" font-weight="600" fill="#1e1b2e">Nicho viable</text>
+    <text x="228" y="123" text-anchor="end" font-size="11.5" fill="#898781">en transformación digital</text>
+    <rect x="244" y="88" width="245" height="44" rx="4" fill="#8b5cf6"/>
+    <text x="264" y="116" font-size="18" font-weight="700" fill="#fff">150</text>
+
+    <text x="228" y="170" text-anchor="end" font-size="14" font-weight="600" fill="#1e1b2e">Visitas comerciales</text>
+    <text x="228" y="187" text-anchor="end" font-size="11.5" fill="#898781">capacidad del año 1</text>
+    <rect x="244" y="152" width="98" height="44" rx="4" fill="#6d28d9"/>
+    <text x="264" y="180" font-size="18" font-weight="700" fill="#fff">60</text>
+
+    <text x="228" y="234" text-anchor="end" font-size="14" font-weight="600" fill="#1e1b2e">Meta de conversión</text>
+    <text x="228" y="251" text-anchor="end" font-size="11.5" fill="#898781">primeras con descuento del 15%</text>
+    <rect x="244" y="216" width="25" height="44" rx="4" fill="#4c1d95"/>
+    <text x="281" y="244" font-size="18" font-weight="700" fill="#4c1d95">15</text>
+  </svg>
+  <p class="note"><b>Cómo leerlo:</b> el embudo aterriza el mercado. No se le vende a 380 colegios: se le vende a 15 el primer año,
+  que es el <b>4% del mercado disponible</b> y el 10% del nicho viable. Es una meta defendible, y eso es exactamente lo que un jurado quiere escuchar.</p>
+</div>
+
+<!-- ───────── G2 · Mapa competitivo ───────── -->
+<div class="lbl">Gráfica 2 <span>— va en la diapositiva 8 (Análisis de la competencia)</span></div>
+<div class="gfx">
+  <h3>Mapa de posicionamiento competitivo</h3>
+  <p class="cap">Cada competidor resuelve una mitad del problema. El cuadrante superior derecho está casi vacío.</p>
+  <svg viewBox="0 0 940 546" role="img" aria-label="Mapa de posicionamiento. GEMS LMS ocupa el cuadrante de alta gestión administrativa y alta experiencia de aprendizaje, donde no hay competidores directos. Moodle y Google Classroom quedan arriba a la izquierda; Master2000 y Q10 abajo a la derecha; Phidias a la derecha en la mitad.">
+    <rect x="476" y="60" width="384" height="209" fill="#f5f3ff"/>
+    <line x1="90" y1="60" x2="90" y2="480" stroke="#c3c2b7" stroke-width="1"/>
+    <line x1="90" y1="480" x2="860" y2="480" stroke="#c3c2b7" stroke-width="1"/>
+    <line x1="475" y1="60" x2="475" y2="480" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="90" y1="270" x2="860" y2="270" stroke="#e1e0d9" stroke-width="1"/>
+
+    <text x="104" y="80" font-size="11" font-weight="700" fill="#b9b5c4" letter-spacing="1.2">LMS DE CONTENIDO</text>
+    <text x="846" y="80" text-anchor="end" font-size="11" font-weight="700" fill="#7c3aed" letter-spacing="1.2">ECOSISTEMA COMPLETO</text>
+    <text x="104" y="468" font-size="11" font-weight="700" fill="#b9b5c4" letter-spacing="1.2">HERRAMIENTAS SUELTAS</text>
+    <text x="846" y="468" text-anchor="end" font-size="11" font-weight="700" fill="#b9b5c4" letter-spacing="1.2">SISTEMAS DE NOTAS</text>
+
+    <text x="475" y="514" text-anchor="middle" font-size="13" font-weight="600" fill="#52514e">Gestión administrativa y académica · SIEE, notas, boletines, matrícula →</text>
+    <text x="0" y="0" transform="translate(64,270) rotate(-90)" text-anchor="middle" font-size="13" font-weight="600" fill="#52514e">Experiencia de aprendizaje · contenidos, evaluación →</text>
+
+    <circle cx="312" cy="178" r="9" fill="#b9b5c4"/><text x="328" y="183" font-size="13.5" fill="#52514e">Moodle</text>
+    <circle cx="223" cy="249" r="9" fill="#b9b5c4"/><text x="239" y="254" font-size="13.5" fill="#52514e">Google Classroom</text>
+    <circle cx="741" cy="304" r="9" fill="#b9b5c4"/><text x="757" y="309" font-size="13.5" fill="#52514e">Phidias</text>
+    <circle cx="726" cy="392" r="9" fill="#b9b5c4"/><text x="742" y="397" font-size="13.5" fill="#52514e">Q10</text>
+    <circle cx="667" cy="425" r="9" fill="#b9b5c4"/><text x="655" y="449" text-anchor="middle" font-size="13.5" fill="#52514e">Master2000</text>
+
+    <circle cx="682" cy="123" r="17" fill="#ffffff"/>
+    <circle cx="682" cy="123" r="13" fill="#7c3aed"/>
+    <text x="707" y="119" font-size="15.5" font-weight="700" fill="#4c1d95">GEMS LMS</text>
+    <text x="707" y="136" font-size="11.5" fill="#7c3aed">gestión + aprendizaje</text>
+
+    <circle cx="98" cy="536" r="6" fill="#7c3aed"/><text x="112" y="541" font-size="12" fill="#52514e">GEMS LMS</text>
+    <circle cx="206" cy="536" r="6" fill="#b9b5c4"/><text x="220" y="541" font-size="12" fill="#52514e">Competencia</text>
+  </svg>
+  <p class="note"><b>Cómo leerlo:</b> abajo a la derecha, Master2000 y Q10 administran el colegio pero no enseñan.
+  Arriba a la izquierda, Moodle y Classroom enseñan pero no administran. <b>GEMS LMS es el único arriba a la derecha</b>;
+  Phidias es el único que se acerca, a 4 o 5 veces el precio. Esa esquina vacía es el argumento de venta.</p>
+</div>
+
+<!-- ───────── G3 · Ingresos vs egresos ───────── -->
+<div class="lbl">Gráfica 3 <span>— va en la diapositiva 23 (Estados financieros)</span></div>
+<div class="gfx">
+  <h3>Ingresos frente a egresos, cinco años</h3>
+  <p class="cap">Ingreso por ventas del flujo de caja (con política de cartera a 15 días) contra el total de egresos de efectivo.</p>
+  <div class="lgd"><span><i style="background:#7c3aed"></i>Ingreso por ventas</span><span><i style="background:#eb6834"></i>Total egresos</span></div>
+  <svg viewBox="0 0 940 392" role="img" aria-label="Barras agrupadas por año. El ingreso por ventas pasa de 178,5 a 361,9 millones y los egresos de 172,8 a 220 millones, de modo que la brecha se abre progresivamente.">
+    <line x1="80" y1="350" x2="880" y2="350" stroke="#c3c2b7" stroke-width="1"/>
+    <line x1="80" y1="272.5" x2="880" y2="272.5" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="80" y1="195" x2="880" y2="195" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="80" y1="117.5" x2="880" y2="117.5" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="80" y1="40" x2="880" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+    <text x="70" y="354" text-anchor="end" font-size="11" fill="#898781">0</text>
+    <text x="70" y="277" text-anchor="end" font-size="11" fill="#898781">100</text>
+    <text x="70" y="199" text-anchor="end" font-size="11" fill="#898781">200</text>
+    <text x="70" y="121" text-anchor="end" font-size="11" fill="#898781">300</text>
+    <text x="70" y="44" text-anchor="end" font-size="11" fill="#898781">400</text>
+    <text x="22" y="24" font-size="11" fill="#898781">millones COP</text>
+
+    <rect x="112" y="211.6" width="46" height="138.4" rx="4" fill="#7c3aed"/>
+    <rect x="160" y="216.1" width="46" height="133.9" rx="4" fill="#eb6834"/>
+    <text x="159" y="372" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 1</text>
+
+    <rect x="270" y="190.0" width="46" height="160.0" rx="4" fill="#7c3aed"/>
+    <rect x="318" y="208.2" width="46" height="141.8" rx="4" fill="#eb6834"/>
+    <text x="317" y="372" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 2</text>
+
+    <rect x="428" y="160.9" width="46" height="189.1" rx="4" fill="#7c3aed"/>
+    <rect x="476" y="199.5" width="46" height="150.5" rx="4" fill="#eb6834"/>
+    <text x="475" y="372" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 3</text>
+
+    <rect x="586" y="121.9" width="46" height="228.1" rx="4" fill="#7c3aed"/>
+    <rect x="634" y="190.0" width="46" height="160.0" rx="4" fill="#eb6834"/>
+    <text x="633" y="372" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 4</text>
+
+    <rect x="744" y="69.5" width="46" height="280.5" rx="4" fill="#7c3aed"/>
+    <rect x="792" y="179.5" width="46" height="170.5" rx="4" fill="#eb6834"/>
+    <text x="791" y="372" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 5</text>
+    <text x="767" y="60" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4c1d95">$361,9 M</text>
+    <text x="846" y="171" text-anchor="middle" font-size="13.5" font-weight="700" fill="#b9451a">$220,0 M</text>
+
+    <text x="112" y="199" font-size="11.5" fill="#898781">casi empatados</text>
+  </svg>
+  <p class="note"><b>Cómo leerlo:</b> en el Año 1 ingresos y egresos van casi iguales, el margen es mínimo.
+  De ahí en adelante la brecha se abre: los ingresos crecen <b>103%</b> y los egresos apenas <b>27%</b>.
+  Esa tijera que se abre es la economía de escala del modelo SaaS y es el argumento central de la viabilidad.</p>
+</div>
+
+<!-- ───────── G4 · Utilidad neta ───────── -->
+<div class="lbl">Gráfica 4 <span>— va en la diapositiva 23 (Estados financieros)</span></div>
+<div class="gfx">
+  <h3>Utilidad neta proyectada</h3>
+  <p class="cap">Después del impuesto de renta del 35%. Positiva desde el primer año.</p>
+  <svg viewBox="0 0 940 382" role="img" aria-label="Barras de utilidad neta: 5,6 millones el año 1, 17,6 el año 2, 37,4 el año 3, 65,9 el año 4 y 144,1 millones el año 5.">
+    <line x1="80" y1="340" x2="880" y2="340" stroke="#c3c2b7" stroke-width="1"/>
+    <line x1="80" y1="265" x2="880" y2="265" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="80" y1="190" x2="880" y2="190" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="80" y1="115" x2="880" y2="115" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="80" y1="40" x2="880" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+    <text x="70" y="344" text-anchor="end" font-size="11" fill="#898781">0</text>
+    <text x="70" y="269" text-anchor="end" font-size="11" fill="#898781">40</text>
+    <text x="70" y="194" text-anchor="end" font-size="11" fill="#898781">80</text>
+    <text x="70" y="119" text-anchor="end" font-size="11" fill="#898781">120</text>
+    <text x="70" y="44" text-anchor="end" font-size="11" fill="#898781">160</text>
+    <text x="22" y="24" font-size="11" fill="#898781">millones COP</text>
+
+    <rect x="119" y="329.5" width="80" height="10.5" rx="4" fill="#7c3aed"/>
+    <text x="159" y="321" text-anchor="middle" font-size="13" font-weight="700" fill="#4c1d95">5,6</text>
+    <text x="159" y="362" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 1</text>
+
+    <rect x="277" y="307.0" width="80" height="33.0" rx="4" fill="#7c3aed"/>
+    <text x="317" y="298" text-anchor="middle" font-size="13" font-weight="700" fill="#4c1d95">17,6</text>
+    <text x="317" y="362" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 2</text>
+
+    <rect x="435" y="269.9" width="80" height="70.1" rx="4" fill="#7c3aed"/>
+    <text x="475" y="261" text-anchor="middle" font-size="13" font-weight="700" fill="#4c1d95">37,4</text>
+    <text x="475" y="362" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 3</text>
+
+    <rect x="593" y="216.4" width="80" height="123.6" rx="4" fill="#7c3aed"/>
+    <text x="633" y="208" text-anchor="middle" font-size="13" font-weight="700" fill="#4c1d95">65,9</text>
+    <text x="633" y="362" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 4</text>
+
+    <rect x="751" y="69.8" width="80" height="270.2" rx="4" fill="#7c3aed"/>
+    <text x="791" y="60" text-anchor="middle" font-size="15.5" font-weight="700" fill="#4c1d95">144,1</text>
+    <text x="791" y="362" text-anchor="middle" font-size="12.5" font-weight="600" fill="#52514e">Año 5</text>
+  </svg>
+  <p class="note"><b>Cómo leerlo:</b> la utilidad se multiplica por <b>25 veces</b> entre el Año 1 y el Año 5.
+  El punto fuerte para sustentar es que <b>no hay ningún año en pérdida</b>. Eso es poco común en software y se explica por dos decisiones:
+  no tomar crédito bancario —cero intereses— y un modelo con costo marginal casi nulo por institución adicional.</p>
+</div>
+
+<!-- ───────── G5 · TIR vs costo de capital ───────── -->
+<div class="lbl">Gráfica 5 <span>— va en la diapositiva 24 (Viabilidad financiera)</span></div>
+<div class="gfx">
+  <h3>Rentabilidad frente al umbral exigido</h3>
+  <p class="cap">La TIR debe superar el costo de capital para que el proyecto sea viable. Aquí lo supera por 8,77 puntos.</p>
+  <svg viewBox="0 0 940 236" role="img" aria-label="La tasa interna de retorno es 28,77% y el costo de capital exigido es 20%, de modo que el proyecto supera el umbral por 8,77 puntos porcentuales.">
+    <text x="185" y="76" text-anchor="end" font-size="14" font-weight="700" fill="#1e1b2e">TIR del proyecto</text>
+    <text x="185" y="93" text-anchor="end" font-size="11.5" fill="#898781">rentabilidad que genera</text>
+    <rect x="200" y="42" width="559" height="58" rx="4" fill="#7c3aed"/>
+    <text x="775" y="79" font-size="21" font-weight="700" fill="#4c1d95">28,77%</text>
+
+    <text x="185" y="154" text-anchor="end" font-size="14" font-weight="700" fill="#1e1b2e">Costo de capital</text>
+    <text x="185" y="171" text-anchor="end" font-size="11.5" fill="#898781">rentabilidad mínima exigida</text>
+    <rect x="200" y="120" width="389" height="58" rx="4" fill="#c9c5d4"/>
+    <text x="605" y="157" font-size="21" font-weight="700" fill="#6b7280">20,00%</text>
+
+    <!-- brecha -->
+    <line x1="589" y1="106" x2="589" y2="114" stroke="#7c3aed" stroke-width="1"/>
+    <line x1="759" y1="106" x2="759" y2="114" stroke="#7c3aed" stroke-width="1"/>
+    <line x1="589" y1="110" x2="759" y2="110" stroke="#7c3aed" stroke-width="1"/>
+    <text x="674" y="103" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">+8,77 puntos</text>
+
+    <!-- eje -->
+    <line x1="200" y1="196" x2="880" y2="196" stroke="#c3c2b7" stroke-width="1"/>
+    <text x="200" y="214" text-anchor="middle" font-size="11" fill="#898781">0%</text>
+    <text x="394" y="214" text-anchor="middle" font-size="11" fill="#898781">10%</text>
+    <text x="589" y="214" text-anchor="middle" font-size="11" fill="#898781">20%</text>
+    <text x="783" y="214" text-anchor="middle" font-size="11" fill="#898781">30%</text>
+  </svg>
+  <p class="note"><b>Cómo leerlo:</b> es el indicador que decide si el proyecto se aprueba o no.
+  Si la barra morada quedara más corta que la gris, el proyecto <b>no</b> sería viable — y eso es exactamente lo que pasa con la otra versión del Excel,
+  donde la TIR es 14,6% contra el mismo 20% exigido. Por eso hay que sustentar con la versión <b>(6)</b>.</p>
+</div>
+
+<!-- ───────── G6 · Recuperación de la inversión ───────── -->
+<div class="lbl">Gráfica 6 <span>— va en la diapositiva 24 (Viabilidad financiera)</span></div>
+<div class="gfx">
+  <h3>Recuperación de la inversión</h3>
+  <p class="cap">Flujo neto acumulado. La curva cruza el cero cuando la inversión inicial queda recuperada.</p>
+  <svg viewBox="0 0 940 420" role="img" aria-label="Flujo neto acumulado: parte de menos 97,2 millones en el año cero y cruza el cero durante el año 4, cerrando en más 173,5 millones al año 5.">
+    <line x1="90" y1="340" x2="880" y2="340" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="90" y1="140" x2="880" y2="140" stroke="#e1e0d9" stroke-width="1"/>
+    <line x1="90" y1="40" x2="880" y2="40" stroke="#e1e0d9" stroke-width="1"/>
+    <text x="80" y="344" text-anchor="end" font-size="11" fill="#898781">-100</text>
+    <text x="80" y="144" text-anchor="end" font-size="11" fill="#898781">100</text>
+    <text x="80" y="44" text-anchor="end" font-size="11" fill="#898781">200</text>
+    <text x="22" y="24" font-size="11" fill="#898781">millones COP</text>
+
+    <!-- áreas -->
+    <path d="M90,240 L90,337.2 L244,331.5 L398,313.9 L552,276.5 L637,240 Z" fill="#f0efec"/>
+    <path d="M637,240 L706,210.7 L860,66.5 L860,240 Z" fill="#ede9fe"/>
+
+    <!-- línea cero, resaltada -->
+    <line x1="90" y1="240" x2="880" y2="240" stroke="#898781" stroke-width="1.5"/>
+    <text x="884" y="244" font-size="11" font-weight="700" fill="#898781">0</text>
+
+    <!-- serie -->
+    <path d="M90,337.2 L244,331.5 L398,313.9 L552,276.5 L706,210.7 L860,66.5"
+          fill="none" stroke="#7c3aed" stroke-width="2" stroke-linejoin="round"/>
+
+    <!-- marcador del cruce -->
+    <line x1="637" y1="240" x2="637" y2="150" stroke="#7c3aed" stroke-width="1"/>
+    <circle cx="637" cy="240" r="6.5" fill="#ffffff"/><circle cx="637" cy="240" r="4" fill="#7c3aed"/>
+    <text x="637" y="142" text-anchor="middle" font-size="12.5" font-weight="700" fill="#4c1d95">Inversión recuperada</text>
+
+    <!-- puntos -->
+    <circle cx="90" cy="337.2" r="6.5" fill="#fff"/><circle cx="90" cy="337.2" r="4.5" fill="#7c3aed"/>
+    <circle cx="244" cy="331.5" r="6.5" fill="#fff"/><circle cx="244" cy="331.5" r="4.5" fill="#7c3aed"/>
+    <circle cx="398" cy="313.9" r="6.5" fill="#fff"/><circle cx="398" cy="313.9" r="4.5" fill="#7c3aed"/>
+    <circle cx="552" cy="276.5" r="6.5" fill="#fff"/><circle cx="552" cy="276.5" r="4.5" fill="#7c3aed"/>
+    <circle cx="706" cy="210.7" r="6.5" fill="#fff"/><circle cx="706" cy="210.7" r="4.5" fill="#7c3aed"/>
+    <circle cx="860" cy="66.5" r="7.5" fill="#fff"/><circle cx="860" cy="66.5" r="5.5" fill="#7c3aed"/>
+
+    <!-- etiquetas selectivas: extremos -->
+    <text x="90" y="360" text-anchor="start" font-size="12.5" font-weight="700" fill="#6b7280">-$97,2 M</text>
+    <text x="860" y="56" text-anchor="end" font-size="13.5" font-weight="700" fill="#4c1d95">+$173,5 M</text>
+
+    <!-- eje x -->
+    <text x="90" y="386" text-anchor="middle" font-size="12" font-weight="600" fill="#52514e">Año 0</text>
+    <text x="244" y="386" text-anchor="middle" font-size="12" font-weight="600" fill="#52514e">Año 1</text>
+    <text x="398" y="386" text-anchor="middle" font-size="12" font-weight="600" fill="#52514e">Año 2</text>
+    <text x="552" y="386" text-anchor="middle" font-size="12" font-weight="600" fill="#52514e">Año 3</text>
+    <text x="706" y="386" text-anchor="middle" font-size="12" font-weight="600" fill="#52514e">Año 4</text>
+    <text x="860" y="386" text-anchor="middle" font-size="12" font-weight="600" fill="#52514e">Año 5</text>
+  </svg>
+  <p class="note"><b>⚠ Ojo con este dato:</b> según los números, el flujo acumulado cruza el cero <b>durante el Año 4</b>
+  (pasa de −$36,5 M en el Año 3 a +$29,3 M en el Año 4), y la propia fila de PRI del Excel también cambia de signo ahí.
+  Pero la celda «Año de recuperación de la inversión» dice <b>5</b>. Es una inconsistencia del Excel.
+  <b>Decide cuál sustentas</b> — Año 4 es lo que muestran las cifras; si dejas Año 5 en la diapositiva 24, sé consciente de que la gráfica dice otra cosa.</p>
+</div>
+
+<!-- ───────── G7 · Arquitectura ───────── -->
+<div class="lbl">Gráfica 7 <span>— va en la diapositiva 26 o 29 (PMV) · la más valiosa para un jurado de ADSO</span></div>
+<div class="gfx">
+  <h3>Arquitectura del sistema construido</h3>
+  <p class="cap">Frontend Angular, proxy con TLS, tres microservicios reactivos y una base de datos por servicio.</p>
+  <svg viewBox="0 0 940 474" role="img" aria-label="Diagrama de arquitectura: cuatro roles de usuario acceden a un frontend Angular 22 con seis librerías, que pasa por Nginx con TLS y una cadena de filtros de seguridad hacia tres microservicios —ms-auth, ms-admin y ms-education— cada uno con su propia base de datos PostgreSQL, más Redis para rate limiting y caché.">
+    <!-- usuarios -->
+    <rect x="40" y="14" width="200" height="42" rx="8" fill="#f5f3ff"/>
+    <text x="140" y="41" text-anchor="middle" font-size="13.5" font-weight="600" fill="#4c1d95">Super administrador</text>
+    <rect x="254" y="14" width="200" height="42" rx="8" fill="#f5f3ff"/>
+    <text x="354" y="41" text-anchor="middle" font-size="13.5" font-weight="600" fill="#4c1d95">Administrador</text>
+    <rect x="468" y="14" width="200" height="42" rx="8" fill="#f5f3ff"/>
+    <text x="568" y="41" text-anchor="middle" font-size="13.5" font-weight="600" fill="#4c1d95">Instructor</text>
+    <rect x="682" y="14" width="200" height="42" rx="8" fill="#f5f3ff"/>
+    <text x="782" y="41" text-anchor="middle" font-size="13.5" font-weight="600" fill="#4c1d95">Estudiante</text>
+
+    <line x1="461" y1="56" x2="461" y2="74" stroke="#c9c5d4" stroke-width="1.5"/>
+
+    <!-- frontend -->
+    <rect x="40" y="74" width="842" height="82" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="56" y="95" font-size="13.5" font-weight="700" fill="#4c1d95">Frontend · Angular 22</text>
+    <text x="866" y="95" text-anchor="end" font-size="11.5" fill="#898781">SSR · signals · zoneless · 113 componentes</text>
+    <rect x="56" y="106" width="130" height="34" rx="6" fill="#ede9fe"/><text x="121" y="128" text-anchor="middle" font-size="12" fill="#4c1d95">main</text>
+    <rect x="192" y="106" width="130" height="34" rx="6" fill="#ede9fe"/><text x="257" y="128" text-anchor="middle" font-size="12" fill="#4c1d95">shared · 27</text>
+    <rect x="328" y="106" width="130" height="34" rx="6" fill="#ede9fe"/><text x="393" y="128" text-anchor="middle" font-size="12" fill="#4c1d95">auth · 5</text>
+    <rect x="464" y="106" width="130" height="34" rx="6" fill="#ede9fe"/><text x="529" y="128" text-anchor="middle" font-size="12" fill="#4c1d95">admin · 22</text>
+    <rect x="600" y="106" width="130" height="34" rx="6" fill="#ede9fe"/><text x="665" y="128" text-anchor="middle" font-size="12" fill="#4c1d95">education · 47</text>
+    <rect x="736" y="106" width="130" height="34" rx="6" fill="#ede9fe"/><text x="801" y="128" text-anchor="middle" font-size="12" fill="#4c1d95">instructor · 12</text>
+
+    <line x1="461" y1="156" x2="461" y2="176" stroke="#c9c5d4" stroke-width="1.5"/>
+
+    <!-- nginx -->
+    <rect x="271" y="176" width="380" height="44" rx="8" fill="#4c1d95"/>
+    <text x="461" y="195" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">Nginx · reverse proxy</text>
+    <text x="461" y="211" text-anchor="middle" font-size="11" fill="#c4b5fd">TLS Let's Encrypt · 3 subdominios</text>
+
+    <line x1="461" y1="220" x2="461" y2="240" stroke="#c9c5d4" stroke-width="1.5"/>
+
+    <!-- cadena de filtros -->
+    <rect x="40" y="240" width="600" height="36" rx="8" fill="#fff7ed"/>
+    <text x="56" y="263" font-size="12.5" font-weight="600" fill="#9a3412">Cadena de filtros:</text>
+    <text x="178" y="263" font-size="12.5" fill="#9a3412">SecurityHeaders → RateLimit → JWT (X-User-Id · X-User-Role)</text>
+    <!-- redis -->
+    <rect x="656" y="236" width="226" height="44" rx="8" fill="#fff7ed"/>
+    <text x="769" y="255" text-anchor="middle" font-size="13" font-weight="700" fill="#9a3412">Redis 7</text>
+    <text x="769" y="271" text-anchor="middle" font-size="11" fill="#c2622f">rate limiting · caché</text>
+    <line x1="640" y1="258" x2="656" y2="258" stroke="#eb6834" stroke-width="1.5"/>
+
+    <line x1="461" y1="276" x2="461" y2="294" stroke="#c9c5d4" stroke-width="1.5"/>
+    <line x1="160" y1="294" x2="762" y2="294" stroke="#c9c5d4" stroke-width="1.5"/>
+    <line x1="160" y1="294" x2="160" y2="308" stroke="#c9c5d4" stroke-width="1.5"/>
+    <line x1="461" y1="294" x2="461" y2="308" stroke="#c9c5d4" stroke-width="1.5"/>
+    <line x1="762" y1="294" x2="762" y2="308" stroke="#c9c5d4" stroke-width="1.5"/>
+
+    <!-- microservicios -->
+    <rect x="40" y="308" width="240" height="76" rx="9" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="160" y="331" text-anchor="middle" font-size="14" font-weight="700" fill="#4c1d95">ms-auth · 8081</text>
+    <text x="160" y="350" text-anchor="middle" font-size="11.5" fill="#52514e">JWT · BCrypt · usuarios</text>
+    <text x="160" y="368" text-anchor="middle" font-size="11.5" fill="#898781">46 clases · 4 casos de uso</text>
+
+    <rect x="341" y="308" width="240" height="76" rx="9" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="461" y="331" text-anchor="middle" font-size="14" font-weight="700" fill="#4c1d95">ms-admin · 8082</text>
+    <text x="461" y="350" text-anchor="middle" font-size="11.5" fill="#52514e">instituciones · branding</text>
+    <text x="461" y="368" text-anchor="middle" font-size="11.5" fill="#898781">51 clases · 8 casos de uso</text>
+
+    <rect x="642" y="308" width="240" height="76" rx="9" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="762" y="331" text-anchor="middle" font-size="14" font-weight="700" fill="#4c1d95">ms-education · 8083</text>
+    <text x="762" y="350" text-anchor="middle" font-size="11.5" fill="#52514e">cursos · quizzes · matrículas</text>
+    <text x="762" y="368" text-anchor="middle" font-size="11.5" fill="#898781">126 clases · 23 casos de uso</text>
+
+    <line x1="160" y1="384" x2="160" y2="402" stroke="#c9c5d4" stroke-width="1.5"/>
+    <line x1="461" y1="384" x2="461" y2="402" stroke="#c9c5d4" stroke-width="1.5"/>
+    <line x1="762" y1="384" x2="762" y2="402" stroke="#c9c5d4" stroke-width="1.5"/>
+
+    <!-- bases de datos -->
+    <rect x="40" y="402" width="240" height="44" rx="8" fill="#f7f7fa"/>
+    <text x="160" y="421" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e1b2e">PostgreSQL 16 · auth_db</text>
+    <text x="160" y="437" text-anchor="middle" font-size="11" fill="#898781">R2DBC reactivo</text>
+    <rect x="341" y="402" width="240" height="44" rx="8" fill="#f7f7fa"/>
+    <text x="461" y="421" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e1b2e">PostgreSQL 16 · admin_db</text>
+    <text x="461" y="437" text-anchor="middle" font-size="11" fill="#898781">R2DBC reactivo</text>
+    <rect x="642" y="402" width="240" height="44" rx="8" fill="#f7f7fa"/>
+    <text x="762" y="421" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e1b2e">PostgreSQL 16 · education_db</text>
+    <text x="762" y="437" text-anchor="middle" font-size="11" fill="#898781">R2DBC reactivo</text>
+
+    <text x="461" y="466" text-anchor="middle" font-size="11.5" fill="#898781">Arquitectura hexagonal (Clean Architecture + DDD) · Java 24 · Spring Boot 3.4.5 WebFlux · base de datos por servicio · Docker Compose</text>
+  </svg>
+  <p class="note"><b>Cómo usarlo:</b> esta es la gráfica que más te sirve frente a instructores técnicos, porque demuestra
+  decisiones de arquitectura, no solo pantallas. Los tres puntos que vale la pena señalar en voz alta:
+  <b>base de datos por servicio</b> (no una sola base compartida), <b>cadena de filtros de seguridad</b> antes de llegar a cualquier
+  microservicio, y <b>backend reactivo</b> con WebFlux y R2DBC de punta a punta.</p>
+</div>
+
+<!-- ───────── G8 · Roadmap ───────── -->
+<div class="lbl">Gráfica 8 <span>— va en la diapositiva 27 (Proceso y resultados)</span></div>
+<div class="gfx">
+  <h3>Avances completados y ruta hacia la comercialización</h3>
+  <p class="cap">Lo construido, en morado. Lo que falta, con su estimación de tiempo.</p>
+  <svg viewBox="0 0 940 330" role="img" aria-label="Tres avances completados —fundación, dominio académico y evaluación— y cuatro fases pendientes: integración frontend-backend de 3 a 4 semanas, modelo de datos de 4 a 6 semanas, autorización backend de 1 a 2 semanas y roadmap comercial de 2 a 3 trimestres.">
+    <text x="40" y="26" font-size="12" font-weight="700" fill="#4c1d95" letter-spacing="1.2">COMPLETADO · PRODUCTO MÍNIMO VIABLE</text>
+    <rect x="40" y="38" width="276" height="94" rx="9" fill="#7c3aed"/>
+    <text x="58" y="63" font-size="12" font-weight="700" fill="#c4b5fd">AVANCE 1</text>
+    <text x="58" y="84" font-size="14.5" font-weight="700" fill="#ffffff">Fundación</text>
+    <text x="58" y="104" font-size="11.5" fill="#ddd6fe">Arquitectura, autenticación JWT,</text>
+    <text x="58" y="120" font-size="11.5" fill="#ddd6fe">multi-tenancy y white-labeling</text>
+
+    <rect x="332" y="38" width="276" height="94" rx="9" fill="#7c3aed"/>
+    <text x="350" y="63" font-size="12" font-weight="700" fill="#c4b5fd">AVANCE 2</text>
+    <text x="350" y="84" font-size="14.5" font-weight="700" fill="#ffffff">Dominio académico</text>
+    <text x="350" y="104" font-size="11.5" fill="#ddd6fe">Cursos, módulos, lecciones,</text>
+    <text x="350" y="120" font-size="11.5" fill="#ddd6fe">editor y carga masiva en Excel</text>
+
+    <rect x="624" y="38" width="276" height="94" rx="9" fill="#7c3aed"/>
+    <text x="642" y="63" font-size="12" font-weight="700" fill="#c4b5fd">AVANCE 3</text>
+    <text x="642" y="84" font-size="14.5" font-weight="700" fill="#ffffff">Evaluación y seguimiento</text>
+    <text x="642" y="104" font-size="11.5" fill="#ddd6fe">Quizzes, reproductor, certificados</text>
+    <text x="642" y="120" font-size="11.5" fill="#ddd6fe">y panel del instructor</text>
+
+    <text x="40" y="176" font-size="12" font-weight="700" fill="#898781" letter-spacing="1.2">PENDIENTE · HACIA LA COMERCIALIZACIÓN</text>
+    <rect x="40" y="188" width="203" height="94" rx="9" fill="#ffffff" stroke="#c9c5d4" stroke-width="1.5"/>
+    <text x="56" y="212" font-size="11.5" font-weight="700" fill="#7c3aed">3 – 4 semanas</text>
+    <text x="56" y="233" font-size="13.5" font-weight="700" fill="#1e1b2e">Integración</text>
+    <text x="56" y="250" font-size="11.5" fill="#52514e">Conectar el frontend</text>
+    <text x="56" y="266" font-size="11.5" fill="#52514e">con el backend real</text>
+
+    <rect x="259" y="188" width="203" height="94" rx="9" fill="#ffffff" stroke="#c9c5d4" stroke-width="1.5"/>
+    <text x="275" y="212" font-size="11.5" font-weight="700" fill="#7c3aed">4 – 6 semanas</text>
+    <text x="275" y="233" font-size="13.5" font-weight="700" fill="#1e1b2e">Modelo de datos</text>
+    <text x="275" y="250" font-size="11.5" fill="#52514e">Tablas de entregas,</text>
+    <text x="275" y="266" font-size="11.5" fill="#52514e">grupos y certificados</text>
+
+    <rect x="478" y="188" width="203" height="94" rx="9" fill="#ffffff" stroke="#c9c5d4" stroke-width="1.5"/>
+    <text x="494" y="212" font-size="11.5" font-weight="700" fill="#7c3aed">1 – 2 semanas</text>
+    <text x="494" y="233" font-size="13.5" font-weight="700" fill="#1e1b2e">Autorización</text>
+    <text x="494" y="250" font-size="11.5" fill="#52514e">Permisos por rol en</text>
+    <text x="494" y="266" font-size="11.5" fill="#52514e">el backend</text>
+
+    <rect x="697" y="188" width="203" height="94" rx="9" fill="#ffffff" stroke="#c9c5d4" stroke-width="1.5"/>
+    <text x="713" y="212" font-size="11.5" font-weight="700" fill="#7c3aed">2 – 3 trimestres</text>
+    <text x="713" y="233" font-size="13.5" font-weight="700" fill="#1e1b2e">Roadmap comercial</text>
+    <text x="713" y="250" font-size="11.5" fill="#52514e">Portal de acudientes,</text>
+    <text x="713" y="266" font-size="11.5" fill="#52514e">analítica y recaudo</text>
+
+    <line x1="40" y1="306" x2="900" y2="306" stroke="#e1e0d9" stroke-width="1"/>
+    <text x="40" y="324" font-size="11.5" fill="#898781">683 archivos · ~58.900 líneas · 43 endpoints · 113 componentes · 67 clases de prueba</text>
+    <text x="900" y="324" text-anchor="end" font-size="11.5" font-weight="700" fill="#7c3aed">≈ 5 meses hasta poder vender</text>
+  </svg>
+  <p class="note"><b>Cómo usarlo:</b> esta gráfica convierte las debilidades en un plan con fechas, que es la forma
+  de presentar lo que falta sin que suene a excusa. El mensaje: <b>lo construido está cerrado y lo que falta está estimado</b>.
+  Un jurado castiga mucho más «no sé cuánto falta» que «faltan cinco meses y sé en qué orden».</p>
+</div>
+
+<script>
+// Detector de desborde: marca en rojo la etiqueta de cualquier diapositiva
+// cuyo contenido no quepa en los 720 px de alto.
+document.addEventListener('DOMContentLoaded', function () {
+  var slides = document.querySelectorAll('.slide');
+  var malas = [];
+  slides.forEach(function (s) {
+    var sobra = s.scrollHeight - s.clientHeight;
+    var lbl = s.previousElementSibling;
+    while (lbl && !lbl.classList.contains('lbl')) lbl = lbl.previousElementSibling;
+    if (sobra > 2) {
+      malas.push((lbl ? lbl.textContent.trim() : '?') + ' (+' + sobra + 'px)');
+      if (lbl) {
+        lbl.style.color = '#b91c1c';
+        var b = document.createElement('span');
+        b.textContent = '  ⚠ SE DESBORDA ' + sobra + 'px — hay que recortar texto';
+        b.style.cssText = 'color:#b91c1c;font-weight:700;text-transform:none;letter-spacing:0';
+        lbl.appendChild(b);
+      }
+      s.style.outline = '2px solid #dc2626';
+    }
+  });
+  var box = document.createElement('div');
+  box.style.cssText = 'max-width:1280px;margin:0 auto 24px;border-radius:12px;padding:16px 22px;font-size:14px;line-height:1.6;' +
+    (malas.length ? 'background:#fef2f2;color:#b91c1c' : 'background:#ecfdf5;color:#047857');
+  box.innerHTML = malas.length
+    ? '<b>⚠ ' + malas.length + ' diapositiva(s) con desborde:</b><br>' + malas.join('<br>') +
+      '<br><br>El contenido que sobra queda recortado al capturar. Dime cuáles y las ajusto.'
+    : '<b>✓ Las ' + slides.length + ' diapositivas caben correctamente en 1280 × 720.</b> Listas para capturar o exportar a PDF.';
+  var head = document.querySelector('.doc-head');
+  head.parentNode.insertBefore(box, head.nextSibling);
+});
+</script>
+</body>
+</html>

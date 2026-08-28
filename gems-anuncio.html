@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS Hub — Anuncio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: #060608;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.ad {
+  width: 1080px; height: 1350px;
+  background: #0d0e1a;
+  position: relative; overflow: hidden; flex-shrink: 0;
+}
+
+/* Nebula con colores del logo (teal + purple + pink sutil) */
+.nebula {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 45% at 8% 20%, rgba(124,58,237,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 55% at 90% 60%, rgba(13,148,136,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 35% at 50% 108%, rgba(124,58,237,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 35% 30% at 75% 12%, rgba(236,72,153,0.07) 0%, transparent 50%);
+}
+.grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.025) 1px, transparent 1px);
+  background-size: 90px 90px;
+}
+
+/* Línea rainbow del logo en la parte superior */
+.logo-stripe {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg,
+    #7c3aed 0%,
+    #0d9488 25%,
+    #f59e0b 50%,
+    #ec4899 75%,
+    #7c3aed 100%
+  );
+  opacity: 0.7;
+}
+
+.s { position:absolute; border-radius:50%; background:#fff; animation: tw var(--d,3s) ease-in-out infinite alternate; animation-delay: var(--dl,0s); }
+@keyframes tw { from{opacity:.05} to{opacity:.4} }
+
+.content {
+  position: relative; z-index: 10; height: 100%;
+  display: flex; flex-direction: column;
+  padding: 50px 72px 56px;
+}
+
+/* Topbar */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 52px;
+}
+.logo-row { display:flex; align-items:center; gap:14px; }
+.logo-img { height:44px; }
+.logo-name {
+  font-size:24px; font-weight:900; letter-spacing:0.07em; color:#fff;
+}
+.badge-free {
+  font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+  color:#a78bfa;
+  background: rgba(124,58,237,0.12);
+  border: 1.5px solid rgba(124,58,237,0.35);
+  padding: 10px 24px; border-radius:100px;
+}
+
+/* Hero */
+.hero { margin-bottom: 40px; }
+.overline {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:14px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase;
+  color:rgba(255,255,255,0.28); margin-bottom:22px;
+}
+.overline-dot { width:7px;height:7px;border-radius:50%;background:#7c3aed; flex-shrink:0;
+  box-shadow: 0 0 10px rgba(124,58,237,0.8); }
+.hero-title {
+  font-size:84px; font-weight:900; line-height:0.97; letter-spacing:-0.04em;
+  color:#fff; margin-bottom:24px;
+}
+.hero-title em {
+  font-style:normal;
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #0d9488 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero-body {
+  font-size:22px; font-weight:500; line-height:1.5;
+  color:rgba(255,255,255,0.38); max-width:640px;
+}
+
+/* Laptop */
+.laptop-wrap {
+  flex:1; display:flex; align-items:center; justify-content:center; position:relative;
+}
+.laptop-glow {
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse 80% 60% at 50% 80%, rgba(124,58,237,0.15) 0%, transparent 65%);
+  pointer-events:none;
+}
+.laptop { width: 820px; position:relative; }
+.laptop-screen-wrap {
+  background: #1a1c2e;
+  border-radius: 18px 18px 0 0;
+  border: 3px solid rgba(124,58,237,0.25);
+  border-bottom: none;
+  padding: 10px 10px 0;
+}
+.cam { width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.12);margin:0 auto 6px; }
+.laptop-screen {
+  background:#0d0e1a; border-radius:10px 10px 0 0;
+  overflow:hidden; height:380px; display:flex;
+}
+.sidebar {
+  width:88px; background:rgba(124,58,237,0.04);
+  border-right:1px solid rgba(124,58,237,0.1);
+  display:flex; flex-direction:column; align-items:center;
+  padding:20px 0; gap:22px;
+}
+.sb-icon { width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center; }
+.sb-icon.active { background:rgba(124,58,237,0.22); }
+.sb-dot { width:12px;height:12px;border-radius:4px;background:rgba(255,255,255,0.15); }
+.sb-dot.active { background:#7c3aed; }
+.screen-main { flex:1;padding:20px 24px;display:flex;flex-direction:column;gap:16px;overflow:hidden; }
+.screen-top { display:flex;justify-content:space-between;align-items:center; }
+.screen-title { font-size:18px;font-weight:700;color:rgba(255,255,255,0.8); }
+.screen-date { font-size:14px;color:rgba(255,255,255,0.25);font-weight:500; }
+.mini-stats { display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px; }
+.mini-stat { background:rgba(255,255,255,0.03);border:1px solid rgba(124,58,237,0.12);border-radius:12px;padding:14px 16px; }
+.ms-label { font-size:11px;color:rgba(255,255,255,0.25);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px; }
+.ms-val { font-size:28px;font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1; }
+.ms-val.p { color:#a78bfa; }
+.ms-val.g { color:#34d399; }
+.ms-change { font-size:12px;color:#34d399;font-weight:600;margin-top:4px; }
+.chart-row { display:flex;gap:10px; }
+.chart-block { flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(124,58,237,0.12);border-radius:12px;padding:14px 16px; }
+.cb-label { font-size:11px;color:rgba(255,255,255,0.25);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px; }
+.bars { display:flex;align-items:flex-end;gap:6px;height:60px; }
+.bar { flex:1;border-radius:4px 4px 0 0;background:rgba(124,58,237,0.18); }
+.bar.hi { background:#7c3aed; }
+.activity-list { display:flex;flex-direction:column;gap:8px; }
+.act-item { display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(124,58,237,0.08);border-radius:10px;padding:10px 14px; }
+.act-ava { width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0; }
+.act-text { flex:1; }
+.act-name { font-size:14px;color:rgba(255,255,255,0.7);font-weight:600; }
+.act-sub { font-size:12px;color:rgba(255,255,255,0.28);margin-top:2px; }
+.act-tag { font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px; }
+.laptop-hinge { height:12px;background:linear-gradient(to bottom,#1a1c2e,#111);border-radius:0 0 4px 4px;border:3px solid rgba(124,58,237,0.15);border-top:none; }
+.laptop-base { height:26px;background:linear-gradient(to bottom,#1a1a2e,#111);border-radius:0 0 12px 12px;margin-top:2px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(124,58,237,0.12); }
+.trackpad { width:100px;height:10px;background:rgba(124,58,237,0.08);border-radius:4px;border:1px solid rgba(124,58,237,0.1); }
+.laptop-shadow { height:8px;background:rgba(0,0,0,0.5);border-radius:0 0 50% 50%;margin-top:4px;filter:blur(8px); }
+
+/* Proof */
+.proof-bar {
+  display:flex;align-items:center;gap:16px;
+  padding:16px 24px;
+  background:rgba(124,58,237,0.06);
+  border:1px solid rgba(124,58,237,0.18);
+  border-radius:18px;margin-bottom:20px;
+}
+.proof-avatars { display:flex; }
+.proof-av { width:38px;height:38px;border-radius:50%;border:3px solid #0d0e1a;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-left:-8px; }
+.proof-av:first-child { margin-left:0; }
+.proof-text { flex:1;font-size:18px;font-weight:600;color:rgba(255,255,255,0.38); }
+.proof-text strong { color:rgba(255,255,255,0.72); }
+.proof-stars { font-size:20px;color:#a78bfa;letter-spacing:-1px; }
+
+/* Pills */
+.pills { display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px; }
+.pill {
+  display:flex;align-items:center;gap:7px;
+  background:rgba(124,58,237,0.08);
+  border:1px solid rgba(124,58,237,0.18);
+  border-radius:100px;padding:8px 18px;
+  font-size:16px;font-weight:600;color:rgba(255,255,255,0.38);
+}
+.pill-dot { width:5px;height:5px;border-radius:50%;background:#7c3aed;flex-shrink:0; }
+
+/* CTA */
+.cta {
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;height:78px;
+  background:linear-gradient(135deg,#7c3aed,#6d28d9);
+  border-radius:20px;padding:0 36px;
+  font-size:24px;font-weight:800;color:#fff;
+  text-decoration:none;
+  box-shadow:0 16px 48px rgba(124,58,237,0.4);
+  border:none;cursor:pointer;font-family:'Inter',sans-serif;
+}
+.cta-arrow { width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:24px; }
+.fine-print { text-align:center;margin-top:12px;font-size:16px;color:rgba(255,255,255,0.15);font-weight:500; }
+</style>
+</head>
+<body>
+<div class="ad">
+  <div class="nebula"></div>
+  <div class="grid"></div>
+  <div class="logo-stripe"></div>
+
+  <div class="s" style="width:3px;height:3px;top:5%;left:12%;--d:2.4s;--dl:0s;"></div>
+  <div class="s" style="width:2px;height:2px;top:10%;left:80%;--d:3.2s;--dl:.6s;"></div>
+  <div class="s" style="width:3px;height:3px;top:18%;left:90%;--d:4.1s;--dl:1.2s;"></div>
+  <div class="s" style="width:2px;height:2px;top:30%;left:5%;--d:2.9s;--dl:.4s;"></div>
+  <div class="s" style="width:2.5px;height:2.5px;top:50%;left:95%;--d:3.8s;--dl:1.9s;"></div>
+  <div class="s" style="width:2px;height:2px;top:65%;left:3%;--d:2.6s;--dl:.9s;"></div>
+  <div class="s" style="width:3px;height:3px;top:75%;left:92%;--d:5.1s;--dl:2.3s;"></div>
+  <div class="s" style="width:2px;height:2px;top:88%;left:20%;--d:3.4s;--dl:1.5s;"></div>
+  <div class="s" style="width:2px;height:2px;top:3%;left:55%;--d:4.2s;--dl:.8s;"></div>
+  <div class="s" style="width:3px;height:3px;top:93%;left:70%;--d:3s;--dl:1.7s;"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <div class="logo-row">
+        <img src="/gems-logo.png" alt="GEMS Hub" class="logo-img" onerror="this.style.display='none'">
+        <span class="logo-name">GEMS HUB</span>
+      </div>
+      <span class="badge-free">Empieza gratis</span>
+    </div>
+
+    <div class="hero">
+      <div class="overline"><span class="overline-dot"></span>Plataforma de gestión empresarial</div>
+      <div class="hero-title">Tu equipo.<br><em>Un solo</em><br>sistema.</div>
+      <div class="hero-body">Clientes, proyectos, equipo y finanzas — todo conectado, sin caos, con inteligencia artificial.</div>
+    </div>
+
+    <div class="laptop-wrap">
+      <div class="laptop-glow"></div>
+      <div class="laptop">
+        <div class="laptop-screen-wrap">
+          <div class="cam"></div>
+          <div class="laptop-screen">
+            <div class="sidebar">
+              <div class="sb-icon active"><div class="sb-dot active"></div></div>
+              <div class="sb-icon"><div class="sb-dot"></div></div>
+              <div class="sb-icon"><div class="sb-dot"></div></div>
+              <div class="sb-icon"><div class="sb-dot"></div></div>
+              <div class="sb-icon"><div class="sb-dot"></div></div>
+              <div class="sb-icon"><div class="sb-dot"></div></div>
+            </div>
+            <div class="screen-main">
+              <div class="screen-top">
+                <div class="screen-title">Panel de control</div>
+                <div class="screen-date">Jun 28, 2025</div>
+              </div>
+              <div class="mini-stats">
+                <div class="mini-stat"><div class="ms-label">Clientes</div><div class="ms-val p">142</div><div class="ms-change">↑ +12%</div></div>
+                <div class="mini-stat"><div class="ms-label">Ingresos</div><div class="ms-val g">$18K</div><div class="ms-change">↑ +23%</div></div>
+                <div class="mini-stat"><div class="ms-label">Tareas</div><div class="ms-val">48</div><div class="ms-change" style="color:rgba(255,255,255,0.22);">activas</div></div>
+              </div>
+              <div class="chart-row">
+                <div class="chart-block" style="flex:2;">
+                  <div class="cb-label">Actividad semanal</div>
+                  <div class="bars">
+                    <div class="bar" style="height:40%"></div>
+                    <div class="bar" style="height:65%"></div>
+                    <div class="bar" style="height:30%"></div>
+                    <div class="bar" style="height:85%"></div>
+                    <div class="bar hi" style="height:100%"></div>
+                    <div class="bar" style="height:50%"></div>
+                    <div class="bar" style="height:75%"></div>
+                  </div>
+                </div>
+                <div class="chart-block" style="flex:1;">
+                  <div class="cb-label">Equipo</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <div style="width:22px;height:22px;border-radius:50%;background:rgba(167,139,250,0.22);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#a78bfa;flex-shrink:0;">A</div>
+                      <div style="flex:1;height:7px;border-radius:4px;background:rgba(124,58,237,0.15);overflow:hidden;"><div style="width:75%;height:100%;background:#7c3aed;border-radius:4px;"></div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <div style="width:22px;height:22px;border-radius:50%;background:rgba(52,211,153,0.22);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#34d399;flex-shrink:0;">C</div>
+                      <div style="flex:1;height:7px;border-radius:4px;background:rgba(52,211,153,0.12);overflow:hidden;"><div style="width:55%;height:100%;background:#34d399;border-radius:4px;"></div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <div style="width:22px;height:22px;border-radius:50%;background:rgba(13,148,136,0.22);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#0d9488;flex-shrink:0;">D</div>
+                      <div style="flex:1;height:7px;border-radius:4px;background:rgba(13,148,136,0.12);overflow:hidden;"><div style="width:88%;height:100%;background:#0d9488;border-radius:4px;"></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="activity-list">
+                <div class="act-item">
+                  <div class="act-ava" style="background:rgba(167,139,250,0.18);color:#a78bfa;">MR</div>
+                  <div class="act-text"><div class="act-name">Mariela Ríos</div><div class="act-sub">Reunión agendada · Hoy 3pm</div></div>
+                  <div class="act-tag" style="background:rgba(124,58,237,0.15);color:#a78bfa;">Prospecto</div>
+                </div>
+                <div class="act-item">
+                  <div class="act-ava" style="background:rgba(52,211,153,0.18);color:#34d399;">JC</div>
+                  <div class="act-text"><div class="act-name">Julio Campos</div><div class="act-sub">Propuesta enviada · $4.200</div></div>
+                  <div class="act-tag" style="background:rgba(52,211,153,0.12);color:#34d399;">Activo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="laptop-hinge"></div>
+        <div class="laptop-base"><div class="trackpad"></div></div>
+        <div class="laptop-shadow"></div>
+      </div>
+    </div>
+
+    <div class="proof-bar">
+      <div class="proof-avatars">
+        <div class="proof-av" style="background:rgba(124,58,237,0.3);color:#a78bfa;">A</div>
+        <div class="proof-av" style="background:rgba(13,148,136,0.3);color:#0d9488;">C</div>
+        <div class="proof-av" style="background:rgba(52,211,153,0.3);color:#34d399;">D</div>
+      </div>
+      <div class="proof-text">Empresas ya usan <strong>GEMS Hub</strong> para crecer</div>
+      <div class="proof-stars">★★★★★</div>
+    </div>
+
+    <div class="pills">
+      <div class="pill"><div class="pill-dot"></div>Prospectos IA</div>
+      <div class="pill"><div class="pill-dot"></div>Tableros</div>
+      <div class="pill"><div class="pill-dot"></div>Reportes</div>
+      <div class="pill"><div class="pill-dot"></div>Equipo</div>
+      <div class="pill"><div class="pill-dot"></div>Wiki</div>
+      <div class="pill"><div class="pill-dot"></div>Tickets</div>
+    </div>
+
+    <a href="mailto:info@gemsinnovations.com?subject=Quiero%20probar%20GEMS%20Hub" class="cta">
+      <span>Solicita tu acceso gratuito</span>
+      <span class="cta-arrow">→</span>
+    </a>
+    <div class="fine-print">gemsinnovations.com</div>
+  </div>
+</div>
+</body>
+</html>

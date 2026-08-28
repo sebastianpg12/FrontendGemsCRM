@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS Hub — Mantis Series</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  background: #04040a;
+  font-family: 'Inter', sans-serif;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 64px;
+  padding: 64px 0 96px;
+}
+
+/* ── Card 1080×1080 ── */
+.card {
+  width: 1080px; height: 1350px;
+  position: relative; overflow: hidden;
+  background: #0a0b15;
+  flex-shrink: 0;
+}
+
+/* Imagen full-bleed */
+.card-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  /* Zoom-in sutil para llenar bordes */
+  transform: scale(1.08);
+}
+
+/* Gradient cinematográfico */
+.card-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,11,21,0.10) 0%,
+    rgba(10,11,21,0.05) 30%,
+    rgba(10,11,21,0.35) 50%,
+    rgba(10,11,21,0.80) 65%,
+    rgba(10,11,21,0.97) 78%,
+    #0a0b15 100%
+  );
+}
+
+/* Vignette lateral */
+.card-vignette {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(10,11,21,0.45) 100%);
+}
+
+/* Línea rainbow del logo — muy sutil arriba */
+.logo-stripe {
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg,
+    #7c3aed, #0d9488, #f59e0b, #ec4899, #22c55e, #7c3aed
+  );
+  opacity: 0.55;
+  z-index: 20;
+}
+
+/* Contenido */
+.card-inner {
+  position: absolute; inset: 0;
+  z-index: 10;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 44px 68px 56px;
+}
+
+/* Top row */
+.card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+.series-num {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.20);
+}
+.gems-top {
+  display: flex; align-items: center; gap: 10px;
+}
+.gems-top-logo { height: 28px; opacity: 0.85; }
+.gems-top-name {
+  font-size: 14px; font-weight: 800; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Bottom — zona de texto principal */
+.card-bottom { display: flex; flex-direction: column; gap: 0; }
+
+/* Etiqueta de parte */
+.part-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.part-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #7c3aed;
+  box-shadow: 0 0 14px rgba(124,58,237,0.9);
+}
+.part-label {
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+/* Título: enorme, dramático */
+.card-title {
+  font-size: 128px; font-weight: 900;
+  line-height: 0.88; letter-spacing: -0.05em;
+  color: #fff;
+  margin-bottom: 28px;
+}
+.card-title .accent {
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 60%, #0d9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+/* Descripción */
+.card-desc {
+  font-size: 22px; font-weight: 500; line-height: 1.5;
+  color: rgba(255,255,255,0.42);
+  margin-bottom: 36px;
+  max-width: 680px;
+}
+
+/* Footer row */
+.card-footer-row {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-features {
+  display: flex; gap: 10px;
+}
+.feat-pill {
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.28);
+  background: rgba(124,58,237,0.10);
+  border: 1px solid rgba(124,58,237,0.20);
+  padding: 6px 16px; border-radius: 100px;
+}
+.footer-cta {
+  font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.25);
+  display: flex; align-items: center; gap: 8px;
+}
+.footer-cta-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #7c3aed;
+  box-shadow: 0 0 8px rgba(124,58,237,0.8);
+}
+</style>
+</head>
+<body>
+
+<!-- ── CARD 1: OJOS / LA VISIÓN ── -->
+<div class="card">
+  <img class="card-img" src="/mantis-ojos.png" alt="">
+  <div class="card-gradient"></div>
+  <div class="card-vignette"></div>
+  <div class="logo-stripe"></div>
+  <div class="card-inner">
+    <div class="card-top">
+      <span class="series-num">01 — 03</span>
+      <div class="gems-top">
+        <img class="gems-top-logo" src="/gems-logo.png" alt="" onerror="this.style.display='none'">
+        <span class="gems-top-name">GEMS HUB</span>
+      </div>
+    </div>
+    <div class="card-bottom">
+      <div class="part-tag">
+        <div class="part-dot"></div>
+        <span class="part-label">Ojos</span>
+      </div>
+      <div class="card-title">
+        La
+        <span class="accent">Visión.</span>
+      </div>
+      <div class="card-desc">
+        Ve todo lo que pasa en tu empresa.<br>En tiempo real, sin sorpresas.
+      </div>
+      <div class="card-footer-row">
+        <div class="footer-features">
+          <span class="feat-pill">Reportes</span>
+          <span class="feat-pill">Dashboard</span>
+          <span class="feat-pill">Analytics</span>
+        </div>
+        <div class="footer-cta">
+          <div class="footer-cta-dot"></div>
+          gemsinnovations.com
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CARD 2: CABEZA / LA MENTE ── -->
+<div class="card">
+  <img class="card-img" src="/mantis-cabeza.png" alt="">
+  <div class="card-gradient"></div>
+  <div class="card-vignette"></div>
+  <div class="logo-stripe"></div>
+  <div class="card-inner">
+    <div class="card-top">
+      <span class="series-num">02 — 03</span>
+      <div class="gems-top">
+        <img class="gems-top-logo" src="/gems-logo.png" alt="" onerror="this.style.display='none'">
+        <span class="gems-top-name">GEMS HUB</span>
+      </div>
+    </div>
+    <div class="card-bottom">
+      <div class="part-tag">
+        <div class="part-dot"></div>
+        <span class="part-label">Cabeza</span>
+      </div>
+      <div class="card-title">
+        La
+        <span class="accent">Mente.</span>
+      </div>
+      <div class="card-desc">
+        IA que lee tu negocio, detecta oportunidades<br>y te dice dónde actuar primero.
+      </div>
+      <div class="card-footer-row">
+        <div class="footer-features">
+          <span class="feat-pill">IA</span>
+          <span class="feat-pill">Prospectos</span>
+          <span class="feat-pill">Insights</span>
+        </div>
+        <div class="footer-cta">
+          <div class="footer-cta-dot"></div>
+          gemsinnovations.com
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CARD 3: BRAZOS / LA ACCIÓN ── -->
+<div class="card">
+  <img class="card-img" src="/mantis-brazos.png" alt="">
+  <div class="card-gradient"></div>
+  <div class="card-vignette"></div>
+  <div class="logo-stripe"></div>
+  <div class="card-inner">
+    <div class="card-top">
+      <span class="series-num">03 — 03</span>
+      <div class="gems-top">
+        <img class="gems-top-logo" src="/gems-logo.png" alt="" onerror="this.style.display='none'">
+        <span class="gems-top-name">GEMS HUB</span>
+      </div>
+    </div>
+    <div class="card-bottom">
+      <div class="part-tag">
+        <div class="part-dot"></div>
+        <span class="part-label">Brazos</span>
+      </div>
+      <div class="card-title">
+        La
+        <span class="accent">Acción.</span>
+      </div>
+      <div class="card-desc">
+        Tu equipo ejecuta sin caos. Tareas, tableros<br>y proyectos en un solo sistema.
+      </div>
+      <div class="card-footer-row">
+        <div class="footer-features">
+          <span class="feat-pill">Tableros</span>
+          <span class="feat-pill">Tareas</span>
+          <span class="feat-pill">Equipo</span>
+        </div>
+        <div class="footer-cta">
+          <div class="footer-cta-dot"></div>
+          gemsinnovations.com
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

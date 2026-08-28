@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GEMS Hub — Historias Destacadas IG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    font-family: 'Inter', sans-serif;
+    padding: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .cover {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    background: #0d0e1a;
+    box-shadow: 0 0 0 2px rgba(124,58,237,0.35);
+  }
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cover.brand {
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cover.brand svg {
+    width: 150px;
+    height: 150px;
+    stroke: #7c3aed;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .cover-shade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 55%, rgba(13,14,26,0.55) 100%);
+  }
+  .label {
+    color: rgba(255,255,255,0.7);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+</style>
+</head>
+<body>
+
+  <div class="item">
+    <div class="cover">
+      <img src="/mantis-brazos.png" alt="Tareas">
+      <div class="cover-shade"></div>
+    </div>
+    <div class="label">Tareas</div>
+  </div>
+
+  <div class="item">
+    <div class="cover brand">
+      <svg viewBox="0 0 24 24"><path d="M13 2 4.5 13H12l-1 9 8.5-11H12z"/></svg>
+    </div>
+    <div class="label">Empieza Gratis</div>
+  </div>
+
+  <div class="item">
+    <div class="cover brand">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+    </div>
+    <div class="label">Cómo Funciona</div>
+  </div>
+
+</body>
+</html>

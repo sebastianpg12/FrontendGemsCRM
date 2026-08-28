@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS Hub — Plan Comercial</title>
+
+<script>
+  const DB_URL = "https://gemshubplan-default-rtdb.firebaseio.com/gems-plan-comercial/checks.json";
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --text2: #64748b;
+    --purple: #6366f1;
+    --blue: #0ea5e9;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --pink: #ec4899;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 16px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-gem {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1, #0ea5e9);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .logo-text { font-size: 17px; font-weight: 800; }
+  .logo-sub { font-size: 11px; color: var(--text2); font-weight: 500; }
+
+  .header-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+  .sync-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #cbd5e1; flex-shrink: 0;
+    transition: background 0.3s;
+    title: "Estado de sincronización";
+  }
+  .sync-dot.ok   { background: #10b981; }
+  .sync-dot.sync { background: #f59e0b; animation: pulse 1s infinite; }
+  .sync-dot.err  { background: #ef4444; }
+  @keyframes pulse { 0%,100%{ opacity:1 } 50%{ opacity:0.4 } }
+
+  .progress-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface2); border-radius: 99px;
+    padding: 6px 14px; font-size: 12px; font-weight: 600;
+  }
+  .progress-pill-bar {
+    width: 80px; height: 6px; border-radius: 99px;
+    background: var(--border); overflow: hidden;
+  }
+  .progress-pill-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+    transition: width 0.4s ease;
+  }
+  .reset-btn {
+    font-size: 12px; color: var(--text2); background: none; border: none;
+    cursor: pointer; padding: 6px 10px; border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .reset-btn:hover { background: var(--surface2); }
+
+  /* ─── BANNER configuración ─── */
+  .config-banner {
+    background: #fef3c7; border-bottom: 1px solid #fde68a;
+    padding: 10px 32px; font-size: 12px; color: #92400e;
+    display: none; align-items: center; gap: 8px;
+  }
+  .config-banner.show { display: flex; }
+  .config-banner a { color: #92400e; font-weight: 700; }
+
+  /* ─── MAIN ─── */
+  main { max-width: 860px; margin: 0 auto; padding: 32px 24px; }
+
+  .page-title { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+  .page-sub { font-size: 14px; color: var(--text2); margin-bottom: 32px; }
+
+  /* ─── TEAM STRIP ─── */
+  .team-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+  .team-pill {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 12px 6px 8px; border-radius: 99px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 12px; font-weight: 600;
+  }
+  .team-avatar {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: white;
+  }
+  .team-role { font-size: 10px; color: var(--text2); font-weight: 500; }
+
+  /* ─── PHASE ─── */
+  .phase { margin-bottom: 24px; }
+  .phase-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-radius: 14px;
+    cursor: pointer; margin-bottom: 8px;
+    user-select: none; transition: opacity 0.15s;
+  }
+  .phase-header:hover { opacity: 0.85; }
+  .phase-badge {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.05em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 99px;
+  }
+  .phase-title { font-size: 14px; font-weight: 700; flex: 1; }
+  .phase-count { font-size: 12px; font-weight: 600; opacity: 0.6; }
+  .phase-chevron { font-size: 12px; transition: transform 0.2s; display: inline-block; }
+  .phase.collapsed .phase-chevron { transform: rotate(-90deg); }
+  .phase.collapsed .phase-items { display: none; }
+
+  /* ─── ITEMS ─── */
+  .phase-items { display: flex; flex-direction: column; gap: 5px; }
+
+  .item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    cursor: pointer; transition: all 0.15s; user-select: none;
+  }
+  .item:hover { border-color: #c7d2fe; background: #fafafe; }
+  .item.done { opacity: 0.45; }
+  .item.done .item-text { text-decoration: line-through; }
+
+  .checkbox {
+    width: 20px; height: 20px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; margin-top: 1px; background: var(--surface);
+  }
+  .item.done .checkbox { border-color: var(--purple); background: var(--purple); }
+  .check-icon { display: none; color: white; font-size: 12px; font-weight: 900; }
+  .item.done .check-icon { display: block; }
+
+  .item-body { flex: 1; min-width: 0; }
+  .item-text { font-size: 14px; font-weight: 500; line-height: 1.4; color: var(--text); }
+  .item-meta { font-size: 11px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+
+  .tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 1px 7px; border-radius: 99px;
+    margin: 2px 3px 0 0; vertical-align: middle;
+  }
+
+  /* ─── PHASE COLORS ─── */
+  .ph1 .phase-header { background: #ede9fe; }
+  .ph1 .phase-badge  { background: #6366f1; color: white; }
+  .ph1 .phase-title  { color: #4338ca; }
+
+  .ph2 .phase-header { background: #dbeafe; }
+  .ph2 .phase-badge  { background: #0ea5e9; color: white; }
+  .ph2 .phase-title  { color: #0369a1; }
+
+  .ph3 .phase-header { background: #d1fae5; }
+  .ph3 .phase-badge  { background: #10b981; color: white; }
+  .ph3 .phase-title  { color: #065f46; }
+
+  .ph4 .phase-header { background: #fef3c7; }
+  .ph4 .phase-badge  { background: #f59e0b; color: white; }
+  .ph4 .phase-title  { color: #92400e; }
+
+  /* ─── TAGS ─── */
+  .t-seb { background: #ede9fe; color: #6d28d9; }
+  .t-jac { background: #fef3c7; color: #92400e; }
+  .t-dan { background: #dbeafe; color: #1d4ed8; }
+  .t-ger { background: #d1fae5; color: #065f46; }
+  .t-lui { background: #fce7f3; color: #9d174d; }
+  .t-yho { background: #f1f5f9; color: #475569; }
+  .t-all { background: #1e293b; color: white; }
+  .t-wpp { background: #dcfce7; color: #15803d; }
+
+  footer {
+    text-align: center; padding: 32px;
+    font-size: 12px; color: var(--text2);
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 12px 16px; }
+    main { padding: 20px 16px; }
+    .progress-pill-bar { width: 50px; }
+    .logo-sub { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="config-banner" id="configBanner" style="display:none"></div>
+
+<header>
+  <div class="logo">
+    <div class="logo-gem">💎</div>
+    <div>
+      <div class="logo-text">GEMS Hub</div>
+      <div class="logo-sub">Plan de Comercialización</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="sync-dot" id="syncDot" title="Estado de sincronización"></div>
+    <div class="progress-pill">
+      <div class="progress-pill-bar">
+        <div class="progress-pill-fill" id="barFill"></div>
+      </div>
+      <span id="barLabel">0 / 25</span>
+    </div>
+    <button class="reset-btn" onclick="resetAll()">↺ Reiniciar</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="page-title">Plan Comercial · 6 semanas</div>
+  <p class="page-sub">Haz clic en cada tarea para marcarla. El progreso se sincroniza en tiempo real para todo el equipo.</p>
+
+  <div class="team-strip">
+    <div class="team-pill">
+      <div class="team-avatar" style="background:#6366f1">S</div>
+      <div><div>Sebastián</div><div class="team-role">Prospectos IA · Demos · Ads</div></div>
+    </div>
+    <div class="team-pill">
+      <div class="team-avatar" style="background:#f59e0b">J</div>
+      <div><div>Jacobo</div><div class="team-role">Pricing</div></div>
+    </div>
+    <div class="team-pill">
+      <div class="team-avatar" style="background:#0ea5e9">D</div>
+      <div><div>Daniel</div><div class="team-role">DMs · Videos</div></div>
+    </div>
+    <div class="team-pill">
+      <div class="team-avatar" style="background:#10b981">G</div>
+      <div><div>Geral</div><div class="team-role">DMs · Onboarding · Videos</div></div>
+    </div>
+    <div class="team-pill">
+      <div class="team-avatar" style="background:#ec4899">L</div>
+      <div><div>Luisa</div><div class="team-role">Onboarding · Videos · Plataforma</div></div>
+    </div>
+    <div class="team-pill">
+      <div class="team-avatar" style="background:#94a3b8">Y</div>
+      <div><div>Yho</div><div class="team-role">Apoyo general</div></div>
+    </div>
+  </div>
+
+  <!-- ══════════ FASE 1 ══════════ -->
+  <div class="phase ph1" id="phase-1">
+    <div class="phase-header" onclick="togglePhase(1)">
+      <span class="phase-badge">Fase 1</span>
+      <span class="phase-title">Preparar la base</span>
+      <span class="phase-count" id="cnt-1"></span>
+      <span class="phase-chevron">▾</span>
+    </div>
+    <div class="phase-items">
+      <div class="item" id="t1" onclick="toggle('t1')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Jacobo define los planes y precios de GEMS Hub</div>
+          <div class="item-meta">Básico · Pro · Enterprise — precios en COP y USD <span class="tag t-jac">Jacobo</span></div>
+        </div>
+      </div>
+      <div class="item" id="t2" onclick="toggle('t2')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Crear y configurar WhatsApp Business de GEMS Hub</div>
+          <div class="item-meta">Nombre, descripción, catálogo, respuestas automáticas, link de contacto <span class="tag t-wpp">WhatsApp</span> <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t3" onclick="toggle('t3')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Reunión de kick-off con todo el equipo</div>
+          <div class="item-meta">Presentar el plan · asignar roles · definir canal de comunicación <span class="tag t-all">Todos</span></div>
+        </div>
+      </div>
+      <div class="item" id="t4" onclick="toggle('t4')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Optimizar el perfil de Instagram de GEMS Hub</div>
+          <div class="item-meta">Bio clara · link a WhatsApp Business · foto de portada <span class="tag t-lui">Luisa</span></div>
+        </div>
+      </div>
+      <div class="item" id="t5" onclick="toggle('t5')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Sebastián configura el módulo Prospectos IA en GEMS Hub</div>
+          <div class="item-meta">Campos: nombre, IG, segmento, señal observada, estado <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t6" onclick="toggle('t6')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Preparar guión de la demo de 15 minutos</div>
+          <div class="item-meta">Estructura: problema → solución → demo live → precio → CTA <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t7" onclick="toggle('t7')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Grabar el primer video mostrando GEMS en vivo</div>
+          <div class="item-meta">2–3 min · kanban, chat, prospectos, actividades <span class="tag t-dan">Daniel</span> <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FASE 2 ══════════ -->
+  <div class="phase ph2" id="phase-2">
+    <div class="phase-header" onclick="togglePhase(2)">
+      <span class="phase-badge">Fase 2</span>
+      <span class="phase-title">Prospectar en Instagram</span>
+      <span class="phase-count" id="cnt-2"></span>
+      <span class="phase-chevron">▾</span>
+    </div>
+    <div class="phase-items">
+      <div class="item" id="t8" onclick="toggle('t8')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Sebastián busca 60 prospectos con IA por segmento</div>
+          <div class="item-meta">20 agencias · 20 TI/MSP · 20 mantenimiento — registrarlos en GEMS <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t9" onclick="toggle('t9')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Seguir a los 60 prospectos desde el perfil GEMS IG</div>
+          <div class="item-meta">Seguir + actualizar estado a "nuevo" en GEMS Hub <span class="tag t-dan">Daniel</span></div>
+        </div>
+      </div>
+      <div class="item" id="t10" onclick="toggle('t10')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Interactuar 2–3 días antes de escribir DM</div>
+          <div class="item-meta">Likes y comentarios reales en sus posts más recientes <span class="tag t-dan">Daniel</span> <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+      <div class="item" id="t11" onclick="toggle('t11')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Redactar 3 plantillas de DM (una por segmento)</div>
+          <div class="item-meta">Agencia · TI/MSP · Mantenimiento — tono natural, sin pitch inmediato <span class="tag t-dan">Daniel</span></div>
+        </div>
+      </div>
+      <div class="item" id="t12" onclick="toggle('t12')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Enviar 5 DMs por día durante 2 semanas (≈ 50 DMs)</div>
+          <div class="item-meta">Registrar respuesta de cada uno en GEMS Hub <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+      <div class="item" id="t13" onclick="toggle('t13')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Publicar 3 posts por semana en IG de GEMS</div>
+          <div class="item-meta">Lunes, miércoles, viernes — features, casos de uso, tips <span class="tag t-dan">Daniel</span> <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+      <div class="item" id="t14" onclick="toggle('t14')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Luisa y Geral preparan flujo de onboarding para clientes</div>
+          <div class="item-meta">Guía de primeros pasos · video tutorial de la plataforma · soporte inicial <span class="tag t-lui">Luisa</span> <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FASE 3 ══════════ -->
+  <div class="phase ph3" id="phase-3">
+    <div class="phase-header" onclick="togglePhase(3)">
+      <span class="phase-badge">Fase 3</span>
+      <span class="phase-title">Campañas publicitarias y Demos</span>
+      <span class="phase-count" id="cnt-3"></span>
+      <span class="phase-chevron">▾</span>
+    </div>
+    <div class="phase-items">
+      <div class="item" id="t15" onclick="toggle('t15')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Sebastián monta la primera campaña en Meta Ads</div>
+          <div class="item-meta">Audiencia: dueños de agencia/empresa en Colombia · presupuesto inicial mínimo <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t16" onclick="toggle('t16')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Crear página de aterrizaje simple para la campaña</div>
+          <div class="item-meta">CTA: "Solicitar demo gratis" → redirige a WhatsApp Business <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t17" onclick="toggle('t17')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Hacer las primeras 5 demos por Zoom o presencial</div>
+          <div class="item-meta">Seguir el guión · escuchar objeciones · registrar feedback real <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t18" onclick="toggle('t18')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Ofrecer prueba gratuita de 14 días post-demo</div>
+          <div class="item-meta">Onboarding el día 1 · check-in al día 7 · Luisa y Geral acompañan <span class="tag t-lui">Luisa</span> <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+      <div class="item" id="t19" onclick="toggle('t19')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Follow-up a las 48 h con cada prospecto post-demo</div>
+          <div class="item-meta">Mensaje corto · resolver dudas · empujar decisión <span class="tag t-dan">Daniel</span></div>
+        </div>
+      </div>
+      <div class="item" id="t20" onclick="toggle('t20')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Registrar cada oportunidad en Prospectos IA de GEMS Hub</div>
+          <div class="item-meta">Estados: contactado → demo agendada → en prueba → cerrado <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FASE 4 ══════════ -->
+  <div class="phase ph4" id="phase-4">
+    <div class="phase-header" onclick="togglePhase(4)">
+      <span class="phase-badge">Fase 4</span>
+      <span class="phase-title">Primer cliente y escalar</span>
+      <span class="phase-count" id="cnt-4"></span>
+      <span class="phase-chevron">▾</span>
+    </div>
+    <div class="phase-items">
+      <div class="item" id="t21" onclick="toggle('t21')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Cerrar el primer contrato de GEMS Hub</div>
+          <div class="item-meta">Cualquier segmento · precio real · contrato simple de 1 página <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t22" onclick="toggle('t22')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Luisa y Geral ejecutan onboarding completo del primer cliente</div>
+          <div class="item-meta">Setup de la cuenta · capacitación del equipo · video de uso de la plataforma <span class="tag t-lui">Luisa</span> <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+      <div class="item" id="t23" onclick="toggle('t23')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Grabar caso de éxito con el primer cliente</div>
+          <div class="item-meta">Video corto · qué problema resolvió · resultado concreto <span class="tag t-dan">Daniel</span> <span class="tag t-ger">Geral</span></div>
+        </div>
+      </div>
+      <div class="item" id="t24" onclick="toggle('t24')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Pedir referidos al primer cliente</div>
+          <div class="item-meta">"¿A quién más conoces que le sirva GEMS Hub?" <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+      <div class="item" id="t25" onclick="toggle('t25')">
+        <div class="checkbox"><span class="check-icon">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Ajustar precio y propuesta según el feedback real</div>
+          <div class="item-meta">¿Qué objeciones hubo? ¿Qué features pidieron? <span class="tag t-jac">Jacobo</span> <span class="tag t-seb">Sebastián</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>GEMS Innovations · Plan activo desde junio 2026</footer>
+
+<script>
+  const TOTAL = 25;
+  const LOCAL_KEY = 'gems_plan_backup';
+  let sse = null;
+
+  // ─── SYNC DOT ───
+  function setSyncDot(state) {
+    const dot = document.getElementById('syncDot');
+    dot.className = 'sync-dot ' + state;
+    dot.title = { ok: 'Sincronizado', sync: 'Guardando...', err: 'Sin conexión — guardado local' }[state] || '';
+  }
+
+  // ─── FIREBASE REST ───
+  async function fbGet() {
+    const r = await fetch(DB_URL);
+    return r.ok ? (await r.json() || {}) : null;
+  }
+
+  async function fbSet(state) {
+    const r = await fetch(DB_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state)
+    });
+    return r.ok;
+  }
+
+  // Escucha cambios en tiempo real via SSE (Server-Sent Events de Firebase)
+  function fbListen() {
+    if (sse) sse.close();
+    sse = new EventSource(DB_URL.replace('.json', '') + '.json?stream=true');
+    // Firebase usa Accept: text/event-stream — fallback: polling
+    sse.onerror = () => { sse.close(); pollFallback(); };
+    sse.addEventListener('put', e => {
+      try {
+        const { data } = JSON.parse(e.data);
+        if (data) { applyState(data); saveLocal(data); setSyncDot('ok'); }
+      } catch {}
+    });
+  }
+
+  // Polling cada 5 s si SSE no funciona (CDN Netlify puede bloquear SSE)
+  let pollTimer = null;
+  function pollFallback() {
+    if (pollTimer) return;
+    pollTimer = setInterval(async () => {
+      const state = await fbGet().catch(() => null);
+      if (state) { applyState(state); saveLocal(state); setSyncDot('ok'); }
+    }, 5000);
+  }
+
+  // ─── TOGGLE ───
+  function toggle(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('done');
+    updateProgress();
+    const state = readCurrentState();
+    saveLocal(state);
+    setSyncDot('sync');
+    fbSet(state)
+      .then(ok => setSyncDot(ok ? 'ok' : 'err'))
+      .catch(() => setSyncDot('err'));
+  }
+
+  function readCurrentState() {
+    const state = {};
+    document.querySelectorAll('.item').forEach(el => { state[el.id] = el.classList.contains('done'); });
+    return state;
+  }
+
+  function applyState(state) {
+    document.querySelectorAll('.item').forEach(el => {
+      el.classList.toggle('done', state[el.id] === true);
+    });
+    updateProgress();
+  }
+
+  // ─── LOCAL FALLBACK ───
+  function saveLocal(state) {
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(state)); } catch {}
+  }
+  function loadLocal() {
+    try { applyState(JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}')); } catch {}
+  }
+
+  // ─── RESET ───
+  function resetAll() {
+    if (!confirm('¿Reiniciar todos los checks para todo el equipo?')) return;
+    const empty = {};
+    document.querySelectorAll('.item').forEach(el => { empty[el.id] = false; });
+    applyState(empty);
+    saveLocal(empty);
+    setSyncDot('sync');
+    fbSet(empty).then(ok => setSyncDot(ok ? 'ok' : 'err')).catch(() => setSyncDot('err'));
+  }
+
+  // ─── PHASE COLLAPSE ───
+  function togglePhase(n) {
+    document.getElementById('phase-' + n).classList.toggle('collapsed');
+  }
+
+  // ─── PROGRESS ───
+  function updateProgress() {
+    const done = document.querySelectorAll('.item.done').length;
+    const pct = Math.round((done / TOTAL) * 100);
+    document.getElementById('barFill').style.width = pct + '%';
+    document.getElementById('barLabel').textContent = done + ' / ' + TOTAL;
+    for (let n = 1; n <= 4; n++) {
+      const phase = document.getElementById('phase-' + n);
+      if (!phase) continue;
+      const cnt = document.getElementById('cnt-' + n);
+      if (cnt) cnt.textContent = phase.querySelectorAll('.item.done').length + ' / ' + phase.querySelectorAll('.item').length;
+    }
+  }
+
+  // ─── BOOT ───
+  (async () => {
+    loadLocal(); // mostrar estado guardado de inmediato
+    setSyncDot('sync');
+    try {
+      const state = await fbGet();
+      if (state && Object.keys(state).length) {
+        applyState(state);
+        saveLocal(state);
+      }
+      setSyncDot('ok');
+      fbListen();
+    } catch {
+      setSyncDot('err');
+      pollFallback();
+    }
+    document.getElementById('configBanner').classList.remove('show');
+    updateProgress();
+  })();
+</script>
+</body>
+</html>

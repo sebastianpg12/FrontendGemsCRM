@@ -2,17 +2,84 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "gems-backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:\\Users\\Sebastian PulgarinCT\\OneDrive\\Documentos\\GEMS-CRM-BACKEND",
+        "start"
+      ],
+      "port": 8000
+    },
+    {
       "name": "gems-frontend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 5173,
       "autoPort": false
     },
     {
       "name": "gems-marketing",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-p", "5200", "-s", "."],
+      "runtimeArgs": [
+        "serve",
+        "-p",
+        "5200",
+        "."
+      ],
       "port": 5200
+    },
+    {
+      "name": "gems-landing",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "serve",
+        "-p",
+        "5201",
+        "C:/Users/Sebastian PulgarinCT/OneDrive/Documentos/Gems/gems-innovations-landing"
+      ],
+      "port": 5201
+    },
+    {
+      "name": "maestro-animal",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:\\maestro-dev",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5180"
+      ],
+      "port": 5180
+    },
+    {
+      "name": "customer-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:\\customer\\frontend",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5300"
+      ],
+      "port": 5300
+    },
+    {
+      "name": "customer-backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:\\customer\\backend",
+        "start"
+      ],
+      "port": 4000
     }
   ]
 }
