@@ -278,10 +278,8 @@
         </form>
 
         <!-- Card footer -->
-        <div class="mt-5 pt-4 flex items-center justify-center gap-2 relative z-10" style="border-top: 1px solid rgba(255,255,255,0.06);">
-          <i class="fas fa-gem text-primary-500/30 text-[9px]"></i>
+        <div class="mt-5 pt-4 flex items-center justify-center relative z-10" style="border-top: 1px solid rgba(255,255,255,0.06);">
           <p class="text-[11px] font-black text-white/20 uppercase tracking-[0.3em]">GEMS Hub · © {{ currentYear }}</p>
-          <i class="fas fa-gem text-primary-500/30 text-[9px]"></i>
         </div>
       </div>
       </div><!-- /card-glow-wrapper -->

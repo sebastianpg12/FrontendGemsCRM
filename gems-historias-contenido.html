@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GEMS Hub — Historias IG (contenido)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    font-family: 'Inter', sans-serif;
+    padding: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  .story {
+    width: 400px;
+    height: 711px;
+    position: relative;
+    overflow: hidden;
+    background: #0d0e1a;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .story img.bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(13,14,26,0.55) 0%, rgba(13,14,26,0.35) 38%, rgba(13,14,26,0.88) 78%, #0d0e1a 100%);
+  }
+  .scrim.solid {
+    background: radial-gradient(circle at 50% 18%, rgba(124,58,237,0.28) 0%, transparent 55%), #0d0e1a;
+  }
+  .content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; padding: 44px 36px; }
+
+  .progress-row { display: flex; gap: 6px; margin-bottom: 20px; }
+  .progress-row .seg { flex: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.25); }
+  .progress-row .seg.done { background: #ffffff; }
+
+  .brand-row { display: flex; align-items: center; gap: 9px; margin-bottom: auto; background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 6px 14px 6px 6px; align-self: flex-start; }
+  .brand-dot { width: 26px; height: 26px; flex-shrink: 0; }
+  .brand-dot img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; }
+  .brand-name { font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 0.02em; }
+
+  .eyebrow { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.18); color: #e9e3ff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 7px 14px; border-radius: 999px; margin: 18px 0 14px; }
+
+  .headline { font-size: 40px; font-weight: 900; color: #fff; line-height: 1.12; letter-spacing: -0.5px; margin-bottom: 14px; }
+  .headline .accent { color: #c4b5fd; }
+  .body-text { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.55; margin-bottom: 18px; max-width: 320px; }
+
+  .step-num { width: 46px; height: 46px; border-radius: 16px; background: rgba(255,255,255,0.12); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 18px; }
+
+  .mock-card { background: rgba(255,255,255,0.09); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.16); border-radius: 18px; padding: 16px; margin-top: 8px; }
+  .mock-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.09); }
+  .mock-row:last-child { border-bottom: none; }
+  .mock-check { width: 18px; height: 18px; border-radius: 6px; background: rgba(255,255,255,0.16); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; flex-shrink: 0; }
+  .mock-label { font-size: 13px; color: rgba(255,255,255,0.75); }
+
+  .price-block { margin-top: 6px; }
+  .price-old { font-size: 15px; color: rgba(255,255,255,0.3); text-decoration: line-through; margin-bottom: 2px; }
+  .price-now { font-size: 52px; font-weight: 900; color: #fff; letter-spacing: -1.5px; line-height: 1; }
+  .price-now span { font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.4); }
+  .price-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.18); color: #fecaca; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 7px 14px; border-radius: 999px; margin-bottom: 14px; }
+
+  .spacer { flex: 1; }
+
+  .cta-bar { display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 10px; }
+  .cta-pill { background: rgba(255,255,255,0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.5); color: #0d0e1a; font-size: 15px; font-weight: 800; padding: 14px 30px; border-radius: 999px; display: flex; align-items: center; gap: 9px; }
+  .cta-pill svg { width: 17px; height: 17px; stroke: #0d0e1a; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .swipe-cue { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .swipe-cue svg { width: 13px; height: 13px; stroke: rgba(255,255,255,0.5); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  .icon-badge { width: 64px; height: 64px; border-radius: 20px; background: rgba(255,255,255,0.12); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .icon-badge svg { width: 32px; height: 32px; stroke: #fff; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  .label { text-align: center; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 600; margin-top: 10px; }
+  .group { display: flex; flex-direction: column; gap: 10px; }
+  .group-title { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ TAREAS · 1 ══════════ -->
+<div class="group">
+  <div class="group-title">Tareas</div>
+  <div class="story" id="tareas-1">
+    <img class="bg" src="/mantis-brazos.png" alt="">
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg"></div><div class="seg"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="spacer"></div>
+      <div class="eyebrow">Tableros</div>
+      <div class="headline">¿Quién tiene<br>esto <span class="accent">ahora mismo?</span></div>
+      <div class="body-text">Si tu equipo vive preguntando eso en WhatsApp, tus tareas no están en ningún sistema. Están perdidas.</div>
+    </div>
+  </div>
+  <div class="label">Tareas · 1/3</div>
+</div>
+
+<!-- ══════════ TAREAS · 2 ══════════ -->
+<div class="group">
+  <div class="group-title">Tareas</div>
+  <div class="story" id="tareas-2">
+    <div class="scrim solid"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg done"></div><div class="seg"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="eyebrow" style="margin-top:8px;">Tableros</div>
+      <div class="headline">Kanban visual.<br><span class="accent">Tiempo real.</span></div>
+      <div class="body-text">Sabes quién hace qué y cuándo, sin preguntar. Por proyecto o por equipo.</div>
+      <div class="mock-card">
+        <div class="mock-row"><div class="mock-check">✓</div><div class="mock-label">Propuesta Nexus Corp</div></div>
+        <div class="mock-row"><div class="mock-check">✓</div><div class="mock-label">Migración de datos — Acme</div></div>
+        <div class="mock-row"><div class="mock-check">✓</div><div class="mock-label">Seguimiento cuenta clave</div></div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+  <div class="label">Tareas · 2/3</div>
+</div>
+
+<!-- ══════════ TAREAS · 3 (CTA) ══════════ -->
+<div class="group">
+  <div class="group-title">Tareas</div>
+  <div class="story" id="tareas-3">
+    <img class="bg" src="/mantis-brazos.png" alt="" style="opacity:0.5;">
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg done"></div><div class="seg done"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="spacer"></div>
+      <div class="headline">Ordena tu<br>equipo <span class="accent">hoy.</span></div>
+      <div class="body-text">Sin contratos largos. Sin curva de aprendizaje. Tu equipo opera desde el primer día.</div>
+      <div class="cta-bar">
+        <div class="cta-pill"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Comenzar gratis</div>
+        <div class="swipe-cue"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Clic en el enlace arriba</div>
+      </div>
+    </div>
+  </div>
+  <div class="label">Tareas · 3/3</div>
+</div>
+
+<!-- ══════════ CÓMO FUNCIONA · 1 ══════════ -->
+<div class="group">
+  <div class="group-title">Cómo Funciona</div>
+  <div class="story" id="como-1">
+    <div class="scrim solid"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg"></div><div class="seg"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="spacer"></div>
+      <div class="step-num">1</div>
+      <div class="headline">Crea tu cuenta<br><span class="accent">gratis.</span></div>
+      <div class="body-text">Sin llamadas, sin contratos previos. Te registras en minutos y ya estás dentro.</div>
+    </div>
+  </div>
+  <div class="label">Cómo Funciona · 1/3</div>
+</div>
+
+<!-- ══════════ CÓMO FUNCIONA · 2 ══════════ -->
+<div class="group">
+  <div class="group-title">Cómo Funciona</div>
+  <div class="story" id="como-2">
+    <div class="scrim solid"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg done"></div><div class="seg"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="spacer"></div>
+      <div class="step-num">2</div>
+      <div class="headline">Configura tu<br><span class="accent">equipo.</span></div>
+      <div class="body-text">Importas tus clientes e invitas a tu equipo. Roles y flujos listos en minutos.</div>
+    </div>
+  </div>
+  <div class="label">Cómo Funciona · 2/3</div>
+</div>
+
+<!-- ══════════ CÓMO FUNCIONA · 3 (CTA) ══════════ -->
+<div class="group">
+  <div class="group-title">Cómo Funciona</div>
+  <div class="story" id="como-3">
+    <div class="scrim solid"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg done"></div><div class="seg done"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="spacer"></div>
+      <div class="step-num">3</div>
+      <div class="headline">Tu equipo<br><span class="accent">arranca.</span></div>
+      <div class="body-text">Sin curva de aprendizaje larga. Soporte directo si lo necesitas.</div>
+      <div class="cta-bar">
+        <div class="cta-pill"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Comenzar gratis</div>
+        <div class="swipe-cue"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Clic en el enlace arriba</div>
+      </div>
+    </div>
+  </div>
+  <div class="label">Cómo Funciona · 3/3</div>
+</div>
+
+<!-- ══════════ EMPIEZA GRATIS · 1 ══════════ -->
+<div class="group">
+  <div class="group-title">Empieza Gratis</div>
+  <div class="story" id="empieza-1">
+    <div class="scrim solid"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="icon-badge" style="margin-top:24px;"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13H12l-1 9 8.5-11H12z"/></svg></div>
+      <div class="price-badge">Precio especial · tiempo limitado</div>
+      <div class="headline">Un plan.<br>Sin sorpresas.</div>
+      <div class="price-block">
+        <div class="price-old">$99.99 USD/mes</div>
+        <div class="price-now">$59.99<span> USD/mes</span></div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+  <div class="label">Empieza Gratis · 1/2</div>
+</div>
+
+<!-- ══════════ EMPIEZA GRATIS · 2 (CTA) ══════════ -->
+<div class="group">
+  <div class="group-title">Empieza Gratis</div>
+  <div class="story" id="empieza-2">
+    <div class="scrim solid"></div>
+    <div class="content">
+      <div class="progress-row"><div class="seg done"></div><div class="seg done"></div></div>
+      <div class="brand-row"><div class="brand-dot"><img src="/gems-icon.png" alt=""></div><div class="brand-name">GEMS HUB</div></div>
+      <div class="spacer"></div>
+      <div class="headline">Todo incluido.<br><span class="accent">Un solo plan.</span></div>
+      <div class="mock-card">
+        <div class="mock-row"><div class="mock-check">✓</div><div class="mock-label">Clientes y prospectos IA</div></div>
+        <div class="mock-row"><div class="mock-check">✓</div><div class="mock-label">Actividades y tableros</div></div>
+        <div class="mock-row"><div class="mock-check">✓</div><div class="mock-label">Casos y tickets</div></div>
+        <div class="mock-row"><div class="mock-check">✓</div><div class="mock-label">Wiki y Daily Scrum</div></div>
+      </div>
+      <div class="spacer"></div>
+      <div class="cta-bar">
+        <div class="cta-pill"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Comenzar gratis</div>
+        <div class="swipe-cue"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Clic en el enlace arriba</div>
+      </div>
+    </div>
+  </div>
+  <div class="label">Empieza Gratis · 2/2</div>
+</div>
+
+</body>
+</html>
