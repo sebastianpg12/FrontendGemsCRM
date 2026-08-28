@@ -73,6 +73,7 @@
         <button @click="goLogout" class="text-white/40 text-xs hover:text-white/70 transition">Salir de la sesión</button>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -82,6 +83,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useThemeStore } from '../stores/theme'
 import { authService } from '../services/authService'
+import { triggerIntroVideo } from '../composables/useIntroVideo'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -111,6 +113,7 @@ async function select(orgId: string) {
   if (result.success) {
     try { await themeStore.load() } catch {}
     const redirect = authStore.user?.role === 'client' ? '/support' : '/'
+    triggerIntroVideo()
     await router.push(redirect)
   } else {
     error.value = result.message || 'Error al seleccionar organización'

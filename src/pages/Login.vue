@@ -348,6 +348,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useThemeStore } from '../stores/theme'
 import { useNotifications } from '@/composables/useNotifications'
+import { triggerIntroVideo } from '../composables/useIntroVideo'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -480,6 +481,7 @@ const handleLogin = async () => {
     // Cargar el branding de la org activa antes de entrar a la app
     try { await themeStore.load() } catch {}
     const redirectPath = authStore.user?.role === 'client' ? '/support' : '/'
+    triggerIntroVideo()
     await router.push(redirectPath)
   } else {
     recordFailedAttempt()
@@ -497,6 +499,7 @@ const handleVerify2FA = async () => {
     }
     try { await themeStore.load() } catch {}
     const redirectPath = authStore.user?.role === 'client' ? '/support' : '/'
+    triggerIntroVideo()
     await router.push(redirectPath)
   } else {
     recordFailedAttempt()
@@ -709,4 +712,12 @@ onMounted(async () => {
   from { opacity: 0; transform: translateY(-6px) scale(0.97); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
+
+/* ── Intro cinemática ── */
+.intro-video-frame {
+  box-shadow: 0 0 0 1px rgba(139,92,246,0.25), 0 40px 90px -20px rgba(0,0,0,0.8), 0 0 60px -10px rgba(139,92,246,0.35);
+}
+.intro-fade-enter-active { transition: opacity 0.4s ease; }
+.intro-fade-leave-active { transition: opacity 0.5s ease; }
+.intro-fade-enter-from, .intro-fade-leave-to { opacity: 0; }
 </style>

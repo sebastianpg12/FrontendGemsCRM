@@ -198,6 +198,9 @@
     @saved="activityModalStore.close"
   />
     </div>
+
+  <!-- Intro cinemática (experimento) — montada una sola vez para sobrevivir la navegación -->
+  <IntroVideoOverlay />
   </div>
 </template>
 
@@ -207,6 +210,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useChatStore } from './stores/chatStore'
 import UserAvatar from './components/ui/UserAvatar.vue'
+import IntroVideoOverlay from './components/IntroVideoOverlay.vue'
 import NewMessageToast from './components/NewMessageToast.vue'
 import NotificationBell from './components/NotificationBell.vue'
 import PageHelp from './components/ui/PageHelp.vue'
