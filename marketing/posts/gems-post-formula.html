@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GEMS Hub — Fórmula 4 Cosas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; font-family: 'Inter', sans-serif; }
+  .post {
+    width: 1080px;
+    height: 1080px;
+    background: #0d0e1a;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 76px;
+  }
+  .post::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 45% at 50% 50%, rgba(124,58,237,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .post-mantis {
+    position: absolute;
+    top: -160px; left: 50%;
+    transform: translateX(-50%);
+    width: 900px; height: 900px;
+    background-image: url('/marketing/mantis-assets/mantis-simetria.jpg');
+    background-size: cover;
+    background-position: center 20%;
+    opacity: 0.07;
+    filter: saturate(1.2);
+    mask-image: radial-gradient(ellipse 60% 55% at 50% 30%, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 30%, black 30%, transparent 75%);
+    pointer-events: none;
+  }
+
+  .row { display: flex; gap: 56px; position: relative; z-index: 1; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .icon {
+    width: 130px; height: 130px; border-radius: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  }
+  .icon.wa { background: rgba(37,211,102,0.16); border: 1px solid rgba(37,211,102,0.3); color: #25d366; }
+  .icon.gems { background: rgba(139,92,246,0.22); border: 1px solid rgba(196,181,253,0.35); overflow: hidden; padding: 22px; }
+  .icon.gems img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; }
+  .icon.team { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.75); }
+  .icon.clock { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.75); }
+  .item-label { color: rgba(255,255,255,0.6); font-size: 18px; font-weight: 700; }
+
+  .headline {
+    position: relative; z-index: 1;
+    text-align: center;
+    color: #fff; font-size: 56px; font-weight: 900; line-height: 1.15; letter-spacing: -1.5px;
+    margin: 56px 0 14px;
+  }
+  .sub {
+    position: relative; z-index: 1;
+    text-align: center;
+    color: rgba(255,255,255,0.45); font-size: 24px; font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+  <div class="post">
+    <div class="post-mantis"></div>
+
+    <div class="row">
+      <div class="item">
+        <div class="icon wa"><i class="fab fa-whatsapp"></i></div>
+        <div class="item-label">WhatsApp</div>
+      </div>
+      <div class="item">
+        <div class="icon gems"><img src="/marketing/gems-icon.png" alt=""></div>
+        <div class="item-label">GEMS Hub</div>
+      </div>
+    </div>
+
+    <div class="headline">Deja el caos.<br>Solo necesitas 4 cosas.</div>
+    <div class="sub">Y una de ellas ya la resolvimos nosotros.</div>
+
+    <div class="row" style="margin-top:56px;">
+      <div class="item">
+        <div class="icon team"><i class="fas fa-users"></i></div>
+        <div class="item-label">Tu equipo</div>
+      </div>
+      <div class="item">
+        <div class="icon clock"><i class="fas fa-clock"></i></div>
+        <div class="item-label">5 minutos</div>
+      </div>
+    </div>
+  </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</body>
+</html>

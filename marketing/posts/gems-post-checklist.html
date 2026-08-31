@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GEMS Hub — Checklist Gratis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; font-family: 'Inter', sans-serif; }
+  .post {
+    width: 1080px;
+    height: 1080px;
+    background: #0d0e1a;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 76px;
+  }
+  .post::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 45% at 20% 15%, rgba(124,58,237,0.24) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .post-mantis {
+    position: absolute;
+    top: -100px; right: -180px;
+    width: 700px; height: 700px;
+    background-image: url('/marketing/mantis-assets/mantis-abdomen.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    filter: saturate(1.2);
+    mask-image: radial-gradient(circle, black 35%, transparent 72%);
+    -webkit-mask-image: radial-gradient(circle, black 35%, transparent 72%);
+    pointer-events: none;
+  }
+
+  .badge {
+    position: relative; z-index: 1;
+    display: inline-flex; align-self: flex-start;
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.18); color: #c4b5fd;
+    font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 9px 18px; border-radius: 999px; margin-bottom: 28px;
+  }
+
+  .title {
+    position: relative; z-index: 1;
+    color: #fff; font-size: 58px; font-weight: 900; line-height: 1.12; letter-spacing: -1.5px;
+    max-width: 680px; margin-bottom: 36px;
+  }
+  .title .accent { color: #a78bfa; }
+
+  .cta {
+    position: relative; z-index: 1;
+    display: inline-flex; align-self: flex-start; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    color: #4c1d95; font-size: 18px; font-weight: 800;
+    padding: 16px 30px; border-radius: 999px; margin-bottom: 60px;
+  }
+  .cta svg { width: 18px; height: 18px; stroke: #4c1d95; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  .stage { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+
+  .doc {
+    width: 460px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 24px;
+    padding: 36px;
+    transform: rotate(-3deg);
+    box-shadow: 0 40px 90px -20px rgba(0,0,0,0.7);
+  }
+  .doc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .doc-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+  .doc-title { color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .doc-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-check { width: 24px; height: 24px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .doc-check.done { background: rgba(139,92,246,0.35); border: 1px solid rgba(196,181,253,0.4); }
+  .doc-check.pending { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); }
+  .doc-check svg { width: 14px; height: 14px; stroke: #c4b5fd; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .doc-label { color: rgba(255,255,255,0.75); font-size: 17px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+  <div class="post">
+    <div class="post-mantis"></div>
+
+    <div class="badge">Descarga gratis</div>
+    <div class="title">Checklist para que a tu equipo <span class="accent">no se le pierda nada.</span></div>
+
+    <div class="cta">Descargar ahora <svg viewBox="0 0 24 24"><path d="M12 4v12M6 12l6 6 6-6"/></svg></div>
+
+    <div class="stage">
+      <div class="doc">
+        <div class="doc-header">
+          <div class="doc-dot"></div><div class="doc-dot"></div><div class="doc-dot"></div>
+          <div class="doc-title">Checklist de equipo</div>
+        </div>
+        <div class="doc-row"><div class="doc-check done"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div class="doc-label">Tareas asignadas por persona</div></div>
+        <div class="doc-row"><div class="doc-check done"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div class="doc-label">Seguimiento de clientes al día</div></div>
+        <div class="doc-row"><div class="doc-check pending"></div><div class="doc-label">Cero mensajes sueltos en WhatsApp</div></div>
+        <div class="doc-row"><div class="doc-check pending"></div><div class="doc-label">Reportes semanales automáticos</div></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

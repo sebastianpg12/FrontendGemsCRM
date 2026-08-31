@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GEMS Hub — Chat Problema/Solución</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; font-family: 'Inter', sans-serif; }
+  .post {
+    width: 1080px;
+    height: 1080px;
+    background: #0d0e1a;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 72px 56px;
+  }
+  .post::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 15%, rgba(124,58,237,0.22) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .post-mantis {
+    position: absolute;
+    bottom: -180px; left: -160px;
+    width: 820px; height: 820px;
+    background-image: url('/marketing/mantis-assets/mantis-boca.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.09;
+    filter: saturate(1.25);
+    mask-image: radial-gradient(circle, black 35%, transparent 72%);
+    -webkit-mask-image: radial-gradient(circle, black 35%, transparent 72%);
+    pointer-events: none;
+  }
+
+  .label { position: relative; z-index: 1; color: rgba(255,255,255,0.4); font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 20px; }
+
+  .bubble-row { display: flex; margin-bottom: 16px; position: relative; z-index: 1; }
+  .bubble-row.right { justify-content: flex-end; }
+  .bubble {
+    max-width: 720px;
+    padding: 26px 32px;
+    border-radius: 28px;
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.45;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  .bubble.problem {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.75);
+    border-bottom-left-radius: 8px;
+  }
+  .bubble.solution {
+    background: rgba(139,92,246,0.28);
+    border: 1px solid rgba(196,181,253,0.35);
+    color: #fff;
+    font-weight: 700;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 20px 50px -15px rgba(124,58,237,0.4);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .bubble.solution .check {
+    width: 26px; height: 26px; flex-shrink: 0;
+    stroke: #c4b5fd; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    padding: 5px;
+    box-sizing: content-box;
+  }
+
+  .spacer-block { height: 60px; }
+
+  .messages { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  .footer { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .footer-dot { width: 22px; height: 22px; }
+  .footer-dot img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; }
+  .footer-name { color: rgba(255,255,255,0.35); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; }
+</style>
+</head>
+<body>
+
+  <div class="post">
+    <div class="post-mantis"></div>
+
+    <div class="messages">
+      <div class="label">Tus problemas:</div>
+      <div class="bubble-row">
+        <div class="bubble problem">Las tareas de mi equipo se pierden entre WhatsApp, notas y la memoria de alguien</div>
+      </div>
+
+      <div class="spacer-block"></div>
+
+      <div class="label" style="text-align:right;">Nuestra solución:</div>
+      <div class="bubble-row right">
+        <div class="bubble solution"><svg viewBox="0 0 24 24" class="check"><path d="M20 6 9 17l-5-5"/></svg>GEMS Hub las centraliza en tableros. Nada se pierde.</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-dot"><img src="/marketing/gems-icon.png" alt=""></div>
+      <div class="footer-name">GEMS Hub</div>
+    </div>
+  </div>
+
+</body>
+</html>

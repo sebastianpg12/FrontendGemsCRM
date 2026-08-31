@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GEMS Hub — Carrusel 3/4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; font-family: 'Inter', sans-serif; }
+  .post {
+    width: 1080px;
+    height: 1350px;
+    background: #0d0e1a;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 88px;
+  }
+  .post::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 45% at 50% 45%, rgba(124,58,237,0.26) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .post-mantis {
+    position: absolute;
+    bottom: -220px; right: -200px;
+    width: 900px; height: 900px;
+    background-image: url('/marketing/mantis-assets/mantis-trono.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    opacity: 0.1;
+    filter: saturate(1.2);
+    mask-image: radial-gradient(circle, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle, black 30%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    position: relative; z-index: 1;
+    display: inline-flex; align-self: flex-start;
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.18); color: #c4b5fd;
+    font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 10px 20px; border-radius: 999px; margin-bottom: 32px;
+  }
+
+  .headline {
+    position: relative; z-index: 1;
+    color: #fff;
+    font-size: 74px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -2.5px;
+    margin-bottom: 26px;
+  }
+  .headline .accent { color: #a78bfa; }
+
+  .sub {
+    position: relative; z-index: 1;
+    color: rgba(255,255,255,0.5);
+    font-size: 28px;
+    font-weight: 600;
+    max-width: 560px;
+  }
+
+  .sub-row {
+    position: relative; z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 90px;
+  }
+  .arrow-btn {
+    width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .arrow-btn svg { width: 26px; height: 26px; stroke: #4c1d95; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+  <div class="post">
+    <div class="post-mantis"></div>
+
+    <div class="eyebrow">Existe algo mejor</div>
+    <div class="headline">Se llama<br><span class="accent">GEMS Hub.</span></div>
+    <div class="sub">Todo tu equipo, tus clientes y tus tareas — en un solo lugar.</div>
+
+    <div class="sub-row">
+      <div class="arrow-btn"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    </div>
+  </div>
+
+</body>
+</html>
