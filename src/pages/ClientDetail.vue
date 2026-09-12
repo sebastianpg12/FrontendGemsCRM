@@ -52,6 +52,7 @@
       <!-- Contenido -->
       <div class="p-5">
         <ClientOverview v-if="activeTab === 'overview'" :editOverview="editOverview" />
+        <ClientProjects v-else-if="activeTab === 'projects'" />
         <ClientServices v-else-if="activeTab === 'services'" />
         <ClientCommitments v-else-if="activeTab === 'commitments'" />
         <ClientPreferences v-else-if="activeTab === 'preferences'" />
@@ -69,6 +70,7 @@ import { useClientDetail } from '@/composables/useClientDetail'
 
 // Sub-componentes fragmentados (Clean Architecture)
 import ClientOverview from '@/components/clients/detail/ClientOverview.vue'
+import ClientProjects from '@/components/clients/detail/ClientProjects.vue'
 import ClientServices from '@/components/clients/detail/ClientServices.vue'
 import ClientCommitments from '@/components/clients/detail/ClientCommitments.vue'
 import ClientPreferences from '@/components/clients/detail/ClientPreferences.vue'
@@ -90,6 +92,7 @@ const activeTab = ref('overview')
 
 const tabs = [
   { key: 'overview', label: 'Resumen', icon: 'fas fa-user' },
+  { key: 'projects', label: 'Proyectos', icon: 'fas fa-diagram-project' },
   { key: 'services', label: 'Servicios', icon: 'fas fa-box' },
   { key: 'commitments', label: 'Compromisos', icon: 'fas fa-handshake' },
   { key: 'preferences', label: 'Preferencias', icon: 'fas fa-heart' },

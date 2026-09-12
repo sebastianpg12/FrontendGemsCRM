@@ -39,3 +39,6 @@ diff.txt
 
 # Test payload con credenciales — no subir
 payload.json
+
+# Material de marketing: capturas, sprites, clips y videos (~1GB, no va al repo)
+marketing/

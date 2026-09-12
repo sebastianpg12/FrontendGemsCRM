@@ -101,47 +101,95 @@
               </div>
             </div>
 
-            <!-- Fila 2: Cliente/Equipo y Detalles -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <!-- Columna Izquierda -->
-              <div class="space-y-4">
-                <div class="space-y-2">
-                  <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Cliente / Proyecto</label>
-                  <CustomSelect
-                    v-model="form.clientId"
-                    searchable
-                    :options="[
-                      { value: '', label: 'Interno' },
-                      ...(clients || []).map(client => ({ value: client._id, label: client.name }))
-                    ]"
-                  />
-                </div>
-                <div class="space-y-2">
-                  <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo Responsable</label>
-                  <div class="bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl p-3 shadow-inner h-[180px] sm:h-[320px] flex flex-col overflow-hidden">
-                    <AssignedUsersSelector
-                      v-model="form.assignedTo"
-                      :teamMembers="teamMembers"
-                    />
-                  </div>
-                </div>
+            <!-- Fila 2: Cliente / Proyecto — fila propia y compacta, no compiten -->
+            <!-- por espacio con Equipo Responsable (antes vivian juntos en media -->
+            <!-- columna y los tabs de departamento quedaban cortados). -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Cliente</label>
+                <CustomSelect
+                  v-model="form.clientId"
+                  searchable
+                  :options="[
+                    { value: '', label: 'Interno' },
+                    ...(clients || []).map(client => ({ value: client._id, label: client.name }))
+                  ]"
+                />
               </div>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between ml-1">
+                  <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest">Proyecto</label>
+                  <button
+                    v-if="form.clientId && !showNewProjectInput"
+                    type="button"
+                    @click="showNewProjectInput = true"
+                    class="text-[12px] font-black text-primary-500 hover:text-primary-600 flex items-center gap-1"
+                  >
+                    <i class="fas fa-plus text-[10px]"></i> Nuevo
+                  </button>
+                </div>
 
-              <!-- Columna Derecha: Descripción y Tiempo -->
-              <div class="space-y-4">
-                <div class="space-y-2">
+                <div v-if="showNewProjectInput" class="flex items-center gap-1.5">
+                  <input
+                    v-model="newProjectName"
+                    type="text"
+                    autofocus
+                    placeholder="Nombre del proyecto..."
+                    @keyup.enter="createProjectInline"
+                    @keyup.escape="cancelNewProject"
+                    class="flex-1 px-3 py-2.5 bg-white dark:bg-[#0f172a] border border-primary-300 dark:border-primary-500/40 rounded-xl text-slate-700 dark:text-white text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all placeholder-slate-300 dark:placeholder-slate-600"
+                  />
+                  <button
+                    type="button"
+                    @click="createProjectInline"
+                    :disabled="!newProjectName.trim() || creatingProject"
+                    class="w-9 h-9 shrink-0 flex items-center justify-center bg-primary-500 hover:bg-primary-600 text-white rounded-xl transition-all disabled:opacity-40"
+                    title="Crear proyecto"
+                  >
+                    <i v-if="creatingProject" class="fas fa-spinner fa-spin text-xs"></i>
+                    <i v-else class="fas fa-check text-xs"></i>
+                  </button>
+                  <button
+                    type="button"
+                    @click="cancelNewProject"
+                    class="w-9 h-9 shrink-0 flex items-center justify-center bg-slate-100 dark:bg-[#0f172a] hover:bg-slate-200 dark:hover:bg-[#1e293b] text-slate-500 dark:text-slate-400 rounded-xl transition-all"
+                    title="Cancelar"
+                  >
+                    <i class="fas fa-times text-xs"></i>
+                  </button>
+                </div>
+                <CustomSelect
+                  v-else
+                  v-model="form.projectId"
+                  :disabled="!form.clientId || loadingProjects"
+                  :options="[
+                    { value: '', label: !form.clientId ? 'Selecciona un cliente primero' : (loadingProjects ? 'Cargando...' : 'Sin proyecto') },
+                    ...projects.map(p => ({ value: p._id, label: p.name }))
+                  ]"
+                />
+              </div>
+            </div>
+
+            <!-- Fila 3: Descripción y Tiempo -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <!-- Columna Izquierda: Descripción -->
+              <div class="space-y-4 h-full flex flex-col">
+                <div class="space-y-2 flex-1 flex flex-col">
                   <div class="flex items-center justify-between ml-1">
                     <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest">Detalles y Notas</label>
                     <VoiceDictateButton v-model="form.description" size="xs" />
                   </div>
                   <textarea
                     v-model="form.description"
-                    rows="5"
-                    class="w-full px-5 py-3 bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all resize-none text-sm font-medium leading-relaxed shadow-sm custom-scrollbar"
+                    rows="9"
+                    class="w-full flex-1 min-h-[220px] px-5 py-3 bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-2xl text-slate-700 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 focus:bg-white dark:focus:bg-[#0f172a] focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-400 transition-all resize-none text-sm font-medium leading-relaxed shadow-sm custom-scrollbar"
                     placeholder="Describe los pasos, criterios de aceptación o contexto..."
                   ></textarea>
                 </div>
+              </div>
 
+              <!-- Columna Derecha: Tiempo -->
+              <div class="space-y-4">
                 <!-- Tiempo Estimado y Progreso -->
                 <div class="space-y-5 shrink-0">
                   <div class="space-y-2">
@@ -149,7 +197,7 @@
                     <span>Tiempo Estimado</span>
                     <button type="button" @click="form.estimatedTime = ''" class="text-primary-500 hover:text-primary-600">Limpiar</button>
                   </label>
-                  <div class="grid grid-cols-4 gap-2">
+                  <div class="grid grid-cols-3 gap-2">
                     <button
                       v-for="time in [
                         { val: '15m', label: '15m' },
@@ -162,40 +210,62 @@
                       :key="time.val"
                       type="button"
                       @click="form.estimatedTime = time.val"
-                      class="px-1 py-2 rounded-xl text-[13px] font-black tracking-wider uppercase transition-all border shadow-sm flex items-center justify-center gap-1"
+                      class="px-1 py-2.5 rounded-xl text-[13px] font-black tracking-wider uppercase transition-all border shadow-sm flex items-center justify-center gap-1.5"
                       :class="form.estimatedTime === time.val
                         ? 'bg-primary-500 text-white border-primary-600 ring-2 ring-primary-500/20 shadow-primary-500/20'
                         : 'bg-white dark:bg-[#0f172a] text-slate-500 dark:text-slate-400 border-slate-200 dark:border-[#334155] hover:bg-slate-50 dark:hover:bg-[#1e293b] hover:text-slate-700 dark:hover:text-slate-200'"
                     >
-                      <i class="fas fa-clock opacity-70 hidden sm:inline-block"></i>
+                      <i class="fas fa-clock opacity-70"></i>
                       {{ time.label }}
                     </button>
-                    
-                    <div class="col-span-2 relative group">
+                    </div>
+
+                    <div class="relative group">
                       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-pen text-[12px] text-slate-400 group-focus-within:text-primary-500 transition-colors"></i>
                       </div>
                       <input
                         v-model="form.estimatedTime"
                         type="text"
-                        placeholder="Ej: 3.5h"
-                        class="w-full h-full pl-8 pr-3 py-2 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-white text-[13px] font-black focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm placeholder-slate-300 dark:placeholder-slate-600"
+                        placeholder="Personalizado, ej: 3.5h"
+                        class="w-full pl-8 pr-3 py-2.5 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl text-slate-700 dark:text-white text-[13px] font-black focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm placeholder-slate-300 dark:placeholder-slate-600"
                       />
-                    </div>
                     </div>
                   </div>
 
                   <!-- Progreso -->
-                  <div class="mt-3 bg-white dark:bg-[#0f172a] p-2 rounded-xl shadow-sm flex items-center gap-3">
-                    <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest w-12 text-right">{{ form.completionPercentage || 0 }}%</span>
-                    <input
-                      type="range"
-                      v-model.number="form.completionPercentage"
-                      min="0" max="100" step="5"
-                      class="flex-1 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
-                    />
+                  <div class="space-y-2">
+                    <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center justify-between">
+                      <span>Progreso</span>
+                      <span class="text-primary-500 text-sm">{{ form.completionPercentage || 0 }}%</span>
+                    </label>
+                    <div class="bg-white dark:bg-[#0f172a] p-3 rounded-xl shadow-sm">
+                      <input
+                        type="range"
+                        v-model.number="form.completionPercentage"
+                        min="0" max="100" step="5"
+                        class="w-full h-2 bg-slate-100 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
+                      />
+                      <div class="flex justify-between mt-1.5 px-0.5">
+                        <span v-for="mark in [0,25,50,75,100]" :key="mark" class="text-[10px] font-bold text-slate-300 dark:text-slate-600">{{ mark }}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <!-- Fila 4: Equipo Responsable — ancho completo. Antes vivia en media
+                 columna junto a Cliente/Proyecto/Equipo y los tabs de departamento
+                 (Marketing, Admin, Comercial...) quedaban cortados sin espacio para
+                 mostrarse en una sola linea. -->
+            <div class="space-y-2">
+              <label class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Equipo Responsable</label>
+              <div class="bg-slate-50/50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] rounded-xl p-3 shadow-inner h-[300px] sm:h-[360px] flex flex-col overflow-hidden">
+                <AssignedUsersSelector
+                  v-model="form.assignedTo"
+                  :teamMembers="teamMembers"
+                />
               </div>
             </div>
           </div>
@@ -470,6 +540,7 @@ import AssignedUsersSelector from '../AssignedUsersSelector.vue'
 import CustomSelect from '../ui/CustomSelect.vue'
 import VoiceDictateButton from '@/components/ui/VoiceDictateButton.vue'
 import { activityService } from '../../services/activityService'
+import { projectService, type ProjectData } from '../../services/projectService'
 import { useBoardsStore } from '../../stores/boards'
 import { useTasksStore } from '../../stores/tasks'
 import { useAuthStore } from '../../stores/auth'
@@ -512,6 +583,7 @@ const form = reactive({
   title: '',
   description: '',
   clientId: '',
+  projectId: '',
   assignedTo: [] as string[],
   priority: 'medium',
   status: 'pending',
@@ -522,6 +594,62 @@ const form = reactive({
   completionPercentage: 0
 })
 
+// ── Proyectos del cliente seleccionado ──────────────────────────────────────
+// (declarado despues de `form`: el watch de abajo lo referencia de inmediato
+// al registrarse, y `const` no se hoistea — si iba antes, TDZ y crash al abrir el modal)
+const projects = ref<ProjectData[]>([])
+const loadingProjects = ref(false)
+
+async function loadProjects(clientId: string) {
+  if (!clientId) { projects.value = []; return }
+  loadingProjects.value = true
+  try {
+    projects.value = await projectService.getAll(clientId)
+  } catch (e) {
+    console.error('Error loading projects:', e)
+    projects.value = []
+  } finally {
+    loadingProjects.value = false
+  }
+}
+
+// al cambiar de cliente se recarga su lista de proyectos; si el proyecto
+// seleccionado no pertenece al cliente nuevo, se limpia (pero no al popular
+// el formulario por primera vez con una actividad existente)
+watch(() => form.clientId, async () => {
+  const kept = form.projectId
+  await loadProjects(form.clientId)
+  if (!projects.value.some(p => p._id === kept)) form.projectId = ''
+})
+
+// ── Crear proyecto sin salir del formulario de tarea ────────────────────────
+// (evita que "no hay proyectos todavia" sea un bloqueo: se crea al vuelo)
+const showNewProjectInput = ref(false)
+const newProjectName = ref('')
+const creatingProject = ref(false)
+
+function cancelNewProject() {
+  showNewProjectInput.value = false
+  newProjectName.value = ''
+}
+
+async function createProjectInline() {
+  const name = newProjectName.value.trim()
+  if (!name || !form.clientId) return
+  creatingProject.value = true
+  try {
+    const project = await projectService.create({ clientId: form.clientId, name })
+    projects.value.push(project)
+    form.projectId = project._id!
+    cancelNewProject()
+  } catch (e) {
+    console.error('Error creating project inline:', e)
+    showError('No se pudo crear el proyecto')
+  } finally {
+    creatingProject.value = false
+  }
+}
+
 const populateForm = () => {
   try {
     if (props.activity) {
@@ -529,8 +657,9 @@ const populateForm = () => {
       form.description = props.activity.description || ''
       
       // Soporte para ambos: clientId (Activity) o client (Task)
-      form.clientId = props.activity.clientId?._id || props.activity.clientId || 
+      form.clientId = props.activity.clientId?._id || props.activity.clientId ||
                       props.activity.client?._id || props.activity.client || ''
+      form.projectId = props.activity.projectId?._id || props.activity.projectId || ''
       
       // Soporte para asignación múltiple (Activity) o única (Task)
       if (props.activity.assignedTo) {
@@ -562,6 +691,7 @@ const populateForm = () => {
       form.title = ''
       form.description = ''
       form.clientId = ''
+      form.projectId = ''
       form.assignedTo = []
       form.priority = 'medium'
       form.status = 'pending'
@@ -613,6 +743,7 @@ const handleSubmit = async () => {
       if (!isNaN(hours)) taskData.estimatedHours = hours
     } else {
       taskData.clientId = form.clientId || undefined
+      taskData.projectId = form.projectId || undefined
       taskData.assignedTo = form.assignedTo
       taskData.estimatedTime = form.estimatedTime
       taskData.date = form.date

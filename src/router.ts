@@ -16,6 +16,7 @@ import CasesView from './components/CasesView.vue'
 import ProfileView from './pages/ProfileView.vue'
 import ChatPage from './pages/ChatPage.vue'
 import ClientDetail from './pages/ClientDetail.vue'
+import ProjectDetail from './pages/ProjectDetail.vue'
 import BoardsPage from './pages/BoardsPage.vue'
 import BoardView from './pages/BoardView.vue'
 import TasksBoard from './pages/TasksBoard.vue'
@@ -101,6 +102,12 @@ const routes = [
     path: '/clients/:id',
     name: 'ClientDetail',
     component: ClientDetail,
+    meta: { requiresAuth: true, requiredPermissions: ['view-clients'] }
+  },
+  {
+    path: '/projects/:id',
+    name: 'ProjectDetail',
+    component: ProjectDetail,
     meta: { requiresAuth: true, requiredPermissions: ['view-clients'] }
   },
   {

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-3 flex flex-col h-full">
     <!-- Selected Users Chips -->
-    <div v-if="selectedUsers.length > 0" class="flex flex-wrap gap-2 p-3 bg-slate-50 rounded-xl min-h-[46px] max-h-[120px] overflow-y-auto shrink-0 custom-scrollbar shadow-inner">
+    <div v-if="selectedUsers.length > 0" class="flex flex-wrap gap-2 p-2.5 bg-slate-50 rounded-xl min-h-[42px] max-h-[70px] overflow-y-auto shrink-0 custom-scrollbar shadow-inner">
       <span v-for="user in selectedUsers" :key="user?._id"
         class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg shadow-sm group transition-all"
       >
@@ -79,7 +79,7 @@
           <span class="text-[12px] text-slate-400 font-medium truncate uppercase tracking-wider">{{ member.department || member.role || 'Miembro' }}</span>
         </div>
         <div class="ml-auto flex-shrink-0 pl-2">
-          <div v-if="isUserSelected(member._id!)" class="w-5 h-5 bg-primary-500 rounded-full flex items-center justify-center shadow-lg shadow-primary-200">
+          <div v-if="isUserSelected(member._id!)" class="w-5 h-5 bg-primary-500 rounded-full flex items-center justify-center shadow-sm shadow-primary-500/30">
              <i class="fas fa-check text-[12px] text-white"></i>
           </div>
           <div v-else class="w-5 h-5 border-2 border-slate-200 rounded-full group-hover:border-primary-300 transition-colors"></div>

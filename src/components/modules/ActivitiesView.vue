@@ -244,6 +244,22 @@
             ]"
           />
         </div>
+        <!-- Filtro por proyecto: se puebla al elegir un cliente -->
+        <div class="flex-1 min-w-[180px]">
+          <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
+            Proyecto
+          </label>
+          <CustomSelect
+            v-model="selectedProject"
+            size="sm"
+            :disabled="!selectedClient || loadingProjects"
+            :options="[
+              { value: '', label: !selectedClient ? 'Elige un cliente primero' : (loadingProjects ? 'Cargando...' : 'Todos los proyectos') },
+              ...projectsForFilter.map(p => ({ value: p._id || '', label: p.name }))
+            ]"
+          />
+        </div>
+
         <!-- Filtro por departamento -->
         <div class="flex-1 min-w-[140px]">
           <label class="block text-[12px] font-black text-slate-400 uppercase tracking-wider mb-0.5 ml-1">
@@ -2664,6 +2680,7 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { activityService, type ActivityData } from '../../services/activityService'
 import { clientService, type ClientData } from '../../services/clientService'
+import { projectService, type ProjectData } from '../../services/projectService'
 import { teamService } from '../../services/teamService'
 import { useNotifications } from '../../composables/useNotifications'
 import { useAuthStore } from '../../stores/auth'
@@ -2825,8 +2842,27 @@ const selectedDepartment = ref('')
 const selectedTeamMember = ref('')
 const selectedStatus = ref('')
 const selectedClient = ref('')
+const selectedProject = ref('')
+const projectsForFilter = ref<ProjectData[]>([])
+const loadingProjects = ref(false)
 const startDate = ref('')
 const endDate = ref('')
+
+// el filtro de proyecto se puebla segun el cliente elegido — sin cliente no
+// tiene sentido listar proyectos de toda la organizacion mezclados
+watch(selectedClient, async (clientId) => {
+  selectedProject.value = ''
+  if (!clientId) { projectsForFilter.value = []; return }
+  loadingProjects.value = true
+  try {
+    projectsForFilter.value = await projectService.getAll(clientId)
+  } catch (e) {
+    console.error('Error loading projects for filter:', e)
+    projectsForFilter.value = []
+  } finally {
+    loadingProjects.value = false
+  }
+})
 
 // Modales para tableros
 const showCreateBoardModal = ref(false)
@@ -2991,6 +3027,14 @@ const filteredActivities = computed(() => {
     filtered = filtered.filter(a => {
       const id = (typeof a.clientId === 'object' && a.clientId !== null) ? (a.clientId as any)._id : a.clientId
       return id === selectedClient.value
+    })
+  }
+
+  // Filtrar por proyecto (solo tiene sentido con un cliente ya elegido)
+  if (selectedProject.value) {
+    filtered = filtered.filter(a => {
+      const id = (typeof (a as any).projectId === 'object' && (a as any).projectId !== null) ? (a as any).projectId._id : (a as any).projectId
+      return id === selectedProject.value
     })
   }
 
@@ -3628,6 +3672,21 @@ async function openFromQuery() {
   }
 }
 
+// ── Preseleccionar filtros Cliente/Proyecto desde query (link "Ver en Actividades") ──
+async function applyFiltersFromQuery() {
+  const qClientId = route.query.clientId as string | undefined
+  const qProjectId = route.query.projectId as string | undefined
+  if (!qClientId) return
+  selectedClient.value = qClientId
+  // el watch de selectedClient carga projectsForFilter de forma async
+  await new Promise(resolve => {
+    const stop = watch(loadingProjects, (v) => { if (!v) { stop(); resolve(null) } })
+    setTimeout(() => { stop(); resolve(null) }, 3000)
+  })
+  if (qProjectId) selectedProject.value = qProjectId
+  showFiltersPanel.value = true
+}
+
 // Reaccionar a cambios de query cuando ya estamos en la página
 watch(() => [route.query.openActivity, route.query.openTask], () => {
   if (route.query.openActivity || route.query.openTask) {
@@ -3666,6 +3725,7 @@ const clearFilters = () => {
   selectedDepartment.value = ''
   selectedTeamMember.value = ''
   selectedStatus.value = ''
+  selectedProject.value = ''
   startDate.value = ''
   endDate.value = ''
 }
@@ -5736,6 +5796,8 @@ onMounted(async () => {
 
   // ── Auto-abrir actividad/tarea desde query (notificaciones) ──
   await openFromQuery()
+  // ── Preseleccionar filtros Cliente/Proyecto (link desde detalle de proyecto) ──
+  await applyFiltersFromQuery()
 
   // Configurar intervalo para verificar periódicamente las actividades vencidas (cada 5 minutos)
   const checkOverdueInterval = setInterval(updateOverdueActivities, 5 * 60 * 1000)
