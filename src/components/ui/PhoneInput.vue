@@ -72,7 +72,7 @@ import { ref, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { COUNTRY_CODES, DEFAULT_COUNTRY_DIAL, type CountryCode } from '../../utils/countryCodes'
 
 withDefaults(defineProps<{ placeholder?: string }>(), {
-  placeholder: '8888-8888'
+  placeholder: '300 123 4567'
 })
 
 const modelDial = defineModel<string>('dial', { default: DEFAULT_COUNTRY_DIAL })
