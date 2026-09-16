@@ -39,4 +39,4 @@ export const COUNTRY_CODES: CountryCode[] = [
   { iso: 'IT', name: 'Italia', dial: '+39', flag: '🇮🇹' },
 ]
 
-export const DEFAULT_COUNTRY_DIAL = '+506' // Costa Rica — sede de GEMS Innovations
+export const DEFAULT_COUNTRY_DIAL = '+57' // Colombia — de donde viene la mayoría de quienes se registran

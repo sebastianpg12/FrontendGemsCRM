@@ -147,7 +147,7 @@
               <input
                 v-model="contactPhone"
                 type="tel"
-                placeholder="Tu teléfono (con prefijo, ej. +506 8888-8888)"
+                placeholder="Tu teléfono (con prefijo, ej. +57 300 123 4567)"
                 class="contact-input w-full rounded-lg py-2 px-3 text-[12px] text-white placeholder-white/25 outline-none mb-2 transition-all"
               />
               <textarea

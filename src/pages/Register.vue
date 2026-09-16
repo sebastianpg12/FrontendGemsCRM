@@ -74,7 +74,9 @@
             <i v-else class="far fa-circle text-white/15"></i>
           </button>
 
-          <p class="text-center text-[10px] font-bold uppercase tracking-wider text-white/25 mb-2">o apuesta por nosotros — y de por vida apostamos por ti</p>
+          <p class="text-center text-[10px] text-white/30 mb-2">Todos los planes incluyen los 9 módulos y hasta 25 usuarios. No cobramos por persona.</p>
+
+          <p class="text-center text-[10px] font-bold uppercase tracking-wider text-white/25 mb-2">o asegura tu precio desde ahora</p>
 
           <div class="grid grid-cols-2 gap-2.5">
             <!-- Mensual -->
@@ -92,7 +94,7 @@
               </div>
               <p class="text-white text-[16px] font-black leading-none mb-0.5">$181.900<span class="text-[10px] font-medium text-white/35"> COP/mes</span></p>
               <p class="text-white/30 text-[10px] line-through mb-0.5">$202.100 COP/mes</p>
-              <p class="text-[10px] font-bold text-white/50">Reserva tu cupo hoy</p>
+              <p class="text-[10px] font-bold text-white/50">10% menos que el regular</p>
             </button>
             <!-- Trimestral (destacado) -->
             <button
@@ -109,7 +111,7 @@
                 <i v-if="selectedPlan === 'quarterly'" class="fas fa-circle-check text-[12px]" :style="`color: var(--brand-accent);`"></i>
               </div>
               <p class="text-white text-[16px] font-black leading-none mb-0.5">$497.500<span class="text-[10px] font-medium text-white/35"> COP/3 meses</span></p>
-              <p class="text-[10px] font-bold" :style="`color: var(--brand-accent);`">Precio congelado para siempre</p>
+              <p class="text-[10px] font-bold" :style="`color: var(--brand-accent);`">Precio congelado mientras sigas</p>
             </button>
           </div>
         </div>
