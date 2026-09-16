@@ -68,7 +68,7 @@
           >
             <div>
               <p class="text-[12px] font-bold text-emerald-300 mb-0.5"><i class="fas fa-gift text-[11px] mr-1"></i>Empezar gratis 14 días</p>
-              <p class="text-white/30 text-[10px]">Sin tarjeta · luego $64.99/mes, sin descuento</p>
+              <p class="text-white/30 text-[10px]">Sin tarjeta · luego $202.100 COP/mes, sin descuento</p>
             </div>
             <i v-if="selectedPlan === 'trial'" class="fas fa-circle-check text-emerald-400"></i>
             <i v-else class="far fa-circle text-white/15"></i>
@@ -90,8 +90,8 @@
                 <p class="text-[9px] font-bold uppercase tracking-wider text-white/35">Mensual</p>
                 <i v-if="selectedPlan === 'monthly'" class="fas fa-circle-check text-[12px]" :style="`color: var(--brand-accent);`"></i>
               </div>
-              <p class="text-white text-[19px] font-black leading-none mb-0.5">$58.49<span class="text-[10px] font-medium text-white/35">/mes</span></p>
-              <p class="text-white/30 text-[10px] line-through mb-0.5">$64.99/mes</p>
+              <p class="text-white text-[16px] font-black leading-none mb-0.5">$181.900<span class="text-[10px] font-medium text-white/35"> COP/mes</span></p>
+              <p class="text-white/30 text-[10px] line-through mb-0.5">$202.100 COP/mes</p>
               <p class="text-[10px] font-bold text-white/50">Reserva tu cupo hoy</p>
             </button>
             <!-- Trimestral (destacado) -->
@@ -108,7 +108,7 @@
                 <p class="text-[9px] font-bold uppercase tracking-wider" :style="`color: var(--brand-accent);`">Trimestral</p>
                 <i v-if="selectedPlan === 'quarterly'" class="fas fa-circle-check text-[12px]" :style="`color: var(--brand-accent);`"></i>
               </div>
-              <p class="text-white text-[19px] font-black leading-none mb-0.5">$159.99<span class="text-[10px] font-medium text-white/35">/3 meses</span></p>
+              <p class="text-white text-[16px] font-black leading-none mb-0.5">$497.500<span class="text-[10px] font-medium text-white/35"> COP/3 meses</span></p>
               <p class="text-[10px] font-bold" :style="`color: var(--brand-accent);`">Precio congelado para siempre</p>
             </button>
           </div>

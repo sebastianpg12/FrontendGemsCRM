@@ -110,7 +110,7 @@
               <div class="flex items-center justify-between mb-1">
                 <div class="text-[10px] font-bold uppercase tracking-wider" style="color: #fbbf24;">{{ currentPlan.name }}</div>
                 <div class="text-right">
-                  <div class="text-white/25 text-[11px] line-through leading-none mb-0.5">${{ currentPlan.was }} {{ currentPlan.unit }}</div>
+                  <div v-if="currentPlan.was" class="text-white/25 text-[11px] line-through leading-none mb-0.5">${{ currentPlan.was }} {{ currentPlan.unit }}</div>
                   <div class="text-white/90 text-[20px] font-bold leading-none">
                     ${{ currentPlan.price }}<span class="text-[11px] font-normal text-white/30"> {{ currentPlan.unit }}</span>
                   </div>
@@ -245,19 +245,19 @@ const billingPeriod = ref<'monthly' | 'quarterly'>('monthly')
 const plans = {
   monthly: {
     name: 'Plan Básico',
-    price: '64.99',
-    was: '99.99',
-    unit: 'USD/mes',
-    note: 'Ahorra $420 al año · La promo se acaba pronto',
-    badge: 'Precio especial por tiempo limitado'
+    price: '202.100',
+    was: '',
+    unit: 'COP/mes',
+    note: 'Sin permanencia · cancelas cuando quieras',
+    badge: 'Precio de lanzamiento'
   },
   quarterly: {
     name: 'Plan Fundador · Trimestral',
-    price: '159.99',
-    was: '194.97',
-    unit: 'USD/trimestre',
-    note: 'Ahorras $35 vs. pagar mes a mes · Precio congelado para siempre · Cupos limitados',
-    badge: 'Precio fundador · cupos limitados'
+    price: '497.500',
+    was: '606.300',
+    unit: 'COP/trimestre',
+    note: 'Ahorras $108.800 frente a pagar mes a mes · Precio congelado mientras sigas con nosotros',
+    badge: 'Plan fundador'
   }
 }
 
